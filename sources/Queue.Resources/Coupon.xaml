@@ -1,0 +1,158 @@
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Width="280"
+      Background="#FFFFFF"
+      mc:Ignorable="d">
+    <Grid.Resources>
+        <Style x:Key="{x:Type GroupBox}" TargetType="{x:Type GroupBox}">
+            <Setter Property="BorderThickness" Value="2" />
+        </Style>
+        <Style x:Key="{x:Type Label}" TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Margin" Value="5,-5,5,-5" />
+        </Style>
+        <Style x:Key="{x:Type TextBlock}" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </Grid.Resources>
+    <StackPanel Margin="5" VerticalAlignment="Top">
+        <TextBlock x:Name="queueName"
+                   HorizontalAlignment="Center"
+                   FontSize="12"
+                   Text="-"
+                   TextWrapping="Wrap" />
+        <TextBlock x:Name="createDate"
+                   HorizontalAlignment="Right"
+                   FontSize="12"
+                   Text="-" />
+        <GroupBox x:Name="clientRequestBlock" BorderBrush="Black">
+            <GroupBox.Header>
+                <Label Content="Запрос" FontWeight="Bold" />
+            </GroupBox.Header>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0"
+                           HorizontalAlignment="Left"
+                           Content="Дата"
+                           FontWeight="Bold" />
+                    <TextBlock x:Name="requestDate"
+                               Grid.Row="0"
+                               Grid.Column="1"
+                               HorizontalAlignment="Left"
+                               Text="-" />
+                    <Label Grid.Row="1"
+                           HorizontalAlignment="Left"
+                           Content="Время"
+                           FontWeight="Bold" />
+                    <TextBlock x:Name="requestTime"
+                               Grid.Row="1"
+                               Grid.Column="1"
+                               HorizontalAlignment="Left"
+                               Text="-" />
+                    <Label Grid.Row="2"
+                           HorizontalAlignment="Left"
+                           Content="Объектов"
+                           FontWeight="Bold" />
+                    <TextBlock x:Name="subjects"
+                               Grid.Row="2"
+                               Grid.Column="1"
+                               HorizontalAlignment="Left"
+                               Text="-" />
+                </Grid>
+                <Border Grid.Row="0"
+                        Grid.Column="1"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        CornerRadius="5">
+                    <TextBlock x:Name="number"
+                               Grid.Row="0"
+                               Grid.Column="1"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="25"
+                               FontWeight="Bold"
+                               Text="000" />
+                </Border>
+            </Grid>
+        </GroupBox>
+        <StackPanel x:Name="stateBlock" Visibility="Collapsed">
+            <GroupBox BorderBrush="Black">
+                <GroupBox.Header>
+                    <Label Content="Очередь" FontWeight="Bold" />
+                </GroupBox.Header>
+                <Grid Margin="0,5,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0"
+                           Content="Позиция"
+                           FontWeight="Bold" />
+                    <TextBlock x:Name="position"
+                               Grid.Row="0"
+                               Grid.Column="1"
+                               Text="-" />
+                    <Label Grid.Row="1"
+                           Content="Время ожидания"
+                           FontWeight="Bold" />
+                    <StackPanel Grid.Row="1"
+                                Grid.Column="1"
+                                Orientation="Horizontal">
+                        <TextBlock x:Name="waitingTime" Text="-" />
+                        <Grid Width="5" />
+                        <TextBlock Text="мин." />
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+        <GroupBox x:Name="clientBlock"
+                  BorderBrush="Black"
+                  Visibility="Collapsed">
+            <GroupBox.Header>
+                <Label Content="Клиент" FontWeight="Bold" />
+            </GroupBox.Header>
+            <TextBlock x:Name="client"
+                       FontWeight="Bold"
+                       Text="-" />
+        </GroupBox>
+        <GroupBox x:Name="workplacesBlock" BorderBrush="Black">
+            <GroupBox.Header>
+                <Label Content="Места" FontWeight="Bold" />
+            </GroupBox.Header>
+            <TextBlock x:Name="workplaces"
+                       Margin="0,5,0,0"
+                       Text="-"
+                       TextWrapping="Wrap" />
+        </GroupBox>
+        <GroupBox x:Name="serviceBlock" BorderBrush="Black">
+            <GroupBox.Header>
+                <Label Content="Услуга" FontWeight="Bold" />
+            </GroupBox.Header>
+            <TextBlock x:Name="serviceName"
+                       Margin="0,5,0,0"
+                       Text="-"
+                       TextWrapping="Wrap" />
+        </GroupBox>
+    </StackPanel>
+</Grid>

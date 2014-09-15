@@ -1,0 +1,1 @@
+﻿update _config_media set TickerSpeed = 5;

@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Электронная очередь</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv='X-UA-Compatible' content='IE=9' />
+    <meta name="author" content="Junte Ltd. (www.junte.ru)" />
+    <meta charset="utf-8" />
+
+    <link href="/content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="/content/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
+
+    <link href="/content/fullcalendar/fullcalendar.css" rel="stylesheet" />
+    <link href="/content/main.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="/content/js/watch.js"></script>
+    <script type="text/javascript" src="/content/js/string.format.min.js"></script>
+    <script type="text/javascript" src="/content/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/content/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/content/js/jquery.PrintArea.js"></script>
+    <script type="text/javascript" src="/content/js/apng-canvas.min.js"></script>
+    <script type="text/javascript" src="/content/flot/jquery.flot.min.js"></script>
+
+    <script type="text/javascript" src="/content/date/date-ru-RU.js"></script>
+    <script type="text/javascript" src="/content/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/content/bootstrap/js/bootstrap-modal.js"></script>
+    <script type="text/javascript" src="/content/bootstrap/js/bootstrap-typeahead.js"></script>
+    <script type="text/javascript" src="/content/bootstrap/js/bootstrap-tab.js"></script>
+    <script type="text/javascript" src="/content/fullcalendar/fullcalendar.min.js"></script>
+
+    <script type="text/javascript" src="/content/js/raphael.min.js"></script>
+    <script type="text/javascript" src="/content/js/justgage.min.js"></script>
+
+    <script type="text/javascript" src="/content/js/common.js"></script>
+    <script type="text/javascript" src="/content/js/translation.js"></script>
+</head>
+<body>
+    <div id="loading">
+        <img src="/content/loading.png" />
+    </div>
+    <div class="container">
+        <header>
+            <h1 id="queue-name"></h1>
+        </header>
+        <div class="index">
+            <p>Мы онлайн:</p>
+            <div class="row">
+                <div id="queue-metric1" class="queue-metric span4"></div>
+                <div id="queue-metric2" class="queue-metric span4"></div>
+                <div id="productivity" class="span4"></div>
+            </div>
+        </div>
+
+        <footer>
+        </footer>
+    </div>
+    <script type="text/javascript" src="/content/main.js"></script>
+</body>
+</html>

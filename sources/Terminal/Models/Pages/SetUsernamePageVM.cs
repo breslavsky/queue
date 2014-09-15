@@ -1,0 +1,97 @@
+﻿using Junte.UI.WPF;
+using Queue.Common;
+using Queue.UI.WPF.Types;
+using System;
+using System.ServiceModel;
+using System.Windows;
+using System.Windows.Input;
+
+namespace Queue.Terminal.Models.Pages
+{
+    public class SetUsernamePageVM : PageVM
+    {
+        private string username;
+
+        public ICommand NextCommand { get; set; }
+
+        public ICommand PrevCommand { get; set; }
+
+        public string Username
+        {
+            get { return username; }
+            set { SetProperty(ref username, value); }
+        }
+
+        public SetUsernamePageVM()
+        {
+            PrevCommand = new RelayCommand(Prev);
+            NextCommand = new RelayCommand(Next);
+        }
+
+        private async void Next()
+        {
+            if (string.IsNullOrWhiteSpace(Username))
+            {
+                screen.ShowWarning("Введите пожалуйста ФИО");
+                return;
+            }
+
+            if (Username == terminalConfig.PIN.ToString())
+            {
+                Application.Current.Shutdown();
+            }
+
+            using (var channel = channelManager.CreateChannel())
+            {
+                var loading = screen.ShowLoading();
+
+                try
+                {
+                    await channel.Service.OpenUserSession(Model.CurrentManager.SessionId);
+
+                    string[] words = Username.Split(' ');
+
+                    string surname = words[0];
+
+                    string name = string.Empty;
+                    if (words.Length > 1)
+                    {
+                        name = words[1];
+                    }
+
+                    string patronymic = string.Empty;
+                    if (words.Length > 2)
+                    {
+                        patronymic = words[2];
+                    }
+
+                    Model.CurrentClient = await taskPool.AddTask(channel.Service.AddClient(surname.ToInOffer(),
+                                                                                            name.ToInOffer(),
+                                                                                            patronymic.ToInOffer(),
+                                                                                            string.Empty,
+                                                                                            string.Empty,
+                                                                                            string.Empty,
+                                                                                            string.Empty));
+                    navigator.NextPage();
+                }
+                catch (FaultException exception)
+                {
+                    screen.ShowWarning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(null, exception.Message);
+                }
+                finally
+                {
+                    loading.Hide();
+                }
+            }
+        }
+
+        private void Prev()
+        {
+            navigator.PrevPage();
+        }
+    }
+}

@@ -1,0 +1,700 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Queue.Services.DTO" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Queue.Services.DTO" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Queue.Model.Common" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/System" />
+  <xs:complexType name="TerminalConfig">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Config">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Columns" type="xs:int" />
+          <xs:element minOccurs="0" name="CurrentDayRecording" type="xs:boolean" />
+          <xs:element minOccurs="0" name="PIN" type="xs:int" />
+          <xs:element minOccurs="0" name="Rows" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TerminalConfig" nillable="true" type="tns:TerminalConfig" />
+  <xs:complexType name="Config">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Entity">
+        <xs:sequence>
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Queue.Model.Common" minOccurs="0" name="Type" type="q1:ConfigType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Config" nillable="true" type="tns:Config" />
+  <xs:complexType name="Entity">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="Entity" nillable="true" type="tns:Entity" />
+  <xs:complexType name="DesignConfig">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Config">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="LogoSmall" nillable="true" type="xs:base64Binary" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DesignConfig" nillable="true" type="tns:DesignConfig" />
+  <xs:complexType name="DefaultConfig">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Config">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="MaxClientRequests" type="xs:int" />
+          <xs:element minOccurs="0" name="MaxRenderingTime" type="xs:int" />
+          <xs:element minOccurs="0" name="QueueName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WorkFinishTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="WorkStartTime" type="ser:duration" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DefaultConfig" nillable="true" type="tns:DefaultConfig" />
+  <xs:complexType name="NotificationConfig">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Config">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClientRequestsLength" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="NotificationConfig" nillable="true" type="tns:NotificationConfig" />
+  <xs:complexType name="QueuePlanMetric">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Metric">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Early" type="xs:int" />
+          <xs:element minOccurs="0" name="Live" type="xs:int" />
+          <xs:element minOccurs="0" name="RenderTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="Rendered" type="xs:int" />
+          <xs:element minOccurs="0" name="Waiting" type="xs:int" />
+          <xs:element minOccurs="0" name="WaitingTime" type="ser:duration" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="QueuePlanMetric" nillable="true" type="tns:QueuePlanMetric" />
+  <xs:complexType name="Metric">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Day" type="xs:int" />
+          <xs:element minOccurs="0" name="Hour" type="xs:int" />
+          <xs:element minOccurs="0" name="Minute" type="xs:int" />
+          <xs:element minOccurs="0" name="Month" type="xs:int" />
+          <xs:element minOccurs="0" name="Second" type="xs:int" />
+          <xs:element minOccurs="0" name="Year" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Metric" nillable="true" type="tns:Metric" />
+  <xs:complexType name="IdentifiedEntity">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Entity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Id" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="IdentifiedEntity" nillable="true" type="tns:IdentifiedEntity" />
+  <xs:complexType name="QueuePlanServiceMetric">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Metric">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Early" type="xs:int" />
+          <xs:element minOccurs="0" name="Live" type="xs:int" />
+          <xs:element minOccurs="0" name="RenderTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="Rendered" type="xs:int" />
+          <xs:element minOccurs="0" name="Service" nillable="true" type="tns:Service" />
+          <xs:element minOccurs="0" name="Waiting" type="xs:int" />
+          <xs:element minOccurs="0" name="WaitingTime" type="ser:duration" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="QueuePlanServiceMetric" nillable="true" type="tns:QueuePlanServiceMetric" />
+  <xs:complexType name="Service">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClientRequire" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Queue.Model.Common" minOccurs="0" name="EarlyRegistrator" type="q2:ClientRequestRegistrator" />
+          <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Link" nillable="true" type="xs:string" />
+          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Queue.Model.Common" minOccurs="0" name="LiveRegistrator" type="q3:ClientRequestRegistrator" />
+          <xs:element minOccurs="0" name="MaxEarlyDays" type="xs:int" />
+          <xs:element minOccurs="0" name="MaxSubjects" type="xs:int" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Priority" type="xs:int" />
+          <xs:element minOccurs="0" name="ServiceGroup" nillable="true" type="tns:ServiceGroup" />
+          <xs:element minOccurs="0" name="SortId" type="xs:long" />
+          <xs:element minOccurs="0" name="Tags" nillable="true" type="xs:string" />
+          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Queue.Model.Common" minOccurs="0" name="Type" type="q4:ServiceType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Service" nillable="true" type="tns:Service" />
+  <xs:complexType name="ServiceGroup">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Color" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Columns" type="xs:int" />
+          <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ParentGroup" nillable="true" type="tns:ServiceGroup" />
+          <xs:element minOccurs="0" name="Rows" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ServiceGroup" nillable="true" type="tns:ServiceGroup" />
+  <xs:complexType name="Operator">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:User">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="InterruptionFinishTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="InterruptionStartTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="IsInterruption" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Workplace" nillable="true" type="tns:Workplace" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Operator" nillable="true" type="tns:Operator" />
+  <xs:complexType name="User">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CreateDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Heartbeat" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Mobile" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Online" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Patronymic" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SessionId" type="ser:guid" />
+          <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="Manager">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:User">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Manager" nillable="true" type="tns:Manager" />
+  <xs:complexType name="Administrator">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:User">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Administrator" nillable="true" type="tns:Administrator" />
+  <xs:complexType name="Workplace">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Display" type="xs:unsignedByte" />
+          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Queue.Model.Common" minOccurs="0" name="Modificator" type="q5:WorkplaceModificator" />
+          <xs:element minOccurs="0" name="Number" type="xs:int" />
+          <xs:element minOccurs="0" name="Segments" type="xs:unsignedByte" />
+          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Queue.Model.Common" minOccurs="0" name="Type" type="q6:WorkplaceType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Workplace" nillable="true" type="tns:Workplace" />
+  <xs:complexType name="Client">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Identity" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Mobile" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Patronymic" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RegisterDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="SessionId" type="ser:guid" />
+          <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VIP" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Client" nillable="true" type="tns:Client" />
+  <xs:complexType name="ArrayOfClient">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Client" nillable="true" type="tns:Client" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfClient" nillable="true" type="tns:ArrayOfClient" />
+  <xs:complexType name="ClientRequestFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClientId" nillable="true" type="ser:guid" />
+      <xs:element minOccurs="0" name="OperatorId" nillable="true" type="ser:guid" />
+      <xs:element minOccurs="0" name="Query" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RequestDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ServiceId" nillable="true" type="ser:guid" />
+      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Queue.Model.Common" minOccurs="0" name="State" nillable="true" type="q7:ClientRequestState" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ClientRequestFilter" nillable="true" type="tns:ClientRequestFilter" />
+  <xs:complexType name="ArrayOfClientRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ClientRequest" nillable="true" type="tns:ClientRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfClientRequest" nillable="true" type="tns:ArrayOfClientRequest" />
+  <xs:complexType name="ClientRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CallingFinishTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="CallingStartTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="Client" nillable="true" type="tns:Client" />
+          <xs:element minOccurs="0" name="Color" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CreateDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="IsClosed" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsEditable" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsPriority" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsRestorable" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Number" type="xs:int" />
+          <xs:element minOccurs="0" name="Operator" nillable="true" type="tns:Operator" />
+          <xs:element minOccurs="0" name="Parameters" nillable="true" type="tns:ArrayOfClientRequestParameter" />
+          <xs:element minOccurs="0" name="Productivity" type="xs:float" />
+          <xs:element minOccurs="0" name="RenderFinishTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="RenderStartTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="RequestDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RequestTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="Service" nillable="true" type="tns:Service" />
+          <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Queue.Model.Common" minOccurs="0" name="ServiceType" type="q8:ServiceType" />
+          <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Queue.Model.Common" minOccurs="0" name="State" type="q9:ClientRequestState" />
+          <xs:element minOccurs="0" name="Subjects" type="xs:int" />
+          <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Queue.Model.Common" minOccurs="0" name="Type" type="q10:ClientRequestType" />
+          <xs:element minOccurs="0" name="Version" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ClientRequest" nillable="true" type="tns:ClientRequest" />
+  <xs:complexType name="ArrayOfClientRequestParameter">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ClientRequestParameter" nillable="true" type="tns:ClientRequestParameter" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfClientRequestParameter" nillable="true" type="tns:ArrayOfClientRequestParameter" />
+  <xs:complexType name="ClientRequestParameter">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ClientRequestParameter" nillable="true" type="tns:ClientRequestParameter" />
+  <xs:complexType name="ArrayOfClientRequestEvent">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ClientRequestEvent" nillable="true" type="tns:ClientRequestEvent" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfClientRequestEvent" nillable="true" type="tns:ArrayOfClientRequestEvent" />
+  <xs:complexType name="ClientRequestEvent">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Event">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClientRequest" nillable="true" type="tns:ClientRequest" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ClientRequestEvent" nillable="true" type="tns:ClientRequestEvent" />
+  <xs:complexType name="Event">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CreateDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+          <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Queue.Model.Common" minOccurs="0" name="Type" type="q11:EventType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Event" nillable="true" type="tns:Event" />
+  <xs:complexType name="UserEvent">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Event">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="User" nillable="true" type="tns:User" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UserEvent" nillable="true" type="tns:UserEvent" />
+  <xs:complexType name="ArrayOfClientRequestPlan">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ClientRequestPlan" nillable="true" type="tns:ClientRequestPlan" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfClientRequestPlan" nillable="true" type="tns:ArrayOfClientRequestPlan" />
+  <xs:complexType name="ClientRequestPlan">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClientRequest" nillable="true" type="tns:QueuePlan.ClientRequest" />
+      <xs:element minOccurs="0" name="FinishTime" type="ser:duration" />
+      <xs:element minOccurs="0" name="StartTime" type="ser:duration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ClientRequestPlan" nillable="true" type="tns:ClientRequestPlan" />
+  <xs:complexType name="QueuePlan.ClientRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Client" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Color" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsClosed" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsEditable" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsPriority" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsRestorable" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Number" type="xs:int" />
+          <xs:element minOccurs="0" name="RequestTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="Service" nillable="true" type="xs:string" />
+          <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Queue.Model.Common" minOccurs="0" name="State" type="q12:ClientRequestState" />
+          <xs:element minOccurs="0" name="Subjects" type="xs:int" />
+          <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Queue.Model.Common" minOccurs="0" name="Type" type="q13:ClientRequestType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="QueuePlan.ClientRequest" nillable="true" type="tns:QueuePlan.ClientRequest" />
+  <xs:complexType name="QueuePlan">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="NotDistributedClientRequests" nillable="true" type="tns:ArrayOfNotDistributedClientRequest" />
+      <xs:element minOccurs="0" name="OperatorsPlans" nillable="true" type="tns:ArrayOfOperatorPlan" />
+      <xs:element minOccurs="0" name="PlanDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PlanTime" type="ser:duration" />
+      <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Report" nillable="true" type="q14:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Version" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="QueuePlan" nillable="true" type="tns:QueuePlan" />
+  <xs:complexType name="ArrayOfNotDistributedClientRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NotDistributedClientRequest" nillable="true" type="tns:NotDistributedClientRequest" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNotDistributedClientRequest" nillable="true" type="tns:ArrayOfNotDistributedClientRequest" />
+  <xs:complexType name="NotDistributedClientRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClientRequest" nillable="true" type="tns:QueuePlan.ClientRequest" />
+      <xs:element minOccurs="0" name="Reason" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NotDistributedClientRequest" nillable="true" type="tns:NotDistributedClientRequest" />
+  <xs:complexType name="ArrayOfOperatorPlan">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OperatorPlan" nillable="true" type="tns:OperatorPlan" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOperatorPlan" nillable="true" type="tns:ArrayOfOperatorPlan" />
+  <xs:complexType name="OperatorPlan">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClientRequestPlans" nillable="true" type="tns:ArrayOfClientRequestPlan" />
+      <xs:element minOccurs="0" name="Metrics" nillable="true" type="tns:OperatorPlanMetrics" />
+      <xs:element minOccurs="0" name="Operator" nillable="true" type="tns:QueuePlan.Operator" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OperatorPlan" nillable="true" type="tns:OperatorPlan" />
+  <xs:complexType name="OperatorPlanMetrics">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LastPosition" type="xs:int" />
+      <xs:element minOccurs="0" name="Operator" nillable="true" type="tns:QueuePlan.Operator" />
+      <xs:element minOccurs="0" name="Standing" type="xs:int" />
+      <xs:element minOccurs="0" name="Workload" type="ser:duration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OperatorPlanMetrics" nillable="true" type="tns:OperatorPlanMetrics" />
+  <xs:complexType name="QueuePlan.Operator">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Heartbeat" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Online" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Workplace" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="QueuePlan.Operator" nillable="true" type="tns:QueuePlan.Operator" />
+  <xs:complexType name="ServiceFreeTime">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FreeTimeIntervals" type="xs:int" />
+      <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Report" nillable="true" type="q15:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Schedule" nillable="true" type="tns:Schedule" />
+      <xs:element minOccurs="0" name="Service" nillable="true" type="tns:Service" />
+      <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="TimeIntervals" nillable="true" type="q16:ArrayOfduration" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceFreeTime" nillable="true" type="tns:ServiceFreeTime" />
+  <xs:complexType name="Schedule">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ClientInterval" type="ser:duration" />
+          <xs:element minOccurs="0" name="EarlyFinishTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="EarlyReservation" type="xs:int" />
+          <xs:element minOccurs="0" name="EarlyStartTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="FinishTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="InterruptionFinishTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="InterruptionStartTime" type="ser:duration" />
+          <xs:element minOccurs="0" name="Intersection" type="ser:duration" />
+          <xs:element minOccurs="0" name="IsInterruption" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsWorked" type="xs:boolean" />
+          <xs:element minOccurs="0" name="MaxClientRequests" type="xs:int" />
+          <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Queue.Model.Common" minOccurs="0" name="RenderingMode" type="q17:ServiceRenderingMode" />
+          <xs:element minOccurs="0" name="Renderings" nillable="true" type="tns:ArrayOfServiceRendering" />
+          <xs:element minOccurs="0" name="StartTime" type="ser:duration" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Schedule" nillable="true" type="tns:Schedule" />
+  <xs:complexType name="ArrayOfServiceRendering">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceRendering" nillable="true" type="tns:ServiceRendering" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServiceRendering" nillable="true" type="tns:ArrayOfServiceRendering" />
+  <xs:complexType name="ServiceRendering">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Queue.Model.Common" minOccurs="0" name="Mode" type="q18:ServiceRenderingMode" />
+          <xs:element minOccurs="0" name="Operator" nillable="true" type="tns:Operator" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ServiceRendering" nillable="true" type="tns:ServiceRendering" />
+  <xs:complexType name="ServiceExceptionSchedule">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Schedule">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ScheduleDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Service" nillable="true" type="tns:Service" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ServiceExceptionSchedule" nillable="true" type="tns:ServiceExceptionSchedule" />
+  <xs:complexType name="DefaultWeekdaySchedule">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Schedule">
+        <xs:sequence>
+          <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="DayOfWeek" type="q19:DayOfWeek" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DefaultWeekdaySchedule" nillable="true" type="tns:DefaultWeekdaySchedule" />
+  <xs:complexType name="DefaultExceptionSchedule">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Schedule">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ScheduleDate" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DefaultExceptionSchedule" nillable="true" type="tns:DefaultExceptionSchedule" />
+  <xs:complexType name="ServiceWeekdaySchedule">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Schedule">
+        <xs:sequence>
+          <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="DayOfWeek" type="q20:DayOfWeek" />
+          <xs:element minOccurs="0" name="Service" nillable="true" type="tns:Service" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ServiceWeekdaySchedule" nillable="true" type="tns:ServiceWeekdaySchedule" />
+  <xs:complexType name="ArrayOfServiceGroup">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceGroup" nillable="true" type="tns:ServiceGroup" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServiceGroup" nillable="true" type="tns:ArrayOfServiceGroup" />
+  <xs:complexType name="ArrayOfUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="User" nillable="true" type="tns:User" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUser" nillable="true" type="tns:ArrayOfUser" />
+  <xs:complexType name="ArrayOfOffice">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Office" nillable="true" type="tns:Office" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOffice" nillable="true" type="tns:ArrayOfOffice" />
+  <xs:complexType name="Office">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Endpoint" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SessionId" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Office" nillable="true" type="tns:Office" />
+  <xs:complexType name="ArrayOfWorkplace">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Workplace" nillable="true" type="tns:Workplace" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWorkplace" nillable="true" type="tns:ArrayOfWorkplace" />
+  <xs:complexType name="ArrayOfService">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Service" nillable="true" type="tns:Service" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfService" nillable="true" type="tns:ArrayOfService" />
+  <xs:complexType name="ArrayOfServiceParameter">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceParameter" nillable="true" type="tns:ServiceParameter" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfServiceParameter" nillable="true" type="tns:ArrayOfServiceParameter" />
+  <xs:complexType name="ServiceParameter">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IsRequire" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SortId" type="xs:long" />
+          <xs:element minOccurs="0" name="ToolTip" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ServiceParameter" nillable="true" type="tns:ServiceParameter" />
+  <xs:complexType name="ServiceParameterOptions">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceParameter">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IsMultiple" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Options" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ServiceParameterOptions" nillable="true" type="tns:ServiceParameterOptions" />
+  <xs:complexType name="ServiceParameterNumber">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceParameter">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ServiceParameterNumber" nillable="true" type="tns:ServiceParameterNumber" />
+  <xs:complexType name="ServiceParameterText">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ServiceParameter">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ServiceParameterText" nillable="true" type="tns:ServiceParameterText" />
+  <xs:complexType name="CouponConfig">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Config">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Template" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CouponConfig" nillable="true" type="tns:CouponConfig" />
+  <xs:complexType name="SMTPConfig">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Config">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="From" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Server" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="User" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SMTPConfig" nillable="true" type="tns:SMTPConfig" />
+  <xs:complexType name="PortalConfig">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Config">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CurrentDayRecording" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Footer" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Header" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PortalConfig" nillable="true" type="tns:PortalConfig" />
+  <xs:complexType name="MediaConfig">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Config">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="MediaFiles" nillable="true" type="tns:ArrayOfMediaConfigFile" />
+          <xs:element minOccurs="0" name="ServiceUrl" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TickerSpeed" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MediaConfig" nillable="true" type="tns:MediaConfig" />
+  <xs:complexType name="ArrayOfMediaConfigFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MediaConfigFile" nillable="true" type="tns:MediaConfigFile" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMediaConfigFile" nillable="true" type="tns:ArrayOfMediaConfigFile" />
+  <xs:complexType name="MediaConfigFile">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:IdentifiedEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CreateDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SortId" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MediaConfigFile" nillable="true" type="tns:MediaConfigFile" />
+</xs:schema>

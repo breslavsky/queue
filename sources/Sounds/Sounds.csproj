@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B53D03CE-D741-40AC-8845-AB81D41CC1A6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Queue.Sounds</RootNamespace>
+    <AssemblyName>Queue.Sounds</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Digits.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Digits.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tones.Designer.cs">
+      <DependentUpon>Tones.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Speaker.cs" />
+    <Compile Include="Words.Designer.cs">
+      <DependentUpon>Words.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Workplaces.Designer.cs">
+      <DependentUpon>Workplaces.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_1f.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\_2f.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cabinet.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\notify.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\number.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\room.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\thousand.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\thousandi.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\thousands.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\window.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Digits.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Digits.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tones.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Tones.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Words.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Words.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Workplaces.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Workplaces.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\thousandi_.wav" />
+    <Content Include="Resources\thousands_.wav" />
+    <Content Include="Resources\thousand_.wav" />
+    <Content Include="Resources\_000.wav" />
+    <Content Include="Resources\_000_.wav" />
+    <Content Include="Resources\_001.wav" />
+    <Content Include="Resources\_001_.wav" />
+    <Content Include="Resources\_002.wav" />
+    <Content Include="Resources\_002_.wav" />
+    <Content Include="Resources\_003.wav" />
+    <Content Include="Resources\_003_.wav" />
+    <Content Include="Resources\_004.wav" />
+    <Content Include="Resources\_004_.wav" />
+    <Content Include="Resources\_005.wav" />
+    <Content Include="Resources\_005_.wav" />
+    <Content Include="Resources\_006.wav" />
+    <Content Include="Resources\_006_.wav" />
+    <Content Include="Resources\_007.wav" />
+    <Content Include="Resources\_007_.wav" />
+    <Content Include="Resources\_008.wav" />
+    <Content Include="Resources\_008_.wav" />
+    <Content Include="Resources\_009.wav" />
+    <Content Include="Resources\_009_.wav" />
+    <Content Include="Resources\_010.wav" />
+    <Content Include="Resources\_010_.wav" />
+    <Content Include="Resources\_011.wav" />
+    <Content Include="Resources\_011_.wav" />
+    <Content Include="Resources\_012.wav" />
+    <Content Include="Resources\_012_.wav" />
+    <Content Include="Resources\_013.wav" />
+    <Content Include="Resources\_013_.wav" />
+    <Content Include="Resources\_014.wav" />
+    <Content Include="Resources\_014_.wav" />
+    <Content Include="Resources\_015.wav" />
+    <Content Include="Resources\_015_.wav" />
+    <Content Include="Resources\_016.wav" />
+    <Content Include="Resources\_016_.wav" />
+    <Content Include="Resources\_017.wav" />
+    <Content Include="Resources\_017_.wav" />
+    <Content Include="Resources\_018.wav" />
+    <Content Include="Resources\_018_.wav" />
+    <Content Include="Resources\_019.wav" />
+    <Content Include="Resources\_019_.wav" />
+    <Content Include="Resources\_020.wav" />
+    <Content Include="Resources\_020_.wav" />
+    <Content Include="Resources\_030.wav" />
+    <Content Include="Resources\_030_.wav" />
+    <Content Include="Resources\_040.wav" />
+    <Content Include="Resources\_040_.wav" />
+    <Content Include="Resources\_050.wav" />
+    <Content Include="Resources\_050_.wav" />
+    <Content Include="Resources\_060.wav" />
+    <Content Include="Resources\_060_.wav" />
+    <Content Include="Resources\_070.wav" />
+    <Content Include="Resources\_070_.wav" />
+    <Content Include="Resources\_080.wav" />
+    <Content Include="Resources\_080_.wav" />
+    <Content Include="Resources\_090.wav" />
+    <Content Include="Resources\_090_.wav" />
+    <Content Include="Resources\_100.wav" />
+    <Content Include="Resources\_100_.wav" />
+    <Content Include="Resources\_200.wav" />
+    <Content Include="Resources\_200_.wav" />
+    <Content Include="Resources\_300.wav" />
+    <Content Include="Resources\_300_.wav" />
+    <Content Include="Resources\_400.wav" />
+    <Content Include="Resources\_400_.wav" />
+    <Content Include="Resources\_500.wav" />
+    <Content Include="Resources\_500_.wav" />
+    <Content Include="Resources\_600.wav" />
+    <Content Include="Resources\_600_.wav" />
+    <Content Include="Resources\_700.wav" />
+    <Content Include="Resources\_700_.wav" />
+    <Content Include="Resources\_800.wav" />
+    <Content Include="Resources\_800_.wav" />
+    <Content Include="Resources\_900.wav" />
+    <Content Include="Resources\_900_.wav" />
+    <Content Include="Words.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AD492499-461F-4117-A495-302089AD7B87}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Model</RootNamespace>
+    <AssemblyName>Queue.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\packages\FluentNHibernate.1.4.0.0\lib\net35\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Junte.Data.Common">
+      <HintPath>..\packages\Junte.Data.Common.1.0.0.15\lib\net45\Junte.Data.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Junte.Data.NHibernate">
+      <HintPath>..\packages\Junte.Data.NHibernate.1.0.0.105\lib\net45\Junte.Data.NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Mapping.Attributes">
+      <HintPath>..\packages\NHibernate.Mapping.Attributes.3.2.0.0\lib\NHibernate.Mapping.Attributes.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Validator">
+      <HintPath>..\packages\NHibernate.Validator.1.3.2.4000\lib\Net35\NHibernate.Validator.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Validator.Specific">
+      <HintPath>..\packages\NHibernate.Validator.1.3.2.4000\lib\Net35\NHibernate.Validator.Specific.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Client.cs" />
+    <Compile Include="ClientRequest.cs" />
+    <Compile Include="ClientRequestParameter.cs" />
+    <Compile Include="Config\Config.cs" />
+    <Compile Include="Config\CouponConfig.cs" />
+    <Compile Include="Config\DefaultConfig.cs" />
+    <Compile Include="Config\DesignConfig.cs" />
+    <Compile Include="Config\MediaConfig.cs" />
+    <Compile Include="Config\MediaConfigFile.cs" />
+    <Compile Include="Config\PortalConfig.cs" />
+    <Compile Include="Config\SMTPConfig.cs" />
+    <Compile Include="Config\TerminalConfig.cs" />
+    <Compile Include="Config\NotificationConfig.cs" />
+    <Compile Include="Config\SchemeConfig.cs" />
+    <Compile Include="Events\ClientRequestEvent.cs" />
+    <Compile Include="Events\Event.cs" />
+    <Compile Include="Events\UserEvent.cs" />
+    <Compile Include="Metric\Metric.cs" />
+    <Compile Include="Metric\QueuePlanMetric.cs" />
+    <Compile Include="Metric\QueuePlanServiceMetric.cs" />
+    <Compile Include="Metric\QueuePlanOperatorMetric.cs" />
+    <Compile Include="Office.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Schedule\DefaultExceptionSchedule.cs" />
+    <Compile Include="Schedule\DefaultWeekdaySchedule.cs" />
+    <Compile Include="Schedule\Schedule.cs" />
+    <Compile Include="Schedule\ServiceExceptionSchedule.cs" />
+    <Compile Include="Schedule\ServiceWeekdaySchedule.cs" />
+    <Compile Include="Service.cs" />
+    <Compile Include="ServiceGroup.cs" />
+    <Compile Include="ServiceParameters\ServiceParameter.cs" />
+    <Compile Include="ServiceParameters\ServiceParameterNumber.cs" />
+    <Compile Include="ServiceParameters\ServiceParameterOptions.cs" />
+    <Compile Include="ServiceParameters\ServiceParameterText.cs" />
+    <Compile Include="ServiceRendering.cs" />
+    <Compile Include="Users\Administrator.cs" />
+    <Compile Include="Users\Manager.cs" />
+    <Compile Include="Users\Operator.cs" />
+    <Compile Include="Users\User.cs" />
+    <Compile Include="Workplace.cs" />
+    <Compile Include="ServiceStep.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Model.Common\Model.Common.csproj">
+      <Project>{83540db2-b860-463d-bcec-656b99270818}</Project>
+      <Name>Model.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

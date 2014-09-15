@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Queue.UI.WPF.NoticeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    <UserControl.Background>
+        <SolidColorBrush Opacity="0.5" Color="White" />
+    </UserControl.Background>
+    <Viewbox MaxWidth="900">
+        <Border Width="250"
+                Height="100"
+                Background="#90B7ED00"
+                CornerRadius="10">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="30" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           FontWeight="Bold"
+                           Text="Уведомление" />
+                <Button x:Name="hideButton"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Click="hideButton_Click">
+                    <Viewbox Margin="-7.5">
+                        <ContentPresenter Content="{Binding Source={StaticResource appbar_close}}" />
+                    </Viewbox>
+                </Button>
+                <TextBlock x:Name="noticeTextBlock"
+                           Grid.Row="1"
+                           Grid.ColumnSpan="2"
+                           Margin="5"
+                           Text="Сопроводительное сообщение"
+                           TextWrapping="Wrap" />
+            </Grid>
+        </Border>
+    </Viewbox>
+</UserControl>

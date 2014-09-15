@@ -1,0 +1,230 @@
+﻿<UserControl x:Class="Queue.UI.WPF.VirtualKeyboard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    <Grid x:Name="mainStackGrid"
+          Width="300"
+          Height="150">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    Margin="1"
+                    Content="й" />
+            <Button Grid.Column="1"
+                    Margin="1"
+                    Content="ц" />
+            <Button Grid.Column="2"
+                    Margin="1"
+                    Content="у" />
+            <Button Grid.Column="3"
+                    Margin="1"
+                    Content="к" />
+            <Button Grid.Column="4"
+                    Margin="1"
+                    Content="е" />
+            <Button Grid.Column="5"
+                    Margin="1"
+                    Content="н" />
+            <Button Grid.Column="6"
+                    Margin="1"
+                    Content="г" />
+            <Button Grid.Column="7"
+                    Margin="1"
+                    Content="ш" />
+            <Button Grid.Column="8"
+                    Margin="1"
+                    Content="щ" />
+            <Button Grid.Column="9"
+                    Margin="1"
+                    Content="з" />
+            <Button Grid.Column="10"
+                    Margin="1"
+                    Content="х" />
+            <Button Grid.Column="11"
+                    Margin="1"
+                    Content="ъ" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    Margin="1"
+                    Content="ф" />
+            <Button Grid.Column="1"
+                    Margin="1"
+                    Content="ы" />
+            <Button Grid.Column="2"
+                    Margin="1"
+                    Content="в" />
+            <Button Grid.Column="3"
+                    Margin="1"
+                    Content="а" />
+            <Button Grid.Column="4"
+                    Margin="1"
+                    Content="п" />
+            <Button Grid.Column="5"
+                    Margin="1"
+                    Content="р" />
+            <Button Grid.Column="6"
+                    Margin="1"
+                    Content="о" />
+            <Button Grid.Column="7"
+                    Margin="1"
+                    Content="л" />
+            <Button Grid.Column="8"
+                    Margin="1"
+                    Content="д" />
+            <Button Grid.Column="9"
+                    Margin="1"
+                    Content="ж" />
+            <Button Grid.Column="10"
+                    Margin="1"
+                    Content="э" />
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    Margin="1"
+                    Content="я" />
+            <Button Grid.Column="1"
+                    Margin="1"
+                    Content="ч" />
+            <Button Grid.Column="2"
+                    Margin="1"
+                    Content="с" />
+            <Button Grid.Column="3"
+                    Margin="1"
+                    Content="м" />
+            <Button Grid.Column="4"
+                    Margin="1"
+                    Content="и" />
+            <Button Grid.Column="5"
+                    Margin="1"
+                    Content="т" />
+            <Button Grid.Column="6"
+                    Margin="1"
+                    Content="ь" />
+            <Button Grid.Column="7"
+                    Margin="1"
+                    Content="б" />
+            <Button Grid.Column="8"
+                    Margin="1"
+                    Content="б" />
+            <Button Grid.Column="9"
+                    Margin="1"
+                    Content="ю" />
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    Margin="1"
+                    Content="0" />
+            <Button Grid.Column="1"
+                    Margin="1"
+                    Content="1" />
+            <Button Grid.Column="2"
+                    Margin="1"
+                    Content="2" />
+            <Button Grid.Column="3"
+                    Margin="1"
+                    Content="3" />
+            <Button Grid.Column="4"
+                    Margin="1"
+                    Content="4" />
+            <Button Grid.Column="5"
+                    Margin="1"
+                    Content="5" />
+            <Button Grid.Column="6"
+                    Margin="1"
+                    Content="6" />
+            <Button Grid.Column="7"
+                    Margin="1"
+                    Content="7" />
+            <Button Grid.Column="8"
+                    Margin="1"
+                    Content="8" />
+            <Button Grid.Column="9"
+                    Margin="1"
+                    Content="9" />
+        </Grid>
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    Margin="1"
+                    Content=" " />
+            <Button Grid.Column="1"
+                    Margin="1"
+                    Content="." />
+            <Button Grid.Column="2"
+                    Margin="1"
+                    Content="," />
+            <Button x:Name="backspaceButton"
+                    Grid.Column="3"
+                    Margin="1"
+                    Click="backspaceButton_Click">
+                <Viewbox Margin="-7.5">
+                    <ContentPresenter Content="{Binding Source={StaticResource appbar_clear_reflect_horizontal}}" />
+                </Viewbox>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

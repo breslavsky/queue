@@ -1,0 +1,12 @@
+﻿<ui_common:RichPage x:Class="Queue.Terminal.TerminalWindow"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:pages="clr-namespace:Queue.Terminal.Pages"
+                    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+                    xmlns:ui_common="clr-namespace:Queue.UI.WPF;assembly=Queue.UI.WPF"
+                    Title="{Binding Title}"
+                    Loaded="OnLoaded"
+                    Unloaded="OnUnloaded" />

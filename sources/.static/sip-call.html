@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Интернет-телефон</title>
+    <script type="text/javascript" src="jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="shortcut.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () { shortcut.add('Ctrl+Shift+1', function () { $("#log").show(); }); });</script>
+    <script type="text/javascript">
+        var Zoiper;
+        var ActiveCall;
+
+        function GetValue(name) {
+            return document.getElementById(name).value;
+        }
+
+        function Quit() {
+            if (Zoiper != null) {
+                Zoiper.DelAccount("ivmfc");
+            }
+        }
+
+        function Hang() {
+            if (null != ActiveCall) {
+                ActiveCall.Hang();
+                ActiveCall = null;
+            }
+        }
+
+        function Dial(phone) {
+            ActiveCall = Zoiper.Dial(phone);
+
+            Log("Идет звонок " + phone);
+        }
+
+        function Hold() {
+            if (ActiveCall != null) {
+                ActiveCall.Hold();
+            }
+        }
+
+        function SendDTMFSequence(signal) {
+            if (ActiveCall != null) {
+                ActiveCall.SendDTMF(signal);
+            }
+        }
+
+        function ShowAudioWizard() {
+            if (ActiveCall != null) {
+                Zoiper.ShowAudioWizard();
+            }
+        }
+
+        function Log(text) {
+            document.getElementById("log").value += text + "\n";
+            Status(text);
+        }
+
+        function Status(text) {
+            document.getElementById("status").innerHTML = text;
+        }
+
+        function OnZoiperReady(phone) {
+            Zoiper = phone;
+
+            var Config = Zoiper.GetConfig();
+            Config.DebugLogPath = "c:\\";
+            Config.EnableDebugLog = "true";
+            Config.RingWhenTalking = "false";
+
+            Account = Zoiper.AddAccount("ivmfc", "sip");
+            Account.Domain = "sip.ivmfc.ru";
+            Account.CallerID = "100";
+            Account.UserName = "100";
+            Account.Password = "ivmfc.RUPortal";
+            //Account.STUNHost = "stun.3cx.com";
+            Account.STUNPort = "3478";
+            Account.DTMFType = "media_inband";
+            Account.SipHeaderDump("true");
+            Account.Apply();
+            Account.Register();
+
+            Log("Регистрация клиента");
+        }
+
+        function OnZoiperCallFail(call) {
+            Log("Ошибка звонка");
+        }
+
+        function OnZoiperCallRing(call) {
+            Log("Идет звонок " + call.Phone);
+        }
+
+        function OnZoiperCallHang(call) {
+            Log("Трубка повешена");
+        }
+
+        function OnZoiperCallReject(call) {
+            Log("Звонок отклонен");
+        }
+
+        function OnZoiperCallIncoming(call) {
+            Log(call.Phone + " входящий звонок");
+        }
+
+        function OnZoiperAccountRegister(account) {
+            Log("Телефон готов");
+            $("#dial-button").attr("disabled", false);
+
+        }
+        function OnZoiperAccountUnregister(account) {
+            Log("Регистрация снята");
+        }
+        function OnZoiperAccountRegisterFail(account) {
+            Log("Ошибка регистрации");
+        }
+        function OnZoiperContactLog(contact, status) {
+            Log(contact.Name + " = " + status);
+        }
+        function OnZoiperCallSipHeader(call, sip) {
+            Log("Кол-во заголовков: " + sip.Count);
+            var property = sip.Entry("allow");
+            if (null != property) {
+                for (var j = 0; j < property.Count; j++) {
+                    Log("Разрешено: " + property.Value(j));
+                }
+            }
+
+            for (var i = 0; i < sip.Count; i++) {
+                var property = sip.Entry(i);
+                Log("Имя: " + property.Name);
+                for (var j = 0; j < property.Count; j++) {
+                    Log("Значение: " + property.Value(j));
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            //$('#log').hide();
+            $('#phone-keyboard').hide();
+
+            $('#dial-button').click(function () {
+                $('#preloader').hide();
+                $('#phone-keyboard').css({ 'display': 'table' }).show();
+            });
+        });
+    </script>
+    <style type="text/css">
+        body {
+            padding: 0px;
+            margin: 0px;
+            overflow: hidden;
+            font-family: sans-serif;
+            margin: 5px;
+        }
+
+        #phone-keyboard button {
+            font-size: 25px;
+            padding: 10px 20px 10px 20px;
+            width: 100%;
+            height: 60px;
+        }
+
+        #status {
+            color: green;
+            font-size: 12px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        #dial-button {
+            width: 320px;
+            height: 60px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="preloader">
+        <p>
+            Подготовьте гарнитуту для разговора
+        </p>
+        <div id="status">
+            Связь с сервером, пожалуйста, подождите пока кнопка [Продолжить] не станет активной
+        </div>
+        <button id="dial-button" onclick="Dial('345000');" disabled="true">
+            Продолжить
+        </button>
+    </div>
+    <object id="ZoiperA" classid="clsid:BCCA9B64-41B3-4A20-8D8B-E69FE61F1F8B" codebase="InstallerWeb.cab"
+        align="left" width="0" height="0">
+        <embed id="ZoiperEmbed" type="application/x-zoiper-plugin" align="left" width="0" height="0" />
+    </object>
+    <table id="phone-keyboard" cellspacing="5" cellpadding="0">
+
+        <tr>
+            <td>
+                <button onclick="sendDTMFSequence('1')">1</button>
+            </td>
+            <td>
+                <button onclick="sendDTMFSequence('2')">2</button>
+            </td>
+            <td>
+                <button onclick="sendDTMFSequence('3')">3</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="sendDTMFSequence('4')">4</button>
+            </td>
+            <td>
+                <button onclick="sendDTMFSequence('5')">5</button>
+            </td>
+            <td>
+                <button onclick="sendDTMFSequence('6')">6</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="sendDTMFSequence('7')">7</button>
+            </td>
+            <td>
+                <button onclick="sendDTMFSequence('8')">8</button>
+            </td>
+            <td>
+                <button onclick="sendDTMFSequence('9')">9</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="sendDTMFSequence('*')">*</button>
+            </td>
+            <td>
+                <button onclick="sendDTMFSequence('0')">0</button>
+            </td>
+            <td>
+                <button onclick="sendDTMFSequence('#')">#</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <button style="width: 100%; font-size: 20px;" onclick="Hang(); Quit();">
+                    Закончить вызов</button>
+            </td>
+        </tr>
+    </table>
+    <textarea id="log" rows="20" cols="40"></textarea>
+</body>
+</html>

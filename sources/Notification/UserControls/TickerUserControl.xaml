@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Queue.Notification.UserControls.TickerUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Unloaded="UserControl_Unloaded"
+             d:DesignHeight="100"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <Canvas HorizontalAlignment="Stretch">
+        <Canvas.Background>
+            <SolidColorBrush Opacity="0.5" Color="White" />
+        </Canvas.Background>
+
+        <TextBlock x:Name="TickerItem"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Stretch"
+                   FontSize="70"
+                   Foreground="Black"
+                   Text="{Binding Ticker}"
+                   TextWrapping="NoWrap" />
+    </Canvas>
+</UserControl>

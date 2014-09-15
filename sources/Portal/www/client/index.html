@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Электронная очередь</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv='X-UA-Compatible' content='IE=9' />
+    <meta name="author" content="Junte Ltd. (www.junte.ru)" />
+    <meta charset="utf-8" />
+
+    <link href="/content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="/content/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="/content/fullcalendar/fullcalendar.css" rel="stylesheet" />
+    <link href="/content/main.css" rel="stylesheet" />
+    <link href="/content/client/main.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="/content/js/watch.js"></script>
+    <script type="text/javascript" src="/content/js/string.format.min.js"></script>
+    <script type="text/javascript" src="/content/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/content/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/content/js/apng-canvas.min.js"></script>
+    <script type="text/javascript" src="/content/flot/jquery.flot.min.js"></script>
+
+    <script type="text/javascript" src="/content/date/date-ru-RU.js"></script>
+    <script type="text/javascript" src="/content/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/content/bootstrap/js/bootstrap-modal.js"></script>
+    <script type="text/javascript" src="/content/bootstrap/js/bootstrap-typeahead.js"></script>
+    <script type="text/javascript" src="/content/fullcalendar/fullcalendar.min.js"></script>
+
+    <script type="text/javascript" src="/content/js/common.js"></script>
+    <script type="text/javascript" src="/content/js/translation.js"></script>
+</head>
+<body>
+    <div id="loading">
+        <img src="/content/loading.png" />
+    </div>
+    <div id="navbar" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <div class="navbar-form pull-left">
+                    <a class="btn home" href="/"><i class="icon-home"></i></a>
+                    <input id="search" type="text" placeholder="Поиск услуги…" style="width: 200px;" />
+                </div>
+                <div class="navbar-form pull-right">
+                    <div id="client-panel-carousel">
+                        <div class="carousel-inner">
+                            <div id="top-login" class="active item">
+                                <script src="http://ulogin.ru/js/ulogin.js"></script>
+                                <div class="navbar-form">
+                                    <a id="uLogin" class="btn" href="#">
+                                        <i class="social"></i>
+                                    </a>
+                                    <input class="span2 email" type="text" placeholder="Электронная почта" />
+                                    <input class="span2 password" type="password" placeholder="Пароль" />
+                                    <button type="submit" class="btn submit">Войти</button>
+                                    <a class="btn btn-mini btn-info restore-password" href="javascript:;">Напомнить пароль</a>
+                                </div>
+                            </div>
+                            <div id="client-menu" class="item">
+                                <ul class="nav">
+                                    <li>
+                                        <span class="name"></span>
+                                    </li>
+                                    <li>
+                                        <div class="navbar-form">
+                                            <a class="btn requests" href="javascript:;">Мои запросы</a>
+                                            <a class="btn profile" href="javascript:;">Мои профиль</a>
+                                            <a class="btn logout" href="javascript:;">Выход</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <header>
+            <h3 id="queue-name"></h3>
+        </header>
+        <div id="main">
+        </div>
+        <footer>
+        </footer>
+    </div>
+
+    <div id="register-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3>Регистрация</h3>
+        </div>
+        <div class="modal-body">
+            <div id="register-carousel">
+                <div class="carousel-inner">
+                    <div class="active item">
+                        <div id="send-pin-to-email">
+                            <h4>Впервые на сайте?</h4>
+                            <p>Укажите действительный адрес своей электронной почты. Данный почтовый ящик будет использоваться Вами для входа в свой личный кабинет.</p>
+                            <div class="input-append">
+                                <input class="input-medium email" type="text" placeholder="Электронный адрес" />
+                                <button class="btn submit" type="button">Продолжить</button>
+                            </div>
+                        </div>
+                        <br />
+                        <div id="login">
+                            <h4>Уже зарегистрированы?</h4>
+                            <p>Если Вы уже проходили процесс регистрации, укажите действительный адрес своей электронной почты и пароль.</p>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input class="email" type="text" placeholder="Электронный адрес" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input class="password" type="password" placeholder="Пароль" />
+                                </div>
+                            </div>
+                            <button class="btn submit" type="button">Войти</button>
+                            <a class="btn btn-mini btn-info restore-password" href="javascript:;">Напомнить пароль</a>
+                        </div>
+                    </div>
+                    <div id="check-pin" class="item">
+                        <div class="alert alert-success">
+                            <h4>Внимание!</h4>
+                            Для подтвеждения на указанный электронный адрес отправлено сообщение с PIN-кодом. Пожалуйста, дождитесь сообщения, обычно данный процесс занимает не более 10 мин.
+                        </div>
+                        <div class="input-append">
+                            <input class="input-small pin" type="text" placeholder="PIN-код" />
+                            <button class="btn btn-success submit" type="button">Подтвердить</button>
+                        </div>
+                    </div>
+                    <div id="register" class="item">
+                        <div class="alert">
+                            <h4>Внимание!</h4>
+                            <i class="icon-exclamation-sign"></i>поля обязательные для заполнения.
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="surname-input">Фамилия</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on"><i class="icon-exclamation-sign"></i></span>
+                                    <input class="surname" type="text" placeholder="Фамилия" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="name-input">Имя</label>
+                            <div class="controls">
+                                <input class="name" type="text" placeholder="Имя" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="patronymic-input">Отчество</label>
+                            <div class="controls">
+                                <input class="patronymic" type="text" placeholder="Отчество" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="mobile-input">Мобильный телефон</label>
+                            <div class="controls">
+                                <input class="mobile" type="text" placeholder="Мобильный телефон" />
+                            </div>
+                        </div>
+                        <button type="submit" class="btn submit">Продолжить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="add-request-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3>Новый запрос</h3>
+        </div>
+        <div class="modal-body">
+            <div id="add-request-carousel">
+                <div class="carousel-inner">
+                    <div id="add-request" class="active item">
+                        <div class="control-group">
+                            <div class="service"></div>
+                            Дата и время записи: <strong class="request-date"></strong>
+                        </div>
+                        <button type="submit" class="btn submit">Продолжить</button>
+                    </div>
+                    <div id="coupon" class="item">
+                        <div>Спасибо, Вы записаны на указанную Вами дату и время. Загрузите и распечатайте талон. Пожалуйста, не опаздывайте.</div>
+                        <a class="btn btn-primary link" href="javascript:;"><i class="icon-download-alt icon-white"></i>Загрузить талон</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-profile-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3>Мой профиль</h3>
+        </div>
+        <div class="modal-body">
+            <div id="edit-profile">
+                <div class="control-group">
+                    <label class="control-label" for="surname-input">Фамилия</label>
+                    <div class="controls">
+                        <input class="surname" type="text" placeholder="Фамилия" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="name-input">Имя</label>
+                    <div class="controls">
+                        <input class="name" type="text" placeholder="Имя" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="patronymic-input">Отчество</label>
+                    <div class="controls">
+                        <input class="patronymic" type="text" placeholder="Отчество" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="mobile-input">Мобильный телефон</label>
+                    <div class="controls">
+                        <input class="mobile" type="text" placeholder="Мобильный телефон" />
+                    </div>
+                </div>
+                <button type="submit" class="btn submit">Сохранить</button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/content/client/main.js"></script>
+</body>
+</html>
