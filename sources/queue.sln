@@ -85,7 +85,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1D370001
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Server.Tests", "Services.Server.Tests\Services.Server.Tests.csproj", "{55E3B7EE-D63A-4DFF-92F7-4A937D139E04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resources", "Queue.Resources\Resources.csproj", "{90C422A9-C537-42A7-B4A8-2490E4D20D3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resources", "Resources\Resources.csproj", "{90C422A9-C537-42A7-B4A8-2490E4D20D3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
