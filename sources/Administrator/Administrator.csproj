@@ -377,7 +377,7 @@
       <Project>{0a11098e-2cc9-487c-b895-b5f9c667785f}</Project>
       <Name>Operator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Queue.Resources\Resources.csproj">
+    <ProjectReference Include="..\Resources\Resources.csproj">
       <Project>{90c422a9-c537-42a7-b4a8-2490e4d20d3a}</Project>
       <Name>Resources</Name>
     </ProjectReference>
