@@ -38,11 +38,12 @@ namespace Queue.Services.Server
                     string text = template
                         .Replace("{PIN}", PIN.Create(email).ToString());
 
-                    using (SmtpClient smtpClient = new SmtpClient(сonfig.Server, 25))
+                    using (SmtpClient smtpClient = new SmtpClient(сonfig.Server, сonfig.Port))
                     {
                         try
                         {
                             smtpClient.UseDefaultCredentials = false;
+                            smtpClient.EnableSsl = сonfig.EnableSsl;
                             smtpClient.Credentials = new NetworkCredential(сonfig.User, сonfig.Password);
 
                             MailMessage message = new MailMessage(сonfig.From, email)
