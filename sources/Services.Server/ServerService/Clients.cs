@@ -208,7 +208,7 @@ namespace Queue.Services.Server
                             string text = template
                                 .Replace("{Password}", password);
 
-                            using (var smtpClient = new SmtpClient(сonfig.Server, 25))
+                            using (var smtpClient = new SmtpClient(сonfig.Server, сonfig.Port))
                             {
                                 try
                                 {
@@ -322,7 +322,7 @@ namespace Queue.Services.Server
                     var text = template
                         .Replace("{Password}", password);
 
-                    using (var smtpClient = new SmtpClient(сonfig.Server, 25))
+                    using (var smtpClient = new SmtpClient(сonfig.Server, сonfig.Port))
                     {
                         try
                         {

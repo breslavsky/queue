@@ -53,6 +53,9 @@ namespace Queue.Services.DTO
         public string Server { get; set; }
 
         [DataMember]
+        public int Port { get; set; }
+
+        [DataMember]
         public bool EnableSsl { get; set; }
 
         [DataMember]

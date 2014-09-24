@@ -40,6 +40,7 @@ namespace Queue.Administrator
                 if (config != null)
                 {
                     serverTextBox.Text = config.Server;
+                    portUpDown.Value = config.Port;
                     enableSslCheckBox.Checked = config.EnableSsl;
                     userTextBox.Text = config.User;
                     passwordTextBox.Text = config.Password;
@@ -69,6 +70,14 @@ namespace Queue.Administrator
             if (config != null)
             {
                 config.Server = serverTextBox.Text;
+            }
+        }
+
+        private void portUpDown_Leave(object sender, EventArgs e)
+        {
+            if (config != null)
+            {
+                config.Port = (int)portUpDown.Value;
             }
         }
 

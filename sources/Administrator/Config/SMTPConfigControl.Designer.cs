@@ -38,6 +38,9 @@
             this.fromTextBox = new System.Windows.Forms.TextBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.enableSslCheckBox = new System.Windows.Forms.CheckBox();
+            this.portUpDown = new System.Windows.Forms.NumericUpDown();
+            this.portLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // serverLabel
@@ -60,7 +63,7 @@
             // userLabel
             // 
             this.userLabel.AutoSize = true;
-            this.userLabel.Location = new System.Drawing.Point(7, 55);
+            this.userLabel.Location = new System.Drawing.Point(7, 80);
             this.userLabel.Name = "userLabel";
             this.userLabel.Size = new System.Drawing.Size(80, 13);
             this.userLabel.TabIndex = 3;
@@ -68,7 +71,7 @@
             // 
             // userTextBox
             // 
-            this.userTextBox.Location = new System.Drawing.Point(95, 50);
+            this.userTextBox.Location = new System.Drawing.Point(95, 75);
             this.userTextBox.Name = "userTextBox";
             this.userTextBox.Size = new System.Drawing.Size(130, 20);
             this.userTextBox.TabIndex = 4;
@@ -77,7 +80,7 @@
             // passwordLabel
             // 
             this.passwordLabel.AutoSize = true;
-            this.passwordLabel.Location = new System.Drawing.Point(7, 80);
+            this.passwordLabel.Location = new System.Drawing.Point(7, 105);
             this.passwordLabel.Name = "passwordLabel";
             this.passwordLabel.Size = new System.Drawing.Size(45, 13);
             this.passwordLabel.TabIndex = 5;
@@ -85,7 +88,7 @@
             // 
             // passwordTextBox
             // 
-            this.passwordTextBox.Location = new System.Drawing.Point(95, 75);
+            this.passwordTextBox.Location = new System.Drawing.Point(95, 100);
             this.passwordTextBox.Name = "passwordTextBox";
             this.passwordTextBox.Size = new System.Drawing.Size(130, 20);
             this.passwordTextBox.TabIndex = 6;
@@ -95,7 +98,7 @@
             // fromLabel
             // 
             this.fromLabel.AutoSize = true;
-            this.fromLabel.Location = new System.Drawing.Point(7, 105);
+            this.fromLabel.Location = new System.Drawing.Point(7, 130);
             this.fromLabel.Name = "fromLabel";
             this.fromLabel.Size = new System.Drawing.Size(73, 13);
             this.fromLabel.TabIndex = 7;
@@ -103,7 +106,7 @@
             // 
             // fromTextBox
             // 
-            this.fromTextBox.Location = new System.Drawing.Point(95, 100);
+            this.fromTextBox.Location = new System.Drawing.Point(95, 125);
             this.fromTextBox.Name = "fromTextBox";
             this.fromTextBox.Size = new System.Drawing.Size(130, 20);
             this.fromTextBox.TabIndex = 8;
@@ -111,7 +114,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(150, 125);
+            this.saveButton.Location = new System.Drawing.Point(150, 150);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 9;
@@ -121,7 +124,7 @@
             // enableSslCheckBox
             // 
             this.enableSslCheckBox.AutoSize = true;
-            this.enableSslCheckBox.Location = new System.Drawing.Point(95, 30);
+            this.enableSslCheckBox.Location = new System.Drawing.Point(95, 55);
             this.enableSslCheckBox.Name = "enableSslCheckBox";
             this.enableSslCheckBox.Size = new System.Drawing.Size(122, 17);
             this.enableSslCheckBox.TabIndex = 10;
@@ -129,10 +132,34 @@
             this.enableSslCheckBox.UseVisualStyleBackColor = true;
             this.enableSslCheckBox.Leave += new System.EventHandler(this.enableSslCheckBox_Leave);
             // 
+            // portUpDown
+            // 
+            this.portUpDown.Location = new System.Drawing.Point(95, 30);
+            this.portUpDown.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.portUpDown.Name = "portUpDown";
+            this.portUpDown.Size = new System.Drawing.Size(60, 20);
+            this.portUpDown.TabIndex = 11;
+            this.portUpDown.Leave += new System.EventHandler(this.portUpDown_Leave);
+            // 
+            // portLabel
+            // 
+            this.portLabel.AutoSize = true;
+            this.portLabel.Location = new System.Drawing.Point(10, 35);
+            this.portLabel.Name = "portLabel";
+            this.portLabel.Size = new System.Drawing.Size(32, 13);
+            this.portLabel.TabIndex = 12;
+            this.portLabel.Text = "Порт";
+            // 
             // SMTPConfigControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.portLabel);
+            this.Controls.Add(this.portUpDown);
             this.Controls.Add(this.enableSslCheckBox);
             this.Controls.Add(this.serverLabel);
             this.Controls.Add(this.serverTextBox);
@@ -144,7 +171,8 @@
             this.Controls.Add(this.fromTextBox);
             this.Controls.Add(this.saveButton);
             this.Name = "SMTPConfigControl";
-            this.Size = new System.Drawing.Size(230, 155);
+            this.Size = new System.Drawing.Size(230, 180);
+            ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -162,5 +190,7 @@
         private System.Windows.Forms.TextBox fromTextBox;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.CheckBox enableSslCheckBox;
+        private System.Windows.Forms.NumericUpDown portUpDown;
+        private System.Windows.Forms.Label portLabel;
     }
 }
