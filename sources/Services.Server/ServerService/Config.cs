@@ -223,6 +223,8 @@ namespace Queue.Services.Server
                     }
 
                     сonfig.Server = source.Server;
+                    сonfig.Port = source.Port;
+                    сonfig.EnableSsl = source.EnableSsl;
                     сonfig.User = source.User;
                     сonfig.Password = source.Password;
                     сonfig.From = source.From;

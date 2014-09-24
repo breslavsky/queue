@@ -114,6 +114,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="SMTPUnitTest.cs" />
     <Compile Include="TimeSpanTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AutomapperTest.cs" />
