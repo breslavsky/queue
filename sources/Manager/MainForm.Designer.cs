@@ -120,6 +120,7 @@
             // 
             // сurrentScheduleMenuItem
             // 
+            this.сurrentScheduleMenuItem.Enabled = false;
             this.сurrentScheduleMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("сurrentScheduleMenuItem.Image")));
             this.сurrentScheduleMenuItem.Name = "сurrentScheduleMenuItem";
             this.сurrentScheduleMenuItem.Size = new System.Drawing.Size(190, 22);
