@@ -213,6 +213,7 @@ namespace Queue.Services.Server
                                 try
                                 {
                                     smtpClient.UseDefaultCredentials = false;
+                                    smtpClient.EnableSsl = сonfig.EnableSsl;
                                     smtpClient.Credentials = new NetworkCredential(сonfig.User, сonfig.Password);
 
                                     var message = new MailMessage(сonfig.From, email)
@@ -327,6 +328,7 @@ namespace Queue.Services.Server
                         try
                         {
                             smtpClient.UseDefaultCredentials = false;
+                            smtpClient.EnableSsl = сonfig.EnableSsl;
                             smtpClient.Credentials = new NetworkCredential(сonfig.User, сonfig.Password);
 
                             var message = new MailMessage(сonfig.From, email)
