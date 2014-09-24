@@ -40,6 +40,7 @@ namespace Queue.Administrator
                 if (config != null)
                 {
                     serverTextBox.Text = config.Server;
+                    enableSslCheckBox.Checked = config.EnableSsl;
                     userTextBox.Text = config.User;
                     passwordTextBox.Text = config.Password;
                     fromTextBox.Text = config.From;
@@ -68,6 +69,14 @@ namespace Queue.Administrator
             if (config != null)
             {
                 config.Server = serverTextBox.Text;
+            }
+        }
+
+        private void enableSslCheckBox_Leave(object sender, EventArgs e)
+        {
+            if (config != null)
+            {
+                config.EnableSsl = enableSslCheckBox.Checked;
             }
         }
 

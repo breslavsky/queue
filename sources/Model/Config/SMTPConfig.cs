@@ -17,6 +17,9 @@ namespace Queue.Model
         [Property]
         public virtual string Server { get; set; }
 
+        [Property]
+        public virtual bool EnableSsl { get; set; }
+
         [Property(Column = "_User")]
         public virtual string User { get; set; }
 
