@@ -440,6 +440,7 @@
             this.priorityUpDown.Name = "priorityUpDown";
             this.priorityUpDown.Size = new System.Drawing.Size(50, 20);
             this.priorityUpDown.TabIndex = 25;
+            this.priorityUpDown.Leave += new System.EventHandler(this.priorityUpDown_Leave);
             // 
             // maxEarlyDaysUpDown
             // 
