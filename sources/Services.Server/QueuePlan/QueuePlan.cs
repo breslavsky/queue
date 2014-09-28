@@ -311,8 +311,7 @@ namespace Queue.Services.Server
                                     Priority = p.Priority,
                                     Workload = p.OperatorPlan.Metrics.Workload
                                 })
-                                .OrderByDescending(m => m.IsOnline)
-                                .ThenBy(m => m.NearTimeInterval)
+                                .OrderBy(m => m.NearTimeInterval)
                                 .ThenByDescending(m => m.IsOnline)
                                 .ThenByDescending(m => m.Availability)
                                 .ThenByDescending(m => m.Priority)
