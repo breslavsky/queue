@@ -2,14 +2,10 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Queue.WinForms.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Server" Type="Queue.ServerSettings" Scope="User">
-      <Value Profile="(Default)">&lt;DatabaseSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                        xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
- &lt;Server&gt;junte.ru&lt;/Server&gt;
-&lt;/DatabaseSettings&gt;</Value>
-    </Setting>
-    <Setting Name="asdasd" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+    <Setting Name="Server" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&lt;xml&gt;
+&lt;val /&gt;
+&lt;/xml&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>
