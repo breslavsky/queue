@@ -97,6 +97,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Queue.WinForms", "Queue.Ser
 EndProject
 Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "Diagrams", "Diagrams\Diagrams.modelproj", "{946EB80F-3785-4F6E-8565-11F0094BF202}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reports", "Reports\Reports.csproj", "{88611229-1F7D-4C6A-88B8-43805B287B8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -486,6 +488,16 @@ Global
 		{946EB80F-3785-4F6E-8565-11F0094BF202}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{946EB80F-3785-4F6E-8565-11F0094BF202}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{946EB80F-3785-4F6E-8565-11F0094BF202}.Release|x86.ActiveCfg = Release|Any CPU
+		{88611229-1F7D-4C6A-88B8-43805B287B8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88611229-1F7D-4C6A-88B8-43805B287B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88611229-1F7D-4C6A-88B8-43805B287B8C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{88611229-1F7D-4C6A-88B8-43805B287B8C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{88611229-1F7D-4C6A-88B8-43805B287B8C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{88611229-1F7D-4C6A-88B8-43805B287B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88611229-1F7D-4C6A-88B8-43805B287B8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88611229-1F7D-4C6A-88B8-43805B287B8C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{88611229-1F7D-4C6A-88B8-43805B287B8C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{88611229-1F7D-4C6A-88B8-43805B287B8C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -146,6 +146,10 @@
       <Project>{ad492499-461f-4117-a495-302089ad7b87}</Project>
       <Name>Model %28Model\Model%29</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Reports\Reports.csproj">
+      <Project>{88611229-1f7d-4c6a-88b8-43805b287b8c}</Project>
+      <Name>Reports</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Resources\Resources.csproj">
       <Project>{90c422a9-c537-42a7-b4a8-2490e4d20d3a}</Project>
       <Name>Resources</Name>
@@ -164,6 +168,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

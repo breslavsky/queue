@@ -37,27 +37,14 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Reports\ClientRequest.xls" />
-    <None Include="Reports\ExceptionSchedule.xls" />
-    <None Include="Reports\QueuePlan.xls" />
-    <None Include="Reports\ServiceRating.xls" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Reports.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Reports.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Templates.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Templates.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Reports.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reports.resx</DependentUpon>
-    </Compile>
     <Compile Include="Templates.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -72,6 +59,12 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Model.Common\Model.Common.csproj">
+      <Project>{83540db2-b860-463d-bcec-656b99270818}</Project>
+      <Name>Model.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
