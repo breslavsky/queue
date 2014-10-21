@@ -214,3 +214,14 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 /sources/queue.v11.suo
+/sources/Administrator/Administrator.csproj.user
+/sources/Display/Display.csproj.user
+/sources/Hub/Hub.csproj.user
+/sources/Manager/Manager.csproj.user
+/sources/Media/*.user
+/sources/Notification/Notification.csproj.user
+/sources/Operator/Operator.csproj.user
+/sources/Services.DTO/Services.DTO.csproj.user
+/sources/Services.Server/Services.Server.csproj.user
+/sources/Simulator/Simulator.csproj.user
+/sources/UI.Silverlight/UI.Silverlight.csproj.user
