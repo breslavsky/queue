@@ -8,12 +8,8 @@ using NHibernate.Caches.SysCache2;
 using Queue.Services.Contracts;
 using Queue.Services.Server;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Queue
 {
