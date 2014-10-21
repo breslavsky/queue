@@ -18,10 +18,10 @@ namespace Queue.Administrator
     {
         #region fields
 
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
         private Service service;
@@ -37,7 +37,7 @@ namespace Queue.Administrator
 
         #endregion properties
 
-        public ServiceEditForm(DuplexChannelBuilder<IServerService> channelBuilder, User currentUser, Service service)
+        public ServiceEditForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Service service)
             : base()
         {
             InitializeComponent();
@@ -46,7 +46,7 @@ namespace Queue.Administrator
             this.currentUser = currentUser;
             this.service = service;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
             var types = EnumDataListItem.GetList<ServiceType>();

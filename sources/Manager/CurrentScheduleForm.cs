@@ -18,10 +18,10 @@ namespace Queue.Manager
     {
         #region filelds
 
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
         #endregion filelds
@@ -32,7 +32,7 @@ namespace Queue.Manager
 
         #endregion properties
 
-        public CurrentScheduleForm(DuplexChannelBuilder<IServerService> channelBuilder, User currentUser)
+        public CurrentScheduleForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
         {
             InitializeComponent();
@@ -40,7 +40,7 @@ namespace Queue.Manager
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
             currentScheduleControl.Initialize(channelBuilder, currentUser);

@@ -33,14 +33,14 @@ namespace Queue.Services.Portal
         private Guid sessionId;
         private Client currentClient;
 
-        public PortalClientService(DuplexChannelBuilder<IServerService> channelBuilder, Administrator currentUser)
+        public PortalClientService(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser)
             : base(channelBuilder, currentUser)
         {
             try
             {
                 sessionId = Guid.Parse(Request.Headers[ExtendHttpHeaders.SESSION]);
 
-                using (Channel<IServerService> channel = ChannelBuilder.CreateChannel())
+                using (Channel<IServerTcpService> channel = ChannelBuilder.CreateChannel())
                 {
                     try
                     {

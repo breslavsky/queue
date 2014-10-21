@@ -10,11 +10,11 @@ namespace Queue.Services.Media
 {
     internal class MediaServiceProvider : IInstanceProvider, IContractBehavior
     {
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private Administrator currentUser;
         private string folder;
 
-        public MediaServiceProvider(DuplexChannelBuilder<IServerService> channelBuilder, Administrator currentUser, string folder)
+        public MediaServiceProvider(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser, string folder)
         {
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;

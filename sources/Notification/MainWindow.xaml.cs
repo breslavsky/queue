@@ -21,7 +21,7 @@ namespace Queue.Notification
 
         private ConnectPage connectPage;
         private TaskPool taskPool;
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
 
         public MainWindow()
             : base()
@@ -99,12 +99,12 @@ namespace Queue.Notification
         private void RegisterTypes(IUnityContainer container)
         {
             taskPool = new TaskPool();
-            container.RegisterInstance<DuplexChannelBuilder<IServerService>>(connectPage.Model.ChannelBuilder);
+            container.RegisterInstance<DuplexChannelBuilder<IServerTcpService>>(connectPage.Model.ChannelBuilder);
             container.RegisterInstance<TaskPool>(taskPool);
             container.RegisterInstance<IUnityContainer>(container);
 
-            channelManager = new ChannelManager<IServerService>(container.Resolve<DuplexChannelBuilder<IServerService>>());
-            container.RegisterInstance<ChannelManager<IServerService>>(channelManager);
+            channelManager = new ChannelManager<IServerTcpService>(container.Resolve<DuplexChannelBuilder<IServerTcpService>>());
+            container.RegisterInstance<ChannelManager<IServerTcpService>>(channelManager);
         }
 
         private void MainWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

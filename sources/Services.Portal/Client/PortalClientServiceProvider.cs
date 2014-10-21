@@ -10,10 +10,10 @@ namespace Queue.Services.Portal
 {
     internal class PortalClientServiceProvider : IInstanceProvider, IContractBehavior
     {
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private Administrator currentUser;
 
-        public PortalClientServiceProvider(DuplexChannelBuilder<IServerService> channelBuilder, Administrator currentUser)
+        public PortalClientServiceProvider(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser)
         {
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;

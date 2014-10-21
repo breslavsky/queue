@@ -45,13 +45,15 @@
       <HintPath>..\packages\NPOI.2.0.6\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Iesi.Collections">
-      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+      <HintPath>..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.Data.Common">
-      <HintPath>..\packages\Junte.Data.Common.1.0.0.15\lib\net45\Junte.Data.Common.dll</HintPath>
+    <Reference Include="Junte.Data.Common, Version=1.0.0.16, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.Data.Common.1.0.0.16\lib\net45\Junte.Data.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.Data.NHibernate">
-      <HintPath>..\packages\Junte.Data.NHibernate.1.0.0.105\lib\net45\Junte.Data.NHibernate.dll</HintPath>
+    <Reference Include="Junte.Data.NHibernate, Version=1.0.1.210, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.Data.NHibernate.1.0.1.210\lib\net45\Junte.Data.NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="Junte.Parallel.Common">
       <HintPath>..\packages\Junte.Parallel.Common.1.0.0.20\lib\net40\Junte.Parallel.Common.dll</HintPath>
@@ -63,7 +65,7 @@
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate">
-      <HintPath>..\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
+      <HintPath>..\packages\NHibernate.4.0.1.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate.Mapping.Attributes">
       <HintPath>..\packages\NHibernate.Mapping.Attributes.3.2.0.0\lib\NHibernate.Mapping.Attributes.dll</HintPath>
@@ -91,6 +93,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />

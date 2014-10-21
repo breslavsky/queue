@@ -18,6 +18,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Description;
+using System.ServiceModel.Web;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DialogResult = System.Windows.Forms.DialogResult;
@@ -30,24 +32,12 @@ namespace Queue.Server
 
         private static Properties.Settings settings = Properties.Settings.Default;
 
-        private ServiceHost serviceHost;
         private ISessionProvider sessionProvider;
-
-        private UnityContainer container;
 
         public MainForm()
             : base()
         {
             InitializeComponent();
-
-            container = new UnityContainer();
-            ServiceLocator.SetLocatorProvider(() =>
-                new UnityServiceLocator(container));
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            portUpDown.Value = settings.Port;
         }
 
         #region menu
@@ -75,7 +65,6 @@ namespace Queue.Server
                                 .UseSecondLevelCache()
                                 .UseMinimalPuts());
                         });
-                        container.RegisterInstance<ISessionProvider>(sessionProvider);
 
                         settings.Database = e.Settings;
                         settings.Save();
@@ -450,61 +439,12 @@ namespace Queue.Server
             }
 
             databaseGroupBox.Enabled = false;
-            serverGroupBox.Enabled = true;
             databaseMenu.Enabled = true;
 
             FormClosing += (e, s) =>
             {
                 sessionProvider.Dispose();
             };
-        }
-
-        private async void startButton_Click(object sender, EventArgs eventArgs)
-        {
-            databaseMenu.Enabled = false;
-
-            var queueInstance = new QueueInstance(isDebugCheckBox.Checked);
-            container.RegisterInstance<IQueueInstance>(queueInstance);
-
-            Mapper.AddProfile(new FullDTOProfile());
-
-            int port = (int)portUpDown.Value;
-
-            var uri = new Uri(string.Format("{0}://0.0.0.0:{1}/", Schemes.NET_TCP, port));
-
-            serviceHost = new ServiceHost(typeof(ServerService), uri);
-            serviceHost.AddServiceEndpoint(typeof(IServerService), Bindings.NetTcpBinding, uri);
-            serviceHost.Description.Behaviors.Add(new ServiceMetadataBehavior());
-            serviceHost.AddServiceEndpoint(typeof(IMetadataExchange), MetadataExchangeBindings.CreateMexTcpBinding(), "mex");
-
-            try
-            {
-                startButton.Enabled = false;
-
-                await Task.Run(() =>
-                {
-                    serviceHost.Open();
-                });
-            }
-            catch (Exception exception)
-            {
-                UIHelper.Error(exception);
-                return;
-            }
-            finally
-            {
-                startButton.Enabled = true;
-            }
-
-            FormClosing += (e, s) =>
-            {
-                serviceHost.Close();
-            };
-
-            settings.Port = port;
-            settings.Save();
-
-            serverGroupBox.Enabled = false;
         }
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)

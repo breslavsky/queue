@@ -18,7 +18,7 @@ namespace Queue.Services.Portal
         private Guid sessionId;
         private Operator currentOperator;
 
-        public PortalOperatorService(DuplexChannelBuilder<IServerService> channelBuilder, Administrator currentUser)
+        public PortalOperatorService(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser)
             : base(channelBuilder, currentUser)
         {
             try

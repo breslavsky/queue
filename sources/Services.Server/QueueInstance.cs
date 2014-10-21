@@ -32,16 +32,11 @@ namespace Queue.Services.Server
 
         private Timer todayQueuePlanTimer;
 
-        public QueueInstance(bool isDebug)
+        public QueueInstance()
         {
             logger.Debug("Создание экземпляра очереди");
 
             TodayQueuePlan = new QueuePlan();
-
-            if (isDebug)
-            {
-                TodayQueuePlan.OnBuilded += TodayQueuePlan_OnBuilded;
-            }
 
             TodayQueuePlan.OnCurrentClientRequestPlanUpdated += TodayQueuePlan_CurrentClientRequestPlanUpdated;
             TodayQueuePlan.OnOperatorPlanMetricsUpdated += TodayQueuePlan_OnOperatorPlanMetricsUpdated;

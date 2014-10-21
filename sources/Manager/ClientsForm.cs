@@ -17,13 +17,13 @@ namespace Queue.Manager
 
         private bool loaded = false;
 
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
-        public ClientsForm(DuplexChannelBuilder<IServerService> channelBuilder, User currentUser)
+        public ClientsForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
         {
             InitializeComponent();
@@ -31,7 +31,7 @@ namespace Queue.Manager
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
         }
 

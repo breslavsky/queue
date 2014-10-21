@@ -27,7 +27,7 @@ namespace Queue.Terminal
 
         private LoginPage loginPage;
         private TaskPool taskPool;
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private Navigator navigator;
 
         private DispatcherTimer resetTimer;
@@ -129,12 +129,12 @@ namespace Queue.Terminal
         private async Task RegisterTypes(IUnityContainer container)
         {
             taskPool = new TaskPool();
-            container.RegisterInstance<DuplexChannelBuilder<IServerService>>(loginPage.Model.ChannelBuilder);
+            container.RegisterInstance<DuplexChannelBuilder<IServerTcpService>>(loginPage.Model.ChannelBuilder);
             container.RegisterInstance<TaskPool>(taskPool);
             container.RegisterInstance<IUnityContainer>(container);
 
-            channelManager = new ChannelManager<IServerService>(container.Resolve<DuplexChannelBuilder<IServerService>>());
-            container.RegisterInstance<ChannelManager<IServerService>>(channelManager);
+            channelManager = new ChannelManager<IServerTcpService>(container.Resolve<DuplexChannelBuilder<IServerTcpService>>());
+            container.RegisterInstance<ChannelManager<IServerTcpService>>(channelManager);
             container.RegisterInstance<ClientRequestModel>(new ClientRequestModel()
             {
                 CurrentManager = (Manager)loginPage.Model.User,
@@ -148,7 +148,7 @@ namespace Queue.Terminal
 
         private async Task LoadConfigs(IUnityContainer container)
         {
-            using (Channel<IServerService> channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
                 try
                 {

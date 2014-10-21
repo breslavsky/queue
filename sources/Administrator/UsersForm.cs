@@ -18,13 +18,13 @@ namespace Queue.Administrator
 {
     public partial class UsersForm : Queue.UI.WinForms.RichForm
     {
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
-        public UsersForm(DuplexChannelBuilder<IServerService> channelBuilder, User currentUser)
+        public UsersForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
         {
             InitializeComponent();
@@ -32,7 +32,7 @@ namespace Queue.Administrator
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
         }
 

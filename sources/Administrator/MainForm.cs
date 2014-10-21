@@ -21,18 +21,18 @@ namespace Queue.Administrator
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(MainForm));
 
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
-        private Channel<IServerService> pingChannel;
+        private Channel<IServerTcpService> pingChannel;
 
         private Timer pingTimer;
         private int PING_INTERVAL = 10000;
 
-        public MainForm(DuplexChannelBuilder<IServerService> channelBuilder, User currentUser)
+        public MainForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
         {
             InitializeComponent();
@@ -40,7 +40,7 @@ namespace Queue.Administrator
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
             Text = currentUser.ToString();

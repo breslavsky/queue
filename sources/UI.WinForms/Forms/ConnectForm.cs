@@ -13,7 +13,7 @@ namespace Queue.UI.WinForms
     {
         public bool IsRemember;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
 
         private TaskPool taskPool;
 
@@ -25,7 +25,7 @@ namespace Queue.UI.WinForms
             taskPool = new TaskPool();
         }
 
-        public DuplexChannelBuilder<IServerService> ChannelBuilder { get; private set; }
+        public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
 
         public string Endpoint
         {
@@ -45,8 +45,8 @@ namespace Queue.UI.WinForms
         {
             try
             {
-                ChannelBuilder = new DuplexChannelBuilder<IServerService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
-                channelManager = new ChannelManager<IServerService>(ChannelBuilder);
+                ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
+                channelManager = new ChannelManager<IServerTcpService>(ChannelBuilder);
 
                 using (var channel = channelManager.CreateChannel())
                 {

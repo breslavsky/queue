@@ -38,8 +38,8 @@ namespace Queue.Notification.Models
         private string currentDateTimeText;
         public ClientRequest[] callingClientRequests;
 
-        private ChannelManager<IServerService> channelManager;
-        private Channel<IServerService> callbackChannel;
+        private ChannelManager<IServerTcpService> channelManager;
+        private Channel<IServerTcpService> callbackChannel;
         private ServerCallback callbackObject;
         private TaskPool taskPool;
         private VlcControl vlcControl;
@@ -77,7 +77,7 @@ namespace Queue.Notification.Models
 
         public HomePageVM()
         {
-            this.channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerService>>();
+            this.channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
             this.taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
             this.screen = ServiceLocator.Current.GetInstance<IRichPage>();
             this.ticker = ServiceLocator.Current.GetInstance<ITicker>();
@@ -92,7 +92,7 @@ namespace Queue.Notification.Models
         {
             this.vlcControl = vlcControl;
 
-            using (Channel<IServerService> channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
                 LoadingControl loading = screen.ShowLoading();
 

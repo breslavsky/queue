@@ -114,7 +114,7 @@ namespace Queue.Display
 
         private void RegisterTypes(IUnityContainer container)
         {
-            container.RegisterInstance<DuplexChannelBuilder<IServerService>>(loginPage.Model.ChannelBuilder);
+            container.RegisterInstance<DuplexChannelBuilder<IServerTcpService>>(loginPage.Model.ChannelBuilder);
             container.RegisterInstance<IUnityContainer>(container);
             container.RegisterInstance<Workplace>(loginPage.Model.Workplace);
         }

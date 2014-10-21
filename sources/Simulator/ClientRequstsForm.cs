@@ -14,10 +14,10 @@ namespace Queue.Simulator
 {
     public partial class ClientRequstsForm : Queue.UI.WinForms.RichForm
     {
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
         private Random random;
@@ -26,7 +26,7 @@ namespace Queue.Simulator
 
         private int SUBJECTS = 1;
 
-        public ClientRequstsForm(DuplexChannelBuilder<IServerService> channelBuilder, User currentUser)
+        public ClientRequstsForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
         {
             InitializeComponent();
@@ -34,7 +34,7 @@ namespace Queue.Simulator
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
             random = new Random();

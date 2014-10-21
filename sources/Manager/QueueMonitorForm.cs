@@ -18,13 +18,13 @@ namespace Queue.Manager
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(QueueMonitorForm));
 
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
-        public QueueMonitorForm(DuplexChannelBuilder<IServerService> channelBuilder, User currentUser)
+        public QueueMonitorForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
         {
             InitializeComponent();
@@ -32,7 +32,7 @@ namespace Queue.Manager
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
             queueMonitorControl.Options = QueueMonitorControlOptions.ClientRequestEdit

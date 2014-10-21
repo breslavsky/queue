@@ -18,11 +18,11 @@ namespace Queue.Portal
     {
         private static Properties.Settings settings = Properties.Settings.Default;
 
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
 
         private Administrator currentUser;
 
-        public MainForm(DuplexChannelBuilder<IServerService> channelBuilder, Administrator currentUser)
+        public MainForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser)
             : base()
         {
             InitializeComponent();

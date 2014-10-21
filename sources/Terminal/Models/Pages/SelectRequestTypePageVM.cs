@@ -86,7 +86,7 @@ namespace Queue.Terminal.Models.Pages
 
             if (model.SelectedService.LiveRegistrator.HasFlag(ClientRequestRegistrator.Terminal))
             {
-                using (Channel<IServerService> channel = channelManager.CreateChannel())
+                using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
                 {
                     var loading = screen.ShowLoading();
 

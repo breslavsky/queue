@@ -1,6 +1,7 @@
 ﻿using Junte.Data.NHibernate;
 using log4net;
 using Microsoft.Practices.ServiceLocation;
+using NHibernate.Criterion;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -8,13 +9,17 @@ using Queue.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.ServiceModel.Description;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Queue.Services.Server
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession, ConcurrencyMode = ConcurrencyMode.Multiple, IncludeExceptionDetailInFaults = true)]
-    public partial class ServerService : IServerService
+    public partial class ServerService : IServerTcpService, IServerHttpService
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(ServerService));
 
@@ -31,9 +36,33 @@ namespace Queue.Services.Server
         public ServerService()
         {
             sessionId = OperationContext.Current.SessionId;
+            if (sessionId == null)
+            {
+                sessionId = OperationContext.Current.IncomingMessageHeaders.GetHeader<string>("SessionId", "queue.name");
+                if (sessionId != null)
+                {
+                    using (var session = sessionProvider.OpenSession())
+                    using (var transaction = session.BeginTransaction())
+                    {
+                        currentUser = session.CreateCriteria<User>()
+                            .Add(Restrictions.Eq("SessionId", Guid.Parse(sessionId)))
+                            .SetMaxResults(1)
+                            .UniqueResult<User>();
+                    }
+                }
+            }
+
             logger.Debug(string.Format("Создан новый экземпляр службы [{0}]", sessionId));
 
-            eventsCallback = OperationContext.Current.GetCallbackChannel<IServerCallback>();
+            try
+            {
+                eventsCallback = OperationContext.Current.GetCallbackChannel<IServerCallback>();
+            }
+            catch
+            {
+                logger.Debug(string.Format("Не удалось получить канал обратного вызова [{0}]", sessionId));
+            }
+
             subscriptions = new Dictionary<ServerServiceEventType, Subscribtion>();
 
             channel = OperationContext.Current.Channel;

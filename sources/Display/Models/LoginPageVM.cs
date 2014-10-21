@@ -22,7 +22,7 @@ namespace Queue.Display.Models
     {
         private bool disposed;
         private readonly TaskPool taskPool;
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private AccentColorComboBoxItem selectedAccent;
         private bool isConnected;
 
@@ -87,7 +87,7 @@ namespace Queue.Display.Models
 
         public Workplace Workplace { get; private set; }
 
-        public DuplexChannelBuilder<IServerService> ChannelBuilder { get; private set; }
+        public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
 
         public event EventHandler OnLogined;
 
@@ -137,18 +137,18 @@ namespace Queue.Display.Models
                 ChannelBuilder.Dispose();
             }
 
-            ChannelBuilder = new DuplexChannelBuilder<IServerService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
+            ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
 
             if (channelManager != null)
             {
                 channelManager.Dispose();
             }
 
-            channelManager = new ChannelManager<IServerService>(ChannelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(ChannelBuilder);
 
             IsConnected = false;
 
-            using (Channel<IServerService> channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
                 LoadingControl loading = owner.ShowLoading();
 

@@ -21,26 +21,26 @@ namespace Queue.Manager
 {
     public partial class EventsForm : RichForm
     {
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private QueueManager currentManager;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
         private ServerCallback callbackObject;
-        private Channel<IServerService> pingChannel;
+        private Channel<IServerTcpService> pingChannel;
 
         private Timer pingTimer;
         private int PING_INTERVAL = 10000;
 
-        public EventsForm(DuplexChannelBuilder<IServerService> channelBuilder, QueueManager currentManager)
+        public EventsForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, QueueManager currentManager)
         {
             InitializeComponent();
 
             this.channelBuilder = channelBuilder;
             this.currentManager = currentManager;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
             Text = currentManager.ToString();

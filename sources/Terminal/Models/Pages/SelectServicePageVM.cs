@@ -27,7 +27,7 @@ namespace Queue.Terminal.Models.Pages
         {
             List<SelectServiceButton> buttons = new List<SelectServiceButton>();
 
-            using (Channel<IServerService> channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
                 LoadingControl loading = screen.ShowLoading();
 

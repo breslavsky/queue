@@ -30,7 +30,7 @@ namespace Queue.Terminal.Models
         private int currentPage;
 
         private IRichPage screen;
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private Navigator navigator;
         private ClientRequestModel request;
 
@@ -64,7 +64,7 @@ namespace Queue.Terminal.Models
             PrevCommand = new RelayCommand(Prev);
 
             screen = ServiceLocator.Current.GetInstance<IRichPage>();
-            channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerService>>();
+            channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
             navigator = ServiceLocator.Current.GetInstance<Navigator>();
             request = ServiceLocator.Current.GetInstance<ClientRequestModel>();
         }
@@ -93,7 +93,7 @@ namespace Queue.Terminal.Models
         private async void ShowResultPage(int pageNo)
         {
             HasPrev = pageNo > 0;
-            using (Channel<IServerService> channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
                 LoadingControl loading = screen.ShowLoading();
 

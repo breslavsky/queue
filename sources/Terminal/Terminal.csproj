@@ -83,8 +83,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.Parallel.Common.1.0.0.20\lib\net40\Junte.Parallel.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.UI.WPF">
-      <HintPath>..\packages\Junte.UI.WPF.1.0.0.11\lib\net45\Junte.UI.WPF.dll</HintPath>
+    <Reference Include="Junte.UI.WPF, Version=1.0.0.15, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.UI.WPF.1.0.0.15\lib\net45\Junte.UI.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Junte.WCF.Common, Version=1.0.0.15, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

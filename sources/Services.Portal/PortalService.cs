@@ -20,7 +20,7 @@ namespace Queue.Services.Portal
 
         private Guid sessionId;
 
-        public PortalService(DuplexChannelBuilder<IServerService> channelBuilder, Administrator currentUser)
+        public PortalService(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser)
         {
             ChannelBuilder = channelBuilder;
             CurrentAdministrator = currentUser;
@@ -38,7 +38,7 @@ namespace Queue.Services.Portal
             Response = WebOperationContext.Current.OutgoingResponse;
         }
 
-        protected DuplexChannelBuilder<IServerService> ChannelBuilder { get; private set; }
+        protected DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
 
         protected Administrator CurrentAdministrator { get; private set; }
 

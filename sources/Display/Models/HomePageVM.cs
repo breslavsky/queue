@@ -25,12 +25,12 @@ namespace Queue.Display.Models
         private DispatcherTimer pingTimer;
         private ServerState serverState;
 
-        private readonly ChannelManager<IServerService> channelManager;
+        private readonly ChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private bool disposed;
         private Workplace workplace;
         private ServerCallback callbackObject;
-        private Channel<IServerService> pingChannel;
+        private Channel<IServerTcpService> pingChannel;
         private string workplaceTitle;
         private string workplaceComment;
         private bool showNotification;
@@ -73,7 +73,7 @@ namespace Queue.Display.Models
             WorkplaceTitle = workplace.ToString();
             WorkplaceComment = workplace.Comment;
 
-            channelManager = new ChannelManager<IServerService>(ServiceLocator.Current.GetInstance<DuplexChannelBuilder<IServerService>>());
+            channelManager = new ChannelManager<IServerTcpService>(ServiceLocator.Current.GetInstance<DuplexChannelBuilder<IServerTcpService>>());
             taskPool = new TaskPool();
 
             callbackObject = new ServerCallback();

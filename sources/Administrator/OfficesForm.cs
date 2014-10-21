@@ -14,13 +14,13 @@ namespace Queue.Administrator
 {
     public partial class OfficesForm : Queue.UI.WinForms.RichForm
     {
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
-        public OfficesForm(DuplexChannelBuilder<IServerService> channelBuilder, User currentUser)
+        public OfficesForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
         {
             InitializeComponent();
@@ -28,7 +28,7 @@ namespace Queue.Administrator
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
         }
 
@@ -161,7 +161,7 @@ namespace Queue.Administrator
 
                     var office = row.Tag as Office;
 
-                    var officeChannelManager = new DuplexChannelBuilder<IServerService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(office.Endpoint));
+                    var officeChannelManager = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(office.Endpoint));
 
                     switch (cell.OwningColumn.Name)
                     {

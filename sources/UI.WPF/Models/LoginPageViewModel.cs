@@ -32,7 +32,7 @@ namespace Queue.UI.WPF.Pages.Models
         private Lazy<ICommand> connectCommand;
         private Lazy<ICommand> loginCommand;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
         private UserLoginSettings settings;
@@ -60,7 +60,7 @@ namespace Queue.UI.WPF.Pages.Models
 
         public event EventHandler OnLogined;
 
-        public DuplexChannelBuilder<IServerService> ChannelBuilder { get; private set; }
+        public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
 
         #region UIProperties
 
@@ -143,8 +143,8 @@ namespace Queue.UI.WPF.Pages.Models
 
         public async void Connect()
         {
-            ChannelBuilder = new DuplexChannelBuilder<IServerService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
-            channelManager = new ChannelManager<IServerService>(ChannelBuilder);
+            ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
+            channelManager = new ChannelManager<IServerTcpService>(ChannelBuilder);
 
             using (var channel = channelManager.CreateChannel())
             {
@@ -226,7 +226,7 @@ namespace Queue.UI.WPF.Pages.Models
                 return;
             }
 
-            using (Channel<IServerService> channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
                 LoadingControl loading = owner.ShowLoading();
 

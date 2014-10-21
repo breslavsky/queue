@@ -14,10 +14,10 @@ namespace Queue.UI.WinForms
     {
         #region fields
 
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
         #endregion fields
@@ -28,7 +28,7 @@ namespace Queue.UI.WinForms
 
         #endregion properties
 
-        public SelectServiceForm(DuplexChannelBuilder<IServerService> channelBuilder, User currentUser)
+        public SelectServiceForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
         {
             InitializeComponent();
@@ -36,7 +36,7 @@ namespace Queue.UI.WinForms
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
             selectServiceControl.Initialize(channelBuilder, currentUser);

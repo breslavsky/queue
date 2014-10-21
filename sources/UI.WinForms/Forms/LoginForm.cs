@@ -17,7 +17,7 @@ namespace Queue.UI.WinForms
 
         private readonly TaskPool taskPool;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
 
         public LoginForm(UserRole userRole)
             : base()
@@ -29,7 +29,7 @@ namespace Queue.UI.WinForms
             taskPool = new TaskPool();
         }
 
-        public DuplexChannelBuilder<IServerService> ChannelBuilder { get; private set; }
+        public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
 
         public string Endpoint
         {
@@ -76,7 +76,7 @@ namespace Queue.UI.WinForms
 
             try
             {
-                ChannelBuilder = new DuplexChannelBuilder<IServerService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
+                ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
             }
             catch (Exception exception)
             {
@@ -88,7 +88,7 @@ namespace Queue.UI.WinForms
             {
                 channelManager.Dispose();
             }
-            channelManager = new ChannelManager<IServerService>(ChannelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(ChannelBuilder);
 
             bool connected = false;
 

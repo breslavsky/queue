@@ -17,28 +17,28 @@ namespace Queue.Hub
     {
         private static Properties.Settings settings = Properties.Settings.Default;
 
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
 
         private TaskPool taskPool;
 
         private ServerCallback callbackObject;
 
-        private Channel<IServerService> pingChannel;
+        private Channel<IServerTcpService> pingChannel;
 
         private Timer pingTimer;
 
         private int PING_INTERVAL = 10000;
 
-        public MainForm(DuplexChannelBuilder<IServerService> channelBuilder)
+        public MainForm(DuplexChannelBuilder<IServerTcpService> channelBuilder)
             : base()
         {
             InitializeComponent();
 
             this.channelBuilder = channelBuilder;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
             callbackObject = new ServerCallback();

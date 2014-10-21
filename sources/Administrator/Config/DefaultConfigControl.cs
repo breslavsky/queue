@@ -20,10 +20,10 @@ namespace Queue.Administrator
     {
         #region fields
 
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
         private DefaultConfig config;
@@ -55,12 +55,12 @@ namespace Queue.Administrator
             InitializeComponent();
         }
 
-        public void Initialize(DuplexChannelBuilder<IServerService> channelBuilder, User currentUser)
+        public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
         {
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
         }
 

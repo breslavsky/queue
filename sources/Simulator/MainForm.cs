@@ -11,15 +11,15 @@ namespace Queue.Simulator
 {
     public partial class MainForm : Queue.UI.WinForms.RichForm
     {
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
         public bool IsLogout { get; private set; }
 
-        public MainForm(DuplexChannelBuilder<IServerService> channelBuilder, User currentUser)
+        public MainForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
         {
             InitializeComponent();
@@ -27,7 +27,7 @@ namespace Queue.Simulator
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
             Text = currentUser.ToString();

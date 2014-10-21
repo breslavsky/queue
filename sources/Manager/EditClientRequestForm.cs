@@ -27,16 +27,16 @@ namespace Queue.Manager
     {
         private static Properties.Settings settings = Properties.Settings.Default;
 
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
         private Guid clientRequestId;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
         private ClientRequest clientRequest;
 
-        public EditClientRequestForm(DuplexChannelBuilder<IServerService> channelBuilder, User currentUser, Guid clientRequestId)
+        public EditClientRequestForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid clientRequestId)
             : base()
         {
             InitializeComponent();
@@ -45,7 +45,7 @@ namespace Queue.Manager
             this.currentUser = currentUser;
             this.clientRequestId = clientRequestId;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
         }
 

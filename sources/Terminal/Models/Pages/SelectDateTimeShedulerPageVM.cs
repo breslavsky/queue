@@ -146,7 +146,7 @@ namespace Queue.Terminal.Models.Pages
             sheduler.ClearEvents();
             sheduler.SelectedDate = date;
 
-            using (Channel<IServerService> channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
                 LoadingControl loading = screen.ShowLoading();
 
@@ -192,7 +192,7 @@ namespace Queue.Terminal.Models.Pages
             return now.AddDays(7 * week - (int)now.DayOfWeek + 1);
         }
 
-        private async Task LoadTimeIntervalForDay(Channel<IServerService> channel, DateTime date)
+        private async Task LoadTimeIntervalForDay(Channel<IServerTcpService> channel, DateTime date)
         {
             try
             {

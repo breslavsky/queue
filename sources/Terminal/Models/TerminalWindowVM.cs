@@ -34,7 +34,7 @@ namespace Queue.Terminal.Models
 
         private IUnityContainer container;
         private TaskPool taskPool;
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private Navigator navigator;
         private DefaultConfig defaultConfig;
         private IRichPage screen;
@@ -77,7 +77,7 @@ namespace Queue.Terminal.Models
             screen = ServiceLocator.Current.GetInstance<IRichPage>();
             container = ServiceLocator.Current.GetInstance<IUnityContainer>();
             taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
-            channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerService>>();
+            channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
             navigator = ServiceLocator.Current.GetInstance<Navigator>();
             defaultConfig = ServiceLocator.Current.GetInstance<DefaultConfig>();
 

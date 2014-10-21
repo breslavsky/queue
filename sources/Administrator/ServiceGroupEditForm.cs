@@ -15,10 +15,10 @@ namespace Queue.Administrator
 {
     public partial class ServiceGroupEditForm : Queue.UI.WinForms.RichForm
     {
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
         private ServiceGroup serviceGroup;
@@ -28,7 +28,7 @@ namespace Queue.Administrator
             get { return serviceGroup; }
         }
 
-        public ServiceGroupEditForm(DuplexChannelBuilder<IServerService> channelBuilder, User currentUser, ServiceGroup serviceGroup)
+        public ServiceGroupEditForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, ServiceGroup serviceGroup)
             : base()
         {
             InitializeComponent();
@@ -37,7 +37,7 @@ namespace Queue.Administrator
             this.currentUser = currentUser;
             this.serviceGroup = serviceGroup;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
         }
 

@@ -14,14 +14,14 @@ namespace Queue.Services.Media
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(MediaService));
 
-        public MediaService(DuplexChannelBuilder<IServerService> channelBuilder, Administrator currentUser, string folder)
+        public MediaService(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser, string folder)
         {
             ChannelBuilder = channelBuilder;
             CurrentAdministrator = currentUser;
             Folder = folder;
         }
 
-        protected DuplexChannelBuilder<IServerService> ChannelBuilder { get; private set; }
+        protected DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
 
         protected Administrator CurrentAdministrator { get; private set; }
 

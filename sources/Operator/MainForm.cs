@@ -33,17 +33,17 @@ namespace Queue.Operator
 
         private readonly QueueOperator currentOperator;
 
-        private readonly DuplexChannelBuilder<IServerService> channelBuilder;
-        private readonly ChannelManager<IServerService> channelManager;
+        private readonly DuplexChannelBuilder<IServerTcpService> channelBuilder;
+        private readonly ChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
 
         private readonly ServerCallback callbackObject;
         private readonly Timer pingTimer;
-        private Channel<IServerService> pingChannel;
+        private Channel<IServerTcpService> pingChannel;
 
         private ClientRequestPlan currentClientRequestPlan;
 
-        public MainForm(DuplexChannelBuilder<IServerService> channelBuilder, QueueOperator currentOperator)
+        public MainForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, QueueOperator currentOperator)
             : base()
         {
             InitializeComponent();
@@ -51,7 +51,7 @@ namespace Queue.Operator
             this.channelBuilder = channelBuilder;
             this.currentOperator = currentOperator;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
             step = 0;

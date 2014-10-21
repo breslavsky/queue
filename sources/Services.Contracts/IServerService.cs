@@ -8,20 +8,11 @@ using System.Threading.Tasks;
 
 namespace Queue.Services.Contracts
 {
-    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IServerCallback))]
+    [ServiceContract]
     public interface IServerService
     {
         [OperationContract]
         Task<DateTime> GetDateTime();
-
-        [OperationContract]
-        bool IsSubscribed(ServerServiceEventType eventType);
-
-        [OperationContract]
-        void Subscribe(ServerServiceEventType eventType, ServerSubscribtionArgs args = null);
-
-        [OperationContract]
-        void UnSubscribe(ServerServiceEventType eventType);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]

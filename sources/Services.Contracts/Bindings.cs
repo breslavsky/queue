@@ -32,6 +32,19 @@ namespace Queue.Services.Contracts
             }
         }
 
+        public static BasicHttpBinding BasicHttpBinding
+        {
+            get
+            {
+                return new BasicHttpBinding()
+                {
+                    TransferMode = TransferMode.Buffered,
+                    MaxReceivedMessageSize = DataLength._150M,
+                    CloseTimeout = TimeSpan.MaxValue
+                };
+            }
+        }
+
         public static WebHttpBinding WebHttpBinding
         {
             get

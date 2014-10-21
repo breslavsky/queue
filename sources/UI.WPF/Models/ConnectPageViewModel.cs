@@ -22,7 +22,7 @@ namespace Queue.UI.WPF.Models
         private AccentColorComboBoxItem selectedAccent;
 
         private TaskPool taskPool;
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
 
         private Lazy<ICommand> connectCommand;
 
@@ -82,7 +82,7 @@ namespace Queue.UI.WPF.Models
 
         public ICommand UnloadedCommand { get; set; }
 
-        public DuplexChannelBuilder<IServerService> ChannelBuilder { get; private set; }
+        public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
 
         public void ApplyUserSettings(UserLoginSettings settings)
         {
@@ -125,8 +125,8 @@ namespace Queue.UI.WPF.Models
 
         private void Connect()
         {
-            ChannelBuilder = new DuplexChannelBuilder<IServerService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
-            channelManager = new ChannelManager<IServerService>(ChannelBuilder);
+            ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
+            channelManager = new ChannelManager<IServerTcpService>(ChannelBuilder);
 
             if (OnConnected != null)
             {

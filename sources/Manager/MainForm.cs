@@ -15,20 +15,20 @@ namespace Queue.Manager
 {
     public partial class MainForm : Queue.UI.WinForms.RichForm
     {
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private QueueManager currentManager;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
-        private Channel<IServerService> pingChannel;
+        private Channel<IServerTcpService> pingChannel;
 
         private Timer pingTimer;
         private int PING_INTERVAL = 10000;
 
         public bool IsLogout { get; private set; }
 
-        public MainForm(DuplexChannelBuilder<IServerService> channelBuilder, QueueManager currentManager)
+        public MainForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, QueueManager currentManager)
             : base()
         {
             InitializeComponent();
@@ -36,7 +36,7 @@ namespace Queue.Manager
             this.channelBuilder = channelBuilder;
             this.currentManager = currentManager;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
             Text = currentManager.ToString();

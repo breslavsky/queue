@@ -29,10 +29,10 @@ namespace Queue.Manager
 
         #region fields
 
-        private DuplexChannelBuilder<IServerService> channelBuilder;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
 
-        private ChannelManager<IServerService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
         private string[] freeTimeReport;
@@ -81,7 +81,7 @@ namespace Queue.Manager
 
         #endregion properties
 
-        public AddClentRequestForm(DuplexChannelBuilder<IServerService> channelBuilder, User currentUser)
+        public AddClentRequestForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
         {
             InitializeComponent();
@@ -89,7 +89,7 @@ namespace Queue.Manager
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
             clientsListBox.DisplayMember = string.Empty;
