@@ -208,6 +208,7 @@
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(330, 110);
             this.nameTextBox.TabIndex = 11;
+            this.nameTextBox.Leave += new System.EventHandler(this.nameTextBox_Leave);
             // 
             // earlyRegistratorLabel
             // 
@@ -226,6 +227,7 @@
             this.serviceTypeListBox.Name = "serviceTypeListBox";
             this.serviceTypeListBox.Size = new System.Drawing.Size(170, 79);
             this.serviceTypeListBox.TabIndex = 12;
+            this.serviceTypeListBox.Leave += new System.EventHandler(this.serviceTypeListBox_Leave);
             // 
             // earlyRegistratorListBox
             // 
@@ -272,6 +274,7 @@
             this.commentTextBox.Name = "commentTextBox";
             this.commentTextBox.Size = new System.Drawing.Size(785, 135);
             this.commentTextBox.TabIndex = 16;
+            this.commentTextBox.Leave += new System.EventHandler(this.commentTextBox_Leave);
             // 
             // commentLabel
             // 
@@ -306,6 +309,7 @@
             this.codeTextBox.Name = "codeTextBox";
             this.codeTextBox.Size = new System.Drawing.Size(60, 20);
             this.codeTextBox.TabIndex = 19;
+            this.codeTextBox.Leave += new System.EventHandler(this.codeTextBox_Leave);
             // 
             // tagsTextBox
             // 
@@ -314,6 +318,7 @@
             this.tagsTextBox.Name = "tagsTextBox";
             this.tagsTextBox.Size = new System.Drawing.Size(175, 80);
             this.tagsTextBox.TabIndex = 25;
+            this.tagsTextBox.LocationChanged += new System.EventHandler(this.tagsTextBox_Leave);
             // 
             // codeLabel
             // 
@@ -360,6 +365,7 @@
             this.linkTextBox.Name = "linkTextBox";
             this.linkTextBox.Size = new System.Drawing.Size(790, 50);
             this.linkTextBox.TabIndex = 29;
+            this.linkTextBox.Leave += new System.EventHandler(this.linkTextBox_Leave);
             // 
             // linkLabel
             // 
