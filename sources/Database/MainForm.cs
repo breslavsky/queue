@@ -83,6 +83,8 @@ namespace Queue.Database
                 }
             }
 
+            logTextBox.AppendText("Проверка структуры базы данных");
+
             bool isSchemeValid = false;
 
             try
@@ -92,7 +94,7 @@ namespace Queue.Database
             }
             catch (Exception exception)
             {
-                UIHelper.Warning(string.Format("База данных не обновлена [{0}]. Будет произведено обновление базы данных.", exception.Message));
+                logTextBox.AppendText(string.Format("Структура базы данных не обновлена [{0}]. Будет произведено обновление.", exception.Message));
             }
 
             if (!isSchemeValid)
@@ -100,12 +102,17 @@ namespace Queue.Database
                 try
                 {
                     sessionProvider.SchemaUpdate();
+                    logTextBox.AppendText("Произведено успешное обновление базы данных");
                 }
                 catch (Exception exception)
                 {
                     UIHelper.Warning(exception.Message);
                     return;
                 }
+            }
+            else
+            {
+                logTextBox.AppendText("Структура базы данных верна");
             }
 
             #region установка базы
@@ -125,6 +132,8 @@ namespace Queue.Database
                     session.Save(schemeConfig);
                 }
 
+                logTextBox.AppendText("Текущий патч базы данных " + schemeConfig.Version);
+
                 #region приминение патчей
 
                 for (int currentPatch = schemeConfig.Version + 1;
@@ -132,9 +141,13 @@ namespace Queue.Database
                 {
                     if (Scheme.Patches.ContainsKey(currentPatch))
                     {
+                        string sql = Scheme.Patches[currentPatch];
+
+                        logTextBox.AppendText("Приминение патча [" + sql +"]");
+
                         try
                         {
-                            session.CreateSQLQuery(Scheme.Patches[currentPatch]).ExecuteUpdate();
+                            session.CreateSQLQuery(sql).ExecuteUpdate();
                         }
                         catch (Exception exception)
                         {
@@ -434,8 +447,9 @@ namespace Queue.Database
             }
 
             #endregion установка базы
-         
-            importMenu.Enabled = true;
+
+            topMenu.Enabled = true;
+            connectButton.Enabled = false;
 
             FormClosing += (e, s) =>
             {
@@ -449,11 +463,6 @@ namespace Queue.Database
             {
                 Process.Start(Application.StartupPath);
             }
-        }
-
-        private void импортДаннызToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

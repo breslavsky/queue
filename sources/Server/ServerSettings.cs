@@ -23,6 +23,11 @@ namespace Queue.Server
             get { return (ServicesConfig)this["services"]; }
             set { this["services"] = value; }
         }
+
+        public override bool IsReadOnly()
+        {
+            return false;
+        }
     }
     public class ServicesConfig : ConfigurationElement
     {
@@ -38,6 +43,11 @@ namespace Queue.Server
         {
             get { return (HttpServiceConfig)this["httpService"]; }
             set { this["httpService"] = value; }
+        }
+
+        public override bool IsReadOnly()
+        {
+            return false;
         }
     }
 
@@ -62,6 +72,11 @@ namespace Queue.Server
         {
             get { return (int)this["port"]; }
             set { this["port"] = value; }
+        }
+
+        public override bool IsReadOnly()
+        {
+            return false;
         }
     }
 

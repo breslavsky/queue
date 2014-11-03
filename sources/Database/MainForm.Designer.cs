@@ -32,6 +32,7 @@
             this.topMenu = new System.Windows.Forms.MenuStrip();
             this.importMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.damaskMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logTextBox = new System.Windows.Forms.TextBox();
             this.topMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,11 +47,12 @@
             // 
             // topMenu
             // 
+            this.topMenu.Enabled = false;
             this.topMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.importMenu});
             this.topMenu.Location = new System.Drawing.Point(0, 0);
             this.topMenu.Name = "topMenu";
-            this.topMenu.Size = new System.Drawing.Size(264, 24);
+            this.topMenu.Size = new System.Drawing.Size(340, 24);
             this.topMenu.TabIndex = 0;
             this.topMenu.Text = "menuStrip1";
             // 
@@ -61,7 +63,6 @@
             this.importMenu.Name = "importMenu";
             this.importMenu.Size = new System.Drawing.Size(106, 20);
             this.importMenu.Text = "Импорт данных";
-            this.importMenu.Click += new System.EventHandler(this.импортДаннызToolStripMenuItem_Click);
             // 
             // damaskMenuItem
             // 
@@ -70,11 +71,20 @@
             this.damaskMenuItem.Text = "Дамаск";
             this.damaskMenuItem.Click += new System.EventHandler(this.damaskMenuItem_Click);
             // 
+            // logTextBox
+            // 
+            this.logTextBox.Location = new System.Drawing.Point(5, 60);
+            this.logTextBox.Multiline = true;
+            this.logTextBox.Name = "logTextBox";
+            this.logTextBox.Size = new System.Drawing.Size(330, 105);
+            this.logTextBox.TabIndex = 1;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(264, 67);
+            this.ClientSize = new System.Drawing.Size(340, 173);
+            this.Controls.Add(this.logTextBox);
             this.Controls.Add(this.connectButton);
             this.Controls.Add(this.topMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -98,6 +108,7 @@
         private System.Windows.Forms.Button connectButton;
         private System.Windows.Forms.ToolStripMenuItem importMenu;
         private System.Windows.Forms.ToolStripMenuItem damaskMenuItem;
+        private System.Windows.Forms.TextBox logTextBox;
     }
 }
 
