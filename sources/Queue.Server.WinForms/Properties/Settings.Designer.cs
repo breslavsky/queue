@@ -22,28 +22,5 @@ namespace Queue.WinForms.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<DatabaseSettings xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        " +
-            "                xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n <Server>junte.ru" +
-            "</Server>\r\n</DatabaseSettings>")]
-        public global::Queue.ServerSettings Server {
-            get {
-                return ((global::Queue.ServerSettings)(this["Server"]));
-            }
-            set {
-                this["Server"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string asdasd {
-            get {
-                return ((string)(this["asdasd"]));
-            }
-        }
     }
 }

@@ -24,18 +24,17 @@ namespace Queue
         private ServiceHost tcpServiceHost;
         private ServiceHost httpServiceHost;
 
-        public Server(ServerSettings settings)
+        public Server(DatabaseSettings database, ServicesConfig services)
         {
             logger.Info("Creating");
 
             container = new UnityContainer();
-            ServiceLocator.SetLocatorProvider(() =>
-                new UnityServiceLocator(container));
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
             var queueInstance = new QueueInstance();
             container.RegisterInstance<IQueueInstance>(queueInstance);
 
-            sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, settings.Database, (fluently) =>
+            sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, database, (fluently) =>
             {
                 fluently.Cache(c => c
                     .ProviderClass<SysCacheProvider>()
@@ -47,7 +46,6 @@ namespace Queue
 
             Mapper.AddProfile(new FullDTOProfile());
 
-            var services = settings.Services;
             var tcpService = services.TcpService;
 
             Uri uri;

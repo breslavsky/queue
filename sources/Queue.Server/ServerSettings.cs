@@ -6,51 +6,54 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Queue
+namespace Queue.Server
 {
-    [SettingsSerializeAs(SettingsSerializeAs.Xml)]
-    public class ServicesSettings
+    public class ServicesConfig : ConfigurationElement
     {
-        public TcpServiceSettings TcpService { get; set; }
-
-        public HttpServiceSettings HttpService { get; set; }
-    }
-
-    [SettingsSerializeAs(SettingsSerializeAs.Xml)]
-    public class ServiceSettings
-    {
-        public bool Enabled { get; set; }
-
-        public string Host { get; set; }
-
-        public int Port { get; set; }
-    }
-
-    [SettingsSerializeAs(SettingsSerializeAs.Xml)]
-    public class TcpServiceSettings : ServiceSettings
-    {
-        public TcpServiceSettings()
-            : base()
+        [ConfigurationProperty("tcpService", IsRequired = true)]
+        public TcpServiceConfig TcpService
         {
-            Port = 4505;
+            get { return (TcpServiceConfig)this["tcpService"]; }
+            set { this["tcpService"] = value; }
+        }
+
+        [ConfigurationProperty("httpService", IsRequired = true)]
+        public HttpServiceConfig HttpService
+        {
+            get { return (HttpServiceConfig)this["httpService"]; }
+            set { this["httpService"] = value; }
         }
     }
 
-    [SettingsSerializeAs(SettingsSerializeAs.Xml)]
-    public class HttpServiceSettings : ServiceSettings
+    public class ServiceConfig : ConfigurationElement
     {
-        public HttpServiceSettings()
-            : base()
+        [ConfigurationProperty("enabled", IsRequired = true)]
+        public bool Enabled
         {
-            Port = 4515;
+            get { return (bool)this["enabled"]; }
+            set { this["enabled"] = value; }
+        }
+
+        [ConfigurationProperty("host", IsRequired = true)]
+        public string Host
+        {
+            get { return (string)this["host"]; }
+            set { this["host"] = value; }
+        }
+
+        [ConfigurationProperty("port", IsRequired = true)]
+        public int Port
+        {
+            get { return (int)this["port"]; }
+            set { this["port"] = value; }
         }
     }
 
-    [SettingsSerializeAs(SettingsSerializeAs.Xml)]
-    public class ServerSettings
+    public class TcpServiceConfig : ServiceConfig
     {
-        public DatabaseSettings Database { get; set; }
+    }
 
-        public ServicesSettings Services { get; set; }
+    public class HttpServiceConfig : ServiceConfig
+    {
     }
 }
