@@ -27,53 +27,6 @@ namespace Queue.UI.WinForms
 
         private void RichForm_Load(object sender, EventArgs e)
         {
-            //var font = new Font("Microsoft Sans Serif", 10, FontStyle.Regular);
-
-            //foreach (var c in GetAll(this, typeof(Label)))
-            //{
-            //    ((Label)c).Font = font;
-            //}
-
-            //foreach (var c in GetAll(this, typeof(Button)))
-            //{
-            //    ((Button)c).Font = font;
-            //}
-
-            //foreach (var c in GetAll(this, typeof(ComboBox)))
-            //{
-            //    ((ComboBox)c).Font = font;
-            //}
-
-            //foreach (var c in GetAll(this, typeof(TextBox)))
-            //{
-            //    ((TextBox)c).Font = font;
-            //}
-
-            //foreach (var c in GetAll(this, typeof(CheckBox)))
-            //{
-            //    ((CheckBox)c).Font = font;
-            //}
-
-            //foreach (var c in GetAll(this, typeof(GroupBox)))
-            //{
-            //    ((GroupBox)c).Font = font;
-            //}
-
-            //foreach (var c in GetAll(this, typeof(RadioButton)))
-            //{
-            //    ((RadioButton)c).Font = font;
-            //}
-
-            //foreach (var c in GetAll(this, typeof(MenuStrip)))
-            //{
-            //    ((MenuStrip)c).Font = font;
-            //}
-
-            //foreach (var c in GetAll(this, typeof(TreeView)))
-            //{
-            //    ((TreeView)c).Font = font;
-            //}
-
             if (DesignMode)
             {
                 return;

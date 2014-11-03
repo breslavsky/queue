@@ -11,11 +11,11 @@ using System;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 
-namespace Queue
+namespace Queue.Server
 {
-    public class Server
+    public class ServerInstance
     {
-        private static readonly ILog logger = LogManager.GetLogger(typeof(Server));
+        private static readonly ILog logger = LogManager.GetLogger(typeof(ServerInstance));
 
         private UnityContainer container;
 
@@ -24,7 +24,7 @@ namespace Queue
         private ServiceHost tcpServiceHost;
         private ServiceHost httpServiceHost;
 
-        public Server(DatabaseSettings database, ServicesConfig services)
+        public ServerInstance(ServerSettings settings)
         {
             logger.Info("Creating");
 
@@ -33,6 +33,8 @@ namespace Queue
 
             var queueInstance = new QueueInstance();
             container.RegisterInstance<IQueueInstance>(queueInstance);
+
+            var database = settings.Database;
 
             sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, database, (fluently) =>
             {
@@ -46,6 +48,7 @@ namespace Queue
 
             Mapper.AddProfile(new FullDTOProfile());
 
+            var services = settings.Services;
             var tcpService = services.TcpService;
 
             Uri uri;

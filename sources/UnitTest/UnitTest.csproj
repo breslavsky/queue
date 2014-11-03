@@ -52,13 +52,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.Data.Common, Version=1.0.0.16, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.Data.Common.1.0.0.16\lib\net45\Junte.Data.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Junte.Data.NHibernate, Version=1.0.1.210, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.Data.NHibernate.1.0.1.210\lib\net45\Junte.Data.NHibernate.dll</HintPath>
+    <Reference Include="Junte.Data.NHibernate">
+      <HintPath>..\packages\Junte.Data.NHibernate.1.1.0.115\lib\net45\Junte.Data.NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="Junte.Parallel.Common">
       <HintPath>..\packages\Junte.Parallel.Common.1.0.0.20\lib\net40\Junte.Parallel.Common.dll</HintPath>
@@ -139,7 +134,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{ad492499-461f-4117-a495-302089ad7b87}</Project>
-      <Name>Model %28Model\Model%29</Name>
+      <Name>Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services.DTO\Services.DTO.csproj">
       <Project>{d8c34e2b-87c1-4f82-aaf6-6b408e35228e}</Project>

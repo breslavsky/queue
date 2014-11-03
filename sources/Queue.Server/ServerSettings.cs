@@ -8,6 +8,22 @@ using System.Threading.Tasks;
 
 namespace Queue.Server
 {
+    public class ServerSettings : ConfigurationSection
+    {
+        [ConfigurationProperty("database")]
+        public DatabaseSettings Database
+        {
+            get { return (DatabaseSettings)this["database"]; }
+            set { this["database"] = value; }
+        }
+
+        [ConfigurationProperty("services")]
+        public ServicesConfig Services
+        {
+            get { return (ServicesConfig)this["services"]; }
+            set { this["services"] = value; }
+        }
+    }
     public class ServicesConfig : ConfigurationElement
     {
         [ConfigurationProperty("tcpService", IsRequired = true)]

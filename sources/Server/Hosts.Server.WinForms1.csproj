@@ -99,11 +99,9 @@
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.Data.Common">
-      <HintPath>..\packages\Junte.Data.Common.1.0.0.16\lib\net45\Junte.Data.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Junte.Data.NHibernate">
-      <HintPath>..\packages\Junte.Data.NHibernate.1.0.1.210\lib\net45\Junte.Data.NHibernate.dll</HintPath>
+    <Reference Include="Junte.Data.NHibernate, Version=1.1.0.115, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.Data.NHibernate.1.1.0.115\lib\net45\Junte.Data.NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="Junte.UI.WinForms, Version=1.0.0.57, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -150,8 +148,9 @@
     <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.4.0.1.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate.Caches.SysCache2">
-      <HintPath>..\packages\NHibernate.Caches.SysCache2.3.2.0.4000\lib\Net35\NHibernate.Caches.SysCache2.dll</HintPath>
+    <Reference Include="NHibernate.Caches.SysCache2, Version=4.0.0.4000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NHibernate.Caches.SysCache2.4.0.0.4000\lib\net40\NHibernate.Caches.SysCache2.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate.Mapping.Attributes">
       <HintPath>..\packages\NHibernate.Mapping.Attributes.3.2.0.0\lib\NHibernate.Mapping.Attributes.dll</HintPath>
@@ -251,7 +250,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{ad492499-461f-4117-a495-302089ad7b87}</Project>
-      <Name>Model %28Model\Model%29</Name>
+      <Name>Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Resources\Resources.csproj">
       <Project>{90c422a9-c537-42a7-b4a8-2490e4d20d3a}</Project>

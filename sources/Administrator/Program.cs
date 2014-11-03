@@ -13,9 +13,9 @@ namespace Queue.Administrator
         private static void Main()
         {
             //var culture = CultureInfo.CreateSpecificCulture("en-US");
-            //var culture = CultureInfo.CreateSpecificCulture("zh-CN");
-            //CultureInfo.DefaultThreadCurrentCulture = culture;
-            //CultureInfo.DefaultThreadCurrentUICulture = culture;
+            var culture = CultureInfo.CreateSpecificCulture("zh-CN");
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
