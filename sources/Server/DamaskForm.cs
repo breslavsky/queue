@@ -12,7 +12,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Queue.Server
+namespace Queue.Database
 {
     public partial class DamaskForm : Queue.UI.WinForms.RichForm
     {

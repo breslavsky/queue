@@ -27,16 +27,16 @@ namespace Queue.Administrator
 
             htmlEditorControl.SetHighlighting(HIGHLIGHTING_STYLE);
 
-            okCancelPanel.OnOk += Save;
-            okCancelPanel.OnCancel += Cancel;
+            okCancelPanel.OnOk += okCancelPanel_OnOk;
+            okCancelPanel.OnCancel += okCancelPanel_OnCancel;
         }
 
-        private void Save()
+        private void okCancelPanel_OnOk(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
         }
 
-        private void Cancel()
+        private void okCancelPanel_OnCancel(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
         }
