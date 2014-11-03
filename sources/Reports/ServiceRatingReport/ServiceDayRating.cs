@@ -1,7 +1,7 @@
 ﻿namespace Queue.Reports.ServiceRatingReport
 {
-    protected class ServiceDayRating : ServiceMonthRating
+    internal class ServiceDayRating : ServiceMonthRating
     {
         public int Day { get; set; }
-    };
+    }
 }

@@ -20,7 +20,7 @@ namespace Queue.Reports.ServiceRatingReport
         {
         }
 
-        public override HSSFWorkbook InternalGenerate(ISession session, ServiceDayRating[] data)
+        protected override HSSFWorkbook InternalGenerate(ISession session, ServiceYearRating[] data)
         {
             HSSFWorkbook workbook = new HSSFWorkbook(new MemoryStream(Templates.ServiceRating));
             ISheet worksheet = workbook.GetSheetAt(0);

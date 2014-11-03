@@ -20,21 +20,20 @@ namespace Queue.Reports.ServiceRatingReport
 
         public override HSSFWorkbook Generate()
         {
-                switch (detailLavel)
-                {
-                    case ServiceRatingReportDetailLavel.Year:
-                        return new YearDetailedReport(servicesIds, settings).Generate();
+            switch (detailLavel)
+            {
+                case ServiceRatingReportDetailLavel.Year:
+                    return new YearDetailedReport(servicesIds, settings).Generate();
 
-                    case ServiceRatingReportDetailLavel.Month:
-                        return new MonthDetailedReport(servicesIds, settings).Generate();
+                case ServiceRatingReportDetailLavel.Month:
+                    return new MonthDetailedReport(servicesIds, settings).Generate();
 
-                    case ServiceRatingReportDetailLavel.Day:
+                case ServiceRatingReportDetailLavel.Day:
 
-                        return new DayDetailedReport(servicesIds, settings).Generate();
+                    return new DayDetailedReport(servicesIds, settings).Generate();
 
-                    default:
-                        throw new FaultException(string.Format("Указанный уровень детализации не поддерживается: {0}", detailLavel.ToString()));
-                }
+                default:
+                    throw new FaultException(string.Format("Указанный уровень детализации не поддерживается: {0}", detailLavel.ToString()));
             }
         }
     }

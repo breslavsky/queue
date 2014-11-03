@@ -19,7 +19,7 @@ namespace Queue.Reports.ServiceRatingReport
         protected ServiceRatingReportSettings settings;
         protected Guid[] servicesIds;
 
-        protected Action<IRow, ServiceRating> renderRating = (r, rating) =>
+        internal Action<IRow, ServiceRating> renderRating = (r, rating) =>
         {
             ICell cell = r.CreateCell(5);
             cell.SetCellValue(rating.Total);

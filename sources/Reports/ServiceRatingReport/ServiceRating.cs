@@ -4,7 +4,7 @@ using System;
 
 namespace Queue.Reports.ServiceRatingReport
 {
-    protected class ServiceRating
+    internal class ServiceRating
     {
         public Service Service { get; set; }
 
@@ -33,5 +33,5 @@ namespace Queue.Reports.ServiceRatingReport
         public int SubjectsLive { get; set; }
 
         public int SubjectsEarly { get; set; }
-    };
+    }
 }

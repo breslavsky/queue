@@ -91,7 +91,15 @@
     <Compile Include="ClientRequestReport\ClientRequestReport.cs" />
     <Compile Include="ExceptionScheduleReport\ExceptionScheduleReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceRatingReport\BaseDetailedReport.cs" />
+    <Compile Include="ServiceRatingReport\DayDetailedReport.cs" />
+    <Compile Include="ServiceRatingReport\MonthDetailedReport.cs" />
+    <Compile Include="ServiceRatingReport\ServiceDayRating.cs" />
+    <Compile Include="ServiceRatingReport\ServiceMonthRating.cs" />
+    <Compile Include="ServiceRatingReport\ServiceRating.cs" />
     <Compile Include="ServiceRatingReport\ServiceRatingReport.cs" />
+    <Compile Include="ServiceRatingReport\ServiceYearRating.cs" />
+    <Compile Include="ServiceRatingReport\YearDetailedReport.cs" />
     <Compile Include="Templates.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
