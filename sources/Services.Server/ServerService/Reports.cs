@@ -1,6 +1,9 @@
 ﻿using NPOI.HSSF.UserModel;
 using Queue.Model.Common;
 using Queue.Reports;
+using Queue.Reports.ClientRequestReport;
+using Queue.Reports.ExceptionScheduleReport;
+using Queue.Reports.ServiceRatingReport;
 using System;
 using System.IO;
 using System.Threading.Tasks;

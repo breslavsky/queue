@@ -14,7 +14,7 @@ namespace Queue.Reports
 
         public abstract HSSFWorkbook Generate();
 
-        protected ICellStyle CreateCellBoldStyle(HSSFWorkbook workBook)
+        protected ICellStyle CreateCellBoldStyle(IWorkbook workBook)
         {
             ICellStyle boldCellStyle = workBook.CreateCellStyle();
 

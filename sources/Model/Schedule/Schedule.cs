@@ -8,7 +8,7 @@ namespace Queue.Model
 {
     [Class(Table = "schedule", DynamicUpdate = true, Lazy = false)]
     [Cache(Usage = CacheUsage.ReadWrite)]
-    public class Schedule : IdentifiedEntity
+    public abstract class Schedule : IdentifiedEntity
     {
         public Schedule()
         {
