@@ -8,11 +8,11 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
+using System.Linq;
 using System.ServiceModel;
 using System.Timers;
 using System.Windows.Forms;
 using QIcons = Queue.UI.Common.Icons;
-using QueueAdministrator = Queue.Services.DTO.Administrator;
 using Timer = System.Timers.Timer;
 
 namespace Queue.Administrator
@@ -158,19 +158,6 @@ namespace Queue.Administrator
             }
         }
 
-        private Form GetChildForm(Type formType)
-        {
-            foreach (Form form in MdiChildren)
-            {
-                if (form.GetType() == formType)
-                {
-                    return form;
-                }
-            }
-
-            return null;
-        }
-
         private void aboutMenuItem_Click(object sender, EventArgs e)
         {
             new AboutForm().ShowDialog();
@@ -178,277 +165,72 @@ namespace Queue.Administrator
 
         private void configMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            var form = GetChildForm(typeof(ConfigForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = new ConfigForm(channelBuilder, currentUser)
-            {
-                MdiParent = this
-            };
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-
-            form.Show();
+            ShowForm<ConfigForm>(() => new ConfigForm(channelBuilder, currentUser));
         }
 
         private void defaultScheduleMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            var form = GetChildForm(typeof(DefaultScheduleForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = new DefaultScheduleForm(channelBuilder, currentUser)
-            {
-                MdiParent = this
-            };
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-            form.Show();
+            ShowForm<DefaultScheduleForm>(() => new DefaultScheduleForm(channelBuilder, currentUser));
         }
 
         private void workplacesMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            var form = GetChildForm(typeof(WorkplacesForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = new WorkplacesForm(channelBuilder, currentUser)
-            {
-                MdiParent = this
-            };
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-            form.Show();
+            ShowForm<WorkplacesForm>(() => new WorkplacesForm(channelBuilder, currentUser));
         }
 
         private void usersMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            var form = GetChildForm(typeof(UsersForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = new UsersForm(channelBuilder, currentUser)
-            {
-                MdiParent = this
-            };
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-            form.Show();
+            ShowForm<UsersForm>(() => new UsersForm(channelBuilder, currentUser));
         }
 
         private void servicesMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            var form = GetChildForm(typeof(ServicesForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = new ServicesForm(channelBuilder, currentUser)
-            {
-                MdiParent = this
-            }; ;
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-            form.Show();
+            ShowForm<ServicesForm>(() => new ServicesForm(channelBuilder, currentUser));
         }
 
         private void clientsMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            var form = GetChildForm(typeof(ClientsForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = new ClientsForm(channelBuilder, currentUser)
-            {
-                MdiParent = this
-            };
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-            form.Show();
+            ShowForm<ClientsForm>(() => new ClientsForm(channelBuilder, currentUser));
         }
 
         private void addClientRequestMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            var form = GetChildForm(typeof(AddClentRequestForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = GetChildForm(typeof(AddClentRequestForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = new AddClentRequestForm(channelBuilder, currentUser)
-            {
-                MdiParent = this
-            };
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-            form.Show();
+            ShowForm<AddClentRequestForm>(() => new AddClentRequestForm(channelBuilder, currentUser));
         }
 
         private void clientRequestsMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            var form = GetChildForm(typeof(ClientRequestsForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = GetChildForm(typeof(ClientRequestsForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = new ClientRequestsForm(channelBuilder, currentUser)
-            {
-                MdiParent = this
-            };
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-            form.Show();
+            ShowForm<ClientRequestsForm>(() => new ClientRequestsForm(channelBuilder, currentUser));
         }
 
         private void queueMonitorMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            var form = GetChildForm(typeof(QueueMonitorForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = new QueueMonitorForm(channelBuilder, currentUser)
-            {
-                MdiParent = this
-            };
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-            form.Show();
+            ShowForm<QueueMonitorForm>(() => new QueueMonitorForm(channelBuilder, currentUser));
         }
 
         private void сurrentScheduleMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            var form = GetChildForm(typeof(CurrentScheduleForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = new CurrentScheduleForm(channelBuilder, currentUser)
-            {
-                MdiParent = this
-            };
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-            form.Show();
+            ShowForm<CurrentScheduleForm>(() => new CurrentScheduleForm(channelBuilder, currentUser));
         }
 
         private void serviceRatingReportMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            var form = GetChildForm(typeof(ServiceRatingReportForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
+            ShowForm<ServiceRatingReportForm>(() => new ServiceRatingReportForm(channelBuilder, currentUser));
+        }
 
-            form = new ServiceRatingReportForm(channelBuilder, currentUser)
-            {
-                MdiParent = this
-            };
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-            form.Show();
+        private void operatorsRatingToolStripMenuItem_Click(object sender, EventArgs eventArgs)
+        {
+            ShowForm<OperatorRatingReportForm>(() => new OperatorRatingReportForm(channelBuilder, currentUser));
         }
 
         private void exceptionScheduleReportMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            var form = GetChildForm(typeof(ExceptionScheduleReportForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = new ExceptionScheduleReportForm(channelBuilder, currentUser)
-            {
-                MdiParent = this
-            };
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-            form.Show();
+            ShowForm<ExceptionScheduleReportForm>(() => new ExceptionScheduleReportForm(channelBuilder, currentUser));
         }
 
         private void officesMenuItem_Click(object sender, EventArgs eventArgsventArgs)
         {
-            var form = GetChildForm(typeof(OfficesForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = new OfficesForm(channelBuilder, currentUser)
-            {
-                MdiParent = this
-            };
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-            form.Show();
+            ShowForm<OfficesForm>(() => new OfficesForm(channelBuilder, currentUser));
         }
 
         private void logoutMenuItem_Click(object sender, EventArgs e)
@@ -462,6 +244,26 @@ namespace Queue.Administrator
             pingTimer.Stop();
             taskPool.Cancel();
             pingChannel.Close();
+        }
+
+        private void ShowForm<T>(Func<Form> create)
+        {
+            Form form = MdiChildren.FirstOrDefault(f => f.GetType() == typeof(T));
+
+            if (form != null)
+            {
+                form.Activate();
+                return;
+            }
+
+            form = create();
+            form.MdiParent = this;
+
+            FormClosing += (s, e) =>
+            {
+                form.Close();
+            };
+            form.Show();
         }
     }
 }

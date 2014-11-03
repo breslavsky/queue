@@ -9,12 +9,12 @@ namespace Queue.Reports.ServiceRatingReport
     {
         private readonly Guid[] servicesIds;
         private readonly ServiceRatingReportSettings settings;
-        private readonly ServiceRatingReportDetailLavel detailLavel;
+        private readonly ReportDetailLevel detailLavel;
 
-        public ServiceRatingReport(Guid[] servicesIds, ServiceRatingReportDetailLavel detailLavel, ServiceRatingReportSettings settings)
+        public ServiceRatingReport(Guid[] services, ReportDetailLevel detailLevel, ServiceRatingReportSettings settings)
         {
-            this.servicesIds = servicesIds;
-            this.detailLavel = detailLavel;
+            this.servicesIds = services;
+            this.detailLavel = detailLevel;
             this.settings = settings;
         }
 
@@ -22,14 +22,13 @@ namespace Queue.Reports.ServiceRatingReport
         {
             switch (detailLavel)
             {
-                case ServiceRatingReportDetailLavel.Year:
+                case ReportDetailLevel.Year:
                     return new YearDetailedReport(servicesIds, settings).Generate();
 
-                case ServiceRatingReportDetailLavel.Month:
+                case ReportDetailLevel.Month:
                     return new MonthDetailedReport(servicesIds, settings).Generate();
 
-                case ServiceRatingReportDetailLavel.Day:
-
+                case ReportDetailLevel.Day:
                     return new DayDetailedReport(servicesIds, settings).Generate();
 
                 default:

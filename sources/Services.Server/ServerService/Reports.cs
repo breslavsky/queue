@@ -3,6 +3,7 @@ using Queue.Model.Common;
 using Queue.Reports;
 using Queue.Reports.ClientRequestReport;
 using Queue.Reports.ExceptionScheduleReport;
+using Queue.Reports.OperatorRatingReport;
 using Queue.Reports.ServiceRatingReport;
 using System;
 using System.IO;
@@ -12,12 +13,21 @@ namespace Queue.Services.Server
 {
     public partial class ServerService
     {
-        public async Task<byte[]> GetServiceRatingReport(Guid[] services, ServiceRatingReportDetailLavel detailLavel, ServiceRatingReportSettings settings)
+        public async Task<byte[]> GetServiceRatingReport(Guid[] services, ReportDetailLevel detailLavel, ServiceRatingReportSettings settings)
         {
             return await Task.Run(() =>
             {
                 checkPermission(UserRole.Administrator);
                 return GenerateReport(new ServiceRatingReport(services, detailLavel, settings));
+            });
+        }
+
+        public async Task<byte[]> GetOperatorRatingReport(Guid[] operators, ReportDetailLevel detailLavel, OperatorRatingReportSettings settings)
+        {
+            return await Task.Run(() =>
+            {
+                checkPermission(UserRole.Administrator);
+                return GenerateReport(new OperatorRatingReport(operators, detailLavel, settings));
             });
         }
 

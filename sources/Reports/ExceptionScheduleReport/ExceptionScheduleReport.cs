@@ -22,7 +22,7 @@ namespace Queue.Reports.ExceptionScheduleReport
             HSSFWorkbook workbook = new HSSFWorkbook(new MemoryStream(Templates.ExceptionSchedule));
 
             AddDataToReport(workbook.GetSheetAt(0), GetDefaultExceptionScheduleData());
-            AddDataToReport(workbook.GetSheetAt(0), GetServiceExceptionScheduleData(), false);
+            AddDataToReport(workbook.GetSheetAt(1), GetServiceExceptionScheduleData(), false);
 
             return workbook;
         }
@@ -32,10 +32,10 @@ namespace Queue.Reports.ExceptionScheduleReport
             using (ISession session = SessionProvider.OpenSession())
             {
                 return session.QueryOver<DefaultExceptionSchedule>()
-                    .Where(s => s.ScheduleDate >= fromDate)
+                    .Where(_s => _s.ScheduleDate >= fromDate)
                     .OrderBy(s => s.ScheduleDate).Asc
-                    .Select(s => new DefaultExceptionScheduleReportData(s))
-                    .List<DefaultExceptionScheduleReportData>()
+                    .List()
+                    .Select(s_ => new DefaultExceptionScheduleReportData(s_))
                     .ToArray();
             }
         }
@@ -47,8 +47,8 @@ namespace Queue.Reports.ExceptionScheduleReport
                 return session.QueryOver<ServiceExceptionSchedule>()
                     .Where(s => s.ScheduleDate >= fromDate)
                     .OrderBy(s => s.ScheduleDate).Asc
+                    .List()
                     .Select(s => new ServiceExceptionScheduleReportData(s))
-                    .List<ServiceExceptionScheduleReportData>()
                     .ToArray();
             }
         }

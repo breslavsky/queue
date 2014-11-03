@@ -83,6 +83,16 @@ namespace Queue.Reports {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] OperatorRating {
+            get {
+                object obj = ResourceManager.GetObject("OperatorRating", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] QueuePlan {
             get {
                 object obj = ResourceManager.GetObject("QueuePlan", resourceCulture);

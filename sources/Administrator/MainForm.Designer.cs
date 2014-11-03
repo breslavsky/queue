@@ -17,6 +17,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.topMenu = new System.Windows.Forms.MenuStrip();
+            this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.formsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dictionariesMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,7 +41,7 @@
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.serverStateLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.currentDateTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.operatorsRatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.topMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             this.SuspendLayout();
@@ -63,6 +64,13 @@
             this.topMenu.Name = "topMenu";
             this.topMenu.Size = new System.Drawing.Size(884, 24);
             this.topMenu.TabIndex = 0;
+            // 
+            // aboutMenuItem
+            // 
+            this.aboutMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("aboutMenuItem.Image")));
+            this.aboutMenuItem.Name = "aboutMenuItem";
+            this.aboutMenuItem.Size = new System.Drawing.Size(28, 20);
+            this.aboutMenuItem.Click += new System.EventHandler(this.aboutMenuItem_Click);
             // 
             // formsMenuItem
             // 
@@ -183,7 +191,8 @@
             // 
             this.reportsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.serviceRatingReportMenuItem,
-            this.scheduleReportMenu});
+            this.scheduleReportMenu,
+            this.operatorsRatingToolStripMenuItem});
             this.reportsMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("reportsMenuItem.Image")));
             this.reportsMenuItem.Name = "reportsMenuItem";
             this.reportsMenuItem.Size = new System.Drawing.Size(76, 20);
@@ -192,7 +201,7 @@
             // serviceRatingReportMenuItem
             // 
             this.serviceRatingReportMenuItem.Name = "serviceRatingReportMenuItem";
-            this.serviceRatingReportMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.serviceRatingReportMenuItem.Size = new System.Drawing.Size(186, 22);
             this.serviceRatingReportMenuItem.Text = "Рейтинг услуг";
             this.serviceRatingReportMenuItem.Click += new System.EventHandler(this.serviceRatingReportMenuItem_Click);
             // 
@@ -201,7 +210,7 @@
             this.scheduleReportMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exceptionScheduleReportMenuItem});
             this.scheduleReportMenu.Name = "scheduleReportMenu";
-            this.scheduleReportMenu.Size = new System.Drawing.Size(172, 22);
+            this.scheduleReportMenu.Size = new System.Drawing.Size(186, 22);
             this.scheduleReportMenu.Text = "Расписание услуг";
             // 
             // exceptionScheduleReportMenuItem
@@ -250,12 +259,12 @@
             this.currentDateTimeLabel.Size = new System.Drawing.Size(12, 17);
             this.currentDateTimeLabel.Text = "-";
             // 
-            // aboutMenuItem
+            // operatorsRatingToolStripMenuItem
             // 
-            this.aboutMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("aboutMenuItem.Image")));
-            this.aboutMenuItem.Name = "aboutMenuItem";
-            this.aboutMenuItem.Size = new System.Drawing.Size(28, 20);
-            this.aboutMenuItem.Click += new System.EventHandler(this.aboutMenuItem_Click);
+            this.operatorsRatingToolStripMenuItem.Name = "operatorsRatingToolStripMenuItem";
+            this.operatorsRatingToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.operatorsRatingToolStripMenuItem.Text = "Рейтинг операторов";
+            this.operatorsRatingToolStripMenuItem.Click += new System.EventHandler(this.operatorsRatingToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -306,6 +315,7 @@
         private System.Windows.Forms.ToolStripMenuItem сurrentScheduleMenuItem;
         private System.Windows.Forms.ToolStripMenuItem formsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem operatorsRatingToolStripMenuItem;
 
     }
 }

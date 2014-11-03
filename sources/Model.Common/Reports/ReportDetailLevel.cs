@@ -1,6 +1,6 @@
 ﻿namespace Queue.Model.Common
 {
-    public enum ServiceRatingReportDetailLavel
+    public enum ReportDetailLevel
     {
         Year,
         Month,

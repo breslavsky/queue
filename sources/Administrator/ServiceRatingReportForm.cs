@@ -12,7 +12,6 @@ using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
-using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
@@ -34,33 +33,6 @@ namespace Queue.Administrator
 
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
-
-            int currentYear = ServerDateTime.Today.Year;
-            for (int year = currentYear - 5; year <= currentYear; year++)
-            {
-                startYearComboBox.Items.Add(year);
-            }
-            startYearComboBox.SelectedIndex = startYearComboBox.Items.Count - 1;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
-                if (taskPool != null)
-                {
-                    taskPool.Dispose();
-                }
-                if (channelManager != null)
-                {
-                    channelManager.Dispose();
-                }
-            }
-            base.Dispose(disposing);
         }
 
         private void ServiceRatingReportForm_Load(object sender, EventArgs e)
@@ -71,6 +43,13 @@ namespace Queue.Administrator
             finishMonthPicker.Value = currentDate;
             finishDatePicker.Value = currentDate;
             targetDatePicker.Value = currentDate;
+
+            int currentYear = ServerDateTime.Today.Year;
+            for (int year = currentYear - 5; year <= currentYear; year++)
+            {
+                startYearComboBox.Items.Add(year);
+            }
+            startYearComboBox.SelectedIndex = startYearComboBox.Items.Count - 1;
         }
 
         private void startYearComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -209,10 +188,10 @@ namespace Queue.Administrator
                     ServiceRatingReportSettings settings;
                     DateTime startDate, finishDate;
 
-                    ServiceRatingReportDetailLavel detailLevel = (ServiceRatingReportDetailLavel)detailLevelTabControl.SelectedIndex;
+                    ReportDetailLevel detailLevel = (ReportDetailLevel)detailLevelTabControl.SelectedIndex;
                     switch (detailLevel)
                     {
-                        case ServiceRatingReportDetailLavel.Year:
+                        case ReportDetailLevel.Year:
 
                             int startYear = (int)startYearComboBox.SelectedItem;
                             int finishYear = (int)finishYearComboBox.SelectedItem;
@@ -225,7 +204,7 @@ namespace Queue.Administrator
                             };
                             break;
 
-                        case ServiceRatingReportDetailLavel.Month:
+                        case ReportDetailLevel.Month:
 
                             startDate = startMonthPicker.Value;
                             finishDate = finishMonthPicker.Value;
@@ -240,7 +219,7 @@ namespace Queue.Administrator
                             };
                             break;
 
-                        case ServiceRatingReportDetailLavel.Day:
+                        case ReportDetailLevel.Day:
 
                             startDate = startDatePicker.Value;
                             finishDate = finishDatePicker.Value;
@@ -257,7 +236,7 @@ namespace Queue.Administrator
                             };
                             break;
 
-                        case ServiceRatingReportDetailLavel.Hour:
+                        case ReportDetailLevel.Hour:
 
                             settings = new ServiceRatingReportSettings()
                             {
@@ -267,7 +246,7 @@ namespace Queue.Administrator
                             break;
 
                         default:
-                            throw new Exception("Не верный тип детализации");
+                            throw new ApplicationException("Неверный тип детализации");
                     }
 
                     List<Guid> servicesIds = isFullCheckBox.Checked
@@ -306,6 +285,26 @@ namespace Queue.Administrator
         private void ServiceRatingReportForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Cancel();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+                if (taskPool != null)
+                {
+                    taskPool.Dispose();
+                }
+                if (channelManager != null)
+                {
+                    channelManager.Dispose();
+                }
+            }
+            base.Dispose(disposing);
         }
     }
 }

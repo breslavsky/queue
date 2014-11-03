@@ -90,6 +90,8 @@
     <Compile Include="BaseReport.cs" />
     <Compile Include="ClientRequestReport\ClientRequestReport.cs" />
     <Compile Include="ExceptionScheduleReport\ExceptionScheduleReport.cs" />
+    <Compile Include="OperatorRatingReport\BaseDetailedReport.cs" />
+    <Compile Include="OperatorRatingReport\OperatorRatingReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceRatingReport\BaseDetailedReport.cs" />
     <Compile Include="ServiceRatingReport\DayDetailedReport.cs" />
@@ -112,6 +114,7 @@
     <None Include="Templates\ClientRequest.xls" />
     <None Include="Templates\ExceptionSchedule.xls" />
     <None Include="Templates\QueuePlan.xls" />
+    <None Include="Templates\OperatorRating.xls" />
     <None Include="Templates\ServiceRating.xls" />
   </ItemGroup>
   <ItemGroup>

@@ -88,11 +88,12 @@
     <Compile Include="ConfigType.cs" />
     <Compile Include="DataListItem.cs" />
     <Compile Include="EventType.cs" />
+    <Compile Include="Reports\OperatorRatingReportSettings.cs" />
     <Compile Include="PIN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceParameterType.cs" />
-    <Compile Include="ServiceRatingReportDetailLavel.cs" />
-    <Compile Include="ServiceRatingReportSettings.cs" />
+    <Compile Include="Reports\ReportDetailLevel.cs" />
+    <Compile Include="Reports\ServiceRatingReportSettings.cs" />
     <Compile Include="ServiceRenderingMode.cs" />
     <Compile Include="ServiceType.cs" />
     <Compile Include="Translation\ClientRequestRegistrator.Designer.cs">

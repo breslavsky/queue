@@ -185,7 +185,7 @@
             this.Controls.Add(this.logoPictureBox);
             this.Controls.Add(this.connectionGroupBox);
             this.Controls.Add(this.loginGroupBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(365, 360);
             this.Name = "LoginForm";
