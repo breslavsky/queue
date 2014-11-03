@@ -28,44 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.databaseGroupBox = new System.Windows.Forms.GroupBox();
-            this.isValidateCheckBox = new System.Windows.Forms.CheckBox();
             this.connectButton = new System.Windows.Forms.Button();
             this.topMenu = new System.Windows.Forms.MenuStrip();
-            this.databaseMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.importMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.damaskMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.databaseGroupBox.SuspendLayout();
             this.topMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // databaseGroupBox
-            // 
-            this.databaseGroupBox.Controls.Add(this.isValidateCheckBox);
-            this.databaseGroupBox.Controls.Add(this.connectButton);
-            this.databaseGroupBox.Location = new System.Drawing.Point(10, 30);
-            this.databaseGroupBox.Name = "databaseGroupBox";
-            this.databaseGroupBox.Size = new System.Drawing.Size(245, 60);
-            this.databaseGroupBox.TabIndex = 0;
-            this.databaseGroupBox.TabStop = false;
-            this.databaseGroupBox.Text = "База данных";
-            // 
-            // isValidateCheckBox
-            // 
-            this.isValidateCheckBox.AutoSize = true;
-            this.isValidateCheckBox.Checked = true;
-            this.isValidateCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.isValidateCheckBox.Location = new System.Drawing.Point(125, 30);
-            this.isValidateCheckBox.Name = "isValidateCheckBox";
-            this.isValidateCheckBox.Size = new System.Drawing.Size(114, 17);
-            this.isValidateCheckBox.TabIndex = 0;
-            this.isValidateCheckBox.Text = "Проверить схему";
-            this.isValidateCheckBox.UseVisualStyleBackColor = true;
-            // 
             // connectButton
             // 
-            this.connectButton.Location = new System.Drawing.Point(10, 25);
+            this.connectButton.Location = new System.Drawing.Point(5, 30);
             this.connectButton.Name = "connectButton";
             this.connectButton.Size = new System.Drawing.Size(105, 25);
             this.connectButton.TabIndex = 0;
@@ -75,35 +47,26 @@
             // topMenu
             // 
             this.topMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.databaseMenu});
+            this.importMenu});
             this.topMenu.Location = new System.Drawing.Point(0, 0);
             this.topMenu.Name = "topMenu";
             this.topMenu.Size = new System.Drawing.Size(264, 24);
             this.topMenu.TabIndex = 0;
             this.topMenu.Text = "menuStrip1";
             // 
-            // databaseMenu
-            // 
-            this.databaseMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.importMenu});
-            this.databaseMenu.Enabled = false;
-            this.databaseMenu.Image = ((System.Drawing.Image)(resources.GetObject("databaseMenu.Image")));
-            this.databaseMenu.Name = "databaseMenu";
-            this.databaseMenu.Size = new System.Drawing.Size(102, 20);
-            this.databaseMenu.Text = "База данных";
-            // 
             // importMenu
             // 
             this.importMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.damaskMenuItem});
             this.importMenu.Name = "importMenu";
-            this.importMenu.Size = new System.Drawing.Size(161, 22);
+            this.importMenu.Size = new System.Drawing.Size(106, 20);
             this.importMenu.Text = "Импорт данных";
+            this.importMenu.Click += new System.EventHandler(this.импортДаннызToolStripMenuItem_Click);
             // 
             // damaskMenuItem
             // 
             this.damaskMenuItem.Name = "damaskMenuItem";
-            this.damaskMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.damaskMenuItem.Size = new System.Drawing.Size(152, 22);
             this.damaskMenuItem.Text = "Дамаск";
             this.damaskMenuItem.Click += new System.EventHandler(this.damaskMenuItem_Click);
             // 
@@ -111,19 +74,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(264, 249);
+            this.ClientSize = new System.Drawing.Size(264, 67);
+            this.Controls.Add(this.connectButton);
             this.Controls.Add(this.topMenu);
-            this.Controls.Add(this.databaseGroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MainMenuStrip = this.topMenu;
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(280, 205);
+            this.MinimumSize = new System.Drawing.Size(280, 105);
             this.Name = "MainForm";
-            this.Text = "Сервер очереди";
+            this.Text = "База данных";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
-            this.databaseGroupBox.ResumeLayout(false);
-            this.databaseGroupBox.PerformLayout();
             this.topMenu.ResumeLayout(false);
             this.topMenu.PerformLayout();
             this.ResumeLayout(false);
@@ -133,13 +94,10 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox databaseGroupBox;
         private System.Windows.Forms.MenuStrip topMenu;
-        private System.Windows.Forms.ToolStripMenuItem databaseMenu;
+        private System.Windows.Forms.Button connectButton;
         private System.Windows.Forms.ToolStripMenuItem importMenu;
         private System.Windows.Forms.ToolStripMenuItem damaskMenuItem;
-        private System.Windows.Forms.Button connectButton;
-        private System.Windows.Forms.CheckBox isValidateCheckBox;
     }
 }
 
