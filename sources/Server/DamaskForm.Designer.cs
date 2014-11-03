@@ -1,4 +1,4 @@
-﻿namespace Queue.Server
+﻿namespace Queue.Database
 {
     partial class DamaskForm
     {

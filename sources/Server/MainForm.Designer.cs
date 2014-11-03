@@ -1,4 +1,4 @@
-﻿namespace Queue.Server
+﻿namespace Queue.Database
 {
     partial class MainForm
     {
@@ -111,7 +111,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(264, 192);
+            this.ClientSize = new System.Drawing.Size(264, 249);
             this.Controls.Add(this.topMenu);
             this.Controls.Add(this.databaseGroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

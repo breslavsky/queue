@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hosts.Server.WinForms1", "Server\Hosts.Server.WinForms1.csproj", "{3F1EECC0-3B45-4A62-8101-0FDCC7293D29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Server\Database.csproj", "{3F1EECC0-3B45-4A62-8101-0FDCC7293D29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{6BC9BEB5-51AB-49B8-A46C-CA9CA59B2976}"
 EndProject
@@ -88,8 +88,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Server.Tests", "Services.Server.Tests\Services.Server.Tests.csproj", "{55E3B7EE-D63A-4DFF-92F7-4A937D139E04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resources", "Resources\Resources.csproj", "{90C422A9-C537-42A7-B4A8-2490E4D20D3A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{3ACCF9A0-E68B-4E43-9B44-D2B2507C1734}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Queue.Server\Server.csproj", "{8EF18975-59B4-4084-9127-7ADFD12129A3}"
 EndProject
@@ -450,16 +448,6 @@ Global
 		{90C422A9-C537-42A7-B4A8-2490E4D20D3A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{90C422A9-C537-42A7-B4A8-2490E4D20D3A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{90C422A9-C537-42A7-B4A8-2490E4D20D3A}.Release|x86.ActiveCfg = Release|Any CPU
-		{3ACCF9A0-E68B-4E43-9B44-D2B2507C1734}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3ACCF9A0-E68B-4E43-9B44-D2B2507C1734}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3ACCF9A0-E68B-4E43-9B44-D2B2507C1734}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{3ACCF9A0-E68B-4E43-9B44-D2B2507C1734}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{3ACCF9A0-E68B-4E43-9B44-D2B2507C1734}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{3ACCF9A0-E68B-4E43-9B44-D2B2507C1734}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3ACCF9A0-E68B-4E43-9B44-D2B2507C1734}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3ACCF9A0-E68B-4E43-9B44-D2B2507C1734}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{3ACCF9A0-E68B-4E43-9B44-D2B2507C1734}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{3ACCF9A0-E68B-4E43-9B44-D2B2507C1734}.Release|x86.ActiveCfg = Release|Any CPU
 		{8EF18975-59B4-4084-9127-7ADFD12129A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8EF18975-59B4-4084-9127-7ADFD12129A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EF18975-59B4-4084-9127-7ADFD12129A3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -520,6 +508,5 @@ Global
 		{3F0ECE25-BF22-4A86-8609-C28F79EE37C1} = {1D370001-385F-4908-AF13-A98082764118}
 		{55E3B7EE-D63A-4DFF-92F7-4A937D139E04} = {1D370001-385F-4908-AF13-A98082764118}
 		{77C9CC5E-AF26-411D-9413-0BF7E827EBA9} = {FDE55A47-7E08-41A2-A05E-86048F913703}
-		{3F1EECC0-3B45-4A62-8101-0FDCC7293D29} = {FDE55A47-7E08-41A2-A05E-86048F913703}
 	EndGlobalSection
 EndGlobal

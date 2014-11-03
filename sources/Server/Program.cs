@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Queue.Server
+namespace Queue.Database
 {
     public static class Program
     {

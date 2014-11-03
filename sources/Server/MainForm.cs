@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DialogResult = System.Windows.Forms.DialogResult;
 
-namespace Queue.Server
+namespace Queue.Database
 {
     public partial class MainForm : Queue.UI.WinForms.RichForm
     {
