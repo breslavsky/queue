@@ -39,13 +39,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.Data.Common, Version=1.0.0.16, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.Data.Common.1.0.0.16\lib\net45\Junte.Data.Common.dll</HintPath>
+    <Reference Include="Junte.Data.Common">
+      <HintPath>..\packages\Junte.Data.Common.1.0.0.20\lib\net45\Junte.Data.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.Data.NHibernate, Version=1.0.1.210, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.Data.NHibernate.1.0.1.210\lib\net45\Junte.Data.NHibernate.dll</HintPath>
+    <Reference Include="Junte.Data.NHibernate">
+      <HintPath>..\packages\Junte.Data.NHibernate.1.1.0.115\lib\net45\Junte.Data.NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -117,6 +115,7 @@
     <Compile Include="ServiceStep.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

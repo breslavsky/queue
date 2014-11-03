@@ -22,16 +22,6 @@ namespace Queue.Reports.ServiceRatingReport
 
         protected override HSSFWorkbook InternalGenerate(ISession session, ServiceYearRating[] data)
         {
-            HSSFWorkbook workbook = new HSSFWorkbook(new MemoryStream(Templates.ServiceRating));
-            ISheet worksheet = workbook.GetSheetAt(0);
-
-            IDataFormat format = workbook.CreateDataFormat();
-            ICellStyle boldCellStyle = CreateCellBoldStyle(workbook);
-
-            IRow row;
-            ICell cell;
-            int rowIndex = worksheet.LastRowNum + 1;
-
             Dictionary<int, List<ServiceYearRating>> yearsData = new Dictionary<int, List<ServiceYearRating>>();
 
             foreach (var year in data.OrderBy(y => y.Year).GroupBy(r => r.Year))
@@ -47,6 +37,16 @@ namespace Queue.Reports.ServiceRatingReport
                     ratings.Add(r);
                 }
             }
+
+            HSSFWorkbook workbook = new HSSFWorkbook(new MemoryStream(Templates.ServiceRating));
+            ISheet worksheet = workbook.GetSheetAt(0);
+
+            IDataFormat format = workbook.CreateDataFormat();
+            ICellStyle boldCellStyle = CreateCellBoldStyle(workbook);
+
+            IRow row;
+            ICell cell;
+            int rowIndex = worksheet.LastRowNum + 1;
 
             row = worksheet.GetRow(0);
             cell = row.CreateCell(0);
