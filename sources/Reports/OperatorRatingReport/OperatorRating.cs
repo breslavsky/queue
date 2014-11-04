@@ -3,7 +3,7 @@ using System;
 
 namespace Queue.Reports.OperatorRatingReport
 {
-    internal class OperatorRating
+    public class OperatorRating
     {
         public Operator Operator { get; set; }
 

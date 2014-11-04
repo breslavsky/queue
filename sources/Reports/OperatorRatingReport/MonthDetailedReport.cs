@@ -51,7 +51,7 @@ namespace Queue.Reports.OperatorRatingReport
                     {
                         IRow row = worksheet.CreateRow(rowIndex++);
                         WriteBoldCell(row, 4, c => c.SetCellValue(rating.Operator.ToString()));
-                        renderRating(row, rating);
+                        RenderRating(row, rating);
                     }
                 }
             }

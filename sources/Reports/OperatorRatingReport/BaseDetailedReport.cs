@@ -23,34 +23,6 @@ namespace Queue.Reports.OperatorRatingReport
 
         private Lazy<Operator[]> allOperators;
 
-        internal Action<IRow, OperatorRating> renderRating = (r, rating) =>
-        {
-            ICell cell = r.CreateCell(5);
-            cell.SetCellValue(rating.Total);
-            cell = r.CreateCell(6);
-            cell.SetCellValue(rating.Live);
-            cell = r.CreateCell(7);
-            cell.SetCellValue(rating.Early);
-            cell = r.CreateCell(8);
-            cell.SetCellValue(rating.Waiting);
-            cell = r.CreateCell(9);
-            cell.SetCellValue(rating.Absence);
-            cell = r.CreateCell(10);
-            cell.SetCellValue(rating.Rendered);
-            cell = r.CreateCell(11);
-            cell.SetCellValue(rating.Canceled);
-            cell = r.CreateCell(12);
-            cell.SetCellValue(rating.Rendered != 0 ? Math.Round(rating.RenderTime.TotalMinutes / rating.Rendered) : 0);
-            cell = r.CreateCell(13);
-            cell.SetCellValue(rating.Rendered != 0 ? Math.Round(rating.WaitingTime.TotalMinutes / rating.Rendered) : 0);
-            cell = r.CreateCell(14);
-            cell.SetCellValue(rating.SubjectsTotal);
-            cell = r.CreateCell(15);
-            cell.SetCellValue(rating.SubjectsLive);
-            cell = r.CreateCell(16);
-            cell.SetCellValue(rating.SubjectsEarly);
-        };
-
         protected ISessionProvider SessionProvider
         {
             get { return ServiceLocator.Current.GetInstance<ISessionProvider>(); }
@@ -204,6 +176,34 @@ namespace Queue.Reports.OperatorRatingReport
             boldCellStyle.SetFont(font);
 
             return boldCellStyle;
+        }
+
+        protected void RenderRating(IRow row, OperatorRating rating)
+        {
+            ICell cell = row.CreateCell(5);
+            cell.SetCellValue(rating.Total);
+            cell = row.CreateCell(6);
+            cell.SetCellValue(rating.Live);
+            cell = row.CreateCell(7);
+            cell.SetCellValue(rating.Early);
+            cell = row.CreateCell(8);
+            cell.SetCellValue(rating.Waiting);
+            cell = row.CreateCell(9);
+            cell.SetCellValue(rating.Absence);
+            cell = row.CreateCell(10);
+            cell.SetCellValue(rating.Rendered);
+            cell = row.CreateCell(11);
+            cell.SetCellValue(rating.Canceled);
+            cell = row.CreateCell(12);
+            cell.SetCellValue(rating.Rendered != 0 ? Math.Round(rating.RenderTime.TotalMinutes / rating.Rendered) : 0);
+            cell = row.CreateCell(13);
+            cell.SetCellValue(rating.Rendered != 0 ? Math.Round(rating.WaitingTime.TotalMinutes / rating.Rendered) : 0);
+            cell = row.CreateCell(14);
+            cell.SetCellValue(rating.SubjectsTotal);
+            cell = row.CreateCell(15);
+            cell.SetCellValue(rating.SubjectsLive);
+            cell = row.CreateCell(16);
+            cell.SetCellValue(rating.SubjectsEarly);
         }
 
         internal OperatorRating[] GetOperatorsRatings(OperatorRating[] input)

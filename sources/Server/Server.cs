@@ -17,26 +17,17 @@ namespace Queue.Server
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(ServerInstance));
 
-        private UnityContainer container;
-
-        private ISessionProvider sessionProvider;
-
         private ServiceHost tcpServiceHost;
         private ServiceHost httpServiceHost;
 
         public ServerInstance(ServerSettings settings)
         {
-            logger.Info("Creating");
+            logger.Info("Creating...");
 
-            container = new UnityContainer();
+            UnityContainer container = new UnityContainer();
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
-            var queueInstance = new QueueInstance();
-            container.RegisterInstance<IQueueInstance>(queueInstance);
-
-            var database = settings.Database;
-
-            sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, database, (fluently) =>
+            ISessionProvider sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, settings.Database, (fluently) =>
             {
                 fluently.Cache(c => c
                     .ProviderClass<SysCacheProvider>()
@@ -45,6 +36,9 @@ namespace Queue.Server
                     .UseMinimalPuts());
             });
             container.RegisterInstance<ISessionProvider>(sessionProvider);
+
+            QueueInstance queueInstance = new QueueInstance();
+            container.RegisterInstance<IQueueInstance>(queueInstance);
 
             Mapper.AddProfile(new FullDTOProfile());
 
