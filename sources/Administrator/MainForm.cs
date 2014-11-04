@@ -2,6 +2,7 @@
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
 using log4net;
+using Queue.Administrator.Reports;
 using Queue.Common;
 using Queue.Manager;
 using Queue.Services.Contracts;
@@ -30,7 +31,7 @@ namespace Queue.Administrator
         private Channel<IServerTcpService> pingChannel;
 
         private Timer pingTimer;
-        private int PING_INTERVAL = 10000;
+        private int PingInterval = 10000;
 
         public MainForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
@@ -84,9 +85,9 @@ namespace Queue.Administrator
         private void pingTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             pingTimer.Stop();
-            if (pingTimer.Interval < PING_INTERVAL)
+            if (pingTimer.Interval < PingInterval)
             {
-                pingTimer.Interval = PING_INTERVAL;
+                pingTimer.Interval = PingInterval;
             }
 
             try

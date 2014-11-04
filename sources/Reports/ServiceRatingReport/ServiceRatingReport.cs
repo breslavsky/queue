@@ -7,13 +7,13 @@ namespace Queue.Reports.ServiceRatingReport
 {
     public class ServiceRatingReport : BaseReport
     {
-        private readonly Guid[] servicesIds;
+        private readonly Guid[] services;
         private readonly ServiceRatingReportSettings settings;
         private readonly ReportDetailLevel detailLavel;
 
         public ServiceRatingReport(Guid[] services, ReportDetailLevel detailLevel, ServiceRatingReportSettings settings)
         {
-            this.servicesIds = services;
+            this.services = services;
             this.detailLavel = detailLevel;
             this.settings = settings;
         }
@@ -23,13 +23,13 @@ namespace Queue.Reports.ServiceRatingReport
             switch (detailLavel)
             {
                 case ReportDetailLevel.Year:
-                    return new YearDetailedReport(servicesIds, settings).Generate();
+                    return new YearDetailedReport(services, settings).Generate();
 
                 case ReportDetailLevel.Month:
-                    return new MonthDetailedReport(servicesIds, settings).Generate();
+                    return new MonthDetailedReport(services, settings).Generate();
 
                 case ReportDetailLevel.Day:
-                    return new DayDetailedReport(servicesIds, settings).Generate();
+                    return new DayDetailedReport(services, settings).Generate();
 
                 default:
                     throw new FaultException(string.Format("Указанный уровень детализации не поддерживается: {0}", detailLavel.ToString()));

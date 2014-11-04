@@ -13,7 +13,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
 
-namespace Queue.Administrator
+namespace Queue.Administrator.Reports
 {
     public partial class ServiceRatingReportForm : Queue.UI.WinForms.RichForm
     {
@@ -33,6 +33,33 @@ namespace Queue.Administrator
 
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
+
+            int currentYear = ServerDateTime.Today.Year;
+            for (int year = currentYear - 5; year <= currentYear; year++)
+            {
+                startYearComboBox.Items.Add(year);
+            }
+            startYearComboBox.SelectedIndex = startYearComboBox.Items.Count - 1;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+                if (taskPool != null)
+                {
+                    taskPool.Dispose();
+                }
+                if (channelManager != null)
+                {
+                    channelManager.Dispose();
+                }
+            }
+            base.Dispose(disposing);
         }
 
         private void ServiceRatingReportForm_Load(object sender, EventArgs e)
@@ -43,13 +70,6 @@ namespace Queue.Administrator
             finishMonthPicker.Value = currentDate;
             finishDatePicker.Value = currentDate;
             targetDatePicker.Value = currentDate;
-
-            int currentYear = ServerDateTime.Today.Year;
-            for (int year = currentYear - 5; year <= currentYear; year++)
-            {
-                startYearComboBox.Items.Add(year);
-            }
-            startYearComboBox.SelectedIndex = startYearComboBox.Items.Count - 1;
         }
 
         private void startYearComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -246,7 +266,7 @@ namespace Queue.Administrator
                             break;
 
                         default:
-                            throw new ApplicationException("Неверный тип детализации");
+                            throw new Exception("Не верный тип детализации");
                     }
 
                     List<Guid> servicesIds = isFullCheckBox.Checked
@@ -285,26 +305,6 @@ namespace Queue.Administrator
         private void ServiceRatingReportForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Cancel();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
-                if (taskPool != null)
-                {
-                    taskPool.Dispose();
-                }
-                if (channelManager != null)
-                {
-                    channelManager.Dispose();
-                }
-            }
-            base.Dispose(disposing);
         }
     }
 }

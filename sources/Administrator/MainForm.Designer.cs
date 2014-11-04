@@ -36,12 +36,12 @@
             this.serviceRatingReportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scheduleReportMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.exceptionScheduleReportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.operatorsRatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.officesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.serverStateLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.currentDateTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.operatorsRatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.topMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             this.SuspendLayout();
@@ -191,8 +191,8 @@
             // 
             this.reportsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.serviceRatingReportMenuItem,
-            this.scheduleReportMenu,
-            this.operatorsRatingToolStripMenuItem});
+            this.operatorsRatingToolStripMenuItem,
+            this.scheduleReportMenu});
             this.reportsMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("reportsMenuItem.Image")));
             this.reportsMenuItem.Name = "reportsMenuItem";
             this.reportsMenuItem.Size = new System.Drawing.Size(76, 20);
@@ -219,6 +219,13 @@
             this.exceptionScheduleReportMenuItem.Size = new System.Drawing.Size(223, 22);
             this.exceptionScheduleReportMenuItem.Text = "Исключения в расписании";
             this.exceptionScheduleReportMenuItem.Click += new System.EventHandler(this.exceptionScheduleReportMenuItem_Click);
+            // 
+            // operatorsRatingToolStripMenuItem
+            // 
+            this.operatorsRatingToolStripMenuItem.Name = "operatorsRatingToolStripMenuItem";
+            this.operatorsRatingToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.operatorsRatingToolStripMenuItem.Text = "Рейтинг операторов";
+            this.operatorsRatingToolStripMenuItem.Click += new System.EventHandler(this.operatorsRatingToolStripMenuItem_Click);
             // 
             // officesMenuItem
             // 
@@ -258,13 +265,6 @@
             this.currentDateTimeLabel.Name = "currentDateTimeLabel";
             this.currentDateTimeLabel.Size = new System.Drawing.Size(12, 17);
             this.currentDateTimeLabel.Text = "-";
-            // 
-            // operatorsRatingToolStripMenuItem
-            // 
-            this.operatorsRatingToolStripMenuItem.Name = "operatorsRatingToolStripMenuItem";
-            this.operatorsRatingToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.operatorsRatingToolStripMenuItem.Text = "Рейтинг операторов";
-            this.operatorsRatingToolStripMenuItem.Click += new System.EventHandler(this.operatorsRatingToolStripMenuItem_Click);
             // 
             // MainForm
             // 

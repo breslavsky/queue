@@ -9,6 +9,8 @@ using NPOI.SS.UserModel;
 using Queue.Model;
 using Queue.Model.Common;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.ServiceModel;
 
@@ -16,18 +18,59 @@ namespace Queue.Reports.OperatorRatingReport
 {
     public abstract class BaseDetailedReport<T>
     {
-        protected ServiceRatingReportSettings settings;
+        protected OperatorRatingReportSettings settings;
         protected Guid[] operators;
+
+        private Lazy<Operator[]> allOperators;
+
+        internal Action<IRow, OperatorRating> renderRating = (r, rating) =>
+        {
+            ICell cell = r.CreateCell(5);
+            cell.SetCellValue(rating.Total);
+            cell = r.CreateCell(6);
+            cell.SetCellValue(rating.Live);
+            cell = r.CreateCell(7);
+            cell.SetCellValue(rating.Early);
+            cell = r.CreateCell(8);
+            cell.SetCellValue(rating.Waiting);
+            cell = r.CreateCell(9);
+            cell.SetCellValue(rating.Absence);
+            cell = r.CreateCell(10);
+            cell.SetCellValue(rating.Rendered);
+            cell = r.CreateCell(11);
+            cell.SetCellValue(rating.Canceled);
+            cell = r.CreateCell(12);
+            cell.SetCellValue(rating.Rendered != 0 ? Math.Round(rating.RenderTime.TotalMinutes / rating.Rendered) : 0);
+            cell = r.CreateCell(13);
+            cell.SetCellValue(rating.Rendered != 0 ? Math.Round(rating.WaitingTime.TotalMinutes / rating.Rendered) : 0);
+            cell = r.CreateCell(14);
+            cell.SetCellValue(rating.SubjectsTotal);
+            cell = r.CreateCell(15);
+            cell.SetCellValue(rating.SubjectsLive);
+            cell = r.CreateCell(16);
+            cell.SetCellValue(rating.SubjectsEarly);
+        };
 
         protected ISessionProvider SessionProvider
         {
             get { return ServiceLocator.Current.GetInstance<ISessionProvider>(); }
         }
 
-        public BaseDetailedReport(Guid[] operators, ServiceRatingReportSettings settings)
+        public BaseDetailedReport(Guid[] operators, OperatorRatingReportSettings settings)
         {
             this.settings = settings;
             this.operators = operators;
+
+            allOperators = new Lazy<Operator[]>(() =>
+            {
+                using (ISession session = SessionProvider.OpenSession())
+                {
+                    return session.QueryOver<Operator>()
+                                    .List()
+                                    .OrderBy(o => o.ToString())
+                                    .ToArray();
+                }
+            });
         }
 
         public HSSFWorkbook Generate()
@@ -44,6 +87,10 @@ namespace Queue.Reports.OperatorRatingReport
             if (operators.Length > 0)
             {
                 conjunction.Add(Expression.In("Operator.Id", operators));
+            }
+            else
+            {
+                conjunction.Add(Expression.IsNotNull("Operator.Id"));
             }
 
             conjunction.Add(Expression.Ge("RequestDate", startDate));
@@ -65,7 +112,24 @@ namespace Queue.Reports.OperatorRatingReport
                     throw new FaultException("Пустой отчет");
                 }
 
-                return InternalGenerate(session, data);
+                HSSFWorkbook workbook = new HSSFWorkbook(new MemoryStream(Templates.OperatorRating));
+                ISheet worksheet = workbook.GetSheetAt(0);
+
+                IDataFormat format = workbook.CreateDataFormat();
+                ICellStyle boldCellStyle = CreateCellBoldStyle(workbook);
+
+                IRow row;
+                ICell cell;
+                int rowIndex = worksheet.LastRowNum + 1;
+
+                row = worksheet.GetRow(0);
+                cell = row.CreateCell(0);
+                cell.SetCellValue(string.Format("Период с {0} по {1}", startDate.ToShortDateString(), finishDate.ToShortDateString()));
+                cell.CellStyle = boldCellStyle;
+
+                RenderData(worksheet, data);
+
+                return workbook;
             }
         }
 
@@ -75,15 +139,15 @@ namespace Queue.Reports.OperatorRatingReport
 
         protected abstract ProjectionList GetProjections();
 
-        protected abstract HSSFWorkbook InternalGenerate(ISession session, T[] data);
+        protected abstract void RenderData(ISheet worksheet, T[] data);
 
         protected ProjectionList GetCommonProjections()
         {
             ProjectionList projections = Projections.ProjectionList();
 
             projections
-                .Add(Projections.GroupProperty("Service"))
-                .Add(Projections.Property("Service"), "Service")
+                .Add(Projections.GroupProperty("Operator"))
+                .Add(Projections.Property("Operator"), "Operator")
 
                 .Add(Projections.RowCount(), "Total")
 
@@ -121,14 +185,14 @@ namespace Queue.Reports.OperatorRatingReport
                 .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("Type", ClientRequestType.Early),
                     Projections.Property("Subjects"), Projections.Constant(0, NHibernateUtil.Int32))), "SubjectsEarly");
 
-            if (settings.IsServiceTypes)
-            {
-                projections
-                    .Add(Projections.GroupProperty("ServiceType"))
-                    .Add(Projections.Property("ServiceType"), "ServiceType");
-            }
-
             return projections;
+        }
+
+        protected void WriteBoldCell(IRow row, int cellIndex, Action<ICell> setValue)
+        {
+            ICell cell = row.CreateCell(cellIndex);
+            setValue(cell);
+            cell.CellStyle = CreateCellBoldStyle(row.Sheet.Workbook);
         }
 
         protected ICellStyle CreateCellBoldStyle(IWorkbook workBook)
@@ -140,6 +204,27 @@ namespace Queue.Reports.OperatorRatingReport
             boldCellStyle.SetFont(font);
 
             return boldCellStyle;
+        }
+
+        internal OperatorRating[] GetOperatorsRatings(OperatorRating[] input)
+        {
+            List<OperatorRating> result = new List<OperatorRating>();
+
+            foreach (Operator op in allOperators.Value)
+            {
+                OperatorRating rating = input.SingleOrDefault(o => o.Operator.Equals(op));
+                if (rating == null)
+                {
+                    rating = new OperatorRating()
+                    {
+                        Operator = op
+                    };
+                }
+
+                result.Add(rating);
+            }
+
+            return result.ToArray();
         }
     }
 }

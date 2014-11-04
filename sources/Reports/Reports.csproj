@@ -91,7 +91,14 @@
     <Compile Include="ClientRequestReport\ClientRequestReport.cs" />
     <Compile Include="ExceptionScheduleReport\ExceptionScheduleReport.cs" />
     <Compile Include="OperatorRatingReport\BaseDetailedReport.cs" />
+    <Compile Include="OperatorRatingReport\DayDetailedReport.cs" />
+    <Compile Include="OperatorRatingReport\MonthDetailedReport.cs" />
+    <Compile Include="OperatorRatingReport\OperatorDayRating.cs" />
     <Compile Include="OperatorRatingReport\OperatorRatingReport.cs" />
+    <Compile Include="OperatorRatingReport\OperatorYearRating.cs" />
+    <Compile Include="OperatorRatingReport\OperatorRating.cs" />
+    <Compile Include="OperatorRatingReport\OperatorMonthRating.cs" />
+    <Compile Include="OperatorRatingReport\YearDetailedReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceRatingReport\BaseDetailedReport.cs" />
     <Compile Include="ServiceRatingReport\DayDetailedReport.cs" />
@@ -121,6 +128,7 @@
     <EmbeddedResource Include="Templates.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Templates.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -6,34 +6,33 @@ namespace Queue.Reports.OperatorRatingReport
 {
     public class OperatorRatingReport : BaseReport
     {
-        private readonly Guid[] servicesIds;
+        private readonly Guid[] operators;
         private readonly OperatorRatingReportSettings settings;
         private readonly ReportDetailLevel detailLavel;
 
-        public OperatorRatingReport(Guid[] services, ReportDetailLevel detailLevel, OperatorRatingReportSettings settings)
+        public OperatorRatingReport(Guid[] operators, ReportDetailLevel detailLevel, OperatorRatingReportSettings settings)
         {
-            this.servicesIds = services;
+            this.operators = operators;
             this.detailLavel = detailLevel;
             this.settings = settings;
         }
 
         public override HSSFWorkbook Generate()
         {
-            //switch (detailLavel)
-            //{
-            //    case ServiceRatingReportDetailLavel.Year:
-            //        return new YearDetailedReport(servicesIds, settings).Generate();
+            switch (detailLavel)
+            {
+                case ReportDetailLevel.Year:
+                    return new YearDetailedReport(operators, settings).Generate();
 
-            //    case ServiceRatingReportDetailLavel.Month:
-            //        return new MonthDetailedReport(servicesIds, settings).Generate();
+                case ReportDetailLevel.Month:
+                    return new MonthDetailedReport(operators, settings).Generate();
 
-            //    case ServiceRatingReportDetailLavel.Day:
+                case ReportDetailLevel.Day:
+                    return new DayDetailedReport(operators, settings).Generate();
 
-            //        return new DayDetailedReport(servicesIds, settings).Generate();
-
-            //    default:
-            //        throw new FaultException(string.Format("Указанный уровень детализации не поддерживается: {0}", detailLavel.ToString()));
-            //}
+                //default:
+                //    throw new FaultException(string.Format("Указанный уровень детализации не поддерживается: {0}", detailLavel.ToString()));
+            }
 
             return null;
         }

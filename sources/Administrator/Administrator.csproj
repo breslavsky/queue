@@ -203,10 +203,10 @@
     <Compile Include="Config\PortalConfigControl.Designer.cs">
       <DependentUpon>PortalConfigControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="OperatorRatingReportForm.cs">
+    <Compile Include="Reports\OperatorRatingReportForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OperatorRatingReportForm.Designer.cs">
+    <Compile Include="Reports\OperatorRatingReportForm.Designer.cs">
       <DependentUpon>OperatorRatingReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -217,10 +217,10 @@
     <Compile Include="ServiceParametersControl.Designer.cs">
       <DependentUpon>ServiceParametersControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="ServiceRatingReportForm.cs">
+    <Compile Include="Reports\ServiceRatingReportForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServiceRatingReportForm.Designer.cs">
+    <Compile Include="Reports\ServiceRatingReportForm.Designer.cs">
       <DependentUpon>ServiceRatingReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Config\SMTPConfigControl.cs">
@@ -307,7 +307,7 @@
     <EmbeddedResource Include="Config\PortalConfigControl.resx">
       <DependentUpon>PortalConfigControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OperatorRatingReportForm.resx">
+    <EmbeddedResource Include="Reports\OperatorRatingReportForm.resx">
       <DependentUpon>OperatorRatingReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -326,7 +326,7 @@
     <EmbeddedResource Include="ServiceParametersControl.resx">
       <DependentUpon>ServiceParametersControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ServiceRatingReportForm.resx">
+    <EmbeddedResource Include="Reports\ServiceRatingReportForm.resx">
       <DependentUpon>ServiceRatingReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Config\SMTPConfigControl.resx">
