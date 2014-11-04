@@ -1,7 +1,6 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
-using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
@@ -19,6 +18,7 @@ using System.Windows.Forms;
 using System.Windows.Markup;
 using System.Windows.Xps.Packaging;
 using System.Xml;
+using QueueOperator = Queue.Services.DTO.Operator;
 using Translation = Queue.Model.Common.Translation;
 
 namespace Queue.Manager
@@ -79,19 +79,23 @@ namespace Queue.Manager
                     serviceTypeTextBlock.Text = translation2.GetString(clientRequest.ServiceType.ToString());
 
                     using (var channel = channelManager.CreateChannel())
-                    {                    
+                    {
                         try
                         {
                             var serviceSteps = await channel.Service.GetServiceSteps(service.Id);
-                            serviceStepComboBox.DataSource = new BindingSource(serviceSteps, null);
-                            serviceStepComboBox.SelectedItem = clientRequest.ServiceStep != null ? clientRequest.ServiceStep : null;
+                            serviceStepComboBox.SelectedValueChanged -= serviceStepComboBox_SelectedValueChanged;
+                            serviceStepComboBox.Items.AddRange(serviceSteps);
+                            serviceStepComboBox.Enabled = serviceSteps.Length > 0;
+                            serviceStepComboBox.SelectedItem = clientRequest.ServiceStep;
+                            serviceStepComboBox.SelectedValueChanged += serviceStepComboBox_SelectedValueChanged;
 
                             var translation3 = Translation.ClientRequestState.ResourceManager;
                             stateTextBlock.Text = translation3.GetString(clientRequest.State.ToString());
                             stateTextBlock.BackColor = ColorTranslator.FromHtml(clientRequest.Color);
 
-                            var queueOperator = clientRequest.Operator;
-                            operatorsComboBox.SelectedValue = queueOperator != null ? queueOperator.Id : Guid.Empty;
+                            operatorsComboBox.SelectedValueChanged -= operatorsComboBox_SelectedValueChanged;
+                            operatorsComboBox.SelectedItem = clientRequest.Operator;
+                            operatorsComboBox.SelectedValueChanged += operatorsComboBox_SelectedValueChanged;
 
                             eventsGridView.Rows.Clear();
 
@@ -126,32 +130,18 @@ namespace Queue.Manager
                         row.Cells["parameterValueColumn"].Value = parameter.Value;
                     }
 
-                    if (clientRequest.IsEditable)
-                    {
-                        isPriorityCheckBox.Enabled = true;
-                        subjectsPanel.Enabled = true;
-                        clientEditLink.Enabled = clientRequest.Client != null;
-                        operatorsComboBox.Enabled = true;
-                        serviceChangeLink.Enabled = true;
-                        postponeMinutesUpDown.Enabled = true;
-                        postponeButton.Enabled = true;
-                        cancelMenuItem.Enabled = true;
-                    }
-                    else
-                    {
-                        isPriorityCheckBox.Enabled = false;
-                        subjectsPanel.Enabled = false;
-                        clientEditLink.Enabled = false;
-                        operatorsComboBox.Enabled = false;
-                        serviceChangeLink.Enabled = false;
-                        postponeMinutesUpDown.Enabled = false;
-                        postponeButton.Enabled = false;
-                        cancelMenuItem.Enabled = false;
-                    }
+                    clientEditLink.Enabled = clientRequest.Client != null;
+                    editPanel.Enabled = clientRequest.IsEditable;
 
                     restoreMenuItem.Enabled = clientRequest.IsRestorable;
                 }));
             }
+        }
+
+        private void editPanel_EnabledChanged(object sender, EventArgs e)
+        {
+            postponeButton.Enabled = editPanel.Enabled;
+            cancelMenuItem.Enabled = editPanel.Enabled;
         }
 
         private async void EditClientRequestForm_Load(object sender, EventArgs e)
@@ -162,12 +152,9 @@ namespace Queue.Manager
                 {
                     await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
 
-                    var operators = await taskPool.AddTask(channel.Service.GetUserList(UserRole.Operator));
-                    operators.Add(Guid.Empty, "[не назначен]");
-
-                    operatorsComboBox.DisplayMember = DataListItem.Value;
-                    operatorsComboBox.ValueMember = DataListItem.Key;
-                    operatorsComboBox.DataSource = new BindingSource(operators.Reverse(), null);
+                    var operators = await taskPool.AddTask(channel.Service.GetOperators());
+                    operatorsComboBox.Items.AddRange(operators);
+                    operatorsComboBox.Enabled = operators.Length > 0;
 
                     ClientRequest = await taskPool.AddTask(channel.Service.GetClientRequest(clientRequestId));
                 }
@@ -262,82 +249,86 @@ namespace Queue.Manager
         private async void serviceStepComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
             var serviceStep = serviceStepComboBox.SelectedItem as ServiceStep;
-            if (serviceStep != null)
-            {
-                using (var channel = channelManager.CreateChannel())
-                {
-                    try
-                    {
-                        serviceStepComboBox.Enabled = false;
 
-                        await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                        ClientRequest = await taskPool.AddTask(channel.Service.ChangeClientRequestServiceStep(clientRequestId, serviceStep.Id));
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
-                    finally
-                    {
-                        serviceStepComboBox.Enabled = true;
-                    }
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    serviceStepComboBox.Enabled = false;
+
+                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
+                    ClientRequest = await taskPool.AddTask(channel.Service.ChangeClientRequestServiceStep(clientRequestId, serviceStep != null ? serviceStep.Id : Guid.Empty));
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+                finally
+                {
+                    serviceStepComboBox.Enabled = true;
                 }
             }
+        }
+
+        private void serviceStepResetButton_Click(object sender, EventArgs e)
+        {
+            serviceStepComboBox.SelectedItem = null;
         }
 
         private async void operatorsComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            var selectedValue = operatorsComboBox.SelectedValue;
-            if (selectedValue != null)
+            var queueOperator = operatorsComboBox.SelectedItem as QueueOperator;
+
+            using (var channel = channelManager.CreateChannel())
             {
-                var operatorId = (Guid)selectedValue;
-
-                using (var channel = channelManager.CreateChannel())
+                try
                 {
-                    try
-                    {
-                        operatorsComboBox.Enabled = false;
+                    serviceStepComboBox.Enabled = false;
 
-                        await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                        ClientRequest = await taskPool.AddTask(channel.Service.ChangeClientRequestOperator(clientRequestId, operatorId));
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
-                    finally
-                    {
-                        operatorsComboBox.Enabled = true;
-                    }
+                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
+                    ClientRequest = await taskPool.AddTask(channel.Service.ChangeClientRequestOperator(clientRequestId, queueOperator != null ? queueOperator.Id : Guid.Empty));
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+                finally
+                {
+                    serviceStepComboBox.Enabled = true;
                 }
             }
         }
 
+        private void operatorResetButton_Click(object sender, EventArgs e)
+        {
+            operatorsComboBox.SelectedItem = null;
+        }
+
         private async void serviceChangeLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            using (var f = new SelectServiceForm(channelBuilder, currentUser))
+            using (var form = new SelectServiceForm(channelBuilder, currentUser))
             {
-                if (f.ShowDialog() == DialogResult.OK)
+                if (form.ShowDialog() == DialogResult.OK)
                 {
-                    if (f.SelectedService != null)
+                    if (form.SelectedService != null)
                     {
-                        var selectedServiceId = f.SelectedService.Id;
+                        var selectedServiceId = form.SelectedService.Id;
 
                         using (var channel = channelManager.CreateChannel())
                         {

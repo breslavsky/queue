@@ -884,22 +884,33 @@ namespace Queue.Services.Server
                         throw new FaultException(string.Format("Невозможно изменить этап услуги у запроса клиента [{0}]", clientRequest));
                     }
 
-                    ServiceStep serviceStep = session.Get<ServiceStep>(serviceStepId);
-                    if (serviceStep == null)
+                    string message;
+
+                    if (serviceStepId != Guid.Empty)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceStepId), string.Format("Этап услуги [{0}] не найден", serviceStepId));
+                        var serviceStep = session.Get<ServiceStep>(serviceStepId);
+                        if (serviceStep == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceStepId), string.Format("Этап услуги [{0}] не найден", serviceStepId));
+                        }
+
+                        clientRequest.ServiceStep = serviceStep;
+                        message = string.Format("[{0}] изменил этап услуги на [{1}] для запроса клиента [{2}]", currentUser, serviceStep, clientRequest);
+                    }
+                    else
+                    {
+                        clientRequest.ServiceStep = null;
+                        message = string.Format("[{0}] сбросил этап услуги для запроса клиента [{1}]", currentUser, clientRequest);
                     }
 
-                    clientRequest.ServiceStep = serviceStep;
                     clientRequest.Version++;
                     session.Save(clientRequest);
 
                     var queueEvent = new ClientRequestEvent()
                     {
                         ClientRequest = clientRequest,
-                        Message = string.Format("[{0}] изменил этап услуги на [{1}] для запроса клиента [{2}]", currentUser, serviceStep, clientRequest)
+                        Message = message
                     };
-
                     session.Save(queueEvent);
 
                     var todayQueuePlan = queueInstance.TodayQueuePlan;

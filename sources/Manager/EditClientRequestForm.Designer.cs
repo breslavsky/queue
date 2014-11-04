@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.stateLabel = new System.Windows.Forms.Label();
             this.numberLabel = new System.Windows.Forms.Label();
             this.parametersLabel = new System.Windows.Forms.Label();
@@ -74,6 +74,9 @@
             this.serviceTypeTextBlock = new System.Windows.Forms.Label();
             this.serviceStepLabel = new System.Windows.Forms.Label();
             this.serviceStepComboBox = new System.Windows.Forms.ComboBox();
+            this.operatorResetButton = new System.Windows.Forms.Button();
+            this.serviceStepResetButton = new System.Windows.Forms.Button();
+            this.editPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.parametersGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).BeginInit();
@@ -81,12 +84,13 @@
             this.groupBox1.SuspendLayout();
             this.topMenu.SuspendLayout();
             this.subjectsPanel.SuspendLayout();
+            this.editPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // stateLabel
             // 
             this.stateLabel.AutoSize = true;
-            this.stateLabel.Location = new System.Drawing.Point(10, 295);
+            this.stateLabel.Location = new System.Drawing.Point(5, 260);
             this.stateLabel.Name = "stateLabel";
             this.stateLabel.Size = new System.Drawing.Size(108, 13);
             this.stateLabel.TabIndex = 0;
@@ -95,7 +99,7 @@
             // numberLabel
             // 
             this.numberLabel.AutoSize = true;
-            this.numberLabel.Location = new System.Drawing.Point(10, 45);
+            this.numberLabel.Location = new System.Drawing.Point(5, 10);
             this.numberLabel.Name = "numberLabel";
             this.numberLabel.Size = new System.Drawing.Size(41, 13);
             this.numberLabel.TabIndex = 0;
@@ -104,7 +108,7 @@
             // parametersLabel
             // 
             this.parametersLabel.AutoSize = true;
-            this.parametersLabel.Location = new System.Drawing.Point(330, 40);
+            this.parametersLabel.Location = new System.Drawing.Point(325, 5);
             this.parametersLabel.Name = "parametersLabel";
             this.parametersLabel.Size = new System.Drawing.Size(102, 13);
             this.parametersLabel.TabIndex = 0;
@@ -115,19 +119,19 @@
             this.parametersGridView.AllowUserToAddRows = false;
             this.parametersGridView.AllowUserToDeleteRows = false;
             this.parametersGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.parametersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.parametersGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.parameterNameColumn,
             this.parameterValueColumn});
-            this.parametersGridView.Location = new System.Drawing.Point(330, 60);
+            this.parametersGridView.Location = new System.Drawing.Point(325, 25);
             this.parametersGridView.MultiSelect = false;
             this.parametersGridView.Name = "parametersGridView";
             this.parametersGridView.ReadOnly = true;
@@ -155,7 +159,7 @@
             // requestDateLabel
             // 
             this.requestDateLabel.AutoSize = true;
-            this.requestDateLabel.Location = new System.Drawing.Point(10, 70);
+            this.requestDateLabel.Location = new System.Drawing.Point(5, 35);
             this.requestDateLabel.Name = "requestDateLabel";
             this.requestDateLabel.Size = new System.Drawing.Size(78, 13);
             this.requestDateLabel.TabIndex = 0;
@@ -164,7 +168,7 @@
             // clientLabel
             // 
             this.clientLabel.AutoSize = true;
-            this.clientLabel.Location = new System.Drawing.Point(10, 145);
+            this.clientLabel.Location = new System.Drawing.Point(5, 110);
             this.clientLabel.Name = "clientLabel";
             this.clientLabel.Size = new System.Drawing.Size(43, 13);
             this.clientLabel.TabIndex = 0;
@@ -173,7 +177,7 @@
             // serviceLabel
             // 
             this.serviceLabel.AutoSize = true;
-            this.serviceLabel.Location = new System.Drawing.Point(10, 205);
+            this.serviceLabel.Location = new System.Drawing.Point(5, 170);
             this.serviceLabel.Name = "serviceLabel";
             this.serviceLabel.Size = new System.Drawing.Size(100, 13);
             this.serviceLabel.TabIndex = 0;
@@ -184,14 +188,14 @@
             this.eventsGridView.AllowUserToAddRows = false;
             this.eventsGridView.AllowUserToDeleteRows = false;
             this.eventsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.eventsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.eventsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.eventsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.eventsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.createDateColumn,
@@ -274,17 +278,16 @@
             // operatorsComboBox
             // 
             this.operatorsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.operatorsComboBox.Location = new System.Drawing.Point(120, 315);
+            this.operatorsComboBox.Location = new System.Drawing.Point(115, 280);
             this.operatorsComboBox.Name = "operatorsComboBox";
-            this.operatorsComboBox.Size = new System.Drawing.Size(200, 21);
+            this.operatorsComboBox.Size = new System.Drawing.Size(180, 21);
             this.operatorsComboBox.TabIndex = 0;
-            this.operatorsComboBox.SelectedValueChanged += new System.EventHandler(this.operatorsComboBox_SelectedValueChanged);
             // 
             // operatorLabel
             // 
             this.operatorLabel.AutoSize = true;
             this.operatorLabel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.operatorLabel.Location = new System.Drawing.Point(10, 320);
+            this.operatorLabel.Location = new System.Drawing.Point(5, 285);
             this.operatorLabel.Name = "operatorLabel";
             this.operatorLabel.Size = new System.Drawing.Size(56, 13);
             this.operatorLabel.TabIndex = 0;
@@ -293,8 +296,7 @@
             // serviceChangeLink
             // 
             this.serviceChangeLink.AutoSize = true;
-            this.serviceChangeLink.Enabled = false;
-            this.serviceChangeLink.Location = new System.Drawing.Point(265, 220);
+            this.serviceChangeLink.Location = new System.Drawing.Point(260, 185);
             this.serviceChangeLink.Name = "serviceChangeLink";
             this.serviceChangeLink.Size = new System.Drawing.Size(62, 13);
             this.serviceChangeLink.TabIndex = 0;
@@ -305,8 +307,7 @@
             // isPriorityCheckBox
             // 
             this.isPriorityCheckBox.AutoSize = true;
-            this.isPriorityCheckBox.Enabled = false;
-            this.isPriorityCheckBox.Location = new System.Drawing.Point(190, 35);
+            this.isPriorityCheckBox.Location = new System.Drawing.Point(185, 5);
             this.isPriorityCheckBox.Name = "isPriorityCheckBox";
             this.isPriorityCheckBox.Size = new System.Drawing.Size(121, 17);
             this.isPriorityCheckBox.TabIndex = 0;
@@ -317,7 +318,7 @@
             // subjectsLabel
             // 
             this.subjectsLabel.AutoSize = true;
-            this.subjectsLabel.Location = new System.Drawing.Point(10, 120);
+            this.subjectsLabel.Location = new System.Drawing.Point(5, 85);
             this.subjectsLabel.Name = "subjectsLabel";
             this.subjectsLabel.Size = new System.Drawing.Size(57, 13);
             this.subjectsLabel.TabIndex = 0;
@@ -338,8 +339,7 @@
             // clientEditLink
             // 
             this.clientEditLink.AutoSize = true;
-            this.clientEditLink.Enabled = false;
-            this.clientEditLink.Location = new System.Drawing.Point(265, 145);
+            this.clientEditLink.Location = new System.Drawing.Point(260, 110);
             this.clientEditLink.Name = "clientEditLink";
             this.clientEditLink.Size = new System.Drawing.Size(62, 13);
             this.clientEditLink.TabIndex = 0;
@@ -353,7 +353,7 @@
             this.groupBox1.Controls.Add(this.postponeMinutesMinLabel);
             this.groupBox1.Controls.Add(this.postponeMinutesUpDown);
             this.groupBox1.Controls.Add(this.postponeMinutesLabel);
-            this.groupBox1.Location = new System.Drawing.Point(330, 230);
+            this.groupBox1.Location = new System.Drawing.Point(325, 195);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(240, 50);
             this.groupBox1.TabIndex = 0;
@@ -362,7 +362,6 @@
             // 
             // postponeButton
             // 
-            this.postponeButton.Enabled = false;
             this.postponeButton.Location = new System.Drawing.Point(150, 20);
             this.postponeButton.Name = "postponeButton";
             this.postponeButton.Size = new System.Drawing.Size(85, 25);
@@ -418,7 +417,7 @@
             // 
             this.subjectsChangeButton.Location = new System.Drawing.Point(65, 5);
             this.subjectsChangeButton.Name = "subjectsChangeButton";
-            this.subjectsChangeButton.Size = new System.Drawing.Size(85, 25);
+            this.subjectsChangeButton.Size = new System.Drawing.Size(75, 20);
             this.subjectsChangeButton.TabIndex = 0;
             this.subjectsChangeButton.Text = "Изменить";
             this.subjectsChangeButton.UseVisualStyleBackColor = true;
@@ -428,7 +427,7 @@
             // 
             this.subjectsPanel.Controls.Add(this.subjectsUpDown);
             this.subjectsPanel.Controls.Add(this.subjectsChangeButton);
-            this.subjectsPanel.Location = new System.Drawing.Point(120, 110);
+            this.subjectsPanel.Location = new System.Drawing.Point(115, 75);
             this.subjectsPanel.Name = "subjectsPanel";
             this.subjectsPanel.Size = new System.Drawing.Size(150, 30);
             this.subjectsPanel.TabIndex = 0;
@@ -437,7 +436,7 @@
             // 
             this.numberTextBlock.BackColor = System.Drawing.Color.White;
             this.numberTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.numberTextBlock.Location = new System.Drawing.Point(120, 40);
+            this.numberTextBlock.Location = new System.Drawing.Point(115, 5);
             this.numberTextBlock.Name = "numberTextBlock";
             this.numberTextBlock.Padding = new System.Windows.Forms.Padding(2);
             this.numberTextBlock.Size = new System.Drawing.Size(60, 20);
@@ -447,7 +446,7 @@
             // 
             this.requestDateTextBlock.BackColor = System.Drawing.Color.White;
             this.requestDateTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.requestDateTextBlock.Location = new System.Drawing.Point(120, 65);
+            this.requestDateTextBlock.Location = new System.Drawing.Point(115, 30);
             this.requestDateTextBlock.Name = "requestDateTextBlock";
             this.requestDateTextBlock.Padding = new System.Windows.Forms.Padding(2);
             this.requestDateTextBlock.Size = new System.Drawing.Size(85, 20);
@@ -457,7 +456,7 @@
             // 
             this.clientTextBlock.BackColor = System.Drawing.Color.White;
             this.clientTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.clientTextBlock.Location = new System.Drawing.Point(120, 140);
+            this.clientTextBlock.Location = new System.Drawing.Point(115, 105);
             this.clientTextBlock.Name = "clientTextBlock";
             this.clientTextBlock.Padding = new System.Windows.Forms.Padding(2);
             this.clientTextBlock.Size = new System.Drawing.Size(140, 20);
@@ -467,7 +466,7 @@
             // 
             this.serviceTextBlock.BackColor = System.Drawing.Color.White;
             this.serviceTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.serviceTextBlock.Location = new System.Drawing.Point(120, 165);
+            this.serviceTextBlock.Location = new System.Drawing.Point(115, 130);
             this.serviceTextBlock.Name = "serviceTextBlock";
             this.serviceTextBlock.Padding = new System.Windows.Forms.Padding(2);
             this.serviceTextBlock.Size = new System.Drawing.Size(205, 55);
@@ -477,7 +476,7 @@
             // 
             this.stateTextBlock.BackColor = System.Drawing.Color.White;
             this.stateTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.stateTextBlock.Location = new System.Drawing.Point(120, 290);
+            this.stateTextBlock.Location = new System.Drawing.Point(115, 255);
             this.stateTextBlock.Name = "stateTextBlock";
             this.stateTextBlock.Padding = new System.Windows.Forms.Padding(2);
             this.stateTextBlock.Size = new System.Drawing.Size(120, 20);
@@ -487,7 +486,7 @@
             // 
             this.typeTextBlock.BackColor = System.Drawing.Color.White;
             this.typeTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.typeTextBlock.Location = new System.Drawing.Point(185, 90);
+            this.typeTextBlock.Location = new System.Drawing.Point(180, 55);
             this.typeTextBlock.Name = "typeTextBlock";
             this.typeTextBlock.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.typeTextBlock.Size = new System.Drawing.Size(135, 20);
@@ -497,7 +496,7 @@
             // 
             this.requestTimeTextBlock.BackColor = System.Drawing.Color.White;
             this.requestTimeTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.requestTimeTextBlock.Location = new System.Drawing.Point(120, 90);
+            this.requestTimeTextBlock.Location = new System.Drawing.Point(115, 55);
             this.requestTimeTextBlock.Name = "requestTimeTextBlock";
             this.requestTimeTextBlock.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.requestTimeTextBlock.Size = new System.Drawing.Size(60, 20);
@@ -506,7 +505,7 @@
             // requestTimeLabel
             // 
             this.requestTimeLabel.AutoSize = true;
-            this.requestTimeLabel.Location = new System.Drawing.Point(10, 95);
+            this.requestTimeLabel.Location = new System.Drawing.Point(5, 60);
             this.requestTimeLabel.Name = "requestTimeLabel";
             this.requestTimeLabel.Size = new System.Drawing.Size(85, 13);
             this.requestTimeLabel.TabIndex = 9;
@@ -515,7 +514,7 @@
             // serviceTypeLabel
             // 
             this.serviceTypeLabel.AutoSize = true;
-            this.serviceTypeLabel.Location = new System.Drawing.Point(10, 245);
+            this.serviceTypeLabel.Location = new System.Drawing.Point(5, 210);
             this.serviceTypeLabel.Name = "serviceTypeLabel";
             this.serviceTypeLabel.Size = new System.Drawing.Size(62, 13);
             this.serviceTypeLabel.TabIndex = 10;
@@ -525,7 +524,7 @@
             // 
             this.serviceTypeTextBlock.BackColor = System.Drawing.Color.White;
             this.serviceTypeTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.serviceTypeTextBlock.Location = new System.Drawing.Point(120, 240);
+            this.serviceTypeTextBlock.Location = new System.Drawing.Point(115, 205);
             this.serviceTypeTextBlock.Name = "serviceTypeTextBlock";
             this.serviceTypeTextBlock.Padding = new System.Windows.Forms.Padding(2);
             this.serviceTypeTextBlock.Size = new System.Drawing.Size(205, 20);
@@ -534,7 +533,7 @@
             // serviceStepLabel
             // 
             this.serviceStepLabel.AutoSize = true;
-            this.serviceStepLabel.Location = new System.Drawing.Point(10, 270);
+            this.serviceStepLabel.Location = new System.Drawing.Point(5, 235);
             this.serviceStepLabel.Name = "serviceStepLabel";
             this.serviceStepLabel.Size = new System.Drawing.Size(67, 13);
             this.serviceStepLabel.TabIndex = 12;
@@ -543,45 +542,75 @@
             // serviceStepComboBox
             // 
             this.serviceStepComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.serviceStepComboBox.Location = new System.Drawing.Point(120, 265);
+            this.serviceStepComboBox.Location = new System.Drawing.Point(115, 230);
             this.serviceStepComboBox.Name = "serviceStepComboBox";
-            this.serviceStepComboBox.Size = new System.Drawing.Size(205, 21);
+            this.serviceStepComboBox.Size = new System.Drawing.Size(180, 21);
             this.serviceStepComboBox.TabIndex = 13;
-            this.serviceStepComboBox.SelectedValueChanged += new System.EventHandler(this.serviceStepComboBox_SelectedValueChanged);
+            // 
+            // operatorResetButton
+            // 
+            this.operatorResetButton.Location = new System.Drawing.Point(300, 280);
+            this.operatorResetButton.Name = "operatorResetButton";
+            this.operatorResetButton.Size = new System.Drawing.Size(20, 21);
+            this.operatorResetButton.TabIndex = 14;
+            this.operatorResetButton.Text = "X";
+            this.operatorResetButton.UseVisualStyleBackColor = true;
+            this.operatorResetButton.Click += new System.EventHandler(this.operatorResetButton_Click);
+            // 
+            // serviceStepResetButton
+            // 
+            this.serviceStepResetButton.Location = new System.Drawing.Point(300, 230);
+            this.serviceStepResetButton.Name = "serviceStepResetButton";
+            this.serviceStepResetButton.Size = new System.Drawing.Size(20, 21);
+            this.serviceStepResetButton.TabIndex = 15;
+            this.serviceStepResetButton.Text = "X";
+            this.serviceStepResetButton.UseVisualStyleBackColor = true;
+            this.serviceStepResetButton.Click += new System.EventHandler(this.serviceStepResetButton_Click);
+            // 
+            // editPanel
+            // 
+            this.editPanel.Controls.Add(this.parametersGridView);
+            this.editPanel.Controls.Add(this.serviceStepResetButton);
+            this.editPanel.Controls.Add(this.parametersLabel);
+            this.editPanel.Controls.Add(this.operatorResetButton);
+            this.editPanel.Controls.Add(this.operatorsComboBox);
+            this.editPanel.Controls.Add(this.serviceStepComboBox);
+            this.editPanel.Controls.Add(this.operatorLabel);
+            this.editPanel.Controls.Add(this.serviceStepLabel);
+            this.editPanel.Controls.Add(this.stateLabel);
+            this.editPanel.Controls.Add(this.serviceTypeTextBlock);
+            this.editPanel.Controls.Add(this.serviceChangeLink);
+            this.editPanel.Controls.Add(this.serviceTypeLabel);
+            this.editPanel.Controls.Add(this.serviceLabel);
+            this.editPanel.Controls.Add(this.typeTextBlock);
+            this.editPanel.Controls.Add(this.clientLabel);
+            this.editPanel.Controls.Add(this.requestTimeTextBlock);
+            this.editPanel.Controls.Add(this.requestDateLabel);
+            this.editPanel.Controls.Add(this.requestTimeLabel);
+            this.editPanel.Controls.Add(this.isPriorityCheckBox);
+            this.editPanel.Controls.Add(this.stateTextBlock);
+            this.editPanel.Controls.Add(this.numberLabel);
+            this.editPanel.Controls.Add(this.serviceTextBlock);
+            this.editPanel.Controls.Add(this.subjectsLabel);
+            this.editPanel.Controls.Add(this.clientTextBlock);
+            this.editPanel.Controls.Add(this.clientEditLink);
+            this.editPanel.Controls.Add(this.requestDateTextBlock);
+            this.editPanel.Controls.Add(this.groupBox1);
+            this.editPanel.Controls.Add(this.numberTextBlock);
+            this.editPanel.Controls.Add(this.subjectsPanel);
+            this.editPanel.Location = new System.Drawing.Point(0, 25);
+            this.editPanel.Name = "editPanel";
+            this.editPanel.Size = new System.Drawing.Size(635, 315);
+            this.editPanel.TabIndex = 16;
+            this.editPanel.EnabledChanged += new System.EventHandler(this.editPanel_EnabledChanged);
             // 
             // EditClientRequestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(634, 536);
-            this.Controls.Add(this.serviceStepComboBox);
-            this.Controls.Add(this.serviceStepLabel);
-            this.Controls.Add(this.serviceTypeTextBlock);
-            this.Controls.Add(this.serviceTypeLabel);
-            this.Controls.Add(this.typeTextBlock);
-            this.Controls.Add(this.requestTimeTextBlock);
-            this.Controls.Add(this.requestTimeLabel);
-            this.Controls.Add(this.stateTextBlock);
-            this.Controls.Add(this.serviceTextBlock);
-            this.Controls.Add(this.clientTextBlock);
-            this.Controls.Add(this.requestDateTextBlock);
-            this.Controls.Add(this.numberTextBlock);
-            this.Controls.Add(this.subjectsPanel);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.editPanel);
             this.Controls.Add(this.topMenu);
-            this.Controls.Add(this.clientEditLink);
-            this.Controls.Add(this.subjectsLabel);
-            this.Controls.Add(this.numberLabel);
-            this.Controls.Add(this.isPriorityCheckBox);
-            this.Controls.Add(this.requestDateLabel);
-            this.Controls.Add(this.clientLabel);
-            this.Controls.Add(this.serviceLabel);
-            this.Controls.Add(this.serviceChangeLink);
-            this.Controls.Add(this.stateLabel);
-            this.Controls.Add(this.operatorLabel);
-            this.Controls.Add(this.operatorsComboBox);
-            this.Controls.Add(this.parametersLabel);
-            this.Controls.Add(this.parametersGridView);
             this.Controls.Add(this.eventsLabel);
             this.Controls.Add(this.eventsGridView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -599,6 +628,8 @@
             this.topMenu.ResumeLayout(false);
             this.topMenu.PerformLayout();
             this.subjectsPanel.ResumeLayout(false);
+            this.editPanel.ResumeLayout(false);
+            this.editPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -650,5 +681,8 @@
         private System.Windows.Forms.Label serviceTypeTextBlock;
         private System.Windows.Forms.Label serviceStepLabel;
         private System.Windows.Forms.ComboBox serviceStepComboBox;
+        private System.Windows.Forms.Button operatorResetButton;
+        private System.Windows.Forms.Button serviceStepResetButton;
+        private System.Windows.Forms.Panel editPanel;
     }
 }
