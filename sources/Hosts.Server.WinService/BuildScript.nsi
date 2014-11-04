@@ -10,6 +10,7 @@ Unicode true
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 !define NET_FRAMEWORK_DOWNLOAD_URL "http://download.microsoft.com/download/B/A/4/BA4A7E71-2906-4B2D-A0E1-80CF16844F5F/dotNetFx45_Full_setup.exe"
+!define WELCOME_TITLE "Вас приветствует программа "
 
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
@@ -20,11 +21,15 @@ Unicode true
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 
+!define MUI_WELCOMEPAGE_TITLE_3LINES
+
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
+!define MUI_FINISHPAGE_TITLE_3LINES
+
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages

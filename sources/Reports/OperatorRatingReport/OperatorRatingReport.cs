@@ -1,6 +1,7 @@
 ﻿using NPOI.HSSF.UserModel;
 using Queue.Model.Common;
 using System;
+using System.ServiceModel;
 
 namespace Queue.Reports.OperatorRatingReport
 {
@@ -30,8 +31,8 @@ namespace Queue.Reports.OperatorRatingReport
                 case ReportDetailLevel.Day:
                     return new DayDetailedReport(operators, settings).Generate();
 
-                //default:
-                //    throw new FaultException(string.Format("Указанный уровень детализации не поддерживается: {0}", detailLavel.ToString()));
+                default:
+                    throw new FaultException(string.Format("Указанный уровень детализации не поддерживается: {0}", detailLavel.ToString()));
             }
 
             return null;

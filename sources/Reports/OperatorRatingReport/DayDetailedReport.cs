@@ -18,54 +18,73 @@ namespace Queue.Reports.OperatorRatingReport
 
         protected override void RenderData(ISheet worksheet, OperatorDayRating[] data)
         {
-            YearReportDataItem[] items = data.GroupBy(y => y.Year)
-                                               .Select(y => new YearReportDataItem()
-                                               {
-                                                   Year = y.Key,
-                                                   Months = y.GroupBy(m => m.Month)
-                                                                .Select(m => new MonthReportDataItem()
-                                                                {
-                                                                    Month = m.Key,
-                                                                    Days = m.GroupBy(d => d.Day)
-                                                                            .Select(d => new DayReportDataItem()
-                                                                            {
-                                                                                Day = d.Key,
-                                                                                Ratings = GetOperatorsRatings(d.ToArray())
-                                                                            })
-                                                                            .OrderBy(d => d.Day)
-                                                                            .ToArray()
-                                                                })
-                                                                .OrderBy(m => m.Month)
-                                                                .ToArray()
-                                               })
-                                               .OrderBy(y => y.Year)
-                                               .ToArray();
+            YearReportDataItem[] items = GetItems(data);
 
             worksheet.SetColumnHidden(3, true);
 
             int rowIndex = worksheet.LastRowNum + 1;
-
             foreach (YearReportDataItem item in items)
             {
-                WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(item.Year));
+                WriteYearData(worksheet, item, ref rowIndex);
+            }
+        }
 
-                foreach (MonthReportDataItem month in item.Months)
-                {
-                    WriteBoldCell(worksheet.CreateRow(rowIndex++), 1, c =>
-                                c.SetCellValue(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month.Month)));
-
-                    foreach (DayReportDataItem day in month.Days)
-                    {
-                        WriteBoldCell(worksheet.CreateRow(rowIndex++), 2, c => c.SetCellValue(day.Day));
-
-                        foreach (OperatorRating rating in day.Ratings)
+        private YearReportDataItem[] GetItems(OperatorDayRating[] data)
+        {
+            return data.GroupBy(y => y.Year)
+                        .Select(y => new YearReportDataItem()
                         {
-                            IRow row = worksheet.CreateRow(rowIndex++);
-                            WriteBoldCell(row, 4, c => c.SetCellValue(rating.Operator.ToString()));
-                            RenderRating(row, rating);
-                        }
-                    }
-                }
+                            Year = y.Key,
+                            Months = y.GroupBy(m => m.Month)
+                                        .Select(m => new MonthReportDataItem()
+                                        {
+                                            Month = m.Key,
+                                            Days = m.GroupBy(d => d.Day)
+                                                    .Select(d => new DayReportDataItem()
+                                                    {
+                                                        Day = d.Key,
+                                                        Ratings = GetOperatorsRatings(d.ToArray())
+                                                    })
+                                                    .OrderBy(d => d.Day)
+                                                    .ToArray()
+                                        })
+                                        .OrderBy(m => m.Month)
+                                        .ToArray()
+                        })
+                        .OrderBy(y => y.Year)
+                        .ToArray();
+        }
+
+        private void WriteYearData(ISheet worksheet, YearReportDataItem data, ref int rowIndex)
+        {
+            WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(data.Year));
+
+            foreach (MonthReportDataItem month in data.Months)
+            {
+                WriteMonthData(worksheet, month, ref rowIndex);
+            }
+        }
+
+        private void WriteMonthData(ISheet worksheet, MonthReportDataItem data, ref int rowIndex)
+        {
+            WriteBoldCell(worksheet.CreateRow(rowIndex++), 1, c =>
+                            c.SetCellValue(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(data.Month)));
+
+            foreach (DayReportDataItem day in data.Days)
+            {
+                WriteDayData(worksheet, day, ref rowIndex);
+            }
+        }
+
+        private void WriteDayData(ISheet worksheet, DayReportDataItem data, ref int rowIndex)
+        {
+            WriteBoldCell(worksheet.CreateRow(rowIndex++), 2, c => c.SetCellValue(data.Day));
+
+            foreach (OperatorRating rating in data.Ratings)
+            {
+                IRow row = worksheet.CreateRow(rowIndex++);
+                WriteBoldCell(row, 4, c => c.SetCellValue(rating.Operator.ToString()));
+                RenderRating(row, rating);
             }
         }
 
