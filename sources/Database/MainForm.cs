@@ -1,18 +1,13 @@
-﻿using AutoMapper;
-using Junte.Data.NHibernate;
+﻿using Junte.Data.NHibernate;
 using Junte.UI.WinForms;
 using Junte.UI.WinForms.NHibernate;
-using Junte.WCF.Common;
 using log4net;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
-using NHibernate.Caches.SysCache2;
 using NHibernate.Criterion;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Resources;
-using Queue.Services.Contracts;
-using Queue.Services.Server;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -40,7 +35,42 @@ namespace Queue.Database
             InitializeComponent();
         }
 
+        private void log(string message)
+        {
+            logTextBox.AppendText(message + Environment.NewLine);
+        }
+
         #region menu
+        private void schemaValidateMenu_Click(object sender, EventArgs e)
+        {
+            log("Проверка структуры базы данных");
+
+            try
+            {
+                sessionProvider.SchemaValidate();
+                log("Структура базы данных верна");
+            }
+            catch (Exception exception)
+            {
+                log(string.Format("Структура базы данных не верна [{0}]", exception.Message));
+            }
+        }
+
+        private void schemaUpdateMenuItem_Click(object sender, EventArgs e)
+        {
+            log("Обновление структуры базы данных");
+
+            try
+            {
+                sessionProvider.SchemaUpdate();
+                log("Структура базы данных обновлена");
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
+                return;
+            }
+        }
 
         private void damaskMenuItem_Click(object sender, EventArgs e)
         {
@@ -57,14 +87,7 @@ namespace Queue.Database
                 {
                     try
                     {
-                        sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, e.Settings, (fluently) =>
-                        {
-                            fluently.Cache(c => c
-                                .ProviderClass<SysCacheProvider>()
-                                .UseQueryCache()
-                                .UseSecondLevelCache()
-                                .UseMinimalPuts());
-                        });
+                        sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, e.Settings);
 
                         settings.Database = e.Settings;
                         settings.Save();
@@ -81,38 +104,6 @@ namespace Queue.Database
                 {
                     return;
                 }
-            }
-
-            logTextBox.AppendText("Проверка структуры базы данных");
-
-            bool isSchemeValid = false;
-
-            try
-            {
-                sessionProvider.SchemaValidate();
-                isSchemeValid = true;
-            }
-            catch (Exception exception)
-            {
-                logTextBox.AppendText(string.Format("Структура базы данных не обновлена [{0}]. Будет произведено обновление.", exception.Message));
-            }
-
-            if (!isSchemeValid)
-            {
-                try
-                {
-                    sessionProvider.SchemaUpdate();
-                    logTextBox.AppendText("Произведено успешное обновление базы данных");
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                    return;
-                }
-            }
-            else
-            {
-                logTextBox.AppendText("Структура базы данных верна");
             }
 
             #region установка базы
@@ -132,7 +123,7 @@ namespace Queue.Database
                     session.Save(schemeConfig);
                 }
 
-                logTextBox.AppendText("Текущий патч базы данных " + schemeConfig.Version);
+                log("Текущий патч базы данных " + schemeConfig.Version);
 
                 #region приминение патчей
 
@@ -143,7 +134,7 @@ namespace Queue.Database
                     {
                         string sql = Scheme.Patches[currentPatch];
 
-                        logTextBox.AppendText("Приминение патча [" + sql +"]");
+                        log("Приминение патча [" + sql +"]");
 
                         try
                         {
@@ -212,14 +203,8 @@ namespace Queue.Database
                 {
                     portalConfig = new PortalConfig()
                     {
-                        Header = @"<p>Добро пожаловать к нам!</p>
-                                <p>Запишитесь на прием в нашу организацию в режиме онлайн!</p><hr />
-                                <p>
-                                    <a href='/client/' class='btn btn-primary btn-large'>Каталог услуг <i class='icon-arrow-right icon-white'></i></a>
-                                </p>",
-                        Footer = @"<p id='copyright'>Система электронной очереди Junte 2007-2013
-                                    <a href='http://www.junte.ru/queue' target='_blank' class='btn btn-mini' type='button'>junte.ru</a>
-                                </p>",
+                        Header = Templates.PortalHeader,
+                        Footer = Templates.PortalFooter,
                         CurrentDayRecording = true
                     };
                     session.Save(portalConfig);
@@ -231,7 +216,7 @@ namespace Queue.Database
                     mediaConfig = new MediaConfig()
                     {
                         ServiceUrl = "http://queue:4506/",
-                        Ticker = "Добро пожаловать! Вы для очень важны.",
+                        Ticker = "Добро пожаловать! Вы для нас очень важны!",
                         TickerSpeed = 5
                     };
                     session.Save(mediaConfig);

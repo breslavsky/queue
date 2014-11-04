@@ -83,8 +83,11 @@ namespace Queue.Manager
                     var service = clientRequest.Service;
                     serviceTextBlock.Text = service.ToString();
 
-                    var translation2 = Translation.ClientRequestState.ResourceManager;
-                    stateTextBlock.Text = translation2.GetString(clientRequest.State.ToString());
+                    var translation2 = Translation.ServiceType.ResourceManager;
+                    serviceTypeTextBlock.Text = translation2.GetString(clientRequest.ServiceType.ToString());
+
+                    var translation3 = Translation.ClientRequestState.ResourceManager;
+                    stateTextBlock.Text = translation3.GetString(clientRequest.State.ToString());
                     stateTextBlock.BackColor = ColorTranslator.FromHtml(clientRequest.Color);
 
                     operatorsComboBox.SelectedValueChanged -= operatorsComboBox_SelectedValueChanged;

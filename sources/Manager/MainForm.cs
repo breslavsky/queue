@@ -221,26 +221,6 @@ namespace Queue.Manager
             form.Show();
         }
 
-        private void сurrentScheduleMenuItem_Click(object sender, EventArgs eventArgs)
-        {
-            var form = GetChildForm(typeof(CurrentScheduleForm));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = new CurrentScheduleForm(channelBuilder, currentManager)
-            {
-                MdiParent = this
-            };
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-            form.Show();
-        }
-
         private void logoutButton_Click(object sender, EventArgs e)
         {
             IsLogout = true;

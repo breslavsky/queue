@@ -16,10 +16,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
-
 using DTO = Queue.Services.DTO;
-
-using QIcons = Queue.UI.Common.Icons;
+using Icons = Queue.UI.Common.Icons;
 using QueueOperator = Queue.Services.DTO.Operator;
 using Timer = System.Timers.Timer;
 using Translation = Queue.Model.Common.Translation;
@@ -135,6 +133,18 @@ namespace Queue.Operator
                                     serviceTypesComboBox.ValueMember = DataListItem.Key;
                                     serviceTypesComboBox.DataSource = new BindingSource(serviceTypes, null);
                                     serviceTypesComboBox.SelectedValue = clientRequest.ServiceType;
+                                }
+                            }
+
+                            using (var channel = channelManager.CreateChannel())
+                            {
+                                try
+                                {
+                                    serviceStepComboBox.DataSource = await taskPool.AddTask(channel.Service.GetServiceSteps(service.Id));
+                                }
+                                catch (Exception exception)
+                                {
+                                    logger.Warn(exception);
                                 }
                             }
 
@@ -305,7 +315,7 @@ namespace Queue.Operator
             {
                 try
                 {
-                    serverStateLabel.Image = QIcons.connecting16x16;
+                    serverStateLabel.Image = Icons.connecting16x16;
 
                     if (!pingChannel.IsConnected)
                     {
@@ -325,7 +335,7 @@ namespace Queue.Operator
                     ServerDateTime.Sync(await taskPool.AddTask(pingChannel.Service.GetDateTime()));
                     currentDateTimeLabel.Text = ServerDateTime.Now.ToLongTimeString();
 
-                    serverStateLabel.Image = QIcons.online16x16;
+                    serverStateLabel.Image = Icons.online16x16;
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -334,7 +344,7 @@ namespace Queue.Operator
                 catch (Exception exception)
                 {
                     currentDateTimeLabel.Text = exception.Message;
-                    serverStateLabel.Image = QIcons.offline16x16;
+                    serverStateLabel.Image = Icons.offline16x16;
 
                     pingChannel.Dispose();
                     pingChannel = channelManager.CreateChannel(callbackObject);

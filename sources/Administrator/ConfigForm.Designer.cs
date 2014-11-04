@@ -53,7 +53,6 @@
             // 
             // couponConfigControl
             // 
-            this.couponConfigControl.Config = null;
             this.couponConfigControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.couponConfigControl.Location = new System.Drawing.Point(0, 0);
             this.couponConfigControl.Name = "couponConfigControl";
@@ -92,7 +91,6 @@
             // 
             // defaultConfigControl
             // 
-            this.defaultConfigControl.Config = null;
             this.defaultConfigControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.defaultConfigControl.Location = new System.Drawing.Point(0, 0);
             this.defaultConfigControl.Name = "defaultConfigControl";
@@ -111,7 +109,6 @@
             // 
             // smtpConfigControl
             // 
-            this.SMTPConfigControl.Config = null;
             this.SMTPConfigControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SMTPConfigControl.Location = new System.Drawing.Point(0, 0);
             this.SMTPConfigControl.Name = "smtpConfigControl";
@@ -131,7 +128,6 @@
             // 
             // portalConfigControl
             // 
-            this.portalConfigControl.Config = null;
             this.portalConfigControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.portalConfigControl.Location = new System.Drawing.Point(3, 3);
             this.portalConfigControl.Name = "portalConfigControl";
@@ -151,7 +147,6 @@
             // 
             // mediaConfigControl
             // 
-            this.mediaConfigControl.Config = null;
             this.mediaConfigControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mediaConfigControl.Location = new System.Drawing.Point(3, 3);
             this.mediaConfigControl.Name = "mediaConfigControl";
@@ -171,7 +166,6 @@
             // 
             // terminalConfigControl
             // 
-            this.terminalConfigControl.Config = null;
             this.terminalConfigControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.terminalConfigControl.Location = new System.Drawing.Point(3, 3);
             this.terminalConfigControl.Name = "terminalConfigControl";
@@ -191,7 +185,6 @@
             // 
             // notificationConfigControl
             // 
-            this.notificationConfigControl.Config = null;
             this.notificationConfigControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.notificationConfigControl.Location = new System.Drawing.Point(3, 3);
             this.notificationConfigControl.Name = "notificationConfigControl";

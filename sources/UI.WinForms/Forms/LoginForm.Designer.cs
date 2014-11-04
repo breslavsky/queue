@@ -180,12 +180,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(349, 322);
+            this.ClientSize = new System.Drawing.Size(349, 326);
             this.Controls.Add(this.productNameLabel);
             this.Controls.Add(this.logoPictureBox);
             this.Controls.Add(this.connectionGroupBox);
             this.Controls.Add(this.loginGroupBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(365, 360);
             this.Name = "LoginForm";

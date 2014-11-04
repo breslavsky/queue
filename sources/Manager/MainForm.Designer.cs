@@ -35,9 +35,7 @@
             this.clientRequestMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.addClientRequestMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientRequestsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.queuePlanMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.queueMonitorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.сurrentScheduleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutButton = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.serverStateLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -52,7 +50,7 @@
             this.formsMenuItem,
             this.clientsMenuItem,
             this.clientRequestMenu,
-            this.queuePlanMenu,
+            this.queueMonitorMenuItem,
             this.logoutButton});
             this.topMenu.Location = new System.Drawing.Point(0, 0);
             this.topMenu.MdiWindowListItem = this.formsMenuItem;
@@ -100,32 +98,13 @@
             this.clientRequestsMenuItem.Text = "Список запросов";
             this.clientRequestsMenuItem.Click += new System.EventHandler(this.clientRequestsMenuItem_Click);
             // 
-            // queuePlanMenu
-            // 
-            this.queuePlanMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.queueMonitorMenuItem,
-            this.сurrentScheduleMenuItem});
-            this.queuePlanMenu.Image = ((System.Drawing.Image)(resources.GetObject("queuePlanMenu.Image")));
-            this.queuePlanMenu.Name = "queuePlanMenu";
-            this.queuePlanMenu.Size = new System.Drawing.Size(113, 20);
-            this.queuePlanMenu.Text = "План очереди";
-            // 
             // queueMonitorMenuItem
             // 
             this.queueMonitorMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("queueMonitorMenuItem.Image")));
             this.queueMonitorMenuItem.Name = "queueMonitorMenuItem";
-            this.queueMonitorMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.queueMonitorMenuItem.Size = new System.Drawing.Size(135, 20);
             this.queueMonitorMenuItem.Text = "Монитор очереди";
             this.queueMonitorMenuItem.Click += new System.EventHandler(this.queueMonitorMenuItem_Click);
-            // 
-            // сurrentScheduleMenuItem
-            // 
-            this.сurrentScheduleMenuItem.Enabled = false;
-            this.сurrentScheduleMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("сurrentScheduleMenuItem.Image")));
-            this.сurrentScheduleMenuItem.Name = "сurrentScheduleMenuItem";
-            this.сurrentScheduleMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.сurrentScheduleMenuItem.Text = "Текущее расписание";
-            this.сurrentScheduleMenuItem.Click += new System.EventHandler(this.сurrentScheduleMenuItem_Click);
             // 
             // logoutButton
             // 
@@ -190,9 +169,7 @@
         private System.Windows.Forms.StatusStrip statusBar;
         private System.Windows.Forms.ToolStripStatusLabel serverStateLabel;
         private System.Windows.Forms.ToolStripStatusLabel currentDateTimeLabel;
-        private System.Windows.Forms.ToolStripMenuItem queuePlanMenu;
         private System.Windows.Forms.ToolStripMenuItem queueMonitorMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem сurrentScheduleMenuItem;
         private System.Windows.Forms.ToolStripMenuItem formsMenuItem;
     }
 }

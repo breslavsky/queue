@@ -30,6 +30,19 @@ namespace Queue.Hosts.Server.WinForms
 
             configuration = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
             settings = configuration.GetSection("server") as ServerSettings;
+
+            var tcp = settings.Services.TcpService;
+
+            tcpCheckBox.Checked = tcp.Enabled;
+            tcpHostTextBox.Text = tcp.Host;
+            tcpPortUpDown.Value = tcp.Port;
+
+            var http = settings.Services.HttpService;
+
+            httpCheckBox.Checked = http.Enabled;
+            httpHostTextBox.Text = http.Host;
+            httpPortUpDown.Value = http.Port;
+
         }
 
         private void databaseButton_Click(object sender, EventArgs eventArgs)
@@ -71,5 +84,49 @@ namespace Queue.Hosts.Server.WinForms
                 server.Stop();
             }
         }
+
+        #region bindings
+
+        private void tcpHostTextBox_Leave(object sender, EventArgs e)
+        {
+            settings.Services.TcpService.Host = tcpHostTextBox.Text;
+        }
+
+        private void tcpPortUpDown_Leave(object sender, EventArgs e)
+        {
+            settings.Services.TcpService.Port = (int)tcpPortUpDown.Value;
+        }
+
+        private void tcpCheckBox_Leave(object sender, EventArgs e)
+        {
+            settings.Services.TcpService.Enabled = tcpCheckBox.Checked;
+        }
+
+        private void tcpCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            tcpGroupBox.Enabled = tcpCheckBox.Checked;
+        }
+
+        private void httpHostTextBox_Leave(object sender, EventArgs e)
+        {
+            settings.Services.HttpService.Host = httpHostTextBox.Text;
+        }
+
+        private void httpPortUpDown_Leave(object sender, EventArgs e)
+        {
+            settings.Services.HttpService.Port = (int)httpPortUpDown.Value;
+        }
+
+        private void httpCheckBox_Leave(object sender, EventArgs e)
+        {
+            settings.Services.HttpService.Enabled = httpCheckBox.Checked;
+        }
+
+        private void httpCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            httpGroupBox.Enabled = httpCheckBox.Checked;
+        }
+
+        #endregion bindings
     }
 }

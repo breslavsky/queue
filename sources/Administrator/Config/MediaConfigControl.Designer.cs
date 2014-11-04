@@ -93,6 +93,7 @@
             // 
             // tickerSpeedTrackBar
             // 
+            this.tickerSpeedTrackBar.BackColor = System.Drawing.Color.White;
             this.tickerSpeedTrackBar.Location = new System.Drawing.Point(75, 100);
             this.tickerSpeedTrackBar.Minimum = 1;
             this.tickerSpeedTrackBar.Name = "tickerSpeedTrackBar";

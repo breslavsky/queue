@@ -19,7 +19,7 @@ using Timer = System.Timers.Timer;
 
 namespace Queue.Manager
 {
-    public partial class EventsForm : RichForm
+    public partial class EventsForm : Queue.UI.WinForms.RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private QueueManager currentManager;

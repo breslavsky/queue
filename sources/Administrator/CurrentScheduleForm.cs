@@ -12,7 +12,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
 
-namespace Queue.Manager
+namespace Queue.Administrator
 {
     public partial class CurrentScheduleForm : Queue.UI.WinForms.RichForm
     {

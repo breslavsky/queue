@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Queue.Manager
+namespace Queue.Administrator
 {
     partial class CurrentScheduleForm
     {

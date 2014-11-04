@@ -161,6 +161,12 @@
     <Compile Include="Config\DefaultConfigControl.Designer.cs">
       <DependentUpon>DefaultConfigControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="CurrentScheduleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CurrentScheduleForm.Designer.cs">
+      <DependentUpon>CurrentScheduleForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DefaultScheduleForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -285,6 +291,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Config\DefaultConfigControl.resx">
       <DependentUpon>DefaultConfigControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CurrentScheduleForm.resx">
+      <DependentUpon>CurrentScheduleForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DefaultScheduleForm.resx">
       <DependentUpon>DefaultScheduleForm.cs</DependentUpon>

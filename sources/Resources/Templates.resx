@@ -121,4 +121,12 @@
   <data name="Coupon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>coupon.xaml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="PortalFooter" xml:space="preserve">
+    <value>&lt;p id='copyright'&gt;Система электронной очереди Junte 2007-2013&lt;a href='http://www.junte.ru/queue' target='_blank' class='btn btn-mini' type='button'&gt;junte.ru&lt;/a&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="PortalHeader" xml:space="preserve">
+    <value>&lt;p&gt;Добро пожаловать к нам!&lt;/p&gt;
+&lt;p&gt;Запишитесь на прием в нашу организацию в режиме онлайн!&lt;/p&gt;&lt;hr /&gt;
+&lt;p&gt;&lt;a href='/client/' class='btn btn-primary btn-large'&gt;Каталог услуг &lt;i class='icon-arrow-right icon-white'&gt;&lt;/i&gt;&lt;/a&gt;&lt;/p&gt;</value>
+  </data>
 </root>

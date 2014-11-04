@@ -23,7 +23,7 @@
                 <Button x:Name="queueReportButton"
                         Width="24"
                         Click="queueReportButton_Click"
-                        Content="!" />
+                        Content="Отчет" />
             </StackPanel>
             <ScrollViewer x:Name="timelineScrollViewer"
                           Grid.Row="0"

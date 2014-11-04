@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class AboutForm : RichForm
+    public partial class AboutForm : Queue.UI.WinForms.RichForm
     {
         public AboutForm()
             : base()

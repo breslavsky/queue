@@ -165,9 +165,7 @@
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.patronymicLabel);
             this.Controls.Add(this.patronymicTextBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "EditClientForm";
             this.Text = "Клиент";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditClientRequestForm_FormClosing);

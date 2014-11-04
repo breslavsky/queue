@@ -189,12 +189,6 @@
     <Compile Include="QueueMonitorForm.Designer.cs">
       <DependentUpon>QueueMonitorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CurrentScheduleForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CurrentScheduleForm.Designer.cs">
-      <DependentUpon>CurrentScheduleForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="EditClientForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -206,9 +200,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ClientsForm.resx">
       <DependentUpon>ClientsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CurrentScheduleForm.resx">
-      <DependentUpon>CurrentScheduleForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditClientRequestForm.resx">
       <DependentUpon>EditClientRequestForm.cs</DependentUpon>

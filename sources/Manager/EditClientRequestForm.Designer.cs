@@ -70,6 +70,10 @@
             this.typeTextBlock = new System.Windows.Forms.Label();
             this.requestTimeTextBlock = new System.Windows.Forms.Label();
             this.requestTimeLabel = new System.Windows.Forms.Label();
+            this.serviceTypeLabel = new System.Windows.Forms.Label();
+            this.serviceTypeTextBlock = new System.Windows.Forms.Label();
+            this.serviceStepLabel = new System.Windows.Forms.Label();
+            this.serviceStepComboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.parametersGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).BeginInit();
@@ -82,7 +86,7 @@
             // stateLabel
             // 
             this.stateLabel.AutoSize = true;
-            this.stateLabel.Location = new System.Drawing.Point(10, 240);
+            this.stateLabel.Location = new System.Drawing.Point(10, 295);
             this.stateLabel.Name = "stateLabel";
             this.stateLabel.Size = new System.Drawing.Size(108, 13);
             this.stateLabel.TabIndex = 0;
@@ -160,7 +164,7 @@
             // clientLabel
             // 
             this.clientLabel.AutoSize = true;
-            this.clientLabel.Location = new System.Drawing.Point(10, 155);
+            this.clientLabel.Location = new System.Drawing.Point(10, 145);
             this.clientLabel.Name = "clientLabel";
             this.clientLabel.Size = new System.Drawing.Size(43, 13);
             this.clientLabel.TabIndex = 0;
@@ -169,7 +173,7 @@
             // serviceLabel
             // 
             this.serviceLabel.AutoSize = true;
-            this.serviceLabel.Location = new System.Drawing.Point(10, 215);
+            this.serviceLabel.Location = new System.Drawing.Point(10, 205);
             this.serviceLabel.Name = "serviceLabel";
             this.serviceLabel.Size = new System.Drawing.Size(100, 13);
             this.serviceLabel.TabIndex = 0;
@@ -192,13 +196,13 @@
             this.eventsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.createDateColumn,
             this.messageColumn});
-            this.eventsGridView.Location = new System.Drawing.Point(10, 320);
+            this.eventsGridView.Location = new System.Drawing.Point(10, 375);
             this.eventsGridView.MultiSelect = false;
             this.eventsGridView.Name = "eventsGridView";
             this.eventsGridView.ReadOnly = true;
             this.eventsGridView.RowHeadersVisible = false;
             this.eventsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.eventsGridView.Size = new System.Drawing.Size(615, 170);
+            this.eventsGridView.Size = new System.Drawing.Size(615, 150);
             this.eventsGridView.TabIndex = 0;
             // 
             // createDateColumn
@@ -220,7 +224,7 @@
             // eventsLabel
             // 
             this.eventsLabel.AutoSize = true;
-            this.eventsLabel.Location = new System.Drawing.Point(10, 300);
+            this.eventsLabel.Location = new System.Drawing.Point(10, 355);
             this.eventsLabel.Name = "eventsLabel";
             this.eventsLabel.Size = new System.Drawing.Size(93, 13);
             this.eventsLabel.TabIndex = 0;
@@ -270,7 +274,7 @@
             // operatorsComboBox
             // 
             this.operatorsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.operatorsComboBox.Location = new System.Drawing.Point(120, 260);
+            this.operatorsComboBox.Location = new System.Drawing.Point(120, 315);
             this.operatorsComboBox.Name = "operatorsComboBox";
             this.operatorsComboBox.Size = new System.Drawing.Size(200, 21);
             this.operatorsComboBox.TabIndex = 0;
@@ -279,7 +283,7 @@
             // 
             this.operatorLabel.AutoSize = true;
             this.operatorLabel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.operatorLabel.Location = new System.Drawing.Point(10, 265);
+            this.operatorLabel.Location = new System.Drawing.Point(10, 320);
             this.operatorLabel.Name = "operatorLabel";
             this.operatorLabel.Size = new System.Drawing.Size(56, 13);
             this.operatorLabel.TabIndex = 0;
@@ -289,7 +293,7 @@
             // 
             this.serviceChangeLink.AutoSize = true;
             this.serviceChangeLink.Enabled = false;
-            this.serviceChangeLink.Location = new System.Drawing.Point(265, 235);
+            this.serviceChangeLink.Location = new System.Drawing.Point(265, 220);
             this.serviceChangeLink.Name = "serviceChangeLink";
             this.serviceChangeLink.Size = new System.Drawing.Size(62, 13);
             this.serviceChangeLink.TabIndex = 0;
@@ -312,7 +316,7 @@
             // subjectsLabel
             // 
             this.subjectsLabel.AutoSize = true;
-            this.subjectsLabel.Location = new System.Drawing.Point(10, 125);
+            this.subjectsLabel.Location = new System.Drawing.Point(10, 120);
             this.subjectsLabel.Name = "subjectsLabel";
             this.subjectsLabel.Size = new System.Drawing.Size(57, 13);
             this.subjectsLabel.TabIndex = 0;
@@ -334,7 +338,7 @@
             // 
             this.clientEditLink.AutoSize = true;
             this.clientEditLink.Enabled = false;
-            this.clientEditLink.Location = new System.Drawing.Point(265, 155);
+            this.clientEditLink.Location = new System.Drawing.Point(265, 145);
             this.clientEditLink.Name = "clientEditLink";
             this.clientEditLink.Size = new System.Drawing.Size(62, 13);
             this.clientEditLink.TabIndex = 0;
@@ -423,7 +427,7 @@
             // 
             this.subjectsPanel.Controls.Add(this.subjectsUpDown);
             this.subjectsPanel.Controls.Add(this.subjectsChangeButton);
-            this.subjectsPanel.Location = new System.Drawing.Point(120, 115);
+            this.subjectsPanel.Location = new System.Drawing.Point(120, 110);
             this.subjectsPanel.Name = "subjectsPanel";
             this.subjectsPanel.Size = new System.Drawing.Size(150, 30);
             this.subjectsPanel.TabIndex = 0;
@@ -452,7 +456,7 @@
             // 
             this.clientTextBlock.BackColor = System.Drawing.Color.White;
             this.clientTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.clientTextBlock.Location = new System.Drawing.Point(120, 150);
+            this.clientTextBlock.Location = new System.Drawing.Point(120, 140);
             this.clientTextBlock.Name = "clientTextBlock";
             this.clientTextBlock.Padding = new System.Windows.Forms.Padding(2);
             this.clientTextBlock.Size = new System.Drawing.Size(140, 20);
@@ -462,7 +466,7 @@
             // 
             this.serviceTextBlock.BackColor = System.Drawing.Color.White;
             this.serviceTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.serviceTextBlock.Location = new System.Drawing.Point(120, 175);
+            this.serviceTextBlock.Location = new System.Drawing.Point(120, 165);
             this.serviceTextBlock.Name = "serviceTextBlock";
             this.serviceTextBlock.Padding = new System.Windows.Forms.Padding(2);
             this.serviceTextBlock.Size = new System.Drawing.Size(205, 55);
@@ -472,7 +476,7 @@
             // 
             this.stateTextBlock.BackColor = System.Drawing.Color.White;
             this.stateTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.stateTextBlock.Location = new System.Drawing.Point(120, 235);
+            this.stateTextBlock.Location = new System.Drawing.Point(120, 290);
             this.stateTextBlock.Name = "stateTextBlock";
             this.stateTextBlock.Padding = new System.Windows.Forms.Padding(2);
             this.stateTextBlock.Size = new System.Drawing.Size(120, 20);
@@ -507,11 +511,51 @@
             this.requestTimeLabel.TabIndex = 9;
             this.requestTimeLabel.Text = "Время запроса";
             // 
+            // serviceTypeLabel
+            // 
+            this.serviceTypeLabel.AutoSize = true;
+            this.serviceTypeLabel.Location = new System.Drawing.Point(10, 245);
+            this.serviceTypeLabel.Name = "serviceTypeLabel";
+            this.serviceTypeLabel.Size = new System.Drawing.Size(62, 13);
+            this.serviceTypeLabel.TabIndex = 10;
+            this.serviceTypeLabel.Text = "Тип услуги";
+            // 
+            // serviceTypeTextBlock
+            // 
+            this.serviceTypeTextBlock.BackColor = System.Drawing.Color.White;
+            this.serviceTypeTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.serviceTypeTextBlock.Location = new System.Drawing.Point(120, 240);
+            this.serviceTypeTextBlock.Name = "serviceTypeTextBlock";
+            this.serviceTypeTextBlock.Padding = new System.Windows.Forms.Padding(2);
+            this.serviceTypeTextBlock.Size = new System.Drawing.Size(205, 20);
+            this.serviceTypeTextBlock.TabIndex = 11;
+            // 
+            // serviceStepLabel
+            // 
+            this.serviceStepLabel.AutoSize = true;
+            this.serviceStepLabel.Location = new System.Drawing.Point(10, 270);
+            this.serviceStepLabel.Name = "serviceStepLabel";
+            this.serviceStepLabel.Size = new System.Drawing.Size(67, 13);
+            this.serviceStepLabel.TabIndex = 12;
+            this.serviceStepLabel.Text = "Этап услуги";
+            // 
+            // serviceStepComboBox
+            // 
+            this.serviceStepComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.serviceStepComboBox.Location = new System.Drawing.Point(120, 265);
+            this.serviceStepComboBox.Name = "serviceStepComboBox";
+            this.serviceStepComboBox.Size = new System.Drawing.Size(205, 21);
+            this.serviceStepComboBox.TabIndex = 13;
+            // 
             // EditClientRequestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(634, 500);
+            this.ClientSize = new System.Drawing.Size(634, 536);
+            this.Controls.Add(this.serviceStepComboBox);
+            this.Controls.Add(this.serviceStepLabel);
+            this.Controls.Add(this.serviceTypeTextBlock);
+            this.Controls.Add(this.serviceTypeLabel);
             this.Controls.Add(this.typeTextBlock);
             this.Controls.Add(this.requestTimeTextBlock);
             this.Controls.Add(this.requestTimeLabel);
@@ -538,9 +582,7 @@
             this.Controls.Add(this.parametersGridView);
             this.Controls.Add(this.eventsLabel);
             this.Controls.Add(this.eventsGridView);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MinimumSize = new System.Drawing.Size(650, 489);
             this.Name = "EditClientRequestForm";
             this.Text = "Запрос клиента";
@@ -602,5 +644,9 @@
         private System.Windows.Forms.Label typeTextBlock;
         private System.Windows.Forms.Label requestTimeTextBlock;
         private System.Windows.Forms.Label requestTimeLabel;
+        private System.Windows.Forms.Label serviceTypeLabel;
+        private System.Windows.Forms.Label serviceTypeTextBlock;
+        private System.Windows.Forms.Label serviceStepLabel;
+        private System.Windows.Forms.ComboBox serviceStepComboBox;
     }
 }

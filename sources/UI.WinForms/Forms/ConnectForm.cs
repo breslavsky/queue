@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class ConnectForm : RichForm
+    public partial class ConnectForm : Queue.UI.WinForms.RichForm
     {
         public bool IsRemember;
 

@@ -82,6 +82,8 @@
             this.clientColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serviceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.serviceStepLabel = new System.Windows.Forms.Label();
+            this.serviceStepComboBox = new System.Windows.Forms.ComboBox();
             this.topMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -106,7 +108,7 @@
             this.topMenu.Dock = System.Windows.Forms.DockStyle.None;
             this.topMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.logoutButton});
-            this.topMenu.Location = new System.Drawing.Point(445, 5);
+            this.topMenu.Location = new System.Drawing.Point(-79, 5);
             this.topMenu.Name = "topMenu";
             this.topMenu.Padding = new System.Windows.Forms.Padding(6, 1, 0, 1);
             this.topMenu.Size = new System.Drawing.Size(77, 24);
@@ -131,7 +133,7 @@
             this.standingLabel,
             this.toolStripStatusLabel3,
             this.versionLabel});
-            this.statusBar.Location = new System.Drawing.Point(0, 456);
+            this.statusBar.Location = new System.Drawing.Point(0, 485);
             this.statusBar.Name = "statusBar";
             this.statusBar.Size = new System.Drawing.Size(524, 22);
             this.statusBar.SizingGrip = false;
@@ -188,7 +190,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(10, 30, 10, 10);
-            this.panel1.Size = new System.Drawing.Size(524, 456);
+            this.panel1.Size = new System.Drawing.Size(524, 485);
             this.panel1.TabIndex = 0;
             // 
             // isAutocallCheckBox
@@ -213,12 +215,14 @@
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.Padding = new System.Drawing.Point(5, 5);
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(504, 416);
+            this.mainTabControl.Size = new System.Drawing.Size(504, 445);
             this.mainTabControl.TabIndex = 1;
             this.mainTabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.mainTabControl_Selecting);
             // 
             // currentClientTab
             // 
+            this.currentClientTab.Controls.Add(this.serviceStepComboBox);
+            this.currentClientTab.Controls.Add(this.serviceStepLabel);
             this.currentClientTab.Controls.Add(this.subjectsPanel);
             this.currentClientTab.Controls.Add(this.digitalTimer);
             this.currentClientTab.Controls.Add(this.subjectsLabel);
@@ -242,7 +246,7 @@
             this.currentClientTab.Controls.Add(this.stepPanel);
             this.currentClientTab.Location = new System.Drawing.Point(4, 26);
             this.currentClientTab.Name = "currentClientTab";
-            this.currentClientTab.Size = new System.Drawing.Size(496, 386);
+            this.currentClientTab.Size = new System.Drawing.Size(496, 415);
             this.currentClientTab.TabIndex = 0;
             this.currentClientTab.Text = "Текущий клиент";
             this.currentClientTab.UseVisualStyleBackColor = true;
@@ -280,7 +284,7 @@
             // 
             // digitalTimer
             // 
-            this.digitalTimer.Location = new System.Drawing.Point(260, 235);
+            this.digitalTimer.Location = new System.Drawing.Point(260, 260);
             this.digitalTimer.Margin = new System.Windows.Forms.Padding(4);
             this.digitalTimer.Name = "digitalTimer";
             this.digitalTimer.Size = new System.Drawing.Size(60, 20);
@@ -309,7 +313,7 @@
             // 
             this.stateTextBlock.BackColor = System.Drawing.Color.White;
             this.stateTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.stateTextBlock.Location = new System.Drawing.Point(120, 235);
+            this.stateTextBlock.Location = new System.Drawing.Point(120, 260);
             this.stateTextBlock.Name = "stateTextBlock";
             this.stateTextBlock.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.stateTextBlock.Size = new System.Drawing.Size(135, 20);
@@ -428,14 +432,14 @@
             this.serviceTypesComboBox.FormattingEnabled = true;
             this.serviceTypesComboBox.Location = new System.Drawing.Point(120, 200);
             this.serviceTypesComboBox.Name = "serviceTypesComboBox";
-            this.serviceTypesComboBox.Size = new System.Drawing.Size(120, 21);
+            this.serviceTypesComboBox.Size = new System.Drawing.Size(135, 21);
             this.serviceTypesComboBox.TabIndex = 0;
             this.serviceTypesComboBox.SelectedIndexChanged += new System.EventHandler(this.serviceTypesComboBox_SelectedIndexChanged);
             // 
             // stateLabel
             // 
             this.stateLabel.AutoSize = true;
-            this.stateLabel.Location = new System.Drawing.Point(5, 240);
+            this.stateLabel.Location = new System.Drawing.Point(5, 265);
             this.stateLabel.Name = "stateLabel";
             this.stateLabel.Size = new System.Drawing.Size(108, 13);
             this.stateLabel.TabIndex = 0;
@@ -444,7 +448,7 @@
             // parametersLabel
             // 
             this.parametersLabel.AutoSize = true;
-            this.parametersLabel.Location = new System.Drawing.Point(5, 270);
+            this.parametersLabel.Location = new System.Drawing.Point(5, 295);
             this.parametersLabel.Name = "parametersLabel";
             this.parametersLabel.Size = new System.Drawing.Size(102, 13);
             this.parametersLabel.TabIndex = 0;
@@ -467,7 +471,7 @@
             this.parametersGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.parameterNameColumn,
             this.parameterValueColumn});
-            this.parametersGridView.Location = new System.Drawing.Point(10, 290);
+            this.parametersGridView.Location = new System.Drawing.Point(10, 315);
             this.parametersGridView.MultiSelect = false;
             this.parametersGridView.Name = "parametersGridView";
             this.parametersGridView.ReadOnly = true;
@@ -741,17 +745,34 @@
             this.stateColumn.ReadOnly = true;
             this.stateColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // serviceStepLabel
+            // 
+            this.serviceStepLabel.AutoSize = true;
+            this.serviceStepLabel.Location = new System.Drawing.Point(5, 240);
+            this.serviceStepLabel.Name = "serviceStepLabel";
+            this.serviceStepLabel.Size = new System.Drawing.Size(67, 13);
+            this.serviceStepLabel.TabIndex = 6;
+            this.serviceStepLabel.Text = "Этап услуги";
+            // 
+            // serviceStepComboBox
+            // 
+            this.serviceStepComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.serviceStepComboBox.FormattingEnabled = true;
+            this.serviceStepComboBox.Location = new System.Drawing.Point(120, 230);
+            this.serviceStepComboBox.Name = "serviceStepComboBox";
+            this.serviceStepComboBox.Size = new System.Drawing.Size(200, 21);
+            this.serviceStepComboBox.TabIndex = 8;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(524, 478);
+            this.ClientSize = new System.Drawing.Size(524, 507);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.statusBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(839, 516);
-            this.MinimumSize = new System.Drawing.Size(539, 516);
+            this.MaximumSize = new System.Drawing.Size(540, 545);
             this.Name = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -843,6 +864,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn stateColumn;
         private System.Windows.Forms.Panel subjectsPanel;
         private System.Windows.Forms.CheckBox isAutocallCheckBox;
+        private System.Windows.Forms.Label serviceStepLabel;
+        private System.Windows.Forms.ComboBox serviceStepComboBox;
 
     }
 }
