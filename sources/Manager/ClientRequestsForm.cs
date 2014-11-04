@@ -283,7 +283,7 @@ namespace Queue.Manager
                     using (var form = new EditClientRequestForm(channelBuilder, currentUser, clientRequest.Id))
                     {
                         form.ShowDialog();
-                        //RenderGridRow(row, form.ClientRequest);
+                        RenderGridViewRow(row, form.ClientRequest);
                     }
                 }
             }

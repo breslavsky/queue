@@ -278,6 +278,7 @@
             this.operatorsComboBox.Name = "operatorsComboBox";
             this.operatorsComboBox.Size = new System.Drawing.Size(200, 21);
             this.operatorsComboBox.TabIndex = 0;
+            this.operatorsComboBox.SelectedValueChanged += new System.EventHandler(this.operatorsComboBox_SelectedValueChanged);
             // 
             // operatorLabel
             // 
@@ -546,6 +547,7 @@
             this.serviceStepComboBox.Name = "serviceStepComboBox";
             this.serviceStepComboBox.Size = new System.Drawing.Size(205, 21);
             this.serviceStepComboBox.TabIndex = 13;
+            this.serviceStepComboBox.SelectedValueChanged += new System.EventHandler(this.serviceStepComboBox_SelectedValueChanged);
             // 
             // EditClientRequestForm
             // 

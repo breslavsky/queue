@@ -72,33 +72,27 @@ namespace Queue.Manager
 
                     clientTextBlock.Text = clientRequest.Client != null ? clientRequest.Client.ToString() : string.Empty;
 
-                    foreach (var parameter in clientRequest.Parameters)
-                    {
-                        var index = parametersGridView.Rows.Add();
-                        var row = parametersGridView.Rows[index];
-                        row.Cells["parameterNameColumn"].Value = parameter.Name;
-                        row.Cells["parameterValueColumn"].Value = parameter.Value;
-                    }
-
                     var service = clientRequest.Service;
                     serviceTextBlock.Text = service.ToString();
 
                     var translation2 = Translation.ServiceType.ResourceManager;
                     serviceTypeTextBlock.Text = translation2.GetString(clientRequest.ServiceType.ToString());
 
-                    var translation3 = Translation.ClientRequestState.ResourceManager;
-                    stateTextBlock.Text = translation3.GetString(clientRequest.State.ToString());
-                    stateTextBlock.BackColor = ColorTranslator.FromHtml(clientRequest.Color);
-
-                    operatorsComboBox.SelectedValueChanged -= operatorsComboBox_SelectedValueChanged;
-                    var queueOperator = clientRequest.Operator;
-                    operatorsComboBox.SelectedValue = queueOperator != null ? queueOperator.Id : Guid.Empty;
-                    operatorsComboBox.SelectedValueChanged += operatorsComboBox_SelectedValueChanged;
-
                     using (var channel = channelManager.CreateChannel())
-                    {
+                    {                    
                         try
                         {
+                            var serviceSteps = await channel.Service.GetServiceSteps(service.Id);
+                            serviceStepComboBox.DataSource = new BindingSource(serviceSteps, null);
+                            serviceStepComboBox.SelectedItem = clientRequest.ServiceStep != null ? clientRequest.ServiceStep : null;
+
+                            var translation3 = Translation.ClientRequestState.ResourceManager;
+                            stateTextBlock.Text = translation3.GetString(clientRequest.State.ToString());
+                            stateTextBlock.BackColor = ColorTranslator.FromHtml(clientRequest.Color);
+
+                            var queueOperator = clientRequest.Operator;
+                            operatorsComboBox.SelectedValue = queueOperator != null ? queueOperator.Id : Guid.Empty;
+
                             eventsGridView.Rows.Clear();
 
                             var events = await taskPool.AddTask(channel.Service.GetClientRequestEvents(clientRequestId));
@@ -122,6 +116,14 @@ namespace Queue.Manager
                         {
                             UIHelper.Warning(exception.Message);
                         }
+                    }
+
+                    foreach (var parameter in clientRequest.Parameters)
+                    {
+                        var index = parametersGridView.Rows.Add();
+                        var row = parametersGridView.Rows[index];
+                        row.Cells["parameterNameColumn"].Value = parameter.Name;
+                        row.Cells["parameterValueColumn"].Value = parameter.Value;
                     }
 
                     if (clientRequest.IsEditable)
@@ -257,34 +259,72 @@ namespace Queue.Manager
             }
         }
 
+        private async void serviceStepComboBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            var serviceStep = serviceStepComboBox.SelectedItem as ServiceStep;
+            if (serviceStep != null)
+            {
+                using (var channel = channelManager.CreateChannel())
+                {
+                    try
+                    {
+                        serviceStepComboBox.Enabled = false;
+
+                        await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
+                        ClientRequest = await taskPool.AddTask(channel.Service.ChangeClientRequestServiceStep(clientRequestId, serviceStep.Id));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                    finally
+                    {
+                        serviceStepComboBox.Enabled = true;
+                    }
+                }
+            }
+        }
+
         private async void operatorsComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            var operatorId = (Guid)operatorsComboBox.SelectedValue;
-
-            using (var channel = channelManager.CreateChannel())
+            var selectedValue = operatorsComboBox.SelectedValue;
+            if (selectedValue != null)
             {
-                try
-                {
-                    operatorsComboBox.Enabled = false;
+                var operatorId = (Guid)selectedValue;
 
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                    ClientRequest = await taskPool.AddTask(channel.Service.ChangeClientRequestOperator(clientRequestId, operatorId));
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
+                using (var channel = channelManager.CreateChannel())
                 {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    operatorsComboBox.Enabled = true;
+                    try
+                    {
+                        operatorsComboBox.Enabled = false;
+
+                        await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
+                        ClientRequest = await taskPool.AddTask(channel.Service.ChangeClientRequestOperator(clientRequestId, operatorId));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                    finally
+                    {
+                        operatorsComboBox.Enabled = true;
+                    }
                 }
             }
         }

@@ -97,6 +97,10 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<ClientRequest> ChangeClientRequestServiceStep(Guid clientRequestId, Guid serviceStepId);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
         Task<ClientRequest> ChangeClientRequestOperator(Guid clientRequestId, Guid operatorId);
 
         [OperationContract]
