@@ -69,7 +69,6 @@ namespace Queue.Administrator.Reports
             DateTime currentDate = ServerDateTime.Today;
             finishMonthPicker.Value = currentDate;
             finishDatePicker.Value = currentDate;
-            targetDatePicker.Value = currentDate;
         }
 
         private void startYearComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -256,17 +255,8 @@ namespace Queue.Administrator.Reports
                             };
                             break;
 
-                        case ReportDetailLevel.Hour:
-
-                            settings = new ServiceRatingReportSettings()
-                            {
-                                TargetDate = targetDatePicker.Value,
-                                IsServiceTypes = isServiceTypesCheckBox.Checked
-                            };
-                            break;
-
                         default:
-                            throw new Exception("Не верный тип детализации");
+                            throw new Exception("Неверный тип детализации");
                     }
 
                     List<Guid> servicesIds = isFullCheckBox.Checked

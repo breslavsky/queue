@@ -225,3 +225,4 @@ pip-log.txt
 /sources/Services.Server/Services.Server.csproj.user
 /sources/Simulator/Simulator.csproj.user
 /sources/UI.Silverlight/UI.Silverlight.csproj.user
+*.exe

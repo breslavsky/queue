@@ -40,8 +40,6 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.startDatePicker = new System.Windows.Forms.DateTimePicker();
             this.finishDatePicker = new System.Windows.Forms.DateTimePicker();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.targetDatePicker = new System.Windows.Forms.DateTimePicker();
             this.panel2 = new System.Windows.Forms.Panel();
             this.isFullCheckBox = new System.Windows.Forms.CheckBox();
             this.createReportButton = new System.Windows.Forms.Button();
@@ -52,7 +50,6 @@
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -91,12 +88,12 @@
             this.detailLevelTabControl.Controls.Add(this.tabPage1);
             this.detailLevelTabControl.Controls.Add(this.tabPage2);
             this.detailLevelTabControl.Controls.Add(this.tabPage3);
-            this.detailLevelTabControl.Controls.Add(this.tabPage4);
-            this.detailLevelTabControl.Location = new System.Drawing.Point(5, 5);
+            this.detailLevelTabControl.Dock = System.Windows.Forms.DockStyle.Top;
+            this.detailLevelTabControl.Location = new System.Drawing.Point(0, 0);
             this.detailLevelTabControl.Name = "detailLevelTabControl";
             this.detailLevelTabControl.Padding = new System.Drawing.Point(5, 5);
             this.detailLevelTabControl.SelectedIndex = 0;
-            this.detailLevelTabControl.Size = new System.Drawing.Size(195, 100);
+            this.detailLevelTabControl.Size = new System.Drawing.Size(210, 100);
             this.detailLevelTabControl.TabIndex = 0;
             // 
             // tabPage1
@@ -106,7 +103,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 26);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(187, 70);
+            this.tabPage1.Size = new System.Drawing.Size(202, 70);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Год";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -137,7 +134,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 26);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(187, 70);
+            this.tabPage2.Size = new System.Drawing.Size(202, 70);
             this.tabPage2.TabIndex = 0;
             this.tabPage2.Text = "Месяц";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -170,7 +167,7 @@
             this.tabPage3.Controls.Add(this.finishDatePicker);
             this.tabPage3.Location = new System.Drawing.Point(4, 26);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(187, 70);
+            this.tabPage3.Size = new System.Drawing.Size(202, 70);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "День";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -188,23 +185,6 @@
             this.finishDatePicker.Name = "finishDatePicker";
             this.finishDatePicker.Size = new System.Drawing.Size(120, 20);
             this.finishDatePicker.TabIndex = 0;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.targetDatePicker);
-            this.tabPage4.Location = new System.Drawing.Point(4, 26);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(187, 70);
-            this.tabPage4.TabIndex = 0;
-            this.tabPage4.Text = "Час";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // targetDatePicker
-            // 
-            this.targetDatePicker.Location = new System.Drawing.Point(10, 10);
-            this.targetDatePicker.Name = "targetDatePicker";
-            this.targetDatePicker.Size = new System.Drawing.Size(120, 20);
-            this.targetDatePicker.TabIndex = 0;
             // 
             // panel2
             // 
@@ -262,7 +242,6 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
@@ -283,8 +262,6 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.DateTimePicker startDatePicker;
         private System.Windows.Forms.DateTimePicker finishDatePicker;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.DateTimePicker targetDatePicker;
         private System.Windows.Forms.Button createReportButton;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.CheckBox isFullCheckBox;

@@ -29,8 +29,6 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.startDatePicker = new System.Windows.Forms.DateTimePicker();
             this.finishDatePicker = new System.Windows.Forms.DateTimePicker();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.targetDatePicker = new System.Windows.Forms.DateTimePicker();
             this.isServiceTypesCheckBox = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.isFullCheckBox = new System.Windows.Forms.CheckBox();
@@ -40,13 +38,13 @@
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // createReportButton
             // 
-            this.createReportButton.Location = new System.Drawing.Point(105, 135);
+            this.createReportButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.createReportButton.Location = new System.Drawing.Point(721, 394);
             this.createReportButton.Name = "createReportButton";
             this.createReportButton.Size = new System.Drawing.Size(100, 25);
             this.createReportButton.TabIndex = 0;
@@ -60,13 +58,15 @@
             this.mainLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 210F));
             this.mainLayoutPanel.Controls.Add(this.servicesTreeView, 0, 1);
             this.mainLayoutPanel.Controls.Add(this.panel1, 1, 0);
+            this.mainLayoutPanel.Controls.Add(this.createReportButton, 1, 2);
             this.mainLayoutPanel.Controls.Add(this.panel2, 0, 0);
             this.mainLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.mainLayoutPanel.Name = "mainLayoutPanel";
-            this.mainLayoutPanel.RowCount = 2;
+            this.mainLayoutPanel.RowCount = 3;
             this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.mainLayoutPanel.Size = new System.Drawing.Size(824, 427);
             this.mainLayoutPanel.TabIndex = 0;
             // 
@@ -80,7 +80,7 @@
             this.servicesTreeView.Location = new System.Drawing.Point(0, 30);
             this.servicesTreeView.Margin = new System.Windows.Forms.Padding(0);
             this.servicesTreeView.Name = "servicesTreeView";
-            this.servicesTreeView.Size = new System.Drawing.Size(614, 397);
+            this.servicesTreeView.Size = new System.Drawing.Size(614, 357);
             this.servicesTreeView.TabIndex = 0;
             this.servicesTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.servicesTreeView_AfterCheck);
             this.servicesTreeView.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.servicesTreeView_AfterExpand);
@@ -89,13 +89,12 @@
             // 
             this.panel1.Controls.Add(this.detailLevelTabControl);
             this.panel1.Controls.Add(this.isServiceTypesCheckBox);
-            this.panel1.Controls.Add(this.createReportButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(614, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
             this.mainLayoutPanel.SetRowSpan(this.panel1, 2);
-            this.panel1.Size = new System.Drawing.Size(210, 427);
+            this.panel1.Size = new System.Drawing.Size(210, 387);
             this.panel1.TabIndex = 0;
             // 
             // detailLevelTabControl
@@ -103,12 +102,12 @@
             this.detailLevelTabControl.Controls.Add(this.tabPage1);
             this.detailLevelTabControl.Controls.Add(this.tabPage2);
             this.detailLevelTabControl.Controls.Add(this.tabPage3);
-            this.detailLevelTabControl.Controls.Add(this.tabPage4);
-            this.detailLevelTabControl.Location = new System.Drawing.Point(5, 5);
+            this.detailLevelTabControl.Dock = System.Windows.Forms.DockStyle.Top;
+            this.detailLevelTabControl.Location = new System.Drawing.Point(0, 0);
             this.detailLevelTabControl.Name = "detailLevelTabControl";
             this.detailLevelTabControl.Padding = new System.Drawing.Point(5, 5);
             this.detailLevelTabControl.SelectedIndex = 0;
-            this.detailLevelTabControl.Size = new System.Drawing.Size(195, 100);
+            this.detailLevelTabControl.Size = new System.Drawing.Size(210, 100);
             this.detailLevelTabControl.TabIndex = 0;
             // 
             // tabPage1
@@ -118,15 +117,15 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 26);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(187, 70);
+            this.tabPage1.Size = new System.Drawing.Size(202, 70);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Год";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // startYearComboBox
             // 
-            this.startYearComboBox.FormattingEnabled = true;
             this.startYearComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.startYearComboBox.FormattingEnabled = true;
             this.startYearComboBox.Location = new System.Drawing.Point(10, 10);
             this.startYearComboBox.Name = "startYearComboBox";
             this.startYearComboBox.Size = new System.Drawing.Size(60, 21);
@@ -135,8 +134,8 @@
             // 
             // finishYearComboBox
             // 
-            this.finishYearComboBox.FormattingEnabled = true;
             this.finishYearComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.finishYearComboBox.FormattingEnabled = true;
             this.finishYearComboBox.Location = new System.Drawing.Point(10, 40);
             this.finishYearComboBox.Name = "finishYearComboBox";
             this.finishYearComboBox.Size = new System.Drawing.Size(60, 21);
@@ -201,23 +200,6 @@
             this.finishDatePicker.Size = new System.Drawing.Size(120, 20);
             this.finishDatePicker.TabIndex = 0;
             // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.targetDatePicker);
-            this.tabPage4.Location = new System.Drawing.Point(4, 26);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(187, 70);
-            this.tabPage4.TabIndex = 0;
-            this.tabPage4.Text = "Час";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // targetDatePicker
-            // 
-            this.targetDatePicker.Location = new System.Drawing.Point(10, 10);
-            this.targetDatePicker.Name = "targetDatePicker";
-            this.targetDatePicker.Size = new System.Drawing.Size(120, 20);
-            this.targetDatePicker.TabIndex = 0;
-            // 
             // isServiceTypesCheckBox
             // 
             this.isServiceTypesCheckBox.AutoSize = true;
@@ -270,7 +252,6 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
@@ -289,14 +270,12 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.ComboBox finishYearComboBox;
         private System.Windows.Forms.ComboBox startYearComboBox;
         private System.Windows.Forms.DateTimePicker startMonthPicker;
         private System.Windows.Forms.DateTimePicker finishMonthPicker;
         private System.Windows.Forms.DateTimePicker finishDatePicker;
         private System.Windows.Forms.DateTimePicker startDatePicker;
-        private System.Windows.Forms.DateTimePicker targetDatePicker;
         private System.Windows.Forms.CheckBox isServiceTypesCheckBox;
     }
 }

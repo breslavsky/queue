@@ -46,7 +46,6 @@ namespace Queue.Administrator.Reports
             DateTime currentDate = ServerDateTime.Today;
             finishMonthPicker.Value = currentDate;
             finishDatePicker.Value = currentDate;
-            targetDatePicker.Value = currentDate;
 
             int currentYear = ServerDateTime.Today.Year;
             for (int year = currentYear - 5; year <= currentYear; year++)
@@ -175,12 +174,6 @@ namespace Queue.Administrator.Reports
                         FinishYear = finishDatePicker.Value.Year,
                         FinishMonth = finishDatePicker.Value.Month,
                         FinishDay = finishDatePicker.Value.Day
-                    };
-
-                case ReportDetailLevel.Hour:
-                    return new OperatorRatingReportSettings()
-                    {
-                        TargetDate = targetDatePicker.Value
                     };
 
                 default:
