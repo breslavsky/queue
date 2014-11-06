@@ -2,24 +2,15 @@
 using Junte.UI.WinForms.NHibernate;
 using Queue.Server;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 
 namespace Queue.Hosts.Server.WinForms
 {
     public partial class MainForm : Form
     {
         private Configuration configuration;
-        
+
         private ServerSettings settings;
 
         private ServerInstance server;
@@ -42,22 +33,15 @@ namespace Queue.Hosts.Server.WinForms
             httpCheckBox.Checked = http.Enabled;
             httpHostTextBox.Text = http.Host;
             httpPortUpDown.Value = http.Port;
-
         }
 
         private void databaseButton_Click(object sender, EventArgs eventArgs)
         {
             using (var loginForm = new LoginForm(settings.Database ?? new DatabaseSettings()))
             {
-                loginForm.OnLogin += (s, e) =>
+                if (loginForm.ShowDialog() == DialogResult.OK)
                 {
-                    settings.Database = e.Settings;
-                    loginForm.DialogResult = DialogResult.OK;                    
-                };
-
-                if (loginForm.ShowDialog() != DialogResult.OK)
-                {
-                    return;
+                    settings.Database = loginForm.Settings;
                 }
             }
         }

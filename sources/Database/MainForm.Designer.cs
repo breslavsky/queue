@@ -30,14 +30,17 @@
         {
             this.connectButton = new System.Windows.Forms.Button();
             this.topMenu = new System.Windows.Forms.MenuStrip();
-            this.logTextBox = new System.Windows.Forms.TextBox();
-            this.SchemaMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.schemaMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.schemaValidateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.schemaUpdateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.constraintUpdateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.импортToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.initDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logTextBox = new System.Windows.Forms.TextBox();
             this.testDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.обновитьСсылкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.установкаОбновленийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.проверкаОбновленийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.topMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,13 +57,67 @@
             // 
             this.topMenu.Enabled = false;
             this.topMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SchemaMenu,
+            this.schemaMenu,
             this.dataMenu});
             this.topMenu.Location = new System.Drawing.Point(0, 0);
             this.topMenu.Name = "topMenu";
             this.topMenu.Size = new System.Drawing.Size(628, 24);
             this.topMenu.TabIndex = 0;
             this.topMenu.Text = "menuStrip1";
+            // 
+            // schemaMenu
+            // 
+            this.schemaMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.schemaValidateMenuItem,
+            this.schemaUpdateMenuItem,
+            this.constraintUpdateMenuItem});
+            this.schemaMenu.Name = "schemaMenu";
+            this.schemaMenu.Size = new System.Drawing.Size(75, 20);
+            this.schemaMenu.Text = "Структура";
+            // 
+            // schemaValidateMenuItem
+            // 
+            this.schemaValidateMenuItem.Name = "schemaValidateMenuItem";
+            this.schemaValidateMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.schemaValidateMenuItem.Text = "Проверить структуру";
+            this.schemaValidateMenuItem.Click += new System.EventHandler(this.schemaValidateMenu_Click);
+            // 
+            // schemaUpdateMenuItem
+            // 
+            this.schemaUpdateMenuItem.Name = "schemaUpdateMenuItem";
+            this.schemaUpdateMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.schemaUpdateMenuItem.Text = "Обновить структуру";
+            this.schemaUpdateMenuItem.Click += new System.EventHandler(this.schemaUpdateMenuItem_Click);
+            // 
+            // constraintUpdateMenuItem
+            // 
+            this.constraintUpdateMenuItem.Name = "constraintUpdateMenuItem";
+            this.constraintUpdateMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.constraintUpdateMenuItem.Text = "Обновить связи";
+            // 
+            // dataMenu
+            // 
+            this.dataMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.проверкаОбновленийToolStripMenuItem,
+            this.установкаОбновленийToolStripMenuItem,
+            this.initDataMenuItem,
+            this.testDataMenuItem,
+            this.importDataMenuItem});
+            this.dataMenu.Name = "dataMenu";
+            this.dataMenu.Size = new System.Drawing.Size(62, 20);
+            this.dataMenu.Text = "Данные";
+            // 
+            // initDataMenuItem
+            // 
+            this.initDataMenuItem.Name = "initDataMenuItem";
+            this.initDataMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.initDataMenuItem.Text = "Инициализировать данные";
+            // 
+            // importDataMenuItem
+            // 
+            this.importDataMenuItem.Name = "importDataMenuItem";
+            this.importDataMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.importDataMenuItem.Text = "Импорт данных";
             // 
             // logTextBox
             // 
@@ -70,56 +127,23 @@
             this.logTextBox.Size = new System.Drawing.Size(615, 105);
             this.logTextBox.TabIndex = 1;
             // 
-            // SchemaMenu
-            // 
-            this.SchemaMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.schemaValidateMenuItem,
-            this.schemaUpdateMenuItem,
-            this.обновитьСсылкиToolStripMenuItem});
-            this.SchemaMenu.Name = "SchemaMenu";
-            this.SchemaMenu.Size = new System.Drawing.Size(75, 20);
-            this.SchemaMenu.Text = "Структура";
-            // 
-            // schemaValidateMenuItem
-            // 
-            this.schemaValidateMenuItem.Name = "schemaValidateMenuItem";
-            this.schemaValidateMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.schemaValidateMenuItem.Text = "Проверить";
-            this.schemaValidateMenuItem.Click += new System.EventHandler(this.schemaValidateMenu_Click);
-            // 
-            // schemaUpdateMenuItem
-            // 
-            this.schemaUpdateMenuItem.Name = "schemaUpdateMenuItem";
-            this.schemaUpdateMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.schemaUpdateMenuItem.Text = "Обновить";
-            this.schemaUpdateMenuItem.Click += new System.EventHandler(this.schemaUpdateMenuItem_Click);
-            // 
-            // dataMenu
-            // 
-            this.dataMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.testDataMenuItem,
-            this.импортToolStripMenuItem});
-            this.dataMenu.Name = "dataMenu";
-            this.dataMenu.Size = new System.Drawing.Size(62, 20);
-            this.dataMenu.Text = "Данные";
-            // 
-            // импортToolStripMenuItem
-            // 
-            this.импортToolStripMenuItem.Name = "импортToolStripMenuItem";
-            this.импортToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.импортToolStripMenuItem.Text = "Импорт";
-            // 
             // testDataMenuItem
             // 
             this.testDataMenuItem.Name = "testDataMenuItem";
-            this.testDataMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.testDataMenuItem.Text = "Тестовые данные";
+            this.testDataMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.testDataMenuItem.Text = "Демонстрационные данные";
             // 
-            // обновитьСсылкиToolStripMenuItem
+            // установкаОбновленийToolStripMenuItem
             // 
-            this.обновитьСсылкиToolStripMenuItem.Name = "обновитьСсылкиToolStripMenuItem";
-            this.обновитьСсылкиToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.обновитьСсылкиToolStripMenuItem.Text = "Обновить связи";
+            this.установкаОбновленийToolStripMenuItem.Name = "установкаОбновленийToolStripMenuItem";
+            this.установкаОбновленийToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.установкаОбновленийToolStripMenuItem.Text = "Установка обновлений";
+            // 
+            // проверкаОбновленийToolStripMenuItem
+            // 
+            this.проверкаОбновленийToolStripMenuItem.Name = "проверкаОбновленийToolStripMenuItem";
+            this.проверкаОбновленийToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.проверкаОбновленийToolStripMenuItem.Text = "Проверка обновлений";
             // 
             // MainForm
             // 
@@ -149,13 +173,16 @@
         private System.Windows.Forms.MenuStrip topMenu;
         private System.Windows.Forms.Button connectButton;
         private System.Windows.Forms.TextBox logTextBox;
-        private System.Windows.Forms.ToolStripMenuItem SchemaMenu;
+        private System.Windows.Forms.ToolStripMenuItem schemaMenu;
         private System.Windows.Forms.ToolStripMenuItem schemaValidateMenuItem;
         private System.Windows.Forms.ToolStripMenuItem schemaUpdateMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dataMenu;
+        private System.Windows.Forms.ToolStripMenuItem initDataMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importDataMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem constraintUpdateMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testDataMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem импортToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem обновитьСсылкиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem проверкаОбновленийToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem установкаОбновленийToolStripMenuItem;
     }
 }
 
