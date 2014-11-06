@@ -50,14 +50,21 @@ namespace Queue.Hosts.Server.WinForms
         {
             try
             {
+                startButton.Enabled = false;
+
                 server = new ServerInstance(settings);
                 server.Start();
                 configuration.Save();
+
                 panel.Enabled = false;
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
+            }
+            finally
+            {
+                startButton.Enabled = true;
             }
         }
 

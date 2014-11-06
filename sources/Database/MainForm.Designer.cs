@@ -28,35 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.connectButton = new System.Windows.Forms.Button();
             this.topMenu = new System.Windows.Forms.MenuStrip();
             this.schemaMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.schemaValidateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.schemaUpdateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.constraintUpdateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkPatchesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.installPatchesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.initDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.demoDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logTextBox = new System.Windows.Forms.TextBox();
-            this.testDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.установкаОбновленийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.проверкаОбновленийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.damaskImportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectButton = new System.Windows.Forms.ToolStripMenuItem();
             this.topMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // connectButton
-            // 
-            this.connectButton.Location = new System.Drawing.Point(5, 30);
-            this.connectButton.Name = "connectButton";
-            this.connectButton.Size = new System.Drawing.Size(105, 25);
-            this.connectButton.TabIndex = 0;
-            this.connectButton.Text = "Подключить";
-            this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
-            // 
             // topMenu
             // 
-            this.topMenu.Enabled = false;
             this.topMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.connectButton,
             this.schemaMenu,
             this.dataMenu});
             this.topMenu.Location = new System.Drawing.Point(0, 0);
@@ -71,6 +63,7 @@
             this.schemaValidateMenuItem,
             this.schemaUpdateMenuItem,
             this.constraintUpdateMenuItem});
+            this.schemaMenu.Enabled = false;
             this.schemaMenu.Name = "schemaMenu";
             this.schemaMenu.Size = new System.Drawing.Size(75, 20);
             this.schemaMenu.Text = "Структура";
@@ -98,60 +91,81 @@
             // dataMenu
             // 
             this.dataMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.проверкаОбновленийToolStripMenuItem,
-            this.установкаОбновленийToolStripMenuItem,
+            this.checkPatchesMenuItem,
+            this.installPatchesMenuItem,
             this.initDataMenuItem,
-            this.testDataMenuItem,
+            this.demoDataMenuItem,
             this.importDataMenuItem});
+            this.dataMenu.Enabled = false;
             this.dataMenu.Name = "dataMenu";
             this.dataMenu.Size = new System.Drawing.Size(62, 20);
             this.dataMenu.Text = "Данные";
+            // 
+            // checkPatchesMenuItem
+            // 
+            this.checkPatchesMenuItem.Name = "checkPatchesMenuItem";
+            this.checkPatchesMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.checkPatchesMenuItem.Text = "Проверка обновлений";
+            this.checkPatchesMenuItem.Click += new System.EventHandler(this.checkPatchesMenuItem_Click);
+            // 
+            // installPatchesMenuItem
+            // 
+            this.installPatchesMenuItem.Name = "installPatchesMenuItem";
+            this.installPatchesMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.installPatchesMenuItem.Text = "Установка обновлений";
+            this.installPatchesMenuItem.Click += new System.EventHandler(this.installPatchesMenuItem_Click);
             // 
             // initDataMenuItem
             // 
             this.initDataMenuItem.Name = "initDataMenuItem";
             this.initDataMenuItem.Size = new System.Drawing.Size(229, 22);
             this.initDataMenuItem.Text = "Инициализировать данные";
+            this.initDataMenuItem.Click += new System.EventHandler(this.initDataMenuItem_Click);
+            // 
+            // demoDataMenuItem
+            // 
+            this.demoDataMenuItem.Name = "demoDataMenuItem";
+            this.demoDataMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.demoDataMenuItem.Text = "Демонстрационные данные";
+            this.demoDataMenuItem.Click += new System.EventHandler(this.demoDataMenuItem_Click);
             // 
             // importDataMenuItem
             // 
+            this.importDataMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.damaskImportMenuItem});
             this.importDataMenuItem.Name = "importDataMenuItem";
             this.importDataMenuItem.Size = new System.Drawing.Size(229, 22);
             this.importDataMenuItem.Text = "Импорт данных";
             // 
             // logTextBox
             // 
-            this.logTextBox.Location = new System.Drawing.Point(5, 60);
+            this.logTextBox.Location = new System.Drawing.Point(5, 30);
             this.logTextBox.Multiline = true;
             this.logTextBox.Name = "logTextBox";
-            this.logTextBox.Size = new System.Drawing.Size(615, 105);
+            this.logTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.logTextBox.Size = new System.Drawing.Size(620, 290);
             this.logTextBox.TabIndex = 1;
             // 
-            // testDataMenuItem
+            // damaskImportMenuItem
             // 
-            this.testDataMenuItem.Name = "testDataMenuItem";
-            this.testDataMenuItem.Size = new System.Drawing.Size(229, 22);
-            this.testDataMenuItem.Text = "Демонстрационные данные";
+            this.damaskImportMenuItem.Name = "damaskImportMenuItem";
+            this.damaskImportMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.damaskImportMenuItem.Text = "Импорт из \"Дамаск\"";
+            this.damaskImportMenuItem.Click += new System.EventHandler(this.damaskImportMenuItem_Click);
             // 
-            // установкаОбновленийToolStripMenuItem
+            // connectButton
             // 
-            this.установкаОбновленийToolStripMenuItem.Name = "установкаОбновленийToolStripMenuItem";
-            this.установкаОбновленийToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
-            this.установкаОбновленийToolStripMenuItem.Text = "Установка обновлений";
-            // 
-            // проверкаОбновленийToolStripMenuItem
-            // 
-            this.проверкаОбновленийToolStripMenuItem.Name = "проверкаОбновленийToolStripMenuItem";
-            this.проверкаОбновленийToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
-            this.проверкаОбновленийToolStripMenuItem.Text = "Проверка обновлений";
+            this.connectButton.Name = "connectButton";
+            this.connectButton.Size = new System.Drawing.Size(89, 20);
+            this.connectButton.Text = "Подключить";
+            this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(628, 173);
+            this.ClientSize = new System.Drawing.Size(628, 326);
             this.Controls.Add(this.logTextBox);
-            this.Controls.Add(this.connectButton);
             this.Controls.Add(this.topMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
@@ -160,7 +174,7 @@
             this.MinimumSize = new System.Drawing.Size(280, 105);
             this.Name = "MainForm";
             this.Text = "База данных";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.topMenu.ResumeLayout(false);
             this.topMenu.PerformLayout();
             this.ResumeLayout(false);
@@ -171,7 +185,6 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip topMenu;
-        private System.Windows.Forms.Button connectButton;
         private System.Windows.Forms.TextBox logTextBox;
         private System.Windows.Forms.ToolStripMenuItem schemaMenu;
         private System.Windows.Forms.ToolStripMenuItem schemaValidateMenuItem;
@@ -180,9 +193,11 @@
         private System.Windows.Forms.ToolStripMenuItem initDataMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importDataMenuItem;
         private System.Windows.Forms.ToolStripMenuItem constraintUpdateMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem testDataMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem проверкаОбновленийToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem установкаОбновленийToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem demoDataMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkPatchesMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem installPatchesMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem damaskImportMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem connectButton;
     }
 }
 
