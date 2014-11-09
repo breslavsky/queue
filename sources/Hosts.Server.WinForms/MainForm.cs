@@ -19,7 +19,7 @@ namespace Queue.Hosts.Server.WinForms
         {
             InitializeComponent();
 
-            configuration = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+            configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoaming);
             settings = configuration.GetSection("server") as ServerSettings;
 
             var tcp = settings.Services.TcpService;
@@ -50,9 +50,12 @@ namespace Queue.Hosts.Server.WinForms
         {
             try
             {
+                //settings.SectionInformation.ForceSave = true;
+                configuration.Save(ConfigurationSaveMode.Modified);
+
                 server = new ServerInstance(settings);
                 server.Start();
-                configuration.Save();
+
                 panel.Enabled = false;
             }
             catch (Exception e)
