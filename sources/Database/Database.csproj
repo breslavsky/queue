@@ -110,9 +110,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.UI.WinForms.1.0.0.60\lib\net45\Junte.UI.WinForms.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.UI.WinForms.NHibernate, Version=1.0.0.30, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Junte.UI.WinForms.NHibernate, Version=1.0.0.45, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.UI.WinForms.NHibernate.1.0.0.30\lib\net45\Junte.UI.WinForms.NHibernate.dll</HintPath>
+      <HintPath>..\packages\Junte.UI.WinForms.NHibernate.1.0.0.45\lib\net45\Junte.UI.WinForms.NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -204,12 +204,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SchemePatch.Designer.cs">
+    <Compile Include="Scheme.cs" />
+    <Compile Include="SchemePatches.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SchemePatch.resx</DependentUpon>
+      <DependentUpon>SchemePatches.resx</DependentUpon>
     </Compile>
-    <Compile Include="Scheme.cs" />
     <EmbeddedResource Include="DamaskForm.resx">
       <DependentUpon>DamaskForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -226,9 +226,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SchemePatch.resx">
+    <EmbeddedResource Include="SchemePatches.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SchemePatch.Designer.cs</LastGenOutput>
+      <LastGenOutput>SchemePatches.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>
@@ -289,9 +289,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="constraint.sql" />
-    <Content Include="SchemePatch\001.sql" />
-    <Content Include="SchemePatch\002.sql" />
-    <Content Include="SchemePatch\003.sql" />
+    <Content Include="SchemePatches\001.sql" />
+    <Content Include="SchemePatches\002.sql" />
+    <Content Include="SchemePatches\003.sql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

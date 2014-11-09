@@ -11,6 +11,7 @@ using Queue.Resources;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.ServiceModel.Web;
@@ -27,20 +28,45 @@ namespace Queue.Database
 
         private static Properties.Settings settings = Properties.Settings.Default;
 
+        private UnityContainer container;
         private ISessionProvider sessionProvider;
 
         public MainForm()
             : base()
         {
             InitializeComponent();
+
+            container = new UnityContainer();
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 
         private void log(string message)
         {
-            logTextBox.AppendText(message + Environment.NewLine);
+            logTextBox.AppendText(string.Format("{0:T} {1}", DateTime.Now, message));
+            logTextBox.AppendText(Environment.NewLine);
         }
 
-        #region menu
+        private void connectButton_Click(object sender, EventArgs eventArgs)
+        {
+            using (var loginForm = new LoginForm(settings.Database ?? new DatabaseSettings()))
+            {
+                if (loginForm.ShowDialog() == DialogResult.OK)
+                {
+                    sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, loginForm.Settings);
+                    container.RegisterInstance<ISessionProvider>(sessionProvider);
+
+                    settings.Database = loginForm.Settings;
+                    settings.Save();
+
+                    schemaMenu.Enabled = dataMenu.Enabled = true;
+                    connectButton.Enabled = false;
+
+                    var model = Assembly.Load("Queue.Model");
+                    log(string.Format("Версия модели данных: {0}", model.GetName().Version));
+                }
+            }
+        }
+
         private void schemaValidateMenu_Click(object sender, EventArgs e)
         {
             log("Проверка структуры базы данных");
@@ -52,7 +78,7 @@ namespace Queue.Database
             }
             catch (Exception exception)
             {
-                log(string.Format("Структура базы данных не верна [{0}]", exception.Message));
+                log(exception.Message);
             }
         }
 
@@ -67,50 +93,87 @@ namespace Queue.Database
             }
             catch (Exception exception)
             {
-                UIHelper.Warning(exception.Message);
-                return;
+                log(exception.Message);
             }
         }
 
-        private void damaskMenuItem_Click(object sender, EventArgs e)
+        private void checkPatchesMenuItem_Click(object sender, EventArgs e)
         {
-            new DamaskForm().ShowDialog();
-        }
-
-        #endregion menu
-
-        private void connectButton_Click(object sender, EventArgs eventArgs)
-        {
-            using (var loginForm = new LoginForm(settings.Database ?? new DatabaseSettings()))
+            using (var session = sessionProvider.OpenSession())
+            using (var transaction = session.BeginTransaction())
             {
-                loginForm.OnLogin += (s, e) =>
+                var schemeConfig = session.Get<SchemeConfig>(ConfigType.Scheme);
+                if (schemeConfig != null)
                 {
-                    try
-                    {
-                        sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, e.Settings);
+                    log(string.Format("Текущий патч базы данных = {0}", schemeConfig.Version));
 
-                        settings.Database = e.Settings;
-                        settings.Save();
-
-                        loginForm.DialogResult = DialogResult.OK;
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Error("Ошибка при подключении к базе данных", exception, "Проверьте параметры подключения");
-                    }
-                };
-
-                if (loginForm.ShowDialog() != DialogResult.OK)
+                    int maxPatch = Scheme.Patches.Max(x => x.Key);
+                    log(string.Format("Доступный патч обновления = {0}", maxPatch));
+                }
+                else
                 {
-                    return;
+                    log("Конфигурация модели данных не найдена в базе данных");
                 }
             }
+        }
 
-            #region установка базы
+        private void installPatchesMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var session = sessionProvider.OpenSession())
+            using (var transaction = session.BeginTransaction())
+            {
+                var schemeConfig = session.Get<SchemeConfig>(ConfigType.Scheme);
+                if (schemeConfig != null)
+                {
+                    log(string.Format("Текущий патч базы данных = {0}", schemeConfig.Version));
+
+                    int maxPatch = Scheme.Patches.Max(x => x.Key);
+                    log(string.Format("Доступный патч обновления = {0}", maxPatch));
+
+                    for (int currentPatch = schemeConfig.Version + 1;
+                        currentPatch <= maxPatch; currentPatch++)
+                    {
+                        if (Scheme.Patches.ContainsKey(currentPatch))
+                        {
+                            string sql = Scheme.Patches[currentPatch];
+
+                            log(string.Format("Приминение патча [{0}]", sql));
+
+                            try
+                            {
+                                session.CreateSQLQuery(sql).ExecuteUpdate();
+                            }
+                            catch (Exception exception)
+                            {
+                                log(exception.Message);
+                                return;
+                            }
+                        }
+                    }
+
+                    schemeConfig.Version = maxPatch;
+                    session.Save(schemeConfig);
+
+                    transaction.Commit();
+
+                    log("Обновление завершено");
+                }
+                else
+                {
+                    log("Конфигурация модели данных не найдена в базе данных");
+                }
+            }
+        }
+
+        private void initDataMenuItem_Click(object sender, EventArgs e)
+        {
+            log("Инициализация данных");
 
             using (var session = sessionProvider.OpenSession())
             using (var transaction = session.BeginTransaction())
             {
+                log("Инициализация конфигурации");
+
                 int maxPatch = Scheme.Patches.Max(x => x.Key);
 
                 var schemeConfig = session.Get<SchemeConfig>(ConfigType.Scheme);
@@ -122,36 +185,6 @@ namespace Queue.Database
                     };
                     session.Save(schemeConfig);
                 }
-
-                log("Текущий патч базы данных " + schemeConfig.Version);
-
-                #region приминение патчей
-
-                for (int currentPatch = schemeConfig.Version + 1;
-                    currentPatch <= maxPatch; currentPatch++)
-                {
-                    if (Scheme.Patches.ContainsKey(currentPatch))
-                    {
-                        string sql = Scheme.Patches[currentPatch];
-
-                        log("Приминение патча [" + sql +"]");
-
-                        try
-                        {
-                            session.CreateSQLQuery(sql).ExecuteUpdate();
-                        }
-                        catch (Exception exception)
-                        {
-                            UIHelper.Error(exception);
-                            return;
-                        }
-                    }
-                }
-
-                schemeConfig.Version = maxPatch;
-                session.Save(schemeConfig);
-
-                #endregion приминение патчей
 
                 var defaultConfig = session.Get<DefaultConfig>(ConfigType.Default);
                 if (defaultConfig == null)
@@ -252,6 +285,8 @@ namespace Queue.Database
                     session.Save(notificationConfig);
                 }
 
+                log("Инициализация администратора");
+
                 int count = session.CreateCriteria<Administrator>()
                     .SetProjection(Projections.Count(Projections.Id()))
                     .UniqueResult<int>();
@@ -262,73 +297,9 @@ namespace Queue.Database
                         Surname = "Администратор"
                     };
                     session.Save(administrator);
-
-                    administrator = new Administrator()
-                    {
-                        Surname = "Терминал"
-                    };
-                    session.Save(administrator);
-
-                    administrator = new Administrator()
-                    {
-                        Surname = "Портал"
-                    };
-                    session.Save(administrator);
-
-                    var manager = new Manager()
-                    {
-                        Surname = "Менеджер"
-                    };
-                    session.Save(manager);
                 }
 
-                count = session.CreateCriteria<Workplace>()
-                    .SetProjection(Projections.Count(Projections.Id()))
-                    .UniqueResult<int>();
-                if (count == 0)
-                {
-                    var workplace1 = new Workplace();
-                    workplace1.Type = WorkplaceType.Window;
-                    workplace1.Number = 1;
-                    session.Save(workplace1);
-
-                    var workplace2 = new Workplace();
-                    workplace2.Type = WorkplaceType.Window;
-                    workplace2.Number = 2;
-                    session.Save(workplace2);
-
-                    var workplace3 = new Workplace();
-                    workplace3.Type = WorkplaceType.Window;
-                    workplace3.Number = 3;
-                    session.Save(workplace3);
-                }
-
-                count = session.CreateCriteria<Operator>()
-                    .SetProjection(Projections.Count(Projections.Id()))
-                    .UniqueResult<int>();
-                if (count == 0)
-                {
-                    var queueOperator1 = new Operator()
-                    {
-                        Name = "Денис",
-                        Surname = "Сидоров"
-                    };
-                    session.Save(queueOperator1);
-
-                    var queueOperator2 = new Operator()
-                    {
-                        Name = "Андрей",
-                        Surname = "Шитиков"
-                    };
-                    session.Save(queueOperator2);
-
-                    var queueOperator3 = new Operator()
-                    {
-                        Name = "Ирина",
-                        Surname = "Меньшова"
-                    };
-                    session.Save(queueOperator3);
-                }
+                log("Инициализация расписания по уполчанию");
 
                 #region monday
 
@@ -340,6 +311,8 @@ namespace Queue.Database
                     schedule1 = new DefaultWeekdaySchedule();
                     schedule1.DayOfWeek = DayOfWeek.Monday;
                     session.Save(schedule1);
+
+                    log("Создано расписание на понедельник");
                 }
 
                 #endregion monday
@@ -431,22 +404,84 @@ namespace Queue.Database
                 transaction.Commit();
             }
 
-            #endregion установка базы
-
-            topMenu.Enabled = true;
-            connectButton.Enabled = false;
-
-            FormClosing += (e, s) =>
-            {
-                sessionProvider.Dispose();
-            };
+            log("Данные инициализорованы");
         }
 
-        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        private void demoDataMenuItem_Click(object sender, EventArgs e)
         {
-            if (e.KeyCode == Keys.Q)
+            log("Загрузка демонстрационных данных");
+
+            using (var session = sessionProvider.OpenSession())
+            using (var transaction = session.BeginTransaction())
             {
-                Process.Start(Application.StartupPath);
+                log("Загрузка рабочих мест");
+
+                int count = session.CreateCriteria<Workplace>()
+                    .SetProjection(Projections.Count(Projections.Id()))
+                    .UniqueResult<int>();
+                if (count == 0)
+                {
+                    var workplace1 = new Workplace();
+                    workplace1.Type = WorkplaceType.Window;
+                    workplace1.Number = 1;
+                    session.Save(workplace1);
+
+                    var workplace2 = new Workplace();
+                    workplace2.Type = WorkplaceType.Window;
+                    workplace2.Number = 2;
+                    session.Save(workplace2);
+
+                    var workplace3 = new Workplace();
+                    workplace3.Type = WorkplaceType.Window;
+                    workplace3.Number = 3;
+                    session.Save(workplace3);
+                }
+
+                log("Загрузка операторов");
+
+                count = session.CreateCriteria<Operator>()
+                    .SetProjection(Projections.Count(Projections.Id()))
+                    .UniqueResult<int>();
+                if (count == 0)
+                {
+                    var queueOperator1 = new Operator()
+                    {
+                        Name = "Денис",
+                        Surname = "Сидоров"
+                    };
+                    session.Save(queueOperator1);
+
+                    var queueOperator2 = new Operator()
+                    {
+                        Name = "Андрей",
+                        Surname = "Шитиков"
+                    };
+                    session.Save(queueOperator2);
+
+                    var queueOperator3 = new Operator()
+                    {
+                        Name = "Ирина",
+                        Surname = "Меньшова"
+                    };
+                    session.Save(queueOperator3);
+                }
+
+                transaction.Commit();
+            }
+
+            log("Загрузка демонстрационных данных завершена");
+        }
+
+        private void damaskImportMenuItem_Click(object sender, EventArgs e)
+        {
+            new DamaskForm().ShowDialog();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (sessionProvider != null)
+            {
+                sessionProvider.Dispose();
             }
         }
     }
