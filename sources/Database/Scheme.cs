@@ -1,14 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Queue.Database
 {
-    public static class Scheme
+    public class Scheme
     {
+        public string[] Constraints
+        {
+            get
+            {
+                return SchemePatches.constraint.Split(new string[] { "-- SEPARATOR" },
+                    StringSplitOptions.RemoveEmptyEntries);
+            }
+        }
+
         public static Dictionary<int, string> Patches = new Dictionary<int, string>()
         {
-            {1, SchemePatch._001},
-            {2, SchemePatch._002},
-            {3, SchemePatch._003}
+            {1, SchemePatches._001},
+            {2, SchemePatches._002},
+            {3, SchemePatches._003}
         };
     }
 }
