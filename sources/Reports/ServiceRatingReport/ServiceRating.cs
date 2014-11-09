@@ -4,7 +4,7 @@ using System;
 
 namespace Queue.Reports.ServiceRatingReport
 {
-    internal class ServiceRating
+    public class ServiceRating
     {
         public Service Service { get; set; }
 
