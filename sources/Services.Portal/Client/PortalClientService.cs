@@ -370,7 +370,7 @@ namespace Queue.Services.Portal
                         }
                     }
 
-                    return await channel.Service.GetFreeTime(Guid.Parse(serviceId), targetDate, (ClientRequestType)int.Parse(queueType));
+                    return await channel.Service.GetServiceFreeTime(Guid.Parse(serviceId), targetDate, (ClientRequestType)int.Parse(queueType));
                 }
                 catch (FaultException exception)
                 {

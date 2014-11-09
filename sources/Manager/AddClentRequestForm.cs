@@ -206,7 +206,7 @@ namespace Queue.Manager
                         {
                             try
                             {
-                                var freeTime = await channel.Service.GetFreeTime(selectedService.Id, ServerDateTime.Now, ClientRequestType.Live);
+                                var freeTime = await channel.Service.GetServiceFreeTime(selectedService.Id, ServerDateTime.Now, ClientRequestType.Live);
                                 var timeIntervals = freeTime.TimeIntervals;
 
                                 liveStatusLabel.Text = timeIntervals.Length > 0
@@ -257,7 +257,7 @@ namespace Queue.Manager
                                 freeTimeComboBox.Enabled = false;
 
                                 var freeTime = (await taskPool.AddTask(channel.Service
-                                    .GetFreeTime(selectedService.Id, selectedDate, ClientRequestType.Early)));
+                                    .GetServiceFreeTime(selectedService.Id, selectedDate, ClientRequestType.Early)));
 
                                 freeTimeComboBox.Items.Clear();
 

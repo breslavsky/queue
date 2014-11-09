@@ -183,6 +183,12 @@ namespace Queue.Services.Server
                         queuePlan.Build();
                     }
 
+                    var firstServiceStep = session.CreateCriteria<ServiceStep>()
+                        .Add(Restrictions.Eq("Service", service))
+                        .AddOrder(Order.Asc("SortId"))
+                        .SetMaxResults(1)
+                        .UniqueResult<ServiceStep>();
+
                     using (var locker = queuePlan.ReadLock())
                     {
                         var schedule = queuePlan.GetServiceSchedule(service);
@@ -201,7 +207,7 @@ namespace Queue.Services.Server
 
                         try
                         {
-                            var freeTime = queuePlan.GetServiceFreeTime(service, ClientRequestType.Early, subjects);
+                            var freeTime = queuePlan.GetServiceFreeTime(service, firstServiceStep, ClientRequestType.Early, subjects);
                             var timeIntervals = freeTime.TimeIntervals;
                             if (timeIntervals.Length == 0)
                             {
@@ -230,6 +236,7 @@ namespace Queue.Services.Server
                     {
                         Client = client,
                         Service = service,
+                        ServiceStep = firstServiceStep,
                         Subjects = subjects
                     };
 
@@ -335,6 +342,12 @@ namespace Queue.Services.Server
                         throw new FaultException("Выбранная услуга требует наличие клиента");
                     }
 
+                    var firstServiceStep = session.CreateCriteria<ServiceStep>()
+                        .Add(Restrictions.Eq("Service", service))
+                        .AddOrder(Order.Asc("SortId"))
+                        .SetMaxResults(1)
+                        .UniqueResult<ServiceStep>();
+
                     var currentTime = DateTime.Now.TimeOfDay;
 
                     var todayQueuePlan = queueInstance.TodayQueuePlan;
@@ -364,7 +377,7 @@ namespace Queue.Services.Server
 
                         try
                         {
-                            var freeTime = todayQueuePlan.GetServiceFreeTime(service, ClientRequestType.Live, service.IsPlanSubjects ? subjects : 1);
+                            var freeTime = todayQueuePlan.GetServiceFreeTime(service, firstServiceStep, ClientRequestType.Live, service.IsPlanSubjects ? subjects : 1);
                             var timeIntervals = freeTime.TimeIntervals;
                             if (timeIntervals.Length == 0)
                             {
@@ -383,6 +396,7 @@ namespace Queue.Services.Server
                     {
                         Client = client,
                         Service = service,
+                        ServiceStep = firstServiceStep,
                         Subjects = subjects,
                         IsPriority = client != null && client.VIP
                     };
@@ -837,6 +851,11 @@ namespace Queue.Services.Server
                     }
 
                     clientRequest.Service = service;
+                    clientRequest.ServiceStep = session.CreateCriteria<ServiceStep>()
+                        .Add(Restrictions.Eq("Service", service))
+                        .AddOrder(Order.Asc("SortId"))
+                        .SetMaxResults(1)
+                        .UniqueResult<ServiceStep>();
                     clientRequest.Version++;
                     session.Save(clientRequest);
 

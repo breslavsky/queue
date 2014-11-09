@@ -16,7 +16,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
+
 using DTO = Queue.Services.DTO;
+
 using Icons = Queue.UI.Common.Icons;
 using QueueOperator = Queue.Services.DTO.Operator;
 using Timer = System.Timers.Timer;
@@ -131,7 +133,7 @@ namespace Queue.Operator
                                 {
                                     serviceTypesComboBox.DisplayMember = DataListItem.Value;
                                     serviceTypesComboBox.ValueMember = DataListItem.Key;
-                                    serviceTypesComboBox.DataSource = new BindingSource(serviceTypes, null);
+                                    serviceTypesComboBox.DataSource = serviceTypes;
                                     serviceTypesComboBox.SelectedValue = clientRequest.ServiceType;
                                 }
                             }
@@ -140,7 +142,9 @@ namespace Queue.Operator
                             {
                                 try
                                 {
-                                    serviceStepComboBox.DataSource = await taskPool.AddTask(channel.Service.GetServiceSteps(service.Id));
+                                    var serviceSteps = await taskPool.AddTask(channel.Service.GetServiceSteps(service.Id));
+                                    serviceStepComboBox.Items.Clear();
+                                    serviceStepComboBox.Items.AddRange(serviceSteps);
                                 }
                                 catch (Exception exception)
                                 {

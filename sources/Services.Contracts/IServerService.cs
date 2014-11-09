@@ -155,7 +155,7 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ServiceFreeTime> GetFreeTime(Guid serviceId, DateTime planDate, ClientRequestType queueType);
+        Task<ServiceFreeTime> GetServiceFreeTime(Guid serviceId, DateTime planDate, ClientRequestType queueType);
 
         [OperationContract]
         Task RefreshTodayQueuePlan();

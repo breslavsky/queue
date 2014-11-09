@@ -1,15 +1,15 @@
 ﻿using Junte.Data.NHibernate;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Queue.Server
 {
     public class ServerSettings : ConfigurationSection
     {
+        public ServerSettings()
+        {
+            SectionInformation.AllowExeDefinition = ConfigurationAllowExeDefinition.MachineToLocalUser;
+        }
+
         [ConfigurationProperty("database")]
         public DatabaseSettings Database
         {
@@ -29,6 +29,7 @@ namespace Queue.Server
             return false;
         }
     }
+
     public class ServicesConfig : ConfigurationElement
     {
         [ConfigurationProperty("tcpService", IsRequired = true)]

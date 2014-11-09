@@ -82,8 +82,9 @@ namespace Queue.Manager
                     {
                         try
                         {
-                            var serviceSteps = await channel.Service.GetServiceSteps(service.Id);
                             serviceStepComboBox.SelectedValueChanged -= serviceStepComboBox_SelectedValueChanged;
+                            var serviceSteps = await channel.Service.GetServiceSteps(service.Id);
+                            serviceStepComboBox.Items.Clear();
                             serviceStepComboBox.Items.AddRange(serviceSteps);
                             serviceStepComboBox.Enabled = serviceSteps.Length > 0;
                             serviceStepComboBox.SelectedItem = clientRequest.ServiceStep;
@@ -291,7 +292,7 @@ namespace Queue.Manager
             {
                 try
                 {
-                    serviceStepComboBox.Enabled = false;
+                    operatorsComboBox.Enabled = false;
 
                     await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                     ClientRequest = await taskPool.AddTask(channel.Service.ChangeClientRequestOperator(clientRequestId, queueOperator != null ? queueOperator.Id : Guid.Empty));
@@ -310,7 +311,7 @@ namespace Queue.Manager
                 }
                 finally
                 {
-                    serviceStepComboBox.Enabled = true;
+                    operatorsComboBox.Enabled = true;
                 }
             }
         }

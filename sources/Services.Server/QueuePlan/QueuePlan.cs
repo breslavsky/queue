@@ -447,7 +447,7 @@ namespace Queue.Services.Server
         /// <summary>
         /// Получить доступные временные интервалы
         /// </summary>
-        public ServiceFreeTime GetServiceFreeTime(Service service, ClientRequestType requestType, int subjects = 1)
+        public ServiceFreeTime GetServiceFreeTime(Service service, ServiceStep serviceStep, ClientRequestType requestType, int subjects = 1)
         {
             Schedule schedule = GetServiceSchedule(service);
             if (schedule == null)
@@ -483,8 +483,7 @@ namespace Queue.Services.Server
                 ? ServiceRenderingMode.EarlyRequests
                 : ServiceRenderingMode.LiveRequests;
 
-            //TODO: think!
-            var renderings = GetServiceRenderings(schedule, null, serviceRenderingMode);
+            var renderings = GetServiceRenderings(schedule, serviceStep, serviceRenderingMode);
 
             var potentialOperatorsPlans = OperatorsPlans
                 .Where(p => renderings.Any(r => r.Operator.Equals(p.Operator)))
@@ -662,6 +661,15 @@ namespace Queue.Services.Server
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
+                    if (serviceStep == null)
+                    {
+                        var serviceSteps = session.CreateCriteria<ServiceStep>()
+                            .Add(Restrictions.Eq("Service", schedule))
+                            .AddOrder(Order.Asc("SortId"))
+                            .SetMaxResults(1)
+                            .UniqueResult<ServiceStep>();
+                    }
+
                     serviceRenderings.Add(key, session.CreateCriteria<ServiceRendering>()
                          .Add(Restrictions.Eq("Schedule", schedule))
                          .Add(serviceStep != null ? Restrictions.Eq("ServiceStep", serviceStep) : Restrictions.IsNull("ServiceStep"))

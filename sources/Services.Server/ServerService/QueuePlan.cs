@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NHibernate.Criterion;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -61,7 +62,7 @@ namespace Queue.Services.Server
                                 plans.Add(o.Operator, o.CurrentClientRequestPlan);
                             }
 
-                            return Mapper.Map<Dictionary<Operator, ClientRequestPlan>, 
+                            return Mapper.Map<Dictionary<Operator, ClientRequestPlan>,
                                 Dictionary<DTO.Operator, DTO.ClientRequestPlan>>(plans);
                         }
                     }
@@ -576,7 +577,7 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.ServiceFreeTime> GetFreeTime(Guid serviceId, DateTime planDate, ClientRequestType requestType)
+        public async Task<DTO.ServiceFreeTime> GetServiceFreeTime(Guid serviceId, DateTime planDate, ClientRequestType requestType)
         {
             return await Task.Run(() =>
             {
@@ -604,11 +605,17 @@ namespace Queue.Services.Server
                         queuePlan.Build();
                     }
 
+                    var firstServiceStep = session.CreateCriteria<ServiceStep>()
+                        .Add(Restrictions.Eq("Service", service))
+                        .AddOrder(Order.Asc("SortId"))
+                        .SetMaxResults(1)
+                        .UniqueResult<ServiceStep>();
+
                     try
                     {
                         using (var locker = queuePlan.ReadLock())
                         {
-                            var serviceFreeTime = queuePlan.GetServiceFreeTime(service, requestType);
+                            var serviceFreeTime = queuePlan.GetServiceFreeTime(service, firstServiceStep, requestType);
                             return Mapper.Map<ServiceFreeTime, DTO.ServiceFreeTime>(serviceFreeTime);
                         }
                     }

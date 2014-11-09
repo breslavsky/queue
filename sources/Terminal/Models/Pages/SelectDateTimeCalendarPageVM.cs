@@ -115,7 +115,7 @@ namespace Queue.Terminal.Models.Pages
 
                     try
                     {
-                        var freeTime = await taskPool.AddTask(channel.Service.GetFreeTime(model.SelectedService.Id, model.SelectedDate.Value, ClientRequestType.Early));
+                        var freeTime = await taskPool.AddTask(channel.Service.GetServiceFreeTime(model.SelectedService.Id, model.SelectedDate.Value, ClientRequestType.Early));
                         var timeIntervals = freeTime.TimeIntervals;
 
                         if (timeIntervals.Length > 0)

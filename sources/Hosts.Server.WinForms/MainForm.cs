@@ -1,5 +1,4 @@
-﻿using Junte.Data.NHibernate;
-using Junte.UI.WinForms.NHibernate;
+﻿using Junte.UI.WinForms;
 using Queue.Server;
 using System;
 using System.Configuration;
@@ -22,6 +21,8 @@ namespace Queue.Hosts.Server.WinForms
             configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoaming);
             settings = configuration.GetSection("server") as ServerSettings;
 
+            editDatabaseSettingsControl.Settings = settings.Database;
+
             var tcp = settings.Services.TcpService;
 
             tcpCheckBox.Checked = tcp.Enabled;
@@ -35,32 +36,20 @@ namespace Queue.Hosts.Server.WinForms
             httpPortUpDown.Value = http.Port;
         }
 
-        private void databaseButton_Click(object sender, EventArgs eventArgs)
-        {
-            using (var loginForm = new LoginForm(settings.Database ?? new DatabaseSettings()))
-            {
-                if (loginForm.ShowDialog() == DialogResult.OK)
-                {
-                    settings.Database = loginForm.Settings;
-                }
-            }
-        }
-
         private void startButton_Click(object sender, EventArgs eventArgs)
         {
             try
             {
-                //settings.SectionInformation.ForceSave = true;
-                configuration.Save(ConfigurationSaveMode.Modified);
-
                 server = new ServerInstance(settings);
                 server.Start();
+
+                configuration.Save(ConfigurationSaveMode.Minimal);
 
                 panel.Enabled = false;
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                UIHelper.Error(e);
             }
         }
 

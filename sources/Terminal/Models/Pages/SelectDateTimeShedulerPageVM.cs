@@ -196,7 +196,7 @@ namespace Queue.Terminal.Models.Pages
         {
             try
             {
-                DTO.ServiceFreeTime freeTime = await taskPool.AddTask(channel.Service.GetFreeTime(model.SelectedService.Id, date, ClientRequestType.Early));
+                DTO.ServiceFreeTime freeTime = await taskPool.AddTask(channel.Service.GetServiceFreeTime(model.SelectedService.Id, date, ClientRequestType.Early));
 
                 SetStartJourney(freeTime.Schedule.EarlyStartTime);
                 SetEndJourney(freeTime.Schedule.EarlyFinishTime);

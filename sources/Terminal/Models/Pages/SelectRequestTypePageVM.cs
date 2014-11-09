@@ -94,7 +94,7 @@ namespace Queue.Terminal.Models.Pages
                     {
                         LiveComment = string.Empty;
 
-                        var timeIntervals = (await taskPool.AddTask(channel.Service.GetFreeTime(model.SelectedService.Id, ServerDateTime.Today, ClientRequestType.Live))).TimeIntervals;
+                        var timeIntervals = (await taskPool.AddTask(channel.Service.GetServiceFreeTime(model.SelectedService.Id, ServerDateTime.Today, ClientRequestType.Live))).TimeIntervals;
                         if (timeIntervals.Length > 0)
                         {
                             model.MaxSubjects = Math.Min(model.SelectedService.MaxSubjects, timeIntervals.Length);
