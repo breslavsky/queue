@@ -34,8 +34,6 @@ namespace Queue.Reports.OperatorRatingReport
                 default:
                     throw new FaultException(string.Format("Указанный уровень детализации не поддерживается: {0}", detailLavel.ToString()));
             }
-
-            return null;
         }
     }
 }

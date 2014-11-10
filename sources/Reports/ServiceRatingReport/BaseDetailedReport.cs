@@ -184,18 +184,16 @@ namespace Queue.Reports.ServiceRatingReport
         {
             using (ISession session = SessionProvider.OpenSession())
             {
+                IList<ServiceDto> rootServices = new List<ServiceDto>();
+                IList<ServiceGroupDto> rootGroups = new List<ServiceGroupDto>();
+
                 if (servicesIds.Length == 0)
                 {
-                    return new ServiceGroupDto()
-                    {
-                        Id = Guid.Empty,
-                        ServicesGroups = GetServicesGroups(session, null),
-                        Services = GetGroupServices(session, null)
-                    };
+                    rootServices = GetGroupServices(session, null);
+                    rootGroups = GetServicesGroups(session, null);
                 }
                 else
                 {
-                    List<ServiceGroupDto> result = new List<ServiceGroupDto>();
                     foreach (Guid serviceId in servicesIds)
                     {
                         Service service = session.Get<Service>(serviceId);
@@ -203,19 +201,93 @@ namespace Queue.Reports.ServiceRatingReport
                         {
                             continue;
                         }
-                    }
 
-                    return new ServiceGroupDto()
+                        if (service.ServiceGroup == null)
+                        {
+                            rootServices.Add(new ServiceDto(service));
+                        }
+                        else
+                        {
+                            AddServiceToRoot(session, service, rootGroups);
+                        }
+                    }
+                }
+
+                return new ServiceGroupDto()
                     {
                         Id = Guid.Empty,
-                        ServicesGroups = GetServicesGroups(session, null),
-                        Services = GetGroupServices(session, null)
+                        ServicesGroups = rootGroups.ToArray(),
+                        Services = rootServices.ToArray()
                     };
+            }
+        }
+
+        private void AddServiceToRoot(ISession session, Service service, IList<ServiceGroupDto> rootGroups)
+        {
+            ServiceGroup current = service.ServiceGroup;
+            ServiceGroupDto group = null;
+
+            while (true)
+            {
+                ServiceGroupDto _group = FindServiceGroup(rootGroups, current.Id);
+
+                if (_group != null)
+                {
+                    if (group == null)
+                    {
+                        _group.Services.Add(new ServiceDto(service));
+                    }
+                    else
+                    {
+                        _group.ServicesGroups.Add(group);
+                    }
+                    break;
+                }
+
+                if (group == null)
+                {
+                    group = new ServiceGroupDto(current);
+                    group.Services.Add(new ServiceDto(service));
+                }
+                else
+                {
+                    ServiceGroupDto tmp = new ServiceGroupDto(current);
+                    tmp.ServicesGroups.Add(group);
+                    group = tmp;
+                }
+
+                if (current.ParentGroup == null)
+                {
+                    rootGroups.Add(group);
+                    break;
+                }
+                else
+                {
+                    current = current.ParentGroup;
                 }
             }
         }
 
-        private ServiceGroupDto[] GetServicesGroups(ISession session, ServiceGroup parent = null)
+        private ServiceGroupDto FindServiceGroup(IList<ServiceGroupDto> groups, Guid id)
+        {
+            foreach (ServiceGroupDto group in groups)
+            {
+                if (group.Id == id)
+                {
+                    return group;
+                }
+
+                ServiceGroupDto result = FindServiceGroup(group.ServicesGroups, id);
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+
+            return null;
+        }
+
+        private IList<ServiceGroupDto> GetServicesGroups(ISession session, ServiceGroup parent = null)
         {
             IList<ServiceGroup> groups = session.QueryOver<ServiceGroup>()
                                                 .Where(g => g.ParentGroup == parent)
@@ -229,28 +301,22 @@ namespace Queue.Reports.ServiceRatingReport
                 {
                     Id = group.Id,
                     Name = group.ToString(),
-                    Services = GetGroupServices(session, group),
-                    ServicesGroups = GetServicesGroups(session, group)
+                    Services = GetGroupServices(session, group).ToArray(),
+                    ServicesGroups = GetServicesGroups(session, group).ToArray()
                 });
             }
 
-            return result.ToArray();
+            return result;
         }
 
-        private ServiceDto[] GetGroupServices(ISession session, ServiceGroup group)
+        private IList<ServiceDto> GetGroupServices(ISession session, ServiceGroup group)
         {
             return session.QueryOver<Service>()
                      .Where(s => s.ServiceGroup == group)
                      .OrderBy(s => s.SortId).Asc
                      .List()
-                     .Select(s => new ServiceDto()
-                         {
-                             Id = s.Id,
-                             Name = s.ToString(),
-                             Type = s.Type
-                         }
-                     )
-                     .ToArray();
+                     .Select(s => new ServiceDto(s))
+                     .ToList();
         }
 
         protected ICellStyle CreateCellBoldStyle(IWorkbook workBook)
@@ -332,8 +398,20 @@ namespace Queue.Reports.ServiceRatingReport
         {
             public Guid Id;
             public string Name;
-            public ServiceDto[] Services;
-            public ServiceGroupDto[] ServicesGroups;
+            public IList<ServiceDto> Services = new List<ServiceDto>();
+            public IList<ServiceGroupDto> ServicesGroups = new List<ServiceGroupDto>();
+
+            public ServiceGroupDto()
+            {
+            }
+
+            public ServiceGroupDto(ServiceGroup source)
+            {
+                Id = source.Id;
+                Name = source.Name;
+                Services = new List<ServiceDto>();
+                ServicesGroups = new List<ServiceGroupDto>();
+            }
         }
 
         protected class ServiceDto
@@ -341,6 +419,13 @@ namespace Queue.Reports.ServiceRatingReport
             public Guid Id;
             public string Name;
             public ServiceType Type;
+
+            public ServiceDto(Service source)
+            {
+                Id = source.Id;
+                Name = source.ToString();
+                Type = source.Type;
+            }
         }
     }
 }
