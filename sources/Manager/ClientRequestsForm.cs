@@ -4,12 +4,9 @@ using Junte.WCF.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
-using Queue.UI.WinForms;
 using System;
 using System.Drawing;
 using System.ServiceModel;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Translation = Queue.Model.Common.Translation;
 
@@ -41,7 +38,7 @@ namespace Queue.Manager
 
             stateComboBox.DisplayMember = DataListItem.Value;
             stateComboBox.ValueMember = DataListItem.Key;
-            stateComboBox.DataSource = EnumDataListItem.GetList<ClientRequestState>();
+            stateComboBox.DataSource = EnumDataListItem<ClientRequestState>.GetList();
         }
 
         private bool isRequestDate

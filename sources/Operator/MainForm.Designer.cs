@@ -35,6 +35,8 @@
             this.isAutocallCheckBox = new System.Windows.Forms.CheckBox();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.currentClientTab = new System.Windows.Forms.TabPage();
+            this.serviceStepComboBox = new System.Windows.Forms.ComboBox();
+            this.serviceStepLabel = new System.Windows.Forms.Label();
             this.subjectsPanel = new System.Windows.Forms.Panel();
             this.subjectsUpDown = new System.Windows.Forms.NumericUpDown();
             this.subjectsChangeButton = new System.Windows.Forms.Button();
@@ -82,8 +84,6 @@
             this.clientColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serviceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.serviceStepLabel = new System.Windows.Forms.Label();
-            this.serviceStepComboBox = new System.Windows.Forms.ComboBox();
             this.topMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -250,6 +250,25 @@
             this.currentClientTab.TabIndex = 0;
             this.currentClientTab.Text = "Текущий клиент";
             this.currentClientTab.UseVisualStyleBackColor = true;
+            // 
+            // serviceStepComboBox
+            // 
+            this.serviceStepComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.serviceStepComboBox.FormattingEnabled = true;
+            this.serviceStepComboBox.Location = new System.Drawing.Point(120, 230);
+            this.serviceStepComboBox.Name = "serviceStepComboBox";
+            this.serviceStepComboBox.Size = new System.Drawing.Size(200, 21);
+            this.serviceStepComboBox.TabIndex = 8;
+            this.serviceStepComboBox.SelectedValueChanged += new System.EventHandler(this.serviceStepComboBox_SelectedValueChanged);
+            // 
+            // serviceStepLabel
+            // 
+            this.serviceStepLabel.AutoSize = true;
+            this.serviceStepLabel.Location = new System.Drawing.Point(5, 240);
+            this.serviceStepLabel.Name = "serviceStepLabel";
+            this.serviceStepLabel.Size = new System.Drawing.Size(67, 13);
+            this.serviceStepLabel.TabIndex = 6;
+            this.serviceStepLabel.Text = "Этап услуги";
             // 
             // subjectsPanel
             // 
@@ -434,7 +453,6 @@
             this.serviceTypesComboBox.Name = "serviceTypesComboBox";
             this.serviceTypesComboBox.Size = new System.Drawing.Size(135, 21);
             this.serviceTypesComboBox.TabIndex = 0;
-            this.serviceTypesComboBox.SelectedIndexChanged += new System.EventHandler(this.serviceTypesComboBox_SelectedIndexChanged);
             // 
             // stateLabel
             // 
@@ -649,7 +667,7 @@
             this.clientRequestsTab.Controls.Add(this.clientRequestsGridView);
             this.clientRequestsTab.Location = new System.Drawing.Point(4, 26);
             this.clientRequestsTab.Name = "clientRequestsTab";
-            this.clientRequestsTab.Size = new System.Drawing.Size(496, 386);
+            this.clientRequestsTab.Size = new System.Drawing.Size(496, 415);
             this.clientRequestsTab.TabIndex = 0;
             this.clientRequestsTab.Text = "Список клиентов";
             this.clientRequestsTab.UseVisualStyleBackColor = true;
@@ -683,7 +701,7 @@
             this.clientRequestsGridView.Name = "clientRequestsGridView";
             this.clientRequestsGridView.ReadOnly = true;
             this.clientRequestsGridView.RowHeadersVisible = false;
-            this.clientRequestsGridView.Size = new System.Drawing.Size(496, 386);
+            this.clientRequestsGridView.Size = new System.Drawing.Size(496, 415);
             this.clientRequestsGridView.TabIndex = 0;
             // 
             // numberColumn
@@ -744,24 +762,6 @@
             this.stateColumn.Name = "stateColumn";
             this.stateColumn.ReadOnly = true;
             this.stateColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // serviceStepLabel
-            // 
-            this.serviceStepLabel.AutoSize = true;
-            this.serviceStepLabel.Location = new System.Drawing.Point(5, 240);
-            this.serviceStepLabel.Name = "serviceStepLabel";
-            this.serviceStepLabel.Size = new System.Drawing.Size(67, 13);
-            this.serviceStepLabel.TabIndex = 6;
-            this.serviceStepLabel.Text = "Этап услуги";
-            // 
-            // serviceStepComboBox
-            // 
-            this.serviceStepComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.serviceStepComboBox.FormattingEnabled = true;
-            this.serviceStepComboBox.Location = new System.Drawing.Point(120, 230);
-            this.serviceStepComboBox.Name = "serviceStepComboBox";
-            this.serviceStepComboBox.Size = new System.Drawing.Size(200, 21);
-            this.serviceStepComboBox.TabIndex = 8;
             // 
             // MainForm
             // 

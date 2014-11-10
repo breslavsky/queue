@@ -115,11 +115,11 @@ namespace Queue.UI.WinForms
 
             modeColumn.DisplayMember = DataListItem.Value;
             modeColumn.ValueMember = DataListItem.Key;
-            modeColumn.DataSource = EnumDataListItem.GetList<ServiceRenderingMode>();
+            modeColumn.DataSource = EnumDataListItem<ServiceRenderingMode>.GetList();
 
             renderingModeComboBox.DisplayMember = DataListItem.Value;
             renderingModeComboBox.ValueMember = DataListItem.Key;
-            renderingModeComboBox.DataSource = EnumDataListItem.GetList<ServiceRenderingMode>();
+            renderingModeComboBox.DataSource = EnumDataListItem<ServiceRenderingMode>.GetList();
         }
 
         public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)

@@ -7,7 +7,6 @@ using Queue.Services.DTO;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
-using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
@@ -32,11 +31,11 @@ namespace Queue.Administrator
 
             typeColumn.DisplayMember = DataListItem.Value;
             typeColumn.ValueMember = DataListItem.Key;
-            typeColumn.DataSource = EnumDataListItem.GetList<WorkplaceType>();
+            typeColumn.DataSource = EnumDataListItem<WorkplaceType>.GetList();
 
             modificatorColumn.DisplayMember = DataListItem.Value;
             modificatorColumn.ValueMember = DataListItem.Key;
-            modificatorColumn.DataSource = EnumDataListItem.GetList<WorkplaceModificator>();
+            modificatorColumn.DataSource = EnumDataListItem<WorkplaceModificator>.GetList();
         }
 
         private async void WorkplacesForm_Load(object sender, EventArgs e)

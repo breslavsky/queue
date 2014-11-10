@@ -5,15 +5,8 @@ using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Queue.Administrator
@@ -78,7 +71,7 @@ namespace Queue.Administrator
 
             parameterTypeComboBox.DisplayMember = DataListItem.Value;
             parameterTypeComboBox.ValueMember = DataListItem.Key;
-            parameterTypeComboBox.DataSource = EnumDataListItem.GetList<ServiceParameterType>();
+            parameterTypeComboBox.DataSource = EnumDataListItem<ServiceParameterType>.GetList();
         }
 
         public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)

@@ -97,8 +97,8 @@ namespace Queue.Operator
                         var clientRequest = value.ClientRequest;
 
                         if (currentClientRequestPlan == null
-                            || !currentClientRequestPlan.ClientRequest.Equals(clientRequest)
-                            || !currentClientRequestPlan.ClientRequest.IsRecent(clientRequest))
+                            || !clientRequest.Equals(currentClientRequestPlan.ClientRequest)
+                            || clientRequest.IsRecent(currentClientRequestPlan.ClientRequest))
                         {
                             numberTextBlock.Text = clientRequest.Number.ToString();
                             isPriorityCheckBox.Checked = clientRequest.IsPriority;
@@ -115,36 +115,41 @@ namespace Queue.Operator
                             var service = clientRequest.Service;
                             serviceTextBlock.Text = service.ToString();
 
-                            serviceTypesComboBox.DataSource = null;
+                            serviceTypesComboBox.SelectedIndexChanged -= serviceTypesComboBox_SelectedIndexChanged;
+                            serviceTypesComboBox.Items.Clear();
 
                             if (service.Type != ServiceType.None)
                             {
-                                var translation = Translation.ServiceType.ResourceManager;
-
-                                var serviceTypes = new Dictionary<ServiceType, string>() { { ServiceType.None, string.Empty } };
+                                var serviceTypes = new List<object>() { new EnumDataListItem<ServiceType>(ServiceType.None) };
                                 foreach (ServiceType type in Enum.GetValues(typeof(ServiceType)))
                                 {
                                     if (type != ServiceType.None && service.Type.HasFlag(type))
                                     {
-                                        serviceTypes.Add(type, translation.GetString(type.ToString()));
+                                        serviceTypes.Add(new EnumDataListItem<ServiceType>(type));
                                     }
                                 }
                                 if (serviceTypes.Count > 0)
                                 {
-                                    serviceTypesComboBox.DisplayMember = DataListItem.Value;
-                                    serviceTypesComboBox.ValueMember = DataListItem.Key;
-                                    serviceTypesComboBox.DataSource = serviceTypes;
-                                    serviceTypesComboBox.SelectedValue = clientRequest.ServiceType;
+                                    serviceTypesComboBox.Items.AddRange(serviceTypes.ToArray());
+                                    serviceTypesComboBox.SelectedItem = new EnumDataListItem<ServiceType>(clientRequest.ServiceType);
+                                    serviceTypesComboBox.SelectedIndexChanged += serviceTypesComboBox_SelectedIndexChanged;
                                 }
                             }
+
+                            serviceStepComboBox.SelectedValueChanged -= serviceStepComboBox_SelectedValueChanged;
+                            serviceStepComboBox.Items.Clear();
 
                             using (var channel = channelManager.CreateChannel())
                             {
                                 try
                                 {
                                     var serviceSteps = await taskPool.AddTask(channel.Service.GetServiceSteps(service.Id));
-                                    serviceStepComboBox.Items.Clear();
-                                    serviceStepComboBox.Items.AddRange(serviceSteps);
+                                    if (serviceSteps.Length > 0)
+                                    {
+                                        serviceStepComboBox.Items.AddRange(serviceSteps);
+                                        serviceStepComboBox.SelectedItem = clientRequest.ServiceStep;
+                                        serviceStepComboBox.SelectedValueChanged += serviceStepComboBox_SelectedValueChanged;
+                                    }
                                 }
                                 catch (Exception exception)
                                 {
@@ -221,7 +226,8 @@ namespace Queue.Operator
                         subjectsUpDown.Value = 0;
                         clientTextBlock.Text = string.Empty;
                         serviceTextBlock.Text = string.Empty;
-                        serviceTypesComboBox.DataSource = null;
+                        serviceTypesComboBox.Items.Clear();
+                        serviceStepComboBox.Items.Clear();
                         stateTextBlock.Text = string.Empty;
                         stateTextBlock.BackColor = Color.White;
                         parametersGridView.Rows.Clear();
@@ -247,6 +253,7 @@ namespace Queue.Operator
                 subjectsPanel.Enabled = false;
                 serviceChangeLink.Enabled = false;
                 serviceTypesComboBox.Enabled = false;
+                serviceStepComboBox.Enabled = false;
 
                 switch (value)
                 {
@@ -265,9 +272,13 @@ namespace Queue.Operator
                         step3Panel.Visible = true;
                         subjectsPanel.Enabled = true;
                         serviceChangeLink.Enabled = true;
-                        if (serviceTypesComboBox.DataSource != null)
+                        if (serviceTypesComboBox.Items.Count > 0)
                         {
                             serviceTypesComboBox.Enabled = true;
+                        }
+                        if (serviceStepComboBox.Items.Count > 0)
+                        {
+                            serviceStepComboBox.Enabled = true;
                         }
                         break;
                 }
@@ -437,11 +448,11 @@ namespace Queue.Operator
 
         private async void serviceTypesComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            object selectedValue = serviceTypesComboBox.SelectedValue;
-            if (selectedValue != null)
+            var selectedItem = serviceTypesComboBox.SelectedItem as EnumDataListItem<ServiceType>;
+            if (selectedItem != null)
             {
-                var serviceType = (ServiceType)selectedValue;
-                if (serviceType != ServiceType.None && serviceType != currentClientRequestPlan.ClientRequest.ServiceType)
+                var serviceType = selectedItem.Value;
+                if (serviceType != ServiceType.None)
                 {
                     using (var channel = channelManager.CreateChannel())
                     {
@@ -471,6 +482,11 @@ namespace Queue.Operator
                     }
                 }
             }
+        }
+
+        private void serviceStepComboBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            object selectedValue = serviceStepComboBox.SelectedValue;
         }
 
         private async void callbackObject_CurrentClientRequestPlanUpdated(object sender, ServerEventArgs e)

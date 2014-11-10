@@ -9,7 +9,6 @@ using Queue.Services.DTO;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Queue.Administrator
@@ -49,14 +48,14 @@ namespace Queue.Administrator
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
-            var types = EnumDataListItem.GetList<ServiceType>();
+            var types = EnumDataListItem<ServiceType>.GetList();
             types.RemoveAll(t => t.Key == ServiceType.None);
 
             serviceTypeListBox.DataSource = types;
             serviceTypeListBox.DisplayMember = DataListItem.Value;
             serviceTypeListBox.ValueMember = DataListItem.Key;
 
-            var registrators1 = EnumDataListItem.GetList<ClientRequestRegistrator>();
+            var registrators1 = EnumDataListItem<ClientRequestRegistrator>.GetList();
             registrators1.RemoveAll(t => t.Key == ClientRequestRegistrator.None
                 || t.Key == ClientRequestRegistrator.Portal);
 
@@ -64,7 +63,7 @@ namespace Queue.Administrator
             liveRegistratorListBox.DisplayMember = DataListItem.Value;
             liveRegistratorListBox.ValueMember = DataListItem.Key;
 
-            var registrators2 = EnumDataListItem.GetList<ClientRequestRegistrator>();
+            var registrators2 = EnumDataListItem<ClientRequestRegistrator>.GetList();
             registrators2.RemoveAll(t => t.Key == ClientRequestRegistrator.None);
 
             earlyRegistratorListBox.DataSource = registrators2;
