@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{3F1EECC0-3B45-4A62-8101-0FDCC7293D29}"
 EndProject
@@ -94,8 +94,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hosts.Server.WinForms", "Hosts.Server.WinForms\Hosts.Server.WinForms.csproj", "{77C9CC5E-AF26-411D-9413-0BF7E827EBA9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reports", "Reports\Reports.csproj", "{88611229-1F7D-4C6A-88B8-43805B287B8C}"
-EndProject
-Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "Diagrams", "Diagrams\Diagrams.modelproj", "{946EB80F-3785-4F6E-8565-11F0094BF202}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{FDE55A47-7E08-41A2-A05E-86048F913703}"
 EndProject
@@ -480,16 +478,6 @@ Global
 		{88611229-1F7D-4C6A-88B8-43805B287B8C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{88611229-1F7D-4C6A-88B8-43805B287B8C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{88611229-1F7D-4C6A-88B8-43805B287B8C}.Release|x86.ActiveCfg = Release|Any CPU
-		{946EB80F-3785-4F6E-8565-11F0094BF202}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{946EB80F-3785-4F6E-8565-11F0094BF202}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{946EB80F-3785-4F6E-8565-11F0094BF202}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{946EB80F-3785-4F6E-8565-11F0094BF202}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{946EB80F-3785-4F6E-8565-11F0094BF202}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{946EB80F-3785-4F6E-8565-11F0094BF202}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{946EB80F-3785-4F6E-8565-11F0094BF202}.Release|Any CPU.Build.0 = Release|Any CPU
-		{946EB80F-3785-4F6E-8565-11F0094BF202}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{946EB80F-3785-4F6E-8565-11F0094BF202}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{946EB80F-3785-4F6E-8565-11F0094BF202}.Release|x86.ActiveCfg = Release|Any CPU
 		{43363F0D-C89A-4EDF-8644-BC5B798A22FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{43363F0D-C89A-4EDF-8644-BC5B798A22FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43363F0D-C89A-4EDF-8644-BC5B798A22FC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
