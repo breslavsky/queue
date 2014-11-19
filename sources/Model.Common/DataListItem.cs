@@ -4,6 +4,7 @@ using System.Resources;
 
 namespace Queue.Model.Common
 {
+    //TODO: remove!
     public abstract class DataListItem
     {
         public const string Id = "Id";
@@ -23,21 +24,20 @@ namespace Queue.Model.Common
 
         private const string TranslationAssemblyPattern = "Queue.Model.Common.Translation.{0}";
 
-        public static List<KeyValuePair<T, string>> GetList()
+        public static EnumDataListItem<T>[] GetList()
         {
-            List<KeyValuePair<T, string>> result = new List<KeyValuePair<T, string>>();
-            ResourceManager resourceManager = new ResourceManager(string.Format(TranslationAssemblyPattern, typeof(T).Name), typeof(T).Assembly);
-            foreach (T key in Enum.GetValues(typeof(T)))
+            var result = new List<EnumDataListItem<T>>();
+            foreach (T value in Enum.GetValues(typeof(T)))
             {
-                result.Add(new KeyValuePair<T, string>(key, resourceManager.GetString(key.ToString())));
+                result.Add(new EnumDataListItem<T>(value));
             }
 
-            return result;
+            return result.ToArray();
         }
 
         public override string ToString()
         {
-            ResourceManager resourceManager = new ResourceManager(string.Format(TranslationAssemblyPattern, typeof(T).Name), typeof(T).Assembly);
+            var resourceManager = new ResourceManager(string.Format(TranslationAssemblyPattern, typeof(T).Name), typeof(T).Assembly);
             return resourceManager.GetString(Value.ToString());
         }
 

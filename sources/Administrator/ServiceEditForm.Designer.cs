@@ -16,6 +16,7 @@
         private void InitializeComponent()
         {
             this.parametersTabPage = new System.Windows.Forms.TabPage();
+            this.serviceParametersControl = new Queue.Administrator.ServiceParametersControl();
             this.exceptionScheduleTabPage = new System.Windows.Forms.TabPage();
             this.exceptionScheduleControl = new Queue.UI.WinForms.ScheduleControl();
             this.exceptionScheduleDatePicker = new System.Windows.Forms.DateTimePicker();
@@ -60,6 +61,7 @@
             this.saveServiceButton = new System.Windows.Forms.Button();
             this.serviceTabControl = new System.Windows.Forms.TabControl();
             this.stepsTabPage = new System.Windows.Forms.TabPage();
+            this.serviceStepsControl = new Queue.Administrator.ServiceStepsControl();
             this.weekdayScheduleTabPage = new System.Windows.Forms.TabPage();
             this.weekdayTabControl = new System.Windows.Forms.TabControl();
             this.mondayTabPage = new System.Windows.Forms.TabPage();
@@ -72,8 +74,6 @@
             this.fridayTabPage = new System.Windows.Forms.TabPage();
             this.saturdayTabPage = new System.Windows.Forms.TabPage();
             this.sundayTabPage = new System.Windows.Forms.TabPage();
-            this.serviceStepsControl = new Queue.Administrator.ServiceStepsControl();
-            this.serviceParametersControl = new Queue.Administrator.ServiceParametersControl();
             this.parametersTabPage.SuspendLayout();
             this.exceptionScheduleTabPage.SuspendLayout();
             this.commonTabPage.SuspendLayout();
@@ -103,6 +103,14 @@
             this.parametersTabPage.TabIndex = 0;
             this.parametersTabPage.Text = "Параметры услуги";
             this.parametersTabPage.UseVisualStyleBackColor = true;
+            // 
+            // serviceParametersControl
+            // 
+            this.serviceParametersControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serviceParametersControl.Location = new System.Drawing.Point(3, 3);
+            this.serviceParametersControl.Name = "serviceParametersControl";
+            this.serviceParametersControl.Size = new System.Drawing.Size(830, 446);
+            this.serviceParametersControl.TabIndex = 0;
             // 
             // exceptionScheduleTabPage
             // 
@@ -165,6 +173,7 @@
             this.servicePropertiesTabControl.Controls.Add(this.commonPropertiesTabPage);
             this.servicePropertiesTabControl.Controls.Add(this.additionalPropertiesTabPage);
             this.servicePropertiesTabControl.Location = new System.Drawing.Point(5, 5);
+            this.servicePropertiesTabControl.Multiline = true;
             this.servicePropertiesTabControl.Name = "servicePropertiesTabControl";
             this.servicePropertiesTabControl.SelectedIndex = 0;
             this.servicePropertiesTabControl.Size = new System.Drawing.Size(825, 410);
@@ -582,6 +591,14 @@
             this.stepsTabPage.Text = "Этапы услуги";
             this.stepsTabPage.UseVisualStyleBackColor = true;
             // 
+            // serviceStepsControl
+            // 
+            this.serviceStepsControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serviceStepsControl.Location = new System.Drawing.Point(3, 3);
+            this.serviceStepsControl.Name = "serviceStepsControl";
+            this.serviceStepsControl.Size = new System.Drawing.Size(830, 446);
+            this.serviceStepsControl.TabIndex = 0;
+            // 
             // weekdayScheduleTabPage
             // 
             this.weekdayScheduleTabPage.Controls.Add(this.weekdayTabControl);
@@ -717,22 +734,6 @@
             this.sundayTabPage.Tag = "0";
             this.sundayTabPage.Text = "Воскресенье";
             this.sundayTabPage.UseVisualStyleBackColor = true;
-            // 
-            // serviceStepsControl
-            // 
-            this.serviceStepsControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serviceStepsControl.Location = new System.Drawing.Point(3, 3);
-            this.serviceStepsControl.Name = "serviceStepsControl";
-            this.serviceStepsControl.Size = new System.Drawing.Size(830, 446);
-            this.serviceStepsControl.TabIndex = 0;
-            // 
-            // serviceParametersControl
-            // 
-            this.serviceParametersControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serviceParametersControl.Location = new System.Drawing.Point(3, 3);
-            this.serviceParametersControl.Name = "serviceParametersControl";
-            this.serviceParametersControl.Size = new System.Drawing.Size(830, 446);
-            this.serviceParametersControl.TabIndex = 0;
             // 
             // ServiceEditForm
             // 

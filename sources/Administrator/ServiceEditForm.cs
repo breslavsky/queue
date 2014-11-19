@@ -8,6 +8,7 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
 
@@ -48,23 +49,23 @@ namespace Queue.Administrator
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
-            var types = EnumDataListItem<ServiceType>.GetList();
-            types.RemoveAll(t => t.Key == ServiceType.None);
+            var types = EnumDataListItem<ServiceType>.GetList().ToList();
+            types.RemoveAll(t => t.Value == ServiceType.None);
 
             serviceTypeListBox.DataSource = types;
             serviceTypeListBox.DisplayMember = DataListItem.Value;
             serviceTypeListBox.ValueMember = DataListItem.Key;
 
-            var registrators1 = EnumDataListItem<ClientRequestRegistrator>.GetList();
-            registrators1.RemoveAll(t => t.Key == ClientRequestRegistrator.None
-                || t.Key == ClientRequestRegistrator.Portal);
+            var registrators1 = EnumDataListItem<ClientRequestRegistrator>.GetList().ToList();
+            registrators1.RemoveAll(t => t.Value == ClientRequestRegistrator.None
+                || t.Value == ClientRequestRegistrator.Portal);
 
             liveRegistratorListBox.DataSource = registrators1;
             liveRegistratorListBox.DisplayMember = DataListItem.Value;
             liveRegistratorListBox.ValueMember = DataListItem.Key;
 
-            var registrators2 = EnumDataListItem<ClientRequestRegistrator>.GetList();
-            registrators2.RemoveAll(t => t.Key == ClientRequestRegistrator.None);
+            var registrators2 = EnumDataListItem<ClientRequestRegistrator>.GetList().ToList();
+            registrators2.RemoveAll(t => t.Value == ClientRequestRegistrator.None);
 
             earlyRegistratorListBox.DataSource = registrators2;
             earlyRegistratorListBox.DisplayMember = DataListItem.Value;

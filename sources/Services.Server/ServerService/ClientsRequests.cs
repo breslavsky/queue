@@ -14,6 +14,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Xml;
+using Translation = Queue.Model.Common.Translation;
 using ValidationError = Junte.Data.NHibernate.ValidationError;
 
 namespace Queue.Services.Server
@@ -724,6 +725,56 @@ namespace Queue.Services.Server
                     thread.Join();
 
                     return output;
+                }
+            });
+        }
+
+        public async Task<DTO.ClientRequest> ChangeClientRequestType(Guid clientRequestId, ClientRequestType type)
+        {
+            return await Task.Run(() =>
+            {
+                checkPermission(UserRole.Manager | UserRole.Administrator);
+
+                using (var session = sessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    var clientRequest = session.Get<ClientRequest>(clientRequestId);
+                    if (clientRequest == null)
+                    {
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientRequestId), string.Format("Запрос клиента [{0}] не найден", clientRequestId));
+                    }
+
+                    if (!clientRequest.IsEditable)
+                    {
+                        throw new FaultException(string.Format("Невозможно изменить тип у запроса клиента [{0}]", clientRequest));
+                    }
+
+                    clientRequest.Type = type;
+                    clientRequest.Version++;
+                    session.Save(clientRequest);
+
+                    var translation = Queue.Model.Common.Translation.ClientRequestType.ResourceManager;
+
+                    var queueEvent = new ClientRequestEvent()
+                    {
+                        ClientRequest = clientRequest,
+                        Message = string.Format("[{0}] изменил тип на [{1}] для запроса клиента [{2}]", currentUser,
+                            translation.GetString(type.ToString()), clientRequest)
+                    };
+
+                    session.Save(queueEvent);
+
+                    var todayQueuePlan = queueInstance.TodayQueuePlan;
+                    using (var locker = todayQueuePlan.WriteLock())
+                    {
+                        transaction.Commit();
+
+                        todayQueuePlan.Put(clientRequest);
+                    }
+
+                    queueInstance.Event(queueEvent);
+
+                    return Mapper.Map<ClientRequest, DTO.ClientRequest>(clientRequest);
                 }
             });
         }

@@ -85,6 +85,10 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<ClientRequest> ChangeClientRequestType(Guid clientRequestId, ClientRequestType type);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
         Task<ClientRequest> ChangeClientRequestPriority(Guid clientRequestId, bool isPriority);
 
         [OperationContract]
@@ -146,6 +150,10 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task<ClientRequest> ChangeCurrentClientRequestServiceType(ServiceType serviceType);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<ClientRequest> ChangeCurrentClientRequestServiceStep(Guid serviceStepId);
 
         [OperationContract]
         Task CallCurrentClient();

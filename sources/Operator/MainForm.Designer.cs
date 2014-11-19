@@ -15,14 +15,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.topMenu = new System.Windows.Forms.MenuStrip();
-            this.logoutButton = new System.Windows.Forms.ToolStripMenuItem();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.serverStateLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.currentDateTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -40,7 +38,6 @@
             this.subjectsPanel = new System.Windows.Forms.Panel();
             this.subjectsUpDown = new System.Windows.Forms.NumericUpDown();
             this.subjectsChangeButton = new System.Windows.Forms.Button();
-            this.digitalTimer = new Queue.Operator.DigitalTimer();
             this.subjectsLabel = new System.Windows.Forms.Label();
             this.serviceTextBlock = new System.Windows.Forms.Label();
             this.stateTextBlock = new System.Windows.Forms.Label();
@@ -84,7 +81,8 @@
             this.clientColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serviceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.topMenu.SuspendLayout();
+            this.logoutButton = new System.Windows.Forms.Button();
+            this.digitalTimer = new Queue.Operator.DigitalTimer();
             this.statusBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.mainTabControl.SuspendLayout();
@@ -100,28 +98,6 @@
             this.clientRequestsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clientRequestsGridView)).BeginInit();
             this.SuspendLayout();
-            // 
-            // topMenu
-            // 
-            this.topMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.topMenu.BackColor = System.Drawing.SystemColors.Control;
-            this.topMenu.Dock = System.Windows.Forms.DockStyle.None;
-            this.topMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.logoutButton});
-            this.topMenu.Location = new System.Drawing.Point(-79, 5);
-            this.topMenu.Name = "topMenu";
-            this.topMenu.Padding = new System.Windows.Forms.Padding(6, 1, 0, 1);
-            this.topMenu.Size = new System.Drawing.Size(77, 24);
-            this.topMenu.TabIndex = 0;
-            this.topMenu.Text = "menuStrip1";
-            // 
-            // logoutButton
-            // 
-            this.logoutButton.Image = ((System.Drawing.Image)(resources.GetObject("logoutButton.Image")));
-            this.logoutButton.Name = "logoutButton";
-            this.logoutButton.Size = new System.Drawing.Size(69, 22);
-            this.logoutButton.Text = "Выход";
-            this.logoutButton.Click += new System.EventHandler(this.logoutButton_Click);
             // 
             // statusBar
             // 
@@ -183,7 +159,7 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.topMenu);
+            this.panel1.Controls.Add(this.logoutButton);
             this.panel1.Controls.Add(this.isAutocallCheckBox);
             this.panel1.Controls.Add(this.mainTabControl);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -259,7 +235,6 @@
             this.serviceStepComboBox.Name = "serviceStepComboBox";
             this.serviceStepComboBox.Size = new System.Drawing.Size(200, 21);
             this.serviceStepComboBox.TabIndex = 8;
-            this.serviceStepComboBox.SelectedValueChanged += new System.EventHandler(this.serviceStepComboBox_SelectedValueChanged);
             // 
             // serviceStepLabel
             // 
@@ -295,19 +270,11 @@
             // 
             this.subjectsChangeButton.Location = new System.Drawing.Point(70, 5);
             this.subjectsChangeButton.Name = "subjectsChangeButton";
-            this.subjectsChangeButton.Size = new System.Drawing.Size(85, 25);
+            this.subjectsChangeButton.Size = new System.Drawing.Size(75, 20);
             this.subjectsChangeButton.TabIndex = 4;
             this.subjectsChangeButton.Text = "Изменить";
             this.subjectsChangeButton.UseVisualStyleBackColor = true;
             this.subjectsChangeButton.Click += new System.EventHandler(this.subjectsChangeButton_Click);
-            // 
-            // digitalTimer
-            // 
-            this.digitalTimer.Location = new System.Drawing.Point(260, 260);
-            this.digitalTimer.Margin = new System.Windows.Forms.Padding(4);
-            this.digitalTimer.Name = "digitalTimer";
-            this.digitalTimer.Size = new System.Drawing.Size(60, 20);
-            this.digitalTimer.TabIndex = 3;
             // 
             // subjectsLabel
             // 
@@ -419,7 +386,7 @@
             // serviceLabel
             // 
             this.serviceLabel.AutoSize = true;
-            this.serviceLabel.Location = new System.Drawing.Point(5, 160);
+            this.serviceLabel.Location = new System.Drawing.Point(5, 175);
             this.serviceLabel.Name = "serviceLabel";
             this.serviceLabel.Size = new System.Drawing.Size(100, 13);
             this.serviceLabel.TabIndex = 0;
@@ -763,6 +730,27 @@
             this.stateColumn.ReadOnly = true;
             this.stateColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // logoutButton
+            // 
+            this.logoutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.logoutButton.Image = ((System.Drawing.Image)(resources.GetObject("logoutButton.Image")));
+            this.logoutButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.logoutButton.Location = new System.Drawing.Point(425, 5);
+            this.logoutButton.Name = "logoutButton";
+            this.logoutButton.Size = new System.Drawing.Size(85, 25);
+            this.logoutButton.TabIndex = 3;
+            this.logoutButton.Text = "Выход";
+            this.logoutButton.UseVisualStyleBackColor = true;
+            this.logoutButton.Click += new System.EventHandler(this.logoutButton_Click);
+            // 
+            // digitalTimer
+            // 
+            this.digitalTimer.Location = new System.Drawing.Point(260, 260);
+            this.digitalTimer.Margin = new System.Windows.Forms.Padding(4);
+            this.digitalTimer.Name = "digitalTimer";
+            this.digitalTimer.Size = new System.Drawing.Size(60, 20);
+            this.digitalTimer.TabIndex = 3;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -772,12 +760,11 @@
             this.Controls.Add(this.statusBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(540, 545);
+            this.MaximumSize = new System.Drawing.Size(840, 545);
+            this.MinimumSize = new System.Drawing.Size(540, 545);
             this.Name = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.topMenu.ResumeLayout(false);
-            this.topMenu.PerformLayout();
             this.statusBar.ResumeLayout(false);
             this.statusBar.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -803,8 +790,6 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip topMenu;
-        private System.Windows.Forms.ToolStripMenuItem logoutButton;
         private System.Windows.Forms.StatusStrip statusBar;
         private System.Windows.Forms.ToolStripStatusLabel serverStateLabel;
         private System.Windows.Forms.ToolStripStatusLabel currentDateTimeLabel;
@@ -866,6 +851,7 @@
         private System.Windows.Forms.CheckBox isAutocallCheckBox;
         private System.Windows.Forms.Label serviceStepLabel;
         private System.Windows.Forms.ComboBox serviceStepComboBox;
+        private System.Windows.Forms.Button logoutButton;
 
     }
 }

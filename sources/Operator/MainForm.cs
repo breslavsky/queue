@@ -136,7 +136,7 @@ namespace Queue.Operator
                                 }
                             }
 
-                            serviceStepComboBox.SelectedValueChanged -= serviceStepComboBox_SelectedValueChanged;
+                            serviceStepComboBox.SelectedIndexChanged -= serviceStepComboBox_SelectedIndexChanged;
                             serviceStepComboBox.Items.Clear();
 
                             using (var channel = channelManager.CreateChannel())
@@ -148,7 +148,7 @@ namespace Queue.Operator
                                     {
                                         serviceStepComboBox.Items.AddRange(serviceSteps);
                                         serviceStepComboBox.SelectedItem = clientRequest.ServiceStep;
-                                        serviceStepComboBox.SelectedValueChanged += serviceStepComboBox_SelectedValueChanged;
+                                        serviceStepComboBox.SelectedIndexChanged += serviceStepComboBox_SelectedIndexChanged;
                                     }
                                 }
                                 catch (Exception exception)
@@ -452,41 +452,68 @@ namespace Queue.Operator
             if (selectedItem != null)
             {
                 var serviceType = selectedItem.Value;
-                if (serviceType != ServiceType.None)
-                {
-                    using (var channel = channelManager.CreateChannel())
-                    {
-                        try
-                        {
-                            serviceTypesComboBox.Enabled = false;
 
-                            await taskPool.AddTask(channel.Service.OpenUserSession(currentOperator.SessionId));
-                            await taskPool.AddTask(channel.Service.ChangeCurrentClientRequestServiceType(serviceType));
-                        }
-                        catch (OperationCanceledException) { }
-                        catch (CommunicationObjectAbortedException) { }
-                        catch (ObjectDisposedException) { }
-                        catch (InvalidOperationException) { }
-                        catch (FaultException exception)
-                        {
-                            UIHelper.Warning(exception.Reason.ToString());
-                        }
-                        catch (Exception exception)
-                        {
-                            UIHelper.Warning(exception.Message);
-                        }
-                        finally
-                        {
-                            serviceTypesComboBox.Enabled = true;
-                        }
+                using (var channel = channelManager.CreateChannel())
+                {
+                    try
+                    {
+                        serviceTypesComboBox.Enabled = false;
+
+                        await taskPool.AddTask(channel.Service.OpenUserSession(currentOperator.SessionId));
+                        await taskPool.AddTask(channel.Service.ChangeCurrentClientRequestServiceType(serviceType));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                    finally
+                    {
+                        serviceTypesComboBox.Enabled = true;
                     }
                 }
             }
         }
 
-        private void serviceStepComboBox_SelectedValueChanged(object sender, EventArgs e)
+        private async void serviceStepComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            object selectedValue = serviceStepComboBox.SelectedValue;
+            var serviceStep = serviceStepComboBox.SelectedItem as ServiceStep;
+            if (serviceStep != null)
+            {
+                using (var channel = channelManager.CreateChannel())
+                {
+                    try
+                    {
+                        serviceStepComboBox.Enabled = false;
+
+                        await taskPool.AddTask(channel.Service.OpenUserSession(currentOperator.SessionId));
+                        await taskPool.AddTask(channel.Service.ChangeCurrentClientRequestServiceStep(serviceStep.Id));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                    finally
+                    {
+                        serviceStepComboBox.Enabled = true;
+                    }
+                }
+            }
         }
 
         private async void callbackObject_CurrentClientRequestPlanUpdated(object sender, ServerEventArgs e)

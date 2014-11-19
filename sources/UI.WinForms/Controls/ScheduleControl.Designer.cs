@@ -68,7 +68,7 @@
             this.deleteColumn = new System.Windows.Forms.DataGridViewLinkColumn();
             this.operatorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serviceStepColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.modeColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.modeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.priorityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serviceStepPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serviceRenderingsGridView)).BeginInit();
@@ -506,10 +506,12 @@
             // 
             // modeColumn
             // 
-            this.modeColumn.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.modeColumn.FillWeight = 140F;
             this.modeColumn.HeaderText = "Режим обслуживания";
             this.modeColumn.Name = "modeColumn";
+            this.modeColumn.ReadOnly = true;
+            this.modeColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.modeColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.modeColumn.Width = 140;
             // 
             // priorityColumn
@@ -587,7 +589,7 @@
         private System.Windows.Forms.DataGridViewLinkColumn deleteColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn operatorColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn serviceStepColumn;
-        private System.Windows.Forms.DataGridViewComboBoxColumn modeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn modeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn priorityColumn;
     }
 }

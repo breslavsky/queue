@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.stateLabel = new System.Windows.Forms.Label();
             this.numberLabel = new System.Windows.Forms.Label();
             this.parametersLabel = new System.Windows.Forms.Label();
@@ -67,7 +67,6 @@
             this.clientTextBlock = new System.Windows.Forms.Label();
             this.serviceTextBlock = new System.Windows.Forms.Label();
             this.stateTextBlock = new System.Windows.Forms.Label();
-            this.typeTextBlock = new System.Windows.Forms.Label();
             this.requestTimeTextBlock = new System.Windows.Forms.Label();
             this.requestTimeLabel = new System.Windows.Forms.Label();
             this.serviceTypeLabel = new System.Windows.Forms.Label();
@@ -77,6 +76,7 @@
             this.operatorResetButton = new System.Windows.Forms.Button();
             this.serviceStepResetButton = new System.Windows.Forms.Button();
             this.editPanel = new System.Windows.Forms.Panel();
+            this.typeComboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.parametersGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).BeginInit();
@@ -89,21 +89,21 @@
             // 
             // stateLabel
             // 
-            this.stateLabel.AutoSize = true;
-            this.stateLabel.Location = new System.Drawing.Point(5, 260);
+            this.stateLabel.Location = new System.Drawing.Point(5, 255);
             this.stateLabel.Name = "stateLabel";
-            this.stateLabel.Size = new System.Drawing.Size(108, 13);
+            this.stateLabel.Size = new System.Drawing.Size(108, 20);
             this.stateLabel.TabIndex = 0;
             this.stateLabel.Text = "Текущее состояние";
+            this.stateLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // numberLabel
             // 
-            this.numberLabel.AutoSize = true;
-            this.numberLabel.Location = new System.Drawing.Point(5, 10);
+            this.numberLabel.Location = new System.Drawing.Point(5, 5);
             this.numberLabel.Name = "numberLabel";
-            this.numberLabel.Size = new System.Drawing.Size(41, 13);
+            this.numberLabel.Size = new System.Drawing.Size(110, 20);
             this.numberLabel.TabIndex = 0;
             this.numberLabel.Text = "Номер";
+            this.numberLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // parametersLabel
             // 
@@ -119,14 +119,14 @@
             this.parametersGridView.AllowUserToAddRows = false;
             this.parametersGridView.AllowUserToDeleteRows = false;
             this.parametersGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle15.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.parametersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.parametersGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.parameterNameColumn,
@@ -158,44 +158,44 @@
             // 
             // requestDateLabel
             // 
-            this.requestDateLabel.AutoSize = true;
-            this.requestDateLabel.Location = new System.Drawing.Point(5, 35);
+            this.requestDateLabel.Location = new System.Drawing.Point(5, 30);
             this.requestDateLabel.Name = "requestDateLabel";
-            this.requestDateLabel.Size = new System.Drawing.Size(78, 13);
+            this.requestDateLabel.Size = new System.Drawing.Size(110, 20);
             this.requestDateLabel.TabIndex = 0;
             this.requestDateLabel.Text = "Дата запроса";
+            this.requestDateLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // clientLabel
             // 
-            this.clientLabel.AutoSize = true;
-            this.clientLabel.Location = new System.Drawing.Point(5, 110);
+            this.clientLabel.Location = new System.Drawing.Point(5, 105);
             this.clientLabel.Name = "clientLabel";
-            this.clientLabel.Size = new System.Drawing.Size(43, 13);
+            this.clientLabel.Size = new System.Drawing.Size(110, 20);
             this.clientLabel.TabIndex = 0;
             this.clientLabel.Text = "Клиент";
+            this.clientLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // serviceLabel
             // 
-            this.serviceLabel.AutoSize = true;
-            this.serviceLabel.Location = new System.Drawing.Point(5, 170);
+            this.serviceLabel.Location = new System.Drawing.Point(5, 130);
             this.serviceLabel.Name = "serviceLabel";
-            this.serviceLabel.Size = new System.Drawing.Size(100, 13);
+            this.serviceLabel.Size = new System.Drawing.Size(110, 55);
             this.serviceLabel.TabIndex = 0;
             this.serviceLabel.Text = "Выбранная услуга";
+            this.serviceLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // eventsGridView
             // 
             this.eventsGridView.AllowUserToAddRows = false;
             this.eventsGridView.AllowUserToDeleteRows = false;
             this.eventsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.eventsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle16.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.eventsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.eventsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.eventsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.createDateColumn,
@@ -227,34 +227,33 @@
             // 
             // eventsLabel
             // 
-            this.eventsLabel.AutoSize = true;
-            this.eventsLabel.Location = new System.Drawing.Point(10, 355);
+            this.eventsLabel.Location = new System.Drawing.Point(10, 350);
             this.eventsLabel.Name = "eventsLabel";
-            this.eventsLabel.Size = new System.Drawing.Size(93, 13);
+            this.eventsLabel.Size = new System.Drawing.Size(615, 20);
             this.eventsLabel.TabIndex = 0;
             this.eventsLabel.Text = "Журнал событий";
+            this.eventsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // postponeMinutesMinLabel
             // 
-            this.postponeMinutesMinLabel.AutoSize = true;
-            this.postponeMinutesMinLabel.Location = new System.Drawing.Point(115, 25);
+            this.postponeMinutesMinLabel.Location = new System.Drawing.Point(115, 20);
             this.postponeMinutesMinLabel.Name = "postponeMinutesMinLabel";
-            this.postponeMinutesMinLabel.Size = new System.Drawing.Size(30, 13);
+            this.postponeMinutesMinLabel.Size = new System.Drawing.Size(30, 20);
             this.postponeMinutesMinLabel.TabIndex = 0;
             this.postponeMinutesMinLabel.Text = "мин.";
+            this.postponeMinutesMinLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // postponeMinutesLabel
             // 
-            this.postponeMinutesLabel.AutoSize = true;
-            this.postponeMinutesLabel.Location = new System.Drawing.Point(5, 25);
+            this.postponeMinutesLabel.Location = new System.Drawing.Point(5, 20);
             this.postponeMinutesLabel.Name = "postponeMinutesLabel";
-            this.postponeMinutesLabel.Size = new System.Drawing.Size(56, 13);
+            this.postponeMinutesLabel.Size = new System.Drawing.Size(60, 20);
             this.postponeMinutesLabel.TabIndex = 0;
             this.postponeMinutesLabel.Text = "На время";
+            this.postponeMinutesLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // postponeMinutesUpDown
             // 
-            this.postponeMinutesUpDown.Enabled = false;
             this.postponeMinutesUpDown.Location = new System.Drawing.Point(65, 20);
             this.postponeMinutesUpDown.Maximum = new decimal(new int[] {
             200,
@@ -285,13 +284,13 @@
             // 
             // operatorLabel
             // 
-            this.operatorLabel.AutoSize = true;
             this.operatorLabel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.operatorLabel.Location = new System.Drawing.Point(5, 285);
+            this.operatorLabel.Location = new System.Drawing.Point(5, 280);
             this.operatorLabel.Name = "operatorLabel";
-            this.operatorLabel.Size = new System.Drawing.Size(56, 13);
+            this.operatorLabel.Size = new System.Drawing.Size(110, 20);
             this.operatorLabel.TabIndex = 0;
             this.operatorLabel.Text = "Оператор";
+            this.operatorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // serviceChangeLink
             // 
@@ -306,10 +305,9 @@
             // 
             // isPriorityCheckBox
             // 
-            this.isPriorityCheckBox.AutoSize = true;
-            this.isPriorityCheckBox.Location = new System.Drawing.Point(185, 5);
+            this.isPriorityCheckBox.Location = new System.Drawing.Point(180, 5);
             this.isPriorityCheckBox.Name = "isPriorityCheckBox";
-            this.isPriorityCheckBox.Size = new System.Drawing.Size(121, 17);
+            this.isPriorityCheckBox.Size = new System.Drawing.Size(115, 20);
             this.isPriorityCheckBox.TabIndex = 0;
             this.isPriorityCheckBox.Text = "Приоритет вызова";
             this.isPriorityCheckBox.UseVisualStyleBackColor = true;
@@ -317,12 +315,12 @@
             // 
             // subjectsLabel
             // 
-            this.subjectsLabel.AutoSize = true;
-            this.subjectsLabel.Location = new System.Drawing.Point(5, 85);
+            this.subjectsLabel.Location = new System.Drawing.Point(5, 80);
             this.subjectsLabel.Name = "subjectsLabel";
-            this.subjectsLabel.Size = new System.Drawing.Size(57, 13);
+            this.subjectsLabel.Size = new System.Drawing.Size(110, 20);
             this.subjectsLabel.TabIndex = 0;
             this.subjectsLabel.Text = "Объектов";
+            this.subjectsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // subjectsUpDown
             // 
@@ -355,7 +353,7 @@
             this.groupBox1.Controls.Add(this.postponeMinutesLabel);
             this.groupBox1.Location = new System.Drawing.Point(325, 195);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(240, 50);
+            this.groupBox1.Size = new System.Drawing.Size(235, 50);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Отложить запрос";
@@ -364,7 +362,7 @@
             // 
             this.postponeButton.Location = new System.Drawing.Point(150, 20);
             this.postponeButton.Name = "postponeButton";
-            this.postponeButton.Size = new System.Drawing.Size(85, 25);
+            this.postponeButton.Size = new System.Drawing.Size(75, 20);
             this.postponeButton.TabIndex = 0;
             this.postponeButton.Text = "Отложить";
             this.postponeButton.UseVisualStyleBackColor = true;
@@ -482,16 +480,6 @@
             this.stateTextBlock.Size = new System.Drawing.Size(120, 20);
             this.stateTextBlock.TabIndex = 6;
             // 
-            // typeTextBlock
-            // 
-            this.typeTextBlock.BackColor = System.Drawing.Color.White;
-            this.typeTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.typeTextBlock.Location = new System.Drawing.Point(180, 55);
-            this.typeTextBlock.Name = "typeTextBlock";
-            this.typeTextBlock.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.typeTextBlock.Size = new System.Drawing.Size(135, 20);
-            this.typeTextBlock.TabIndex = 7;
-            // 
             // requestTimeTextBlock
             // 
             this.requestTimeTextBlock.BackColor = System.Drawing.Color.White;
@@ -504,21 +492,21 @@
             // 
             // requestTimeLabel
             // 
-            this.requestTimeLabel.AutoSize = true;
-            this.requestTimeLabel.Location = new System.Drawing.Point(5, 60);
+            this.requestTimeLabel.Location = new System.Drawing.Point(5, 55);
             this.requestTimeLabel.Name = "requestTimeLabel";
-            this.requestTimeLabel.Size = new System.Drawing.Size(85, 13);
+            this.requestTimeLabel.Size = new System.Drawing.Size(110, 20);
             this.requestTimeLabel.TabIndex = 9;
             this.requestTimeLabel.Text = "Время запроса";
+            this.requestTimeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // serviceTypeLabel
             // 
-            this.serviceTypeLabel.AutoSize = true;
-            this.serviceTypeLabel.Location = new System.Drawing.Point(5, 210);
+            this.serviceTypeLabel.Location = new System.Drawing.Point(5, 205);
             this.serviceTypeLabel.Name = "serviceTypeLabel";
-            this.serviceTypeLabel.Size = new System.Drawing.Size(62, 13);
+            this.serviceTypeLabel.Size = new System.Drawing.Size(110, 20);
             this.serviceTypeLabel.TabIndex = 10;
             this.serviceTypeLabel.Text = "Тип услуги";
+            this.serviceTypeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // serviceTypeTextBlock
             // 
@@ -532,12 +520,12 @@
             // 
             // serviceStepLabel
             // 
-            this.serviceStepLabel.AutoSize = true;
-            this.serviceStepLabel.Location = new System.Drawing.Point(5, 235);
+            this.serviceStepLabel.Location = new System.Drawing.Point(5, 230);
             this.serviceStepLabel.Name = "serviceStepLabel";
-            this.serviceStepLabel.Size = new System.Drawing.Size(67, 13);
+            this.serviceStepLabel.Size = new System.Drawing.Size(110, 20);
             this.serviceStepLabel.TabIndex = 12;
             this.serviceStepLabel.Text = "Этап услуги";
+            this.serviceStepLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // serviceStepComboBox
             // 
@@ -569,6 +557,7 @@
             // 
             // editPanel
             // 
+            this.editPanel.Controls.Add(this.typeComboBox);
             this.editPanel.Controls.Add(this.parametersGridView);
             this.editPanel.Controls.Add(this.serviceStepResetButton);
             this.editPanel.Controls.Add(this.parametersLabel);
@@ -582,7 +571,6 @@
             this.editPanel.Controls.Add(this.serviceChangeLink);
             this.editPanel.Controls.Add(this.serviceTypeLabel);
             this.editPanel.Controls.Add(this.serviceLabel);
-            this.editPanel.Controls.Add(this.typeTextBlock);
             this.editPanel.Controls.Add(this.clientLabel);
             this.editPanel.Controls.Add(this.requestTimeTextBlock);
             this.editPanel.Controls.Add(this.requestDateLabel);
@@ -604,6 +592,14 @@
             this.editPanel.TabIndex = 16;
             this.editPanel.EnabledChanged += new System.EventHandler(this.editPanel_EnabledChanged);
             // 
+            // typeComboBox
+            // 
+            this.typeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.typeComboBox.Location = new System.Drawing.Point(180, 55);
+            this.typeComboBox.Name = "typeComboBox";
+            this.typeComboBox.Size = new System.Drawing.Size(110, 21);
+            this.typeComboBox.TabIndex = 16;
+            // 
             // EditClientRequestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -624,7 +620,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.topMenu.ResumeLayout(false);
             this.topMenu.PerformLayout();
             this.subjectsPanel.ResumeLayout(false);
@@ -674,7 +669,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn messageColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn parameterNameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn parameterValueColumn;
-        private System.Windows.Forms.Label typeTextBlock;
         private System.Windows.Forms.Label requestTimeTextBlock;
         private System.Windows.Forms.Label requestTimeLabel;
         private System.Windows.Forms.Label serviceTypeLabel;
@@ -684,5 +678,6 @@
         private System.Windows.Forms.Button operatorResetButton;
         private System.Windows.Forms.Button serviceStepResetButton;
         private System.Windows.Forms.Panel editPanel;
+        private System.Windows.Forms.ComboBox typeComboBox;
     }
 }

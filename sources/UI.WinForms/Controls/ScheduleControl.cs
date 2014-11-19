@@ -49,7 +49,7 @@ namespace Queue.UI.WinForms
                     clientIntervalUpDown.Value = (decimal)schedule.ClientInterval.TotalMinutes;
                     intersectionUpDown.Value = (decimal)schedule.Intersection.TotalMinutes;
                     maxClientRequestsUpDown.Value = schedule.MaxClientRequests;
-                    renderingModeComboBox.SelectedValue = schedule.RenderingMode;
+                    renderingModeComboBox.SelectedItem = new EnumDataListItem<ServiceRenderingMode>(schedule.RenderingMode);
                     earlyStartTimeTextBox.Text = schedule.EarlyStartTime.ToString("hh\\:mm");
                     earlyFinishTimeTextBox.Text = schedule.FinishTime.ToString("hh\\:mm");
                     earlyReservationUpDown.Value = schedule.EarlyReservation;
@@ -113,13 +113,7 @@ namespace Queue.UI.WinForms
         {
             InitializeComponent();
 
-            modeColumn.DisplayMember = DataListItem.Value;
-            modeColumn.ValueMember = DataListItem.Key;
-            modeColumn.DataSource = EnumDataListItem<ServiceRenderingMode>.GetList();
-
-            renderingModeComboBox.DisplayMember = DataListItem.Value;
-            renderingModeComboBox.ValueMember = DataListItem.Key;
-            renderingModeComboBox.DataSource = EnumDataListItem<ServiceRenderingMode>.GetList();
+            renderingModeComboBox.Items.AddRange(EnumDataListItem<ServiceRenderingMode>.GetList());
         }
 
         public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
@@ -453,16 +447,16 @@ namespace Queue.UI.WinForms
 
         private void renderingModeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var renderingMode = (ServiceRenderingMode)renderingModeComboBox.SelectedValue;
-            earlyGroupBox.Enabled = renderingMode == ServiceRenderingMode.AllRequests;
+            var selectedItem = renderingModeComboBox.SelectedItem as EnumDataListItem<ServiceRenderingMode>;
+            earlyGroupBox.Enabled = selectedItem.Value == ServiceRenderingMode.AllRequests;
         }
 
         private void renderingModeComboBox_Leave(object sender, EventArgs e)
         {
             if (schedule != null)
             {
-                var renderingMode = (ServiceRenderingMode)renderingModeComboBox.SelectedValue;
-                schedule.RenderingMode = renderingMode;
+                var selectedItem = renderingModeComboBox.SelectedItem as EnumDataListItem<ServiceRenderingMode>;
+                schedule.RenderingMode = selectedItem.Value;
             }
         }
 

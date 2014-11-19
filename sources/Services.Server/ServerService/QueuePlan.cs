@@ -220,7 +220,8 @@ namespace Queue.Services.Server
                                 {
                                     case ClientRequestState.Rendered:
 
-                                        if (clientRequest.Service.Type != ServiceType.None && clientRequest.ServiceType == ServiceType.None)
+                                        if (clientRequest.Service.Type != ServiceType.None
+                                            && clientRequest.ServiceType == ServiceType.None)
                                         {
                                             throw new Exception("Укажите тип услуги перед окончанием обслуживания");
                                         }
@@ -529,6 +530,67 @@ namespace Queue.Services.Server
                         }
 
                         clientRequest.ServiceType = serviceType;
+
+                        clientRequest.Version++;
+                        session.Save(clientRequest);
+
+                        var todayQueuePlan = queueInstance.TodayQueuePlan;
+                        using (var locker = todayQueuePlan.WriteLock())
+                        {
+                            transaction.Commit();
+
+                            todayQueuePlan.Put(clientRequest);
+                        }
+
+                        return Mapper.Map<ClientRequest, DTO.ClientRequest>(clientRequest);
+                    }
+                    catch (Exception exception)
+                    {
+                        throw new FaultException(exception.Message);
+                    }
+                }
+            });
+        }
+
+        public async Task<DTO.ClientRequest> ChangeCurrentClientRequestServiceStep(Guid serviceStepId)
+        {
+            return await Task.Run(() =>
+            {
+                checkPermission(UserRole.Operator);
+
+                using (var session = sessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    var queueOperator = (Operator)currentUser;
+
+                    try
+                    {
+                        var clientRequest = session.Merge(queueInstance.TodayQueuePlan
+                            .GetOperatorPlan(queueOperator).CurrentClientRequestPlan.ClientRequest);
+
+                        switch (clientRequest.State)
+                        {
+                            case ClientRequestState.Rendering:
+                                break;
+
+                            default:
+                                throw new Exception("Нельзя изменить тип услуги запроса клиента находящийся в данном статусе");
+                        }
+
+                        if (serviceStepId != Guid.Empty)
+                        {
+                            var serviceStep = session.Get<ServiceStep>(serviceStepId);
+                            if (serviceStep == null)
+                            {
+                                throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceStepId), string.Format("Этап услуги [{0}] не найден", serviceStepId));
+                            }
+
+                            clientRequest.ServiceStep = serviceStep;
+                        }
+                        else
+                        {
+                            clientRequest.ServiceStep = null;
+                        }
 
                         clientRequest.Version++;
                         session.Save(clientRequest);

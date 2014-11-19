@@ -661,15 +661,6 @@ namespace Queue.Services.Server
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    if (serviceStep == null)
-                    {
-                        var serviceSteps = session.CreateCriteria<ServiceStep>()
-                            .Add(Restrictions.Eq("Service", schedule))
-                            .AddOrder(Order.Asc("SortId"))
-                            .SetMaxResults(1)
-                            .UniqueResult<ServiceStep>();
-                    }
-
                     serviceRenderings.Add(key, session.CreateCriteria<ServiceRendering>()
                          .Add(Restrictions.Eq("Schedule", schedule))
                          .Add(serviceStep != null ? Restrictions.Eq("ServiceStep", serviceStep) : Restrictions.IsNull("ServiceStep"))
