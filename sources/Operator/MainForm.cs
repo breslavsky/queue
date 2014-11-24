@@ -120,18 +120,18 @@ namespace Queue.Operator
 
                             if (service.Type != ServiceType.None)
                             {
-                                var serviceTypes = new List<object>() { new EnumDataListItem<ServiceType>(ServiceType.None) };
+                                var serviceTypes = new List<object>() { new EnumItem<ServiceType>(ServiceType.None) };
                                 foreach (ServiceType type in Enum.GetValues(typeof(ServiceType)))
                                 {
                                     if (type != ServiceType.None && service.Type.HasFlag(type))
                                     {
-                                        serviceTypes.Add(new EnumDataListItem<ServiceType>(type));
+                                        serviceTypes.Add(new EnumItem<ServiceType>(type));
                                     }
                                 }
                                 if (serviceTypes.Count > 0)
                                 {
                                     serviceTypesComboBox.Items.AddRange(serviceTypes.ToArray());
-                                    serviceTypesComboBox.SelectedItem = new EnumDataListItem<ServiceType>(clientRequest.ServiceType);
+                                    serviceTypesComboBox.SelectedItem = new EnumItem<ServiceType>(clientRequest.ServiceType);
                                     serviceTypesComboBox.SelectedIndexChanged += serviceTypesComboBox_SelectedIndexChanged;
                                 }
                             }
@@ -448,7 +448,7 @@ namespace Queue.Operator
 
         private async void serviceTypesComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selectedItem = serviceTypesComboBox.SelectedItem as EnumDataListItem<ServiceType>;
+            var selectedItem = serviceTypesComboBox.SelectedItem as EnumItem<ServiceType>;
             if (selectedItem != null)
             {
                 var serviceType = selectedItem.Value;

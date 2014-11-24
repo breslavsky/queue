@@ -13,23 +13,23 @@ namespace Queue.Model.Common
         public const string Value = "Value";
     }
 
-    public class EnumDataListItem<T> : DataListItem
+    public class EnumItem<T> : DataListItem
     {
         public T Value { get; set; }
 
-        public EnumDataListItem(T value)
+        public EnumItem(T value)
         {
             this.Value = value;
         }
 
         private const string TranslationAssemblyPattern = "Queue.Model.Common.Translation.{0}";
 
-        public static EnumDataListItem<T>[] GetList()
+        public static EnumItem<T>[] GetItems()
         {
-            var result = new List<EnumDataListItem<T>>();
+            var result = new List<EnumItem<T>>();
             foreach (T value in Enum.GetValues(typeof(T)))
             {
-                result.Add(new EnumDataListItem<T>(value));
+                result.Add(new EnumItem<T>(value));
             }
 
             return result.ToArray();

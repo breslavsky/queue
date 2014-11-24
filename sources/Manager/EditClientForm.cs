@@ -18,58 +18,85 @@ namespace Queue.Manager
         private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
+        private Guid clientId;
+
         private Client client;
 
         public Client Client
         {
             get { return client; }
+            private set
+            {
+                client = value;
+
+                surnameTextBox.Text = client.Surname;
+                nameTextBox.Text = client.Name;
+                patronymicTextBox.Text = client.Patronymic;
+                emailTextBox.Text = client.Email;
+                mobileTextBox.Text = client.Mobile;
+            }
         }
 
-        public EditClientForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Client client)
+        public EditClientForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid clientId)
             : base()
         {
             InitializeComponent();
 
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
-            this.client = client;
+            this.clientId = clientId;
 
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
         }
 
-        private void EditClientForm_Load(object sender, EventArgs e)
+        private async void EditClientForm_Load(object sender, EventArgs e)
         {
-            surnameTextBox.Text = client.Surname;
-            nameTextBox.Text = client.Name;
-            patronymicTextBox.Text = client.Patronymic;
-            emailTextBox.Text = client.Email;
-            mobileTextBox.Text = client.Mobile;
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
+                    Client = await taskPool.AddTask(channel.Service.GetClient(clientId));
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+            }
         }
 
         private void surnameTextBox_Leave(object sender, EventArgs e)
         {
-            client.Surname = surnameTextBox.Text;
+            Client.Surname = surnameTextBox.Text;
         }
 
         private void nameTextBox_Leave(object sender, EventArgs e)
         {
-            client.Name = nameTextBox.Text;
+            Client.Name = nameTextBox.Text;
         }
 
         private void patronymicTextBox_Leave(object sender, EventArgs e)
         {
-            client.Patronymic = patronymicTextBox.Text;
+            Client.Patronymic = patronymicTextBox.Text;
         }
 
         private void emailTextBox_Leave(object sender, EventArgs e)
         {
-            client.Email = emailTextBox.Text;
+            Client.Email = emailTextBox.Text;
         }
 
         private void mobileTextBox_Leave(object sender, EventArgs e)
         {
-            client.Mobile = mobileTextBox.Text;
+            Client.Mobile = mobileTextBox.Text;
         }
 
         private async void saveButton_Click(object sender, EventArgs e)
@@ -81,7 +108,7 @@ namespace Queue.Manager
                     saveButton.Enabled = false;
 
                     await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                    client = await taskPool.AddTask(channel.Service.EditClient(client));
+                    Client = await taskPool.AddTask(channel.Service.EditClient(Client));
 
                     DialogResult = DialogResult.OK;
                 }
@@ -117,7 +144,7 @@ namespace Queue.Manager
                             passwordButton.Enabled = false;
 
                             await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                            await taskPool.AddTask(channel.Service.ChangeClientPassword(client.Id, f.Password));
+                            await taskPool.AddTask(channel.Service.ChangeClientPassword(Client.Id, f.Password));
                         }
                         catch (OperationCanceledException) { }
                         catch (CommunicationObjectAbortedException) { }

@@ -13,7 +13,7 @@ using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class ServiceGroupEditForm : Queue.UI.WinForms.RichForm
+    public partial class EditServiceGroupForm : Queue.UI.WinForms.RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
@@ -28,7 +28,7 @@ namespace Queue.Administrator
             get { return serviceGroup; }
         }
 
-        public ServiceGroupEditForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, ServiceGroup serviceGroup)
+        public EditServiceGroupForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, ServiceGroup serviceGroup)
             : base()
         {
             InitializeComponent();

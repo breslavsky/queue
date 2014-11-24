@@ -507,7 +507,27 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.ServiceRendering> AddServiceRendering(Guid scheduleId, Guid operatorId, Guid serviceStepId)
+        public async Task<DTO.ServiceRendering> GetServiceRendering(Guid serviceRenderingId)
+        {
+            return await Task.Run(() =>
+            {
+                checkPermission(UserRole.Manager | UserRole.Administrator);
+
+                using (var session = sessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    var serviceRendering = session.Get<ServiceRendering>(serviceRenderingId);
+                    if (serviceRendering == null)
+                    {
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceRenderingId), string.Format("Обслуживание [{0}] не найдено", serviceRenderingId));
+                    }
+
+                    return Mapper.Map<ServiceRendering, DTO.ServiceRendering>(serviceRendering);
+                }
+            });
+        }
+
+        public async Task<DTO.ServiceRendering> AddServiceRendering(Guid scheduleId)
         {
             return await Task.Run(() =>
             {
@@ -526,24 +546,16 @@ namespace Queue.Services.Server
 
                     serviceRendering.Schedule = schedule;
 
-                    var queueOperator = session.Get<Operator>(operatorId);
+                    var queueOperator = session.CreateCriteria<Operator>()
+                        .AddOrder(Order.Asc("Name"))
+                        .SetMaxResults(1)
+                        .UniqueResult<Operator>();
                     if (queueOperator == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(operatorId), string.Format("Оператор [{0}] не найден", operatorId));
+                        throw new FaultException("Добавьте хотя бы одного оператора");
                     }
 
                     serviceRendering.Operator = queueOperator;
-
-                    if (serviceStepId != Guid.Empty)
-                    {
-                        var serviceStep = session.Get<ServiceStep>(serviceStepId);
-                        if (serviceStep == null)
-                        {
-                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(operatorId), string.Format("Этап услуги [{0}] не найден", serviceStepId));
-                        }
-
-                        serviceRendering.ServiceStep = serviceStep;
-                    }
 
                     var errors = serviceRendering.Validate();
                     if (errors.Length > 0)
@@ -576,16 +588,22 @@ namespace Queue.Services.Server
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    var serviceRenderingId = source.Id;
-
-                    var serviceRendering = session.Get<ServiceRendering>(serviceRenderingId);
+                    var serviceRendering = session.Get<ServiceRendering>(source.Id);
                     if (serviceRendering == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceRenderingId), string.Format("Обслуживание услуги [{0}] не найдено", serviceRenderingId));
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(source.Id),
+                            string.Format("Обслуживание услуги [{0}] не найдено", source.Id));
                     }
 
-                    serviceRendering.Mode = source.Mode;
-                    serviceRendering.Priority = source.Priority;
+                    var operatorId = source.Operator.Id;
+
+                    var queueOperator = session.Get<Operator>(operatorId);
+                    if (queueOperator == null)
+                    {
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(operatorId),
+                            string.Format("Оператор [{0}] не найден", operatorId));
+                    }
+                    serviceRendering.Operator = queueOperator;
 
                     if (source.ServiceStep != null)
                     {
@@ -594,11 +612,14 @@ namespace Queue.Services.Server
                         var serviceStep = session.Get<ServiceStep>(serviceStepId);
                         if (serviceStep == null)
                         {
-                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceStepId), string.Format("Этап услуги [{0}] не найдено", serviceStepId));
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceStepId),
+                                string.Format("Этап услуги [{0}] не найдено", serviceStepId));
                         }
-
                         serviceRendering.ServiceStep = serviceStep;
                     }
+
+                    serviceRendering.Mode = source.Mode;
+                    serviceRendering.Priority = source.Priority;
 
                     var errors = serviceRendering.Validate();
                     if (errors.Length > 0)

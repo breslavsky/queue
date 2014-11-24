@@ -1,4 +1,5 @@
 ﻿using Queue.Model.Common;
+using System;
 using System.Resources;
 using System.Runtime.Serialization;
 using Translation = Queue.Model.Common.Translation;

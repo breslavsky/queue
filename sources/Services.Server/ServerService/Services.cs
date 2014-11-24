@@ -426,6 +426,24 @@ namespace Queue.Services.Server
             });
         }
 
+        public async Task<DTO.ServiceStep> GetServiceStep(Guid serviceStepId)
+        {
+            return await Task.Run(() =>
+            {
+                using (var session = sessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    var serviceStep = session.Get<ServiceStep>(serviceStepId);
+                    if (serviceStep == null)
+                    {
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceStep), string.Format("Этап услуги [{0}] не найден", serviceStep));
+                    }
+
+                    return Mapper.Map<ServiceStep, DTO.ServiceStep>(serviceStep);
+                }
+            });
+        }
+
         public async Task<DTO.ServiceStep> AddServiceStep(Guid serviceId)
         {
             return await Task.Run(() =>

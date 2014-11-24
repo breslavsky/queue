@@ -48,7 +48,7 @@ namespace Queue.Database
 
         private void connectButton_Click(object sender, EventArgs eventArgs)
         {
-            using (var loginForm = new LoginForm(settings.Database ?? new DatabaseSettings()))
+            using (var loginForm = new LoginForm(settings.Database ?? new DatabaseSettingsProfiles()))
             {
                 if (loginForm.ShowDialog() == DialogResult.OK)
                 {

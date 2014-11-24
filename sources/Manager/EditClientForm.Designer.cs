@@ -152,7 +152,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(274, 177);
+            this.ClientSize = new System.Drawing.Size(274, 171);
             this.Controls.Add(this.mobileTextBox);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.mobileLabel);

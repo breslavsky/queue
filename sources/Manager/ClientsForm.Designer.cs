@@ -24,7 +24,7 @@
             this.firstButton = new System.Windows.Forms.Button();
             this.prevButton = new System.Windows.Forms.Button();
             this.nextButton = new System.Windows.Forms.Button();
-            this.gridView = new System.Windows.Forms.DataGridView();
+            this.clientsGridView = new System.Windows.Forms.DataGridView();
             this.registerDateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.surnameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -33,7 +33,7 @@
             this.mobileColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainTableLayoutPanel.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clientsGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // mainTableLayoutPanel
@@ -41,7 +41,7 @@
             this.mainTableLayoutPanel.ColumnCount = 1;
             this.mainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.mainTableLayoutPanel.Controls.Add(this.panel1, 0, 0);
-            this.mainTableLayoutPanel.Controls.Add(this.gridView, 0, 1);
+            this.mainTableLayoutPanel.Controls.Add(this.clientsGridView, 0, 1);
             this.mainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainTableLayoutPanel.Location = new System.Drawing.Point(10, 10);
             this.mainTableLayoutPanel.Name = "mainTableLayoutPanel";
@@ -114,11 +114,11 @@
             // 
             // clientsGridView
             // 
-            this.gridView.AllowUserToAddRows = false;
-            this.gridView.AllowUserToDeleteRows = false;
-            this.gridView.AllowUserToOrderColumns = true;
-            this.gridView.AllowUserToResizeColumns = false;
-            this.gridView.AllowUserToResizeRows = false;
+            this.clientsGridView.AllowUserToAddRows = false;
+            this.clientsGridView.AllowUserToDeleteRows = false;
+            this.clientsGridView.AllowUserToOrderColumns = true;
+            this.clientsGridView.AllowUserToResizeColumns = false;
+            this.clientsGridView.AllowUserToResizeRows = false;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -126,26 +126,26 @@
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.gridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.clientsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.clientsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.clientsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.registerDateColumn,
             this.surnameColumn,
             this.nameColumn,
             this.patronymicColumn,
             this.emailColumn,
             this.mobileColumn});
-            this.gridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridView.Location = new System.Drawing.Point(0, 40);
-            this.gridView.Margin = new System.Windows.Forms.Padding(0);
-            this.gridView.MultiSelect = false;
-            this.gridView.Name = "clientsGridView";
-            this.gridView.ReadOnly = true;
-            this.gridView.RowHeadersVisible = false;
-            this.gridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridView.Size = new System.Drawing.Size(864, 302);
-            this.gridView.TabIndex = 0;
-            this.gridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.clientsGridView_CellMouseDoubleClick);
+            this.clientsGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.clientsGridView.Location = new System.Drawing.Point(0, 40);
+            this.clientsGridView.Margin = new System.Windows.Forms.Padding(0);
+            this.clientsGridView.MultiSelect = false;
+            this.clientsGridView.Name = "clientsGridView";
+            this.clientsGridView.ReadOnly = true;
+            this.clientsGridView.RowHeadersVisible = false;
+            this.clientsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.clientsGridView.Size = new System.Drawing.Size(864, 302);
+            this.clientsGridView.TabIndex = 0;
+            this.clientsGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.clientsGridView_CellMouseDoubleClick);
             // 
             // registerDateColumn
             // 
@@ -211,7 +211,7 @@
             this.mainTableLayoutPanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clientsGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -219,7 +219,7 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
-        private System.Windows.Forms.DataGridView gridView;
+        private System.Windows.Forms.DataGridView clientsGridView;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label queryLabel;
         private System.Windows.Forms.TextBox queryTextBox;

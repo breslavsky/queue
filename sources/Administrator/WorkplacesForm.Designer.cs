@@ -24,9 +24,9 @@
             this.workplacesGridView = new System.Windows.Forms.DataGridView();
             this.addWorkplaceButton = new System.Windows.Forms.Button();
             this.deleteColumn = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.typeColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.typeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.modificatorColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.modificatorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.commentColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.displayColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.segmentsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -41,13 +41,12 @@
             this.mainTableLayoutPanel.Controls.Add(this.workplacesGridView, 0, 0);
             this.mainTableLayoutPanel.Controls.Add(this.addWorkplaceButton, 0, 1);
             this.mainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainTableLayoutPanel.Location = new System.Drawing.Point(13, 12);
-            this.mainTableLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.mainTableLayoutPanel.Location = new System.Drawing.Point(10, 10);
             this.mainTableLayoutPanel.Name = "mainTableLayoutPanel";
             this.mainTableLayoutPanel.RowCount = 2;
             this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
-            this.mainTableLayoutPanel.Size = new System.Drawing.Size(1086, 545);
+            this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.mainTableLayoutPanel.Size = new System.Drawing.Size(814, 442);
             this.mainTableLayoutPanel.TabIndex = 0;
             // 
             // workplacesGridView
@@ -76,19 +75,20 @@
             this.workplacesGridView.Margin = new System.Windows.Forms.Padding(0);
             this.workplacesGridView.MultiSelect = false;
             this.workplacesGridView.Name = "workplacesGridView";
+            this.workplacesGridView.ReadOnly = true;
             this.workplacesGridView.RowHeadersVisible = false;
-            this.workplacesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.workplacesGridView.Size = new System.Drawing.Size(1086, 502);
+            this.workplacesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.workplacesGridView.Size = new System.Drawing.Size(814, 407);
             this.workplacesGridView.TabIndex = 0;
             this.workplacesGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.workplacesGridView_CellClick);
-            this.workplacesGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.workplacesGridView_CellEndEdit);
+            this.workplacesGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.workplacesGridView_CellMouseDoubleClick);
             // 
             // addWorkplaceButton
             // 
-            this.addWorkplaceButton.Location = new System.Drawing.Point(0, 508);
-            this.addWorkplaceButton.Margin = new System.Windows.Forms.Padding(0, 6, 0, 0);
+            this.addWorkplaceButton.Location = new System.Drawing.Point(0, 412);
+            this.addWorkplaceButton.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
             this.addWorkplaceButton.Name = "addWorkplaceButton";
-            this.addWorkplaceButton.Size = new System.Drawing.Size(100, 31);
+            this.addWorkplaceButton.Size = new System.Drawing.Size(75, 25);
             this.addWorkplaceButton.TabIndex = 0;
             this.addWorkplaceButton.Text = "Добавить";
             this.addWorkplaceButton.Click += new System.EventHandler(this.addWorkplaceButton_Click);
@@ -111,18 +111,20 @@
             this.typeColumn.FillWeight = 130F;
             this.typeColumn.HeaderText = "Тип";
             this.typeColumn.Name = "typeColumn";
+            this.typeColumn.ReadOnly = true;
             this.typeColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.typeColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.typeColumn.Width = 130;
             // 
             // numberColumn
             // 
             this.numberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             dataGridViewCellStyle3.NullValue = null;
             this.numberColumn.DefaultCellStyle = dataGridViewCellStyle3;
             this.numberColumn.FillWeight = 80F;
             this.numberColumn.HeaderText = "Номер";
             this.numberColumn.Name = "numberColumn";
+            this.numberColumn.ReadOnly = true;
             this.numberColumn.Width = 80;
             // 
             // modificatorColumn
@@ -130,8 +132,8 @@
             this.modificatorColumn.FillWeight = 120F;
             this.modificatorColumn.HeaderText = "Модификатор";
             this.modificatorColumn.Name = "modificatorColumn";
+            this.modificatorColumn.ReadOnly = true;
             this.modificatorColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.modificatorColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.modificatorColumn.Width = 120;
             // 
             // commentColumn
@@ -139,6 +141,7 @@
             this.commentColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.commentColumn.HeaderText = "Комментарий";
             this.commentColumn.Name = "commentColumn";
+            this.commentColumn.ReadOnly = true;
             // 
             // displayColumn
             // 
@@ -146,6 +149,7 @@
             this.displayColumn.DefaultCellStyle = dataGridViewCellStyle4;
             this.displayColumn.HeaderText = "Номер табло";
             this.displayColumn.Name = "displayColumn";
+            this.displayColumn.ReadOnly = true;
             this.displayColumn.Width = 130;
             // 
             // segmentsColumn
@@ -154,18 +158,18 @@
             this.segmentsColumn.DefaultCellStyle = dataGridViewCellStyle5;
             this.segmentsColumn.HeaderText = "Кол-во сегментов";
             this.segmentsColumn.Name = "segmentsColumn";
+            this.segmentsColumn.ReadOnly = true;
             this.segmentsColumn.Width = 160;
             // 
             // WorkplacesForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1112, 569);
+            this.ClientSize = new System.Drawing.Size(834, 462);
             this.Controls.Add(this.mainTableLayoutPanel);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.MinimumSize = new System.Drawing.Size(1127, 605);
+            this.MinimumSize = new System.Drawing.Size(849, 499);
             this.Name = "WorkplacesForm";
-            this.Padding = new System.Windows.Forms.Padding(13, 12, 13, 12);
+            this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Рабочие места";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WorkplacesForm_FormClosing);
@@ -182,9 +186,9 @@
         private System.Windows.Forms.DataGridView workplacesGridView;
         private System.Windows.Forms.Button addWorkplaceButton;
         private System.Windows.Forms.DataGridViewLinkColumn deleteColumn;
-        private System.Windows.Forms.DataGridViewComboBoxColumn typeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn typeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn numberColumn;
-        private System.Windows.Forms.DataGridViewComboBoxColumn modificatorColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn modificatorColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn commentColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn displayColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn segmentsColumn;

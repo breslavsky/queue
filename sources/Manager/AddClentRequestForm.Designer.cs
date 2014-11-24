@@ -82,10 +82,9 @@
             // 
             // priorityCheckBox
             // 
-            this.priorityCheckBox.AutoSize = true;
-            this.priorityCheckBox.Location = new System.Drawing.Point(70, 490);
+            this.priorityCheckBox.Location = new System.Drawing.Point(65, 490);
             this.priorityCheckBox.Name = "priorityCheckBox";
-            this.priorityCheckBox.Size = new System.Drawing.Size(121, 17);
+            this.priorityCheckBox.Size = new System.Drawing.Size(130, 20);
             this.priorityCheckBox.TabIndex = 0;
             this.priorityCheckBox.Text = "Приоритет вызова";
             this.priorityCheckBox.UseVisualStyleBackColor = true;
@@ -137,12 +136,12 @@
             // 
             // freeTimeLabel
             // 
-            this.freeTimeLabel.AutoSize = true;
             this.freeTimeLabel.Location = new System.Drawing.Point(90, 80);
             this.freeTimeLabel.Name = "freeTimeLabel";
-            this.freeTimeLabel.Size = new System.Drawing.Size(79, 13);
+            this.freeTimeLabel.Size = new System.Drawing.Size(85, 20);
             this.freeTimeLabel.TabIndex = 0;
             this.freeTimeLabel.Text = "Время записи";
+            this.freeTimeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // freeTimeComboBox
             // 
@@ -156,21 +155,19 @@
             // 
             // earlyRadioButton
             // 
-            this.earlyRadioButton.AutoSize = true;
             this.earlyRadioButton.Location = new System.Drawing.Point(122, 285);
             this.earlyRadioButton.Name = "earlyRadioButton";
-            this.earlyRadioButton.Size = new System.Drawing.Size(155, 17);
+            this.earlyRadioButton.Size = new System.Drawing.Size(155, 20);
             this.earlyRadioButton.TabIndex = 0;
             this.earlyRadioButton.Text = "Предварительная запись";
             this.earlyRadioButton.CheckedChanged += new System.EventHandler(this.earlyRadioButton_CheckedChanged);
             // 
             // liveRadioButton
             // 
-            this.liveRadioButton.AutoSize = true;
             this.liveRadioButton.Checked = true;
             this.liveRadioButton.Location = new System.Drawing.Point(15, 285);
             this.liveRadioButton.Name = "liveRadioButton";
-            this.liveRadioButton.Size = new System.Drawing.Size(104, 17);
+            this.liveRadioButton.Size = new System.Drawing.Size(105, 20);
             this.liveRadioButton.TabIndex = 0;
             this.liveRadioButton.TabStop = true;
             this.liveRadioButton.Text = "Живая очередь";
@@ -197,7 +194,7 @@
             // 
             // clientMobileTextBox
             // 
-            this.clientMobileTextBox.Location = new System.Drawing.Point(80, 120);
+            this.clientMobileTextBox.Location = new System.Drawing.Point(85, 120);
             this.clientMobileTextBox.Mask = "8(999)-000-0000";
             this.clientMobileTextBox.Name = "clientMobileTextBox";
             this.clientMobileTextBox.Size = new System.Drawing.Size(90, 20);
@@ -206,25 +203,25 @@
             // 
             // mobileLabel
             // 
-            this.mobileLabel.AutoSize = true;
-            this.mobileLabel.Location = new System.Drawing.Point(10, 125);
+            this.mobileLabel.Location = new System.Drawing.Point(10, 120);
             this.mobileLabel.Name = "mobileLabel";
-            this.mobileLabel.Size = new System.Drawing.Size(66, 13);
+            this.mobileLabel.Size = new System.Drawing.Size(70, 20);
             this.mobileLabel.TabIndex = 1;
             this.mobileLabel.Text = "Мобильный";
+            this.mobileLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // surnameLabel
             // 
-            this.surnameLabel.AutoSize = true;
             this.surnameLabel.Location = new System.Drawing.Point(10, 30);
             this.surnameLabel.Name = "surnameLabel";
-            this.surnameLabel.Size = new System.Drawing.Size(56, 13);
+            this.surnameLabel.Size = new System.Drawing.Size(70, 20);
             this.surnameLabel.TabIndex = 0;
             this.surnameLabel.Text = "Фамилия";
+            this.surnameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // clientSurnameTextBox
             // 
-            this.clientSurnameTextBox.Location = new System.Drawing.Point(80, 30);
+            this.clientSurnameTextBox.Location = new System.Drawing.Point(85, 30);
             this.clientSurnameTextBox.Name = "clientSurnameTextBox";
             this.clientSurnameTextBox.Size = new System.Drawing.Size(135, 20);
             this.clientSurnameTextBox.TabIndex = 0;
@@ -233,16 +230,16 @@
             // 
             // nameLabel
             // 
-            this.nameLabel.AutoSize = true;
             this.nameLabel.Location = new System.Drawing.Point(10, 60);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(29, 13);
+            this.nameLabel.Size = new System.Drawing.Size(70, 20);
             this.nameLabel.TabIndex = 0;
             this.nameLabel.Text = "Имя";
+            this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // clientNameTextBox
             // 
-            this.clientNameTextBox.Location = new System.Drawing.Point(80, 60);
+            this.clientNameTextBox.Location = new System.Drawing.Point(85, 60);
             this.clientNameTextBox.Name = "clientNameTextBox";
             this.clientNameTextBox.Size = new System.Drawing.Size(90, 20);
             this.clientNameTextBox.TabIndex = 0;
@@ -250,16 +247,16 @@
             // 
             // patronymicLabel
             // 
-            this.patronymicLabel.AutoSize = true;
             this.patronymicLabel.Location = new System.Drawing.Point(10, 90);
             this.patronymicLabel.Name = "patronymicLabel";
-            this.patronymicLabel.Size = new System.Drawing.Size(54, 13);
+            this.patronymicLabel.Size = new System.Drawing.Size(70, 20);
             this.patronymicLabel.TabIndex = 0;
             this.patronymicLabel.Text = "Отчество";
+            this.patronymicLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // clientPatronymicTextBox
             // 
-            this.clientPatronymicTextBox.Location = new System.Drawing.Point(80, 90);
+            this.clientPatronymicTextBox.Location = new System.Drawing.Point(85, 90);
             this.clientPatronymicTextBox.Name = "clientPatronymicTextBox";
             this.clientPatronymicTextBox.Size = new System.Drawing.Size(135, 20);
             this.clientPatronymicTextBox.TabIndex = 0;

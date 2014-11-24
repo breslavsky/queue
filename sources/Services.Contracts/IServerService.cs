@@ -357,6 +357,9 @@ namespace Queue.Services.Contracts
         Task<ServiceStep[]> GetServiceSteps(Guid serviceId);
 
         [OperationContract]
+        Task<ServiceStep> GetServiceStep(Guid serviceStepId);
+
+        [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task<ServiceStep> AddServiceStep(Guid serviceId);
 
@@ -382,7 +385,11 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ServiceRendering> AddServiceRendering(Guid scheduleId, Guid operatorId, Guid serviceStepId);
+        Task<DTO.ServiceRendering> GetServiceRendering(Guid serviceRenderingId);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<ServiceRendering> AddServiceRendering(Guid scheduleId);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]

@@ -71,7 +71,7 @@ namespace Queue.Administrator
 
             parameterTypeComboBox.DisplayMember = DataListItem.Value;
             parameterTypeComboBox.ValueMember = DataListItem.Key;
-            parameterTypeComboBox.DataSource = EnumDataListItem<ServiceParameterType>.GetList();
+            parameterTypeComboBox.DataSource = EnumItem<ServiceParameterType>.GetItems();
         }
 
         public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)

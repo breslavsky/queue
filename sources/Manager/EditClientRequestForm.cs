@@ -49,7 +49,7 @@ namespace Queue.Manager
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
-            typeComboBox.Items.AddRange(EnumDataListItem<ClientRequestType>.GetList());
+            typeComboBox.Items.AddRange(EnumItem<ClientRequestType>.GetItems());
         }
 
         public ClientRequest ClientRequest
@@ -71,7 +71,7 @@ namespace Queue.Manager
                     subjectsUpDown.Value = clientRequest.Subjects;
 
                     typeComboBox.SelectedValueChanged -= typeComboBox_SelectedValueChanged;
-                    typeComboBox.SelectedItem = new EnumDataListItem<ClientRequestType>(clientRequest.Type);
+                    typeComboBox.SelectedItem = new EnumItem<ClientRequestType>(clientRequest.Type);
                     typeComboBox.SelectedValueChanged += typeComboBox_SelectedValueChanged;
 
                     clientTextBlock.Text = clientRequest.Client != null ? clientRequest.Client.ToString() : string.Empty;
@@ -243,7 +243,7 @@ namespace Queue.Manager
 
         private void clientEditLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            using (var f = new EditClientForm(channelBuilder, currentUser, clientRequest.Client))
+            using (var f = new EditClientForm(channelBuilder, currentUser, clientRequest.Client.Id))
             {
                 if (f.ShowDialog() == DialogResult.OK)
                 {
@@ -254,7 +254,7 @@ namespace Queue.Manager
 
         private async void typeComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            var type = typeComboBox.SelectedItem as EnumDataListItem<ClientRequestType>;
+            var type = typeComboBox.SelectedItem as EnumItem<ClientRequestType>;
 
             using (var channel = channelManager.CreateChannel())
             {

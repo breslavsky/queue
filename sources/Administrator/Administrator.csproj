@@ -173,6 +173,12 @@
     <Compile Include="DefaultScheduleForm.Designer.cs">
       <DependentUpon>DefaultScheduleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditWorkplaceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditWorkplaceForm.Designer.cs">
+      <DependentUpon>EditWorkplaceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="HtmlEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -241,6 +247,12 @@
     <Compile Include="Config\TerminalConfigControl.Designer.cs">
       <DependentUpon>TerminalConfigControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditServiceStepForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditServiceStepForm.Designer.cs">
+      <DependentUpon>EditServiceStepForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ServiceStepsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -259,17 +271,17 @@
     <Compile Include="UsersForm.Designer.cs">
       <DependentUpon>UsersForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ServiceEditForm.cs">
+    <Compile Include="EditServiceForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServiceEditForm.Designer.cs">
-      <DependentUpon>ServiceEditForm.cs</DependentUpon>
+    <Compile Include="EditServiceForm.Designer.cs">
+      <DependentUpon>EditServiceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ServiceGroupEditForm.cs">
+    <Compile Include="EditServiceGroupForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServiceGroupEditForm.Designer.cs">
-      <DependentUpon>ServiceGroupEditForm.cs</DependentUpon>
+    <Compile Include="EditServiceGroupForm.Designer.cs">
+      <DependentUpon>EditServiceGroupForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ServicesForm.cs">
       <SubType>Form</SubType>
@@ -297,6 +309,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DefaultScheduleForm.resx">
       <DependentUpon>DefaultScheduleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditWorkplaceForm.resx">
+      <DependentUpon>EditWorkplaceForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HtmlEditorForm.resx">
       <DependentUpon>HtmlEditorForm.cs</DependentUpon>
@@ -329,8 +344,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ServiceEditForm.resx">
-      <DependentUpon>ServiceEditForm.cs</DependentUpon>
+    <EmbeddedResource Include="EditServiceForm.resx">
+      <DependentUpon>EditServiceForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ServiceParametersControl.resx">
       <DependentUpon>ServiceParametersControl.cs</DependentUpon>
@@ -344,6 +359,9 @@
     <EmbeddedResource Include="Config\TerminalConfigControl.resx">
       <DependentUpon>TerminalConfigControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditServiceStepForm.resx">
+      <DependentUpon>EditServiceStepForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ServiceStepsControl.resx">
       <DependentUpon>ServiceStepsControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -355,8 +373,8 @@
     <EmbeddedResource Include="UsersForm.resx">
       <DependentUpon>UsersForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ServiceGroupEditForm.resx">
-      <DependentUpon>ServiceGroupEditForm.cs</DependentUpon>
+    <EmbeddedResource Include="EditServiceGroupForm.resx">
+      <DependentUpon>EditServiceGroupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ServicesForm.resx">
       <DependentUpon>ServicesForm.cs</DependentUpon>

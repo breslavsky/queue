@@ -28,14 +28,6 @@ namespace Queue.Administrator
 
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
-
-            typeColumn.DisplayMember = DataListItem.Value;
-            typeColumn.ValueMember = DataListItem.Key;
-            typeColumn.DataSource = EnumDataListItem<WorkplaceType>.GetList();
-
-            modificatorColumn.DisplayMember = DataListItem.Value;
-            modificatorColumn.ValueMember = DataListItem.Key;
-            modificatorColumn.DataSource = EnumDataListItem<WorkplaceModificator>.GetList();
         }
 
         private async void WorkplacesForm_Load(object sender, EventArgs e)
@@ -50,13 +42,7 @@ namespace Queue.Administrator
                         int index = workplacesGridView.Rows.Add();
                         var row = workplacesGridView.Rows[index];
 
-                        row.Cells["typeColumn"].Value = workplace.Type;
-                        row.Cells["numberColumn"].Value = workplace.Number.ToString();
-                        row.Cells["modificatorColumn"].Value = workplace.Modificator;
-                        row.Cells["commentColumn"].Value = workplace.Comment;
-                        row.Cells["displayColumn"].Value = workplace.Display.ToString();
-                        row.Cells["segmentsColumn"].Value = workplace.Segments.ToString();
-                        row.Tag = workplace;
+                        WorkplacesGridViewRenderRow(row, workplace);
                     }
                 }
                 catch (OperationCanceledException) { }
@@ -74,152 +60,85 @@ namespace Queue.Administrator
             }
         }
 
-        private async void workplacesGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void WorkplacesGridViewRenderRow(DataGridViewRow row, Workplace workplace)
         {
-            int rowIndex = e.RowIndex;
-            if (rowIndex >= 0)
-            {
-                int columnIndex = e.ColumnIndex;
-                if (columnIndex >= 0)
-                {
-                    var row = workplacesGridView.Rows[rowIndex];
-                    var cell = row.Cells[columnIndex];
-
-                    var workplace = row.Tag as Workplace;
-                    workplace.Type = (WorkplaceType)row.Cells["typeColumn"].Value;
-
-                    object column = row.Cells["numberColumn"].Value;
-                    if (!string.IsNullOrWhiteSpace((string)column))
-                    {
-                        try
-                        {
-                            workplace.Number = Convert.ToInt32(column.ToString());
-                        }
-                        catch
-                        {
-                            UIHelper.Warning("Указан не верный номер рабочего места");
-                            return;
-                        }
-                    }
-
-                    workplace.Modificator = (WorkplaceModificator)row.Cells["modificatorColumn"].Value;
-
-                    column = row.Cells["commentColumn"].Value;
-                    if (!string.IsNullOrWhiteSpace((string)column))
-                    {
-                        try
-                        {
-                            workplace.Comment = column.ToString();
-                        }
-                        catch
-                        {
-                            UIHelper.Warning("Указан не верный номер табло");
-                            return;
-                        }
-                    }
-
-                    column = row.Cells["displayColumn"].Value;
-                    if (!string.IsNullOrWhiteSpace((string)column))
-                    {
-                        try
-                        {
-                            workplace.Display = Convert.ToByte(column.ToString());
-                        }
-                        catch
-                        {
-                            UIHelper.Warning("Указан не верный номер табло");
-                            return;
-                        }
-                    }
-
-                    column = row.Cells["segmentsColumn"].Value;
-                    if (!string.IsNullOrWhiteSpace((string)column))
-                    {
-                        try
-                        {
-                            workplace.Segments = Convert.ToByte(column.ToString());
-                        }
-                        catch
-                        {
-                            UIHelper.Warning("Указано не верное кол-во сегментов");
-                            return;
-                        }
-                    }
-
-                    using (var channel = channelManager.CreateChannel())
-                    {
-                        try
-                        {
-                            await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                            await taskPool.AddTask(channel.Service.EditWorkplace(workplace));
-                        }
-                        catch (OperationCanceledException) { }
-                        catch (CommunicationObjectAbortedException) { }
-                        catch (ObjectDisposedException) { }
-                        catch (InvalidOperationException) { }
-                        catch (FaultException exception)
-                        {
-                            UIHelper.Warning(exception.Reason.ToString());
-                        }
-                        catch (Exception exception)
-                        {
-                            UIHelper.Warning(exception.Message);
-                        }
-                    }
-                }
-            }
+            row.Cells["typeColumn"].Value = workplace.Type.Translate();
+            row.Cells["numberColumn"].Value = workplace.Number;
+            row.Cells["modificatorColumn"].Value = workplace.Modificator.Translate();
+            row.Cells["commentColumn"].Value = workplace.Comment;
+            row.Cells["displayColumn"].Value = workplace.Display;
+            row.Cells["segmentsColumn"].Value = workplace.Segments;
+            row.Tag = workplace;
         }
 
         private async void workplacesGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int rowIndex = e.RowIndex;
-            if (rowIndex >= 0)
+            int rowIndex = e.RowIndex,
+                columnIndex = e.ColumnIndex;
+
+            if (rowIndex >= 0 && columnIndex >= 0)
             {
-                int columnIndex = e.ColumnIndex;
-                if (columnIndex >= 0)
+                var row = workplacesGridView.Rows[rowIndex];
+                var cell = row.Cells[columnIndex];
+
+                Workplace workplace = row.Tag as Workplace;
+
+                switch (cell.OwningColumn.Name)
                 {
-                    var row = workplacesGridView.Rows[rowIndex];
-                    var cell = row.Cells[columnIndex];
+                    case "deleteColumn":
 
-                    Workplace workplace = (Workplace)row.Tag;
-
-                    switch (cell.OwningColumn.Name)
-                    {
-                        case "deleteColumn":
-
-                            if (MessageBox.Show("Вы действительно хотите удалить рабочее место?",
-                                "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        if (MessageBox.Show("Вы действительно хотите удалить рабочее место?",
+                            "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            using (var channel = channelManager.CreateChannel())
                             {
-                                using (var channel = channelManager.CreateChannel())
+                                try
                                 {
-                                    try
-                                    {
-                                        deleteColumn.ReadOnly = true;
+                                    deleteColumn.ReadOnly = true;
 
-                                        await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                                        await taskPool.AddTask(channel.Service.DeleteWorkplace(workplace.Id));
+                                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
+                                    await taskPool.AddTask(channel.Service.DeleteWorkplace(workplace.Id));
 
-                                        workplacesGridView.Rows.Remove(row);
-                                    }
-                                    catch (OperationCanceledException) { }
-                                    catch (CommunicationObjectAbortedException) { }
-                                    catch (ObjectDisposedException) { }
-                                    catch (InvalidOperationException) { }
-                                    catch (FaultException exception)
-                                    {
-                                        UIHelper.Warning(exception.Reason.ToString());
-                                    }
-                                    catch (Exception exception)
-                                    {
-                                        UIHelper.Warning(exception.Message);
-                                    }
-                                    finally
-                                    {
-                                        deleteColumn.ReadOnly = false;
-                                    }
+                                    workplacesGridView.Rows.Remove(row);
+                                }
+                                catch (OperationCanceledException) { }
+                                catch (CommunicationObjectAbortedException) { }
+                                catch (ObjectDisposedException) { }
+                                catch (InvalidOperationException) { }
+                                catch (FaultException exception)
+                                {
+                                    UIHelper.Warning(exception.Reason.ToString());
+                                }
+                                catch (Exception exception)
+                                {
+                                    UIHelper.Warning(exception.Message);
+                                }
+                                finally
+                                {
+                                    deleteColumn.ReadOnly = false;
                                 }
                             }
-                            break;
+                        }
+                        break;
+                }
+            }
+        }
+
+        private void workplacesGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            int rowIndex = e.RowIndex,
+                columnIndex = e.ColumnIndex;
+
+            if (rowIndex >= 0 && columnIndex >= 0)
+            {
+                var row = workplacesGridView.Rows[rowIndex];
+                Workplace workplace = row.Tag as Workplace;
+
+                using (var f = new EditWorkplaceForm(channelBuilder, currentUser, workplace.Id))
+                {
+                    if (f.ShowDialog() == DialogResult.OK)
+                    {
+                        WorkplacesGridViewRenderRow(row, f.Workplace);
                     }
                 }
             }
@@ -234,16 +153,21 @@ namespace Queue.Administrator
                     addWorkplaceButton.Enabled = false;
 
                     await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                    Workplace workplace = await taskPool.AddTask(channel.Service.AddWorkplace());
+                    var workplace = await taskPool.AddTask(channel.Service.AddWorkplace());
 
-                    int index = workplacesGridView.Rows.Add();
-                    var row = workplacesGridView.Rows[index];
+                    var row = workplacesGridView.Rows[workplacesGridView.Rows.Add()];
 
-                    row.Cells["typeColumn"].Value = workplace.Type;
-                    row.Cells["numberColumn"].Value = workplace.Number.ToString();
-                    row.Cells["modificatorColumn"].Value = workplace.Modificator;
-                    row.Tag = workplace;
+                    WorkplacesGridViewRenderRow(row, workplace);
+
+                    using (var f = new EditWorkplaceForm(channelBuilder, currentUser, workplace.Id))
+                    {
+                        if (f.ShowDialog() == DialogResult.OK)
+                        {
+                            WorkplacesGridViewRenderRow(row, f.Workplace);
+                        }
+                    }
                 }
+
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
                 catch (ObjectDisposedException) { }

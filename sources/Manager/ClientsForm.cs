@@ -52,13 +52,13 @@ namespace Queue.Manager
                     await channel.Service.OpenUserSession(currentUser.SessionId);
                     var clients = await taskPool.AddTask(channel.Service.FindClients(startIndex, PageSize, queryTextBox.Text.Trim()));
 
-                    gridView.Rows.Clear();
+                    clientsGridView.Rows.Clear();
                     foreach (var c in clients)
                     {
-                        int index = gridView.Rows.Add();
-                        var row = gridView.Rows[index];
+                        int index = clientsGridView.Rows.Add();
+                        var row = clientsGridView.Rows[index];
 
-                        RenderGridViewRow(row, c);
+                        ClientsGridViewRenderRow(row, c);
                     }
                 }
                 catch (OperationCanceledException) { }
@@ -76,7 +76,7 @@ namespace Queue.Manager
             }
         }
 
-        private void RenderGridViewRow(DataGridViewRow row, Client client)
+        private void ClientsGridViewRenderRow(DataGridViewRow row, Client client)
         {
             row.Cells["registerDateColumn"].Value = client.RegisterDate;
             row.Cells["surnameColumn"].Value = client.Surname;
@@ -105,7 +105,7 @@ namespace Queue.Manager
 
         private void nextButton_Click(object sender, EventArgs e)
         {
-            if (gridView.Rows.Count == PageSize)
+            if (clientsGridView.Rows.Count == PageSize)
             {
                 startIndex += PageSize;
             }
@@ -123,21 +123,18 @@ namespace Queue.Manager
 
         private void clientsGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            int rowIndex = e.RowIndex;
-            if (rowIndex >= 0)
+            int rowIndex = e.RowIndex,
+                columnIndex = e.ColumnIndex;
+            if (rowIndex >= 0 && columnIndex >= 0)
             {
-                int columnIndex = e.ColumnIndex;
-                if (columnIndex >= 0)
-                {
-                    var row = gridView.Rows[rowIndex];
-                    var client = row.Tag as Client;
+                var row = clientsGridView.Rows[rowIndex];
+                Client client = row.Tag as Client;
 
-                    using (var f = new EditClientForm(channelBuilder, currentUser, client))
+                using (var f = new EditClientForm(channelBuilder, currentUser, client.Id))
+                {
+                    if (f.ShowDialog() == DialogResult.OK)
                     {
-                        if (f.ShowDialog() == DialogResult.OK)
-                        {
-                            RenderGridViewRow(row, f.Client);
-                        }
+                        ClientsGridViewRenderRow(row, f.Client);
                     }
                 }
             }

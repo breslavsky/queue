@@ -32,13 +32,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.saveButton = new System.Windows.Forms.Button();
-            this.serviceStepPanel = new System.Windows.Forms.Panel();
-            this.serviceStepsComboBox = new System.Windows.Forms.ComboBox();
-            this.serviceStepLabel = new System.Windows.Forms.Label();
-            this.operatorLabel = new System.Windows.Forms.Label();
             this.addServiceRenderingButton = new System.Windows.Forms.Button();
-            this.operatorsComboBox = new System.Windows.Forms.ComboBox();
-            this.serviceRenderingsGridView = new System.Windows.Forms.DataGridView();
+            this.gridView = new System.Windows.Forms.DataGridView();
             this.renderingModeComboBox = new System.Windows.Forms.ComboBox();
             this.maxClientRequestsMeasureLabel = new System.Windows.Forms.Label();
             this.earlyGroupBox = new System.Windows.Forms.GroupBox();
@@ -70,8 +65,7 @@
             this.serviceStepColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.modeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.priorityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.serviceStepPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.serviceRenderingsGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
             this.earlyGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.earlyReservationUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxClientRequestsUpDown)).BeginInit();
@@ -91,63 +85,19 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
-            // serviceStepPanel
-            // 
-            this.serviceStepPanel.Controls.Add(this.serviceStepsComboBox);
-            this.serviceStepPanel.Controls.Add(this.serviceStepLabel);
-            this.serviceStepPanel.Enabled = false;
-            this.serviceStepPanel.Location = new System.Drawing.Point(440, 195);
-            this.serviceStepPanel.Name = "serviceStepPanel";
-            this.serviceStepPanel.Size = new System.Drawing.Size(250, 25);
-            this.serviceStepPanel.TabIndex = 3;
-            // 
-            // serviceStepsComboBox
-            // 
-            this.serviceStepsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.serviceStepsComboBox.Location = new System.Drawing.Point(80, 0);
-            this.serviceStepsComboBox.Name = "serviceStepsComboBox";
-            this.serviceStepsComboBox.Size = new System.Drawing.Size(170, 21);
-            this.serviceStepsComboBox.TabIndex = 2;
-            // 
-            // serviceStepLabel
-            // 
-            this.serviceStepLabel.AutoSize = true;
-            this.serviceStepLabel.Location = new System.Drawing.Point(5, 5);
-            this.serviceStepLabel.Name = "serviceStepLabel";
-            this.serviceStepLabel.Size = new System.Drawing.Size(70, 13);
-            this.serviceStepLabel.TabIndex = 1;
-            this.serviceStepLabel.Text = "Этап услуги:";
-            // 
-            // operatorLabel
-            // 
-            this.operatorLabel.AutoSize = true;
-            this.operatorLabel.Location = new System.Drawing.Point(215, 200);
-            this.operatorLabel.Name = "operatorLabel";
-            this.operatorLabel.Size = new System.Drawing.Size(59, 13);
-            this.operatorLabel.TabIndex = 0;
-            this.operatorLabel.Text = "Оператор:";
-            // 
             // addServiceRenderingButton
             // 
-            this.addServiceRenderingButton.Location = new System.Drawing.Point(695, 195);
+            this.addServiceRenderingButton.Location = new System.Drawing.Point(695, 190);
             this.addServiceRenderingButton.Name = "addServiceRenderingButton";
             this.addServiceRenderingButton.Size = new System.Drawing.Size(80, 25);
             this.addServiceRenderingButton.TabIndex = 0;
             this.addServiceRenderingButton.Text = "Добавить";
             this.addServiceRenderingButton.Click += new System.EventHandler(this.addServiceRenderingButton_Click);
             // 
-            // operatorsComboBox
+            // gridView
             // 
-            this.operatorsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.operatorsComboBox.Location = new System.Drawing.Point(275, 195);
-            this.operatorsComboBox.Name = "operatorsComboBox";
-            this.operatorsComboBox.Size = new System.Drawing.Size(160, 21);
-            this.operatorsComboBox.TabIndex = 0;
-            // 
-            // serviceRenderingsGridView
-            // 
-            this.serviceRenderingsGridView.AllowUserToAddRows = false;
-            this.serviceRenderingsGridView.AllowUserToResizeRows = false;
+            this.gridView.AllowUserToAddRows = false;
+            this.gridView.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -155,23 +105,24 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.serviceRenderingsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.serviceRenderingsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.serviceRenderingsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.gridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.gridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.deleteColumn,
             this.operatorColumn,
             this.serviceStepColumn,
             this.modeColumn,
             this.priorityColumn});
-            this.serviceRenderingsGridView.Location = new System.Drawing.Point(215, 5);
-            this.serviceRenderingsGridView.MultiSelect = false;
-            this.serviceRenderingsGridView.Name = "serviceRenderingsGridView";
-            this.serviceRenderingsGridView.RowHeadersVisible = false;
-            this.serviceRenderingsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.serviceRenderingsGridView.Size = new System.Drawing.Size(560, 180);
-            this.serviceRenderingsGridView.TabIndex = 0;
-            this.serviceRenderingsGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.serviceRenderingsGridView_CellClick);
-            this.serviceRenderingsGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.serviceRenderingsGridView_CellEndEdit);
+            this.gridView.Location = new System.Drawing.Point(215, 5);
+            this.gridView.MultiSelect = false;
+            this.gridView.Name = "gridView";
+            this.gridView.ReadOnly = true;
+            this.gridView.RowHeadersVisible = false;
+            this.gridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridView.Size = new System.Drawing.Size(560, 180);
+            this.gridView.TabIndex = 0;
+            this.gridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.serviceRenderingsGridView_CellClick);
+            this.gridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.serviceRenderingsGridView_CellMouseDoubleClick);
             // 
             // renderingModeComboBox
             // 
@@ -448,15 +399,12 @@
             // 
             // schedulePanel
             // 
-            this.schedulePanel.Controls.Add(this.serviceStepPanel);
             this.schedulePanel.Controls.Add(this.timeLabel);
-            this.schedulePanel.Controls.Add(this.operatorLabel);
             this.schedulePanel.Controls.Add(this.minLabel2);
             this.schedulePanel.Controls.Add(this.addServiceRenderingButton);
             this.schedulePanel.Controls.Add(this.intersectionUpDown);
-            this.schedulePanel.Controls.Add(this.operatorsComboBox);
             this.schedulePanel.Controls.Add(this.intersectionLabel);
-            this.schedulePanel.Controls.Add(this.serviceRenderingsGridView);
+            this.schedulePanel.Controls.Add(this.gridView);
             this.schedulePanel.Controls.Add(this.minLabel1);
             this.schedulePanel.Controls.Add(this.renderingModeComboBox);
             this.schedulePanel.Controls.Add(this.clientIntervalUpDown);
@@ -500,9 +448,7 @@
             this.serviceStepColumn.HeaderText = "Этап услуги";
             this.serviceStepColumn.Name = "serviceStepColumn";
             this.serviceStepColumn.ReadOnly = true;
-            this.serviceStepColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.serviceStepColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.serviceStepColumn.Visible = false;
             // 
             // modeColumn
             // 
@@ -520,6 +466,7 @@
             this.priorityColumn.DefaultCellStyle = dataGridViewCellStyle3;
             this.priorityColumn.HeaderText = "Приоритет";
             this.priorityColumn.Name = "priorityColumn";
+            this.priorityColumn.ReadOnly = true;
             this.priorityColumn.Width = 90;
             // 
             // ScheduleControl
@@ -531,10 +478,7 @@
             this.Controls.Add(this.isWorkedCheckBox);
             this.Name = "ScheduleControl";
             this.Size = new System.Drawing.Size(790, 310);
-            this.Load += new System.EventHandler(this.ScheduleControl_Load);
-            this.serviceStepPanel.ResumeLayout(false);
-            this.serviceStepPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.serviceRenderingsGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
             this.earlyGroupBox.ResumeLayout(false);
             this.earlyGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.earlyReservationUpDown)).EndInit();
@@ -577,13 +521,8 @@
         private System.Windows.Forms.Label maxClientRequestsLabel;
         private System.Windows.Forms.NumericUpDown maxClientRequestsUpDown;
         private System.Windows.Forms.Label maxClientRequestsMeasureLabel;
-        private System.Windows.Forms.Label operatorLabel;
         private System.Windows.Forms.Button addServiceRenderingButton;
-        private System.Windows.Forms.ComboBox operatorsComboBox;
-        private System.Windows.Forms.DataGridView serviceRenderingsGridView;
-        private System.Windows.Forms.Label serviceStepLabel;
-        private System.Windows.Forms.ComboBox serviceStepsComboBox;
-        private System.Windows.Forms.Panel serviceStepPanel;
+        private System.Windows.Forms.DataGridView gridView;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Panel schedulePanel;
         private System.Windows.Forms.DataGridViewLinkColumn deleteColumn;

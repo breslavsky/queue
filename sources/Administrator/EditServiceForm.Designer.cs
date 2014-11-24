@@ -1,6 +1,6 @@
 ﻿namespace Queue.Administrator
 {
-    partial class ServiceEditForm
+    partial class EditServiceForm
     {
         /// <summary>
         /// Required designer variable.
@@ -58,7 +58,7 @@
             this.timeIntervalRoundingLabel = new System.Windows.Forms.Label();
             this.timeIntervalRoundingMinLabel = new System.Windows.Forms.Label();
             this.clientCallDelayUpDown = new System.Windows.Forms.NumericUpDown();
-            this.saveServiceButton = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
             this.serviceTabControl = new System.Windows.Forms.TabControl();
             this.stepsTabPage = new System.Windows.Forms.TabPage();
             this.serviceStepsControl = new Queue.Administrator.ServiceStepsControl();
@@ -157,12 +157,11 @@
             // 
             // commonTabPage
             // 
-            this.commonTabPage.BackColor = System.Drawing.Color.Transparent;
             this.commonTabPage.Controls.Add(this.servicePropertiesTabControl);
-            this.commonTabPage.Controls.Add(this.saveServiceButton);
+            this.commonTabPage.Controls.Add(this.saveButton);
             this.commonTabPage.Location = new System.Drawing.Point(4, 26);
             this.commonTabPage.Name = "commonTabPage";
-            this.commonTabPage.Size = new System.Drawing.Size(836, 452);
+            this.commonTabPage.Size = new System.Drawing.Size(836, 456);
             this.commonTabPage.TabIndex = 0;
             this.commonTabPage.Text = "Общая информация";
             this.commonTabPage.UseVisualStyleBackColor = true;
@@ -181,7 +180,6 @@
             // 
             // commonPropertiesTabPage
             // 
-            this.commonPropertiesTabPage.BackColor = System.Drawing.Color.White;
             this.commonPropertiesTabPage.Controls.Add(this.nameTextBox);
             this.commonPropertiesTabPage.Controls.Add(this.earlyRegistratorLabel);
             this.commonPropertiesTabPage.Controls.Add(this.serviceTypeListBox);
@@ -333,7 +331,6 @@
             // 
             // additionalPropertiesTabPage
             // 
-            this.additionalPropertiesTabPage.BackColor = System.Drawing.Color.White;
             this.additionalPropertiesTabPage.Controls.Add(this.linkTextBox);
             this.additionalPropertiesTabPage.Controls.Add(this.linkLabel);
             this.additionalPropertiesTabPage.Controls.Add(this.maxEarlyDaysDaysLabel);
@@ -554,14 +551,14 @@
             this.clientCallDelayUpDown.TabIndex = 7;
             this.clientCallDelayUpDown.Leave += new System.EventHandler(this.clientCallDelayUpDown_Leave);
             // 
-            // saveServiceButton
+            // saveButton
             // 
-            this.saveServiceButton.Location = new System.Drawing.Point(745, 420);
-            this.saveServiceButton.Name = "saveServiceButton";
-            this.saveServiceButton.Size = new System.Drawing.Size(85, 25);
-            this.saveServiceButton.TabIndex = 0;
-            this.saveServiceButton.Text = "Сохранить";
-            this.saveServiceButton.Click += new System.EventHandler(this.saveServiceButton_Click);
+            this.saveButton.Location = new System.Drawing.Point(745, 420);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(85, 25);
+            this.saveButton.TabIndex = 0;
+            this.saveButton.Text = "Сохранить";
+            this.saveButton.Click += new System.EventHandler(this.saveServiceButton_Click);
             // 
             // serviceTabControl
             // 
@@ -576,7 +573,7 @@
             this.serviceTabControl.Name = "serviceTabControl";
             this.serviceTabControl.Padding = new System.Drawing.Point(5, 5);
             this.serviceTabControl.SelectedIndex = 0;
-            this.serviceTabControl.Size = new System.Drawing.Size(844, 482);
+            this.serviceTabControl.Size = new System.Drawing.Size(844, 486);
             this.serviceTabControl.TabIndex = 0;
             this.serviceTabControl.SelectedIndexChanged += new System.EventHandler(this.serviceTabControl_SelectedIndexChanged);
             // 
@@ -642,10 +639,10 @@
             this.mondayTabPage.TabIndex = 0;
             this.mondayTabPage.Tag = "1";
             this.mondayTabPage.Text = "Понедельник";
+            this.mondayTabPage.UseVisualStyleBackColor = true;
             // 
             // weekdaySchedulePanel
             // 
-            this.weekdaySchedulePanel.BackColor = System.Drawing.Color.White;
             this.weekdaySchedulePanel.Controls.Add(this.weekdayScheduleControl);
             this.weekdaySchedulePanel.Controls.Add(this.weekdayScheduleCheckBox);
             this.weekdaySchedulePanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -735,17 +732,17 @@
             this.sundayTabPage.Text = "Воскресенье";
             this.sundayTabPage.UseVisualStyleBackColor = true;
             // 
-            // ServiceEditForm
+            // EditServiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(864, 502);
             this.Controls.Add(this.serviceTabControl);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(820, 540);
-            this.Name = "ServiceEditForm";
+            this.Name = "EditServiceForm";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Редактирование услуги";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ServiceEditForm_FormClosing);
@@ -779,7 +776,7 @@
 
         private System.Windows.Forms.TabControl serviceTabControl;
         private System.Windows.Forms.TabPage commonTabPage;
-        private System.Windows.Forms.Button saveServiceButton;
+        private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.TabPage exceptionScheduleTabPage;
         private System.Windows.Forms.DateTimePicker exceptionScheduleDatePicker;
         private System.Windows.Forms.CheckBox exceptionScheduleCheckBox;

@@ -38,7 +38,7 @@ namespace Queue.Manager
 
             stateComboBox.DisplayMember = DataListItem.Value;
             stateComboBox.ValueMember = DataListItem.Key;
-            stateComboBox.DataSource = EnumDataListItem<ClientRequestState>.GetList();
+            stateComboBox.DataSource = EnumItem<ClientRequestState>.GetItems();
         }
 
         private bool isRequestDate

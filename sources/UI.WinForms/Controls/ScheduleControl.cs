@@ -20,8 +20,6 @@ namespace Queue.UI.WinForms
         private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
-        private bool initialized = false;
-
         private Schedule schedule;
 
         #endregion fields
@@ -33,7 +31,7 @@ namespace Queue.UI.WinForms
             get { return schedule; }
             set
             {
-                serviceRenderingsGridView.Rows.Clear();
+                gridView.Rows.Clear();
 
                 schedule = value;
                 if (schedule != null)
@@ -49,7 +47,7 @@ namespace Queue.UI.WinForms
                     clientIntervalUpDown.Value = (decimal)schedule.ClientInterval.TotalMinutes;
                     intersectionUpDown.Value = (decimal)schedule.Intersection.TotalMinutes;
                     maxClientRequestsUpDown.Value = schedule.MaxClientRequests;
-                    renderingModeComboBox.SelectedItem = new EnumDataListItem<ServiceRenderingMode>(schedule.RenderingMode);
+                    renderingModeComboBox.SelectedItem = new EnumItem<ServiceRenderingMode>(schedule.RenderingMode);
                     earlyStartTimeTextBox.Text = schedule.EarlyStartTime.ToString("hh\\:mm");
                     earlyFinishTimeTextBox.Text = schedule.FinishTime.ToString("hh\\:mm");
                     earlyReservationUpDown.Value = schedule.EarlyReservation;
@@ -63,26 +61,10 @@ namespace Queue.UI.WinForms
                                 await channel.Service.OpenUserSession(currentUser.SessionId);
                                 foreach (var r in await taskPool.AddTask(channel.Service.GetServiceRenderings(schedule.Id)))
                                 {
-                                    int index = serviceRenderingsGridView.Rows.Add();
-                                    var row = serviceRenderingsGridView.Rows[index];
+                                    int index = gridView.Rows.Add();
+                                    var row = gridView.Rows[index];
 
-                                    row.Cells["operatorColumn"].Value = r.Operator;
-                                    row.Cells["modeColumn"].Value = r.Mode;
-                                    row.Cells["serviceStepColumn"].Value = r.ServiceStep;
-                                    row.Cells["priorityColumn"].Value = r.Priority;
-
-                                    row.Tag = r;
-                                }
-
-                                Guid serviceId = GetServiceId();
-                                if (serviceId != Guid.Empty)
-                                {
-                                    var serviceSteps = await taskPool.AddTask(channel.Service.GetServiceSteps(serviceId));
-                                    serviceStepsComboBox.DataSource = new BindingSource(serviceSteps, null);
-
-                                    serviceStepColumn.Visible
-                                        = serviceStepPanel.Enabled
-                                        = serviceSteps.Length > 0;
+                                    ServiceRenderingsGridViewRenderRow(row, r);
                                 }
                             }
                             catch (OperationCanceledException) { }
@@ -113,7 +95,7 @@ namespace Queue.UI.WinForms
         {
             InitializeComponent();
 
-            renderingModeComboBox.Items.AddRange(EnumDataListItem<ServiceRenderingMode>.GetList());
+            renderingModeComboBox.Items.AddRange(EnumItem<ServiceRenderingMode>.GetItems());
         }
 
         public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
@@ -123,73 +105,20 @@ namespace Queue.UI.WinForms
 
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
-
-            initialized = true;
         }
 
-        private Guid GetServiceId()
-        {
-            Guid serviceId = Guid.Empty;
-
-            if (schedule is ServiceWeekdaySchedule)
-            {
-                serviceId = ((ServiceWeekdaySchedule)schedule).Service.Id;
-            }
-            else
-
-                if (schedule is ServiceExceptionSchedule)
-                {
-                    serviceId = ((ServiceExceptionSchedule)schedule).Service.Id;
-                }
-
-            return serviceId;
-        }
-
-        private void RenderServiceRenderingsGridViewRow(DataGridViewRow row, ServiceRendering serviceRendering)
+        private void ServiceRenderingsGridViewRenderRow(DataGridViewRow row, ServiceRendering serviceRendering)
         {
             row.Cells["operatorColumn"].Value = serviceRendering.Operator;
             row.Cells["serviceStepColumn"].Value = serviceRendering.ServiceStep;
-            row.Cells["modeColumn"].Value = ServiceRenderingMode.AllRequests;
+            row.Cells["modeColumn"].Value = serviceRendering.Mode.Translate();
             row.Cells["priorityColumn"].Value = serviceRendering.Priority;
 
             row.Tag = serviceRendering;
         }
 
-        private async void ScheduleControl_Load(object sender, EventArgs e)
-        {
-            if (initialized)
-            {
-                using (var channel = channelManager.CreateChannel())
-                {
-                    try
-                    {
-                        await channel.Service.OpenUserSession(currentUser.SessionId);
-                        operatorsComboBox.DataSource = new BindingSource(await taskPool.AddTask(channel.Service.GetOperators()), null);
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
-                }
-            }
-        }
-
         private async void addServiceRenderingButton_Click(object sender, EventArgs eventArgs)
         {
-            var selectedOperator = operatorsComboBox.SelectedValue as Operator;
-            var operatorId = selectedOperator.Id;
-
-            var selectedsServiceStep = serviceStepsComboBox.SelectedValue as ServiceStep;
-            var serviceStepId = selectedsServiceStep != null ? selectedsServiceStep.Id : Guid.Empty;
-
             using (var channel = channelManager.CreateChannel())
             {
                 try
@@ -197,10 +126,10 @@ namespace Queue.UI.WinForms
                     addServiceRenderingButton.Enabled = false;
 
                     await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                    var serviceRendering = await taskPool.AddTask(channel.Service.AddServiceRendering(schedule.Id, operatorId, serviceStepId));
+                    var serviceRendering = await taskPool.AddTask(channel.Service.AddServiceRendering(schedule.Id));
 
-                    var row = serviceRenderingsGridView.Rows[serviceRenderingsGridView.Rows.Add()];
-                    RenderServiceRenderingsGridViewRow(row, serviceRendering);
+                    var row = gridView.Rows[gridView.Rows.Add()];
+                    ServiceRenderingsGridViewRenderRow(row, serviceRendering);
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -223,110 +152,66 @@ namespace Queue.UI.WinForms
 
         private async void serviceRenderingsGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int rowIndex = e.RowIndex;
-            if (rowIndex >= 0)
+            int rowIndex = e.RowIndex,
+                columnIndex = e.ColumnIndex;
+            if (rowIndex >= 0 && columnIndex >= 0)
             {
-                int columnIndex = e.ColumnIndex;
-                if (columnIndex >= 0)
+                var row = gridView.Rows[rowIndex];
+                var cell = row.Cells[columnIndex];
+
+                switch (cell.OwningColumn.Name)
                 {
-                    var row = serviceRenderingsGridView.Rows[rowIndex];
-                    var cell = row.Cells[columnIndex];
+                    case "deleteColumn":
+                        var serviceRendering = (ServiceRendering)row.Tag;
 
-                    switch (cell.OwningColumn.Name)
-                    {
-                        case "deleteColumn":
-                            var serviceRendering = (ServiceRendering)row.Tag;
-
-                            using (var channel = channelManager.CreateChannel())
+                        using (var channel = channelManager.CreateChannel())
+                        {
+                            try
                             {
-                                try
-                                {
-                                    saveButton.Enabled = false;
+                                saveButton.Enabled = false;
 
-                                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                                    await taskPool.AddTask(channel.Service.DeleteServiceRendering(serviceRendering.Id));
+                                await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
+                                await taskPool.AddTask(channel.Service.DeleteServiceRendering(serviceRendering.Id));
 
-                                    serviceRenderingsGridView.Rows.Remove(row);
-                                }
-                                catch (OperationCanceledException) { }
-                                catch (CommunicationObjectAbortedException) { }
-                                catch (ObjectDisposedException) { }
-                                catch (InvalidOperationException) { }
-                                catch (FaultException exception)
-                                {
-                                    UIHelper.Warning(exception.Reason.ToString());
-                                }
-                                catch (Exception exception)
-                                {
-                                    UIHelper.Warning(exception.Message);
-                                }
-                                finally
-                                {
-                                    saveButton.Enabled = true;
-                                }
+                                gridView.Rows.Remove(row);
                             }
+                            catch (OperationCanceledException) { }
+                            catch (CommunicationObjectAbortedException) { }
+                            catch (ObjectDisposedException) { }
+                            catch (InvalidOperationException) { }
+                            catch (FaultException exception)
+                            {
+                                UIHelper.Warning(exception.Reason.ToString());
+                            }
+                            catch (Exception exception)
+                            {
+                                UIHelper.Warning(exception.Message);
+                            }
+                            finally
+                            {
+                                saveButton.Enabled = true;
+                            }
+                        }
 
-                            break;
-                    }
+                        break;
                 }
             }
         }
 
-        private async void serviceRenderingsGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void serviceRenderingsGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            int rowIndex = e.RowIndex;
-            if (rowIndex >= 0)
+            int rowIndex = e.RowIndex,
+                columnIndex = e.ColumnIndex;
+            if (rowIndex >= 0 && columnIndex >= 0)
             {
-                int columnIndex = e.ColumnIndex;
-                if (columnIndex >= 0)
+                var row = gridView.Rows[rowIndex];
+                ServiceRendering serviceRendering = row.Tag as ServiceRendering;
+
+                using (var f = new EditServiceRenderingForm(channelBuilder, currentUser, serviceRendering.Id))
                 {
-                    var row = serviceRenderingsGridView.Rows[rowIndex];
-                    var serviceRendering = row.Tag as ServiceRendering;
-
-                    object value = row.Cells["modeColumn"].Value;
-                    if (value != null)
+                    if (f.ShowDialog() == DialogResult.OK)
                     {
-                        serviceRendering.Mode = (ServiceRenderingMode)value;
-                    }
-
-                    value = row.Cells["priorityColumn"].Value;
-                    if (value != null)
-                    {
-                        try
-                        {
-                            serviceRendering.Priority = int.Parse(value.ToString());
-                        }
-                        catch (Exception exception)
-                        {
-                            UIHelper.Error(exception);
-                        }
-                    }
-
-                    using (var channel = channelManager.CreateChannel())
-                    {
-                        try
-                        {
-                            row.ReadOnly = true;
-
-                            await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                            await taskPool.AddTask(channel.Service.EditServiceRendering(serviceRendering));
-                        }
-                        catch (OperationCanceledException) { }
-                        catch (CommunicationObjectAbortedException) { }
-                        catch (ObjectDisposedException) { }
-                        catch (InvalidOperationException) { }
-                        catch (FaultException exception)
-                        {
-                            UIHelper.Warning(exception.Reason.ToString());
-                        }
-                        catch (Exception exception)
-                        {
-                            UIHelper.Warning(exception.Message);
-                        }
-                        finally
-                        {
-                            row.ReadOnly = false;
-                        }
+                        ServiceRenderingsGridViewRenderRow(row, f.ServiceRendering);
                     }
                 }
             }
@@ -447,7 +332,7 @@ namespace Queue.UI.WinForms
 
         private void renderingModeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selectedItem = renderingModeComboBox.SelectedItem as EnumDataListItem<ServiceRenderingMode>;
+            var selectedItem = renderingModeComboBox.SelectedItem as EnumItem<ServiceRenderingMode>;
             earlyGroupBox.Enabled = selectedItem.Value == ServiceRenderingMode.AllRequests;
         }
 
@@ -455,7 +340,7 @@ namespace Queue.UI.WinForms
         {
             if (schedule != null)
             {
-                var selectedItem = renderingModeComboBox.SelectedItem as EnumDataListItem<ServiceRenderingMode>;
+                var selectedItem = renderingModeComboBox.SelectedItem as EnumItem<ServiceRenderingMode>;
                 schedule.RenderingMode = selectedItem.Value;
             }
         }

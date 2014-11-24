@@ -1,4 +1,6 @@
-﻿namespace Queue.Model.Common
+﻿using Translation = Queue.Model.Common.Translation;
+
+namespace Queue.Model.Common
 {
     public enum WorkplaceModificator
     {
@@ -21,5 +23,13 @@
         CHAR6 = 106,
         CHAR7 = 107,
         CHAR8 = 108
+    }
+
+    public static partial class TranslationExtensions
+    {
+        public static string Translate(this WorkplaceModificator value)
+        {
+            return Translation.WorkplaceModificator.ResourceManager.GetString(value.ToString());
+        }
     }
 }

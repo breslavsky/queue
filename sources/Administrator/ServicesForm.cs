@@ -144,7 +144,7 @@ namespace Queue.Administrator
                         servicesTreeView.Nodes.Add(treeNode);
                     }
 
-                    using (var f = new ServiceGroupEditForm(channelBuilder, currentUser, serviceGroup))
+                    using (var f = new EditServiceGroupForm(channelBuilder, currentUser, serviceGroup))
                     {
                         if (f.ShowDialog() == DialogResult.OK)
                         {
@@ -209,7 +209,7 @@ namespace Queue.Administrator
                         servicesTreeView.Nodes.Add(treeNode);
                     }
 
-                    using (var f = new ServiceEditForm(channelBuilder, currentUser, service))
+                    using (var f = new EditServiceForm(channelBuilder, currentUser, service.Id))
                     {
                         if (f.ShowDialog() == DialogResult.OK)
                         {
@@ -243,7 +243,7 @@ namespace Queue.Administrator
             {
                 var serviceGroup = selectedNode.Tag as ServiceGroup;
 
-                using (var f = new ServiceGroupEditForm(channelBuilder, currentUser, serviceGroup))
+                using (var f = new EditServiceGroupForm(channelBuilder, currentUser, serviceGroup))
                 {
                     if (f.ShowDialog() == DialogResult.OK)
                     {
@@ -260,7 +260,7 @@ namespace Queue.Administrator
             {
                 var service = selectedNode.Tag as Service;
 
-                using (var f = new ServiceEditForm(channelBuilder, currentUser, service))
+                using (var f = new EditServiceForm(channelBuilder, currentUser, service.Id))
                 {
                     if (f.ShowDialog() == DialogResult.OK)
                     {

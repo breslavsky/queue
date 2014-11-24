@@ -1,6 +1,6 @@
 ﻿namespace Queue.Administrator
 {
-    partial class ServiceGroupEditForm
+    partial class EditServiceGroupForm
     {
         /// <summary>
         /// Required designer variable.
@@ -205,7 +205,7 @@
             this.columnsLabel.TabIndex = 2;
             this.columnsLabel.Text = "Колонок";
             // 
-            // ServiceGroupEditForm
+            // EditServiceGroupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -223,11 +223,11 @@
             this.Controls.Add(this.colorPanel);
             this.Controls.Add(this.colorButton);
             this.Controls.Add(this.saveButton);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(430, 470);
-            this.Name = "ServiceGroupEditForm";
+            this.Name = "EditServiceGroupForm";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Редактирование группы услуг";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ServiceGroupEditForm_FormClosing);
