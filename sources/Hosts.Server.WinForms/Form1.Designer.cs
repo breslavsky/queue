@@ -28,13 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.editDatabaseSettingsUserControl1 = new Junte.UI.WinForms.NHibernate.EditDatabaseSettingsUserControl();
             this.SuspendLayout();
+            // 
+            // editDatabaseSettingsUserControl1
+            // 
+            this.editDatabaseSettingsUserControl1.Location = new System.Drawing.Point(45, 25);
+            this.editDatabaseSettingsUserControl1.Name = "editDatabaseSettingsUserControl1";
+            this.editDatabaseSettingsUserControl1.Settings = null;
+            this.editDatabaseSettingsUserControl1.Size = new System.Drawing.Size(340, 186);
+            this.editDatabaseSettingsUserControl1.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ClientSize = new System.Drawing.Size(460, 262);
+            this.Controls.Add(this.editDatabaseSettingsUserControl1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -42,6 +52,8 @@
         }
 
         #endregion
+
+        private Junte.UI.WinForms.NHibernate.EditDatabaseSettingsUserControl editDatabaseSettingsUserControl1;
 
     }
 }

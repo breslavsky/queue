@@ -57,9 +57,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.UI.WinForms.NHibernate.1.1.5.76\lib\net45\Junte.UI.WinForms.NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.UI.WinForms.NHibernate.1.1.5.50.Fakes">
-      <HintPath>FakesAssemblies\Junte.UI.WinForms.NHibernate.1.1.5.50.Fakes.dll</HintPath>
-    </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
