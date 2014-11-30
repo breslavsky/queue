@@ -4,16 +4,7 @@ using System.Resources;
 
 namespace Queue.Model.Common
 {
-    //TODO: remove!
-    public abstract class DataListItem
-    {
-        public const string Id = "Id";
-        public const string Text = "Text";
-        public const string Key = "Key";
-        public const string Value = "Value";
-    }
-
-    public class EnumItem<T> : DataListItem
+    public class EnumItem<T>
     {
         public T Value { get; set; }
 

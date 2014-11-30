@@ -98,8 +98,6 @@ namespace Queue.UI.WinForms
                 {
                     connectButton.Enabled = false;
 
-                    usersComboBox.DisplayMember = DataListItem.Value;
-                    usersComboBox.ValueMember = DataListItem.Key;
                     usersComboBox.DataSource = new BindingSource(await taskPool.AddTask(channel.Service.GetUserList(userRole)), null);
                     usersComboBox.SelectedIndex = 0;
 
@@ -192,7 +190,6 @@ namespace Queue.UI.WinForms
                 login();
             }
         }
-
 
         private void passwordTextBox_Enter(object sender, EventArgs e)
         {

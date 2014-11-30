@@ -5,9 +5,11 @@ namespace Queue.Server
 {
     public class ServerSettings : ConfigurationSection
     {
-        public ServerSettings()
+        [ConfigurationProperty("debug")]
+        public bool Debug
         {
-            SectionInformation.AllowExeDefinition = ConfigurationAllowExeDefinition.MachineToLocalUser;
+            get { return (bool)this["debug"]; }
+            set { this["debug"] = value; }
         }
 
         [ConfigurationProperty("database")]

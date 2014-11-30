@@ -17,11 +17,15 @@ namespace Queue.Hosts.Server.WinForms
         public MainForm()
         {
             InitializeComponent();
+            if (DesignMode)
+            {
+                return;
+            }
 
             configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoaming);
             settings = configuration.GetSection("server") as ServerSettings;
 
-            editDatabaseSettingsControl.Settings = settings.Database;
+            //editDatabaseSettingsControl.Settings = settings.Database;
 
             var tcp = settings.Services.TcpService;
 

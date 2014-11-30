@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.startButton = new System.Windows.Forms.Button();
             this.panel = new System.Windows.Forms.Panel();
+            this.databaseGroupBox = new System.Windows.Forms.GroupBox();
             this.httpCheckBox = new System.Windows.Forms.CheckBox();
             this.httpGroupBox = new System.Windows.Forms.GroupBox();
             this.httpPortUpDown = new System.Windows.Forms.NumericUpDown();
@@ -40,14 +41,11 @@
             this.tcpPortUpDown = new System.Windows.Forms.NumericUpDown();
             this.tcpHostTextBox = new System.Windows.Forms.TextBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.editDatabaseSettingsControl = new Junte.UI.WinForms.NHibernate.EditDatabaseSettingsUserControl();
-            this.databaseGroupBox = new System.Windows.Forms.GroupBox();
             this.panel.SuspendLayout();
             this.httpGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.httpPortUpDown)).BeginInit();
             this.tcpGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tcpPortUpDown)).BeginInit();
-            this.databaseGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // startButton
@@ -73,6 +71,15 @@
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(389, 332);
             this.panel.TabIndex = 2;
+            // 
+            // databaseGroupBox
+            // 
+            this.databaseGroupBox.Location = new System.Drawing.Point(10, 10);
+            this.databaseGroupBox.Name = "databaseGroupBox";
+            this.databaseGroupBox.Size = new System.Drawing.Size(365, 205);
+            this.databaseGroupBox.TabIndex = 7;
+            this.databaseGroupBox.TabStop = false;
+            this.databaseGroupBox.Text = "База данных";
             // 
             // httpCheckBox
             // 
@@ -177,23 +184,6 @@
             this.notifyIcon.Text = "notifyIcon1";
             this.notifyIcon.Visible = true;
             // 
-            // editDatabaseSettingsControl
-            // 
-            this.editDatabaseSettingsControl.Location = new System.Drawing.Point(10, 15);
-            this.editDatabaseSettingsControl.Name = "editDatabaseSettingsControl";
-            this.editDatabaseSettingsControl.Size = new System.Drawing.Size(340, 186);
-            this.editDatabaseSettingsControl.TabIndex = 6;
-            // 
-            // databaseGroupBox
-            // 
-            this.databaseGroupBox.Controls.Add(this.editDatabaseSettingsControl);
-            this.databaseGroupBox.Location = new System.Drawing.Point(10, 10);
-            this.databaseGroupBox.Name = "databaseGroupBox";
-            this.databaseGroupBox.Size = new System.Drawing.Size(365, 205);
-            this.databaseGroupBox.TabIndex = 7;
-            this.databaseGroupBox.TabStop = false;
-            this.databaseGroupBox.Text = "База данных";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -215,7 +205,6 @@
             this.tcpGroupBox.ResumeLayout(false);
             this.tcpGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tcpPortUpDown)).EndInit();
-            this.databaseGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -234,7 +223,6 @@
         private System.Windows.Forms.NumericUpDown httpPortUpDown;
         private System.Windows.Forms.TextBox httpHostTextBox;
         private System.Windows.Forms.GroupBox databaseGroupBox;
-        private Junte.UI.WinForms.NHibernate.EditDatabaseSettingsUserControl editDatabaseSettingsControl;
     }
 }
 
