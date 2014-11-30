@@ -23,6 +23,8 @@ namespace Queue.Hosts.Server.WinForms
 
             editDatabaseSettingsControl.Settings = settings.Database;
 
+            debugCheckBox.Checked = settings.Debug;
+
             var tcp = settings.Services.TcpService;
 
             tcpCheckBox.Checked = tcp.Enabled;
@@ -62,6 +64,11 @@ namespace Queue.Hosts.Server.WinForms
         }
 
         #region bindings
+
+        private void debugCheckBox_Leave(object sender, EventArgs e)
+        {
+            settings.Debug = debugCheckBox.Checked;
+        }
 
         private void tcpHostTextBox_Leave(object sender, EventArgs e)
         {

@@ -31,7 +31,9 @@
             this.components = new System.ComponentModel.Container();
             this.startButton = new System.Windows.Forms.Button();
             this.panel = new System.Windows.Forms.Panel();
+            this.debugCheckBox = new System.Windows.Forms.CheckBox();
             this.databaseGroupBox = new System.Windows.Forms.GroupBox();
+            this.editDatabaseSettingsControl = new Junte.UI.WinForms.NHibernate.EditDatabaseSettingsUserControl();
             this.httpCheckBox = new System.Windows.Forms.CheckBox();
             this.httpGroupBox = new System.Windows.Forms.GroupBox();
             this.httpPortUpDown = new System.Windows.Forms.NumericUpDown();
@@ -41,7 +43,6 @@
             this.tcpPortUpDown = new System.Windows.Forms.NumericUpDown();
             this.tcpHostTextBox = new System.Windows.Forms.TextBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.editDatabaseSettingsControl = new Junte.UI.WinForms.NHibernate.EditDatabaseSettingsUserControl();
             this.panel.SuspendLayout();
             this.databaseGroupBox.SuspendLayout();
             this.httpGroupBox.SuspendLayout();
@@ -52,7 +53,7 @@
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(10, 295);
+            this.startButton.Location = new System.Drawing.Point(10, 320);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(370, 30);
             this.startButton.TabIndex = 0;
@@ -62,6 +63,7 @@
             // 
             // panel
             // 
+            this.panel.Controls.Add(this.debugCheckBox);
             this.panel.Controls.Add(this.databaseGroupBox);
             this.panel.Controls.Add(this.httpCheckBox);
             this.panel.Controls.Add(this.httpGroupBox);
@@ -71,8 +73,19 @@
             this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel.Location = new System.Drawing.Point(0, 0);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(389, 332);
+            this.panel.Size = new System.Drawing.Size(389, 362);
             this.panel.TabIndex = 2;
+            // 
+            // debugCheckBox
+            // 
+            this.debugCheckBox.AutoSize = true;
+            this.debugCheckBox.Location = new System.Drawing.Point(20, 225);
+            this.debugCheckBox.Name = "debugCheckBox";
+            this.debugCheckBox.Size = new System.Drawing.Size(105, 17);
+            this.debugCheckBox.TabIndex = 8;
+            this.debugCheckBox.Text = "Режим отладки";
+            this.debugCheckBox.UseVisualStyleBackColor = true;
+            this.debugCheckBox.Leave += new System.EventHandler(this.debugCheckBox_Leave);
             // 
             // databaseGroupBox
             // 
@@ -84,10 +97,18 @@
             this.databaseGroupBox.TabStop = false;
             this.databaseGroupBox.Text = "База данных";
             // 
+            // editDatabaseSettingsControl
+            // 
+            this.editDatabaseSettingsControl.Location = new System.Drawing.Point(15, 15);
+            this.editDatabaseSettingsControl.Name = "editDatabaseSettingsControl";
+            this.editDatabaseSettingsControl.Settings = null;
+            this.editDatabaseSettingsControl.Size = new System.Drawing.Size(340, 186);
+            this.editDatabaseSettingsControl.TabIndex = 0;
+            // 
             // httpCheckBox
             // 
             this.httpCheckBox.AutoSize = true;
-            this.httpCheckBox.Location = new System.Drawing.Point(205, 230);
+            this.httpCheckBox.Location = new System.Drawing.Point(205, 255);
             this.httpCheckBox.Name = "httpCheckBox";
             this.httpCheckBox.Size = new System.Drawing.Size(94, 17);
             this.httpCheckBox.TabIndex = 5;
@@ -101,7 +122,7 @@
             this.httpGroupBox.Controls.Add(this.httpPortUpDown);
             this.httpGroupBox.Controls.Add(this.httpHostTextBox);
             this.httpGroupBox.Enabled = false;
-            this.httpGroupBox.Location = new System.Drawing.Point(195, 230);
+            this.httpGroupBox.Location = new System.Drawing.Point(195, 255);
             this.httpGroupBox.Name = "httpGroupBox";
             this.httpGroupBox.Size = new System.Drawing.Size(180, 60);
             this.httpGroupBox.TabIndex = 4;
@@ -136,7 +157,7 @@
             // tcpCheckBox
             // 
             this.tcpCheckBox.AutoSize = true;
-            this.tcpCheckBox.Location = new System.Drawing.Point(20, 230);
+            this.tcpCheckBox.Location = new System.Drawing.Point(20, 255);
             this.tcpCheckBox.Name = "tcpCheckBox";
             this.tcpCheckBox.Size = new System.Drawing.Size(86, 17);
             this.tcpCheckBox.TabIndex = 3;
@@ -150,7 +171,7 @@
             this.tcpGroupBox.Controls.Add(this.tcpPortUpDown);
             this.tcpGroupBox.Controls.Add(this.tcpHostTextBox);
             this.tcpGroupBox.Enabled = false;
-            this.tcpGroupBox.Location = new System.Drawing.Point(10, 230);
+            this.tcpGroupBox.Location = new System.Drawing.Point(10, 255);
             this.tcpGroupBox.Name = "tcpGroupBox";
             this.tcpGroupBox.Size = new System.Drawing.Size(180, 60);
             this.tcpGroupBox.TabIndex = 2;
@@ -187,19 +208,11 @@
             this.notifyIcon.Text = "notifyIcon1";
             this.notifyIcon.Visible = true;
             // 
-            // editDatabaseSettingsControl
-            // 
-            this.editDatabaseSettingsControl.Location = new System.Drawing.Point(15, 15);
-            this.editDatabaseSettingsControl.Name = "editDatabaseSettingsControl";
-            this.editDatabaseSettingsControl.Settings = null;
-            this.editDatabaseSettingsControl.Size = new System.Drawing.Size(340, 186);
-            this.editDatabaseSettingsControl.TabIndex = 0;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 332);
+            this.ClientSize = new System.Drawing.Size(389, 362);
             this.Controls.Add(this.panel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -236,6 +249,7 @@
         private System.Windows.Forms.TextBox httpHostTextBox;
         private System.Windows.Forms.GroupBox databaseGroupBox;
         private Junte.UI.WinForms.NHibernate.EditDatabaseSettingsUserControl editDatabaseSettingsControl;
+        private System.Windows.Forms.CheckBox debugCheckBox;
     }
 }
 
