@@ -41,7 +41,9 @@
             this.tcpPortUpDown = new System.Windows.Forms.NumericUpDown();
             this.tcpHostTextBox = new System.Windows.Forms.TextBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.editDatabaseSettingsControl = new Junte.UI.WinForms.NHibernate.EditDatabaseSettingsUserControl();
             this.panel.SuspendLayout();
+            this.databaseGroupBox.SuspendLayout();
             this.httpGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.httpPortUpDown)).BeginInit();
             this.tcpGroupBox.SuspendLayout();
@@ -74,6 +76,7 @@
             // 
             // databaseGroupBox
             // 
+            this.databaseGroupBox.Controls.Add(this.editDatabaseSettingsControl);
             this.databaseGroupBox.Location = new System.Drawing.Point(10, 10);
             this.databaseGroupBox.Name = "databaseGroupBox";
             this.databaseGroupBox.Size = new System.Drawing.Size(365, 205);
@@ -184,6 +187,14 @@
             this.notifyIcon.Text = "notifyIcon1";
             this.notifyIcon.Visible = true;
             // 
+            // editDatabaseSettingsControl
+            // 
+            this.editDatabaseSettingsControl.Location = new System.Drawing.Point(15, 15);
+            this.editDatabaseSettingsControl.Name = "editDatabaseSettingsControl";
+            this.editDatabaseSettingsControl.Settings = null;
+            this.editDatabaseSettingsControl.Size = new System.Drawing.Size(340, 186);
+            this.editDatabaseSettingsControl.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -199,6 +210,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.panel.ResumeLayout(false);
             this.panel.PerformLayout();
+            this.databaseGroupBox.ResumeLayout(false);
             this.httpGroupBox.ResumeLayout(false);
             this.httpGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.httpPortUpDown)).EndInit();
@@ -223,6 +235,7 @@
         private System.Windows.Forms.NumericUpDown httpPortUpDown;
         private System.Windows.Forms.TextBox httpHostTextBox;
         private System.Windows.Forms.GroupBox databaseGroupBox;
+        private Junte.UI.WinForms.NHibernate.EditDatabaseSettingsUserControl editDatabaseSettingsControl;
     }
 }
 
