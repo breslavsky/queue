@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace Queue.Services.DTO
 {
+    [DataContract]
+    public class OperatorLink : EntityLink { }
+
     public class Operator : User
     {
         [DataMember]
@@ -16,5 +19,14 @@ namespace Queue.Services.DTO
 
         [DataMember]
         public TimeSpan InterruptionFinishTime { get; set; }
+
+        public override EntityLink GetLink()
+        {
+            return new OperatorLink
+            {
+                Id = Id,
+                Presentation = ToString()
+            };
+        }
     }
 }

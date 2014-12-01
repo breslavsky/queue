@@ -15,22 +15,18 @@ namespace Queue.Services.Server
 {
     public partial class ServerService
     {
-        public async Task<IDictionary<Guid, string>> GetServiceList()
+        public async Task<DTO.IdentifiedEntityLink<DTO.Service>[]> GetServiceList()
         {
             return await Task.Run(() =>
             {
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    var services = new Dictionary<Guid, string>();
-                    foreach (var s in session.CreateCriteria<Service>()
+                    var services = session.CreateCriteria<Service>()
                         .AddOrder(Order.Asc("ServiceGroup"))
-                        .AddOrder(Order.Asc("Code"))
-                        .List<Service>())
-                    {
-                        services.Add(s.Id, s.ToString());
-                    }
-                    return services;
+                        .AddOrder(Order.Asc("SortId"))
+                        .List<Service>();
+                    return Mapper.Map<IList<Service>, DTO.IdentifiedEntityLink<DTO.Service>[]>(services);
                 }
             });
         }

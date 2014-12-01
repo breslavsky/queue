@@ -110,7 +110,7 @@ namespace Queue.Terminal.Models.Pages
                     continue;
                 }
 
-                buttons.Add(CreateSelectServiceButton(service.Code, service.Name, service.ServiceGroup == null ? DefaultServiceColor : service.ServiceGroup.Color, (s, a) =>
+                buttons.Add(CreateSelectServiceButton(service.Code, service.Name, service.ServiceGroup == null ? DefaultServiceColor : service.Color, (s, a) =>
                 {
                     Model.SelectedService = service;
                     navigator.NextPage();

@@ -8,5 +8,6 @@ namespace Queue.Services.Server
         public ClientRequest ClientRequest;
         public Operator Operator;
         public OperatorPlanMetrics OperatorPlanMetrics;
+        public QueuePlan QueuePlan;
     }
 }

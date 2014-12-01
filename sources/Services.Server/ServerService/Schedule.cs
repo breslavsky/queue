@@ -395,7 +395,7 @@ namespace Queue.Services.Server
                         throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(scheduleId), string.Format("Расписание [{0}] не найдено", scheduleId));
                     }
 
-                    return Mapper.Map<Schedule, DTO.Schedule>(schedule);
+                    return Mapper.Map(schedule, schedule.GetType(), typeof(DTO.Schedule)) as DTO.Schedule;
                 }
             });
         }

@@ -139,7 +139,7 @@ namespace Queue.Terminal.Models
             foreach (Service service in services)
             {
                 SelectServiceButton button = CreateServiceButton(service.Code, service.Name,
-                    service.ServiceGroup == null ? DefaultServiceColor : service.ServiceGroup.Color, (s, a) =>
+                    service.ServiceGroup == null ? DefaultServiceColor : service.Color, (s, a) =>
                 {
                     request.SelectedService = service;
                     navigator.NextPage();

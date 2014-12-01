@@ -4,12 +4,9 @@ using System.Runtime.Serialization;
 namespace Queue.Services.DTO
 {
     [DataContract]
-    public class ServiceWeekdaySchedule : Schedule
+    public class ServiceWeekdaySchedule : ServiceSchedule
     {
         [DataMember]
         public DayOfWeek DayOfWeek { get; set; }
-
-        [DataMember]
-        public Service Service { get; set; }
     }
 }

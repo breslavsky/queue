@@ -153,8 +153,8 @@ namespace Queue.UI.WPF.Pages.Models
                 {
                     Users = (await taskPool.AddTask(channel.Service.GetUserList(userRole))).Select(u => new UserComboBoxItem()
                     {
-                        Id = u.Key,
-                        Name = u.Value
+                        Id = u.Id,
+                        Name = u.ToString()
                     }).ToList();
 
                     if (settings != null && settings.UserId != Guid.Empty)

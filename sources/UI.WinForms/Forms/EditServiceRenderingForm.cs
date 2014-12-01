@@ -1,4 +1,5 @@
-﻿using Junte.Parallel.Common;
+﻿using Junte.Data.Common;
+using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
 using Queue.Model.Common;
@@ -25,9 +26,11 @@ namespace Queue.UI.WinForms
         private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
-        private Guid serviceRenderingId { get; set; }
+        private ScheduleLink scheduleLink;
+        private Schedule schedule;
 
-        private ServiceRendering serviceRendering { get; set; }
+        private ServiceRenderingLink serviceRenderingLink;
+        private ServiceRendering serviceRendering;
 
         public ServiceRendering ServiceRendering
         {
@@ -43,11 +46,13 @@ namespace Queue.UI.WinForms
             }
         }
 
-        public EditServiceRenderingForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid serviceRenderingId)
+        public EditServiceRenderingForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser,
+            ScheduleLink scheduleLink, ServiceRenderingLink serviceRenderingLink)
         {
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
-            this.serviceRenderingId = serviceRenderingId;
+            this.scheduleLink = scheduleLink;
+            this.serviceRenderingLink = serviceRenderingLink;
 
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
@@ -65,13 +70,26 @@ namespace Queue.UI.WinForms
                 {
                     await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
 
-                    var serviceRendering = await taskPool.AddTask(channel.Service.GetServiceRendering(serviceRenderingId));
+                    schedule = await taskPool.AddTask(channel.Service.GetEntity(scheduleLink)) as Schedule;
+                    if (schedule is ServiceSchedule)
+                    {
+                        Service service = ((ServiceSchedule)schedule).Service;
+
+                        ServiceStep[] serviceSteps = await taskPool.AddTask(channel.Service.GetServiceSteps(service.Id));
+                        if (serviceSteps.Length > 0)
+                        {
+                            serviceStepСomboBox.Items.AddRange(serviceSteps);
+                            serviceStepСomboBox.SelectedIndex = 0;
+                            serviceStepPanel.Enabled = true;
+                        }
+                    }
+
+                    var serviceRendering = await taskPool.AddTask(channel.Service.GetEntity(serviceRenderingLink)) as ServiceRendering;
 
                     var operators = await taskPool.AddTask(channel.Service.GetOperators());
                     operatorComboBox.Items.AddRange(operators);
 
-                    //var serviceSteps = await taskPool.AddTask(channel.Service.GetServiceSteps(serviceId));
-                    //operatorComboBox.Items.AddRange(operators);
+                    ServiceRendering = serviceRendering;
 
                     ServiceRendering = serviceRendering;
                 }

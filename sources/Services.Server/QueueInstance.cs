@@ -38,6 +38,7 @@ namespace Queue.Services.Server
 
             TodayQueuePlan = new QueuePlan();
 
+            TodayQueuePlan.OnBuilded += TodayQueuePlan_OnBuilded;
             TodayQueuePlan.OnCurrentClientRequestPlanUpdated += TodayQueuePlan_CurrentClientRequestPlanUpdated;
             TodayQueuePlan.OnOperatorPlanMetricsUpdated += TodayQueuePlan_OnOperatorPlanMetricsUpdated;
 
@@ -50,6 +51,12 @@ namespace Queue.Services.Server
         {
             add { callClientHandler += value; }
             remove { callClientHandler -= value; }
+        }
+
+        public event QueueInstanceEventHandler OnTodayQueuePlanBuilded
+        {
+            add { onTodayQueuePlanBuildedHandler += value; }
+            remove { onTodayQueuePlanBuildedHandler -= value; }
         }
 
         public event QueueInstanceEventHandler OnClientRequestUpdated
@@ -83,6 +90,8 @@ namespace Queue.Services.Server
         }
 
         private event QueueInstanceEventHandler callClientHandler;
+
+        private event QueueInstanceEventHandler onTodayQueuePlanBuildedHandler;
 
         private event QueueInstanceEventHandler clientRequestUpdatedHandler;
 
@@ -155,6 +164,7 @@ namespace Queue.Services.Server
 
             todayQueuePlanTimer.Stop();
 
+            TodayQueuePlan.OnBuilded -= TodayQueuePlan_OnBuilded;
             TodayQueuePlan.OnCurrentClientRequestPlanUpdated -= TodayQueuePlan_CurrentClientRequestPlanUpdated;
             TodayQueuePlan.OnOperatorPlanMetricsUpdated -= TodayQueuePlan_OnOperatorPlanMetricsUpdated;
             TodayQueuePlan.Dispose();
@@ -223,19 +233,15 @@ namespace Queue.Services.Server
 
         private void TodayQueuePlan_OnBuilded(object sender, QueuePlanEventArgs e)
         {
-            try
+            if (onTodayQueuePlanBuildedHandler != null)
             {
-                string directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "queue");
-                if (!Directory.Exists(directory))
+                var queuePlan = sender as QueuePlan;
+
+                logger.Debug(string.Format("Запуск обработчика для события [TodayQueuePlanBuilded] с кол-вом слушателей [{0}]", onTodayQueuePlanBuildedHandler.GetInvocationList().Length));
+                onTodayQueuePlanBuildedHandler(this, new QueueInstanceEventArgs()
                 {
-                    Directory.CreateDirectory(directory);
-                }
-                string file = Path.Combine(directory, string.Format("queue-plan-{0:00000}.txt", TodayQueuePlan.Version));
-                File.WriteAllLines(file, TodayQueuePlan.Report);
-            }
-            catch (Exception exception)
-            {
-                logger.Error(exception);
+                    QueuePlan = Mapper.Map<QueuePlan, DTO.QueuePlan>(queuePlan)
+                });
             }
         }
 

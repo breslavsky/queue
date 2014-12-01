@@ -93,6 +93,14 @@ namespace Queue.Model
         [Property]
         public virtual ClientRequestRegistrator EarlyRegistrator { get; set; }
 
+        public virtual string Color
+        {
+            get
+            {
+                return ServiceGroup != null ? ServiceGroup.Color : string.Empty;
+            }
+        }
+
         #endregion properties
 
         public override string ToString()

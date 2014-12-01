@@ -1,4 +1,5 @@
-﻿using Junte.Parallel.Common;
+﻿using Junte.Data.Common;
+using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
 using Queue.Model.Common;
@@ -69,9 +70,7 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
-            parameterTypeComboBox.DisplayMember = DataListItem.Value;
-            parameterTypeComboBox.ValueMember = DataListItem.Key;
-            parameterTypeComboBox.DataSource = EnumItem<ServiceParameterType>.GetItems();
+            parameterTypeComboBox.Items.Add(EnumItem<ServiceParameterType>.GetItems());
         }
 
         public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
@@ -85,34 +84,36 @@ namespace Queue.Administrator
 
         private async void addButton_Click(object sender, EventArgs e)
         {
-            var serviceParameterType = (ServiceParameterType)parameterTypeComboBox.SelectedValue;
-
-            using (var channel = channelManager.CreateChannel())
+            var selectedType = parameterTypeComboBox.SelectedItem as EnumItem<ServiceParameterType>;
+            if (selectedType != null)
             {
-                try
+                using (var channel = channelManager.CreateChannel())
                 {
-                    addButton.Enabled = false;
+                    try
+                    {
+                        addButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                    var parameter = await taskPool.AddTask(channel.Service.AddServiceParameter(service.Id, serviceParameterType));
-                    parameters.Add(parameter);
-                    listBox.SelectedItem = parameter;
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    addButton.Enabled = true;
+                        await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
+                        var parameter = await taskPool.AddTask(channel.Service.AddServiceParameter(service.Id, selectedType.Value));
+                        parameters.Add(parameter);
+                        listBox.SelectedItem = parameter;
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                    finally
+                    {
+                        addButton.Enabled = true;
+                    }
                 }
             }
         }

@@ -125,7 +125,7 @@ namespace Queue.Reports.ExceptionScheduleReport
 
         private class DefaultExceptionScheduleReportData
         {
-            public DefaultExceptionScheduleReportData(ExceptionSchedule source)
+            public DefaultExceptionScheduleReportData(DefaultExceptionSchedule source)
             {
                 ScheduleDate = source.ScheduleDate;
                 IsWorked = source.IsWorked;
@@ -162,8 +162,9 @@ namespace Queue.Reports.ExceptionScheduleReport
 
         private class ServiceExceptionScheduleReportData : DefaultExceptionScheduleReportData
         {
+            //TODO: think!
             public ServiceExceptionScheduleReportData(ServiceExceptionSchedule source)
-                : base(source)
+                : base(new DefaultExceptionSchedule())
             {
                 Service = source.Service.ToString();
             }

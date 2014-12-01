@@ -114,6 +114,7 @@
             // usersComboBox
             // 
             this.usersComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.usersComboBox.Enabled = false;
             this.usersComboBox.Location = new System.Drawing.Point(100, 30);
             this.usersComboBox.Name = "usersComboBox";
             this.usersComboBox.Size = new System.Drawing.Size(220, 21);
