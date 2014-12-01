@@ -86,7 +86,6 @@
             this.numberUpDown.Name = "numberUpDown";
             this.numberUpDown.Size = new System.Drawing.Size(60, 20);
             this.numberUpDown.TabIndex = 7;
-            this.numberUpDown.Leave += new System.EventHandler(this.numberUpDown_Leave);
             // 
             // modificatorLabel
             // 

@@ -131,7 +131,6 @@
     <Compile Include="ServerService\Users.cs" />
     <Compile Include="ServerService\Workplaces.cs" />
     <Compile Include="ServerService.cs" />
-    <Compile Include="ServerService\Entity.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

@@ -16,10 +16,6 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<IdentifiedEntity> GetEntity(EntityLink link);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
         Task<Client> GetClient(Guid clientId);
 
         [OperationContract]
@@ -240,7 +236,7 @@ namespace Queue.Services.Contracts
         Task<User> GetUser(Guid userId);
 
         [OperationContract]
-        Task<IdentifiedEntityLink<User>[]> GetUserList(UserRole userRole);
+        Task<IDictionary<Guid, string>> GetUserList(UserRole userRole);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
@@ -307,7 +303,7 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<IdentifiedEntityLink<Service>[]> GetServiceList();
+        Task<IDictionary<Guid, string>> GetServiceList();
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]

@@ -62,10 +62,7 @@ namespace Queue.Services.DTO
         public bool IsActive { get; set; }
 
         [DataMember]
-        public IdentifiedEntityLink<ServiceGroup> ServiceGroup { get; set; }
-
-        [DataMember]
-        public string Color { get; set; }
+        public ServiceGroup ServiceGroup { get; set; }
 
         public override string ToString()
         {

@@ -24,9 +24,7 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.modeСomboBox = new System.Windows.Forms.ComboBox();
             this.mode = new System.Windows.Forms.Label();
-            this.serviceStepPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.priorityUpDown)).BeginInit();
-            this.serviceStepPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // operatorComboBox
@@ -43,7 +41,7 @@
             // 
             this.serviceStepСomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.serviceStepСomboBox.FormattingEnabled = true;
-            this.serviceStepСomboBox.Location = new System.Drawing.Point(105, 5);
+            this.serviceStepСomboBox.Location = new System.Drawing.Point(110, 35);
             this.serviceStepСomboBox.Name = "serviceStepСomboBox";
             this.serviceStepСomboBox.Size = new System.Drawing.Size(140, 21);
             this.serviceStepСomboBox.TabIndex = 1;
@@ -60,7 +58,7 @@
             // 
             // serviceStepLabel
             // 
-            this.serviceStepLabel.Location = new System.Drawing.Point(5, 5);
+            this.serviceStepLabel.Location = new System.Drawing.Point(10, 35);
             this.serviceStepLabel.Name = "serviceStepLabel";
             this.serviceStepLabel.Size = new System.Drawing.Size(95, 20);
             this.serviceStepLabel.TabIndex = 8;
@@ -118,28 +116,19 @@
             this.mode.Text = "Режим";
             this.mode.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // serviceStepPanel
-            // 
-            this.serviceStepPanel.Controls.Add(this.serviceStepLabel);
-            this.serviceStepPanel.Controls.Add(this.serviceStepСomboBox);
-            this.serviceStepPanel.Enabled = false;
-            this.serviceStepPanel.Location = new System.Drawing.Point(5, 30);
-            this.serviceStepPanel.Name = "serviceStepPanel";
-            this.serviceStepPanel.Size = new System.Drawing.Size(250, 30);
-            this.serviceStepPanel.TabIndex = 18;
-            // 
             // EditServiceRenderingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(259, 141);
-            this.Controls.Add(this.serviceStepPanel);
             this.Controls.Add(this.mode);
             this.Controls.Add(this.modeСomboBox);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.priorityUpDown);
             this.Controls.Add(this.priorityLabel);
+            this.Controls.Add(this.serviceStepLabel);
             this.Controls.Add(this.operatorLabel);
+            this.Controls.Add(this.serviceStepСomboBox);
             this.Controls.Add(this.operatorComboBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "EditServiceRenderingForm";
@@ -147,7 +136,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditServiceRenderingForm_FormClosing);
             this.Load += new System.EventHandler(this.EditServiceRenderingForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.priorityUpDown)).EndInit();
-            this.serviceStepPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -163,6 +151,5 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.ComboBox modeСomboBox;
         private System.Windows.Forms.Label mode;
-        private System.Windows.Forms.Panel serviceStepPanel;
     }
 }

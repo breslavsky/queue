@@ -1,5 +1,4 @@
-﻿using Junte.Data.Common;
-using Junte.Parallel.Common;
+﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
 using Queue.Model.Common;
@@ -208,7 +207,7 @@ namespace Queue.UI.WinForms
                 var row = gridView.Rows[rowIndex];
                 ServiceRendering serviceRendering = row.Tag as ServiceRendering;
 
-                using (var f = new EditServiceRenderingForm(channelBuilder, currentUser, schedule.Id, serviceRendering.Id))
+                using (var f = new EditServiceRenderingForm(channelBuilder, currentUser, serviceRendering.Id))
                 {
                     if (f.ShowDialog() == DialogResult.OK)
                     {

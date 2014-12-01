@@ -55,7 +55,6 @@
     <Compile Include="QueuePlan\QueuePlan.cs" />
     <Compile Include="OperatorPlan.cs" />
     <Compile Include="NotDistributedClientRequest.cs" />
-    <Compile Include="Schedule\ServiceSchedule.cs" />
     <Compile Include="ServiceFreeTime.cs" />
     <Compile Include="Schedule\DefaultExceptionSchedule.cs" />
     <Compile Include="Schedule\DefaultWeekdaySchedule.cs" />
@@ -73,7 +72,6 @@
     <Compile Include="Users\Manager.cs" />
     <Compile Include="Users\Operator.cs" />
     <Compile Include="Users\User.cs" />
-    <Compile Include="IdentifiedEntityLink.cs" />
     <Compile Include="Workplace.cs" />
     <Compile Include="ClientRequestFilter.cs" />
     <Compile Include="OperatorInterruption.cs" />

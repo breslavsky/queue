@@ -8,17 +8,13 @@ using NHibernate.Caches.SysCache2;
 using Queue.Services.Contracts;
 using Queue.Services.Server;
 using System;
-using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using QueuePlan = Queue.Services.DTO.QueuePlan;
 
 namespace Queue.Server
 {
     public class ServerInstance
     {
-        private const string queuePlanDirectory = "queue-plan";
-
         private static readonly ILog logger = LogManager.GetLogger(typeof(ServerInstance));
 
         private ServiceHost tcpServiceHost;
@@ -26,7 +22,7 @@ namespace Queue.Server
 
         public ServerInstance(ServerSettings settings)
         {
-            logger.Info("creating server");
+            logger.Info("Creating...");
 
             UnityContainer container = new UnityContainer();
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
@@ -43,11 +39,6 @@ namespace Queue.Server
 
             QueueInstance queueInstance = new QueueInstance();
             container.RegisterInstance<IQueueInstance>(queueInstance);
-
-            if (settings.Debug)
-            {
-                queueInstance.OnTodayQueuePlanBuilded += queueInstance_OnTodayQueuePlanBuilded;
-            }
 
             Mapper.AddProfile(new FullDTOProfile());
 
@@ -83,28 +74,9 @@ namespace Queue.Server
             }
         }
 
-        private void queueInstance_OnTodayQueuePlanBuilded(object sender, QueueInstanceEventArgs e)
-        {
-            QueuePlan todayQueuePlan = e.QueuePlan;
-
-            try
-            {
-                if (!Directory.Exists(queuePlanDirectory))
-                {
-                    Directory.CreateDirectory(queuePlanDirectory);
-                }
-                string file = Path.Combine(queuePlanDirectory, string.Format("{0:00000}.txt", todayQueuePlan.Version));
-                File.WriteAllLines(file, todayQueuePlan.Report);
-            }
-            catch (Exception exception)
-            {
-                logger.Error(exception);
-            }
-        }
-
         public void Start()
         {
-            logger.Info("starting server");
+            logger.Info("Starting");
 
             if (tcpServiceHost != null)
             {
@@ -121,8 +93,6 @@ namespace Queue.Server
 
         public void Stop()
         {
-            logger.Info("stoping server");
-
             if (tcpServiceHost != null)
             {
                 logger.Info("TCP service host closing");

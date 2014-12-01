@@ -69,8 +69,6 @@ namespace Queue.Services.Server
         protected override void Configure()
         {
             Mapper.CreateMap<Client, DTO.Client>();
-            Mapper.CreateMap<Client, DTO.IdentifiedEntityLink<DTO.Client>>()
-                .ForMember(dest => dest.Presentation, map => map.MapFrom(src => src.ToString()));
 
             //ConfigurationIsValid
             Mapper.AssertConfigurationIsValid();
@@ -88,14 +86,9 @@ namespace Queue.Services.Server
                 .Include<Manager, DTO.Manager>()
                 .Include<Operator, DTO.Operator>();
 
-            Mapper.CreateMap<User, DTO.IdentifiedEntityLink<DTO.User>>()
-                .ForMember(dest => dest.Presentation, map => map.MapFrom(src => src.ToString()));
-
             Mapper.CreateMap<Administrator, DTO.Administrator>();
             Mapper.CreateMap<Manager, DTO.Manager>();
             Mapper.CreateMap<Operator, DTO.Operator>();
-            Mapper.CreateMap<Operator, DTO.IdentifiedEntityLink<DTO.Operator>>()
-                .ForMember(dest => dest.Presentation, map => map.MapFrom(src => src.ToString()));
 
             //ConfigurationIsValid
             Mapper.AssertConfigurationIsValid();
@@ -120,14 +113,8 @@ namespace Queue.Services.Server
             Mapper.AddProfile(new UserDTOProfile());
 
             Mapper.CreateMap<ServiceGroup, DTO.ServiceGroup>();
-            Mapper.CreateMap<ServiceGroup, DTO.IdentifiedEntityLink<DTO.ServiceGroup>>()
-                .ForMember(dest => dest.Presentation, map => map.MapFrom(src => src.ToString()));
 
             Mapper.CreateMap<Service, DTO.Service>();
-
-            Mapper.CreateMap<Service, DTO.IdentifiedEntityLink<DTO.Service>>()
-                .ForMember(d => d.Presentation, map => map.MapFrom(s => s.ToString()));
-
             Mapper.CreateMap<ServiceStep, DTO.ServiceStep>();
             Mapper.CreateMap<ServiceRendering, DTO.ServiceRendering>();
             Mapper.CreateMap<ServiceFreeTime, DTO.ServiceFreeTime>();
@@ -144,13 +131,11 @@ namespace Queue.Services.Server
             Mapper.CreateMap<Schedule, DTO.Schedule>()
                  .Include<DefaultWeekdaySchedule, DTO.DefaultWeekdaySchedule>()
                  .Include<DefaultExceptionSchedule, DTO.DefaultExceptionSchedule>()
-                 .Include<ServiceSchedule, DTO.ServiceSchedule>()
                  .Include<ServiceWeekdaySchedule, DTO.ServiceWeekdaySchedule>()
                  .Include<ServiceExceptionSchedule, DTO.ServiceExceptionSchedule>();
 
             Mapper.CreateMap<DefaultWeekdaySchedule, DTO.DefaultWeekdaySchedule>();
             Mapper.CreateMap<DefaultExceptionSchedule, DTO.DefaultExceptionSchedule>();
-            Mapper.CreateMap<ServiceSchedule, DTO.ServiceSchedule>();
             Mapper.CreateMap<ServiceWeekdaySchedule, DTO.ServiceWeekdaySchedule>();
             Mapper.CreateMap<ServiceExceptionSchedule, DTO.ServiceExceptionSchedule>();
 

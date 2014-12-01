@@ -1,5 +1,4 @@
-﻿using Junte.Data.Common;
-using Junte.Parallel.Common;
+﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
 using Queue.Model.Common;
@@ -9,7 +8,6 @@ using System;
 using System.Drawing;
 using System.ServiceModel;
 using System.Windows.Forms;
-using QueueOperator = Queue.Services.DTO.Operator;
 using Translation = Queue.Model.Common.Translation;
 
 namespace Queue.Manager
@@ -38,7 +36,9 @@ namespace Queue.Manager
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
-            stateComboBox.Items.AddRange(EnumItem<ClientRequestState>.GetItems());
+            stateComboBox.DisplayMember = DataListItem.Value;
+            stateComboBox.ValueMember = DataListItem.Key;
+            stateComboBox.DataSource = EnumItem<ClientRequestState>.GetItems();
         }
 
         private bool isRequestDate
@@ -88,7 +88,6 @@ namespace Queue.Manager
         private async void ClientRequestsForm_Load(object sender, EventArgs e)
         {
             requestDatePicker.Value = DateTime.Today;
-            stateComboBox.SelectedIndex = 0;
 
             using (var channel = channelManager.CreateChannel())
             {
@@ -99,21 +98,23 @@ namespace Queue.Manager
                     await channel.Service.OpenUserSession(currentUser.SessionId);
 
                     var operators = await taskPool.AddTask(channel.Service.GetUserList(UserRole.Operator));
-                    if (operators.Length > 0)
+                    if (operators.Count > 0)
                     {
-                        operatorComboBox.Items.AddRange(operators);
+                        operatorComboBox.DisplayMember = DataListItem.Value;
+                        operatorComboBox.ValueMember = DataListItem.Key;
+                        operatorComboBox.DataSource = new BindingSource(operators, null);
                         operatorComboBox.Enabled = true;
-                        operatorComboBox.SelectedIndex = 0;
                     }
 
                     serviceComboBox.Enabled = false;
 
                     var services = await taskPool.AddTask(channel.Service.GetServiceList());
-                    if (services.Length > 0)
+                    if (services.Count > 0)
                     {
-                        serviceComboBox.Items.AddRange(services);
+                        serviceComboBox.DisplayMember = DataListItem.Value;
+                        serviceComboBox.ValueMember = DataListItem.Key;
+                        serviceComboBox.DataSource = new BindingSource(services, null);
                         serviceComboBox.Enabled = true;
-                        serviceComboBox.SelectedIndex = 0;
                     }
 
                     RefreshGridView();
@@ -142,32 +143,32 @@ namespace Queue.Manager
                 Query = queryTextBox.Text.Trim()
             };
 
-            DateTime requestDate = requestDatePicker.Value;
+            object value = requestDatePicker.Value;
 
-            if (isRequestDate)
+            if (isRequestDate && value != null)
             {
-                filter.RequestDate = requestDate;
+                filter.RequestDate = requestDatePicker.Value;
             }
 
-            var selectedOperator = operatorComboBox.SelectedItem as IdentifiedEntity;
+            value = operatorComboBox.SelectedValue;
 
-            if (isOperator && selectedOperator != null)
+            if (isOperator && value != null)
             {
-                filter.OperatorId = selectedOperator.Id;
+                filter.OperatorId = (Guid)value;
             }
 
-            var selectedService = serviceComboBox.SelectedItem as IdentifiedEntity;
+            value = serviceComboBox.SelectedValue;
 
-            if (isService && selectedService != null)
+            if (isService && value != null)
             {
-                filter.ServiceId = selectedService.Id;
+                filter.ServiceId = (Guid)value;
             }
 
-            var selectedState = stateComboBox.SelectedItem as EnumItem<ClientRequestState>;
+            value = stateComboBox.SelectedValue;
 
-            if (isState && selectedState != null)
+            if (isState && value != null)
             {
-                filter.State = selectedState.Value;
+                filter.State = (ClientRequestState?)value;
             }
 
             using (var channel = channelManager.CreateChannel())

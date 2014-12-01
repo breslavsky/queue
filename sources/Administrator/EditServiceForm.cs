@@ -1,5 +1,4 @@
-﻿using Junte.Data.Common;
-using Junte.Parallel.Common;
+﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
 using Queue.Common;

@@ -7,8 +7,6 @@ namespace Queue.Services.Server
     {
         event QueueInstanceEventHandler OnCallClient;
 
-        event QueueInstanceEventHandler OnTodayQueuePlanBuilded;
-
         event QueueInstanceEventHandler OnClientRequestUpdated;
 
         event QueueInstanceEventHandler OnCurrentClientRequestPlanUpdated;

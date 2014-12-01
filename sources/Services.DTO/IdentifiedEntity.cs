@@ -21,7 +21,5 @@ namespace Queue.Services.DTO
         {
             return Id.GetHashCode();
         }
-
-        public abstract EntityLink GetLink();
     }
 }

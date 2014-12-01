@@ -86,6 +86,7 @@
     <Compile Include="ClientRequestState.cs" />
     <Compile Include="ClientRequestType.cs" />
     <Compile Include="ConfigType.cs" />
+    <Compile Include="EnumItem.cs" />
     <Compile Include="EventType.cs" />
     <Compile Include="Reports\OperatorRatingReportSettings.cs" />
     <Compile Include="PIN.cs" />
