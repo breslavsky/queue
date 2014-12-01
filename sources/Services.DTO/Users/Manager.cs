@@ -1,20 +1,11 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Queue.Services.DTO
 {
-    [DataContract]
-    public class ManagerLink : UserLink { }
-
-    [DataContract]
     public class Manager : User
     {
-        public override IdentifiedEntityLink GetLink()
-        {
-            return new ManagerLink
-            {
-                Id = Id,
-                Presentation = ToString()
-            };
-        }
     }
 }

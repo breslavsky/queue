@@ -17,11 +17,12 @@ namespace Queue.Services.Server
     public class QueueInstanceEventArgs
     {
         public DTO.QueuePlan QueuePlan;
-        public DTO.ClientRequestPlanFull ClientRequestPlan;
-        public DTO.ClientRequestFull ClientRequest;
-        public DTO.OperatorFull Operator;
-        public DTO.OperatorPlanMetricsFull OperatorPlanMetrics;
-        public DTO.ConfigFull Config;
+        public DTO.ClientRequestPlan ClientRequestPlan;
+        public DTO.ClientRequest ClientRequest;
+        public DTO.Operator Operator;
+        public DTO.OperatorPlanMetrics OperatorPlanMetrics;
+        public DTO.Config Config;
+        public DTO.Event Event;
     }
 
     public class QueueInstance : IQueueInstance

@@ -3,9 +3,6 @@
 namespace Queue.Services.DTO
 {
     [DataContract]
-    public class ServiceParameterOptionsLink : IdentifiedEntityLink { }
-
-    [DataContract]
     public class ServiceParameterOptions : ServiceParameter
     {
         [DataMember]
@@ -13,14 +10,5 @@ namespace Queue.Services.DTO
 
         [DataMember]
         public bool IsMultiple { get; set; }
-
-        public override IdentifiedEntityLink GetLink()
-        {
-            return new ServiceParameterOptionsLink
-            {
-                Id = Id,
-                Presentation = ToString()
-            };
-        }
     }
 }

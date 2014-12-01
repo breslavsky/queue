@@ -98,7 +98,7 @@ namespace Queue.UI.WinForms
                 {
                     connectButton.Enabled = false;
 
-                    var users = await taskPool.AddTask(channel.Service.GetUserLinks(userRole));
+                    var users = await taskPool.AddTask(channel.Service.GetUserList(userRole));
                     if (users.Length > 0)
                     {
                         usersComboBox.Items.AddRange(users);
@@ -106,7 +106,7 @@ namespace Queue.UI.WinForms
 
                         if (UserId != Guid.Empty)
                         {
-                            usersComboBox.SelectedItem = new UserLink() { Id = UserId };
+                            usersComboBox.SelectedItem = new IdentifiedEntityLink<User>(UserId);
                         }
                         else
                         {
@@ -147,7 +147,7 @@ namespace Queue.UI.WinForms
 
         private async void login()
         {
-            var selectedUser = usersComboBox.SelectedItem as UserLink;
+            var selectedUser = usersComboBox.SelectedItem as IdentifiedEntityLink<User>;
             if (selectedUser != null)
             {
                 UserId = selectedUser.Id;

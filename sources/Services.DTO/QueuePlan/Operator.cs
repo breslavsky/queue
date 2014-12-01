@@ -26,15 +26,6 @@ namespace Queue.Services.DTO
             {
                 return string.Format("{0} {1}", Surname, Name).Trim();
             }
-
-            public override IdentifiedEntityLink GetLink()
-            {
-                return new OperatorLink
-                {
-                    Id = Id,
-                    Presentation = ToString()
-                };
-            }
         }
     }
 }

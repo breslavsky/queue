@@ -3,18 +3,16 @@ using System.Runtime.Serialization;
 
 namespace Queue.Services.DTO
 {
-    public class OperatorPlanMetrics
+    [DataContract]
+    public class OperatorInterruption : IdentifiedEntity
     {
         [DataMember]
         public Operator Operator { get; set; }
 
         [DataMember]
-        public int LastPosition { get; set; }
+        public TimeSpan StartTime { get; set; }
 
         [DataMember]
-        public TimeSpan Workload { get; set; }
-
-        [DataMember]
-        public int Standing { get; set; }
+        public TimeSpan FinishTime { get; set; }
     }
 }

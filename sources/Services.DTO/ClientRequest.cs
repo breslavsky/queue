@@ -5,9 +5,6 @@ using System.Runtime.Serialization;
 namespace Queue.Services.DTO
 {
     [DataContract]
-    public class ClientRequestLink : IdentifiedEntityLink { }
-
-    [DataContract]
     public class ClientRequest : IdentifiedEntity
     {
         [DataMember]
@@ -26,19 +23,19 @@ namespace Queue.Services.DTO
         public ClientRequestType Type { get; set; }
 
         [DataMember]
-        public ClientLink Client { get; set; }
+        public Client Client { get; set; }
 
         [DataMember]
-        public ServiceLink Service { get; set; }
+        public Service Service { get; set; }
 
         [DataMember]
         public ServiceType ServiceType { get; set; }
 
         [DataMember]
-        public ServiceStepLink ServiceStep { get; set; }
+        public ServiceStep ServiceStep { get; set; }
 
         [DataMember]
-        public OperatorLink Operator { get; set; }
+        public Operator Operator { get; set; }
 
         [DataMember]
         public float Productivity { get; set; }
@@ -94,30 +91,5 @@ namespace Queue.Services.DTO
         {
             return string.Format("{0} {1} - {2}", Number, Client != null ? Client.ToString() : string.Empty, Service);
         }
-
-        public override IdentifiedEntityLink GetLink()
-        {
-            return new ClientRequestLink
-            {
-                Id = Id,
-                Presentation = ToString()
-            };
-        }
-    }
-
-    [DataContract]
-    public class ClientRequestFull : ClientRequest
-    {
-        [DataMember]
-        public new ClientFull Client { get; set; }
-
-        [DataMember]
-        public new ServiceFull Service { get; set; }
-
-        [DataMember]
-        public new ServiceStepFull ServiceStep { get; set; }
-
-        [DataMember]
-        public new OperatorFull Operator { get; set; }
     }
 }

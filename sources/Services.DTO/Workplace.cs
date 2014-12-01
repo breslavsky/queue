@@ -7,9 +7,6 @@ using Translation = Queue.Model.Common.Translation;
 namespace Queue.Services.DTO
 {
     [DataContract]
-    public class WorkplaceLink : IdentifiedEntityLink { }
-
-    [DataContract]
     public class Workplace : IdentifiedEntity
     {
         [DataMember]
@@ -36,15 +33,6 @@ namespace Queue.Services.DTO
             ResourceManager translation2 = Translation.WorkplaceType.ResourceManager;
 
             return string.Format("{0} {1}{2}", translation1.GetString(Type.ToString()), Number, translation2.GetString(Modificator.ToString())).Trim();
-        }
-
-        public override IdentifiedEntityLink GetLink()
-        {
-            return new WorkplaceLink
-            {
-                Id = Id,
-                Presentation = ToString()
-            };
         }
     }
 }

@@ -1,23 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Text;
 
 namespace Queue.Services.DTO
 {
-    [DataContract]
-    public abstract class IdentifiedEntityLink
-    {
-        [DataMember]
-        public Guid Id { get; set; }
-
-        [DataMember]
-        public string Presentation { get; set; }
-
-        public override string ToString()
-        {
-            return Presentation;
-        }
-    }
-
     [DataContract]
     public abstract class IdentifiedEntity : Entity
     {
@@ -34,6 +22,6 @@ namespace Queue.Services.DTO
             return Id.GetHashCode();
         }
 
-        public abstract IdentifiedEntityLink GetLink();
+        public abstract EntityLink GetLink();
     }
 }

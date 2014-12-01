@@ -208,7 +208,7 @@ namespace Queue.UI.WinForms
                 var row = gridView.Rows[rowIndex];
                 ServiceRendering serviceRendering = row.Tag as ServiceRendering;
 
-                using (var f = new EditServiceRenderingForm(channelBuilder, currentUser, schedule.GetLink() as ScheduleLink, serviceRendering.GetLink() as ServiceRenderingLink))
+                using (var f = new EditServiceRenderingForm(channelBuilder, currentUser, schedule.Id, serviceRendering.Id))
                 {
                     if (f.ShowDialog() == DialogResult.OK)
                     {

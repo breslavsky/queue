@@ -87,7 +87,7 @@ namespace Queue.Operator
             }
         }
 
-        private ClientRequestPlanFull CurrentClientRequestPlan
+        private ClientRequestPlan CurrentClientRequestPlan
         {
             set
             {
@@ -341,7 +341,7 @@ namespace Queue.Operator
                             new ServerSubscribtionArgs { Operators = new DTO.Operator[] { currentOperator } });
                         pingChannel.Service.Subscribe(ServerServiceEventType.OperatorPlanMetricsUpdated,
                             new ServerSubscribtionArgs { Operators = new DTO.Operator[] { currentOperator } });
-                        CurrentClientRequestPlan = await taskPool.AddTask(pingChannel.Service.GetCurrentClientRequestPlan<ClientRequestPlanFull>());
+                        CurrentClientRequestPlan = await taskPool.AddTask(pingChannel.Service.GetCurrentClientRequestPlan());
                     }
                     else
                     {

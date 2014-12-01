@@ -117,7 +117,7 @@ namespace Queue.Simulator
                 {
                     await taskPool.AddTask(channel.Service.OpenUserSession(queueOperator.SessionId));
                     await taskPool.AddTask(channel.Service.UserHeartbeat());
-                    var clientRequest = (await channel.Service.GetCurrentClientRequestPlan<ClientRequestPlanFull>()).ClientRequest;
+                    var clientRequest = (await channel.Service.GetCurrentClientRequestPlan()).ClientRequest;
                     if (clientRequest != null)
                     {
                         var state = ClientRequestState.Calling;

@@ -4,9 +4,6 @@ using System.Runtime.Serialization;
 namespace Queue.Services.DTO
 {
     [DataContract]
-    public class OfficeLink : IdentifiedEntityLink { }
-
-    [DataContract]
     public class Office : IdentifiedEntity
     {
         [DataMember]
@@ -21,15 +18,6 @@ namespace Queue.Services.DTO
         public override string ToString()
         {
             return Name;
-        }
-
-        public override IdentifiedEntityLink GetLink()
-        {
-            return new OfficeLink
-            {
-                Id = Id,
-                Presentation = ToString()
-            };
         }
     }
 }

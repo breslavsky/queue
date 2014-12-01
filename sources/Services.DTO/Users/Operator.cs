@@ -4,12 +4,12 @@ using System.Runtime.Serialization;
 namespace Queue.Services.DTO
 {
     [DataContract]
-    public class OperatorLink : UserLink { }
+    public class OperatorLink : EntityLink { }
 
     public class Operator : User
     {
         [DataMember]
-        public WorkplaceLink Workplace { get; set; }
+        public Workplace Workplace { get; set; }
 
         [DataMember]
         public virtual bool IsInterruption { get; set; }
@@ -20,7 +20,7 @@ namespace Queue.Services.DTO
         [DataMember]
         public TimeSpan InterruptionFinishTime { get; set; }
 
-        public override IdentifiedEntityLink GetLink()
+        public override EntityLink GetLink()
         {
             return new OperatorLink
             {
@@ -28,12 +28,5 @@ namespace Queue.Services.DTO
                 Presentation = ToString()
             };
         }
-    }
-
-    [DataContract]
-    public class OperatorFull : Operator
-    {
-        [DataMember]
-        public Workplace Workplace { get; set; }
     }
 }

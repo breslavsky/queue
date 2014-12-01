@@ -151,7 +151,7 @@ namespace Queue.UI.WPF.Pages.Models
                 LoadingControl loading = owner.ShowLoading();
                 try
                 {
-                    Users = (await taskPool.AddTask(channel.Service.GetUserLinks(userRole))).Select(u => new UserComboBoxItem()
+                    Users = (await taskPool.AddTask(channel.Service.GetUserList(userRole))).Select(u => new UserComboBoxItem()
                     {
                         Id = u.Id,
                         Name = u.ToString()

@@ -6,6 +6,7 @@
         ClientRequestUpdated,
         CurrentClientRequestPlanUpdated,
         OperatorPlanMetricsUpdated,
-        ConfigUpdated
+        ConfigUpdated,
+        Event
     }
 }

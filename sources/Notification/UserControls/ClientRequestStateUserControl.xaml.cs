@@ -14,7 +14,7 @@ namespace Queue.Notification.UserControls
 
         public Brush StateBrush { get; set; }
 
-        public ClientRequestStateUserControl(ClientRequestFull request)
+        public ClientRequestStateUserControl(ClientRequest request)
         {
             InitializeComponent();
 

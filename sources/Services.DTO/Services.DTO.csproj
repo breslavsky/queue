@@ -39,9 +39,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Events\ClientRequestEvent.cs" />
-    <Compile Include="Events\Event.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Events\Event.cs" />
     <Compile Include="Events\UserEvent.cs" />
     <Compile Include="IdentifiedEntity.cs" />
     <Compile Include="Metric.cs" />
@@ -75,8 +73,10 @@
     <Compile Include="Users\Manager.cs" />
     <Compile Include="Users\Operator.cs" />
     <Compile Include="Users\User.cs" />
+    <Compile Include="IdentifiedEntityLink.cs" />
     <Compile Include="Workplace.cs" />
     <Compile Include="ClientRequestFilter.cs" />
+    <Compile Include="OperatorInterruption.cs" />
     <Compile Include="ServiceStep.cs" />
   </ItemGroup>
   <ItemGroup>

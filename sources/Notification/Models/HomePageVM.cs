@@ -256,7 +256,7 @@ namespace Queue.Notification.Models
             }
         }
 
-        private void CallClient(ClientRequestFull request)
+        private void CallClient(ClientRequest request)
         {
             lock (typeof(SoundPlayer))
             {
@@ -266,7 +266,7 @@ namespace Queue.Notification.Models
             }
         }
 
-        private void PlayVoice(ClientRequestFull request)
+        private void PlayVoice(ClientRequest request)
         {
             using (SoundPlayer soundPlayer = new SoundPlayer())
             {

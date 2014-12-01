@@ -16,7 +16,7 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<IdentifiedEntity> GetEntity(IdentifiedEntityLink link);
+        Task<IdentifiedEntity> GetEntity(EntityLink link);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
@@ -130,7 +130,7 @@ namespace Queue.Services.Contracts
         Task<Dictionary<DTO.Operator, DTO.ClientRequestPlan>> GetCurrentClientRequestPlans();
 
         [OperationContract]
-        Task<T> GetCurrentClientRequestPlan<T>() where T : ClientRequestPlan;
+        Task<ClientRequestPlan> GetCurrentClientRequestPlan();
 
         [OperationContract]
         Task UpdateCurrentClientRequest(ClientRequestState state);
@@ -240,7 +240,7 @@ namespace Queue.Services.Contracts
         Task<User> GetUser(Guid userId);
 
         [OperationContract]
-        Task<UserLink[]> GetUserLinks(UserRole userRole);
+        Task<IdentifiedEntityLink<User>[]> GetUserList(UserRole userRole);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
@@ -307,7 +307,7 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ServiceLink[]> GetServiceLinks();
+        Task<IdentifiedEntityLink<Service>[]> GetServiceList();
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]

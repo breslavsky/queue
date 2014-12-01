@@ -5,9 +5,6 @@ using System.Runtime.Serialization;
 namespace Queue.Services.DTO
 {
     [DataContract]
-    public class ScheduleLink : IdentifiedEntityLink { }
-
-    [DataContract]
     [KnownType(typeof(DefaultWeekdaySchedule))]
     [KnownType(typeof(DefaultExceptionSchedule))]
     [KnownType(typeof(ServiceWeekdaySchedule))]
@@ -52,14 +49,5 @@ namespace Queue.Services.DTO
 
         [DataMember]
         public int EarlyReservation { get; set; }
-
-        public override IdentifiedEntityLink GetLink()
-        {
-            return new ScheduleLink
-            {
-                Id = Id,
-                Presentation = ToString()
-            };
-        }
     }
 }

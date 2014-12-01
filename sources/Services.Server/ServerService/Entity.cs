@@ -16,7 +16,7 @@ namespace Queue.Services.Server
 {
     public partial class ServerService
     {
-        public async Task<DTO.IdentifiedEntity> GetEntity(DTO.IdentifiedEntityLink link)
+        public async Task<DTO.IdentifiedEntity> GetEntity(DTO.EntityLink link)
         {
             return await Task.Run(() =>
             {

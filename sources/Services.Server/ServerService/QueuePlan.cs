@@ -74,7 +74,7 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<T> GetCurrentClientRequestPlan<T>() where T : DTO.ClientRequestPlan
+        public async Task<DTO.ClientRequestPlan> GetCurrentClientRequestPlan()
         {
             return await Task.Run(() =>
             {
@@ -90,7 +90,7 @@ namespace Queue.Services.Server
                         var clientRequestPlan = todayQueuePlan.GetOperatorPlan(queueOperator)
                             .CurrentClientRequestPlan;
 
-                        return Mapper.Map<ClientRequestPlan, T>(clientRequestPlan);
+                        return Mapper.Map<ClientRequestPlan, DTO.ClientRequestPlan>(clientRequestPlan);
                     }
                 }
                 catch
