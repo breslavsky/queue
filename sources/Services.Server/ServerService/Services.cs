@@ -401,7 +401,7 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.IdentifiedEntity[]> GetServiceList(Guid serviceId)
+        public async Task<DTO.IdentifiedEntity[]> GetServiceStepList(Guid serviceId)
         {
             return await Task.Run(() =>
             {

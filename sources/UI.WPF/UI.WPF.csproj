@@ -139,10 +139,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controls\QueueMonitorControl.xaml.cs">
-      <DependentUpon>QueueMonitorControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\QueueMonitorControlOptions.cs" />
     <Compile Include="Types\AccentColorComboBoxItem.cs" />
     <Compile Include="Models\LoginPageViewModel.cs" />
     <Compile Include="Types\IRichPage.cs" />
@@ -160,10 +156,6 @@
     <Compile Include="RichPage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\QueueMonitorControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\Sheduler\DayScheduler.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
 
-namespace Queue.Administrator
+namespace Queue.UI.WinForms
 {
     internal static class Program
     {
@@ -24,7 +24,7 @@ namespace Queue.Administrator
 
             while (true)
             {
-                using (var loginForm = new LoginForm(UserRole.Administrator)
+                using (LoginForm loginForm = new LoginForm(UserRole.Administrator)
                 {
                     Endpoint = settings.Endpoint,
                     UserId = settings.UserId,
@@ -40,7 +40,7 @@ namespace Queue.Administrator
                         settings.IsRemember = loginForm.IsRemember;
                         settings.Save();
 
-                        var mainForm = new MainForm(loginForm.ChannelBuilder, (QueueAdministrator)loginForm.User);
+                        AdministratorForm mainForm = new AdministratorForm(loginForm.ChannelBuilder, loginForm.User);
                         Application.Run(mainForm);
 
                         if (mainForm.IsLogout)

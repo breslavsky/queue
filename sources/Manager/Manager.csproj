@@ -144,74 +144,8 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddClentRequestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AddClentRequestForm.Designer.cs">
-      <DependentUpon>AddClentRequestForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EditClientRequestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditClientRequestForm.Designer.cs">
-      <DependentUpon>EditClientRequestForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ClientRequestsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ClientRequestsForm.Designer.cs">
-      <DependentUpon>ClientRequestsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ClientsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ClientsForm.Designer.cs">
-      <DependentUpon>ClientsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EventsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EventsForm.Designer.cs">
-      <DependentUpon>EventsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueueMonitorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="QueueMonitorForm.Designer.cs">
-      <DependentUpon>QueueMonitorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EditClientForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditClientForm.Designer.cs">
-      <DependentUpon>EditClientForm.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="AddClentRequestForm.resx">
-      <DependentUpon>AddClentRequestForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ClientsForm.resx">
-      <DependentUpon>ClientsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditClientRequestForm.resx">
-      <DependentUpon>EditClientRequestForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ClientRequestsForm.resx">
-      <DependentUpon>ClientRequestsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EventsForm.resx">
-      <DependentUpon>EventsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -222,12 +156,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="QueueMonitorForm.resx">
-      <DependentUpon>QueueMonitorForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditClientForm.resx">
-      <DependentUpon>EditClientForm.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
