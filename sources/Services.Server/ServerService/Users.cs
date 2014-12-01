@@ -162,7 +162,7 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<IDictionary<Guid, string>> GetUserList(UserRole userRole)
+        public async Task<DTO.IdentifiedEntity[]> GetUserList(UserRole userRole)
         {
             return await Task.Run(() =>
             {
@@ -188,16 +188,12 @@ namespace Queue.Services.Server
                             throw new FaultException("Указанная роль пользователя не найдена");
                     }
 
-                    var users = new Dictionary<Guid, string>();
-                    foreach (var u in session.CreateCriteria(userType)
+                    var users = session.CreateCriteria(userType)
                         .AddOrder(Order.Asc("Surname"))
                         .AddOrder(Order.Asc("Name"))
                         .AddOrder(Order.Asc("Patronymic"))
-                        .List<User>())
-                    {
-                        users.Add(u.Id, u.ToString());
-                    }
-                    return users;
+                        .List<User>();
+                    return Mapper.Map<IList<User>, DTO.IdentifiedEntity[]>(users);
                 }
             });
         }

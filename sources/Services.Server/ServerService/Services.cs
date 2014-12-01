@@ -15,22 +15,19 @@ namespace Queue.Services.Server
 {
     public partial class ServerService
     {
-        public async Task<IDictionary<Guid, string>> GetServiceList()
+        public async Task<DTO.IdentifiedEntity[]> GetServiceList()
         {
             return await Task.Run(() =>
             {
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    var services = new Dictionary<Guid, string>();
-                    foreach (var s in session.CreateCriteria<Service>()
+                    var services = session.CreateCriteria<Service>()
                         .AddOrder(Order.Asc("ServiceGroup"))
                         .AddOrder(Order.Asc("Code"))
-                        .List<Service>())
-                    {
-                        services.Add(s.Id, s.ToString());
-                    }
-                    return services;
+                        .List<Service>();
+
+                    return Mapper.Map<IList<Service>, DTO.IdentifiedEntity[]>(services);
                 }
             });
         }
@@ -400,6 +397,28 @@ namespace Queue.Services.Server
 
                     session.Save(service);
                     transaction.Commit();
+                }
+            });
+        }
+
+        public async Task<DTO.IdentifiedEntity[]> GetServiceList(Guid serviceId)
+        {
+            return await Task.Run(() =>
+            {
+                using (var session = sessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    var service = session.Get<Service>(serviceId);
+                    if (service == null)
+                    {
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId), string.Format("Услуга [{0}] не найдена", serviceId));
+                    }
+
+                    var serviceSteps = session.CreateCriteria<ServiceStep>()
+                        .Add(Restrictions.Eq("Service", service))
+                        .AddOrder(Order.Asc("SortId"))
+                        .List<ServiceStep>();
+                    return Mapper.Map<IList<ServiceStep>, DTO.IdentifiedEntity[]>(serviceSteps);
                 }
             });
         }

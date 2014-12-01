@@ -36,9 +36,7 @@ namespace Queue.Manager
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
-            stateComboBox.DisplayMember = DataListItem.Value;
-            stateComboBox.ValueMember = DataListItem.Key;
-            stateComboBox.DataSource = EnumItem<ClientRequestState>.GetItems();
+            stateComboBox.Items.AddRange(EnumItem<ClientRequestState>.GetItems());
         }
 
         private bool isRequestDate
@@ -98,22 +96,18 @@ namespace Queue.Manager
                     await channel.Service.OpenUserSession(currentUser.SessionId);
 
                     var operators = await taskPool.AddTask(channel.Service.GetUserList(UserRole.Operator));
-                    if (operators.Count > 0)
+                    if (operators.Length > 0)
                     {
-                        operatorComboBox.DisplayMember = DataListItem.Value;
-                        operatorComboBox.ValueMember = DataListItem.Key;
-                        operatorComboBox.DataSource = new BindingSource(operators, null);
+                        operatorComboBox.Items.AddRange(operators);
                         operatorComboBox.Enabled = true;
                     }
 
                     serviceComboBox.Enabled = false;
 
                     var services = await taskPool.AddTask(channel.Service.GetServiceList());
-                    if (services.Count > 0)
+                    if (services.Length > 0)
                     {
-                        serviceComboBox.DisplayMember = DataListItem.Value;
-                        serviceComboBox.ValueMember = DataListItem.Key;
-                        serviceComboBox.DataSource = new BindingSource(services, null);
+                        serviceComboBox.Items.AddRange(services);
                         serviceComboBox.Enabled = true;
                     }
 

@@ -236,7 +236,7 @@ namespace Queue.Services.Contracts
         Task<User> GetUser(Guid userId);
 
         [OperationContract]
-        Task<IDictionary<Guid, string>> GetUserList(UserRole userRole);
+        Task<IdentifiedEntity[]> GetUserList(UserRole userRole);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
@@ -303,7 +303,7 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<IDictionary<Guid, string>> GetServiceList();
+        Task<IdentifiedEntity[]> GetServiceList();
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
@@ -352,6 +352,9 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task ChangeServiceActivity(Guid serviceId, bool isActive);
+
+        [OperationContract]
+        Task<IdentifiedEntity[]> GetServiceStepList(Guid serviceId);
 
         [OperationContract]
         Task<ServiceStep[]> GetServiceSteps(Guid serviceId);

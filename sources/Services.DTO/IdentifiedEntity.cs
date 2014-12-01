@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Queue.Services.DTO
 {
     [DataContract]
-    public abstract class IdentifiedEntity : Entity
+    public class IdentifiedEntity : Entity
     {
         [DataMember]
         public Guid Id { get; set; }
+
+        [DataMember]
+        public string Presentation { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -20,6 +20,11 @@ namespace Queue.Services.DTO
         public override int GetHashCode()
         {
             return Id.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return string.IsNullOrWhiteSpace(Presentation) ? Id.ToString() : Presentation;
         }
     }
 }
