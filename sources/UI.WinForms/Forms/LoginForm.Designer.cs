@@ -34,8 +34,8 @@
             this.serverLabel = new System.Windows.Forms.Label();
             this.endpointTextBox = new System.Windows.Forms.TextBox();
             this.loginGroupBox = new System.Windows.Forms.GroupBox();
+            this.usersControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.rememberCheckBox = new System.Windows.Forms.CheckBox();
-            this.usersComboBox = new System.Windows.Forms.ComboBox();
             this.passwordLabel = new System.Windows.Forms.Label();
             this.loginButton = new System.Windows.Forms.Button();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
@@ -87,8 +87,8 @@
             // 
             // loginGroupBox
             // 
+            this.loginGroupBox.Controls.Add(this.usersControl);
             this.loginGroupBox.Controls.Add(this.rememberCheckBox);
-            this.loginGroupBox.Controls.Add(this.usersComboBox);
             this.loginGroupBox.Controls.Add(this.passwordLabel);
             this.loginGroupBox.Controls.Add(this.loginButton);
             this.loginGroupBox.Controls.Add(this.passwordTextBox);
@@ -101,6 +101,15 @@
             this.loginGroupBox.TabStop = false;
             this.loginGroupBox.Text = "Данные пользователя";
             // 
+            // usersControl
+            // 
+            this.usersControl.Location = new System.Drawing.Point(100, 25);
+            this.usersControl.Name = "usersControl";
+            this.usersControl.Selected = null;
+            this.usersControl.Size = new System.Drawing.Size(220, 21);
+            this.usersControl.TabIndex = 1;
+            this.usersControl.UserCanReset = false;
+            // 
             // rememberCheckBox
             // 
             this.rememberCheckBox.AutoSize = true;
@@ -110,14 +119,6 @@
             this.rememberCheckBox.TabIndex = 0;
             this.rememberCheckBox.Text = "Запомнить";
             this.rememberCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // usersComboBox
-            // 
-            this.usersComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.usersComboBox.Location = new System.Drawing.Point(100, 30);
-            this.usersComboBox.Name = "usersComboBox";
-            this.usersComboBox.Size = new System.Drawing.Size(220, 21);
-            this.usersComboBox.TabIndex = 0;
             // 
             // passwordLabel
             // 
@@ -208,7 +209,6 @@
         private System.Windows.Forms.Label serverLabel;
         private System.Windows.Forms.TextBox endpointTextBox;
         private System.Windows.Forms.GroupBox loginGroupBox;
-        private System.Windows.Forms.ComboBox usersComboBox;
         private System.Windows.Forms.Label passwordLabel;
         private System.Windows.Forms.Button loginButton;
         private System.Windows.Forms.TextBox passwordTextBox;
@@ -216,6 +216,7 @@
         private System.Windows.Forms.CheckBox rememberCheckBox;
         private System.Windows.Forms.PictureBox logoPictureBox;
         private System.Windows.Forms.Label productNameLabel;
+        private IdentifiedEntityControl usersControl;
     }
 }
 

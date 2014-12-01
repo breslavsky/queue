@@ -98,12 +98,10 @@ namespace Queue.UI.WinForms
                 {
                     connectButton.Enabled = false;
 
-                    usersComboBox.DataSource = new BindingSource(await taskPool.AddTask(channel.Service.GetUserList(userRole)), null);
-                    usersComboBox.SelectedIndex = 0;
-
+                    usersControl.Entities = await taskPool.AddTask(channel.Service.GetUserList(userRole));
                     if (UserId != Guid.Empty)
                     {
-                        usersComboBox.SelectedValue = UserId;
+                        usersControl.Selected = new IdentifiedEntity() { Id = UserId };
                     }
 
                     passwordTextBox.Focus();
@@ -139,17 +137,17 @@ namespace Queue.UI.WinForms
 
         private async void login()
         {
-            if (usersComboBox.SelectedValue != null)
-            {
-                UserId = (Guid)usersComboBox.SelectedValue;
+            var selectedUser = usersControl.Selected;
 
+            if (selectedUser != null)
+            {
                 using (var channel = channelManager.CreateChannel())
                 {
                     try
                     {
                         loginButton.Enabled = false;
 
-                        User = await taskPool.AddTask(channel.Service.UserLogin(UserId, passwordTextBox.Text));
+                        User = await taskPool.AddTask(channel.Service.UserLogin(selectedUser.Id, passwordTextBox.Text));
                         DialogResult = DialogResult.OK;
                     }
                     catch (OperationCanceledException) { }

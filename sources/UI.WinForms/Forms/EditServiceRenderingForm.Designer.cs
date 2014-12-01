@@ -24,6 +24,7 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.modeСomboBox = new System.Windows.Forms.ComboBox();
             this.mode = new System.Windows.Forms.Label();
+            this.serviceStepControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             ((System.ComponentModel.ISupportInitialize)(this.priorityUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -116,11 +117,21 @@
             this.mode.Text = "Режим";
             this.mode.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
+            // serviceStepControl
+            // 
+            this.serviceStepControl.Location = new System.Drawing.Point(110, 45);
+            this.serviceStepControl.Name = "serviceStepControl";
+            this.serviceStepControl.Selected = null;
+            this.serviceStepControl.Size = new System.Drawing.Size(140, 21);
+            this.serviceStepControl.TabIndex = 18;
+            this.serviceStepControl.UserCanReset = true;
+            // 
             // EditServiceRenderingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(259, 141);
+            this.Controls.Add(this.serviceStepControl);
             this.Controls.Add(this.mode);
             this.Controls.Add(this.modeСomboBox);
             this.Controls.Add(this.saveButton);
@@ -151,5 +162,6 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.ComboBox modeСomboBox;
         private System.Windows.Forms.Label mode;
+        private IdentifiedEntityControl serviceStepControl;
     }
 }
