@@ -35,7 +35,7 @@ namespace Queue.Notification.Models
             set { SetProperty(ref workplaceNumber, value); }
         }
 
-        public void ShowMessage(ClientRequest request)
+        public void ShowMessage(ClientRequestFull request)
         {
             Number = request.Number;
             Workplace workplace = request.Operator.Workplace;

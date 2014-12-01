@@ -6,11 +6,10 @@ namespace Queue.Services.Common
 
     public class ServerEventArgs
     {
-        public ClientRequestPlan ClientRequestPlan;
-        public ClientRequest ClientRequest;
-        public Operator Operator;
-        public OperatorPlanMetrics OperatorPlanMetrics;
-        public Config Config;
-        public Event Event;
+        public ClientRequestPlanFull ClientRequestPlan;
+        public ClientRequestFull ClientRequest;
+        public OperatorFull Operator;
+        public OperatorPlanMetricsFull OperatorPlanMetrics;
+        public ConfigFull Config;
     }
 }

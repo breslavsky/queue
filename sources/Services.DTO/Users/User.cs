@@ -1,11 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Queue.Services.DTO
 {
+    [DataContract]
+    [KnownType(typeof(AdministratorLink))]
+    [KnownType(typeof(ManagerLink))]
+    [KnownType(typeof(OperatorLink))]
+    public class UserLink : IdentifiedEntityLink { }
+
     [DataContract]
     [KnownType(typeof(Administrator))]
     [KnownType(typeof(Manager))]
@@ -42,6 +45,15 @@ namespace Queue.Services.DTO
         public override string ToString()
         {
             return string.Format("{0} {1}", Surname, Name).Trim();
+        }
+
+        public override IdentifiedEntityLink GetLink()
+        {
+            return new UserLink
+            {
+                Id = Id,
+                Presentation = ToString()
+            };
         }
     }
 }

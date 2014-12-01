@@ -7,12 +7,19 @@ namespace Queue.Services.DTO
     public class ClientRequestPlan
     {
         [DataMember]
-        public ClientRequest ClientRequest { get; set; }
+        public ClientRequestLink ClientRequest { get; set; }
 
         [DataMember]
         public TimeSpan StartTime { get; set; }
 
         [DataMember]
         public TimeSpan FinishTime { get; set; }
+    }
+
+    [DataContract]
+    public class ClientRequestPlanFull : ClientRequestPlan
+    {
+        [DataMember]
+        public ClientRequestFull ClientRequest { get; set; }
     }
 }

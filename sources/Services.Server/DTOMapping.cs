@@ -69,8 +69,8 @@ namespace Queue.Services.Server
         protected override void Configure()
         {
             Mapper.CreateMap<Client, DTO.Client>();
-            Mapper.CreateMap<Client, DTO.IdentifiedEntityLink<DTO.Client>>()
-                .ForMember(dest => dest.Presentation, map => map.MapFrom(src => src.ToString()));
+            Mapper.CreateMap<Client, DTO.ClientLink>()
+                .ForMember(d => d.Presentation, map => map.MapFrom(s => s.ToString()));
 
             //ConfigurationIsValid
             Mapper.AssertConfigurationIsValid();
@@ -88,14 +88,20 @@ namespace Queue.Services.Server
                 .Include<Manager, DTO.Manager>()
                 .Include<Operator, DTO.Operator>();
 
-            Mapper.CreateMap<User, DTO.IdentifiedEntityLink<DTO.User>>()
-                .ForMember(dest => dest.Presentation, map => map.MapFrom(src => src.ToString()));
+            Mapper.CreateMap<User, DTO.UserLink>()
+                .ForMember(d => d.Presentation, map => map.MapFrom(s => s.ToString()));
 
             Mapper.CreateMap<Administrator, DTO.Administrator>();
+            Mapper.CreateMap<Administrator, DTO.AdministratorLink>()
+                .ForMember(d => d.Presentation, map => map.MapFrom(s => s.ToString()));
+
             Mapper.CreateMap<Manager, DTO.Manager>();
+            Mapper.CreateMap<Manager, DTO.ManagerLink>()
+                .ForMember(d => d.Presentation, map => map.MapFrom(s => s.ToString()));
+
             Mapper.CreateMap<Operator, DTO.Operator>();
-            Mapper.CreateMap<Operator, DTO.IdentifiedEntityLink<DTO.Operator>>()
-                .ForMember(dest => dest.Presentation, map => map.MapFrom(src => src.ToString()));
+            Mapper.CreateMap<Operator, DTO.OperatorLink>()
+                .ForMember(d => d.Presentation, map => map.MapFrom(s => s.ToString()));
 
             //ConfigurationIsValid
             Mapper.AssertConfigurationIsValid();
@@ -120,16 +126,21 @@ namespace Queue.Services.Server
             Mapper.AddProfile(new UserDTOProfile());
 
             Mapper.CreateMap<ServiceGroup, DTO.ServiceGroup>();
-            Mapper.CreateMap<ServiceGroup, DTO.IdentifiedEntityLink<DTO.ServiceGroup>>()
-                .ForMember(dest => dest.Presentation, map => map.MapFrom(src => src.ToString()));
+            Mapper.CreateMap<ServiceGroup, DTO.ServiceGroupLink>()
+                .ForMember(d => d.Presentation, map => map.MapFrom(s => s.ToString()));
 
             Mapper.CreateMap<Service, DTO.Service>();
-
-            Mapper.CreateMap<Service, DTO.IdentifiedEntityLink<DTO.Service>>()
+            Mapper.CreateMap<Service, DTO.ServiceLink>()
                 .ForMember(d => d.Presentation, map => map.MapFrom(s => s.ToString()));
 
             Mapper.CreateMap<ServiceStep, DTO.ServiceStep>();
+            Mapper.CreateMap<Service, DTO.ServiceLink>()
+                .ForMember(d => d.Presentation, map => map.MapFrom(s => s.ToString()));
+
             Mapper.CreateMap<ServiceRendering, DTO.ServiceRendering>();
+            Mapper.CreateMap<ServiceRendering, DTO.ServiceRenderingLink>()
+                .ForMember(d => d.Presentation, map => map.MapFrom(s => s.ToString()));
+
             Mapper.CreateMap<ServiceFreeTime, DTO.ServiceFreeTime>();
 
             Mapper.CreateMap<ServiceParameter, DTO.ServiceParameter>()

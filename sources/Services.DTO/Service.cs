@@ -5,6 +5,9 @@ using System.Runtime.Serialization;
 namespace Queue.Services.DTO
 {
     [DataContract]
+    public class ServiceLink : IdentifiedEntityLink { }
+
+    [DataContract]
     public class Service : IdentifiedEntity
     {
         [DataMember]
@@ -62,7 +65,7 @@ namespace Queue.Services.DTO
         public bool IsActive { get; set; }
 
         [DataMember]
-        public IdentifiedEntityLink<ServiceGroup> ServiceGroup { get; set; }
+        public ServiceGroupLink ServiceGroup { get; set; }
 
         [DataMember]
         public string Color { get; set; }
@@ -71,5 +74,21 @@ namespace Queue.Services.DTO
         {
             return string.Format("{0} {1}", Code, Name);
         }
+
+        public override IdentifiedEntityLink GetLink()
+        {
+            return new ServiceLink
+            {
+                Id = Id,
+                Presentation = ToString()
+            };
+        }
+    }
+
+    [DataContract]
+    public class ServiceFull : Service
+    {
+        [DataMember]
+        public ServiceGroup ServiceGroup { get; set; }
     }
 }

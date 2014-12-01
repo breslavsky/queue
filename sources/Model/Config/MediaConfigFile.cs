@@ -8,7 +8,6 @@ namespace Queue.Model
     [Class(Table = "media_config_file", DynamicUpdate = true, Lazy = false)]
     public class MediaConfigFile : IdentifiedEntity
     {
-        //TODO: см. выше
         public MediaConfigFile()
         {
             Name = "Новый медиа-файл";

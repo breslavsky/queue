@@ -13,6 +13,10 @@ namespace Queue.Services.DTO
         public ConfigType Type { get; set; }
     }
 
+    public class ConfigFull : Config
+    {
+    }
+
     [DataContract]
     public class DefaultConfig : Config
     {
@@ -98,6 +102,9 @@ namespace Queue.Services.DTO
     }
 
     [DataContract]
+    public class MediaConfigFileLink : IdentifiedEntityLink { }
+
+    [DataContract]
     public class MediaConfigFile : IdentifiedEntity
     {
         [DataMember]
@@ -115,6 +122,15 @@ namespace Queue.Services.DTO
         public override string ToString()
         {
             return Name;
+        }
+
+        public override IdentifiedEntityLink GetLink()
+        {
+            return new MediaConfigFileLink
+            {
+                Id = Id,
+                Presentation = ToString()
+            };
         }
     }
 

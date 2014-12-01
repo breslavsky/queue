@@ -3,6 +3,9 @@
 namespace Queue.Services.DTO
 {
     [DataContract]
+    public class ServiceGroupLink : IdentifiedEntityLink { }
+
+    [DataContract]
     public class ServiceGroup : IdentifiedEntity
     {
         [DataMember]
@@ -27,7 +30,7 @@ namespace Queue.Services.DTO
         public string Color { get; set; }
 
         [DataMember]
-        public ServiceGroup ParentGroup { get; set; }
+        public ServiceGroupLink ParentGroup { get; set; }
 
         [DataMember]
         public bool IsActive { get; set; }
@@ -36,5 +39,20 @@ namespace Queue.Services.DTO
         {
             return string.Format("{0} {1}", Code, Name);
         }
+
+        public override IdentifiedEntityLink GetLink()
+        {
+            return new ServiceGroupLink
+            {
+                Id = Id,
+                Presentation = ToString()
+            };
+        }
+    }
+
+    public class ServiceGroupFull : ServiceGroup
+    {
+        [DataMember]
+        public ServiceGroup ParentGroup { get; set; }
     }
 }

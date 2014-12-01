@@ -4,6 +4,9 @@ using System.Runtime.Serialization;
 namespace Queue.Services.DTO
 {
     [DataContract]
+    public class ClientLink : IdentifiedEntityLink { }
+
+    [DataContract]
     public class Client : IdentifiedEntity
     {
         [DataMember]
@@ -37,5 +40,19 @@ namespace Queue.Services.DTO
         {
             return string.Format("{0} {1}", Surname, Name).Trim();
         }
+
+        public override IdentifiedEntityLink GetLink()
+        {
+            return new ClientLink
+            {
+                Id = Id,
+                Presentation = ToString()
+            };
+        }
+    }
+
+    [DataContract]
+    public class ClientFull : Client
+    {
     }
 }

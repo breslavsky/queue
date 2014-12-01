@@ -1,11 +1,12 @@
 ﻿using Queue.Model.Common;
-using System;
-using System.Resources;
 using System.Runtime.Serialization;
 using Translation = Queue.Model.Common.Translation;
 
 namespace Queue.Services.DTO
 {
+    [DataContract]
+    public class ServiceRenderingLink : IdentifiedEntityLink { }
+
     [DataContract]
     public class ServiceRendering : IdentifiedEntity
     {
@@ -26,6 +27,15 @@ namespace Queue.Services.DTO
             var translation = Translation.ServiceRenderingMode.ResourceManager;
 
             return string.Format("[{0}] {1}", Operator, translation.GetString(Mode.ToString()));
+        }
+
+        public override IdentifiedEntityLink GetLink()
+        {
+            return new ServiceRenderingLink
+            {
+                Id = Id,
+                Presentation = ToString()
+            };
         }
     }
 }

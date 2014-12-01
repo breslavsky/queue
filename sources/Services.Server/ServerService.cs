@@ -9,12 +9,8 @@ using Queue.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.ServiceModel.Description;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace Queue.Services.Server
 {
@@ -147,15 +143,6 @@ namespace Queue.Services.Server
                                 Args = args
                             };
                             break;
-
-                        case ServerServiceEventType.Event:
-                            queueInstance.OnEvent += queueInstance_OnEvent;
-                            subscriptions[eventType] = new Subscribtion()
-                            {
-                                EventHandler = queueInstance_OnEvent,
-                                Args = args
-                            };
-                            break;
                     }
                 }
             }
@@ -189,10 +176,6 @@ namespace Queue.Services.Server
 
                         case ServerServiceEventType.ConfigUpdated:
                             queueInstance.OnConfigUpdated -= queueInstance_OnConfigUpdated;
-                            break;
-
-                        case ServerServiceEventType.Event:
-                            queueInstance.OnEvent -= queueInstance_OnEvent;
                             break;
                     }
 
@@ -364,26 +347,6 @@ namespace Queue.Services.Server
                     logger.Error(exception);
                     UnSubscribe(ServerServiceEventType.ConfigUpdated);
                 }
-            }
-        }
-
-        private void queueInstance_OnEvent(object sender, QueueInstanceEventArgs e)
-        {
-            try
-            {
-                Task.Run(() =>
-                {
-                    eventsCallback.Event(e.Event);
-                });
-            }
-            catch (ObjectDisposedException exception)
-            {
-                logger.Debug(exception);
-            }
-            catch (Exception exception)
-            {
-                logger.Error(exception);
-                UnSubscribe(ServerServiceEventType.Event);
             }
         }
 

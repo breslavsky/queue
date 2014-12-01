@@ -5,7 +5,7 @@ namespace Queue.Notification.Types
 {
     public class ClientRequestWrap
     {
-        public ClientRequest Request { get; set; }
+        public ClientRequestFull Request { get; set; }
 
         public DateTime Added { get; set; }
     }

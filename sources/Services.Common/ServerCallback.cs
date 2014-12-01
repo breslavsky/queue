@@ -34,12 +34,6 @@ namespace Queue.Services.Common
             remove { configUpdatedHandler -= value; }
         }
 
-        public event ServerEventHandler OnEvent
-        {
-            add { eventHandler += value; }
-            remove { eventHandler -= value; }
-        }
-
         private event ServerEventHandler callClientHandler;
 
         private event ServerEventHandler clientRequestUpdatedHandler;
@@ -50,53 +44,59 @@ namespace Queue.Services.Common
 
         private event ServerEventHandler configUpdatedHandler;
 
-        private event ServerEventHandler eventHandler;
-
-        public void CallClient(ClientRequest clientRequest)
+        public void CallClient(ClientRequestFull clientRequest)
         {
             if (callClientHandler != null)
             {
-                callClientHandler(this, new ServerEventArgs() { ClientRequest = clientRequest });
+                callClientHandler(this, new ServerEventArgs()
+                {
+                    ClientRequest = clientRequest
+                });
             }
         }
 
-        public void ClientRequestUpdated(ClientRequest clientRequest)
+        public void ClientRequestUpdated(ClientRequestFull clientRequest)
         {
             if (clientRequestUpdatedHandler != null)
             {
-                clientRequestUpdatedHandler(this, new ServerEventArgs() { ClientRequest = clientRequest });
+                clientRequestUpdatedHandler(this, new ServerEventArgs()
+                {
+                    ClientRequest = clientRequest
+                });
             }
         }
 
-        public void CurrentClientRequestPlanUpdated(ClientRequestPlan clientRequestPlan, Operator queueOperator)
+        public void CurrentClientRequestPlanUpdated(ClientRequestPlanFull clientRequestPlan, OperatorFull queueOperator)
         {
             if (currentClientRequestPlanUpdatedHandler != null)
             {
-                currentClientRequestPlanUpdatedHandler(this, new ServerEventArgs() { ClientRequestPlan = clientRequestPlan, Operator = queueOperator });
+                currentClientRequestPlanUpdatedHandler(this, new ServerEventArgs()
+                {
+                    ClientRequestPlan = clientRequestPlan,
+                    Operator = queueOperator
+                });
             }
         }
 
-        public void OperatorPlanMetricsUpdated(OperatorPlanMetrics operatorPlanMetrics)
+        public void OperatorPlanMetricsUpdated(OperatorPlanMetricsFull operatorPlanMetrics)
         {
             if (operatorPlanMetricsUpdatedHandler != null)
             {
-                operatorPlanMetricsUpdatedHandler(this, new ServerEventArgs() { OperatorPlanMetrics = operatorPlanMetrics });
+                operatorPlanMetricsUpdatedHandler(this, new ServerEventArgs()
+                {
+                    OperatorPlanMetrics = operatorPlanMetrics
+                });
             }
         }
 
-        public void ConfigUpdated(Config config)
+        public void ConfigUpdated(ConfigFull config)
         {
             if (configUpdatedHandler != null)
             {
-                configUpdatedHandler(this, new ServerEventArgs() { Config = config });
-            }
-        }
-
-        public void Event(Event queueEvent)
-        {
-            if (eventHandler != null)
-            {
-                eventHandler(this, new ServerEventArgs() { Event = queueEvent });
+                configUpdatedHandler(this, new ServerEventArgs()
+                {
+                    Config = config
+                });
             }
         }
     }

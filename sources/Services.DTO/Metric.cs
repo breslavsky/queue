@@ -1,7 +1,4 @@
-﻿using Queue.Model.Common;
-using Queue.Services.DTO;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Runtime.Serialization;
 
 namespace Queue.Services.DTO
@@ -31,6 +28,9 @@ namespace Queue.Services.DTO
     }
 
     [DataContract]
+    public class QueuePlanMetricLink : IdentifiedEntityLink { }
+
+    [DataContract]
     public class QueuePlanMetric : Metric
     {
         [DataMember]
@@ -53,7 +53,19 @@ namespace Queue.Services.DTO
 
         [DataMember]
         public float Productivity { get; set; }
+
+        public override IdentifiedEntityLink GetLink()
+        {
+            return new QueuePlanMetricLink
+            {
+                Id = Id,
+                Presentation = ToString()
+            };
+        }
     }
+
+    [DataContract]
+    public class QueuePlanServiceMetricLink : IdentifiedEntityLink { }
 
     [DataContract]
     public class QueuePlanServiceMetric : Metric
@@ -81,5 +93,14 @@ namespace Queue.Services.DTO
 
         [DataMember]
         public float Productivity { get; set; }
+
+        public override IdentifiedEntityLink GetLink()
+        {
+            return new QueuePlanServiceMetricLink
+            {
+                Id = Id,
+                Presentation = ToString()
+            };
+        }
     }
 }

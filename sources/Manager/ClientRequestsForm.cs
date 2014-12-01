@@ -98,7 +98,7 @@ namespace Queue.Manager
 
                     await channel.Service.OpenUserSession(currentUser.SessionId);
 
-                    var operators = await taskPool.AddTask(channel.Service.GetUserList(UserRole.Operator));
+                    var operators = await taskPool.AddTask(channel.Service.GetUserLinks(UserRole.Operator));
                     if (operators.Length > 0)
                     {
                         operatorComboBox.Items.AddRange(operators);
@@ -108,7 +108,7 @@ namespace Queue.Manager
 
                     serviceComboBox.Enabled = false;
 
-                    var services = await taskPool.AddTask(channel.Service.GetServiceList());
+                    var services = await taskPool.AddTask(channel.Service.GetServiceLinks());
                     if (services.Length > 0)
                     {
                         serviceComboBox.Items.AddRange(services);

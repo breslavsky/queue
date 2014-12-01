@@ -3,6 +3,9 @@
 namespace Queue.Services.DTO
 {
     [DataContract]
+    public class ServiceStepLink : IdentifiedEntityLink { }
+
+    [DataContract]
     public class ServiceStep : IdentifiedEntity
     {
         [DataMember]
@@ -12,5 +15,19 @@ namespace Queue.Services.DTO
         {
             return Name;
         }
+
+        public override IdentifiedEntityLink GetLink()
+        {
+            return new ServiceStepLink
+            {
+                Id = Id,
+                Presentation = ToString()
+            };
+        }
+    }
+
+    [DataContract]
+    public class ServiceStepFull : ServiceStep
+    {
     }
 }

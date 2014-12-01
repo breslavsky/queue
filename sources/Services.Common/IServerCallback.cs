@@ -14,21 +14,18 @@ namespace Queue.Services.Common
     public interface IServerCallback
     {
         [OperationContract(IsOneWay = true)]
-        void CallClient(ClientRequest clientRequest);
+        void CallClient(ClientRequestFull clientRequest);
 
         [OperationContract(IsOneWay = true)]
-        void ClientRequestUpdated(ClientRequest clientRequest);
+        void ClientRequestUpdated(ClientRequestFull clientRequest);
 
         [OperationContract(IsOneWay = true)]
-        void CurrentClientRequestPlanUpdated(ClientRequestPlan clientRequestPlan, Operator queueOperator);
+        void CurrentClientRequestPlanUpdated(ClientRequestPlanFull clientRequestPlan, OperatorFull queueOperator);
 
         [OperationContract(IsOneWay = true)]
-        void OperatorPlanMetricsUpdated(OperatorPlanMetrics operatorPlanMetrics);
+        void OperatorPlanMetricsUpdated(OperatorPlanMetricsFull operatorPlanMetrics);
 
         [OperationContract(IsOneWay = true)]
-        void ConfigUpdated(Config config);
-
-        [OperationContract(IsOneWay = true)]
-        void Event(Event queueEvent);
+        void ConfigUpdated(ConfigFull config);
     }
 }

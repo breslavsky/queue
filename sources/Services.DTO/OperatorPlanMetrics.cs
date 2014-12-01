@@ -17,4 +17,8 @@ namespace Queue.Services.DTO
         [DataMember]
         public int Standing { get; set; }
     }
+
+    public class OperatorPlanMetricsFull : OperatorPlanMetrics
+    {
+    }
 }

@@ -1,14 +1,12 @@
 ﻿using Queue.Model.Common;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace Queue.Services.DTO
 {
     public partial class QueuePlan
     {
+        //TODO: think!
         [DataContract]
         public class ClientRequest : IdentifiedEntity
         {
@@ -51,6 +49,15 @@ namespace Queue.Services.DTO
             public override string ToString()
             {
                 return string.Format("{0} {1} - {2}", Number, Service, Client);
+            }
+
+            public override IdentifiedEntityLink GetLink()
+            {
+                return new ClientRequestLink
+                {
+                    Id = Id,
+                    Presentation = ToString()
+                };
             }
         }
     }

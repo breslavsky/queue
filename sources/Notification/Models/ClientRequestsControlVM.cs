@@ -51,7 +51,7 @@ namespace Queue.Notification.Models
             this.clientRequestsGrid = clientRequestsGrid;
         }
 
-        public void AddToClientRequests(ClientRequest request)
+        public void AddToClientRequests(ClientRequestFull request)
         {
             lock (updateLock)
             {
