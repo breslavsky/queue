@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Queue.UI.WinForms
+namespace Queue.UI.WPF
 {
     [Flags]
     public enum QueueMonitorControlOptions

@@ -33,6 +33,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Administrator", "Administrator\Administrator.csproj", "{D494CA01-E544-4515-B412-5FBFB6AD0197}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal", "Portal\Portal.csproj", "{DDA91225-DBCC-46B3-872E-3F57F34D3221}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7E36B0A3-E454-495C-B5DA-D2F792CE4EF5} = {7E36B0A3-E454-495C-B5DA-D2F792CE4EF5}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Operator.Silverlight", "Operator.Silverlight\Operator.Silverlight.csproj", "{7E36B0A3-E454-495C-B5DA-D2F792CE4EF5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.Silverlight", "UI.Silverlight\UI.Silverlight.csproj", "{0E6A62B0-9FA9-4F6A-851D-78493B8A5D5B}"
 EndProject
@@ -251,6 +256,18 @@ Global
 		{DDA91225-DBCC-46B3-872E-3F57F34D3221}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DDA91225-DBCC-46B3-872E-3F57F34D3221}.Release|x86.ActiveCfg = Release|Any CPU
 		{DDA91225-DBCC-46B3-872E-3F57F34D3221}.Release|x86.Build.0 = Release|Any CPU
+		{7E36B0A3-E454-495C-B5DA-D2F792CE4EF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E36B0A3-E454-495C-B5DA-D2F792CE4EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E36B0A3-E454-495C-B5DA-D2F792CE4EF5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7E36B0A3-E454-495C-B5DA-D2F792CE4EF5}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7E36B0A3-E454-495C-B5DA-D2F792CE4EF5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7E36B0A3-E454-495C-B5DA-D2F792CE4EF5}.Debug|x86.Build.0 = Debug|Any CPU
+		{7E36B0A3-E454-495C-B5DA-D2F792CE4EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E36B0A3-E454-495C-B5DA-D2F792CE4EF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E36B0A3-E454-495C-B5DA-D2F792CE4EF5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7E36B0A3-E454-495C-B5DA-D2F792CE4EF5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7E36B0A3-E454-495C-B5DA-D2F792CE4EF5}.Release|x86.ActiveCfg = Release|Any CPU
+		{7E36B0A3-E454-495C-B5DA-D2F792CE4EF5}.Release|x86.Build.0 = Release|Any CPU
 		{0E6A62B0-9FA9-4F6A-851D-78493B8A5D5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0E6A62B0-9FA9-4F6A-851D-78493B8A5D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E6A62B0-9FA9-4F6A-851D-78493B8A5D5B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

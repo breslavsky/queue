@@ -17,8 +17,9 @@ using Operator = Queue.Services.DTO.QueuePlan.Operator;
 using Path = System.IO.Path;
 using QIcons = Queue.UI.Common.Icons;
 using Translation = Queue.Model.Common.Translation;
+using WindowState = Xceed.Wpf.Toolkit.WindowState;
 
-namespace Queue.UI.WinForms
+namespace Queue.UI.WPF
 {
     public delegate void MonitorEventHandler(object sender, QueueMonitorEventArgs e);
 
@@ -202,6 +203,24 @@ namespace Queue.UI.WinForms
                 var queueOperator = operatorPlan.Operator;
 
                 var dockPanel = new DockPanel();
+
+                var button = new Button()
+                {
+                    Height = 22,
+                    Width = 25,
+                    ToolTip = "Список запросов",
+                    Content = QIcons.clientRequests16x16.ToWpfImage()
+                };
+
+                var clientsRequestPlans = operatorPlan.ClientRequestPlans;
+
+                button.Click += (s, e) =>
+                {
+                    clientRequestsChildWindow.WindowState = WindowState.Open;
+                    clientRequestsDataGrid.ItemsSource = clientsRequestPlans;
+                };
+
+                dockPanel.Children.Add(button);
 
                 if (Options.HasFlag(QueueMonitorControlOptions.OperatorLogin))
                 {
