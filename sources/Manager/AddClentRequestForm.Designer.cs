@@ -108,12 +108,11 @@
             // earlyStatusLabel
             // 
             this.earlyStatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.earlyStatusLabel.AutoSize = true;
             this.earlyStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.earlyStatusLabel.ForeColor = System.Drawing.Color.Red;
             this.earlyStatusLabel.Location = new System.Drawing.Point(9, 25);
             this.earlyStatusLabel.Name = "earlyStatusLabel";
-            this.earlyStatusLabel.Size = new System.Drawing.Size(10, 13);
+            this.earlyStatusLabel.Size = new System.Drawing.Size(246, 15);
             this.earlyStatusLabel.TabIndex = 0;
             this.earlyStatusLabel.Text = "-";
             // 
@@ -330,12 +329,11 @@
             // liveStatusLabel
             // 
             this.liveStatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.liveStatusLabel.AutoSize = true;
             this.liveStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.liveStatusLabel.ForeColor = System.Drawing.Color.Red;
             this.liveStatusLabel.Location = new System.Drawing.Point(9, 25);
             this.liveStatusLabel.Name = "liveStatusLabel";
-            this.liveStatusLabel.Size = new System.Drawing.Size(10, 13);
+            this.liveStatusLabel.Size = new System.Drawing.Size(246, 15);
             this.liveStatusLabel.TabIndex = 0;
             this.liveStatusLabel.Text = "-";
             // 
@@ -432,7 +430,6 @@
             this.queueTypePanel.ResumeLayout(false);
             this.queueTypePanel.PerformLayout();
             this.queueTypeLiveGroupBox.ResumeLayout(false);
-            this.queueTypeLiveGroupBox.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).EndInit();

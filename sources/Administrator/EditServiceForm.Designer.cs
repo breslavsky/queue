@@ -18,46 +18,46 @@
             this.parametersTabPage = new System.Windows.Forms.TabPage();
             this.serviceParametersControl = new Queue.Administrator.ServiceParametersControl();
             this.exceptionScheduleTabPage = new System.Windows.Forms.TabPage();
-            this.exceptionScheduleControl = new Queue.UI.WinForms.ScheduleControl();
+            this.exceptionScheduleControl = new Queue.Administrator.ScheduleControl();
             this.exceptionScheduleDatePicker = new System.Windows.Forms.DateTimePicker();
             this.exceptionScheduleCheckBox = new System.Windows.Forms.CheckBox();
             this.commonTabPage = new System.Windows.Forms.TabPage();
             this.servicePropertiesTabControl = new System.Windows.Forms.TabControl();
             this.commonPropertiesTabPage = new System.Windows.Forms.TabPage();
+            this.codeLabel = new System.Windows.Forms.Label();
+            this.codeTextBox = new System.Windows.Forms.TextBox();
+            this.nameLabel = new System.Windows.Forms.Label();
             this.nameTextBox = new System.Windows.Forms.TextBox();
+            this.tagsLabel = new System.Windows.Forms.Label();
+            this.tagsTextBox = new System.Windows.Forms.TextBox();
+            this.commentLabel = new System.Windows.Forms.Label();
+            this.commentTextBox = new System.Windows.Forms.TextBox();
             this.earlyRegistratorLabel = new System.Windows.Forms.Label();
-            this.serviceTypeListBox = new System.Windows.Forms.CheckedListBox();
             this.earlyRegistratorListBox = new System.Windows.Forms.CheckedListBox();
             this.serviceTypeLabel = new System.Windows.Forms.Label();
+            this.serviceTypeListBox = new System.Windows.Forms.CheckedListBox();
             this.liveRegistratorLabel = new System.Windows.Forms.Label();
             this.liveRegistratorListBox = new System.Windows.Forms.CheckedListBox();
-            this.commentTextBox = new System.Windows.Forms.TextBox();
-            this.commentLabel = new System.Windows.Forms.Label();
-            this.nameLabel = new System.Windows.Forms.Label();
-            this.tagsLabel = new System.Windows.Forms.Label();
-            this.codeTextBox = new System.Windows.Forms.TextBox();
-            this.tagsTextBox = new System.Windows.Forms.TextBox();
-            this.codeLabel = new System.Windows.Forms.Label();
             this.additionalPropertiesTabPage = new System.Windows.Forms.TabPage();
-            this.linkTextBox = new System.Windows.Forms.TextBox();
-            this.linkLabel = new System.Windows.Forms.Label();
-            this.maxEarlyDaysDaysLabel = new System.Windows.Forms.Label();
-            this.descriptionTextBox = new System.Windows.Forms.TextBox();
+            this.clientCallDelayLabel = new System.Windows.Forms.Label();
+            this.clientCallDelayUpDown = new System.Windows.Forms.NumericUpDown();
+            this.clientCallDelaySecondsLabel = new System.Windows.Forms.Label();
+            this.timeIntervalRoundingLabel = new System.Windows.Forms.Label();
+            this.timeIntervalRoundingUpDown = new System.Windows.Forms.NumericUpDown();
+            this.timeIntervalRoundingMinLabel = new System.Windows.Forms.Label();
+            this.maxSubjectsLabel = new System.Windows.Forms.Label();
             this.maxSubjectsUpDown = new System.Windows.Forms.NumericUpDown();
             this.maxEarlyDaysLabel = new System.Windows.Forms.Label();
-            this.descriptionLabel = new System.Windows.Forms.Label();
-            this.maxSubjectsLabel = new System.Windows.Forms.Label();
-            this.priorityUpDown = new System.Windows.Forms.NumericUpDown();
             this.maxEarlyDaysUpDown = new System.Windows.Forms.NumericUpDown();
+            this.maxEarlyDaysDaysLabel = new System.Windows.Forms.Label();
             this.priorityLabel = new System.Windows.Forms.Label();
-            this.clientCallDelayLabel = new System.Windows.Forms.Label();
-            this.isPlanSubjectsCheckBox = new System.Windows.Forms.CheckBox();
-            this.clientCallDelaySecondsLabel = new System.Windows.Forms.Label();
+            this.priorityUpDown = new System.Windows.Forms.NumericUpDown();
             this.clientRequireCheckBox = new System.Windows.Forms.CheckBox();
-            this.timeIntervalRoundingUpDown = new System.Windows.Forms.NumericUpDown();
-            this.timeIntervalRoundingLabel = new System.Windows.Forms.Label();
-            this.timeIntervalRoundingMinLabel = new System.Windows.Forms.Label();
-            this.clientCallDelayUpDown = new System.Windows.Forms.NumericUpDown();
+            this.isPlanSubjectsCheckBox = new System.Windows.Forms.CheckBox();
+            this.descriptionLabel = new System.Windows.Forms.Label();
+            this.descriptionTextBox = new System.Windows.Forms.TextBox();
+            this.linkLabel = new System.Windows.Forms.Label();
+            this.linkTextBox = new System.Windows.Forms.TextBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.serviceTabControl = new System.Windows.Forms.TabControl();
             this.stepsTabPage = new System.Windows.Forms.TabPage();
@@ -66,7 +66,7 @@
             this.weekdayTabControl = new System.Windows.Forms.TabControl();
             this.mondayTabPage = new System.Windows.Forms.TabPage();
             this.weekdaySchedulePanel = new System.Windows.Forms.Panel();
-            this.weekdayScheduleControl = new Queue.UI.WinForms.ScheduleControl();
+            this.weekdayScheduleControl = new Queue.Administrator.ScheduleControl();
             this.weekdayScheduleCheckBox = new System.Windows.Forms.CheckBox();
             this.tuesdayTabPage = new System.Windows.Forms.TabPage();
             this.wednesdayTabPage = new System.Windows.Forms.TabPage();
@@ -74,17 +74,18 @@
             this.fridayTabPage = new System.Windows.Forms.TabPage();
             this.saturdayTabPage = new System.Windows.Forms.TabPage();
             this.sundayTabPage = new System.Windows.Forms.TabPage();
+            this.saveAndCloseButton = new System.Windows.Forms.Button();
             this.parametersTabPage.SuspendLayout();
             this.exceptionScheduleTabPage.SuspendLayout();
             this.commonTabPage.SuspendLayout();
             this.servicePropertiesTabControl.SuspendLayout();
             this.commonPropertiesTabPage.SuspendLayout();
             this.additionalPropertiesTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.maxSubjectsUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.priorityUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.maxEarlyDaysUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.timeIntervalRoundingUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.clientCallDelayUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.timeIntervalRoundingUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maxSubjectsUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maxEarlyDaysUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.priorityUpDown)).BeginInit();
             this.serviceTabControl.SuspendLayout();
             this.stepsTabPage.SuspendLayout();
             this.weekdayScheduleTabPage.SuspendLayout();
@@ -99,7 +100,7 @@
             this.parametersTabPage.Location = new System.Drawing.Point(4, 26);
             this.parametersTabPage.Name = "parametersTabPage";
             this.parametersTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.parametersTabPage.Size = new System.Drawing.Size(836, 452);
+            this.parametersTabPage.Size = new System.Drawing.Size(836, 456);
             this.parametersTabPage.TabIndex = 0;
             this.parametersTabPage.Text = "Параметры услуги";
             this.parametersTabPage.UseVisualStyleBackColor = true;
@@ -109,7 +110,7 @@
             this.serviceParametersControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serviceParametersControl.Location = new System.Drawing.Point(3, 3);
             this.serviceParametersControl.Name = "serviceParametersControl";
-            this.serviceParametersControl.Size = new System.Drawing.Size(830, 446);
+            this.serviceParametersControl.Size = new System.Drawing.Size(830, 450);
             this.serviceParametersControl.TabIndex = 0;
             // 
             // exceptionScheduleTabPage
@@ -120,7 +121,7 @@
             this.exceptionScheduleTabPage.Location = new System.Drawing.Point(4, 26);
             this.exceptionScheduleTabPage.Name = "exceptionScheduleTabPage";
             this.exceptionScheduleTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.exceptionScheduleTabPage.Size = new System.Drawing.Size(836, 452);
+            this.exceptionScheduleTabPage.Size = new System.Drawing.Size(836, 456);
             this.exceptionScheduleTabPage.TabIndex = 0;
             this.exceptionScheduleTabPage.Text = "Исключения в расписании";
             this.exceptionScheduleTabPage.UseVisualStyleBackColor = true;
@@ -157,6 +158,7 @@
             // 
             // commonTabPage
             // 
+            this.commonTabPage.Controls.Add(this.saveAndCloseButton);
             this.commonTabPage.Controls.Add(this.servicePropertiesTabControl);
             this.commonTabPage.Controls.Add(this.saveButton);
             this.commonTabPage.Location = new System.Drawing.Point(4, 26);
@@ -168,38 +170,66 @@
             // 
             // servicePropertiesTabControl
             // 
-            this.servicePropertiesTabControl.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.servicePropertiesTabControl.Controls.Add(this.commonPropertiesTabPage);
             this.servicePropertiesTabControl.Controls.Add(this.additionalPropertiesTabPage);
             this.servicePropertiesTabControl.Location = new System.Drawing.Point(5, 5);
+            this.servicePropertiesTabControl.Margin = new System.Windows.Forms.Padding(5);
             this.servicePropertiesTabControl.Multiline = true;
             this.servicePropertiesTabControl.Name = "servicePropertiesTabControl";
+            this.servicePropertiesTabControl.Padding = new System.Drawing.Point(5, 5);
             this.servicePropertiesTabControl.SelectedIndex = 0;
             this.servicePropertiesTabControl.Size = new System.Drawing.Size(825, 410);
             this.servicePropertiesTabControl.TabIndex = 14;
             // 
             // commonPropertiesTabPage
             // 
+            this.commonPropertiesTabPage.Controls.Add(this.codeLabel);
+            this.commonPropertiesTabPage.Controls.Add(this.codeTextBox);
+            this.commonPropertiesTabPage.Controls.Add(this.nameLabel);
             this.commonPropertiesTabPage.Controls.Add(this.nameTextBox);
+            this.commonPropertiesTabPage.Controls.Add(this.tagsLabel);
+            this.commonPropertiesTabPage.Controls.Add(this.tagsTextBox);
+            this.commonPropertiesTabPage.Controls.Add(this.commentLabel);
+            this.commonPropertiesTabPage.Controls.Add(this.commentTextBox);
             this.commonPropertiesTabPage.Controls.Add(this.earlyRegistratorLabel);
-            this.commonPropertiesTabPage.Controls.Add(this.serviceTypeListBox);
             this.commonPropertiesTabPage.Controls.Add(this.earlyRegistratorListBox);
             this.commonPropertiesTabPage.Controls.Add(this.serviceTypeLabel);
+            this.commonPropertiesTabPage.Controls.Add(this.serviceTypeListBox);
             this.commonPropertiesTabPage.Controls.Add(this.liveRegistratorLabel);
             this.commonPropertiesTabPage.Controls.Add(this.liveRegistratorListBox);
-            this.commonPropertiesTabPage.Controls.Add(this.commentTextBox);
-            this.commonPropertiesTabPage.Controls.Add(this.commentLabel);
-            this.commonPropertiesTabPage.Controls.Add(this.nameLabel);
-            this.commonPropertiesTabPage.Controls.Add(this.tagsLabel);
-            this.commonPropertiesTabPage.Controls.Add(this.codeTextBox);
-            this.commonPropertiesTabPage.Controls.Add(this.tagsTextBox);
-            this.commonPropertiesTabPage.Controls.Add(this.codeLabel);
-            this.commonPropertiesTabPage.Location = new System.Drawing.Point(4, 25);
+            this.commonPropertiesTabPage.Location = new System.Drawing.Point(4, 26);
             this.commonPropertiesTabPage.Name = "commonPropertiesTabPage";
             this.commonPropertiesTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.commonPropertiesTabPage.Size = new System.Drawing.Size(817, 381);
+            this.commonPropertiesTabPage.Size = new System.Drawing.Size(817, 380);
             this.commonPropertiesTabPage.TabIndex = 0;
             this.commonPropertiesTabPage.Text = "Основные параметры";
+            this.commonPropertiesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // codeLabel
+            // 
+            this.codeLabel.AutoSize = true;
+            this.codeLabel.Location = new System.Drawing.Point(10, 10);
+            this.codeLabel.Name = "codeLabel";
+            this.codeLabel.Size = new System.Drawing.Size(26, 13);
+            this.codeLabel.TabIndex = 20;
+            this.codeLabel.Text = "Код";
+            // 
+            // codeTextBox
+            // 
+            this.codeTextBox.Location = new System.Drawing.Point(20, 35);
+            this.codeTextBox.Name = "codeTextBox";
+            this.codeTextBox.Size = new System.Drawing.Size(60, 20);
+            this.codeTextBox.TabIndex = 19;
+            this.codeTextBox.Leave += new System.EventHandler(this.codeTextBox_Leave);
+            // 
+            // nameLabel
+            // 
+            this.nameLabel.AutoSize = true;
+            this.nameLabel.Location = new System.Drawing.Point(7, 62);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(83, 13);
+            this.nameLabel.TabIndex = 18;
+            this.nameLabel.Text = "Наименование";
             // 
             // nameTextBox
             // 
@@ -210,6 +240,42 @@
             this.nameTextBox.TabIndex = 11;
             this.nameTextBox.Leave += new System.EventHandler(this.nameTextBox_Leave);
             // 
+            // tagsLabel
+            // 
+            this.tagsLabel.AutoSize = true;
+            this.tagsLabel.Location = new System.Drawing.Point(370, 10);
+            this.tagsLabel.Name = "tagsLabel";
+            this.tagsLabel.Size = new System.Drawing.Size(90, 13);
+            this.tagsLabel.TabIndex = 26;
+            this.tagsLabel.Text = "Поисковые тэги";
+            // 
+            // tagsTextBox
+            // 
+            this.tagsTextBox.Location = new System.Drawing.Point(385, 30);
+            this.tagsTextBox.Multiline = true;
+            this.tagsTextBox.Name = "tagsTextBox";
+            this.tagsTextBox.Size = new System.Drawing.Size(175, 80);
+            this.tagsTextBox.TabIndex = 25;
+            this.tagsTextBox.LocationChanged += new System.EventHandler(this.tagsTextBox_Leave);
+            // 
+            // commentLabel
+            // 
+            this.commentLabel.AutoSize = true;
+            this.commentLabel.Location = new System.Drawing.Point(10, 210);
+            this.commentLabel.Name = "commentLabel";
+            this.commentLabel.Size = new System.Drawing.Size(77, 13);
+            this.commentLabel.TabIndex = 17;
+            this.commentLabel.Text = "Комментарий";
+            // 
+            // commentTextBox
+            // 
+            this.commentTextBox.Location = new System.Drawing.Point(20, 230);
+            this.commentTextBox.Multiline = true;
+            this.commentTextBox.Name = "commentTextBox";
+            this.commentTextBox.Size = new System.Drawing.Size(785, 135);
+            this.commentTextBox.TabIndex = 16;
+            this.commentTextBox.Leave += new System.EventHandler(this.commentTextBox_Leave);
+            // 
             // earlyRegistratorLabel
             // 
             this.earlyRegistratorLabel.AutoSize = true;
@@ -218,16 +284,6 @@
             this.earlyRegistratorLabel.Size = new System.Drawing.Size(133, 13);
             this.earlyRegistratorLabel.TabIndex = 0;
             this.earlyRegistratorLabel.Text = "Регистраторы по записи";
-            // 
-            // serviceTypeListBox
-            // 
-            this.serviceTypeListBox.CheckOnClick = true;
-            this.serviceTypeListBox.FormattingEnabled = true;
-            this.serviceTypeListBox.Location = new System.Drawing.Point(605, 30);
-            this.serviceTypeListBox.Name = "serviceTypeListBox";
-            this.serviceTypeListBox.Size = new System.Drawing.Size(170, 79);
-            this.serviceTypeListBox.TabIndex = 12;
-            this.serviceTypeListBox.Leave += new System.EventHandler(this.serviceTypeListBox_Leave);
             // 
             // earlyRegistratorListBox
             // 
@@ -248,6 +304,16 @@
             this.serviceTypeLabel.TabIndex = 13;
             this.serviceTypeLabel.Text = "Типы услуги";
             // 
+            // serviceTypeListBox
+            // 
+            this.serviceTypeListBox.CheckOnClick = true;
+            this.serviceTypeListBox.FormattingEnabled = true;
+            this.serviceTypeListBox.Location = new System.Drawing.Point(605, 30);
+            this.serviceTypeListBox.Name = "serviceTypeListBox";
+            this.serviceTypeListBox.Size = new System.Drawing.Size(170, 79);
+            this.serviceTypeListBox.TabIndex = 12;
+            this.serviceTypeListBox.Leave += new System.EventHandler(this.serviceTypeListBox_Leave);
+            // 
             // liveRegistratorLabel
             // 
             this.liveRegistratorLabel.AutoSize = true;
@@ -267,132 +333,105 @@
             this.liveRegistratorListBox.TabIndex = 0;
             this.liveRegistratorListBox.Leave += new System.EventHandler(this.liveRegistratorListBox_Leave);
             // 
-            // commentTextBox
-            // 
-            this.commentTextBox.Location = new System.Drawing.Point(20, 230);
-            this.commentTextBox.Multiline = true;
-            this.commentTextBox.Name = "commentTextBox";
-            this.commentTextBox.Size = new System.Drawing.Size(785, 135);
-            this.commentTextBox.TabIndex = 16;
-            this.commentTextBox.Leave += new System.EventHandler(this.commentTextBox_Leave);
-            // 
-            // commentLabel
-            // 
-            this.commentLabel.AutoSize = true;
-            this.commentLabel.Location = new System.Drawing.Point(10, 210);
-            this.commentLabel.Name = "commentLabel";
-            this.commentLabel.Size = new System.Drawing.Size(77, 13);
-            this.commentLabel.TabIndex = 17;
-            this.commentLabel.Text = "Комментарий";
-            // 
-            // nameLabel
-            // 
-            this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(7, 62);
-            this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(83, 13);
-            this.nameLabel.TabIndex = 18;
-            this.nameLabel.Text = "Наименование";
-            // 
-            // tagsLabel
-            // 
-            this.tagsLabel.AutoSize = true;
-            this.tagsLabel.Location = new System.Drawing.Point(370, 10);
-            this.tagsLabel.Name = "tagsLabel";
-            this.tagsLabel.Size = new System.Drawing.Size(90, 13);
-            this.tagsLabel.TabIndex = 26;
-            this.tagsLabel.Text = "Поисковые тэги";
-            // 
-            // codeTextBox
-            // 
-            this.codeTextBox.Location = new System.Drawing.Point(20, 35);
-            this.codeTextBox.Name = "codeTextBox";
-            this.codeTextBox.Size = new System.Drawing.Size(60, 20);
-            this.codeTextBox.TabIndex = 19;
-            this.codeTextBox.Leave += new System.EventHandler(this.codeTextBox_Leave);
-            // 
-            // tagsTextBox
-            // 
-            this.tagsTextBox.Location = new System.Drawing.Point(385, 30);
-            this.tagsTextBox.Multiline = true;
-            this.tagsTextBox.Name = "tagsTextBox";
-            this.tagsTextBox.Size = new System.Drawing.Size(175, 80);
-            this.tagsTextBox.TabIndex = 25;
-            this.tagsTextBox.LocationChanged += new System.EventHandler(this.tagsTextBox_Leave);
-            // 
-            // codeLabel
-            // 
-            this.codeLabel.AutoSize = true;
-            this.codeLabel.Location = new System.Drawing.Point(10, 10);
-            this.codeLabel.Name = "codeLabel";
-            this.codeLabel.Size = new System.Drawing.Size(26, 13);
-            this.codeLabel.TabIndex = 20;
-            this.codeLabel.Text = "Код";
-            // 
             // additionalPropertiesTabPage
             // 
-            this.additionalPropertiesTabPage.Controls.Add(this.linkTextBox);
-            this.additionalPropertiesTabPage.Controls.Add(this.linkLabel);
-            this.additionalPropertiesTabPage.Controls.Add(this.maxEarlyDaysDaysLabel);
-            this.additionalPropertiesTabPage.Controls.Add(this.descriptionTextBox);
+            this.additionalPropertiesTabPage.Controls.Add(this.clientCallDelayLabel);
+            this.additionalPropertiesTabPage.Controls.Add(this.clientCallDelayUpDown);
+            this.additionalPropertiesTabPage.Controls.Add(this.clientCallDelaySecondsLabel);
+            this.additionalPropertiesTabPage.Controls.Add(this.timeIntervalRoundingLabel);
+            this.additionalPropertiesTabPage.Controls.Add(this.timeIntervalRoundingUpDown);
+            this.additionalPropertiesTabPage.Controls.Add(this.timeIntervalRoundingMinLabel);
+            this.additionalPropertiesTabPage.Controls.Add(this.maxSubjectsLabel);
             this.additionalPropertiesTabPage.Controls.Add(this.maxSubjectsUpDown);
             this.additionalPropertiesTabPage.Controls.Add(this.maxEarlyDaysLabel);
-            this.additionalPropertiesTabPage.Controls.Add(this.descriptionLabel);
-            this.additionalPropertiesTabPage.Controls.Add(this.maxSubjectsLabel);
-            this.additionalPropertiesTabPage.Controls.Add(this.priorityUpDown);
             this.additionalPropertiesTabPage.Controls.Add(this.maxEarlyDaysUpDown);
+            this.additionalPropertiesTabPage.Controls.Add(this.maxEarlyDaysDaysLabel);
             this.additionalPropertiesTabPage.Controls.Add(this.priorityLabel);
-            this.additionalPropertiesTabPage.Controls.Add(this.clientCallDelayLabel);
-            this.additionalPropertiesTabPage.Controls.Add(this.isPlanSubjectsCheckBox);
-            this.additionalPropertiesTabPage.Controls.Add(this.clientCallDelaySecondsLabel);
+            this.additionalPropertiesTabPage.Controls.Add(this.priorityUpDown);
             this.additionalPropertiesTabPage.Controls.Add(this.clientRequireCheckBox);
-            this.additionalPropertiesTabPage.Controls.Add(this.timeIntervalRoundingUpDown);
-            this.additionalPropertiesTabPage.Controls.Add(this.timeIntervalRoundingLabel);
-            this.additionalPropertiesTabPage.Controls.Add(this.timeIntervalRoundingMinLabel);
-            this.additionalPropertiesTabPage.Controls.Add(this.clientCallDelayUpDown);
-            this.additionalPropertiesTabPage.Location = new System.Drawing.Point(4, 25);
+            this.additionalPropertiesTabPage.Controls.Add(this.isPlanSubjectsCheckBox);
+            this.additionalPropertiesTabPage.Controls.Add(this.descriptionLabel);
+            this.additionalPropertiesTabPage.Controls.Add(this.descriptionTextBox);
+            this.additionalPropertiesTabPage.Controls.Add(this.linkLabel);
+            this.additionalPropertiesTabPage.Controls.Add(this.linkTextBox);
+            this.additionalPropertiesTabPage.Location = new System.Drawing.Point(4, 26);
             this.additionalPropertiesTabPage.Name = "additionalPropertiesTabPage";
             this.additionalPropertiesTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.additionalPropertiesTabPage.Size = new System.Drawing.Size(817, 381);
+            this.additionalPropertiesTabPage.Size = new System.Drawing.Size(817, 380);
             this.additionalPropertiesTabPage.TabIndex = 1;
             this.additionalPropertiesTabPage.Text = "Дополнительные параметры";
+            this.additionalPropertiesTabPage.UseVisualStyleBackColor = true;
             // 
-            // linkTextBox
+            // clientCallDelayLabel
             // 
-            this.linkTextBox.Location = new System.Drawing.Point(15, 320);
-            this.linkTextBox.Multiline = true;
-            this.linkTextBox.Name = "linkTextBox";
-            this.linkTextBox.Size = new System.Drawing.Size(790, 50);
-            this.linkTextBox.TabIndex = 29;
-            this.linkTextBox.Leave += new System.EventHandler(this.linkTextBox_Leave);
+            this.clientCallDelayLabel.Location = new System.Drawing.Point(5, 10);
+            this.clientCallDelayLabel.Name = "clientCallDelayLabel";
+            this.clientCallDelayLabel.Size = new System.Drawing.Size(205, 30);
+            this.clientCallDelayLabel.TabIndex = 6;
+            this.clientCallDelayLabel.Text = "Задержка вызова клиента";
+            this.clientCallDelayLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // linkLabel
+            // clientCallDelayUpDown
             // 
-            this.linkLabel.AutoSize = true;
-            this.linkLabel.Location = new System.Drawing.Point(5, 295);
-            this.linkLabel.Name = "linkLabel";
-            this.linkLabel.Size = new System.Drawing.Size(130, 13);
-            this.linkLabel.TabIndex = 30;
-            this.linkLabel.Text = "Ссылка на информацию";
+            this.clientCallDelayUpDown.Location = new System.Drawing.Point(215, 20);
+            this.clientCallDelayUpDown.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.clientCallDelayUpDown.Name = "clientCallDelayUpDown";
+            this.clientCallDelayUpDown.Size = new System.Drawing.Size(50, 20);
+            this.clientCallDelayUpDown.TabIndex = 7;
+            this.clientCallDelayUpDown.Leave += new System.EventHandler(this.clientCallDelayUpDown_Leave);
             // 
-            // maxEarlyDaysDaysLabel
+            // clientCallDelaySecondsLabel
             // 
-            this.maxEarlyDaysDaysLabel.AutoSize = true;
-            this.maxEarlyDaysDaysLabel.Location = new System.Drawing.Point(270, 115);
-            this.maxEarlyDaysDaysLabel.Name = "maxEarlyDaysDaysLabel";
-            this.maxEarlyDaysDaysLabel.Size = new System.Drawing.Size(31, 13);
-            this.maxEarlyDaysDaysLabel.TabIndex = 5;
-            this.maxEarlyDaysDaysLabel.Text = "дней";
+            this.clientCallDelaySecondsLabel.AutoSize = true;
+            this.clientCallDelaySecondsLabel.Location = new System.Drawing.Point(270, 25);
+            this.clientCallDelaySecondsLabel.Name = "clientCallDelaySecondsLabel";
+            this.clientCallDelaySecondsLabel.Size = new System.Drawing.Size(28, 13);
+            this.clientCallDelaySecondsLabel.TabIndex = 8;
+            this.clientCallDelaySecondsLabel.Text = "сек.";
             // 
-            // descriptionTextBox
+            // timeIntervalRoundingLabel
             // 
-            this.descriptionTextBox.Location = new System.Drawing.Point(15, 210);
-            this.descriptionTextBox.Multiline = true;
-            this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.ReadOnly = true;
-            this.descriptionTextBox.Size = new System.Drawing.Size(790, 75);
-            this.descriptionTextBox.TabIndex = 28;
-            this.descriptionTextBox.Click += new System.EventHandler(this.descriptionTextBox_Click);
+            this.timeIntervalRoundingLabel.Location = new System.Drawing.Point(5, 40);
+            this.timeIntervalRoundingLabel.Name = "timeIntervalRoundingLabel";
+            this.timeIntervalRoundingLabel.Size = new System.Drawing.Size(205, 30);
+            this.timeIntervalRoundingLabel.TabIndex = 11;
+            this.timeIntervalRoundingLabel.Text = "Округление временных интервалов";
+            this.timeIntervalRoundingLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // timeIntervalRoundingUpDown
+            // 
+            this.timeIntervalRoundingUpDown.Location = new System.Drawing.Point(215, 50);
+            this.timeIntervalRoundingUpDown.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.timeIntervalRoundingUpDown.Name = "timeIntervalRoundingUpDown";
+            this.timeIntervalRoundingUpDown.Size = new System.Drawing.Size(50, 20);
+            this.timeIntervalRoundingUpDown.TabIndex = 6;
+            this.timeIntervalRoundingUpDown.Leave += new System.EventHandler(this.timeIntervalRoundingUpDown_Leave);
+            // 
+            // timeIntervalRoundingMinLabel
+            // 
+            this.timeIntervalRoundingMinLabel.AutoSize = true;
+            this.timeIntervalRoundingMinLabel.Location = new System.Drawing.Point(270, 55);
+            this.timeIntervalRoundingMinLabel.Name = "timeIntervalRoundingMinLabel";
+            this.timeIntervalRoundingMinLabel.Size = new System.Drawing.Size(27, 13);
+            this.timeIntervalRoundingMinLabel.TabIndex = 12;
+            this.timeIntervalRoundingMinLabel.Text = "мин";
+            // 
+            // maxSubjectsLabel
+            // 
+            this.maxSubjectsLabel.Location = new System.Drawing.Point(5, 70);
+            this.maxSubjectsLabel.Name = "maxSubjectsLabel";
+            this.maxSubjectsLabel.Size = new System.Drawing.Size(205, 30);
+            this.maxSubjectsLabel.TabIndex = 0;
+            this.maxSubjectsLabel.Text = "Максимальное кол-во объектов";
+            this.maxSubjectsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // maxSubjectsUpDown
             // 
@@ -416,23 +455,36 @@
             this.maxEarlyDaysLabel.Text = "Предварительная запись доступна на";
             this.maxEarlyDaysLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // descriptionLabel
+            // maxEarlyDaysUpDown
             // 
-            this.descriptionLabel.AutoSize = true;
-            this.descriptionLabel.Location = new System.Drawing.Point(10, 185);
-            this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(93, 13);
-            this.descriptionLabel.TabIndex = 27;
-            this.descriptionLabel.Text = "Описание услуги";
+            this.maxEarlyDaysUpDown.Location = new System.Drawing.Point(215, 110);
+            this.maxEarlyDaysUpDown.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.maxEarlyDaysUpDown.Name = "maxEarlyDaysUpDown";
+            this.maxEarlyDaysUpDown.Size = new System.Drawing.Size(50, 20);
+            this.maxEarlyDaysUpDown.TabIndex = 4;
+            this.maxEarlyDaysUpDown.Leave += new System.EventHandler(this.maxEarlyDaysUpDown_Leave);
             // 
-            // maxSubjectsLabel
+            // maxEarlyDaysDaysLabel
             // 
-            this.maxSubjectsLabel.Location = new System.Drawing.Point(5, 70);
-            this.maxSubjectsLabel.Name = "maxSubjectsLabel";
-            this.maxSubjectsLabel.Size = new System.Drawing.Size(205, 30);
-            this.maxSubjectsLabel.TabIndex = 0;
-            this.maxSubjectsLabel.Text = "Максимальное кол-во объектов";
-            this.maxSubjectsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.maxEarlyDaysDaysLabel.AutoSize = true;
+            this.maxEarlyDaysDaysLabel.Location = new System.Drawing.Point(270, 115);
+            this.maxEarlyDaysDaysLabel.Name = "maxEarlyDaysDaysLabel";
+            this.maxEarlyDaysDaysLabel.Size = new System.Drawing.Size(31, 13);
+            this.maxEarlyDaysDaysLabel.TabIndex = 5;
+            this.maxEarlyDaysDaysLabel.Text = "дней";
+            // 
+            // priorityLabel
+            // 
+            this.priorityLabel.Location = new System.Drawing.Point(5, 130);
+            this.priorityLabel.Name = "priorityLabel";
+            this.priorityLabel.Size = new System.Drawing.Size(205, 30);
+            this.priorityLabel.TabIndex = 26;
+            this.priorityLabel.Text = "Приоритет услуги";
+            this.priorityLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // priorityUpDown
             // 
@@ -447,36 +499,15 @@
             this.priorityUpDown.TabIndex = 25;
             this.priorityUpDown.Leave += new System.EventHandler(this.priorityUpDown_Leave);
             // 
-            // maxEarlyDaysUpDown
+            // clientRequireCheckBox
             // 
-            this.maxEarlyDaysUpDown.Location = new System.Drawing.Point(215, 110);
-            this.maxEarlyDaysUpDown.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.maxEarlyDaysUpDown.Name = "maxEarlyDaysUpDown";
-            this.maxEarlyDaysUpDown.Size = new System.Drawing.Size(50, 20);
-            this.maxEarlyDaysUpDown.TabIndex = 4;
-            this.maxEarlyDaysUpDown.Leave += new System.EventHandler(this.maxEarlyDaysUpDown_Leave);
-            // 
-            // priorityLabel
-            // 
-            this.priorityLabel.Location = new System.Drawing.Point(5, 130);
-            this.priorityLabel.Name = "priorityLabel";
-            this.priorityLabel.Size = new System.Drawing.Size(205, 30);
-            this.priorityLabel.TabIndex = 26;
-            this.priorityLabel.Text = "Приоритет услуги";
-            this.priorityLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // clientCallDelayLabel
-            // 
-            this.clientCallDelayLabel.Location = new System.Drawing.Point(5, 10);
-            this.clientCallDelayLabel.Name = "clientCallDelayLabel";
-            this.clientCallDelayLabel.Size = new System.Drawing.Size(205, 30);
-            this.clientCallDelayLabel.TabIndex = 6;
-            this.clientCallDelayLabel.Text = "Задержка вызова клиента";
-            this.clientCallDelayLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.clientRequireCheckBox.Location = new System.Drawing.Point(305, 10);
+            this.clientRequireCheckBox.Name = "clientRequireCheckBox";
+            this.clientRequireCheckBox.Size = new System.Drawing.Size(180, 30);
+            this.clientRequireCheckBox.TabIndex = 8;
+            this.clientRequireCheckBox.Text = "Требовать клиента";
+            this.clientRequireCheckBox.UseVisualStyleBackColor = true;
+            this.clientRequireCheckBox.Leave += new System.EventHandler(this.clientRequireCheckBox_Leave);
             // 
             // isPlanSubjectsCheckBox
             // 
@@ -488,77 +519,51 @@
             this.isPlanSubjectsCheckBox.UseVisualStyleBackColor = true;
             this.isPlanSubjectsCheckBox.Leave += new System.EventHandler(this.isPlanSubjectsCheckBox_Leave);
             // 
-            // clientCallDelaySecondsLabel
+            // descriptionLabel
             // 
-            this.clientCallDelaySecondsLabel.AutoSize = true;
-            this.clientCallDelaySecondsLabel.Location = new System.Drawing.Point(270, 25);
-            this.clientCallDelaySecondsLabel.Name = "clientCallDelaySecondsLabel";
-            this.clientCallDelaySecondsLabel.Size = new System.Drawing.Size(28, 13);
-            this.clientCallDelaySecondsLabel.TabIndex = 8;
-            this.clientCallDelaySecondsLabel.Text = "сек.";
+            this.descriptionLabel.AutoSize = true;
+            this.descriptionLabel.Location = new System.Drawing.Point(10, 185);
+            this.descriptionLabel.Name = "descriptionLabel";
+            this.descriptionLabel.Size = new System.Drawing.Size(93, 13);
+            this.descriptionLabel.TabIndex = 27;
+            this.descriptionLabel.Text = "Описание услуги";
             // 
-            // clientRequireCheckBox
+            // descriptionTextBox
             // 
-            this.clientRequireCheckBox.Location = new System.Drawing.Point(305, 10);
-            this.clientRequireCheckBox.Name = "clientRequireCheckBox";
-            this.clientRequireCheckBox.Size = new System.Drawing.Size(180, 30);
-            this.clientRequireCheckBox.TabIndex = 8;
-            this.clientRequireCheckBox.Text = "Требовать клиента";
-            this.clientRequireCheckBox.UseVisualStyleBackColor = true;
-            this.clientRequireCheckBox.Leave += new System.EventHandler(this.clientRequireCheckBox_Leave);
+            this.descriptionTextBox.Location = new System.Drawing.Point(15, 210);
+            this.descriptionTextBox.Multiline = true;
+            this.descriptionTextBox.Name = "descriptionTextBox";
+            this.descriptionTextBox.ReadOnly = true;
+            this.descriptionTextBox.Size = new System.Drawing.Size(790, 75);
+            this.descriptionTextBox.TabIndex = 28;
+            this.descriptionTextBox.Click += new System.EventHandler(this.descriptionTextBox_Click);
             // 
-            // timeIntervalRoundingUpDown
+            // linkLabel
             // 
-            this.timeIntervalRoundingUpDown.Location = new System.Drawing.Point(215, 50);
-            this.timeIntervalRoundingUpDown.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.timeIntervalRoundingUpDown.Name = "timeIntervalRoundingUpDown";
-            this.timeIntervalRoundingUpDown.Size = new System.Drawing.Size(50, 20);
-            this.timeIntervalRoundingUpDown.TabIndex = 6;
-            this.timeIntervalRoundingUpDown.Leave += new System.EventHandler(this.timeIntervalRoundingUpDown_Leave);
+            this.linkLabel.AutoSize = true;
+            this.linkLabel.Location = new System.Drawing.Point(5, 295);
+            this.linkLabel.Name = "linkLabel";
+            this.linkLabel.Size = new System.Drawing.Size(130, 13);
+            this.linkLabel.TabIndex = 30;
+            this.linkLabel.Text = "Ссылка на информацию";
             // 
-            // timeIntervalRoundingLabel
+            // linkTextBox
             // 
-            this.timeIntervalRoundingLabel.Location = new System.Drawing.Point(5, 40);
-            this.timeIntervalRoundingLabel.Name = "timeIntervalRoundingLabel";
-            this.timeIntervalRoundingLabel.Size = new System.Drawing.Size(205, 30);
-            this.timeIntervalRoundingLabel.TabIndex = 11;
-            this.timeIntervalRoundingLabel.Text = "Округление временных интервалов";
-            this.timeIntervalRoundingLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // timeIntervalRoundingMinLabel
-            // 
-            this.timeIntervalRoundingMinLabel.AutoSize = true;
-            this.timeIntervalRoundingMinLabel.Location = new System.Drawing.Point(270, 55);
-            this.timeIntervalRoundingMinLabel.Name = "timeIntervalRoundingMinLabel";
-            this.timeIntervalRoundingMinLabel.Size = new System.Drawing.Size(27, 13);
-            this.timeIntervalRoundingMinLabel.TabIndex = 12;
-            this.timeIntervalRoundingMinLabel.Text = "мин";
-            // 
-            // clientCallDelayUpDown
-            // 
-            this.clientCallDelayUpDown.Location = new System.Drawing.Point(215, 20);
-            this.clientCallDelayUpDown.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.clientCallDelayUpDown.Name = "clientCallDelayUpDown";
-            this.clientCallDelayUpDown.Size = new System.Drawing.Size(50, 20);
-            this.clientCallDelayUpDown.TabIndex = 7;
-            this.clientCallDelayUpDown.Leave += new System.EventHandler(this.clientCallDelayUpDown_Leave);
+            this.linkTextBox.Location = new System.Drawing.Point(15, 320);
+            this.linkTextBox.Multiline = true;
+            this.linkTextBox.Name = "linkTextBox";
+            this.linkTextBox.Size = new System.Drawing.Size(790, 50);
+            this.linkTextBox.TabIndex = 29;
+            this.linkTextBox.Leave += new System.EventHandler(this.linkTextBox_Leave);
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(745, 420);
+            this.saveButton.Location = new System.Drawing.Point(605, 420);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(85, 25);
             this.saveButton.TabIndex = 0;
-            this.saveButton.Text = "Сохранить";
-            this.saveButton.Click += new System.EventHandler(this.saveServiceButton_Click);
+            this.saveButton.Text = "Записать";
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // serviceTabControl
             // 
@@ -583,7 +588,7 @@
             this.stepsTabPage.Location = new System.Drawing.Point(4, 26);
             this.stepsTabPage.Name = "stepsTabPage";
             this.stepsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.stepsTabPage.Size = new System.Drawing.Size(836, 452);
+            this.stepsTabPage.Size = new System.Drawing.Size(836, 456);
             this.stepsTabPage.TabIndex = 1;
             this.stepsTabPage.Text = "Этапы услуги";
             this.stepsTabPage.UseVisualStyleBackColor = true;
@@ -593,7 +598,7 @@
             this.serviceStepsControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serviceStepsControl.Location = new System.Drawing.Point(3, 3);
             this.serviceStepsControl.Name = "serviceStepsControl";
-            this.serviceStepsControl.Size = new System.Drawing.Size(830, 446);
+            this.serviceStepsControl.Size = new System.Drawing.Size(830, 450);
             this.serviceStepsControl.TabIndex = 0;
             // 
             // weekdayScheduleTabPage
@@ -603,7 +608,7 @@
             this.weekdayScheduleTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.weekdayScheduleTabPage.Name = "weekdayScheduleTabPage";
             this.weekdayScheduleTabPage.Padding = new System.Windows.Forms.Padding(5);
-            this.weekdayScheduleTabPage.Size = new System.Drawing.Size(836, 452);
+            this.weekdayScheduleTabPage.Size = new System.Drawing.Size(836, 456);
             this.weekdayScheduleTabPage.TabIndex = 0;
             this.weekdayScheduleTabPage.Text = "Регулярное расписание";
             this.weekdayScheduleTabPage.UseVisualStyleBackColor = true;
@@ -623,7 +628,7 @@
             this.weekdayTabControl.Name = "weekdayTabControl";
             this.weekdayTabControl.Padding = new System.Drawing.Point(5, 5);
             this.weekdayTabControl.SelectedIndex = 0;
-            this.weekdayTabControl.Size = new System.Drawing.Size(826, 442);
+            this.weekdayTabControl.Size = new System.Drawing.Size(826, 446);
             this.weekdayTabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.weekdayTabControl.TabIndex = 0;
             this.weekdayTabControl.Tag = "";
@@ -635,7 +640,7 @@
             this.mondayTabPage.Controls.Add(this.weekdaySchedulePanel);
             this.mondayTabPage.Location = new System.Drawing.Point(4, 26);
             this.mondayTabPage.Name = "mondayTabPage";
-            this.mondayTabPage.Size = new System.Drawing.Size(818, 412);
+            this.mondayTabPage.Size = new System.Drawing.Size(818, 416);
             this.mondayTabPage.TabIndex = 0;
             this.mondayTabPage.Tag = "1";
             this.mondayTabPage.Text = "Понедельник";
@@ -648,7 +653,7 @@
             this.weekdaySchedulePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.weekdaySchedulePanel.Location = new System.Drawing.Point(0, 0);
             this.weekdaySchedulePanel.Name = "weekdaySchedulePanel";
-            this.weekdaySchedulePanel.Size = new System.Drawing.Size(818, 412);
+            this.weekdaySchedulePanel.Size = new System.Drawing.Size(818, 416);
             this.weekdaySchedulePanel.TabIndex = 1;
             // 
             // weekdayScheduleControl
@@ -674,9 +679,9 @@
             // 
             // tuesdayTabPage
             // 
-            this.tuesdayTabPage.Location = new System.Drawing.Point(4, 26);
+            this.tuesdayTabPage.Location = new System.Drawing.Point(4, 70);
             this.tuesdayTabPage.Name = "tuesdayTabPage";
-            this.tuesdayTabPage.Size = new System.Drawing.Size(818, 412);
+            this.tuesdayTabPage.Size = new System.Drawing.Size(174, 0);
             this.tuesdayTabPage.TabIndex = 0;
             this.tuesdayTabPage.Tag = "2";
             this.tuesdayTabPage.Text = "Вторник";
@@ -684,9 +689,9 @@
             // 
             // wednesdayTabPage
             // 
-            this.wednesdayTabPage.Location = new System.Drawing.Point(4, 26);
+            this.wednesdayTabPage.Location = new System.Drawing.Point(4, 70);
             this.wednesdayTabPage.Name = "wednesdayTabPage";
-            this.wednesdayTabPage.Size = new System.Drawing.Size(818, 412);
+            this.wednesdayTabPage.Size = new System.Drawing.Size(174, 0);
             this.wednesdayTabPage.TabIndex = 0;
             this.wednesdayTabPage.Tag = "3";
             this.wednesdayTabPage.Text = "Среда";
@@ -694,9 +699,9 @@
             // 
             // thursdayTabPage
             // 
-            this.thursdayTabPage.Location = new System.Drawing.Point(4, 26);
+            this.thursdayTabPage.Location = new System.Drawing.Point(4, 70);
             this.thursdayTabPage.Name = "thursdayTabPage";
-            this.thursdayTabPage.Size = new System.Drawing.Size(818, 412);
+            this.thursdayTabPage.Size = new System.Drawing.Size(174, 0);
             this.thursdayTabPage.TabIndex = 0;
             this.thursdayTabPage.Tag = "4";
             this.thursdayTabPage.Text = "Четверг";
@@ -704,9 +709,9 @@
             // 
             // fridayTabPage
             // 
-            this.fridayTabPage.Location = new System.Drawing.Point(4, 26);
+            this.fridayTabPage.Location = new System.Drawing.Point(4, 70);
             this.fridayTabPage.Name = "fridayTabPage";
-            this.fridayTabPage.Size = new System.Drawing.Size(818, 412);
+            this.fridayTabPage.Size = new System.Drawing.Size(174, 0);
             this.fridayTabPage.TabIndex = 0;
             this.fridayTabPage.Tag = "5";
             this.fridayTabPage.Text = "Пятница";
@@ -714,9 +719,9 @@
             // 
             // saturdayTabPage
             // 
-            this.saturdayTabPage.Location = new System.Drawing.Point(4, 26);
+            this.saturdayTabPage.Location = new System.Drawing.Point(4, 70);
             this.saturdayTabPage.Name = "saturdayTabPage";
-            this.saturdayTabPage.Size = new System.Drawing.Size(818, 412);
+            this.saturdayTabPage.Size = new System.Drawing.Size(174, 0);
             this.saturdayTabPage.TabIndex = 0;
             this.saturdayTabPage.Tag = "6";
             this.saturdayTabPage.Text = "Суббота";
@@ -724,19 +729,28 @@
             // 
             // sundayTabPage
             // 
-            this.sundayTabPage.Location = new System.Drawing.Point(4, 26);
+            this.sundayTabPage.Location = new System.Drawing.Point(4, 70);
             this.sundayTabPage.Name = "sundayTabPage";
-            this.sundayTabPage.Size = new System.Drawing.Size(818, 412);
+            this.sundayTabPage.Size = new System.Drawing.Size(174, 0);
             this.sundayTabPage.TabIndex = 0;
             this.sundayTabPage.Tag = "0";
             this.sundayTabPage.Text = "Воскресенье";
             this.sundayTabPage.UseVisualStyleBackColor = true;
             // 
+            // saveAndCloseButton
+            // 
+            this.saveAndCloseButton.Location = new System.Drawing.Point(695, 420);
+            this.saveAndCloseButton.Name = "saveAndCloseButton";
+            this.saveAndCloseButton.Size = new System.Drawing.Size(134, 25);
+            this.saveAndCloseButton.TabIndex = 15;
+            this.saveAndCloseButton.Text = "Записать и закрыть";
+            this.saveAndCloseButton.Click += new System.EventHandler(this.saveAndCloseButton_Click);
+            // 
             // EditServiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(864, 502);
+            this.ClientSize = new System.Drawing.Size(864, 506);
             this.Controls.Add(this.serviceTabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
@@ -756,11 +770,11 @@
             this.commonPropertiesTabPage.PerformLayout();
             this.additionalPropertiesTabPage.ResumeLayout(false);
             this.additionalPropertiesTabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.maxSubjectsUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.priorityUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.maxEarlyDaysUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.timeIntervalRoundingUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.clientCallDelayUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.timeIntervalRoundingUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maxSubjectsUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maxEarlyDaysUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.priorityUpDown)).EndInit();
             this.serviceTabControl.ResumeLayout(false);
             this.stepsTabPage.ResumeLayout(false);
             this.weekdayScheduleTabPage.ResumeLayout(false);
@@ -784,7 +798,7 @@
         private System.Windows.Forms.TabPage weekdayScheduleTabPage;
         private System.Windows.Forms.TabControl weekdayTabControl;
         private System.Windows.Forms.TabPage mondayTabPage;
-        private UI.WinForms.ScheduleControl weekdayScheduleControl;
+        private Administrator.ScheduleControl weekdayScheduleControl;
         private System.Windows.Forms.TabPage tuesdayTabPage;
         private System.Windows.Forms.TabPage wednesdayTabPage;
         private System.Windows.Forms.TabPage thursdayTabPage;
@@ -806,7 +820,7 @@
         private System.Windows.Forms.Label timeIntervalRoundingMinLabel;
         private System.Windows.Forms.Label timeIntervalRoundingLabel;
         private System.Windows.Forms.TabPage stepsTabPage;
-        private UI.WinForms.ScheduleControl exceptionScheduleControl;
+        private Administrator.ScheduleControl exceptionScheduleControl;
         private System.Windows.Forms.Panel weekdaySchedulePanel;
         private ServiceStepsControl serviceStepsControl;
         private ServiceParametersControl serviceParametersControl;
@@ -833,6 +847,7 @@
         private System.Windows.Forms.CheckBox isPlanSubjectsCheckBox;
         private System.Windows.Forms.TextBox linkTextBox;
         private System.Windows.Forms.Label linkLabel;
+        private System.Windows.Forms.Button saveAndCloseButton;
 
     }
 }

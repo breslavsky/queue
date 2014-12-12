@@ -7,10 +7,12 @@ using System.Collections.Generic;
 
 namespace Queue.Model
 {
-    [Subclass(ExtendsType = typeof(ServiceParameter), DiscriminatorValueObject = ServiceParameterType.Text, Lazy = false, DynamicUpdate = true)]
+    [Subclass(ExtendsType = typeof(ServiceParameter),
+        DiscriminatorValueObject = ServiceParameterType.Text,
+        Lazy = false,
+        DynamicUpdate = true)]
     public class ServiceParameterText : ServiceParameter
     {
-        //TODO: мне кажется нехорошо инициализировать здесь  - это UI плюшки... объяснял уже раньше
         public ServiceParameterText()
             : base()
         {

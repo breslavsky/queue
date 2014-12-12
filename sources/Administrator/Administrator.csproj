@@ -88,13 +88,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.Parallel.Common.1.0.0.20\lib\net40\Junte.Parallel.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.UI.WinForms, Version=1.0.0.60, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Junte.UI.WinForms, Version=1.0.0.65, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.UI.WinForms.1.0.0.60\lib\net45\Junte.UI.WinForms.dll</HintPath>
+      <HintPath>..\packages\Junte.UI.WinForms.1.0.0.65\lib\net45\Junte.UI.WinForms.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.WCF.Common, Version=1.0.0.15, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Junte.WCF.Common, Version=1.0.0.35, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.WCF.Common.1.0.0.15\lib\net45\Junte.WCF.Common.dll</HintPath>
+      <HintPath>..\packages\Junte.WCF.Common.1.0.0.35\lib\net45\Junte.WCF.Common.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -148,17 +148,23 @@
     <Compile Include="ConfigForm.Designer.cs">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Config\CouponConfigControl.cs">
+    <Compile Include="Controls\Config\CouponConfigControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Config\CouponConfigControl.Designer.cs">
+    <Compile Include="Controls\Config\CouponConfigControl.Designer.cs">
       <DependentUpon>CouponConfigControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Config\DefaultConfigControl.cs">
+    <Compile Include="Controls\Config\DefaultConfigControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Config\DefaultConfigControl.Designer.cs">
+    <Compile Include="Controls\Config\DefaultConfigControl.Designer.cs">
       <DependentUpon>DefaultConfigControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ScheduleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ScheduleControl.Designer.cs">
+      <DependentUpon>ScheduleControl.cs</DependentUpon>
     </Compile>
     <Compile Include="CurrentScheduleForm.cs">
       <SubType>Form</SubType>
@@ -172,28 +178,34 @@
     <Compile Include="DefaultScheduleForm.Designer.cs">
       <DependentUpon>DefaultScheduleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditOfficeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditOfficeForm.Designer.cs">
+      <DependentUpon>EditOfficeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditServiceRenderingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditServiceRenderingForm.Designer.cs">
+      <DependentUpon>EditServiceRenderingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditWorkplaceForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EditWorkplaceForm.Designer.cs">
       <DependentUpon>EditWorkplaceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="HtmlEditorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="HtmlEditorForm.Designer.cs">
-      <DependentUpon>HtmlEditorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Config\MediaConfigControl.cs">
+    <Compile Include="Controls\Config\MediaConfigControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Config\MediaConfigControl.Designer.cs">
+    <Compile Include="Controls\Config\MediaConfigControl.Designer.cs">
       <DependentUpon>MediaConfigControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Config\NotificationConfigControl.cs">
+    <Compile Include="Controls\Config\NotificationConfigControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Config\NotificationConfigControl.Designer.cs">
+    <Compile Include="Controls\Config\NotificationConfigControl.Designer.cs">
       <DependentUpon>NotificationConfigControl.cs</DependentUpon>
     </Compile>
     <Compile Include="OfficesForm.cs">
@@ -202,16 +214,16 @@
     <Compile Include="OfficesForm.Designer.cs">
       <DependentUpon>OfficesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="AdministratorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="AdministratorForm.Designer.cs">
+      <DependentUpon>AdministratorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Config\PortalConfigControl.cs">
+    <Compile Include="Controls\Config\PortalConfigControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Config\PortalConfigControl.Designer.cs">
+    <Compile Include="Controls\Config\PortalConfigControl.Designer.cs">
       <DependentUpon>PortalConfigControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Reports\OperatorRatingReportForm.cs">
@@ -222,10 +234,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceParametersControl.cs">
+    <Compile Include="Controls\ServiceParametersControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ServiceParametersControl.Designer.cs">
+    <Compile Include="Controls\ServiceParametersControl.Designer.cs">
       <DependentUpon>ServiceParametersControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Reports\ServiceRatingReportForm.cs">
@@ -234,16 +246,16 @@
     <Compile Include="Reports\ServiceRatingReportForm.Designer.cs">
       <DependentUpon>ServiceRatingReportForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Config\SMTPConfigControl.cs">
+    <Compile Include="Controls\Config\SMTPConfigControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Config\SMTPConfigControl.Designer.cs">
+    <Compile Include="Controls\Config\SMTPConfigControl.Designer.cs">
       <DependentUpon>SMTPConfigControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Config\TerminalConfigControl.cs">
+    <Compile Include="Controls\Config\TerminalConfigControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Config\TerminalConfigControl.Designer.cs">
+    <Compile Include="Controls\Config\TerminalConfigControl.Designer.cs">
       <DependentUpon>TerminalConfigControl.cs</DependentUpon>
     </Compile>
     <Compile Include="EditServiceStepForm.cs">
@@ -252,10 +264,10 @@
     <Compile Include="EditServiceStepForm.Designer.cs">
       <DependentUpon>EditServiceStepForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ServiceStepsControl.cs">
+    <Compile Include="Controls\ServiceStepsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ServiceStepsControl.Designer.cs">
+    <Compile Include="Controls\ServiceStepsControl.Designer.cs">
       <DependentUpon>ServiceStepsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WorkplacesForm.cs">
@@ -297,11 +309,14 @@
     <EmbeddedResource Include="ConfigForm.resx">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Config\CouponConfigControl.resx">
+    <EmbeddedResource Include="Controls\Config\CouponConfigControl.resx">
       <DependentUpon>CouponConfigControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Config\DefaultConfigControl.resx">
+    <EmbeddedResource Include="Controls\Config\DefaultConfigControl.resx">
       <DependentUpon>DefaultConfigControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ScheduleControl.resx">
+      <DependentUpon>ScheduleControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CurrentScheduleForm.resx">
       <DependentUpon>CurrentScheduleForm.cs</DependentUpon>
@@ -309,25 +324,28 @@
     <EmbeddedResource Include="DefaultScheduleForm.resx">
       <DependentUpon>DefaultScheduleForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditOfficeForm.resx">
+      <DependentUpon>EditOfficeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditServiceRenderingForm.resx">
+      <DependentUpon>EditServiceRenderingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditWorkplaceForm.resx">
       <DependentUpon>EditWorkplaceForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="HtmlEditorForm.resx">
-      <DependentUpon>HtmlEditorForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Config\MediaConfigControl.resx">
+    <EmbeddedResource Include="Controls\Config\MediaConfigControl.resx">
       <DependentUpon>MediaConfigControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Config\NotificationConfigControl.resx">
+    <EmbeddedResource Include="Controls\Config\NotificationConfigControl.resx">
       <DependentUpon>NotificationConfigControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OfficesForm.resx">
       <DependentUpon>OfficesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="AdministratorForm.resx">
+      <DependentUpon>AdministratorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Config\PortalConfigControl.resx">
+    <EmbeddedResource Include="Controls\Config\PortalConfigControl.resx">
       <DependentUpon>PortalConfigControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\OperatorRatingReportForm.resx">
@@ -346,22 +364,22 @@
     <EmbeddedResource Include="EditServiceForm.resx">
       <DependentUpon>EditServiceForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ServiceParametersControl.resx">
+    <EmbeddedResource Include="Controls\ServiceParametersControl.resx">
       <DependentUpon>ServiceParametersControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\ServiceRatingReportForm.resx">
       <DependentUpon>ServiceRatingReportForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Config\SMTPConfigControl.resx">
+    <EmbeddedResource Include="Controls\Config\SMTPConfigControl.resx">
       <DependentUpon>SMTPConfigControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Config\TerminalConfigControl.resx">
+    <EmbeddedResource Include="Controls\Config\TerminalConfigControl.resx">
       <DependentUpon>TerminalConfigControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditServiceStepForm.resx">
       <DependentUpon>EditServiceStepForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ServiceStepsControl.resx">
+    <EmbeddedResource Include="Controls\ServiceStepsControl.resx">
       <DependentUpon>ServiceStepsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Translate\MainForm.en-US.resx" />
@@ -444,12 +462,12 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 и x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <ProductName>Клиентский профиль .NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

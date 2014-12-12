@@ -20,14 +20,25 @@ namespace Queue.Administrator
     public partial class EditWorkplaceForm : Queue.UI.WinForms.RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
         private ChannelManager<IServerTcpService> channelManager;
+        private User currentUser;
         private TaskPool taskPool;
 
-        private Guid workplaceId { get; set; }
+        public EditWorkplaceForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? workplaceId = null)
+        {
+            this.channelBuilder = channelBuilder;
+            this.currentUser = currentUser;
+            this.workplaceId = workplaceId.HasValue
+                ? workplaceId.Value : Guid.Empty;
 
-        private Workplace workplace { get; set; }
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            taskPool = new TaskPool();
+
+            InitializeComponent();
+
+            typeControl.Initialize<WorkplaceType>();
+            modificatorControl.Initialize<WorkplaceModificator>();
+        }
 
         public Workplace Workplace
         {
@@ -36,78 +47,75 @@ namespace Queue.Administrator
             {
                 workplace = value;
 
-                typeComboBox.SelectedItem = new EnumItem<WorkplaceType>(workplace.Type);
+                typeControl.Select<WorkplaceType>(workplace.Type);
                 numberUpDown.Value = workplace.Number;
-                modificatorСomboBox.SelectedItem = new EnumItem<WorkplaceModificator>(workplace.Modificator);
+                modificatorControl.Select<WorkplaceModificator>(workplace.Modificator);
                 commentTextBox.Text = workplace.Comment;
                 displayUpDown.Value = workplace.Display;
                 segmentsUpDown.Value = workplace.Segments;
             }
         }
 
-        public EditWorkplaceForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid workplaceId)
+        private Workplace workplace { get; set; }
+
+        private Guid workplaceId { get; set; }
+
+        protected override void Dispose(bool disposing)
         {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-            this.workplaceId = workplaceId;
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+                if (taskPool != null)
+                {
+                    taskPool.Dispose();
+                }
+                if (channelManager != null)
+                {
+                    channelManager.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
-            taskPool = new TaskPool();
-
-            InitializeComponent();
-
-            typeComboBox.Items.AddRange(EnumItem<WorkplaceType>.GetItems());
-            modificatorСomboBox.Items.AddRange(EnumItem<WorkplaceModificator>.GetItems());
+        private void EditWorkplaceForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            taskPool.Cancel();
         }
 
         private async void EditWorkplaceForm_Load(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            if (workplaceId != Guid.Empty)
             {
-                try
+                using (var channel = channelManager.CreateChannel())
                 {
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                    Workplace = await taskPool.AddTask(channel.Service.GetWorkplace(workplaceId));
+                    try
+                    {
+                        Workplace = await taskPool.AddTask(channel.Service.GetWorkplace(workplaceId));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
+            }
+            else
+            {
+                Workplace = new Workplace();
             }
         }
 
         #region bindings
-
-        private void typeComboBox_Leave(object sender, EventArgs e)
-        {
-            var selectedItem = typeComboBox.SelectedItem as EnumItem<WorkplaceType>;
-            if (selectedItem != null)
-            {
-                Workplace.Type = selectedItem.Value;
-            }
-        }
-
-        private void numberUpDown_Leave(object sender, EventArgs e)
-        {
-            Workplace.Number = (int)numberUpDown.Value;
-        }
-
-        private void modificatorСomboBox_Leave(object sender, EventArgs e)
-        {
-            var selectedItem = modificatorСomboBox.SelectedItem as EnumItem<WorkplaceModificator>;
-            if (selectedItem != null)
-            {
-                Workplace.Modificator = selectedItem.Value;
-            }
-        }
 
         private void commentTextBox_Leave(object sender, EventArgs e)
         {
@@ -119,9 +127,24 @@ namespace Queue.Administrator
             Workplace.Display = (byte)displayUpDown.Value;
         }
 
+        private void modificatorControl_Leave(object sender, EventArgs e)
+        {
+            Workplace.Modificator = modificatorControl.Selected<WorkplaceModificator>();
+        }
+
+        private void numberUpDown_Leave(object sender, EventArgs e)
+        {
+            Workplace.Number = (int)numberUpDown.Value;
+        }
+
         private void segmentsUpDown_Leave(object sender, EventArgs e)
         {
             Workplace.Segments = (byte)segmentsUpDown.Value;
+        }
+
+        private void typeControl_Leave(object sender, EventArgs e)
+        {
+            Workplace.Type = typeControl.Selected<WorkplaceType>();
         }
 
         #endregion bindings
@@ -134,8 +157,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                    Workplace = await taskPool.AddTask(channel.Service.EditWorkplace(Workplace));
+                    await taskPool.AddTask(channel.Service.EditWorkplace(workplace));
 
                     DialogResult = DialogResult.OK;
                 }
@@ -156,31 +178,6 @@ namespace Queue.Administrator
                     saveButton.Enabled = true;
                 }
             }
-        }
-
-        private void EditWorkplaceForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            taskPool.Cancel();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
-                if (taskPool != null)
-                {
-                    taskPool.Dispose();
-                }
-                if (channelManager != null)
-                {
-                    channelManager.Dispose();
-                }
-            }
-            base.Dispose(disposing);
         }
     }
 }

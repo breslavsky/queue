@@ -28,7 +28,7 @@ namespace Queue.Administrator
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
         }
 
@@ -126,7 +126,6 @@ namespace Queue.Administrator
                 {
                     addServiceGroupMenuItem.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                     var serviceGroup = selectedServiceGroup != null
                         ? await taskPool.AddTask(channel.Service.AddServiceGroup(selectedServiceGroup.Id))
                         : await taskPool.AddTask(channel.Service.AddRootServiceGroup());
@@ -144,7 +143,7 @@ namespace Queue.Administrator
                         servicesTreeView.Nodes.Add(treeNode);
                     }
 
-                    using (var f = new EditServiceGroupForm(channelBuilder, currentUser, serviceGroup))
+                    using (var f = new EditServiceGroupForm(channelBuilder, currentUser, serviceGroup.Id))
                     {
                         if (f.ShowDialog() == DialogResult.OK)
                         {
@@ -178,8 +177,6 @@ namespace Queue.Administrator
                 try
                 {
                     addServiceMenuItem.Enabled = false;
-
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
 
                     Service service;
 
@@ -243,7 +240,7 @@ namespace Queue.Administrator
             {
                 var serviceGroup = selectedNode.Tag as ServiceGroup;
 
-                using (var f = new EditServiceGroupForm(channelBuilder, currentUser, serviceGroup))
+                using (var f = new EditServiceGroupForm(channelBuilder, currentUser, serviceGroup.Id))
                 {
                     if (f.ShowDialog() == DialogResult.OK)
                     {
@@ -285,7 +282,6 @@ namespace Queue.Administrator
                         {
                             deleteServiceGroupMenuItem.Enabled = false;
 
-                            await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                             await taskPool.AddTask(channel.Service.DeleteServiceGroup(selectedServiceGroup.Id));
 
                             selectedNode.Nodes.Remove(selectedNode);
@@ -327,7 +323,6 @@ namespace Queue.Administrator
                         {
                             deleteServiceMenuItem.Enabled = false;
 
-                            await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                             await taskPool.AddTask(channel.Service.DeleteService(selectedService.Id));
 
                             selectedNode.Nodes.Remove(selectedNode);
@@ -363,8 +358,6 @@ namespace Queue.Administrator
                     try
                     {
                         buttonUp.Enabled = false;
-
-                        await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
 
                         bool isUp = false;
 
@@ -428,8 +421,6 @@ namespace Queue.Administrator
                     {
                         buttonDown.Enabled = false;
 
-                        await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-
                         bool isDown = false;
 
                         if (typeof(ServiceGroup).IsInstanceOfType(selectedNode.Tag))
@@ -489,8 +480,6 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-
                     if (typeof(ServiceGroup).IsInstanceOfType(checkedNode.Tag))
                     {
                         var serviceGroup = (ServiceGroup)checkedNode.Tag;
@@ -602,7 +591,6 @@ namespace Queue.Administrator
                             {
                                 try
                                 {
-                                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                                     await taskPool.AddTask(channel.Service.MoveServiceGroup(sourceServiceGroup.Id, targetServiceGroup.Id));
                                 }
                                 catch (OperationCanceledException) { }
@@ -631,7 +619,6 @@ namespace Queue.Administrator
                         {
                             try
                             {
-                                await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                                 await taskPool.AddTask(channel.Service.MoveServiceGroupToRoot(sourceServiceGroup.Id));
                             }
                             catch (OperationCanceledException) { }
@@ -664,7 +651,6 @@ namespace Queue.Administrator
                             {
                                 try
                                 {
-                                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                                     await taskPool.AddTask(channel.Service.MoveService(service.Id, serviceGroup.Id));
                                 }
                                 catch (OperationCanceledException) { }

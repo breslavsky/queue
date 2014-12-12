@@ -47,9 +47,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.UI.WPF.1.0.0.15\lib\net45\Junte.UI.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.WCF.Common, Version=1.0.0.15, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Junte.WCF.Common, Version=1.0.0.35, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.WCF.Common.1.0.0.15\lib\net45\Junte.WCF.Common.dll</HintPath>
+      <HintPath>..\packages\Junte.WCF.Common.1.0.0.35\lib\net45\Junte.WCF.Common.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro, Version=0.14.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -129,7 +129,6 @@
       <DependentUpon>WeekScheduler.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\ServerState.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Models\ConnectPageViewModel.cs" />
     <Compile Include="Pages\ConnectPage.xaml.cs">
       <DependentUpon>ConnectPage.xaml</DependentUpon>
@@ -139,18 +138,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controls\QueueMonitorControl.xaml.cs">
-      <DependentUpon>QueueMonitorControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\QueueMonitorControlOptions.cs" />
     <Compile Include="Types\AccentColorComboBoxItem.cs" />
     <Compile Include="Models\LoginPageViewModel.cs" />
-    <Compile Include="Types\IRichPage.cs" />
+    <Compile Include="IRichPage.cs" />
     <Compile Include="Types\ObservableObject.cs" />
     <Compile Include="Types\RelayCommand.cs" />
     <Compile Include="Types\UserComboBoxItem.cs" />
     <Compile Include="Types\UserLoginSettings.cs" />
-    <Compile Include="WPFHelper.cs" />
+    <Compile Include="Extensions\WPFExtensions.cs" />
     <Compile Include="Controls\VirtualKeyboard.xaml.cs">
       <DependentUpon>VirtualKeyboard.xaml</DependentUpon>
     </Compile>
@@ -160,10 +155,6 @@
     <Compile Include="RichPage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\QueueMonitorControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\Sheduler\DayScheduler.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

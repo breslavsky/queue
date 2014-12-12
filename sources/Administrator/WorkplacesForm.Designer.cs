@@ -19,11 +19,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.workplacesGridView = new System.Windows.Forms.DataGridView();
             this.addWorkplaceButton = new System.Windows.Forms.Button();
-            this.deleteColumn = new System.Windows.Forms.DataGridViewLinkColumn();
             this.typeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.modificatorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -63,7 +61,6 @@
             this.workplacesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.workplacesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.workplacesGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.deleteColumn,
             this.typeColumn,
             this.numberColumn,
             this.modificatorColumn,
@@ -80,8 +77,8 @@
             this.workplacesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.workplacesGridView.Size = new System.Drawing.Size(814, 407);
             this.workplacesGridView.TabIndex = 0;
-            this.workplacesGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.workplacesGridView_CellClick);
             this.workplacesGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.workplacesGridView_CellMouseDoubleClick);
+            this.workplacesGridView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.workplacesGridView_UserDeletingRow);
             // 
             // addWorkplaceButton
             // 
@@ -92,19 +89,6 @@
             this.addWorkplaceButton.TabIndex = 0;
             this.addWorkplaceButton.Text = "Добавить";
             this.addWorkplaceButton.Click += new System.EventHandler(this.addWorkplaceButton_Click);
-            // 
-            // deleteColumn
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.deleteColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.deleteColumn.FillWeight = 60F;
-            this.deleteColumn.HeaderText = "";
-            this.deleteColumn.Name = "deleteColumn";
-            this.deleteColumn.ReadOnly = true;
-            this.deleteColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.deleteColumn.Text = "[удалить]";
-            this.deleteColumn.UseColumnTextForLinkValue = true;
-            this.deleteColumn.Width = 60;
             // 
             // typeColumn
             // 
@@ -118,9 +102,9 @@
             // numberColumn
             // 
             this.numberColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.NullValue = null;
-            this.numberColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.NullValue = null;
+            this.numberColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.numberColumn.FillWeight = 80F;
             this.numberColumn.HeaderText = "Номер";
             this.numberColumn.Name = "numberColumn";
@@ -145,8 +129,8 @@
             // 
             // displayColumn
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.displayColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.displayColumn.DefaultCellStyle = dataGridViewCellStyle3;
             this.displayColumn.HeaderText = "Номер табло";
             this.displayColumn.Name = "displayColumn";
             this.displayColumn.ReadOnly = true;
@@ -154,8 +138,8 @@
             // 
             // segmentsColumn
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.segmentsColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.segmentsColumn.DefaultCellStyle = dataGridViewCellStyle4;
             this.segmentsColumn.HeaderText = "Кол-во сегментов";
             this.segmentsColumn.Name = "segmentsColumn";
             this.segmentsColumn.ReadOnly = true;
@@ -185,7 +169,6 @@
         private System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
         private System.Windows.Forms.DataGridView workplacesGridView;
         private System.Windows.Forms.Button addWorkplaceButton;
-        private System.Windows.Forms.DataGridViewLinkColumn deleteColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn typeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn numberColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn modificatorColumn;

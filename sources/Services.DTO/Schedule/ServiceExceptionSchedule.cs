@@ -4,12 +4,9 @@ using System.Runtime.Serialization;
 namespace Queue.Services.DTO
 {
     [DataContract]
-    public class ServiceExceptionSchedule : Schedule
+    public class ServiceExceptionSchedule : ServiceSchedule
     {
         [DataMember]
         public DateTime ScheduleDate { get; set; }
-
-        [DataMember]
-        public Service Service { get; set; }
     }
 }

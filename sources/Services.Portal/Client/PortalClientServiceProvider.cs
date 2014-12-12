@@ -8,7 +8,7 @@ using System.ServiceModel.Dispatcher;
 
 namespace Queue.Services.Portal
 {
-    internal class PortalClientServiceProvider : IInstanceProvider, IContractBehavior
+    internal sealed class PortalClientServiceProvider : IInstanceProvider, IContractBehavior
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private Administrator currentUser;

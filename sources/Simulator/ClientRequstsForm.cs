@@ -14,17 +14,13 @@ namespace Queue.Simulator
 {
     public partial class ClientRequstsForm : Queue.UI.WinForms.RichForm
     {
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
-        private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
-
-        private Random random;
-
+        private const int Subjects = 1;
         private CancellationTokenSource cancellationTokenSource;
-
-        private int SUBJECTS = 1;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
+        private ChannelManager<IServerTcpService> channelManager;
+        private User currentUser;
+        private Random random;
+        private TaskPool taskPool;
 
         public ClientRequstsForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
@@ -40,16 +36,42 @@ namespace Queue.Simulator
             random = new Random();
         }
 
-        private void log(string message)
+        private async void addClientRequest(Service service)
         {
-            try
+            using (var channel = channelManager.CreateChannel())
             {
-                Invoke(new MethodInvoker(() =>
+                string surname = string.Format("client {0}", random.Next());
+
+                try
                 {
-                    logTextBox.AppendText(string.Format("[{0:hh:mm:ss}] {1}", DateTime.Now, message) + Environment.NewLine);
-                }));
+                    Client client = await channel.Service.AddClient(surname, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
+
+                    var isPriority = random.Next(0, 1) == 1;
+
+                    var clientRequest = await channel.Service.AddLiveClientRequest(client.Id, service.Id, isPriority,
+                        new Dictionary<Guid, object>() { }, Subjects);
+                    log(string.Format("Добавлен запроса клиента {0}", clientRequest));
+                }
+                catch (FaultException exception)
+                {
+                    log(string.Format("{0} = {1}", service, exception.Reason));
+                }
+                catch (Exception exception)
+                {
+                    log(exception.ToString());
+                }
             }
-            catch { }
+        }
+
+        private void ClientRequstsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (cancellationTokenSource != null)
+            {
+                cancellationTokenSource.Cancel();
+            }
+
+            taskPool.Dispose();
+            channelManager.Dispose();
         }
 
         private async Task<Service[]> getServices(ServiceGroup serviceGroup = null)
@@ -74,6 +96,18 @@ namespace Queue.Simulator
 
                 return services.ToArray();
             }
+        }
+
+        private void log(string message)
+        {
+            try
+            {
+                Invoke(new MethodInvoker(() =>
+                {
+                    logTextBox.AppendText(string.Format("[{0:hh:mm:ss}] {1}", DateTime.Now, message) + Environment.NewLine);
+                }));
+            }
+            catch { }
         }
 
         private async void startButton_Click(object sender, EventArgs e)
@@ -123,33 +157,6 @@ namespace Queue.Simulator
             }
         }
 
-        private async void addClientRequest(Service service)
-        {
-            using (var channel = channelManager.CreateChannel())
-            {
-                string surname = string.Format("client {0}", random.Next());
-
-                try
-                {
-                    Client client = await channel.Service.AddClient(surname, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
-
-                    var isPriority = random.Next(0, 1) == 1;
-
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                    var clientRequest = await channel.Service.AddLiveClientRequest(client.Id, service.Id, isPriority, new Dictionary<Guid, object>() { }, SUBJECTS);
-                    log(string.Format("Добавлен запроса клиента {0}", clientRequest));
-                }
-                catch (FaultException exception)
-                {
-                    log(string.Format("{0} = {1}", service, exception.Reason));
-                }
-                catch (Exception exception)
-                {
-                    log(exception.ToString());
-                }
-            }
-        }
-
         private void stopButton_Click(object sender, EventArgs e)
         {
             if (cancellationTokenSource != null)
@@ -158,17 +165,6 @@ namespace Queue.Simulator
             }
             stopButton.Enabled = false;
             startButton.Enabled = true;
-        }
-
-        private void ClientRequstsForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (cancellationTokenSource != null)
-            {
-                cancellationTokenSource.Cancel();
-            }
-
-            taskPool.Dispose();
-            channelManager.Dispose();
         }
     }
 }

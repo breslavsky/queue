@@ -5,7 +5,7 @@ using Queue.Services.DTO;
 using Queue.Terminal.Types;
 using Queue.Terminal.UserControls;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Extensions;
+
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;

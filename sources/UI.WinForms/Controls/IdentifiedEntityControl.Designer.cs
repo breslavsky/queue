@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IdentifiedEntityControl));
             this.comboBox = new System.Windows.Forms.ComboBox();
             this.resetButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -42,15 +43,16 @@
             this.comboBox.Name = "comboBox";
             this.comboBox.Size = new System.Drawing.Size(125, 21);
             this.comboBox.TabIndex = 0;
+            this.comboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // resetButton
             // 
             this.resetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.resetButton.Location = new System.Drawing.Point(130, 0);
+            this.resetButton.Image = ((System.Drawing.Image)(resources.GetObject("resetButton.Image")));
+            this.resetButton.Location = new System.Drawing.Point(127, 0);
             this.resetButton.Name = "resetButton";
-            this.resetButton.Size = new System.Drawing.Size(25, 21);
+            this.resetButton.Size = new System.Drawing.Size(20, 20);
             this.resetButton.TabIndex = 1;
-            this.resetButton.Text = "X";
             this.resetButton.UseVisualStyleBackColor = true;
             this.resetButton.VisibleChanged += new System.EventHandler(this.resetButton_VisibleChanged);
             this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
@@ -61,6 +63,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.resetButton);
             this.Controls.Add(this.comboBox);
+            this.Enabled = false;
             this.Name = "IdentifiedEntityControl";
             this.Size = new System.Drawing.Size(154, 21);
             this.ResumeLayout(false);

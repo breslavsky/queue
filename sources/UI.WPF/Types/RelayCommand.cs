@@ -3,6 +3,7 @@ using System.Windows.Input;
 
 namespace Queue.UI.WPF.Types
 {
+    //TODO: what is this?
     public class RelayCommand<T> : ICommand
     {
         private static bool CanExecute(T parameter)

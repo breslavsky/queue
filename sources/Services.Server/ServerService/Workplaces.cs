@@ -73,25 +73,6 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.Workplace> AddWorkplace()
-        {
-            return await Task.Run(() =>
-            {
-                checkPermission(UserRole.Administrator);
-
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    var workplace = new Workplace();
-
-                    session.Save(workplace);
-                    transaction.Commit();
-
-                    return Mapper.Map<Workplace, DTO.Workplace>(workplace);
-                }
-            });
-        }
-
         public async Task<DTO.Workplace> EditWorkplace(DTO.Workplace source)
         {
             return await Task.Run(() =>
@@ -103,10 +84,19 @@ namespace Queue.Services.Server
                 {
                     var workplaceId = source.Id;
 
-                    var workplace = session.Get<Workplace>(workplaceId);
-                    if (workplace == null)
+                    Workplace workplace;
+
+                    if (workplaceId != Guid.Empty)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(workplaceId), string.Format("Рабочее место [{0}] не найдено", workplaceId));
+                        workplace = session.Get<Workplace>(workplaceId);
+                        if (workplace == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(workplaceId), string.Format("Рабочее место [{0}] не найдено", workplaceId));
+                        }
+                    }
+                    else
+                    {
+                        workplace = new Workplace();
                     }
 
                     workplace.Type = source.Type;
@@ -172,6 +162,5 @@ namespace Queue.Services.Server
                 }
             });
         }
-
     }
 }

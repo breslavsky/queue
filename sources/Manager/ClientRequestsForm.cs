@@ -8,21 +8,24 @@ using System;
 using System.Drawing;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueOperator = Queue.Services.DTO.Operator;
 using Translation = Queue.Model.Common.Translation;
 
 namespace Queue.Manager
 {
     public partial class ClientRequestsForm : Queue.UI.WinForms.RichForm
     {
-        private const byte PAGE_SIZE = 50;
-        private int startIndex = 0;
-
-        private bool loaded = false;
-
+        private const byte PageSize = 50;
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
+        private ChannelManager<IServerTcpService> channelManager;
         private User currentUser;
 
-        private ChannelManager<IServerTcpService> channelManager;
+        private ClientRequestFilter filter = new ClientRequestFilter()
+        {
+            IsRequestDate = true
+        };
+
+        private int startIndex = 0;
         private TaskPool taskPool;
 
         public ClientRequestsForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
@@ -33,34 +36,10 @@ namespace Queue.Manager
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
 
-            stateComboBox.Items.AddRange(EnumItem<ClientRequestState>.GetItems());
-        }
-
-        private bool isRequestDate
-        {
-            get { return requestDateCheckBox.Checked; }
-            set { requestDateCheckBox.Checked = value; }
-        }
-
-        private bool isOperator
-        {
-            get { return operatorCheckBox.Checked; }
-            set { operatorCheckBox.Checked = value; }
-        }
-
-        private bool isService
-        {
-            get { return serviceCheckBox.Checked; }
-            set { serviceCheckBox.Checked = value; }
-        }
-
-        private bool isState
-        {
-            get { return stateCheckBox.Checked; }
-            set { stateCheckBox.Checked = value; }
+            stateControl.Initialize<ClientRequestState>();
         }
 
         protected override void Dispose(bool disposing)
@@ -83,6 +62,11 @@ namespace Queue.Manager
             base.Dispose(disposing);
         }
 
+        private void ClientRequestsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            taskPool.Cancel();
+        }
+
         private async void ClientRequestsForm_Load(object sender, EventArgs e)
         {
             requestDatePicker.Value = DateTime.Today;
@@ -91,27 +75,10 @@ namespace Queue.Manager
             {
                 try
                 {
-                    operatorComboBox.Enabled = false;
+                    serviceControl.Initialize<Service>(await taskPool.AddTask(channel.Service.GetServiceList()));
+                    operatorControl.Initialize<QueueOperator>(await taskPool.AddTask(channel.Service.GetUserList(UserRole.Operator)));
 
-                    await channel.Service.OpenUserSession(currentUser.SessionId);
-
-                    var operators = await taskPool.AddTask(channel.Service.GetUserList(UserRole.Operator));
-                    if (operators.Length > 0)
-                    {
-                        operatorComboBox.Items.AddRange(operators);
-                        operatorComboBox.Enabled = true;
-                    }
-
-                    serviceComboBox.Enabled = false;
-
-                    var services = await taskPool.AddTask(channel.Service.GetServiceList());
-                    if (services.Length > 0)
-                    {
-                        serviceComboBox.Items.AddRange(services);
-                        serviceComboBox.Enabled = true;
-                    }
-
-                    RefreshGridView();
+                    RefreshClienRequestsGridView();
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -126,59 +93,43 @@ namespace Queue.Manager
                     UIHelper.Warning(exception.Message);
                 }
             }
-
-            loaded = true;
         }
 
-        private async void RefreshGridView()
+        private void clientRequestsGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            var filter = new ClientRequestFilter()
+            if (e.RowIndex >= 0)
             {
-                Query = queryTextBox.Text.Trim()
-            };
+                var row = clientRequestsGridView.Rows[e.RowIndex];
+                var clientRequest = row.Tag as ClientRequest;
 
-            object value = requestDatePicker.Value;
-
-            if (isRequestDate && value != null)
-            {
-                filter.RequestDate = requestDatePicker.Value;
+                using (var form = new EditClientRequestForm(channelBuilder, currentUser, clientRequest.Id))
+                {
+                    form.ShowDialog();
+                    RenderClientRequestsGridViewRow(row, form.ClientRequest);
+                }
             }
+        }
 
-            value = operatorComboBox.SelectedValue;
+        private void findButton_Click(object sender, EventArgs e)
+        {
+            RefreshClienRequestsGridView();
+        }
 
-            if (isOperator && value != null)
-            {
-                filter.OperatorId = (Guid)value;
-            }
-
-            value = serviceComboBox.SelectedValue;
-
-            if (isService && value != null)
-            {
-                filter.ServiceId = (Guid)value;
-            }
-
-            value = stateComboBox.SelectedValue;
-
-            if (isState && value != null)
-            {
-                filter.State = (ClientRequestState?)value;
-            }
-
+        private async void RefreshClienRequestsGridView()
+        {
             using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
-                    await channel.Service.OpenUserSession(currentUser.SessionId);
-                    var clientRequests = await taskPool.AddTask(channel.Service.FindClientRequests(startIndex, PAGE_SIZE, filter));
+                    ClientRequest[] clientRequests = await taskPool.AddTask(channel.Service.FindClientRequests(startIndex, PageSize, filter));
 
-                    gridView.Rows.Clear();
-                    foreach (var r in clientRequests)
+                    clientRequestsGridView.Rows.Clear();
+                    foreach (ClientRequest r in clientRequests)
                     {
-                        int index = gridView.Rows.Add();
-                        var row = gridView.Rows[index];
+                        int index = clientRequestsGridView.Rows.Add();
+                        var row = clientRequestsGridView.Rows[index];
 
-                        RenderGridViewRow(row, r);
+                        RenderClientRequestsGridViewRow(row, r);
                     }
                 }
                 catch (OperationCanceledException) { }
@@ -196,7 +147,7 @@ namespace Queue.Manager
             }
         }
 
-        private void RenderGridViewRow(DataGridViewRow row, ClientRequest clientRequest)
+        private void RenderClientRequestsGridViewRow(DataGridViewRow row, ClientRequest clientRequest)
         {
             row.Cells["numberColumn"].Value = clientRequest.Number;
             row.Cells["requestDateColumn"].Value = clientRequest.RequestDate.ToShortDateString();
@@ -260,84 +211,36 @@ namespace Queue.Manager
             row.DefaultCellStyle.BackColor = ColorTranslator.FromHtml(clientRequest.Color);
         }
 
-        private void gridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            int rowIndex = e.RowIndex;
-            if (rowIndex >= 0)
-            {
-                int columnIndex = e.ColumnIndex;
-                if (columnIndex >= 0)
-                {
-                    var row = gridView.Rows[rowIndex];
-                    var clientRequest = row.Tag as ClientRequest;
+        #region navigation
 
-                    using (var form = new EditClientRequestForm(channelBuilder, currentUser, clientRequest.Id))
-                    {
-                        form.ShowDialog();
-                        RenderGridViewRow(row, form.ClientRequest);
-                    }
-                }
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            if (clientRequestsGridView.Rows.Count == PageSize)
+            {
+                startIndex += PageSize;
             }
+            RefreshClienRequestsGridView();
+        }
+
+        private void prevButton_Click(object sender, EventArgs e)
+        {
+            startIndex -= PageSize;
+            if (startIndex < 0)
+            {
+                startIndex = 0;
+            }
+            RefreshClienRequestsGridView();
         }
 
         private void resetButton_Click(object sender, EventArgs e)
         {
             startIndex = 0;
-            RefreshGridView();
+            RefreshClienRequestsGridView();
         }
 
-        private void prevButton_Click(object sender, EventArgs e)
-        {
-            startIndex -= PAGE_SIZE;
-            if (startIndex < 0)
-            {
-                startIndex = 0;
-            }
-            RefreshGridView();
-        }
+        #endregion navigation
 
-        private void nextButton_Click(object sender, EventArgs e)
-        {
-            if (gridView.Rows.Count == PAGE_SIZE)
-            {
-                startIndex += PAGE_SIZE;
-            }
-            RefreshGridView();
-        }
-
-        private void requestDateCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            requestDatePanel.Enabled = isRequestDate;
-        }
-
-        private void operatorCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            operatorPanel.Enabled = isOperator;
-        }
-
-        private void serviceCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            servicePanel.Enabled = isService;
-        }
-
-        private void stateCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            statePanel.Enabled = isState;
-        }
-
-        private void filterChanged(object sender, EventArgs e)
-        {
-            if (loaded)
-            {
-                startIndex = 0;
-                RefreshGridView();
-            }
-        }
-
-        private void ClientRequestsForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            taskPool.Cancel();
-        }
+        #region bindings
 
         private void detailsCheckBox_CheckedChanged(object sender, EventArgs e)
         {
@@ -352,5 +255,64 @@ namespace Queue.Manager
                 productivityColumn.Visible =
                 detailsCheckBox.Checked;
         }
+
+        private void operatorCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            filter.IsOperator = operatorPanel.Enabled
+                = operatorCheckBox.Checked;
+        }
+
+        private void operatorControl_Leave(object sender, EventArgs e)
+        {
+            QueueOperator selectedOperator = operatorControl.Selected<QueueOperator>();
+            if (selectedOperator != null)
+            {
+                filter.OperatorId = selectedOperator.Id;
+            }
+        }
+
+        private void queryTextBox_Leave(object sender, EventArgs e)
+        {
+            filter.Query = queryTextBox.Text;
+        }
+
+        private void requestDateCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            filter.IsRequestDate = requestDatePanel.Enabled
+                = requestDateCheckBox.Checked;
+        }
+
+        private void requestDatePicker_ValueChanged(object sender, EventArgs e)
+        {
+            filter.RequestDate = requestDatePicker.Value;
+        }
+
+        private void serviceCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            filter.IsService = servicePanel.Enabled
+                = serviceCheckBox.Checked;
+        }
+
+        private void serviceControl_Leave(object sender, EventArgs e)
+        {
+            Service selectedService = serviceControl.Selected<Service>();
+            if (selectedService != null)
+            {
+                filter.ServiceId = selectedService.Id;
+            }
+        }
+
+        private void stateCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            filter.IsState = statePanel.Enabled
+                = stateCheckBox.Checked;
+        }
+
+        private void stateControl_Leave(object sender, EventArgs e)
+        {
+            filter.State = stateControl.Selected<ClientRequestState>();
+        }
+
+        #endregion bindings
     }
 }

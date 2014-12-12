@@ -16,9 +16,8 @@ namespace Queue.Administrator
     public partial class ExceptionScheduleReportForm : Queue.UI.WinForms.RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
         private ChannelManager<IServerTcpService> channelManager;
+        private User currentUser;
         private TaskPool taskPool;
 
         public ExceptionScheduleReportForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
@@ -29,13 +28,28 @@ namespace Queue.Administrator
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
         }
 
-        private void ExceptionScheduleReportForm_Load(object sender, EventArgs e)
+        protected override void Dispose(bool disposing)
         {
-            fromDateCalendar.SelectionStart = ServerDateTime.Today;
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+                if (taskPool != null)
+                {
+                    taskPool.Dispose();
+                }
+                if (channelManager != null)
+                {
+                    channelManager.Dispose();
+                }
+            }
+            base.Dispose(disposing);
         }
 
         private async void createReportButton_Click(object sender, EventArgs e)
@@ -48,7 +62,6 @@ namespace Queue.Administrator
 
                     DateTime fromDate = fromDateCalendar.SelectionStart;
 
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                     byte[] report = await taskPool.AddTask(channel.Service.GetExceptionScheduleReport(fromDate));
                     string path = Path.GetTempPath() + Path.GetRandomFileName() + ".xls";
 
@@ -82,24 +95,9 @@ namespace Queue.Administrator
             taskPool.Cancel();
         }
 
-        protected override void Dispose(bool disposing)
+        private void ExceptionScheduleReportForm_Load(object sender, EventArgs e)
         {
-            if (disposing)
-            {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
-                if (taskPool != null)
-                {
-                    taskPool.Dispose();
-                }
-                if (channelManager != null)
-                {
-                    channelManager.Dispose();
-                }
-            }
-            base.Dispose(disposing);
+            fromDateCalendar.SelectionStart = ServerDateTime.Today;
         }
     }
 }

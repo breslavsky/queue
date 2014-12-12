@@ -30,7 +30,7 @@ namespace Queue.Services.Contracts
         Task<Client[]> FindClients(int startIndex, int maxResults, string filter);
 
         [OperationContract]
-        Task<Client> AddClient(string surname, string name, string patronymic, string email, string mobile, string identity, string password);
+        Task<Client> AddClient(string surname, string name = null, string patronymic = null, string email = null, string mobile = null, string identity = null, string password = null);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
@@ -81,31 +81,11 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<ClientRequest> EditClientRequest(ClientRequest source);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
         Task<string> GetClientRequestCoupon(Guid clientRequestId);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ClientRequest> ChangeClientRequestType(Guid clientRequestId, ClientRequestType type);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ClientRequest> ChangeClientRequestPriority(Guid clientRequestId, bool isPriority);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ClientRequest> ChangeClientRequestSubjects(Guid clientRequestId, int subjects);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ClientRequest> ChangeClientRequestService(Guid clientRequestId, Guid serviceId);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ClientRequest> ChangeClientRequestServiceStep(Guid clientRequestId, Guid serviceStepId);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ClientRequest> ChangeClientRequestOperator(Guid clientRequestId, Guid operatorId);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
@@ -122,11 +102,15 @@ namespace Queue.Services.Contracts
         [OperationContract]
         Task<ClientRequestPlan[]> GetOperatorClientRequestPlans();
 
+        //TODO: shit!
         [OperationContract]
-        Task<Dictionary<DTO.Operator, DTO.ClientRequestPlan>> GetCurrentClientRequestPlans();
+        Task<Dictionary<Operator, ClientRequestPlan>> GetCurrentClientRequestPlans();
 
         [OperationContract]
         Task<ClientRequestPlan> GetCurrentClientRequestPlan();
+
+        [OperationContract]
+        Task<ClientRequest> EditCurrentClientRequest(ClientRequest source);
 
         [OperationContract]
         Task UpdateCurrentClientRequest(ClientRequestState state);
@@ -138,22 +122,6 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task ReturnCurrentClientRequest();
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ClientRequest> ChangeCurrentClientRequestSubjects(int subjects);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ClientRequest> ChangeCurrentClientRequestService(Guid serviceId);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ClientRequest> ChangeCurrentClientRequestServiceType(ServiceType serviceType);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ClientRequest> ChangeCurrentClientRequestServiceStep(Guid serviceStepId);
 
         [OperationContract]
         Task CallCurrentClient();
@@ -267,9 +235,6 @@ namespace Queue.Services.Contracts
         Task<Office> GetOffice(Guid officeId);
 
         [OperationContract]
-        Task<Office> AddOffice();
-
-        [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task<Office> EditOffice(Office office);
 
@@ -286,9 +251,6 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task<Workplace> GetWorkplace(Guid workplaceId);
-
-        [OperationContract]
-        Task<Workplace> AddWorkplace();
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
@@ -364,10 +326,6 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ServiceStep> AddServiceStep(Guid serviceId);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
         Task<ServiceStep> EditServiceStep(ServiceStep serviceStep);
 
         [OperationContract]
@@ -389,10 +347,6 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task<DTO.ServiceRendering> GetServiceRendering(Guid serviceRenderingId);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ServiceRendering> AddServiceRendering(Guid scheduleId);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]

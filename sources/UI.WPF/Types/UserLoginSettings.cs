@@ -2,6 +2,7 @@
 
 namespace Queue.UI.WPF.Types
 {
+    //TODO: create configuration
     public class UserLoginSettings
     {
         public string Endpoint { get; set; }

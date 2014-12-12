@@ -32,10 +32,10 @@ namespace Queue.Reports.ExceptionScheduleReport
             using (ISession session = SessionProvider.OpenSession())
             {
                 return session.QueryOver<DefaultExceptionSchedule>()
-                    .Where(_s => _s.ScheduleDate >= fromDate)
+                    .Where(s => s.ScheduleDate >= fromDate)
                     .OrderBy(s => s.ScheduleDate).Asc
                     .List()
-                    .Select(s_ => new DefaultExceptionScheduleReportData(s_))
+                    .Select(s => new DefaultExceptionScheduleReportData(s, s.ScheduleDate))
                     .ToArray();
             }
         }
@@ -125,9 +125,9 @@ namespace Queue.Reports.ExceptionScheduleReport
 
         private class DefaultExceptionScheduleReportData
         {
-            public DefaultExceptionScheduleReportData(ExceptionSchedule source)
+            public DefaultExceptionScheduleReportData(Schedule source, DateTime scheduleDate)
             {
-                ScheduleDate = source.ScheduleDate;
+                ScheduleDate = scheduleDate;
                 IsWorked = source.IsWorked;
                 StartTime = source.StartTime;
                 FinishTime = source.FinishTime;
@@ -163,7 +163,7 @@ namespace Queue.Reports.ExceptionScheduleReport
         private class ServiceExceptionScheduleReportData : DefaultExceptionScheduleReportData
         {
             public ServiceExceptionScheduleReportData(ServiceExceptionSchedule source)
-                : base(source)
+                : base(source, source.ScheduleDate)
             {
                 Service = source.Service.ToString();
             }

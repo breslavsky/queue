@@ -16,23 +16,21 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.gridView = new System.Windows.Forms.DataGridView();
-            this.addOfficeButton = new System.Windows.Forms.Button();
-            this.deleteColumn = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.officesGridView = new System.Windows.Forms.DataGridView();
             this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.loginColumn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.manageColumn = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.addOfficeButton = new System.Windows.Forms.Button();
             this.mainTableLayoutPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.officesGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // mainTableLayoutPanel
             // 
             this.mainTableLayoutPanel.ColumnCount = 1;
             this.mainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainTableLayoutPanel.Controls.Add(this.gridView, 0, 0);
+            this.mainTableLayoutPanel.Controls.Add(this.officesGridView, 0, 0);
             this.mainTableLayoutPanel.Controls.Add(this.addOfficeButton, 0, 1);
             this.mainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainTableLayoutPanel.Location = new System.Drawing.Point(10, 10);
@@ -45,8 +43,9 @@
             // 
             // officesGridView
             // 
-            this.gridView.AllowUserToAddRows = false;
-            this.gridView.AllowUserToResizeRows = false;
+            this.officesGridView.AllowUserToAddRows = false;
+            this.officesGridView.AllowUserToResizeColumns = false;
+            this.officesGridView.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -54,24 +53,54 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.gridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.deleteColumn,
+            this.officesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.officesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.officesGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nameColumn,
             this.loginColumn,
             this.manageColumn});
-            this.gridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridView.Location = new System.Drawing.Point(0, 0);
-            this.gridView.Margin = new System.Windows.Forms.Padding(0);
-            this.gridView.MultiSelect = false;
-            this.gridView.Name = "officesGridView";
-            this.gridView.RowHeadersVisible = false;
-            this.gridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.gridView.Size = new System.Drawing.Size(464, 257);
-            this.gridView.TabIndex = 0;
-            this.gridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridView_CellClick);
-            this.gridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridView_CellEndEdit);
+            this.officesGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.officesGridView.Location = new System.Drawing.Point(0, 0);
+            this.officesGridView.Margin = new System.Windows.Forms.Padding(0);
+            this.officesGridView.MultiSelect = false;
+            this.officesGridView.Name = "officesGridView";
+            this.officesGridView.ReadOnly = true;
+            this.officesGridView.RowHeadersVisible = false;
+            this.officesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.officesGridView.Size = new System.Drawing.Size(464, 257);
+            this.officesGridView.TabIndex = 0;
+            this.officesGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.officeGridView_CellClick);
+            this.officesGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.officesGridView_CellMouseDoubleClick);
+            this.officesGridView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.officesGridView_UserDeletingRow);
+            // 
+            // nameColumn
+            // 
+            this.nameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nameColumn.FillWeight = 80F;
+            this.nameColumn.HeaderText = "Название";
+            this.nameColumn.Name = "nameColumn";
+            this.nameColumn.ReadOnly = true;
+            this.nameColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // loginColumn
+            // 
+            this.loginColumn.FillWeight = 60F;
+            this.loginColumn.HeaderText = "";
+            this.loginColumn.Name = "loginColumn";
+            this.loginColumn.ReadOnly = true;
+            this.loginColumn.Text = "Войти";
+            this.loginColumn.UseColumnTextForButtonValue = true;
+            this.loginColumn.Width = 60;
+            // 
+            // manageColumn
+            // 
+            this.manageColumn.HeaderText = "";
+            this.manageColumn.Name = "manageColumn";
+            this.manageColumn.ReadOnly = true;
+            this.manageColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.manageColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.manageColumn.Text = "Управлять";
+            this.manageColumn.UseColumnTextForButtonValue = true;
             // 
             // addOfficeButton
             // 
@@ -82,45 +111,6 @@
             this.addOfficeButton.TabIndex = 0;
             this.addOfficeButton.Text = "Добавить";
             this.addOfficeButton.Click += new System.EventHandler(this.addOfficeButton_Click);
-            // 
-            // deleteColumn
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.deleteColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.deleteColumn.FillWeight = 60F;
-            this.deleteColumn.HeaderText = "";
-            this.deleteColumn.Name = "deleteColumn";
-            this.deleteColumn.ReadOnly = true;
-            this.deleteColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.deleteColumn.Text = "[удалить]";
-            this.deleteColumn.UseColumnTextForLinkValue = true;
-            this.deleteColumn.Width = 60;
-            // 
-            // nameColumn
-            // 
-            this.nameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nameColumn.FillWeight = 80F;
-            this.nameColumn.HeaderText = "Название";
-            this.nameColumn.Name = "nameColumn";
-            this.nameColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // loginColumn
-            // 
-            this.loginColumn.FillWeight = 60F;
-            this.loginColumn.HeaderText = "";
-            this.loginColumn.Name = "loginColumn";
-            this.loginColumn.Text = "Войти";
-            this.loginColumn.UseColumnTextForButtonValue = true;
-            this.loginColumn.Width = 60;
-            // 
-            // manageColumn
-            // 
-            this.manageColumn.HeaderText = "";
-            this.manageColumn.Name = "manageColumn";
-            this.manageColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.manageColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.manageColumn.Text = "Управлять";
-            this.manageColumn.UseColumnTextForButtonValue = true;
             // 
             // OfficesForm
             // 
@@ -136,7 +126,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OfficesForm_FormClosing);
             this.Load += new System.EventHandler(this.OfficesForm_Load);
             this.mainTableLayoutPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.officesGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -145,8 +135,7 @@
 
         private System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
         private System.Windows.Forms.Button addOfficeButton;
-        private System.Windows.Forms.DataGridView gridView;
-        private System.Windows.Forms.DataGridViewLinkColumn deleteColumn;
+        private System.Windows.Forms.DataGridView officesGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameColumn;
         private System.Windows.Forms.DataGridViewButtonColumn loginColumn;
         private System.Windows.Forms.DataGridViewButtonColumn manageColumn;

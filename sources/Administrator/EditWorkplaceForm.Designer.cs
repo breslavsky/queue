@@ -15,8 +15,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.typeComboBox = new System.Windows.Forms.ComboBox();
-            this.modificatorСomboBox = new System.Windows.Forms.ComboBox();
             this.commentTextBox = new System.Windows.Forms.TextBox();
             this.typeLabel = new System.Windows.Forms.Label();
             this.numberLabel = new System.Windows.Forms.Label();
@@ -28,30 +26,12 @@
             this.segmentsUpDown = new System.Windows.Forms.NumericUpDown();
             this.displayUpDown = new System.Windows.Forms.NumericUpDown();
             this.saveButton = new System.Windows.Forms.Button();
+            this.typeControl = new Queue.UI.WinForms.EnumItemControl();
+            this.modificatorControl = new Queue.UI.WinForms.EnumItemControl();
             ((System.ComponentModel.ISupportInitialize)(this.numberUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.segmentsUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.displayUpDown)).BeginInit();
             this.SuspendLayout();
-            // 
-            // typeComboBox
-            // 
-            this.typeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.typeComboBox.FormattingEnabled = true;
-            this.typeComboBox.Location = new System.Drawing.Point(105, 10);
-            this.typeComboBox.Name = "typeComboBox";
-            this.typeComboBox.Size = new System.Drawing.Size(145, 21);
-            this.typeComboBox.TabIndex = 0;
-            this.typeComboBox.Leave += new System.EventHandler(this.typeComboBox_Leave);
-            // 
-            // modificatorСomboBox
-            // 
-            this.modificatorСomboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.modificatorСomboBox.FormattingEnabled = true;
-            this.modificatorСomboBox.Location = new System.Drawing.Point(105, 65);
-            this.modificatorСomboBox.Name = "modificatorСomboBox";
-            this.modificatorСomboBox.Size = new System.Drawing.Size(145, 21);
-            this.modificatorСomboBox.TabIndex = 1;
-            this.modificatorСomboBox.Leave += new System.EventHandler(this.modificatorСomboBox_Leave);
             // 
             // commentTextBox
             // 
@@ -86,6 +66,7 @@
             this.numberUpDown.Name = "numberUpDown";
             this.numberUpDown.Size = new System.Drawing.Size(60, 20);
             this.numberUpDown.TabIndex = 7;
+            this.numberUpDown.Leave += new System.EventHandler(this.numberUpDown_Leave);
             // 
             // modificatorLabel
             // 
@@ -159,11 +140,31 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
+            // typeControl
+            // 
+            this.typeControl.Enabled = false;
+            this.typeControl.Location = new System.Drawing.Point(105, 5);
+            this.typeControl.Name = "typeControl";
+            this.typeControl.Size = new System.Drawing.Size(150, 21);
+            this.typeControl.TabIndex = 16;
+            this.typeControl.Leave += new System.EventHandler(this.typeControl_Leave);
+            // 
+            // modificatorControl
+            // 
+            this.modificatorControl.Enabled = false;
+            this.modificatorControl.Location = new System.Drawing.Point(105, 65);
+            this.modificatorControl.Name = "modificatorControl";
+            this.modificatorControl.Size = new System.Drawing.Size(150, 21);
+            this.modificatorControl.TabIndex = 17;
+            this.modificatorControl.Leave += new System.EventHandler(this.modificatorControl_Leave);
+            // 
             // EditWorkplaceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(264, 271);
+            this.Controls.Add(this.modificatorControl);
+            this.Controls.Add(this.typeControl);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.displayUpDown);
             this.Controls.Add(this.segmentsUpDown);
@@ -175,8 +176,6 @@
             this.Controls.Add(this.numberLabel);
             this.Controls.Add(this.typeLabel);
             this.Controls.Add(this.commentTextBox);
-            this.Controls.Add(this.modificatorСomboBox);
-            this.Controls.Add(this.typeComboBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "EditWorkplaceForm";
             this.Text = "Изменение рабочего места";
@@ -192,8 +191,6 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox typeComboBox;
-        private System.Windows.Forms.ComboBox modificatorСomboBox;
         private System.Windows.Forms.TextBox commentTextBox;
         private System.Windows.Forms.Label typeLabel;
         private System.Windows.Forms.Label numberLabel;
@@ -205,5 +202,7 @@
         private System.Windows.Forms.NumericUpDown segmentsUpDown;
         private System.Windows.Forms.NumericUpDown displayUpDown;
         private System.Windows.Forms.Button saveButton;
+        private UI.WinForms.EnumItemControl typeControl;
+        private UI.WinForms.EnumItemControl modificatorControl;
     }
 }

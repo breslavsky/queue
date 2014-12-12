@@ -6,7 +6,7 @@ using System.ServiceModel;
 
 namespace Queue.Services.Portal
 {
-    public class PortalClientServiceHost : ServiceHost
+    public sealed class PortalClientServiceHost : ServiceHost
     {
         public PortalClientServiceHost(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser, Type serviceType, params Uri[] baseAddresses)
             : base(serviceType, baseAddresses)

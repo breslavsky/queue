@@ -28,24 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.selectServiceControl = new Queue.UI.WinForms.SelectServiceControl();
+            this.serviceControl = new Queue.UI.WinForms.SelectServiceControl();
             this.SuspendLayout();
             // 
             // selectServiceControl
             // 
-            this.selectServiceControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.selectServiceControl.Location = new System.Drawing.Point(10, 10);
-            this.selectServiceControl.Name = "selectServiceControl";
-            this.selectServiceControl.Size = new System.Drawing.Size(544, 412);
-            this.selectServiceControl.TabIndex = 0;
-            this.selectServiceControl.ServiceSelected += new System.EventHandler<System.EventArgs>(this.selectServiceControl_ServiceSelected);
+            this.serviceControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serviceControl.Location = new System.Drawing.Point(10, 10);
+            this.serviceControl.Name = "selectServiceControl";
+            this.serviceControl.Size = new System.Drawing.Size(544, 412);
+            this.serviceControl.TabIndex = 0;
+            this.serviceControl.Selected += new System.EventHandler<System.EventArgs>(this.serviceControl_Selected);
             // 
             // SelectServiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 432);
-            this.Controls.Add(this.selectServiceControl);
+            this.Controls.Add(this.serviceControl);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(580, 470);
@@ -59,7 +59,7 @@
 
         #endregion
 
-        private SelectServiceControl selectServiceControl;
+        private SelectServiceControl serviceControl;
 
     }
 }

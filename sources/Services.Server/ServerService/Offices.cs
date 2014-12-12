@@ -48,25 +48,6 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.Office> AddOffice()
-        {
-            return await Task.Run(() =>
-            {
-                checkPermission(UserRole.Administrator);
-
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    var office = new Office();
-
-                    session.Save(office);
-                    transaction.Commit();
-
-                    return Mapper.Map<Office, DTO.Office>(office);
-                }
-            });
-        }
-
         public async Task<DTO.Office> EditOffice(DTO.Office source)
         {
             return await Task.Run(() =>
@@ -78,10 +59,19 @@ namespace Queue.Services.Server
                 {
                     var officeId = source.Id;
 
-                    var office = session.Get<Office>(officeId);
-                    if (office == null)
+                    Office office;
+
+                    if (officeId != Guid.Empty)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(officeId), string.Format("Филиал [{0}] не найден", officeId));
+                        office = session.Get<Office>(officeId);
+                        if (office == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(officeId), string.Format("Филиал [{0}] не найден", officeId));
+                        }
+                    }
+                    else
+                    {
+                        office = new Office();
                     }
 
                     office.Name = source.Name;

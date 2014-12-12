@@ -50,8 +50,9 @@
     <Reference Include="Junte.Data.NHibernate">
       <HintPath>..\packages\Junte.Data.NHibernate.1.1.0.120\lib\net45\Junte.Data.NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.UI.WinForms">
-      <HintPath>..\packages\Junte.UI.WinForms.1.0.0.60\lib\net45\Junte.UI.WinForms.dll</HintPath>
+    <Reference Include="Junte.UI.WinForms, Version=1.0.0.65, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.UI.WinForms.1.0.0.65\lib\net45\Junte.UI.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="Junte.UI.WinForms.NHibernate, Version=1.1.5.80, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

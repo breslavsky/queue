@@ -6,8 +6,8 @@ using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
@@ -19,13 +19,11 @@ namespace Queue.Administrator
         #region fields
 
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
         private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
-
-        private Guid serviceId;
+        private User currentUser;
         private Service service;
+        private Guid serviceId;
+        private TaskPool taskPool;
 
         #endregion fields
 
@@ -101,7 +99,7 @@ namespace Queue.Administrator
             this.currentUser = currentUser;
             this.serviceId = serviceId;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
 
             var types = EnumItem<ServiceType>.GetItems().ToList();
@@ -126,142 +124,27 @@ namespace Queue.Administrator
             serviceParametersControl.Initialize(channelBuilder, currentUser);
         }
 
-        private async void ServiceEditForm_Load(object sender, EventArgs e)
+        protected override void Dispose(bool disposing)
         {
-            using (var channel = channelManager.CreateChannel())
+            if (disposing)
             {
-                try
+                if (components != null)
                 {
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                    Service = await taskPool.AddTask(channel.Service.GetService(serviceId));
+                    components.Dispose();
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
+                if (taskPool != null)
                 {
-                    UIHelper.Warning(exception.Reason.ToString());
+                    taskPool.Dispose();
                 }
-                catch (Exception exception)
+                if (channelManager != null)
                 {
-                    UIHelper.Warning(exception.Message);
+                    channelManager.Dispose();
                 }
             }
+            base.Dispose(disposing);
         }
 
-        #region bindings
-
-        private void codeTextBox_Leave(object sender, EventArgs e)
-        {
-            Service.Code = codeTextBox.Text;
-        }
-
-        private void priorityUpDown_Leave(object sender, EventArgs e)
-        {
-            Service.Priority = (int)priorityUpDown.Value;
-        }
-
-        private void clientRequireCheckBox_Leave(object sender, EventArgs e)
-        {
-            Service.ClientRequire = clientRequireCheckBox.Checked;
-        }
-
-        private void nameTextBox_Leave(object sender, EventArgs e)
-        {
-            Service.Name = nameTextBox.Text;
-        }
-
-        private void commentTextBox_Leave(object sender, EventArgs e)
-        {
-            Service.Comment = commentTextBox.Text;
-        }
-
-        private void linkTextBox_Leave(object sender, EventArgs e)
-        {
-            Service.Link = linkTextBox.Text;
-        }
-
-        private void descriptionTextBox_Click(object sender, EventArgs e)
-        {
-            using (var form = new HtmlEditorForm())
-            {
-                form.HTML = descriptionTextBox.Text;
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    descriptionTextBox.Text = form.HTML;
-                }
-            }
-        }
-
-        private void descriptionTextBox_Leave(object sender, EventArgs e)
-        {
-            Service.Description = descriptionTextBox.Text;
-        }
-
-        private void tagsTextBox_Leave(object sender, EventArgs e)
-        {
-            Service.Tags = tagsTextBox.Text;
-        }
-
-        private void serviceTypeListBox_Leave(object sender, EventArgs e)
-        {
-            Service.Type = ServiceType.None;
-
-            foreach (EnumItem<ServiceType> item in serviceTypeListBox.CheckedItems)
-            {
-                Service.Type |= item.Value;
-            }
-        }
-
-        private void liveRegistratorListBox_Leave(object sender, EventArgs e)
-        {
-            Service.LiveRegistrator = ClientRequestRegistrator.None;
-
-            foreach (EnumItem<ClientRequestRegistrator> item in liveRegistratorListBox.CheckedItems)
-            {
-                Service.LiveRegistrator |= item.Value;
-            }
-        }
-
-        private void earlyRegistratorListBox_Leave(object sender, EventArgs e)
-        {
-            Service.EarlyRegistrator = ClientRequestRegistrator.None;
-
-            foreach (EnumItem<ClientRequestRegistrator> item in liveRegistratorListBox.CheckedItems)
-            {
-                Service.EarlyRegistrator |= item.Value;
-            }
-        }
-
-        private void timeIntervalRoundingUpDown_Leave(object sender, EventArgs e)
-        {
-            Service.TimeIntervalRounding = TimeSpan.FromMinutes((double)timeIntervalRoundingUpDown.Value);
-        }
-
-        private void clientCallDelayUpDown_Leave(object sender, EventArgs e)
-        {
-            Service.ClientCallDelay = TimeSpan.FromSeconds((double)clientCallDelayUpDown.Value);
-        }
-
-        private void maxSubjectsUpDown_Leave(object sender, EventArgs e)
-        {
-            Service.MaxSubjects = (int)maxSubjectsUpDown.Value;
-        }
-
-        private void maxEarlyDaysUpDown_Leave(object sender, EventArgs e)
-        {
-            Service.MaxEarlyDays = (int)maxEarlyDaysUpDown.Value;
-        }
-
-        private void isPlanSubjectsCheckBox_Leave(object sender, EventArgs e)
-        {
-            Service.IsPlanSubjects = isPlanSubjectsCheckBox.Checked;
-        }
-
-        #endregion bindings
-
-        private async void saveServiceButton_Click(object sender, EventArgs e)
+        private async void saveButton_Click(object sender, EventArgs e)
         {
             using (var channel = channelManager.CreateChannel())
             {
@@ -269,9 +152,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-
-                    Service = await taskPool.AddTask(channel.Service.EditService(Service));
+                    await taskPool.AddTask(channel.Service.EditService(service));
 
                     DialogResult = DialogResult.OK;
                 }
@@ -293,6 +174,149 @@ namespace Queue.Administrator
                 }
             }
         }
+
+        private void saveAndCloseButton_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void ServiceEditForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            taskPool.Cancel();
+        }
+
+        private async void ServiceEditForm_Load(object sender, EventArgs e)
+        {
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    Service = await taskPool.AddTask(channel.Service.GetService(serviceId));
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+            }
+        }
+
+        #region bindings
+
+        private void clientCallDelayUpDown_Leave(object sender, EventArgs e)
+        {
+            Service.ClientCallDelay = TimeSpan.FromSeconds((double)clientCallDelayUpDown.Value);
+        }
+
+        private void clientRequireCheckBox_Leave(object sender, EventArgs e)
+        {
+            Service.ClientRequire = clientRequireCheckBox.Checked;
+        }
+
+        private void codeTextBox_Leave(object sender, EventArgs e)
+        {
+            Service.Code = codeTextBox.Text;
+        }
+
+        private void commentTextBox_Leave(object sender, EventArgs e)
+        {
+            Service.Comment = commentTextBox.Text;
+        }
+
+        private void descriptionTextBox_Click(object sender, EventArgs e)
+        {
+            using (var form = new HtmlEditorForm())
+            {
+                form.HTML = descriptionTextBox.Text;
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    descriptionTextBox.Text = form.HTML;
+                }
+            }
+        }
+
+        private void descriptionTextBox_Leave(object sender, EventArgs e)
+        {
+            Service.Description = descriptionTextBox.Text;
+        }
+
+        private void earlyRegistratorListBox_Leave(object sender, EventArgs e)
+        {
+            Service.EarlyRegistrator = ClientRequestRegistrator.None;
+
+            foreach (EnumItem<ClientRequestRegistrator> item in liveRegistratorListBox.CheckedItems)
+            {
+                Service.EarlyRegistrator |= item.Value;
+            }
+        }
+
+        private void isPlanSubjectsCheckBox_Leave(object sender, EventArgs e)
+        {
+            Service.IsPlanSubjects = isPlanSubjectsCheckBox.Checked;
+        }
+
+        private void linkTextBox_Leave(object sender, EventArgs e)
+        {
+            Service.Link = linkTextBox.Text;
+        }
+
+        private void liveRegistratorListBox_Leave(object sender, EventArgs e)
+        {
+            Service.LiveRegistrator = ClientRequestRegistrator.None;
+
+            foreach (EnumItem<ClientRequestRegistrator> item in liveRegistratorListBox.CheckedItems)
+            {
+                Service.LiveRegistrator |= item.Value;
+            }
+        }
+
+        private void maxEarlyDaysUpDown_Leave(object sender, EventArgs e)
+        {
+            Service.MaxEarlyDays = (int)maxEarlyDaysUpDown.Value;
+        }
+
+        private void maxSubjectsUpDown_Leave(object sender, EventArgs e)
+        {
+            Service.MaxSubjects = (int)maxSubjectsUpDown.Value;
+        }
+
+        private void nameTextBox_Leave(object sender, EventArgs e)
+        {
+            Service.Name = nameTextBox.Text;
+        }
+
+        private void priorityUpDown_Leave(object sender, EventArgs e)
+        {
+            Service.Priority = (int)priorityUpDown.Value;
+        }
+
+        private void serviceTypeListBox_Leave(object sender, EventArgs e)
+        {
+            Service.Type = ServiceType.None;
+
+            foreach (EnumItem<ServiceType> item in serviceTypeListBox.CheckedItems)
+            {
+                Service.Type |= item.Value;
+            }
+        }
+
+        private void tagsTextBox_Leave(object sender, EventArgs e)
+        {
+            Service.Tags = tagsTextBox.Text;
+        }
+
+        private void timeIntervalRoundingUpDown_Leave(object sender, EventArgs e)
+        {
+            Service.TimeIntervalRounding = TimeSpan.FromMinutes((double)timeIntervalRoundingUpDown.Value);
+        }
+
+        #endregion bindings
 
         private void serviceTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -333,7 +357,6 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    await channel.Service.OpenUserSession(currentUser.SessionId);
                     weekdayScheduleControl.Schedule = await taskPool.AddTask(channel.Service.GetServiceWeekdaySchedule(Service.Id, dayOfWeek));
 
                     weekdayScheduleCheckBox.Checked = true;
@@ -358,10 +381,9 @@ namespace Queue.Administrator
             }
         }
 
-        private void weekdayTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        private void weekdayScheduleCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            weekdaySchedulePanel.Parent = weekdayTabControl.SelectedTab;
-            LoadWeekdaySchedule();
+            weekdayScheduleControl.Enabled = weekdayScheduleCheckBox.Checked;
         }
 
         private async void weekdayScheduleCheckBox_Click(object sender, EventArgs e)
@@ -373,8 +395,6 @@ namespace Queue.Administrator
                 try
                 {
                     weekdayScheduleCheckBox.Enabled = false;
-
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
 
                     if (weekdayScheduleCheckBox.Checked)
                     {
@@ -409,46 +429,19 @@ namespace Queue.Administrator
             }
         }
 
-        private void weekdayScheduleCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void weekdayTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            weekdayScheduleControl.Enabled = weekdayScheduleCheckBox.Checked;
+            weekdaySchedulePanel.Parent = weekdayTabControl.SelectedTab;
+            LoadWeekdaySchedule();
         }
 
         #endregion weekday schedule
 
         #region exception schedule
 
-        private async void exceptionScheduleDatePicker_ValueChanged(object sender, EventArgs e)
+        private void exceptionScheduleCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            var scheduleDate = exceptionScheduleDatePicker.Value;
-
-            using (var channel = channelManager.CreateChannel())
-            {
-                try
-                {
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                    exceptionScheduleControl.Schedule = await taskPool.AddTask(channel.Service.GetServiceExceptionSchedule(Service.Id, scheduleDate));
-
-                    exceptionScheduleCheckBox.Checked = true;
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException<ObjectNotFoundFault>)
-                {
-                    exceptionScheduleCheckBox.Checked = false;
-                    exceptionScheduleControl.Schedule = null;
-                }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-            }
+            exceptionScheduleControl.Enabled = exceptionScheduleCheckBox.Checked;
         }
 
         private async void exceptionScheduleCheckBox_Click(object sender, EventArgs e)
@@ -460,8 +453,6 @@ namespace Queue.Administrator
                     exceptionScheduleCheckBox.Enabled = false;
 
                     var scheduleDate = exceptionScheduleDatePicker.Value;
-
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
 
                     if (exceptionScheduleCheckBox.Checked)
                     {
@@ -500,36 +491,38 @@ namespace Queue.Administrator
             }
         }
 
-        private void exceptionScheduleCheckBox_CheckedChanged(object sender, EventArgs e)
+        private async void exceptionScheduleDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            exceptionScheduleControl.Enabled = exceptionScheduleCheckBox.Checked;
+            var scheduleDate = exceptionScheduleDatePicker.Value;
+
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    exceptionScheduleControl.Schedule = await taskPool.AddTask(channel.Service.GetServiceExceptionSchedule(Service.Id, scheduleDate));
+
+                    exceptionScheduleCheckBox.Checked = true;
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException<ObjectNotFoundFault>)
+                {
+                    exceptionScheduleCheckBox.Checked = false;
+                    exceptionScheduleControl.Schedule = null;
+                }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+            }
         }
 
         #endregion exception schedule
-
-        private void ServiceEditForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            taskPool.Cancel();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
-                if (taskPool != null)
-                {
-                    taskPool.Dispose();
-                }
-                if (channelManager != null)
-                {
-                    channelManager.Dispose();
-                }
-            }
-            base.Dispose(disposing);
-        }
     }
 }

@@ -10,13 +10,13 @@ namespace Queue.Services.Server
             Operator = queueOperator;
         }
 
-        public Operator Operator { get; private set; }
+        public TimeSpan Capacity { get; set; }
 
         public int LastPosition { get; set; }
 
-        public int Standing { get; set; }
+        public Operator Operator { get; private set; }
 
-        public TimeSpan Capacity { get; set; }
+        public int Standing { get; set; }
 
         public TimeSpan Workload { get; set; }
 

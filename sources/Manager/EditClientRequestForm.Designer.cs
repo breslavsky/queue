@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.stateLabel = new System.Windows.Forms.Label();
             this.numberLabel = new System.Windows.Forms.Label();
             this.parametersLabel = new System.Windows.Forms.Label();
@@ -43,25 +43,17 @@
             this.createDateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.messageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.eventsLabel = new System.Windows.Forms.Label();
-            this.postponeMinutesMinLabel = new System.Windows.Forms.Label();
-            this.postponeMinutesLabel = new System.Windows.Forms.Label();
-            this.postponeMinutesUpDown = new System.Windows.Forms.NumericUpDown();
-            this.operatorsComboBox = new System.Windows.Forms.ComboBox();
             this.operatorLabel = new System.Windows.Forms.Label();
             this.serviceChangeLink = new System.Windows.Forms.LinkLabel();
             this.isPriorityCheckBox = new System.Windows.Forms.CheckBox();
             this.subjectsLabel = new System.Windows.Forms.Label();
             this.subjectsUpDown = new System.Windows.Forms.NumericUpDown();
             this.clientEditLink = new System.Windows.Forms.LinkLabel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.postponeButton = new System.Windows.Forms.Button();
             this.topMenu = new System.Windows.Forms.MenuStrip();
             this.cancelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.couponMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.subjectsChangeButton = new System.Windows.Forms.Button();
-            this.subjectsPanel = new System.Windows.Forms.Panel();
             this.numberTextBlock = new System.Windows.Forms.Label();
             this.requestDateTextBlock = new System.Windows.Forms.Label();
             this.clientTextBlock = new System.Windows.Forms.Label();
@@ -72,18 +64,15 @@
             this.serviceTypeLabel = new System.Windows.Forms.Label();
             this.serviceTypeTextBlock = new System.Windows.Forms.Label();
             this.serviceStepLabel = new System.Windows.Forms.Label();
-            this.serviceStepComboBox = new System.Windows.Forms.ComboBox();
-            this.operatorResetButton = new System.Windows.Forms.Button();
-            this.serviceStepResetButton = new System.Windows.Forms.Button();
             this.editPanel = new System.Windows.Forms.Panel();
-            this.typeComboBox = new System.Windows.Forms.ComboBox();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.operatorControl = new Queue.UI.WinForms.IdentifiedEntityControl();
+            this.serviceStepControl = new Queue.UI.WinForms.IdentifiedEntityControl();
+            this.typeControl = new Queue.UI.WinForms.EnumItemControl();
             ((System.ComponentModel.ISupportInitialize)(this.parametersGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.topMenu.SuspendLayout();
-            this.subjectsPanel.SuspendLayout();
             this.editPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,14 +108,14 @@
             this.parametersGridView.AllowUserToAddRows = false;
             this.parametersGridView.AllowUserToDeleteRows = false;
             this.parametersGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.parametersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.parametersGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.parameterNameColumn,
@@ -188,14 +177,14 @@
             this.eventsGridView.AllowUserToAddRows = false;
             this.eventsGridView.AllowUserToDeleteRows = false;
             this.eventsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.eventsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.eventsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.eventsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.eventsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.createDateColumn,
@@ -234,54 +223,6 @@
             this.eventsLabel.Text = "Журнал событий";
             this.eventsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // postponeMinutesMinLabel
-            // 
-            this.postponeMinutesMinLabel.Location = new System.Drawing.Point(115, 20);
-            this.postponeMinutesMinLabel.Name = "postponeMinutesMinLabel";
-            this.postponeMinutesMinLabel.Size = new System.Drawing.Size(30, 20);
-            this.postponeMinutesMinLabel.TabIndex = 0;
-            this.postponeMinutesMinLabel.Text = "мин.";
-            this.postponeMinutesMinLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // postponeMinutesLabel
-            // 
-            this.postponeMinutesLabel.Location = new System.Drawing.Point(5, 20);
-            this.postponeMinutesLabel.Name = "postponeMinutesLabel";
-            this.postponeMinutesLabel.Size = new System.Drawing.Size(60, 20);
-            this.postponeMinutesLabel.TabIndex = 0;
-            this.postponeMinutesLabel.Text = "На время";
-            this.postponeMinutesLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // postponeMinutesUpDown
-            // 
-            this.postponeMinutesUpDown.Location = new System.Drawing.Point(65, 20);
-            this.postponeMinutesUpDown.Maximum = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
-            this.postponeMinutesUpDown.Minimum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.postponeMinutesUpDown.Name = "postponeMinutesUpDown";
-            this.postponeMinutesUpDown.Size = new System.Drawing.Size(50, 20);
-            this.postponeMinutesUpDown.TabIndex = 0;
-            this.postponeMinutesUpDown.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            // 
-            // operatorsComboBox
-            // 
-            this.operatorsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.operatorsComboBox.Location = new System.Drawing.Point(115, 280);
-            this.operatorsComboBox.Name = "operatorsComboBox";
-            this.operatorsComboBox.Size = new System.Drawing.Size(180, 21);
-            this.operatorsComboBox.TabIndex = 0;
-            // 
             // operatorLabel
             // 
             this.operatorLabel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
@@ -311,7 +252,7 @@
             this.isPriorityCheckBox.TabIndex = 0;
             this.isPriorityCheckBox.Text = "Приоритет вызова";
             this.isPriorityCheckBox.UseVisualStyleBackColor = true;
-            this.isPriorityCheckBox.Click += new System.EventHandler(this.isPriorityCheckBox_Click);
+            this.isPriorityCheckBox.Leave += new System.EventHandler(this.isPriorityCheckBox_Leave);
             // 
             // subjectsLabel
             // 
@@ -324,7 +265,7 @@
             // 
             // subjectsUpDown
             // 
-            this.subjectsUpDown.Location = new System.Drawing.Point(0, 5);
+            this.subjectsUpDown.Location = new System.Drawing.Point(115, 80);
             this.subjectsUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -333,6 +274,7 @@
             this.subjectsUpDown.Name = "subjectsUpDown";
             this.subjectsUpDown.Size = new System.Drawing.Size(60, 20);
             this.subjectsUpDown.TabIndex = 0;
+            this.subjectsUpDown.Leave += new System.EventHandler(this.subjectsUpDown_Leave);
             // 
             // clientEditLink
             // 
@@ -344,29 +286,6 @@
             this.clientEditLink.TabStop = true;
             this.clientEditLink.Text = "[изменить]";
             this.clientEditLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.clientEditLink_LinkClicked);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.postponeButton);
-            this.groupBox1.Controls.Add(this.postponeMinutesMinLabel);
-            this.groupBox1.Controls.Add(this.postponeMinutesUpDown);
-            this.groupBox1.Controls.Add(this.postponeMinutesLabel);
-            this.groupBox1.Location = new System.Drawing.Point(325, 195);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(235, 50);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Отложить запрос";
-            // 
-            // postponeButton
-            // 
-            this.postponeButton.Location = new System.Drawing.Point(150, 20);
-            this.postponeButton.Name = "postponeButton";
-            this.postponeButton.Size = new System.Drawing.Size(75, 20);
-            this.postponeButton.TabIndex = 0;
-            this.postponeButton.Text = "Отложить";
-            this.postponeButton.UseVisualStyleBackColor = true;
-            this.postponeButton.Click += new System.EventHandler(this.postponeButton_Click);
             // 
             // topMenu
             // 
@@ -410,25 +329,6 @@
             this.reportMenuItem.Size = new System.Drawing.Size(97, 20);
             this.reportMenuItem.Text = "Печать отчета";
             this.reportMenuItem.Click += new System.EventHandler(this.reportMenuItem_Click);
-            // 
-            // subjectsChangeButton
-            // 
-            this.subjectsChangeButton.Location = new System.Drawing.Point(65, 5);
-            this.subjectsChangeButton.Name = "subjectsChangeButton";
-            this.subjectsChangeButton.Size = new System.Drawing.Size(75, 20);
-            this.subjectsChangeButton.TabIndex = 0;
-            this.subjectsChangeButton.Text = "Изменить";
-            this.subjectsChangeButton.UseVisualStyleBackColor = true;
-            this.subjectsChangeButton.Click += new System.EventHandler(this.subjectsChangeButton_Click);
-            // 
-            // subjectsPanel
-            // 
-            this.subjectsPanel.Controls.Add(this.subjectsUpDown);
-            this.subjectsPanel.Controls.Add(this.subjectsChangeButton);
-            this.subjectsPanel.Location = new System.Drawing.Point(115, 75);
-            this.subjectsPanel.Name = "subjectsPanel";
-            this.subjectsPanel.Size = new System.Drawing.Size(150, 30);
-            this.subjectsPanel.TabIndex = 0;
             // 
             // numberTextBlock
             // 
@@ -527,86 +427,87 @@
             this.serviceStepLabel.Text = "Этап услуги";
             this.serviceStepLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // serviceStepComboBox
-            // 
-            this.serviceStepComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.serviceStepComboBox.Location = new System.Drawing.Point(115, 230);
-            this.serviceStepComboBox.Name = "serviceStepComboBox";
-            this.serviceStepComboBox.Size = new System.Drawing.Size(180, 21);
-            this.serviceStepComboBox.TabIndex = 13;
-            // 
-            // operatorResetButton
-            // 
-            this.operatorResetButton.Location = new System.Drawing.Point(300, 280);
-            this.operatorResetButton.Name = "operatorResetButton";
-            this.operatorResetButton.Size = new System.Drawing.Size(20, 21);
-            this.operatorResetButton.TabIndex = 14;
-            this.operatorResetButton.Text = "X";
-            this.operatorResetButton.UseVisualStyleBackColor = true;
-            this.operatorResetButton.Click += new System.EventHandler(this.operatorResetButton_Click);
-            // 
-            // serviceStepResetButton
-            // 
-            this.serviceStepResetButton.Location = new System.Drawing.Point(300, 230);
-            this.serviceStepResetButton.Name = "serviceStepResetButton";
-            this.serviceStepResetButton.Size = new System.Drawing.Size(20, 21);
-            this.serviceStepResetButton.TabIndex = 15;
-            this.serviceStepResetButton.Text = "X";
-            this.serviceStepResetButton.UseVisualStyleBackColor = true;
-            this.serviceStepResetButton.Click += new System.EventHandler(this.serviceStepResetButton_Click);
-            // 
             // editPanel
             // 
-            this.editPanel.Controls.Add(this.typeComboBox);
-            this.editPanel.Controls.Add(this.parametersGridView);
-            this.editPanel.Controls.Add(this.serviceStepResetButton);
-            this.editPanel.Controls.Add(this.parametersLabel);
-            this.editPanel.Controls.Add(this.operatorResetButton);
-            this.editPanel.Controls.Add(this.operatorsComboBox);
-            this.editPanel.Controls.Add(this.serviceStepComboBox);
-            this.editPanel.Controls.Add(this.operatorLabel);
-            this.editPanel.Controls.Add(this.serviceStepLabel);
-            this.editPanel.Controls.Add(this.stateLabel);
-            this.editPanel.Controls.Add(this.serviceTypeTextBlock);
-            this.editPanel.Controls.Add(this.serviceChangeLink);
-            this.editPanel.Controls.Add(this.serviceTypeLabel);
-            this.editPanel.Controls.Add(this.serviceLabel);
-            this.editPanel.Controls.Add(this.clientLabel);
-            this.editPanel.Controls.Add(this.requestTimeTextBlock);
-            this.editPanel.Controls.Add(this.requestDateLabel);
-            this.editPanel.Controls.Add(this.requestTimeLabel);
-            this.editPanel.Controls.Add(this.isPriorityCheckBox);
-            this.editPanel.Controls.Add(this.stateTextBlock);
+            this.editPanel.Controls.Add(this.saveButton);
+            this.editPanel.Controls.Add(this.operatorControl);
+            this.editPanel.Controls.Add(this.serviceStepControl);
+            this.editPanel.Controls.Add(this.typeControl);
             this.editPanel.Controls.Add(this.numberLabel);
-            this.editPanel.Controls.Add(this.serviceTextBlock);
+            this.editPanel.Controls.Add(this.numberTextBlock);
+            this.editPanel.Controls.Add(this.isPriorityCheckBox);
+            this.editPanel.Controls.Add(this.requestDateLabel);
+            this.editPanel.Controls.Add(this.requestDateTextBlock);
+            this.editPanel.Controls.Add(this.requestTimeLabel);
+            this.editPanel.Controls.Add(this.requestTimeTextBlock);
             this.editPanel.Controls.Add(this.subjectsLabel);
+            this.editPanel.Controls.Add(this.subjectsUpDown);
+            this.editPanel.Controls.Add(this.clientLabel);
             this.editPanel.Controls.Add(this.clientTextBlock);
             this.editPanel.Controls.Add(this.clientEditLink);
-            this.editPanel.Controls.Add(this.requestDateTextBlock);
-            this.editPanel.Controls.Add(this.groupBox1);
-            this.editPanel.Controls.Add(this.numberTextBlock);
-            this.editPanel.Controls.Add(this.subjectsPanel);
+            this.editPanel.Controls.Add(this.serviceLabel);
+            this.editPanel.Controls.Add(this.serviceTextBlock);
+            this.editPanel.Controls.Add(this.serviceChangeLink);
+            this.editPanel.Controls.Add(this.serviceTypeLabel);
+            this.editPanel.Controls.Add(this.serviceTypeTextBlock);
+            this.editPanel.Controls.Add(this.serviceStepLabel);
+            this.editPanel.Controls.Add(this.stateLabel);
+            this.editPanel.Controls.Add(this.stateTextBlock);
+            this.editPanel.Controls.Add(this.operatorLabel);
+            this.editPanel.Controls.Add(this.parametersLabel);
+            this.editPanel.Controls.Add(this.parametersGridView);
             this.editPanel.Location = new System.Drawing.Point(0, 25);
             this.editPanel.Name = "editPanel";
             this.editPanel.Size = new System.Drawing.Size(635, 315);
             this.editPanel.TabIndex = 16;
             this.editPanel.EnabledChanged += new System.EventHandler(this.editPanel_EnabledChanged);
             // 
-            // typeComboBox
+            // saveButton
             // 
-            this.typeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.typeComboBox.Location = new System.Drawing.Point(180, 55);
-            this.typeComboBox.Name = "typeComboBox";
-            this.typeComboBox.Size = new System.Drawing.Size(110, 21);
-            this.typeComboBox.TabIndex = 16;
+            this.saveButton.Location = new System.Drawing.Point(330, 195);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(75, 25);
+            this.saveButton.TabIndex = 20;
+            this.saveButton.Text = "Сохранить";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // operatorControl
+            // 
+            this.operatorControl.Enabled = false;
+            this.operatorControl.Location = new System.Drawing.Point(115, 280);
+            this.operatorControl.Name = "operatorControl";
+            this.operatorControl.Size = new System.Drawing.Size(205, 21);
+            this.operatorControl.TabIndex = 19;
+            this.operatorControl.UseResetButton = true;
+            this.operatorControl.Leave += new System.EventHandler(this.operatorsControl_Leave);
+            // 
+            // serviceStepControl
+            // 
+            this.serviceStepControl.Enabled = false;
+            this.serviceStepControl.Location = new System.Drawing.Point(115, 230);
+            this.serviceStepControl.Name = "serviceStepControl";
+            this.serviceStepControl.Size = new System.Drawing.Size(205, 21);
+            this.serviceStepControl.TabIndex = 18;
+            this.serviceStepControl.UseResetButton = true;
+            this.serviceStepControl.Leave += new System.EventHandler(this.serviceStepControl_Leave);
+            // 
+            // typeControl
+            // 
+            this.typeControl.Enabled = false;
+            this.typeControl.Location = new System.Drawing.Point(180, 55);
+            this.typeControl.Name = "typeControl";
+            this.typeControl.Size = new System.Drawing.Size(135, 21);
+            this.typeControl.TabIndex = 17;
+            this.typeControl.Leave += new System.EventHandler(this.typeControl_Leave);
             // 
             // EditClientRequestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(634, 536);
-            this.Controls.Add(this.editPanel);
             this.Controls.Add(this.topMenu);
+            this.Controls.Add(this.editPanel);
             this.Controls.Add(this.eventsLabel);
             this.Controls.Add(this.eventsGridView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -617,12 +518,9 @@
             this.Load += new System.EventHandler(this.EditClientRequestForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.parametersGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).EndInit();
-            this.groupBox1.ResumeLayout(false);
             this.topMenu.ResumeLayout(false);
             this.topMenu.PerformLayout();
-            this.subjectsPanel.ResumeLayout(false);
             this.editPanel.ResumeLayout(false);
             this.editPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -641,25 +539,17 @@
         private System.Windows.Forms.Label serviceLabel;
         private System.Windows.Forms.DataGridView eventsGridView;
         private System.Windows.Forms.Label eventsLabel;
-        private System.Windows.Forms.Label postponeMinutesMinLabel;
-        private System.Windows.Forms.Label postponeMinutesLabel;
-        private System.Windows.Forms.NumericUpDown postponeMinutesUpDown;
-        private System.Windows.Forms.ComboBox operatorsComboBox;
         private System.Windows.Forms.Label operatorLabel;
         private System.Windows.Forms.LinkLabel serviceChangeLink;
         private System.Windows.Forms.CheckBox isPriorityCheckBox;
         private System.Windows.Forms.Label subjectsLabel;
         private System.Windows.Forms.NumericUpDown subjectsUpDown;
         private System.Windows.Forms.LinkLabel clientEditLink;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button postponeButton;
         private System.Windows.Forms.MenuStrip topMenu;
         private System.Windows.Forms.ToolStripMenuItem cancelMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restoreMenuItem;
         private System.Windows.Forms.ToolStripMenuItem couponMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportMenuItem;
-        private System.Windows.Forms.Button subjectsChangeButton;
-        private System.Windows.Forms.Panel subjectsPanel;
         private System.Windows.Forms.Label numberTextBlock;
         private System.Windows.Forms.Label requestDateTextBlock;
         private System.Windows.Forms.Label clientTextBlock;
@@ -674,10 +564,10 @@
         private System.Windows.Forms.Label serviceTypeLabel;
         private System.Windows.Forms.Label serviceTypeTextBlock;
         private System.Windows.Forms.Label serviceStepLabel;
-        private System.Windows.Forms.ComboBox serviceStepComboBox;
-        private System.Windows.Forms.Button operatorResetButton;
-        private System.Windows.Forms.Button serviceStepResetButton;
         private System.Windows.Forms.Panel editPanel;
-        private System.Windows.Forms.ComboBox typeComboBox;
+        private UI.WinForms.EnumItemControl typeControl;
+        private UI.WinForms.IdentifiedEntityControl operatorControl;
+        private UI.WinForms.IdentifiedEntityControl serviceStepControl;
+        private System.Windows.Forms.Button saveButton;
     }
 }

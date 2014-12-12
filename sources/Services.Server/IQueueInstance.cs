@@ -5,17 +5,17 @@ namespace Queue.Services.Server
 {
     public interface IQueueInstance : IDisposable
     {
-        event QueueInstanceEventHandler OnCallClient;
+        event EventHandler<QueueInstanceEventArgs> OnCallClient;
 
-        event QueueInstanceEventHandler OnClientRequestUpdated;
+        event EventHandler<QueueInstanceEventArgs> OnClientRequestUpdated;
 
-        event QueueInstanceEventHandler OnCurrentClientRequestPlanUpdated;
+        event EventHandler<QueueInstanceEventArgs> OnCurrentClientRequestPlanUpdated;
 
-        event QueueInstanceEventHandler OnOperatorPlanMetricsUpdated;
+        event EventHandler<QueueInstanceEventArgs> OnOperatorPlanMetricsUpdated;
 
-        event QueueInstanceEventHandler OnConfigUpdated;
+        event EventHandler<QueueInstanceEventArgs> OnConfigUpdated;
 
-        event QueueInstanceEventHandler OnEvent;
+        event EventHandler<QueueInstanceEventArgs> OnEvent;
 
         QueuePlan TodayQueuePlan { get; }
 

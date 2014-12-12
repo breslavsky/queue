@@ -30,7 +30,6 @@
             this.terminalConfigControl = new Queue.Administrator.TerminalConfigControl();
             this.notificationTabPage = new System.Windows.Forms.TabPage();
             this.notificationConfigControl = new Queue.Administrator.NotificationConfigControl();
-            this.selectMediaFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.couponConfigTabPage.SuspendLayout();
             this.сonfigTabControl.SuspendLayout();
             this.defaultConfigTabPage.SuspendLayout();
@@ -107,11 +106,11 @@
             this.SMTPConfigTabPage.Text = "Отправка почты";
             this.SMTPConfigTabPage.UseVisualStyleBackColor = true;
             // 
-            // smtpConfigControl
+            // SMTPConfigControl
             // 
             this.SMTPConfigControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SMTPConfigControl.Location = new System.Drawing.Point(0, 0);
-            this.SMTPConfigControl.Name = "smtpConfigControl";
+            this.SMTPConfigControl.Name = "SMTPConfigControl";
             this.SMTPConfigControl.Size = new System.Drawing.Size(656, 412);
             this.SMTPConfigControl.TabIndex = 0;
             // 
@@ -191,10 +190,6 @@
             this.notificationConfigControl.Size = new System.Drawing.Size(650, 406);
             this.notificationConfigControl.TabIndex = 0;
             // 
-            // selectMediaFileDialog
-            // 
-            this.selectMediaFileDialog.Filter = "Windows Media Video |*.wmv";
-            // 
             // ConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -228,7 +223,6 @@
         private System.Windows.Forms.TabPage SMTPConfigTabPage;
         private System.Windows.Forms.TabPage portalConfigTabPage;
         private System.Windows.Forms.TabPage mediaConfigTabPage;
-        private System.Windows.Forms.OpenFileDialog selectMediaFileDialog;
         private System.Windows.Forms.TabPage terminalConfigTabPage;
         private System.Windows.Forms.TabPage notificationTabPage;
         private CouponConfigControl couponConfigControl;

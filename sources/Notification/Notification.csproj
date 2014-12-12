@@ -85,8 +85,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.UI.WPF.1.0.0.15\lib\net45\Junte.UI.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.WCF.Common">
-      <HintPath>..\packages\Junte.WCF.Common.1.0.0.15\lib\net45\Junte.WCF.Common.dll</HintPath>
+    <Reference Include="Junte.WCF.Common, Version=1.0.0.35, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.WCF.Common.1.0.0.35\lib\net45\Junte.WCF.Common.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro, Version=0.14.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

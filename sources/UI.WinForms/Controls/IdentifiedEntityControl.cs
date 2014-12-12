@@ -1,11 +1,12 @@
 ﻿using Queue.Services.DTO;
+using System;
 using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
     public partial class IdentifiedEntityControl : UserControl
     {
-        public bool UserCanReset
+        public bool UseResetButton
         {
             get
             {
@@ -17,30 +18,44 @@ namespace Queue.UI.WinForms
             }
         }
 
-        public IdentifiedEntity[] Entities
-        {
-            set
-            {
-                comboBox.Items.Clear();
-                comboBox.Items.AddRange(value);
-            }
-        }
+        public event EventHandler<EventArgs> SelectedChanged;
 
-        public IdentifiedEntity Selected
-        {
-            get
-            {
-                return comboBox.SelectedItem as IdentifiedEntity;
-            }
-            set
-            {
-                comboBox.SelectedItem = value;
-            }
-        }
+        private bool frozen = true;
 
         public IdentifiedEntityControl()
         {
             InitializeComponent();
+        }
+
+        public void Initialize<T>(IdentifiedEntity[] entities) where T : IdentifiedEntity
+        {
+            frozen = true;
+
+            comboBox.Items.Clear();
+            comboBox.Items.AddRange(entities);
+            Enabled = entities.Length > 0;
+
+            frozen = false;
+        }
+
+        public T Selected<T>() where T : IdentifiedEntity
+        {
+            return comboBox.SelectedItem != null ? (comboBox.SelectedItem as IdentifiedEntity).Cast<T>() : null;
+        }
+
+        public void Select<T>(T value) where T : IdentifiedEntity
+        {
+            frozen = true;
+
+            comboBox.SelectedItem = value;
+
+            frozen = false;
+        }
+
+        public void Clear()
+        {
+            comboBox.Items.Clear();
+            Enabled = false;
         }
 
         private void resetButton_VisibleChanged(object sender, System.EventArgs e)
@@ -50,7 +65,15 @@ namespace Queue.UI.WinForms
 
         private void resetButton_Click(object sender, System.EventArgs e)
         {
-            Selected = null;
+            comboBox.SelectedItem = null;
+        }
+
+        private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (SelectedChanged != null && !frozen)
+            {
+                SelectedChanged(this, new EventArgs());
+            }
         }
     }
 }

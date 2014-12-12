@@ -7,7 +7,6 @@ using Queue.Terminal.Core;
 using Queue.Terminal.Types;
 using Queue.Terminal.UserControls;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Extensions;
 using Queue.UI.WPF.Types;
 using System;
 using System.ServiceModel;

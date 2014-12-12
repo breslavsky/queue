@@ -24,7 +24,10 @@ namespace Queue.UI.WinForms
 
         #region properties
 
-        public Service SelectedService { get { return selectServiceControl.SelectedService; } }
+        public Service Service
+        {
+            get { return serviceControl.Service; }
+        }
 
         #endregion properties
 
@@ -39,12 +42,12 @@ namespace Queue.UI.WinForms
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             taskPool = new TaskPool();
 
-            selectServiceControl.Initialize(channelBuilder, currentUser);
+            serviceControl.Initialize(channelBuilder, currentUser);
         }
 
-        private void selectServiceControl_ServiceSelected(object sender, EventArgs e)
+        private void serviceControl_Selected(object sender, EventArgs e)
         {
-            if (SelectedService != null)
+            if (Service != null)
             {
                 DialogResult = DialogResult.OK;
             }

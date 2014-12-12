@@ -13,9 +13,8 @@ namespace Queue.Administrator
     public partial class WorkplacesForm : Queue.UI.WinForms.RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
         private ChannelManager<IServerTcpService> channelManager;
+        private User currentUser;
         private TaskPool taskPool;
 
         public WorkplacesForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
@@ -26,8 +25,45 @@ namespace Queue.Administrator
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+                if (taskPool != null)
+                {
+                    taskPool.Dispose();
+                }
+                if (channelManager != null)
+                {
+                    channelManager.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        private void addWorkplaceButton_Click(object sender, EventArgs e)
+        {
+            using (var f = new EditWorkplaceForm(channelBuilder, currentUser))
+            {
+                if (f.ShowDialog() == DialogResult.OK)
+                {
+                    var row = workplacesGridView.Rows[workplacesGridView.Rows.Add()];
+                    WorkplacesGridViewRenderRow(row, f.Workplace);
+                }
+            }
+        }
+
+        private void WorkplacesForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            taskPool.Cancel();
         }
 
         private async void WorkplacesForm_Load(object sender, EventArgs e)
@@ -36,7 +72,6 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                     foreach (var workplace in await taskPool.AddTask(channel.Service.GetWorkplaces()))
                     {
                         int index = workplacesGridView.Rows.Add();
@@ -56,70 +91,6 @@ namespace Queue.Administrator
                 catch (Exception exception)
                 {
                     UIHelper.Warning(exception.Message);
-                }
-            }
-        }
-
-        private void WorkplacesGridViewRenderRow(DataGridViewRow row, Workplace workplace)
-        {
-            row.Cells["typeColumn"].Value = workplace.Type.Translate();
-            row.Cells["numberColumn"].Value = workplace.Number;
-            row.Cells["modificatorColumn"].Value = workplace.Modificator.Translate();
-            row.Cells["commentColumn"].Value = workplace.Comment;
-            row.Cells["displayColumn"].Value = workplace.Display;
-            row.Cells["segmentsColumn"].Value = workplace.Segments;
-            row.Tag = workplace;
-        }
-
-        private async void workplacesGridView_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int rowIndex = e.RowIndex,
-                columnIndex = e.ColumnIndex;
-
-            if (rowIndex >= 0 && columnIndex >= 0)
-            {
-                var row = workplacesGridView.Rows[rowIndex];
-                var cell = row.Cells[columnIndex];
-
-                Workplace workplace = row.Tag as Workplace;
-
-                switch (cell.OwningColumn.Name)
-                {
-                    case "deleteColumn":
-
-                        if (MessageBox.Show("Вы действительно хотите удалить рабочее место?",
-                            "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                        {
-                            using (var channel = channelManager.CreateChannel())
-                            {
-                                try
-                                {
-                                    deleteColumn.ReadOnly = true;
-
-                                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                                    await taskPool.AddTask(channel.Service.DeleteWorkplace(workplace.Id));
-
-                                    workplacesGridView.Rows.Remove(row);
-                                }
-                                catch (OperationCanceledException) { }
-                                catch (CommunicationObjectAbortedException) { }
-                                catch (ObjectDisposedException) { }
-                                catch (InvalidOperationException) { }
-                                catch (FaultException exception)
-                                {
-                                    UIHelper.Warning(exception.Reason.ToString());
-                                }
-                                catch (Exception exception)
-                                {
-                                    UIHelper.Warning(exception.Message);
-                                }
-                                finally
-                                {
-                                    deleteColumn.ReadOnly = false;
-                                }
-                            }
-                        }
-                        break;
                 }
             }
         }
@@ -144,72 +115,44 @@ namespace Queue.Administrator
             }
         }
 
-        private async void addWorkplaceButton_Click(object sender, EventArgs e)
+        private async void workplacesGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            if (MessageBox.Show("Вы действительно хотите удалить рабочее место?",
+                "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                try
+                Workplace workplace = e.Row.Tag as Workplace;
+
+                using (var channel = channelManager.CreateChannel())
                 {
-                    addWorkplaceButton.Enabled = false;
-
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                    var workplace = await taskPool.AddTask(channel.Service.AddWorkplace());
-
-                    var row = workplacesGridView.Rows[workplacesGridView.Rows.Add()];
-
-                    WorkplacesGridViewRenderRow(row, workplace);
-
-                    using (var f = new EditWorkplaceForm(channelBuilder, currentUser, workplace.Id))
+                    try
                     {
-                        if (f.ShowDialog() == DialogResult.OK)
-                        {
-                            WorkplacesGridViewRenderRow(row, f.Workplace);
-                        }
+                        await taskPool.AddTask(channel.Service.DeleteWorkplace(workplace.Id));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
                     }
                 }
-
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    addWorkplaceButton.Enabled = true;
-                }
             }
         }
 
-        private void WorkplacesForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void WorkplacesGridViewRenderRow(DataGridViewRow row, Workplace workplace)
         {
-            taskPool.Cancel();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
-                if (taskPool != null)
-                {
-                    taskPool.Dispose();
-                }
-                if (channelManager != null)
-                {
-                    channelManager.Dispose();
-                }
-            }
-            base.Dispose(disposing);
+            row.Cells["typeColumn"].Value = workplace.Type.Translate();
+            row.Cells["numberColumn"].Value = workplace.Number;
+            row.Cells["modificatorColumn"].Value = workplace.Modificator.Translate();
+            row.Cells["commentColumn"].Value = workplace.Comment;
+            row.Cells["displayColumn"].Value = workplace.Display;
+            row.Cells["segmentsColumn"].Value = workplace.Segments;
+            row.Tag = workplace;
         }
     }
 }

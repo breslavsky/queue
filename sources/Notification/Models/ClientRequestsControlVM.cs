@@ -2,7 +2,7 @@
 using Queue.Notification.Types;
 using Queue.Notification.UserControls;
 using Queue.Services.DTO;
-using Queue.UI.WPF.Extensions;
+using Queue.UI.WPF;
 using Queue.UI.WPF.Types;
 using System;
 using System.Collections.Generic;

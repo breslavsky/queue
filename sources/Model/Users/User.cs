@@ -16,9 +16,6 @@ namespace Queue.Model
 
         private const int HeartbitTimeout = 20;
 
-        // TODO: хм... не очень хорошо. это может хорошо работать, если мы создаем нового пользователя через UI (хотя должна происходить инициализация таких свойств),
-        // а если nhibernate? поля же потом перезатрутся - лишние действия...
-        // можно сделать метот статический, что то типа - createDefault
         public User()
         {
             CreateDate = DateTime.Now;

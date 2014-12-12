@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QueueMonitorForm));
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.elementHost = new System.Windows.Forms.Integration.ElementHost();
-            this.queueMonitorControl = new Queue.UI.WPF.QueueMonitorControl();
+            this.queueMonitorControl = new Queue.Manager.QueueMonitorControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.refreshButton = new System.Windows.Forms.Button();
             this.loadButton = new System.Windows.Forms.Button();
@@ -48,8 +48,8 @@
             // 
             this.mainTableLayoutPanel.ColumnCount = 1;
             this.mainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 830F));
-            this.mainTableLayoutPanel.Controls.Add(this.elementHost, 0, 1);
             this.mainTableLayoutPanel.Controls.Add(this.panel1, 0, 0);
+            this.mainTableLayoutPanel.Controls.Add(this.elementHost, 0, 1);
             this.mainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainTableLayoutPanel.Location = new System.Drawing.Point(10, 10);
             this.mainTableLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
@@ -74,12 +74,12 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.refreshButton);
+            this.panel1.Controls.Add(this.planDateTimePicker);
             this.panel1.Controls.Add(this.loadButton);
             this.panel1.Controls.Add(this.numberLabel);
-            this.panel1.Controls.Add(this.searchButton);
             this.panel1.Controls.Add(this.numberUpDown);
-            this.panel1.Controls.Add(this.planDateTimePicker);
+            this.panel1.Controls.Add(this.searchButton);
+            this.panel1.Controls.Add(this.refreshButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
@@ -182,7 +182,7 @@
         #endregion
 
         private System.Windows.Forms.Integration.ElementHost elementHost;
-        private Queue.UI.WPF.QueueMonitorControl queueMonitorControl;
+        private Queue.Manager.QueueMonitorControl queueMonitorControl;
         private System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DateTimePicker planDateTimePicker;

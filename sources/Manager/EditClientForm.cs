@@ -13,14 +13,24 @@ namespace Queue.Manager
     public partial class EditClientForm : Queue.UI.WinForms.RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
         private ChannelManager<IServerTcpService> channelManager;
+        private Client client;
+        private Guid clientId;
+        private User currentUser;
         private TaskPool taskPool;
 
-        private Guid clientId;
+        public EditClientForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid clientId)
+            : base()
+        {
+            InitializeComponent();
 
-        private Client client;
+            this.channelBuilder = channelBuilder;
+            this.currentUser = currentUser;
+            this.clientId = clientId;
+
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            taskPool = new TaskPool();
+        }
 
         public Client Client
         {
@@ -37,26 +47,12 @@ namespace Queue.Manager
             }
         }
 
-        public EditClientForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid clientId)
-            : base()
-        {
-            InitializeComponent();
-
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-            this.clientId = clientId;
-
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
-            taskPool = new TaskPool();
-        }
-
         private async void EditClientForm_Load(object sender, EventArgs e)
         {
             using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                     Client = await taskPool.AddTask(channel.Service.GetClient(clientId));
                 }
                 catch (OperationCanceledException) { }
@@ -74,19 +70,10 @@ namespace Queue.Manager
             }
         }
 
-        private void surnameTextBox_Leave(object sender, EventArgs e)
+        private void EditClientRequestForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Client.Surname = surnameTextBox.Text;
-        }
-
-        private void nameTextBox_Leave(object sender, EventArgs e)
-        {
-            Client.Name = nameTextBox.Text;
-        }
-
-        private void patronymicTextBox_Leave(object sender, EventArgs e)
-        {
-            Client.Patronymic = patronymicTextBox.Text;
+            taskPool.Dispose();
+            channelManager.Dispose();
         }
 
         private void emailTextBox_Leave(object sender, EventArgs e)
@@ -99,36 +86,9 @@ namespace Queue.Manager
             Client.Mobile = mobileTextBox.Text;
         }
 
-        private async void saveButton_Click(object sender, EventArgs e)
+        private void nameTextBox_Leave(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
-            {
-                try
-                {
-                    saveButton.Enabled = false;
-
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                    Client = await taskPool.AddTask(channel.Service.EditClient(Client));
-
-                    DialogResult = DialogResult.OK;
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    saveButton.Enabled = true;
-                }
-            }
+            Client.Name = nameTextBox.Text;
         }
 
         private async void passwordButton_Click(object sender, EventArgs e)
@@ -143,7 +103,6 @@ namespace Queue.Manager
                         {
                             passwordButton.Enabled = false;
 
-                            await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                             await taskPool.AddTask(channel.Service.ChangeClientPassword(Client.Id, f.Password));
                         }
                         catch (OperationCanceledException) { }
@@ -167,10 +126,45 @@ namespace Queue.Manager
             }
         }
 
-        private void EditClientRequestForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void patronymicTextBox_Leave(object sender, EventArgs e)
         {
-            taskPool.Dispose();
-            channelManager.Dispose();
+            Client.Patronymic = patronymicTextBox.Text;
+        }
+
+        private async void saveButton_Click(object sender, EventArgs e)
+        {
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    saveButton.Enabled = false;
+
+                    Client = await taskPool.AddTask(channel.Service.EditClient(Client));
+
+                    DialogResult = DialogResult.OK;
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+                finally
+                {
+                    saveButton.Enabled = true;
+                }
+            }
+        }
+
+        private void surnameTextBox_Leave(object sender, EventArgs e)
+        {
+            Client.Surname = surnameTextBox.Text;
         }
     }
 }

@@ -10,4 +10,12 @@ namespace Queue.Model.Common
         ReceiptOfDocuments = 2,
         ReleaseOfDocuments = 4
     }
+
+    public static partial class TranslationExtensions
+    {
+        public static string Translate(this ServiceType value)
+        {
+            return Translation.ServiceType.ResourceManager.GetString(value.ToString());
+        }
+    }
 }

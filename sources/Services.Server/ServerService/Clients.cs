@@ -116,7 +116,7 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.Client> AddClient(string surname, string name, string patronymic, string email, string mobile, string identity, string password)
+        public async Task<DTO.Client> AddClient(string surname, string name = null, string patronymic = null, string email = null, string mobile = null, string identity = null, string password = null)
         {
             return await Task.Run(() =>
             {

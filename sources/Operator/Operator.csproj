@@ -83,13 +83,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.Parallel.Common.1.0.0.20\lib\net40\Junte.Parallel.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.UI.WinForms, Version=1.0.0.60, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Junte.UI.WinForms, Version=1.0.0.65, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.UI.WinForms.1.0.0.60\lib\net45\Junte.UI.WinForms.dll</HintPath>
+      <HintPath>..\packages\Junte.UI.WinForms.1.0.0.65\lib\net45\Junte.UI.WinForms.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.WCF.Common, Version=1.0.0.15, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Junte.WCF.Common, Version=1.0.0.35, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.WCF.Common.1.0.0.15\lib\net45\Junte.WCF.Common.dll</HintPath>
+      <HintPath>..\packages\Junte.WCF.Common.1.0.0.35\lib\net45\Junte.WCF.Common.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -129,28 +129,19 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DigitalTimer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="DigitalTimer.Designer.cs">
-      <DependentUpon>DigitalTimer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="OperatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="OperatorForm.Designer.cs">
+      <DependentUpon>OperatorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs">
       <SubType>
       </SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="DigitalTimer.resx">
-      <DependentUpon>DigitalTimer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="OperatorForm.resx">
+      <DependentUpon>OperatorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

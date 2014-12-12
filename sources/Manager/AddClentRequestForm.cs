@@ -30,17 +30,12 @@ namespace Queue.Manager
         #region fields
 
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
         private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
-
-        private string[] freeTimeReport;
-
         private Client currentClient;
-
+        private User currentUser;
+        private string[] freeTimeReport;
         private Service selectedService;
-
+        private TaskPool taskPool;
         private string xpsCouponFile;
 
         #endregion fields
@@ -89,10 +84,165 @@ namespace Queue.Manager
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
 
             clientsListBox.DisplayMember = string.Empty;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+                if (taskPool != null)
+                {
+                    taskPool.Dispose();
+                }
+                if (channelManager != null)
+                {
+                    channelManager.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        private async void addButton_Click(object clickSender, EventArgs eventArg)
+        {
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    addButton.Enabled = false;
+
+                    var surname = clientSurnameTextBox.Text.Trim();
+
+                    if (CurrentClient == null && !string.IsNullOrWhiteSpace(surname))
+                    {
+                        var name = clientNameTextBox.Text.Trim();
+                        var patronymic = clientPatronymicTextBox.Text.Trim();
+                        var mobile = clientMobileTextBox.Text.Trim();
+
+                        CurrentClient = await taskPool.AddTask(channel.Service.AddClient(surname, name, patronymic, string.Empty, mobile, string.Empty, string.Empty));
+                    }
+
+                    var selectedItem = servicesTreeView.SelectedNode;
+                    if (selectedItem != null)
+                    {
+                        var selectedQueueService = (Service)selectedItem.Tag;
+                        if (selectedQueueService != null)
+                        {
+                            ClientRequest clientRequest;
+
+                            int subjects = (int)subjectsUpDown.Value;
+
+                            var currentClientId = CurrentClient != null ? CurrentClient.Id : Guid.Empty;
+
+                            if (liveRadioButton.Checked)
+                            {
+                                clientRequest = await taskPool.AddTask(channel.Service
+                                    .AddLiveClientRequest(currentClientId, selectedQueueService.Id, priorityCheckBox.Checked,
+                                    new Dictionary<Guid, object>(), subjects));
+                            }
+                            else
+                            {
+                                object selectedTime = freeTimeComboBox.SelectedItem;
+                                if (selectedTime != null)
+                                {
+                                    clientRequest = await taskPool.AddTask(channel.Service
+                                        .AddEarlyClientRequest(currentClientId, selectedQueueService.Id, earlyDatePicker.Value, (TimeSpan)selectedTime,
+                                        new Dictionary<Guid, object>(), subjects));
+                                }
+                                else
+                                {
+                                    UIHelper.Warning("Не указано время предварительной записи");
+                                    return;
+                                }
+                            }
+
+                            LoadFreeTime();
+
+                            CurrentClient = null;
+                            subjectsUpDown.Value = Math.Min(1, subjectsUpDown.Maximum);
+                            priorityCheckBox.Checked = false;
+
+                            string coupon = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
+                            var xmlReader = new XmlTextReader(new StringReader(coupon));
+                            var grid = (Grid)XamlReader.Load(xmlReader);
+
+                            xpsCouponFile = Path.GetTempFileName() + ".xps";
+
+                            using (var container = Package.Open(xpsCouponFile, FileMode.Create))
+                            {
+                                using (var document = new XpsDocument(container, CompressionOption.SuperFast))
+                                {
+                                    var fixedPage = new FixedPage();
+                                    fixedPage.Children.Add(grid);
+
+                                    var pageConent = new PageContent();
+                                    ((IAddChild)pageConent).AddChild(fixedPage);
+
+                                    var fixedDocument = new FixedDocument();
+                                    fixedDocument.Pages.Add(pageConent);
+
+                                    var xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(document);
+                                    xpsDocumentWriter.Write(fixedDocument);
+                                }
+                            }
+
+                            if (couponAutoPrintCheckBox.Checked)
+                            {
+                                PrintCoupon();
+                            }
+                            else
+                            {
+                                Process.Start(xpsCouponFile);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        UIHelper.Warning("Услуга не выбрана");
+                    }
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+                finally
+                {
+                    addButton.Enabled = true;
+                }
+            }
+        }
+
+        private void AddClentRequestForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            taskPool.Cancel();
+        }
+
+        private void AddClentRequestForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.Q)
+            {
+                if (freeTimeReport != null)
+                {
+                    string file = Path.GetTempFileName() + ".txt";
+                    File.WriteAllLines(file, freeTimeReport);
+                    Process.Start(file);
+                }
+            }
         }
 
         private void AddClientRequestForm_Load(object sender, EventArgs e)
@@ -112,78 +262,111 @@ namespace Queue.Manager
             LoadServiceGroup(servicesTreeView.Nodes);
         }
 
-        private async void LoadServiceGroup(TreeNodeCollection nodes, ServiceGroup serviceGroup = null)
+        private void clearCurrentClientButton_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            CurrentClient = null;
+        }
+
+        private async void clientMobileTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            var mobile = clientMobileTextBox.Text;
+
+            if (!string.IsNullOrWhiteSpace(mobile))
             {
-                try
+                using (var channel = channelManager.CreateChannel())
                 {
-                    var serviceGroups = serviceGroup != null
-                        ? await taskPool.AddTask(channel.Service.GetServiceGroups(serviceGroup.Id))
-                        : await taskPool.AddTask(channel.Service.GetRootServiceGroups());
-
-                    foreach (var g in serviceGroups)
+                    try
                     {
-                        var node = new TreeNode()
-                        {
-                            Text = g.ToString(),
-                            Checked = g.IsActive,
-                            Tag = g
-                        };
+                        var clients = await taskPool.AddTask(channel.Service.FindClients(0, 10, mobile));
 
-                        node.Nodes.Add(new TreeNode("загрузка...") { Tag = g });
-                        nodes.Add(node);
+                        clientsListBox.SelectionMode = SelectionMode.None;
+                        clientsListBox.DataSource = clients;
+                        clientsListBox.SelectionMode = SelectionMode.One;
                     }
-
-                    var services = serviceGroup != null
-                        ? await taskPool.AddTask(channel.Service.GetServices(serviceGroup.Id))
-                        : await taskPool.AddTask(channel.Service.GetRootServices());
-
-                    foreach (var s in services)
+                    catch
                     {
-                        var node = new TreeNode()
-                        {
-                            Text = s.ToString(),
-                            Tag = s
-                        };
-                        nodes.Add(node);
-                    }
-
-                    if (serviceGroup != null)
-                    {
-                        nodes.RemoveAt(0);
                     }
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
+            }
+            else
+            {
+                clientsListBox.DataSource = null;
             }
         }
 
-        private void PrintCoupon()
+        private void clientNameTextBox_Leave(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(xpsCouponFile))
+            clientNameTextBox.Text = clientNameTextBox.Text.ToInOffer();
+        }
+
+        private void clientPatronymicTextBox_Leave(object sender, EventArgs e)
+        {
+            clientPatronymicTextBox.Text = clientPatronymicTextBox.Text.ToInOffer();
+        }
+
+        private void clientsListBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            CurrentClient = (Client)clientsListBox.SelectedItem;
+        }
+
+        private async void clientSurnameTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            var surname = clientSurnameTextBox.Text;
+
+            if (!string.IsNullOrWhiteSpace(surname))
             {
-                PrintQueue printQueue;
-                try
+                using (var channel = channelManager.CreateChannel())
                 {
-                    printQueue = new PrintServer().GetPrintQueue(settings.DefaultPrintQueue);
+                    try
+                    {
+                        var clients = await taskPool.AddTask(channel.Service.FindClients(0, 10, surname));
+
+                        clientsListBox.SelectionMode = SelectionMode.None;
+                        clientsListBox.DataSource = clients;
+                        clientsListBox.SelectionMode = SelectionMode.One;
+                    }
+                    catch
+                    {
+                    }
                 }
-                catch
-                {
-                    UIHelper.Warning("Ошибка получения принтера, будет использован принтер по умолчанию");
-                    printQueue = LocalPrintServer.GetDefaultPrintQueue();
-                }
-                printQueue.AddJob(xpsCouponFile, xpsCouponFile, false);
+            }
+            else
+            {
+                clientsListBox.DataSource = null;
+            }
+        }
+
+        private void clientSurnameTextBox_Leave(object sender, EventArgs e)
+        {
+            clientSurnameTextBox.Text = clientSurnameTextBox.Text.ToInOffer();
+        }
+
+        private void earlyDatePicker_ValueChanged(object sender, EventArgs e)
+        {
+            LoadFreeTime();
+        }
+
+        private void earlyRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (earlyRadioButton.Checked)
+            {
+                queueTypeLiveGroupBox.Enabled = false;
+                queueTypeEarlyGroupBox.Enabled = true;
+                priorityCheckBox.Enabled = false;
+
+                LoadFreeTime();
+            }
+        }
+
+        private void liveRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (liveRadioButton.Checked)
+            {
+                queueTypeLiveGroupBox.Enabled = true;
+                queueTypeEarlyGroupBox.Enabled = false;
+                priorityCheckBox.Enabled = true;
+
+                LoadFreeTime();
             }
         }
 
@@ -309,85 +492,90 @@ namespace Queue.Manager
             }
         }
 
-        private async void clientSurnameTextBox_KeyDown(object sender, KeyEventArgs e)
+        private async void LoadServiceGroup(TreeNodeCollection nodes, ServiceGroup serviceGroup = null)
         {
-            var surname = clientSurnameTextBox.Text;
-
-            if (!string.IsNullOrWhiteSpace(surname))
+            using (var channel = channelManager.CreateChannel())
             {
-                using (var channel = channelManager.CreateChannel())
+                try
                 {
-                    try
-                    {
-                        await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                        var clients = await taskPool.AddTask(channel.Service.FindClients(0, 10, surname));
+                    var serviceGroups = serviceGroup != null
+                        ? await taskPool.AddTask(channel.Service.GetServiceGroups(serviceGroup.Id))
+                        : await taskPool.AddTask(channel.Service.GetRootServiceGroups());
 
-                        clientsListBox.SelectionMode = SelectionMode.None;
-                        clientsListBox.DataSource = clients;
-                        clientsListBox.SelectionMode = SelectionMode.One;
-                    }
-                    catch
+                    foreach (var g in serviceGroups)
                     {
+                        var node = new TreeNode()
+                        {
+                            Text = g.ToString(),
+                            Checked = g.IsActive,
+                            Tag = g
+                        };
+
+                        node.Nodes.Add(new TreeNode("загрузка...") { Tag = g });
+                        nodes.Add(node);
+                    }
+
+                    var services = serviceGroup != null
+                        ? await taskPool.AddTask(channel.Service.GetServices(serviceGroup.Id))
+                        : await taskPool.AddTask(channel.Service.GetRootServices());
+
+                    foreach (var s in services)
+                    {
+                        var node = new TreeNode()
+                        {
+                            Text = s.ToString(),
+                            Tag = s
+                        };
+                        nodes.Add(node);
+                    }
+
+                    if (serviceGroup != null)
+                    {
+                        nodes.RemoveAt(0);
                     }
                 }
-            }
-            else
-            {
-                clientsListBox.DataSource = null;
-            }
-        }
-
-        private async void clientMobileTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            var mobile = clientMobileTextBox.Text;
-
-            if (!string.IsNullOrWhiteSpace(mobile))
-            {
-                using (var channel = channelManager.CreateChannel())
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
                 {
-                    try
-                    {
-                        await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                        var clients = await taskPool.AddTask(channel.Service.FindClients(0, 10, mobile));
-
-                        clientsListBox.SelectionMode = SelectionMode.None;
-                        clientsListBox.DataSource = clients;
-                        clientsListBox.SelectionMode = SelectionMode.One;
-                    }
-                    catch
-                    {
-                    }
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
                 }
             }
-            else
+        }
+
+        private void printButton_Click(object sender, EventArgs e)
+        {
+            PrintCoupon();
+        }
+
+        private void PrintCoupon()
+        {
+            if (!string.IsNullOrWhiteSpace(xpsCouponFile))
             {
-                clientsListBox.DataSource = null;
+                PrintQueue printQueue;
+                try
+                {
+                    printQueue = new PrintServer().GetPrintQueue(settings.DefaultPrintQueue);
+                }
+                catch
+                {
+                    UIHelper.Warning("Ошибка получения принтера, будет использован принтер по умолчанию");
+                    printQueue = LocalPrintServer.GetDefaultPrintQueue();
+                }
+                printQueue.AddJob(xpsCouponFile, xpsCouponFile, false);
             }
         }
 
-        private void clientSurnameTextBox_Leave(object sender, EventArgs e)
+        private void printersComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            clientSurnameTextBox.Text = clientSurnameTextBox.Text.ToInOffer();
-        }
-
-        private void clientNameTextBox_Leave(object sender, EventArgs e)
-        {
-            clientNameTextBox.Text = clientNameTextBox.Text.ToInOffer();
-        }
-
-        private void clientPatronymicTextBox_Leave(object sender, EventArgs e)
-        {
-            clientPatronymicTextBox.Text = clientPatronymicTextBox.Text.ToInOffer();
-        }
-
-        private void clientsListBox_SelectedValueChanged(object sender, EventArgs e)
-        {
-            CurrentClient = (Client)clientsListBox.SelectedItem;
-        }
-
-        private void clearCurrentClientButton_Click(object sender, EventArgs e)
-        {
-            CurrentClient = null;
+            settings.DefaultPrintQueue = (string)printersComboBox.SelectedItem;
+            settings.Save();
         }
 
         private void servicesTreeView_AfterExpand(object sender, TreeViewEventArgs e)
@@ -405,6 +593,14 @@ namespace Queue.Manager
             }
         }
 
+        private void servicesTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            var selectedNode = servicesTreeView.SelectedNode;
+            selectedService = selectedNode != null && selectedNode.Tag is Service ? (Service)selectedNode.Tag : null;
+
+            LoadFreeTime();
+        }
+
         private void servicesTreeView_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
             if (e.Node.Tag is ServiceGroup)
@@ -414,211 +610,6 @@ namespace Queue.Manager
                     e.Node.Expand();
                 }
             }
-        }
-
-        private void servicesTreeView_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            var selectedNode = servicesTreeView.SelectedNode;
-            selectedService = selectedNode != null && selectedNode.Tag is Service ? (Service)selectedNode.Tag : null;
-
-            LoadFreeTime();
-        }
-
-        private async void addButton_Click(object clickSender, EventArgs eventArg)
-        {
-            using (var channel = channelManager.CreateChannel())
-            {
-                try
-                {
-                    addButton.Enabled = false;
-
-                    await channel.Service.OpenUserSession(currentUser.SessionId);
-
-                    var surname = clientSurnameTextBox.Text.Trim();
-
-                    if (CurrentClient == null && !string.IsNullOrWhiteSpace(surname))
-                    {
-                        var name = clientNameTextBox.Text.Trim();
-                        var patronymic = clientPatronymicTextBox.Text.Trim();
-                        var mobile = clientMobileTextBox.Text.Trim();
-
-                        CurrentClient = await taskPool.AddTask(channel.Service.AddClient(surname, name, patronymic, string.Empty, mobile, string.Empty, string.Empty));
-                    }
-
-                    var selectedItem = servicesTreeView.SelectedNode;
-                    if (selectedItem != null)
-                    {
-                        var selectedQueueService = (Service)selectedItem.Tag;
-                        if (selectedQueueService != null)
-                        {
-                            ClientRequest clientRequest;
-
-                            int subjects = (int)subjectsUpDown.Value;
-
-                            var currentClientId = CurrentClient != null ? CurrentClient.Id : Guid.Empty;
-
-                            if (liveRadioButton.Checked)
-                            {
-                                clientRequest = await taskPool.AddTask(channel.Service
-                                    .AddLiveClientRequest(currentClientId, selectedQueueService.Id, priorityCheckBox.Checked,
-                                    new Dictionary<Guid, object>(), subjects));
-                            }
-                            else
-                            {
-                                object selectedTime = freeTimeComboBox.SelectedItem;
-                                if (selectedTime != null)
-                                {
-                                    clientRequest = await taskPool.AddTask(channel.Service
-                                        .AddEarlyClientRequest(currentClientId, selectedQueueService.Id, earlyDatePicker.Value, (TimeSpan)selectedTime,
-                                        new Dictionary<Guid, object>(), subjects));
-                                }
-                                else
-                                {
-                                    UIHelper.Warning("Не указано время предварительной записи");
-                                    return;
-                                }
-                            }
-
-                            LoadFreeTime();
-
-                            CurrentClient = null;
-                            subjectsUpDown.Value = Math.Min(1, subjectsUpDown.Maximum);
-                            priorityCheckBox.Checked = false;
-
-                            string coupon = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
-                            var xmlReader = new XmlTextReader(new StringReader(coupon));
-                            var grid = (Grid)XamlReader.Load(xmlReader);
-
-                            xpsCouponFile = Path.GetTempFileName() + ".xps";
-
-                            using (var container = Package.Open(xpsCouponFile, FileMode.Create))
-                            {
-                                using (var document = new XpsDocument(container, CompressionOption.SuperFast))
-                                {
-                                    var fixedPage = new FixedPage();
-                                    fixedPage.Children.Add(grid);
-
-                                    var pageConent = new PageContent();
-                                    ((IAddChild)pageConent).AddChild(fixedPage);
-
-                                    var fixedDocument = new FixedDocument();
-                                    fixedDocument.Pages.Add(pageConent);
-
-                                    var xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(document);
-                                    xpsDocumentWriter.Write(fixedDocument);
-                                }
-                            }
-
-                            if (couponAutoPrintCheckBox.Checked)
-                            {
-                                PrintCoupon();
-                            }
-                            else
-                            {
-                                Process.Start(xpsCouponFile);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        UIHelper.Warning("Услуга не выбрана");
-                    }
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    addButton.Enabled = true;
-                }
-            }
-        }
-
-        private void printButton_Click(object sender, EventArgs e)
-        {
-            PrintCoupon();
-        }
-
-        private void liveRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            if (liveRadioButton.Checked)
-            {
-                queueTypeLiveGroupBox.Enabled = true;
-                queueTypeEarlyGroupBox.Enabled = false;
-                priorityCheckBox.Enabled = true;
-
-                LoadFreeTime();
-            }
-        }
-
-        private void earlyRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            if (earlyRadioButton.Checked)
-            {
-                queueTypeLiveGroupBox.Enabled = false;
-                queueTypeEarlyGroupBox.Enabled = true;
-                priorityCheckBox.Enabled = false;
-
-                LoadFreeTime();
-            }
-        }
-
-        private void earlyDatePicker_ValueChanged(object sender, EventArgs e)
-        {
-            LoadFreeTime();
-        }
-
-        private void printersComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            settings.DefaultPrintQueue = (string)printersComboBox.SelectedItem;
-            settings.Save();
-        }
-
-        private void AddClentRequestForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.Q)
-            {
-                if (freeTimeReport != null)
-                {
-                    string file = Path.GetTempFileName() + ".txt";
-                    File.WriteAllLines(file, freeTimeReport);
-                    Process.Start(file);
-                }
-            }
-        }
-
-        private void AddClentRequestForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            taskPool.Cancel();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
-                if (taskPool != null)
-                {
-                    taskPool.Dispose();
-                }
-                if (channelManager != null)
-                {
-                    channelManager.Dispose();
-                }
-            }
-            base.Dispose(disposing);
         }
     }
 }

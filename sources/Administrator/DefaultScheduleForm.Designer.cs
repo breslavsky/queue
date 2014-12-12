@@ -16,13 +16,13 @@
         private void InitializeComponent()
         {
             this.exceptionTabPage = new System.Windows.Forms.TabPage();
-            this.exceptionScheduleControl = new Queue.UI.WinForms.ScheduleControl();
+            this.exceptionScheduleControl = new Queue.Administrator.ScheduleControl();
             this.exceptionScheduleDatePicker = new System.Windows.Forms.DateTimePicker();
             this.exceptionScheduleCheckBox = new System.Windows.Forms.CheckBox();
             this.weekdayTabPage = new System.Windows.Forms.TabPage();
             this.weekdayTabControl = new System.Windows.Forms.TabControl();
             this.mondayTabPage = new System.Windows.Forms.TabPage();
-            this.weekdayScheduleControl = new Queue.UI.WinForms.ScheduleControl();
+            this.weekdayScheduleControl = new Queue.Administrator.ScheduleControl();
             this.tuesdayTabPage = new System.Windows.Forms.TabPage();
             this.wednesdayTabPage = new System.Windows.Forms.TabPage();
             this.thursdayTabPage = new System.Windows.Forms.TabPage();
@@ -45,7 +45,7 @@
             this.exceptionTabPage.Location = new System.Drawing.Point(4, 26);
             this.exceptionTabPage.Name = "exceptionTabPage";
             this.exceptionTabPage.Padding = new System.Windows.Forms.Padding(5);
-            this.exceptionTabPage.Size = new System.Drawing.Size(818, 382);
+            this.exceptionTabPage.Size = new System.Drawing.Size(836, 406);
             this.exceptionTabPage.TabIndex = 0;
             this.exceptionTabPage.Text = "Исключения в расписании";
             this.exceptionTabPage.UseVisualStyleBackColor = true;
@@ -87,7 +87,7 @@
             this.weekdayTabPage.Margin = new System.Windows.Forms.Padding(5);
             this.weekdayTabPage.Name = "weekdayTabPage";
             this.weekdayTabPage.Padding = new System.Windows.Forms.Padding(5);
-            this.weekdayTabPage.Size = new System.Drawing.Size(816, 382);
+            this.weekdayTabPage.Size = new System.Drawing.Size(826, 396);
             this.weekdayTabPage.TabIndex = 0;
             this.weekdayTabPage.Text = "Регулярное расписание";
             this.weekdayTabPage.UseVisualStyleBackColor = true;
@@ -107,7 +107,7 @@
             this.weekdayTabControl.Name = "weekdayTabControl";
             this.weekdayTabControl.Padding = new System.Drawing.Point(5, 5);
             this.weekdayTabControl.SelectedIndex = 0;
-            this.weekdayTabControl.Size = new System.Drawing.Size(806, 372);
+            this.weekdayTabControl.Size = new System.Drawing.Size(816, 386);
             this.weekdayTabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.weekdayTabControl.TabIndex = 0;
             this.weekdayTabControl.Tag = "";
@@ -119,7 +119,7 @@
             this.mondayTabPage.Location = new System.Drawing.Point(4, 26);
             this.mondayTabPage.Name = "mondayTabPage";
             this.mondayTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.mondayTabPage.Size = new System.Drawing.Size(798, 342);
+            this.mondayTabPage.Size = new System.Drawing.Size(808, 356);
             this.mondayTabPage.TabIndex = 0;
             this.mondayTabPage.Tag = "1";
             this.mondayTabPage.Text = "Понедельник";
@@ -138,7 +138,7 @@
             this.tuesdayTabPage.Location = new System.Drawing.Point(4, 26);
             this.tuesdayTabPage.Name = "tuesdayTabPage";
             this.tuesdayTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tuesdayTabPage.Size = new System.Drawing.Size(800, 342);
+            this.tuesdayTabPage.Size = new System.Drawing.Size(818, 366);
             this.tuesdayTabPage.TabIndex = 0;
             this.tuesdayTabPage.Tag = "2";
             this.tuesdayTabPage.Text = "Вторник";
@@ -148,7 +148,7 @@
             // 
             this.wednesdayTabPage.Location = new System.Drawing.Point(4, 26);
             this.wednesdayTabPage.Name = "wednesdayTabPage";
-            this.wednesdayTabPage.Size = new System.Drawing.Size(800, 342);
+            this.wednesdayTabPage.Size = new System.Drawing.Size(818, 366);
             this.wednesdayTabPage.TabIndex = 0;
             this.wednesdayTabPage.Tag = "3";
             this.wednesdayTabPage.Text = "Среда";
@@ -158,7 +158,7 @@
             // 
             this.thursdayTabPage.Location = new System.Drawing.Point(4, 26);
             this.thursdayTabPage.Name = "thursdayTabPage";
-            this.thursdayTabPage.Size = new System.Drawing.Size(800, 342);
+            this.thursdayTabPage.Size = new System.Drawing.Size(818, 366);
             this.thursdayTabPage.TabIndex = 0;
             this.thursdayTabPage.Tag = "4";
             this.thursdayTabPage.Text = "Четверг";
@@ -168,7 +168,7 @@
             // 
             this.fridayTabPage.Location = new System.Drawing.Point(4, 26);
             this.fridayTabPage.Name = "fridayTabPage";
-            this.fridayTabPage.Size = new System.Drawing.Size(800, 342);
+            this.fridayTabPage.Size = new System.Drawing.Size(818, 366);
             this.fridayTabPage.TabIndex = 0;
             this.fridayTabPage.Tag = "5";
             this.fridayTabPage.Text = "Пятница";
@@ -178,7 +178,7 @@
             // 
             this.saturdayTabPage.Location = new System.Drawing.Point(4, 26);
             this.saturdayTabPage.Name = "saturdayTabPage";
-            this.saturdayTabPage.Size = new System.Drawing.Size(800, 342);
+            this.saturdayTabPage.Size = new System.Drawing.Size(818, 366);
             this.saturdayTabPage.TabIndex = 0;
             this.saturdayTabPage.Tag = "6";
             this.saturdayTabPage.Text = "Суббота";
@@ -188,7 +188,7 @@
             // 
             this.sundayTabPage.Location = new System.Drawing.Point(4, 26);
             this.sundayTabPage.Name = "sundayTabPage";
-            this.sundayTabPage.Size = new System.Drawing.Size(800, 342);
+            this.sundayTabPage.Size = new System.Drawing.Size(818, 366);
             this.sundayTabPage.TabIndex = 0;
             this.sundayTabPage.Tag = "0";
             this.sundayTabPage.Text = "Воскресенье";
@@ -199,26 +199,24 @@
             this.scheduleTabControl.Controls.Add(this.weekdayTabPage);
             this.scheduleTabControl.Controls.Add(this.exceptionTabPage);
             this.scheduleTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scheduleTabControl.Location = new System.Drawing.Point(10, 10);
+            this.scheduleTabControl.Location = new System.Drawing.Point(5, 5);
             this.scheduleTabControl.Margin = new System.Windows.Forms.Padding(5);
             this.scheduleTabControl.Multiline = true;
             this.scheduleTabControl.Name = "scheduleTabControl";
             this.scheduleTabControl.Padding = new System.Drawing.Point(5, 5);
             this.scheduleTabControl.SelectedIndex = 0;
-            this.scheduleTabControl.Size = new System.Drawing.Size(824, 412);
+            this.scheduleTabControl.Size = new System.Drawing.Size(834, 426);
             this.scheduleTabControl.TabIndex = 0;
             // 
             // DefaultScheduleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(844, 432);
+            this.ClientSize = new System.Drawing.Size(844, 436);
             this.Controls.Add(this.scheduleTabControl);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(860, 470);
             this.Name = "DefaultScheduleForm";
-            this.Padding = new System.Windows.Forms.Padding(10);
+            this.Padding = new System.Windows.Forms.Padding(5);
             this.Text = "Общее расписание";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DefaultScheduleForm_FormClosing);
             this.Load += new System.EventHandler(this.DefaultScheduleForm_Load);
@@ -247,7 +245,7 @@
         private System.Windows.Forms.TabPage fridayTabPage;
         private System.Windows.Forms.TabPage saturdayTabPage;
         private System.Windows.Forms.TabPage sundayTabPage;
-        private global::Queue.UI.WinForms.ScheduleControl weekdayScheduleControl;
-        private global::Queue.UI.WinForms.ScheduleControl exceptionScheduleControl;
+        private global::Queue.Administrator.ScheduleControl weekdayScheduleControl;
+        private global::Queue.Administrator.ScheduleControl exceptionScheduleControl;
     }
 }

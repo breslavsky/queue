@@ -527,58 +527,6 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.ServiceRendering> AddServiceRendering(Guid scheduleId)
-        {
-            return await Task.Run(() =>
-            {
-                checkPermission(UserRole.Manager | UserRole.Administrator);
-
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    var serviceRendering = new ServiceRendering();
-
-                    var schedule = session.Get<Schedule>(scheduleId);
-                    if (schedule == null)
-                    {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(scheduleId), string.Format("Раписание [{0}] не найдено", scheduleId));
-                    }
-
-                    serviceRendering.Schedule = schedule;
-
-                    var queueOperator = session.CreateCriteria<Operator>()
-                        .AddOrder(Order.Asc("Name"))
-                        .SetMaxResults(1)
-                        .UniqueResult<Operator>();
-                    if (queueOperator == null)
-                    {
-                        throw new FaultException("Добавьте хотя бы одного оператора");
-                    }
-
-                    serviceRendering.Operator = queueOperator;
-
-                    var errors = serviceRendering.Validate();
-                    if (errors.Length > 0)
-                    {
-                        logger.Error(ValidationError.ToException(errors));
-                    }
-
-                    session.Save(serviceRendering);
-
-                    var todayQueuePlan = queueInstance.TodayQueuePlan;
-                    using (var locker = todayQueuePlan.WriteLock())
-                    {
-                        transaction.Commit();
-
-                        todayQueuePlan.Flush(QueuePlanFlushMode.ServiceRenderings);
-                        todayQueuePlan.Build(DateTime.Now.TimeOfDay);
-                    }
-
-                    return Mapper.Map<ServiceRendering, DTO.ServiceRendering>(serviceRendering);
-                }
-            });
-        }
-
         public async Task<DTO.ServiceRendering> EditServiceRendering(DTO.ServiceRendering source)
         {
             return await Task.Run(() =>
@@ -588,22 +536,57 @@ namespace Queue.Services.Server
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    var serviceRendering = session.Get<ServiceRendering>(source.Id);
-                    if (serviceRendering == null)
+                    Guid serviceRenderingId = source.Id;
+
+                    ServiceRendering serviceRendering;
+
+                    if (serviceRenderingId != Guid.Empty)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(source.Id),
-                            string.Format("Обслуживание услуги [{0}] не найдено", source.Id));
+                        serviceRendering = session.Get<ServiceRendering>(serviceRenderingId);
+                        if (serviceRendering == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceRenderingId),
+                                string.Format("Обслуживание услуги [{0}] не найдено", serviceRenderingId));
+                        }
+                    }
+                    else
+                    {
+                        serviceRendering = new ServiceRendering();
                     }
 
-                    var operatorId = source.Operator.Id;
-
-                    var queueOperator = session.Get<Operator>(operatorId);
-                    if (queueOperator == null)
+                    if (source.Schedule != null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(operatorId),
-                            string.Format("Оператор [{0}] не найден", operatorId));
+                        var scheduleId = source.Schedule.Id;
+
+                        var schedule = session.Get<Schedule>(scheduleId);
+                        if (schedule == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(scheduleId),
+                                string.Format("Расписание [{0}] не найдено", scheduleId));
+                        }
+                        serviceRendering.Schedule = schedule;
                     }
-                    serviceRendering.Operator = queueOperator;
+                    else
+                    {
+                        serviceRendering.Schedule = null;
+                    }
+
+                    if (source.Operator != null)
+                    {
+                        var operatorId = source.Operator.Id;
+
+                        var queueOperator = session.Get<Operator>(operatorId);
+                        if (queueOperator == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(operatorId),
+                                string.Format("Оператор [{0}] не найден", operatorId));
+                        }
+                        serviceRendering.Operator = queueOperator;
+                    }
+                    else
+                    {
+                        serviceRendering.Operator = null;
+                    }
 
                     if (source.ServiceStep != null)
                     {
@@ -613,9 +596,13 @@ namespace Queue.Services.Server
                         if (serviceStep == null)
                         {
                             throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceStepId),
-                                string.Format("Этап услуги [{0}] не найдено", serviceStepId));
+                                string.Format("Этап услуги [{0}] не найден", serviceStepId));
                         }
                         serviceRendering.ServiceStep = serviceStep;
+                    }
+                    else
+                    {
+                        serviceRendering.ServiceStep = null;
                     }
 
                     serviceRendering.Mode = source.Mode;

@@ -32,7 +32,7 @@ namespace Queue.Administrator
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.currentSchedulePanel = new System.Windows.Forms.Panel();
             this.currentScheduleCheckBox = new System.Windows.Forms.CheckBox();
-            this.currentScheduleControl = new Queue.UI.WinForms.ScheduleControl();
+            this.currentScheduleControl = new Queue.Administrator.ScheduleControl();
             this.selectServiceControl = new Queue.UI.WinForms.SelectServiceControl();
             this.mainTableLayoutPanel.SuspendLayout();
             this.currentSchedulePanel.SuspendLayout();
@@ -42,17 +42,15 @@ namespace Queue.Administrator
             // 
             this.mainTableLayoutPanel.ColumnCount = 1;
             this.mainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainTableLayoutPanel.Controls.Add(this.currentSchedulePanel, 0, 1);
             this.mainTableLayoutPanel.Controls.Add(this.selectServiceControl, 0, 0);
+            this.mainTableLayoutPanel.Controls.Add(this.currentSchedulePanel, 0, 1);
             this.mainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainTableLayoutPanel.Location = new System.Drawing.Point(10, 10);
+            this.mainTableLayoutPanel.Location = new System.Drawing.Point(5, 5);
             this.mainTableLayoutPanel.Name = "mainTableLayoutPanel";
             this.mainTableLayoutPanel.RowCount = 2;
             this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 350F));
-            this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.mainTableLayoutPanel.Size = new System.Drawing.Size(804, 542);
+            this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 340F));
+            this.mainTableLayoutPanel.Size = new System.Drawing.Size(794, 556);
             this.mainTableLayoutPanel.TabIndex = 0;
             // 
             // currentSchedulePanel
@@ -61,10 +59,10 @@ namespace Queue.Administrator
             this.currentSchedulePanel.Controls.Add(this.currentScheduleControl);
             this.currentSchedulePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.currentSchedulePanel.Enabled = false;
-            this.currentSchedulePanel.Location = new System.Drawing.Point(0, 192);
+            this.currentSchedulePanel.Location = new System.Drawing.Point(0, 216);
             this.currentSchedulePanel.Margin = new System.Windows.Forms.Padding(0);
             this.currentSchedulePanel.Name = "currentSchedulePanel";
-            this.currentSchedulePanel.Size = new System.Drawing.Size(804, 350);
+            this.currentSchedulePanel.Size = new System.Drawing.Size(794, 340);
             this.currentSchedulePanel.TabIndex = 0;
             // 
             // currentScheduleCheckBox
@@ -93,19 +91,19 @@ namespace Queue.Administrator
             this.selectServiceControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.selectServiceControl.Location = new System.Drawing.Point(3, 3);
             this.selectServiceControl.Name = "selectServiceControl";
-            this.selectServiceControl.Size = new System.Drawing.Size(798, 186);
+            this.selectServiceControl.Size = new System.Drawing.Size(788, 210);
             this.selectServiceControl.TabIndex = 1;
-            this.selectServiceControl.ServiceSelected += new System.EventHandler<EventArgs>(this.selectServiceControl_ServiceSelected);
+            this.selectServiceControl.Selected += new System.EventHandler<System.EventArgs>(this.selectServiceControl_ServiceSelected);
             // 
             // CurrentScheduleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(824, 562);
+            this.ClientSize = new System.Drawing.Size(804, 566);
             this.Controls.Add(this.mainTableLayoutPanel);
-            this.MinimumSize = new System.Drawing.Size(840, 600);
+            this.MinimumSize = new System.Drawing.Size(820, 600);
             this.Name = "CurrentScheduleForm";
-            this.Padding = new System.Windows.Forms.Padding(10);
+            this.Padding = new System.Windows.Forms.Padding(5);
             this.Text = "Текущее расписание";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ServicesForm_FormClosing);
@@ -119,7 +117,7 @@ namespace Queue.Administrator
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
-        private UI.WinForms.ScheduleControl currentScheduleControl;
+        private Administrator.ScheduleControl currentScheduleControl;
         private System.Windows.Forms.CheckBox currentScheduleCheckBox;
         private System.Windows.Forms.Panel currentSchedulePanel;
         private UI.WinForms.SelectServiceControl selectServiceControl;

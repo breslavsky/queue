@@ -28,7 +28,7 @@ namespace Queue.Administrator.Reports
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
 
             int currentYear = ServerDateTime.Today.Year;
@@ -63,8 +63,6 @@ namespace Queue.Administrator.Reports
             {
                 try
                 {
-                    await channel.Service.OpenUserSession(currentUser.SessionId);
-
                     foreach (DTO.Operator op in await channel.Service.GetOperators())
                     {
                         operatorsListBox.Items.Add(op, true);
@@ -116,7 +114,6 @@ namespace Queue.Administrator.Reports
 
                     Guid[] operators = isFullCheckBox.Checked ? new Guid[0] : GetSelectedOperators();
 
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                     byte[] report = await taskPool.AddTask(channel.Service.GetOperatorRatingReport(operators, detailLevel, settings));
                     string path = Path.GetTempPath() + Path.GetRandomFileName() + ".xls";
 

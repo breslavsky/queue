@@ -8,6 +8,9 @@ using Queue.Model.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ServiceRenderingKey = System.Tuple<Queue.Model.Schedule,
+                            Queue.Model.ServiceStep,
+                            Queue.Model.Common.ServiceRenderingMode>;
 
 namespace Queue.Services.Server
 {
@@ -19,56 +22,50 @@ namespace Queue.Services.Server
         Full = ServiceSchedule | ServiceRenderings
     }
 
-    public class QueuePlan : Synchronized, IDisposable
+    public sealed class QueuePlan : Synchronized, IDisposable
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(QueuePlan));
 
-        private readonly EntityStorage storage;
+        private readonly List<ClientRequest> clientRequests = new List<ClientRequest>();
 
-        private readonly List<ClientRequest> clientRequests;
+        private readonly Dictionary<ServiceRenderingKey, ServiceRendering[]> serviceRenderings
+            = new Dictionary<ServiceRenderingKey, ServiceRendering[]>();
+
+        private readonly Dictionary<Service, Schedule> serviceSchedule
+            = new Dictionary<Service, Schedule>();
+
+        private readonly EntityStorage storage = new EntityStorage();
 
         public QueuePlan()
         {
             logger.Info("Создание экземпляра плана очереди");
 
-            storage = new EntityStorage();
-
             OperatorsPlans = new List<OperatorPlan>();
             NotDistributedClientRequests = new List<NotDistributedClientRequest>();
-
-            clientRequests = new List<ClientRequest>();
-
-            serviceSchedule = new Dictionary<Service, Schedule>();
-            serviceRenderings = new Dictionary<string, ServiceRendering[]>();
         }
 
-        public delegate void QueuePlanEventHandler(object sender, QueuePlanEventArgs e);
+        public event EventHandler<QueuePlanEventArgs> OnBuilded;
 
-        public event QueuePlanEventHandler OnBuilded;
+        public event EventHandler<QueuePlanEventArgs> OnCurrentClientRequestPlanUpdated;
 
-        public event QueuePlanEventHandler OnCurrentClientRequestPlanUpdated;
-
-        public event QueuePlanEventHandler OnOperatorPlanMetricsUpdated;
-
-        public DateTime PlanDate { get; private set; }
-
-        public TimeSpan PlanTime { get; private set; }
-
-        public int Version { get; set; }
-
-        public List<string> Report { get; set; }
-
-        public List<OperatorPlan> OperatorsPlans { get; private set; }
-
-        private Dictionary<Service, Schedule> serviceSchedule;
-        private Dictionary<string, ServiceRendering[]> serviceRenderings;
-
-        public List<NotDistributedClientRequest> NotDistributedClientRequests { get; private set; }
+        public event EventHandler<QueuePlanEventArgs> OnOperatorPlanMetricsUpdated;
 
         /// <summary>
         /// Последний номер талона
         /// </summary>
         public int LastNumber { get; set; }
+
+        public List<NotDistributedClientRequest> NotDistributedClientRequests { get; private set; }
+
+        public List<OperatorPlan> OperatorsPlans { get; private set; }
+
+        public DateTime PlanDate { get; private set; }
+
+        public TimeSpan PlanTime { get; private set; }
+
+        public List<string> Report { get; private set; }
+
+        public int Version { get; private set; }
 
         private ISessionProvider sessionProvider
         {
@@ -76,83 +73,18 @@ namespace Queue.Services.Server
         }
 
         /// <summary>
-        /// Загрузить план очереди
+        /// Запланировать новый запрос клиента
         /// </summary>
-        public void Load(DateTime planDate)
+        /// <param name="clientRequest"></param>
+        /// <returns></returns>
+        public void AddClientRequest(ClientRequest clientRequest)
         {
-            logger.Debug(string.Format("Загрузка плана очереди на дату [{0}]", planDate));
-
-            PlanDate = planDate.Date;
-            PlanTime = TimeSpan.Zero;
-            Version = 0;
-
-            Refresh();
-        }
-
-        public void Refresh()
-        {
-            storage.Clear();
-
-            Flush(QueuePlanFlushMode.Full);
-
-            using (var session = sessionProvider.OpenSession())
-            using (var transaction = session.BeginTransaction())
-            {
-                logger.Info("Загрузка операторов");
-
-                var operators = session.CreateCriteria<Operator>()
-                    .AddOrder(Order.Asc("Surname"))
-                    .AddOrder(Order.Asc("Name"))
-                    .AddOrder(Order.Asc("Patronymic"))
-                    .List<Operator>();
-
-                OperatorsPlans.Clear();
-                foreach (var o in operators)
-                {
-                    OperatorsPlans.Add(new OperatorPlan(storage.Put(o)));
-                    logger.Debug(string.Format("Загружен оператор [{0}]", o));
-                }
-
-                logger.Info("Загрузка запросов");
-
-                var openedClientRequests = session.CreateCriteria<ClientRequest>()
-                    .Add(Restrictions.Eq("RequestDate", PlanDate))
-                    .Add(Restrictions.Eq("IsClosed", false))
-                    .AddOrder(Order.Asc("Number"))
-                    .List<ClientRequest>();
-
-                clientRequests.Clear();
-                foreach (var r in openedClientRequests)
-                {
-                    clientRequests.Add(storage.Put(r));
-                    logger.Debug(string.Format("Загружен [{0}] запрос", r.Number));
-                }
-
-                LastNumber = session.CreateCriteria<ClientRequest>()
-                    .Add(Restrictions.Eq("RequestDate", PlanDate))
-                    .SetProjection(Projections.Max("Number"))
-                    .UniqueResult<int>();
-
-                NotDistributedClientRequests.Clear();
-            }
+            clientRequests.Add(storage.Put(clientRequest));
         }
 
         public void Build()
         {
             Build(TimeSpan.Zero);
-        }
-
-        public void Flush(QueuePlanFlushMode mode)
-        {
-            if (mode.HasFlag(QueuePlanFlushMode.ServiceSchedule))
-            {
-                serviceSchedule.Clear();
-            }
-
-            if (mode.HasFlag(QueuePlanFlushMode.ServiceRenderings))
-            {
-                serviceRenderings.Clear();
-            }
         }
 
         /// <summary>
@@ -180,12 +112,34 @@ namespace Queue.Services.Server
             NotDistributedClientRequests.Clear();
 
             var conditions = new[] {
-                new { Name = "Вызываемые", Predicate = new Predicate<ClientRequest>(r => r.State == ClientRequestState.Calling) },
-                new { Name = "Обслуживаемые", Predicate = new Predicate<ClientRequest>(r => r.State == ClientRequestState.Rendering) },
-                new { Name = "Отложенные", Predicate = new Predicate<ClientRequest>(r => r.State == ClientRequestState.Postponed) },
-                new { Name = "Предварительная запись", Predicate = new Predicate<ClientRequest>(r => r.Type == ClientRequestType.Early) },
-                new { Name = "Живая очередь с приоритетом", Predicate = new Predicate<ClientRequest>(r => r.Type == ClientRequestType.Live && r.IsPriority) },
-                new { Name = "Живая очередь", Predicate = new Predicate<ClientRequest>(r => r.Type == ClientRequestType.Live) }
+                new {
+                    Name = "Вызываемые",
+                    Predicate = new Predicate<ClientRequest>(r => r.State == ClientRequestState.Calling)
+                },
+                new {
+                    Name = "Обслуживаемые",
+                    Predicate = new Predicate<ClientRequest>(r => r.State == ClientRequestState.Rendering)
+                },
+                new {
+                    Name = "Отложенные",
+                    Predicate = new Predicate<ClientRequest>(r => r.State == ClientRequestState.Postponed)
+                },
+                new {
+                    Name = "Предварительная запись с определенными операторами",
+                    Predicate = new Predicate<ClientRequest>(r => r.Type == ClientRequestType.Early && r.Operator != null)
+                },
+                new {
+                    Name = "Предварительная запись",
+                    Predicate = new Predicate<ClientRequest>(r => r.Type == ClientRequestType.Early)
+                },
+                new {
+                    Name = "Живая очередь с приоритетом",
+                    Predicate = new Predicate<ClientRequest>(r => r.Type == ClientRequestType.Live && r.IsPriority)
+                },
+                new {
+                    Name = "Живая очередь",
+                    Predicate = new Predicate<ClientRequest>(r => r.Type == ClientRequestType.Live)
+                }
             };
 
             foreach (var condition in conditions)
@@ -219,56 +173,7 @@ namespace Queue.Services.Server
                         {
                             Report.Add(string.Format("Оператор {0} определен ранее для запроса", conditionClientRequest.Operator));
 
-                            targetOperatorPlan = OperatorsPlans
-                                .FirstOrDefault(p => p.Operator.Equals(conditionClientRequest.Operator));
-                            if (targetOperatorPlan == null)
-                            {
-                                throw new Exception(string.Format("План оператора [{0}] не найден", conditionClientRequest.Operator));
-                            }
-
-                            if (targetOperatorPlan.Operator.HasGone)
-                            {
-                                using (var session = sessionProvider.OpenSession())
-                                using (var transaction = session.BeginTransaction())
-                                {
-                                    var clientRequest = session.Merge(conditionClientRequest);
-
-                                    string message;
-
-                                    switch (clientRequest.State)
-                                    {
-                                        case ClientRequestState.Calling:
-                                            clientRequest.Return();
-                                            message = "Запрос был возвращен в очередь из-за потери связи с оператором";
-                                            break;
-
-                                        case ClientRequestState.Rendering:
-                                            clientRequest.Rendered(schedule.ClientInterval);
-                                            message = "Запрос был принудительно закрыт из-за потери связи с оператором";
-                                            break;
-
-                                        default:
-                                            goto Continue;
-                                    }
-
-                                    var queueEvent = new ClientRequestEvent()
-                                    {
-                                        ClientRequest = clientRequest,
-                                        Message = message
-                                    };
-                                    session.Save(queueEvent);
-
-                                    session.Save(clientRequest);
-                                    transaction.Commit();
-
-                                    Put(clientRequest);
-
-                                    continue;
-                                }
-
-                            //TODO: подумать
-                            Continue: ;
-                            }
+                            targetOperatorPlan = GetOperatorPlan(conditionClientRequest.Operator);
                         }
                         else
                         {
@@ -324,7 +229,8 @@ namespace Queue.Services.Server
                             {
                                 m.OperatorPlan.Metrics.Standing++;
 
-                                Report.Add(string.Format("{0} {1}, ближайший интервал времени: {2:hh\\:mm\\:ss}, доступность: {3}, приоритет: {4}, нагрузка: {5:hh\\:mm\\:ss}", m.OperatorPlan, m.IsOnline ? "в сети" : "не в сети", m.NearTimeInterval, m.Availability ? "свободен" : "занят", m.Priority, m.Workload));
+                                Report.Add(string.Format("{0} {1}, ближайший интервал времени: {2:hh\\:mm\\:ss}, доступность: {3}, приоритет: {4}, нагрузка: {5:hh\\:mm\\:ss}",
+                                    m.OperatorPlan, m.IsOnline ? "в сети" : "не в сети", m.NearTimeInterval, m.Availability ? "свободен" : "занят", m.Priority, m.Workload));
                             }
 
                             targetOperatorPlan = operatorPlanMetrics.Select(m => m.OperatorPlan).First();
@@ -376,7 +282,8 @@ namespace Queue.Services.Server
 
             if (OnCurrentClientRequestPlanUpdated != null)
             {
-                logger.Info(string.Format("Запуск обработчика для события [OnCurrentClientRequestPlanUpdated] с кол-вом слушателей [{0}]", OnCurrentClientRequestPlanUpdated.GetInvocationList().Length));
+                logger.Info(string.Format("Запуск обработчика для события [OnCurrentClientRequestPlanUpdated] с кол-вом слушателей [{0}]",
+                    OnCurrentClientRequestPlanUpdated.GetInvocationList().Length));
 
                 foreach (var o in OperatorsPlans)
                 {
@@ -396,7 +303,8 @@ namespace Queue.Services.Server
 
             if (OnOperatorPlanMetricsUpdated != null)
             {
-                logger.Info(string.Format("Запуск обработчика для события [OnOperatorPlanMetricsUpdated] с кол-вом слушателей [{0}]", OnOperatorPlanMetricsUpdated.GetInvocationList().Length));
+                logger.Info(string.Format("Запуск обработчика для события [OnOperatorPlanMetricsUpdated] с кол-вом слушателей [{0}]",
+                    OnOperatorPlanMetricsUpdated.GetInvocationList().Length));
 
                 foreach (var o in OperatorsPlans)
                 {
@@ -417,14 +325,22 @@ namespace Queue.Services.Server
             }
         }
 
-        /// <summary>
-        /// Запланировать новый запрос клиента
-        /// </summary>
-        /// <param name="clientRequest"></param>
-        /// <returns></returns>
-        public void AddClientRequest(ClientRequest clientRequest)
+        public void Dispose()
         {
-            clientRequests.Add(storage.Put(clientRequest));
+            logger.Info("Уничтожение экземпляра плана очереди");
+        }
+
+        public void Flush(QueuePlanFlushMode mode)
+        {
+            if (mode.HasFlag(QueuePlanFlushMode.ServiceSchedule))
+            {
+                serviceSchedule.Clear();
+            }
+
+            if (mode.HasFlag(QueuePlanFlushMode.ServiceRenderings))
+            {
+                serviceRenderings.Clear();
+            }
         }
 
         /// <summary>
@@ -593,7 +509,34 @@ namespace Queue.Services.Server
         }
 
         /// <summary>
-        /// Взять расписание для услуги
+        /// Получить параметры обслуживания
+        /// </summary>
+        public ServiceRendering[] GetServiceRenderings(Schedule schedule, ServiceStep serviceStep, ServiceRenderingMode serviceRenderingMode)
+        {
+            var key = new ServiceRenderingKey(schedule, serviceStep, serviceRenderingMode);
+
+            if (!serviceRenderings.ContainsKey(key))
+            {
+                logger.InfoFormat("Загрузка параметров оказания услуги для раписания [{0}]", schedule);
+
+                using (var session = sessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    serviceRenderings.Add(key, session.CreateCriteria<ServiceRendering>()
+                         .Add(Restrictions.Eq("Schedule", schedule))
+                         .Add(serviceStep != null ? Restrictions.Eq("ServiceStep", serviceStep) : Restrictions.IsNull("ServiceStep"))
+                         .Add(new Disjunction()
+                             .Add(Restrictions.Eq("Mode", serviceRenderingMode))
+                             .Add(Restrictions.Eq("Mode", ServiceRenderingMode.AllRequests)))
+                         .List<ServiceRendering>().ToArray());
+                }
+            }
+
+            return serviceRenderings[key];
+        }
+
+        /// <summary>
+        /// Получить расписание для услуги
         /// </summary>
         /// <param name="date"></param>
         /// <returns></returns>
@@ -647,47 +590,77 @@ namespace Queue.Services.Server
             return serviceSchedule[service];
         }
 
-        public ServiceRendering[] GetServiceRenderings(Schedule schedule, ServiceStep serviceStep, ServiceRenderingMode serviceRenderingMode)
+        /// <summary>
+        /// Загрузить план очереди
+        /// </summary>
+        public void Load(DateTime planDate)
         {
-            string key = string.Join("|", new object[] {
-                schedule.GetId(),
-                serviceStep != null ? serviceStep.GetId() : string.Empty,
-                serviceRenderingMode });
+            logger.Debug(string.Format("Загрузка плана очереди на дату [{0}]", planDate));
 
-            if (!serviceRenderings.ContainsKey(key))
-            {
-                logger.InfoFormat("Загрузка параметров оказания услуги для раписания [{0}]", schedule);
+            PlanDate = planDate.Date;
+            PlanTime = TimeSpan.Zero;
+            Version = 0;
 
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    serviceRenderings.Add(key, session.CreateCriteria<ServiceRendering>()
-                         .Add(Restrictions.Eq("Schedule", schedule))
-                         .Add(serviceStep != null ? Restrictions.Eq("ServiceStep", serviceStep) : Restrictions.IsNull("ServiceStep"))
-                         .Add(new Disjunction()
-                             .Add(Restrictions.Eq("Mode", serviceRenderingMode))
-                             .Add(Restrictions.Eq("Mode", ServiceRenderingMode.AllRequests)))
-                         .List<ServiceRendering>().ToArray());
-                }
-            }
-
-            return serviceRenderings[key];
+            Refresh();
         }
 
         /// <summary>
-        /// Поместить объект плана очереди
+        /// Поместить объект в хранилище
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
         public void Put(Entity entity)
         {
-            logger.InfoFormat("Поместить объект в хранилище {0}", entity);
+            logger.InfoFormat("Помещен объект в хранилище {0}", entity);
             storage.Put(entity);
         }
 
-        public void Dispose()
+        public void Refresh()
         {
-            logger.Info("Уничтожение экземпляра плана очереди");
+            storage.Clear();
+
+            Flush(QueuePlanFlushMode.Full);
+
+            using (var session = sessionProvider.OpenSession())
+            using (var transaction = session.BeginTransaction())
+            {
+                logger.Info("Загрузка операторов");
+
+                var operators = session.CreateCriteria<Operator>()
+                    .AddOrder(Order.Asc("Surname"))
+                    .AddOrder(Order.Asc("Name"))
+                    .AddOrder(Order.Asc("Patronymic"))
+                    .List<Operator>();
+
+                OperatorsPlans.Clear();
+                foreach (var o in operators)
+                {
+                    OperatorsPlans.Add(new OperatorPlan(storage.Put(o)));
+                    logger.Debug(string.Format("Загружен оператор [{0}]", o));
+                }
+
+                logger.Info("Загрузка запросов");
+
+                var openedClientRequests = session.CreateCriteria<ClientRequest>()
+                    .Add(Restrictions.Eq("RequestDate", PlanDate))
+                    .Add(Restrictions.Eq("IsClosed", false))
+                    .AddOrder(Order.Asc("Number"))
+                    .List<ClientRequest>();
+
+                clientRequests.Clear();
+                foreach (var r in openedClientRequests)
+                {
+                    clientRequests.Add(storage.Put(r));
+                    logger.Debug(string.Format("Загружен [{0}] запрос", r.Number));
+                }
+
+                LastNumber = session.CreateCriteria<ClientRequest>()
+                    .Add(Restrictions.Eq("RequestDate", PlanDate))
+                    .SetProjection(Projections.Max("Number"))
+                    .UniqueResult<int>();
+
+                NotDistributedClientRequests.Clear();
+            }
         }
     }
 }

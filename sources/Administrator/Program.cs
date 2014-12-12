@@ -40,7 +40,7 @@ namespace Queue.Administrator
                         settings.IsRemember = loginForm.IsRemember;
                         settings.Save();
 
-                        var mainForm = new MainForm(loginForm.ChannelBuilder, (QueueAdministrator)loginForm.User);
+                        var mainForm = new AdministratorForm(loginForm.ChannelBuilder, (QueueAdministrator)loginForm.User);
                         Application.Run(mainForm);
 
                         if (mainForm.IsLogout)

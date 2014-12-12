@@ -12,8 +12,6 @@ using Timer = System.Timers.Timer;
 
 namespace Queue.Services.Server
 {
-    public delegate void QueueInstanceEventHandler(object sender, QueueInstanceEventArgs e);
-
     public class QueueInstanceEventArgs
     {
         public DTO.QueuePlan QueuePlan;
@@ -27,7 +25,7 @@ namespace Queue.Services.Server
 
     public class QueueInstance : IQueueInstance
     {
-        private const int TODAY_QUEUE_PLAN_BUILD_INTERVAL = 10000;
+        private const int TodayQueuePlanBuildInterval = 10000;
         private static readonly ILog logger = LogManager.GetLogger(typeof(QueueInstance));
 
         private Timer todayQueuePlanTimer;
@@ -46,53 +44,17 @@ namespace Queue.Services.Server
             todayQueuePlanTimer.Start();
         }
 
-        public event QueueInstanceEventHandler OnCallClient
-        {
-            add { callClientHandler += value; }
-            remove { callClientHandler -= value; }
-        }
+        public event EventHandler<QueueInstanceEventArgs> OnCallClient;
 
-        public event QueueInstanceEventHandler OnClientRequestUpdated
-        {
-            add { clientRequestUpdatedHandler += value; }
-            remove { clientRequestUpdatedHandler -= value; }
-        }
+        public event EventHandler<QueueInstanceEventArgs> OnClientRequestUpdated;
 
-        public event QueueInstanceEventHandler OnCurrentClientRequestPlanUpdated
-        {
-            add { currentClientRequestPlanUpdatedHandler += value; }
-            remove { currentClientRequestPlanUpdatedHandler -= value; }
-        }
+        public event EventHandler<QueueInstanceEventArgs> OnCurrentClientRequestPlanUpdated;
 
-        public event QueueInstanceEventHandler OnOperatorPlanMetricsUpdated
-        {
-            add { operatorPlanMetricsUpdatedHandler += value; }
-            remove { operatorPlanMetricsUpdatedHandler -= value; }
-        }
+        public event EventHandler<QueueInstanceEventArgs> OnOperatorPlanMetricsUpdated;
 
-        public event QueueInstanceEventHandler OnConfigUpdated
-        {
-            add { configUpdatedHandler += value; }
-            remove { configUpdatedHandler -= value; }
-        }
+        public event EventHandler<QueueInstanceEventArgs> OnConfigUpdated;
 
-        public event QueueInstanceEventHandler OnEvent
-        {
-            add { eventHandler += value; }
-            remove { eventHandler -= value; }
-        }
-
-        private event QueueInstanceEventHandler callClientHandler;
-
-        private event QueueInstanceEventHandler clientRequestUpdatedHandler;
-
-        private event QueueInstanceEventHandler currentClientRequestPlanUpdatedHandler;
-
-        private event QueueInstanceEventHandler operatorPlanMetricsUpdatedHandler;
-
-        private event QueueInstanceEventHandler configUpdatedHandler;
-
-        private event QueueInstanceEventHandler eventHandler;
+        public event EventHandler<QueueInstanceEventArgs> OnEvent;
 
         public QueuePlan TodayQueuePlan { get; private set; }
 
@@ -103,10 +65,10 @@ namespace Queue.Services.Server
 
         public void CallClient(ClientRequest clientRequest)
         {
-            if (callClientHandler != null)
+            if (OnCallClient != null)
             {
-                logger.Debug(string.Format("Запуск обработчика для события [ClientCalling] с кол-вом слушателей [{0}]", callClientHandler.GetInvocationList().Length));
-                callClientHandler(this, new QueueInstanceEventArgs()
+                logger.Debug(string.Format("Запуск обработчика для события [ClientCalling] с кол-вом слушателей [{0}]", OnCallClient.GetInvocationList().Length));
+                OnCallClient(this, new QueueInstanceEventArgs()
                 {
                     ClientRequest = Mapper.Map<ClientRequest, DTO.ClientRequest>(clientRequest)
                 });
@@ -115,10 +77,10 @@ namespace Queue.Services.Server
 
         public void ClientRequestUpdated(ClientRequest clientRequest)
         {
-            if (clientRequestUpdatedHandler != null)
+            if (OnClientRequestUpdated != null)
             {
-                logger.Debug(string.Format("Запуск обработчика для события [OnClientRequestUpdated] с кол-вом слушателей [{0}]", clientRequestUpdatedHandler.GetInvocationList().Length));
-                clientRequestUpdatedHandler(this, new QueueInstanceEventArgs()
+                logger.Debug(string.Format("Запуск обработчика для события [OnClientRequestUpdated] с кол-вом слушателей [{0}]", OnClientRequestUpdated.GetInvocationList().Length));
+                OnClientRequestUpdated(this, new QueueInstanceEventArgs()
                 {
                     ClientRequest = Mapper.Map<ClientRequest, DTO.ClientRequest>(clientRequest)
                 });
@@ -127,10 +89,10 @@ namespace Queue.Services.Server
 
         public void ConfigUpdated(Config config)
         {
-            if (configUpdatedHandler != null)
+            if (OnConfigUpdated != null)
             {
-                logger.Debug(string.Format("Запуск обработчика для события [ConfigUpdated] с кол-вом слушателей [{0}]", configUpdatedHandler.GetInvocationList().Length));
-                configUpdatedHandler(this, new QueueInstanceEventArgs()
+                logger.Debug(string.Format("Запуск обработчика для события [ConfigUpdated] с кол-вом слушателей [{0}]", OnConfigUpdated.GetInvocationList().Length));
+                OnConfigUpdated(this, new QueueInstanceEventArgs()
                 {
                     Config = Mapper.Map<Config, DTO.Config>(config)
                 });
@@ -139,10 +101,10 @@ namespace Queue.Services.Server
 
         public void Event(Event queueEvent)
         {
-            if (eventHandler != null)
+            if (OnEvent != null)
             {
-                logger.Debug(string.Format("Запуск обработчика для события [OnQueueEvent] с кол-вом слушателей [{0}]", eventHandler.GetInvocationList().Length));
-                eventHandler(this, new QueueInstanceEventArgs()
+                logger.Debug(string.Format("Запуск обработчика для события [OnQueueEvent] с кол-вом слушателей [{0}]", OnEvent.GetInvocationList().Length));
+                OnEvent(this, new QueueInstanceEventArgs()
                 {
                     Event = Mapper.Map<Event, DTO.Event>(queueEvent)
                 });
@@ -163,9 +125,9 @@ namespace Queue.Services.Server
         private void todayQueuePlanTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             todayQueuePlanTimer.Stop();
-            if (todayQueuePlanTimer.Interval < TODAY_QUEUE_PLAN_BUILD_INTERVAL)
+            if (todayQueuePlanTimer.Interval < TodayQueuePlanBuildInterval)
             {
-                todayQueuePlanTimer.Interval = TODAY_QUEUE_PLAN_BUILD_INTERVAL;
+                todayQueuePlanTimer.Interval = TodayQueuePlanBuildInterval;
             }
 
             try
@@ -202,7 +164,7 @@ namespace Queue.Services.Server
                     }
                 }
 
-                if (DateTime.Now.TimeOfDay - TodayQueuePlan.PlanTime > new TimeSpan(TODAY_QUEUE_PLAN_BUILD_INTERVAL))
+                if (DateTime.Now.TimeOfDay - TodayQueuePlan.PlanTime > new TimeSpan(TodayQueuePlanBuildInterval))
                 {
                     using (var locker = TodayQueuePlan.WriteLock())
                     {
@@ -241,7 +203,7 @@ namespace Queue.Services.Server
 
         private void TodayQueuePlan_CurrentClientRequestPlanUpdated(object sender, QueuePlanEventArgs e)
         {
-            if (currentClientRequestPlanUpdatedHandler != null)
+            if (OnCurrentClientRequestPlanUpdated != null)
             {
                 var eventArgs = new QueueInstanceEventArgs()
                 {
@@ -258,17 +220,17 @@ namespace Queue.Services.Server
                     logger.Debug(string.Format("У оператора [{0}] отсутствуют текущие запросы", e.Operator));
                 }
 
-                logger.Debug(string.Format("Запуск обработчика для события [CurrentClientRequestPlanUpdated] с кол-вом слушателей [{0}]", currentClientRequestPlanUpdatedHandler.GetInvocationList().Length));
-                currentClientRequestPlanUpdatedHandler(this, eventArgs);
+                logger.Debug(string.Format("Запуск обработчика для события [CurrentClientRequestPlanUpdated] с кол-вом слушателей [{0}]", OnCurrentClientRequestPlanUpdated.GetInvocationList().Length));
+                OnCurrentClientRequestPlanUpdated(this, eventArgs);
             }
         }
 
         private void TodayQueuePlan_OnOperatorPlanMetricsUpdated(object sender, QueuePlanEventArgs e)
         {
-            if (operatorPlanMetricsUpdatedHandler != null)
+            if (OnOperatorPlanMetricsUpdated != null)
             {
-                logger.Debug(string.Format("Запуск обработчика для события [OperatorPlanMetricsUpdated] с кол-вом слушателей [{0}]", operatorPlanMetricsUpdatedHandler.GetInvocationList().Length));
-                operatorPlanMetricsUpdatedHandler(this, new QueueInstanceEventArgs()
+                logger.Debug(string.Format("Запуск обработчика для события [OperatorPlanMetricsUpdated] с кол-вом слушателей [{0}]", OnOperatorPlanMetricsUpdated.GetInvocationList().Length));
+                OnOperatorPlanMetricsUpdated(this, new QueueInstanceEventArgs()
                 {
                     OperatorPlanMetrics = Mapper.Map<OperatorPlanMetrics, DTO.OperatorPlanMetrics>(e.OperatorPlanMetrics)
                 });

@@ -16,7 +16,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientsForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.queryLabel = new System.Windows.Forms.Label();
@@ -31,6 +31,7 @@
             this.patronymicColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.emailColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mobileColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.findButton = new System.Windows.Forms.Button();
             this.mainTableLayoutPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clientsGridView)).BeginInit();
@@ -55,6 +56,7 @@
             // 
             this.panel1.Controls.Add(this.queryLabel);
             this.panel1.Controls.Add(this.queryTextBox);
+            this.panel1.Controls.Add(this.findButton);
             this.panel1.Controls.Add(this.firstButton);
             this.panel1.Controls.Add(this.prevButton);
             this.panel1.Controls.Add(this.nextButton);
@@ -80,7 +82,6 @@
             this.queryTextBox.Name = "queryTextBox";
             this.queryTextBox.Size = new System.Drawing.Size(170, 20);
             this.queryTextBox.TabIndex = 0;
-            this.queryTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.filterChanged);
             // 
             // firstButton
             // 
@@ -119,14 +120,14 @@
             this.clientsGridView.AllowUserToOrderColumns = true;
             this.clientsGridView.AllowUserToResizeColumns = false;
             this.clientsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.clientsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.clientsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.clientsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.clientsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.registerDateColumn,
@@ -195,6 +196,16 @@
             this.mobileColumn.ReadOnly = true;
             this.mobileColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // findButton
+            // 
+            this.findButton.Location = new System.Drawing.Point(235, 10);
+            this.findButton.Name = "findButton";
+            this.findButton.Size = new System.Drawing.Size(75, 25);
+            this.findButton.TabIndex = 5;
+            this.findButton.Text = "Найти";
+            this.findButton.UseVisualStyleBackColor = true;
+            this.findButton.Click += new System.EventHandler(this.findButton_Click);
+            // 
             // ClientsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -203,7 +214,7 @@
             this.Controls.Add(this.mainTableLayoutPanel);
             this.MinimumSize = new System.Drawing.Size(900, 399);
             this.Name = "ClientsForm";
-            this.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Клиенты";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ClientsForm_FormClosing);
@@ -232,5 +243,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn patronymicColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn emailColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn mobileColumn;
+        private System.Windows.Forms.Button findButton;
     }
 }

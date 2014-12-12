@@ -401,7 +401,7 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.IdentifiedEntity[]> GetServiceList(Guid serviceId)
+        public async Task<DTO.IdentifiedEntity[]> GetServiceStepList(Guid serviceId)
         {
             return await Task.Run(() =>
             {
@@ -463,42 +463,6 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.ServiceStep> AddServiceStep(Guid serviceId)
-        {
-            return await Task.Run(() =>
-            {
-                checkPermission(UserRole.Administrator);
-
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    var serviceStep = new ServiceStep();
-
-                    if (serviceId != Guid.Empty)
-                    {
-                        var service = session.Get<Service>(serviceId);
-                        if (service == null)
-                        {
-                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId), string.Format("Услуга [{0}] не найдена", serviceId));
-                        }
-
-                        serviceStep.Service = service;
-                    }
-
-                    var errors = serviceStep.Validate();
-                    if (errors.Length > 0)
-                    {
-                        logger.Error(ValidationError.ToException(errors));
-                    }
-
-                    session.Save(serviceStep);
-                    transaction.Commit();
-
-                    return Mapper.Map<ServiceStep, DTO.ServiceStep>(serviceStep);
-                }
-            });
-        }
-
         public async Task<DTO.ServiceStep> EditServiceStep(DTO.ServiceStep source)
         {
             return await Task.Run(() =>
@@ -510,10 +474,37 @@ namespace Queue.Services.Server
                 {
                     var serviceStepId = source.Id;
 
-                    var serviceStep = session.Get<ServiceStep>(serviceStepId);
-                    if (serviceStep == null)
+                    ServiceStep serviceStep;
+
+                    if (serviceStepId != Guid.Empty)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceStepId), string.Format("Этап услуги [{0}] не найден", serviceStepId));
+                        serviceStep = session.Get<ServiceStep>(serviceStepId);
+                        if (serviceStep == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceStepId),
+                                string.Format("Этап услуги [{0}] не найден", serviceStepId));
+                        }
+                    }
+                    else
+                    {
+                        serviceStep = new ServiceStep();
+                    }
+
+                    if (source.Service != null)
+                    {
+                        var serviceId = source.Service.Id;
+
+                        var service = session.Get<Service>(serviceId);
+                        if (service == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId),
+                                string.Format("Услуга [{0}] не найдена", serviceId));
+                        }
+                        serviceStep.Service = service;
+                    }
+                    else
+                    {
+                        serviceStep.Service = null;
                     }
 
                     serviceStep.Name = source.Name;

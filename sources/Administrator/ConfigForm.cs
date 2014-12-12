@@ -37,7 +37,7 @@ namespace Queue.Administrator
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
 
             defaultConfigControl.Initialize(channelBuilder, currentUser);
@@ -61,7 +61,6 @@ namespace Queue.Administrator
             {
                 using (var channel = channelManager.CreateChannel())
                 {
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                     try
                     {
                         switch (сonfigTabControl.SelectedIndex)

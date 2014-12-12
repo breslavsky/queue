@@ -105,10 +105,9 @@
             // 
             this.usersControl.Location = new System.Drawing.Point(100, 25);
             this.usersControl.Name = "usersControl";
-            this.usersControl.Selected = null;
             this.usersControl.Size = new System.Drawing.Size(220, 21);
             this.usersControl.TabIndex = 1;
-            this.usersControl.UserCanReset = false;
+            this.usersControl.UseResetButton = false;
             // 
             // rememberCheckBox
             // 

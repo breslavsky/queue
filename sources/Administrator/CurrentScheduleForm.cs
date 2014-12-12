@@ -28,7 +28,7 @@ namespace Queue.Administrator
 
         #region properties
 
-        private Service SelectedService { get { return selectServiceControl.SelectedService; } }
+        private Service SelectedService { get { return selectServiceControl.Service; } }
 
         #endregion properties
 
@@ -40,7 +40,7 @@ namespace Queue.Administrator
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
 
             currentScheduleControl.Initialize(channelBuilder, currentUser);
@@ -57,7 +57,6 @@ namespace Queue.Administrator
                 {
                     try
                     {
-                        await channel.Service.OpenUserSession(currentUser.SessionId);
                         currentScheduleControl.Schedule = await taskPool.AddTask(channel.Service.GetServiceExceptionSchedule(SelectedService.Id, ServerDateTime.Today));
 
                         currentScheduleCheckBox.Checked = true;
@@ -98,8 +97,6 @@ namespace Queue.Administrator
                         currentScheduleCheckBox.Enabled = false;
 
                         var scheduleDate = ServerDateTime.Today;
-
-                        await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
 
                         if (currentScheduleCheckBox.Checked)
                         {

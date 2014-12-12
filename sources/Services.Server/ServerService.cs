@@ -23,34 +23,31 @@ namespace Queue.Services.Server
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(ServerService));
 
+        private IContextChannel channel;
         private User currentUser;
 
         private IServerCallback eventsCallback;
 
+        private Guid sessionId;
         private IDictionary<ServerServiceEventType, Subscribtion> subscriptions;
-
-        private string sessionId;
-
-        private IContextChannel channel;
 
         public ServerService()
         {
-            sessionId = OperationContext.Current.SessionId;
-            if (sessionId == null)
+            try
             {
-                sessionId = OperationContext.Current.IncomingMessageHeaders.GetHeader<string>("SessionId", "queue.name");
-                if (sessionId != null)
+                sessionId = Guid.Parse(OperationContext.Current.IncomingMessageHeaders
+                    .GetHeader<string>("SessionId", string.Empty));
+
+                using (var session = sessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
                 {
-                    using (var session = sessionProvider.OpenSession())
-                    using (var transaction = session.BeginTransaction())
-                    {
-                        currentUser = session.CreateCriteria<User>()
-                            .Add(Restrictions.Eq("SessionId", Guid.Parse(sessionId)))
-                            .SetMaxResults(1)
-                            .UniqueResult<User>();
-                    }
+                    currentUser = session.CreateCriteria<User>()
+                        .Add(Restrictions.Eq("SessionId", sessionId))
+                        .SetMaxResults(1)
+                        .UniqueResult<User>();
                 }
             }
+            catch { }
 
             logger.Debug(string.Format("Создан новый экземпляр службы [{0}]", sessionId));
 
@@ -66,8 +63,8 @@ namespace Queue.Services.Server
             subscriptions = new Dictionary<ServerServiceEventType, Subscribtion>();
 
             channel = OperationContext.Current.Channel;
-            channel.Faulted += Channel_Faulted;
-            channel.Closing += Channel_Closing;
+            channel.Faulted += channel_Faulted;
+            channel.Closing += channel_Closing;
         }
 
         private IQueueInstance queueInstance
@@ -218,6 +215,20 @@ namespace Queue.Services.Server
             }
         }
 
+        private void channel_Closing(object sender, EventArgs e)
+        {
+            logger.Info(string.Format("Канал службы закрывается [{0}]", sessionId));
+
+            UnSubscribe();
+        }
+
+        private void channel_Faulted(object sender, EventArgs e)
+        {
+            logger.Info(string.Format("В канале службы произошла ошибка [{0}]", sessionId));
+
+            UnSubscribe();
+        }
+
         private void checkPermission(UserRole role)
         {
             if (currentUser == null)
@@ -286,6 +297,33 @@ namespace Queue.Services.Server
             }
         }
 
+        private void queueInstance_OnConfigUpdated(object sender, QueueInstanceEventArgs e)
+        {
+            var subscription = subscriptions[ServerServiceEventType.ConfigUpdated];
+            var args = subscription.Args;
+
+            if (args == null || args.ConfigTypes.Length > 0
+                && args.ConfigTypes.Contains(e.Config.Type))
+            {
+                try
+                {
+                    Task.Run(() =>
+                    {
+                        eventsCallback.ConfigUpdated(e.Config);
+                    });
+                }
+                catch (ObjectDisposedException exception)
+                {
+                    logger.Debug(exception);
+                }
+                catch (Exception exception)
+                {
+                    logger.Error(exception);
+                    UnSubscribe(ServerServiceEventType.ConfigUpdated);
+                }
+            }
+        }
+
         private void queueInstance_OnCurrentClientRequestPlanUpdated(object sender, QueueInstanceEventArgs e)
         {
             var subscription = subscriptions[ServerServiceEventType.CurrentClientRequestPlanUpdated];
@@ -309,6 +347,26 @@ namespace Queue.Services.Server
                     logger.Error(exception);
                     UnSubscribe(ServerServiceEventType.CurrentClientRequestPlanUpdated);
                 }
+            }
+        }
+
+        private void queueInstance_OnEvent(object sender, QueueInstanceEventArgs e)
+        {
+            try
+            {
+                Task.Run(() =>
+                {
+                    eventsCallback.Event(e.Event);
+                });
+            }
+            catch (ObjectDisposedException exception)
+            {
+                logger.Debug(exception);
+            }
+            catch (Exception exception)
+            {
+                logger.Error(exception);
+                UnSubscribe(ServerServiceEventType.Event);
             }
         }
 
@@ -340,72 +398,11 @@ namespace Queue.Services.Server
             }
         }
 
-        private void queueInstance_OnConfigUpdated(object sender, QueueInstanceEventArgs e)
-        {
-            var subscription = subscriptions[ServerServiceEventType.ConfigUpdated];
-            var args = subscription.Args;
-
-            if (args == null || args.ConfigTypes.Length > 0
-                && args.ConfigTypes.Contains(e.Config.Type))
-            {
-                try
-                {
-                    Task.Run(() =>
-                    {
-                        eventsCallback.ConfigUpdated(e.Config);
-                    });
-                }
-                catch (ObjectDisposedException exception)
-                {
-                    logger.Debug(exception);
-                }
-                catch (Exception exception)
-                {
-                    logger.Error(exception);
-                    UnSubscribe(ServerServiceEventType.ConfigUpdated);
-                }
-            }
-        }
-
-        private void queueInstance_OnEvent(object sender, QueueInstanceEventArgs e)
-        {
-            try
-            {
-                Task.Run(() =>
-                {
-                    eventsCallback.Event(e.Event);
-                });
-            }
-            catch (ObjectDisposedException exception)
-            {
-                logger.Debug(exception);
-            }
-            catch (Exception exception)
-            {
-                logger.Error(exception);
-                UnSubscribe(ServerServiceEventType.Event);
-            }
-        }
-
-        private void Channel_Faulted(object sender, EventArgs e)
-        {
-            logger.Info(string.Format("В канале службы произошла ошибка [{0}]", sessionId));
-
-            UnSubscribe();
-        }
-
-        private void Channel_Closing(object sender, EventArgs e)
-        {
-            logger.Info(string.Format("Канал службы закрывается [{0}]", sessionId));
-
-            UnSubscribe();
-        }
-
         public class Subscribtion
         {
-            public QueueInstanceEventHandler EventHandler { get; set; }
-
             public ServerSubscribtionArgs Args { get; set; }
+
+            public EventHandler<QueueInstanceEventArgs> EventHandler { get; set; }
         }
     }
 }

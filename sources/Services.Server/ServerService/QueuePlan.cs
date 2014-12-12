@@ -374,7 +374,7 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.ClientRequest> ChangeCurrentClientRequestSubjects(int subjects)
+        public async Task<DTO.ClientRequest> EditCurrentClientRequest(DTO.ClientRequest source)
         {
             return await Task.Run(() =>
             {
@@ -392,215 +392,119 @@ namespace Queue.Services.Server
                         var todayQueuePlan = queueInstance.TodayQueuePlan;
                         using (var locker = todayQueuePlan.ReadLock())
                         {
-                            clientRequest = session.Merge(todayQueuePlan.GetOperatorPlan(queueOperator)
-                                .CurrentClientRequestPlan.ClientRequest);
+                            ClientRequestPlan clientRequestPlan = todayQueuePlan.GetOperatorPlan(queueOperator)
+                                .CurrentClientRequestPlan;
+                            if (clientRequestPlan == null)
+                            {
+                                throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(queueOperator.GetId()),
+                                    string.Format("Текущий запрос клиента не найден у оператора [{0}]", queueOperator));
+                            }
+
+                            clientRequest = session.Merge(clientRequestPlan.ClientRequest);
                         }
 
-                        switch (clientRequest.State)
+                        if (clientRequest.State != ClientRequestState.Rendering)
                         {
-                            case ClientRequestState.Rendering:
-                                break;
-
-                            default:
-                                throw new Exception("Нельзя изменить количество объектов у запроса клиента находящийся в данном статусе");
+                            throw new FaultException("Нельзя изменить запрос клиент находящийся в данном статусе");
                         }
 
-                        clientRequest.Subjects = subjects;
-
-                        clientRequest.Version++;
-                        session.Save(clientRequest);
-
-                        var queueEvent = new ClientRequestEvent()
+                        if (clientRequest.Subjects != source.Subjects)
                         {
-                            ClientRequest = clientRequest,
-                            Message = string.Format("[{0}] изменил количество запросов на [{1}] для запроса клиента [{2}]", queueOperator, subjects, clientRequest)
-                        };
+                            clientRequest.Subjects = source.Subjects;
 
-                        session.Save(queueEvent);
-
-                        using (var locker = todayQueuePlan.WriteLock())
-                        {
-                            transaction.Commit();
-
-                            todayQueuePlan.Put(clientRequest);
-                            todayQueuePlan.Build(DateTime.Now.TimeOfDay);
+                            session.Save(new ClientRequestEvent()
+                            {
+                                ClientRequest = clientRequest,
+                                Message = string.Format("[{0}] изменил количество запросов на [{1}] для запроса клиента [{2}]",
+                                    queueOperator, clientRequest.Subjects, clientRequest)
+                            });
                         }
 
-                        return Mapper.Map<ClientRequest, DTO.ClientRequest>(clientRequest);
-                    }
-                    catch (Exception exception)
-                    {
-                        throw new FaultException(exception.Message);
-                    }
-                }
-            });
-        }
-
-        public async Task<DTO.ClientRequest> ChangeCurrentClientRequestService(Guid serviceId)
-        {
-            return await Task.Run(() =>
-            {
-                checkPermission(UserRole.Operator);
-
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    var queueOperator = (Operator)currentUser;
-
-                    try
-                    {
-                        ClientRequest clientRequest;
-
-                        var todayQueuePlan = queueInstance.TodayQueuePlan;
-                        using (var locker = todayQueuePlan.ReadLock())
+                        if (source.Service != null)
                         {
-                            clientRequest = session.Merge(todayQueuePlan.GetOperatorPlan(queueOperator)
-                                .CurrentClientRequestPlan.ClientRequest);
+                            Guid serviceId = source.Service.Id;
+
+                            Service service = session.Get<Service>(serviceId);
+                            if (service == null)
+                            {
+                                throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId),
+                                    string.Format("Услуга [{0}] не найдена", serviceId));
+                            }
+
+                            if (clientRequest.Service == null
+                                || !clientRequest.Service.Equals(service))
+                            {
+                                clientRequest.Service = service;
+
+                                session.Save(new ClientRequestEvent()
+                                {
+                                    ClientRequest = clientRequest,
+                                    Message = string.Format("[{0}] изменил услугу на [{1}] для запроса клиента [{2}]",
+                                        queueOperator, service, clientRequest)
+                                });
+                            }
+                        }
+                        else
+                        {
+                            clientRequest.Service = null;
                         }
 
-                        switch (clientRequest.State)
+                        if (source.ServiceStep != null)
                         {
-                            case ClientRequestState.Rendering:
-                                break;
+                            Guid serviceStepId = source.ServiceStep.Id;
 
-                            default:
-                                throw new Exception("Нельзя изменить услугу запроса клиента находящийся в данном статусе");
-                        }
-
-                        var service = session.Get<Service>(serviceId);
-                        if (service == null)
-                        {
-                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId), string.Format("Услуга [{0}] не найдена", serviceId));
-                        }
-
-                        clientRequest.Service = service;
-
-                        clientRequest.Version++;
-                        session.Save(clientRequest);
-
-                        var queueEvent = new ClientRequestEvent()
-                        {
-                            ClientRequest = clientRequest,
-                            Message = string.Format("[{0}] изменил услугу на [{1}] для запроса клиента [{2}]", queueOperator, service, clientRequest)
-                        };
-
-                        session.Save(queueEvent);
-
-                        using (var locker = todayQueuePlan.WriteLock())
-                        {
-                            transaction.Commit();
-
-                            todayQueuePlan.Put(clientRequest);
-                            todayQueuePlan.Build(DateTime.Now.TimeOfDay);
-                        }
-
-                        return Mapper.Map<ClientRequest, DTO.ClientRequest>(clientRequest);
-                    }
-                    catch (Exception exception)
-                    {
-                        throw new FaultException(exception.Message);
-                    }
-                }
-            });
-        }
-
-        public async Task<DTO.ClientRequest> ChangeCurrentClientRequestServiceType(ServiceType serviceType)
-        {
-            return await Task.Run(() =>
-            {
-                checkPermission(UserRole.Operator);
-
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    var queueOperator = (Operator)currentUser;
-
-                    try
-                    {
-                        var clientRequest = session.Merge(queueInstance.TodayQueuePlan
-                            .GetOperatorPlan(queueOperator).CurrentClientRequestPlan.ClientRequest);
-
-                        switch (clientRequest.State)
-                        {
-                            case ClientRequestState.Rendering:
-                                break;
-
-                            default:
-                                throw new Exception("Нельзя изменить тип услуги запроса клиента находящийся в данном статусе");
-                        }
-
-                        clientRequest.ServiceType = serviceType;
-
-                        clientRequest.Version++;
-                        session.Save(clientRequest);
-
-                        var todayQueuePlan = queueInstance.TodayQueuePlan;
-                        using (var locker = todayQueuePlan.WriteLock())
-                        {
-                            transaction.Commit();
-
-                            todayQueuePlan.Put(clientRequest);
-                        }
-
-                        return Mapper.Map<ClientRequest, DTO.ClientRequest>(clientRequest);
-                    }
-                    catch (Exception exception)
-                    {
-                        throw new FaultException(exception.Message);
-                    }
-                }
-            });
-        }
-
-        public async Task<DTO.ClientRequest> ChangeCurrentClientRequestServiceStep(Guid serviceStepId)
-        {
-            return await Task.Run(() =>
-            {
-                checkPermission(UserRole.Operator);
-
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    var queueOperator = (Operator)currentUser;
-
-                    try
-                    {
-                        var clientRequest = session.Merge(queueInstance.TodayQueuePlan
-                            .GetOperatorPlan(queueOperator).CurrentClientRequestPlan.ClientRequest);
-
-                        switch (clientRequest.State)
-                        {
-                            case ClientRequestState.Rendering:
-                                break;
-
-                            default:
-                                throw new Exception("Нельзя изменить тип услуги запроса клиента находящийся в данном статусе");
-                        }
-
-                        if (serviceStepId != Guid.Empty)
-                        {
                             var serviceStep = session.Get<ServiceStep>(serviceStepId);
                             if (serviceStep == null)
                             {
-                                throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceStepId), string.Format("Этап услуги [{0}] не найден", serviceStepId));
+                                throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceStepId),
+                                    string.Format("Этап услуги [{0}] не найден", serviceStepId));
                             }
 
-                            clientRequest.ServiceStep = serviceStep;
+                            if (clientRequest.ServiceStep == null
+                                || !clientRequest.ServiceStep.Equals(serviceStep))
+                            {
+                                clientRequest.ServiceStep = serviceStep;
+
+                                session.Save(new ClientRequestEvent()
+                                {
+                                    ClientRequest = clientRequest,
+                                    Message = string.Format("[{0}] изменил этап услуги на [{1}] для запроса клиента [{2}]",
+                                        queueOperator, serviceStep, clientRequest)
+                                });
+                            }
                         }
                         else
                         {
                             clientRequest.ServiceStep = null;
+
+                            session.Save(new ClientRequestEvent()
+                            {
+                                ClientRequest = clientRequest,
+                                Message = string.Format("[{0}] сбросил этап услуги для запроса клиента [{1}]", queueOperator, clientRequest)
+                            });
+                        }
+
+                        if (!clientRequest.ServiceType.Equals(source.ServiceType))
+                        {
+                            clientRequest.ServiceType = source.ServiceType;
+
+                            session.Save(new ClientRequestEvent()
+                            {
+                                ClientRequest = clientRequest,
+                                Message = string.Format("[{0}] изменил тип услуги на [{1}] для запроса клиента [{2}]", queueOperator,
+                                    clientRequest.ServiceType.Translate(), clientRequest)
+                            });
                         }
 
                         clientRequest.Version++;
                         session.Save(clientRequest);
 
-                        var todayQueuePlan = queueInstance.TodayQueuePlan;
                         using (var locker = todayQueuePlan.WriteLock())
                         {
                             transaction.Commit();
 
                             todayQueuePlan.Put(clientRequest);
+                            todayQueuePlan.Build(DateTime.Now.TimeOfDay);
                         }
 
                         return Mapper.Map<ClientRequest, DTO.ClientRequest>(clientRequest);

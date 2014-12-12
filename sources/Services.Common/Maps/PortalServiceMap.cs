@@ -8,7 +8,7 @@
         public const string ClientAccessPolicy = "clientaccesspolicy.xml";
         public const string GetDefaultConfig = "/config/default";
         public const string GetPortalConfig = "/config/portal";
-        public const string FindServices = "/find-services?filter={filter}";
+        public const string FindServices = "/find-services?query={query}";
         public const string GetQueuePlanMetric = "/get-queue-plan-metric?year={year}&month={month}&day={day}&hour={hour}&minute={minute}&second={second}";
         public const string GetQueuePlanServiceMetric = "/get-queue-plan-service-metric?year={year}&month={month}&day={day}&hour={hour}&minute={minute}&second={second}&serviceId={serviceId}";
     }

@@ -8,19 +8,34 @@ namespace Queue.Services.DTO
     public class ClientRequestFilter
     {
         [DataMember]
-        public DateTime? RequestDate { get; set; }
+        public bool IsRequestDate { get; set; }
 
         [DataMember]
-        public Guid? OperatorId { get; set; }
+        public DateTime RequestDate { get; set; }
 
         [DataMember]
-        public Guid? ServiceId { get; set; }
+        public bool IsOperator { get; set; }
 
         [DataMember]
-        public Guid? ClientId { get; set; }
+        public Guid OperatorId { get; set; }
 
         [DataMember]
-        public ClientRequestState? State { get; set; }
+        public bool IsService { get; set; }
+
+        [DataMember]
+        public Guid ServiceId { get; set; }
+
+        [DataMember]
+        public bool IsClient { get; set; }
+
+        [DataMember]
+        public Guid ClientId { get; set; }
+
+        [DataMember]
+        public bool IsState { get; set; }
+
+        [DataMember]
+        public ClientRequestState State { get; set; }
 
         [DataMember]
         public string Query { get; set; }

@@ -14,11 +14,11 @@ namespace Queue.Services.Server
 
         public ClientRequest ClientRequest { get; private set; }
 
-        public TimeSpan StartTime { get; private set; }
-
         public TimeSpan FinishTime { get; private set; }
 
         public int Position { get; set; }
+
+        public TimeSpan StartTime { get; private set; }
 
         public override string ToString()
         {

@@ -26,5 +26,13 @@ namespace Queue.Services.DTO
         {
             return string.IsNullOrWhiteSpace(Presentation) ? Id.ToString() : Presentation;
         }
+
+        public T Cast<T>() where T : IdentifiedEntity
+        {
+            var instance = Activator.CreateInstance<T>();
+            instance.Id = Id;
+            instance.Presentation = Presentation;
+            return instance;
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace Queue.Administrator
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
         }
 
@@ -62,8 +62,6 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-
                     workplaceColumn.DisplayMember = "Key";
                     workplaceColumn.ValueMember = "Value";
                     workplaceColumn.DataSource = (await taskPool.AddTask(channel.Service.GetWorkplaces()))
@@ -219,8 +217,6 @@ namespace Queue.Administrator
                     {
                         try
                         {
-                            await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-
                             if (user is QueueOperator)
                             {
                                 var queueOperator = user as QueueOperator;
@@ -311,7 +307,6 @@ namespace Queue.Administrator
                                         {
                                             row.ReadOnly = true;
 
-                                            await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                                             await taskPool.AddTask(channel.Service.ChangeUserPassword(user.Id, passwordForm.Password));
                                         }
                                         catch (OperationCanceledException) { }
@@ -344,7 +339,6 @@ namespace Queue.Administrator
                                 {
                                     try
                                     {
-                                        await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                                         await taskPool.AddTask(channel.Service.DeleteUser(user.Id));
 
                                         usersGridView.Rows.Remove(row);
@@ -377,7 +371,6 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                     var user = await taskPool.AddTask(channel.Service.AddUser((UserRole)userRole));
 
                     int index = usersGridView.Rows.Add();

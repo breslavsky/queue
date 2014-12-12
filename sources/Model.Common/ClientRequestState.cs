@@ -10,4 +10,12 @@
         Rendered,
         Canceled
     }
+
+    public static partial class TranslationExtensions
+    {
+        public static string Translate(this ClientRequestState value)
+        {
+            return Translation.ClientRequestState.ResourceManager.GetString(value.ToString());
+        }
+    }
 }

@@ -9,12 +9,12 @@ using System.Linq;
 
 namespace Queue.Services.Server
 {
-    public class OperatorPlan
+    public sealed class OperatorPlan
     {
         public ClientRequestPlan currentClientRequestPlan;
         private static readonly ILog logger = LogManager.GetLogger(typeof(OperatorPlan));
 
-        private List<TimeInterval> clientRequestIntervals;
+        private readonly List<TimeInterval> clientRequestIntervals = new List<TimeInterval>();
 
         public OperatorPlan(Operator queueOperator)
         {
@@ -24,17 +24,9 @@ namespace Queue.Services.Server
 
             ClientRequestPlans = new ObservableCollection<ClientRequestPlan>();
             ClientRequestPlans.CollectionChanged += ClientRequestPlans_CollectionChanged;
-
-            clientRequestIntervals = new List<TimeInterval>();
         }
 
-        public Operator Operator { get; private set; }
-
         public ObservableCollection<ClientRequestPlan> ClientRequestPlans { get; private set; }
-
-        public OperatorPlanMetrics Metrics { get; private set; }
-
-        public TimeSpan PlanTime { get; set; }
 
         public ClientRequestPlan CurrentClientRequestPlan
         {
@@ -44,52 +36,17 @@ namespace Queue.Services.Server
                 currentClientRequestPlan = value;
                 if (currentClientRequestPlan == null)
                 {
+                    //TODO: why?
                     Metrics.Reset();
                 }
             }
         }
 
-        public TimeSpan GetNearTimeInterval(TimeSpan startTime, Schedule schedule, int subjects = 1)
-        {
-            // Недоступные интервалы
-            var reservedIntervals = new List<TimeInterval>(clientRequestIntervals);
+        public OperatorPlanMetrics Metrics { get; private set; }
 
-            // Если установлен перерыв у оператора
-            if (Operator.IsInterruption)
-            {
-                reservedIntervals.Add(new TimeInterval(Operator.InterruptionStartTime, Operator.InterruptionFinishTime));
-            }
+        public Operator Operator { get; private set; }
 
-            // Если установлен перерыв у расписания
-            if (schedule.IsInterruption)
-            {
-                reservedIntervals.Add(new TimeInterval(schedule.InterruptionStartTime, schedule.InterruptionFinishTime));
-            }
-
-            var clientInterval = TimeSpan.FromTicks(schedule.ClientInterval.Ticks * subjects);
-
-            var renderStartTime = startTime;
-
-            foreach (var exception in reservedIntervals
-                .Where<TimeInterval>(i => i.FinishTime >= startTime)
-                .OrderBy(i => i.FinishTime))
-            {
-                var renderFinishTime = exception.StartTime;
-
-                var interval = renderFinishTime - renderStartTime;
-                // Найденный интервал обслуживания клиента больше или равен плановому?
-                if (interval < clientInterval - schedule.Intersection)
-                {
-                    renderStartTime = exception.FinishTime;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return renderStartTime;
-        }
+        public TimeSpan PlanTime { get; set; }
 
         public void AddClientRequest(ClientRequest clientRequest, Schedule schedule)
         {
@@ -140,6 +97,48 @@ namespace Queue.Services.Server
             {
                 Metrics.Workload = Metrics.Workload.Add(clientRequest.RenderFinishTime - clientRequest.RenderStartTime);
             }
+        }
+
+        public TimeSpan GetNearTimeInterval(TimeSpan startTime, Schedule schedule, int subjects = 1)
+        {
+            // Недоступные интервалы
+            var reservedIntervals = new List<TimeInterval>(clientRequestIntervals);
+
+            // Если установлен перерыв у оператора
+            if (Operator.IsInterruption)
+            {
+                reservedIntervals.Add(new TimeInterval(Operator.InterruptionStartTime, Operator.InterruptionFinishTime));
+            }
+
+            // Если установлен перерыв у расписания
+            if (schedule.IsInterruption)
+            {
+                reservedIntervals.Add(new TimeInterval(schedule.InterruptionStartTime, schedule.InterruptionFinishTime));
+            }
+
+            var clientInterval = TimeSpan.FromTicks(schedule.ClientInterval.Ticks * subjects);
+
+            var renderStartTime = startTime;
+
+            foreach (var exception in reservedIntervals
+                .Where<TimeInterval>(i => i.FinishTime >= startTime)
+                .OrderBy(i => i.FinishTime))
+            {
+                var renderFinishTime = exception.StartTime;
+
+                var interval = renderFinishTime - renderStartTime;
+                // Найденный интервал обслуживания клиента больше или равен плановому?
+                if (interval < clientInterval - schedule.Intersection)
+                {
+                    renderStartTime = exception.FinishTime;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return renderStartTime;
         }
 
         public override string ToString()

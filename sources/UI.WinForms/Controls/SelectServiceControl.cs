@@ -20,7 +20,7 @@ namespace Queue.UI.WinForms
     {
         #region events
 
-        public event EventHandler<EventArgs> ServiceSelected;
+        public event EventHandler<EventArgs> Selected;
 
         #endregion events
 
@@ -39,7 +39,7 @@ namespace Queue.UI.WinForms
 
         #region properties
 
-        public Service SelectedService { get; private set; }
+        public Service Service { get; private set; }
 
         #endregion properties
 
@@ -152,9 +152,9 @@ namespace Queue.UI.WinForms
 
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            SelectedService = treeView.SelectedNode.Tag as Service;
+            Service = treeView.SelectedNode.Tag as Service;
 
-            ServiceSelected(this, new EventArgs());
+            Selected(this, new EventArgs());
         }
     }
 }

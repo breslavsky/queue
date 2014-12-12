@@ -3,62 +3,106 @@ using Junte.UI.WinForms;
 using Junte.WCF.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.ServiceModel;
 using System.Windows.Forms;
-using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
     public partial class EditServiceGroupForm : Queue.UI.WinForms.RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
         private ChannelManager<IServerTcpService> channelManager;
+        private User currentUser;
+        private ServiceGroup serviceGroup;
+        private Guid serviceGroupId;
         private TaskPool taskPool;
 
-        private ServiceGroup serviceGroup;
-
-        public ServiceGroup ServiceGroup
-        {
-            get { return serviceGroup; }
-        }
-
-        public EditServiceGroupForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, ServiceGroup serviceGroup)
+        public EditServiceGroupForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? serviceGroupId = null)
             : base()
         {
             InitializeComponent();
 
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
-            this.serviceGroup = serviceGroup;
+            this.serviceGroupId = serviceGroupId.HasValue
+                ? serviceGroupId.Value : Guid.Empty;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
         }
 
-        private void ServiceGroupEdit_Load(object sender, EventArgs e)
+        public ServiceGroup ServiceGroup
         {
-            codeTextBox.Text = ServiceGroup.Code;
-            nameTextBox.Text = ServiceGroup.Name;
-            commentTextBox.Text = ServiceGroup.Comment;
-            descriptionTextBox.Text = ServiceGroup.Description;
-            columnsUpDown.Value = ServiceGroup.Columns;
-            rowsUpDown.Value = ServiceGroup.Rows;
-            if (!string.IsNullOrWhiteSpace(ServiceGroup.Color))
+            get { return serviceGroup; }
+            private set
             {
-                colorPanel.BackColor = ColorTranslator.FromHtml(ServiceGroup.Color);
-            }
+                serviceGroup = value;
 
-            //TODO: create!
-            byte[] icon = new byte[] { };
-            if (icon.Length > 0)
+                codeTextBox.Text = serviceGroup.Code;
+                nameTextBox.Text = serviceGroup.Name;
+                commentTextBox.Text = serviceGroup.Comment;
+                descriptionTextBox.Text = serviceGroup.Description;
+                columnsUpDown.Value = serviceGroup.Columns;
+                rowsUpDown.Value = serviceGroup.Rows;
+                if (!string.IsNullOrWhiteSpace(serviceGroup.Color))
+                {
+                    colorPanel.BackColor = ColorTranslator.FromHtml(serviceGroup.Color);
+                }
+
+                //TODO: create!
+                byte[] icon = new byte[] { };
+                if (icon.Length > 0)
+                {
+                    iconImageBox.Image = Image.FromStream(new MemoryStream(icon));
+                }
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                iconImageBox.Image = Image.FromStream(new MemoryStream(icon));
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+                if (taskPool != null)
+                {
+                    taskPool.Dispose();
+                }
+                if (channelManager != null)
+                {
+                    channelManager.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        private void colorButton_Click(object sender, EventArgs e)
+        {
+            using (var d = new ColorDialog())
+            {
+                if (d.ShowDialog() == DialogResult.OK)
+                {
+                    colorPanel.BackColor = d.Color;
+                }
+            }
+        }
+
+        private void descriptionTextBox_Click(object sender, EventArgs e)
+        {
+            using (var f = new HtmlEditorForm())
+            {
+                f.HTML = descriptionTextBox.Text;
+                if (f.ShowDialog() == DialogResult.OK)
+                {
+                    descriptionTextBox.Text = f.HTML;
+                }
             }
         }
 
@@ -75,62 +119,6 @@ namespace Queue.Administrator
             }
         }
 
-        private void codeTextBox_Leave(object sender, EventArgs e)
-        {
-            serviceGroup.Code = codeTextBox.Text;
-        }
-
-        private void colorPanel_Leave(object sender, EventArgs e)
-        {
-            serviceGroup.Color = ColorTranslator.ToHtml(colorPanel.BackColor);
-        }
-
-        private void colorButton_Click(object sender, EventArgs e)
-        {
-            var d = new ColorDialog();
-            if (d.ShowDialog() == DialogResult.OK)
-            {
-                colorPanel.BackColor = d.Color;
-            }
-        }
-
-        private void nameTextBox_Leave(object sender, EventArgs e)
-        {
-            serviceGroup.Name = nameTextBox.Text;
-        }
-
-        private void commentTextBox_Leave(object sender, EventArgs e)
-        {
-            serviceGroup.Comment = commentTextBox.Text;
-        }
-
-        private void descriptionTextBox_Click(object sender, EventArgs e)
-        {
-            using (var f = new HtmlEditorForm())
-            {
-                f.HTML = descriptionTextBox.Text;
-                if (f.ShowDialog() == DialogResult.OK)
-                {
-                    descriptionTextBox.Text = f.HTML;
-                }
-            }
-        }
-
-        private void descriptionTextBox_Leave(object sender, EventArgs e)
-        {
-            serviceGroup.Description = descriptionTextBox.Text;
-        }
-
-        private void columnsUpDown_Leave(object sender, EventArgs e)
-        {
-            serviceGroup.Columns = (int)columnsUpDown.Value;
-        }
-
-        private void rowsUpDown_Leave(object sender, EventArgs e)
-        {
-            serviceGroup.Rows = (int)rowsUpDown.Value;
-        }
-
         private async void saveButton_Click(object sender, EventArgs e)
         {
             var memoryStream = new MemoryStream();
@@ -145,8 +133,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                    serviceGroup = await taskPool.AddTask(channel.Service.EditServiceGroup(serviceGroup));
+                    await taskPool.AddTask(channel.Service.EditServiceGroup(serviceGroup));
 
                     DialogResult = DialogResult.OK;
                 }
@@ -169,29 +156,78 @@ namespace Queue.Administrator
             }
         }
 
+        private async void ServiceGroupEdit_Load(object sender, EventArgs e)
+        {
+            if (serviceGroupId != Guid.Empty)
+            {
+                using (var channel = channelManager.CreateChannel())
+                {
+                    try
+                    {
+                        ServiceGroup = await taskPool.AddTask(channel.Service.GetServiceGroup(serviceGroupId));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                }
+            }
+            else
+            {
+                ServiceGroup = new ServiceGroup();
+            }
+        }
+
+        #region bindings
+
+        private void codeTextBox_Leave(object sender, EventArgs e)
+        {
+            serviceGroup.Code = codeTextBox.Text;
+        }
+
+        private void colorPanel_Leave(object sender, EventArgs e)
+        {
+            serviceGroup.Color = ColorTranslator.ToHtml(colorPanel.BackColor);
+        }
+
+        private void columnsUpDown_Leave(object sender, EventArgs e)
+        {
+            serviceGroup.Columns = (int)columnsUpDown.Value;
+        }
+
+        private void commentTextBox_Leave(object sender, EventArgs e)
+        {
+            serviceGroup.Comment = commentTextBox.Text;
+        }
+
+        private void descriptionTextBox_Leave(object sender, EventArgs e)
+        {
+            serviceGroup.Description = descriptionTextBox.Text;
+        }
+
+        private void nameTextBox_Leave(object sender, EventArgs e)
+        {
+            serviceGroup.Name = nameTextBox.Text;
+        }
+
+        private void rowsUpDown_Leave(object sender, EventArgs e)
+        {
+            serviceGroup.Rows = (int)rowsUpDown.Value;
+        }
+
+        #endregion bindings
+
         private void ServiceGroupEditForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Cancel();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
-                if (taskPool != null)
-                {
-                    taskPool.Dispose();
-                }
-                if (channelManager != null)
-                {
-                    channelManager.Dispose();
-                }
-            }
-            base.Dispose(disposing);
         }
     }
 }

@@ -11,49 +11,28 @@ using System.Threading.Tasks;
 
 namespace Queue.Services.Portal
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple, IncludeExceptionDetailInFaults = true, UseSynchronizationContext = false)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple,
+        IncludeExceptionDetailInFaults = true, UseSynchronizationContext = false)]
     public partial class PortalService : IPortalService
     {
-        private const string WEB_CLIENT_PATH = "\\projects\\queue\\trunk\\Portal";
+        private const string WebClientPath = "\\projects\\queue\\trunk\\Portal";
+        private static readonly ILog logger = LogManager.GetLogger(typeof(PortalService));
 
-        private static readonly ILog logger = LogManager.GetLogger(typeof(PortalClientService));
+        private readonly DuplexChannelBuilder<IServerTcpService> channelBuilder;
+        protected readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly User currentUser;
+        protected readonly IncomingWebRequestContext request;
+        protected readonly OutgoingWebResponseContext response;
 
-        private Guid sessionId;
-
-        public PortalService(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser)
+        public PortalService(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
         {
-            ChannelBuilder = channelBuilder;
-            CurrentAdministrator = currentUser;
+            this.channelBuilder = channelBuilder;
+            this.currentUser = currentUser;
 
-            Request = WebOperationContext.Current.IncomingRequest;
-            try
-            {
-                sessionId = Guid.Parse(Request.Headers[ExtendHttpHeaders.SESSION]);
-            }
-            catch (Exception exception)
-            {
-                logger.Warn(exception);
-            }
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
 
-            Response = WebOperationContext.Current.OutgoingResponse;
-        }
-
-        protected DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
-
-        protected Administrator CurrentAdministrator { get; private set; }
-
-        protected IncomingWebRequestContext Request { get; private set; }
-
-        protected OutgoingWebResponseContext Response { get; private set; }
-
-        public virtual Stream Index()
-        {
-            return GetContent("index.html");
-        }
-
-        public Stream Favicon()
-        {
-            return GetContent("favicon.ico");
+            request = WebOperationContext.Current.IncomingRequest;
+            response = WebOperationContext.Current.OutgoingResponse;
         }
 
         public Stream ClientAccessPolicy()
@@ -61,23 +40,42 @@ namespace Queue.Services.Portal
             return GetContent("clientaccesspolicy.xml");
         }
 
+        public Stream Favicon()
+        {
+            return GetContent("favicon.ico");
+        }
+
+        public async Task<Service[]> FindServices(string query)
+        {
+            using (var channel = channelBuilder.CreateChannel())
+            {
+                try
+                {
+                    return await channel.Service.FindServices(query, 0, 50);
+                }
+                catch (FaultException exception)
+                {
+                    throw new WebFaultException<string>(exception.Reason.ToString(), HttpStatusCode.BadRequest);
+                }
+            }
+        }
+
         public Stream GetContent(string path)
         {
-            string file = Directory.Exists(WEB_CLIENT_PATH)
-                ? string.Format("{0}\\www\\{1}", WEB_CLIENT_PATH, path)
+            string file = Directory.Exists(WebClientPath)
+                ? string.Format("{0}\\www\\{1}", WebClientPath, path)
                 : file = string.Format("www\\{0}", path);
 
-            Response.ContentType = ContentType.GetType(Path.GetExtension(file));
+            response.ContentType = ContentType.GetType(Path.GetExtension(file));
             return File.Open(file, FileMode.Open);
         }
 
         public async Task<DefaultConfig> GetDefaultConfig()
         {
-            using (var channel = ChannelBuilder.CreateChannel())
+            using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
-                    await channel.Service.OpenUserSession(CurrentAdministrator.SessionId);
                     return await channel.Service.GetDefaultConfig();
                 }
                 catch (FaultException exception)
@@ -89,27 +87,11 @@ namespace Queue.Services.Portal
 
         public async Task<PortalConfig> GetPortalConfig()
         {
-            using (var channel = ChannelBuilder.CreateChannel())
+            using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
-                    await channel.Service.OpenUserSession(CurrentAdministrator.SessionId);
                     return await channel.Service.GetPortalConfig();
-                }
-                catch (FaultException exception)
-                {
-                    throw new WebFaultException<string>(exception.Reason.ToString(), HttpStatusCode.BadRequest);
-                }
-            }
-        }
-
-        public async Task<Service[]> FindServices(string filter)
-        {
-            using (var channel = ChannelBuilder.CreateChannel())
-            {
-                try
-                {
-                    return await channel.Service.FindServices(filter, 0, 50);
                 }
                 catch (FaultException exception)
                 {
@@ -120,11 +102,10 @@ namespace Queue.Services.Portal
 
         public async Task<QueuePlanMetric> GetQueuePlanMetric(int year, int month, int day, int hour, int minute, int second)
         {
-            using (var channel = ChannelBuilder.CreateChannel())
+            using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
-                    await channel.Service.OpenUserSession(CurrentAdministrator.SessionId);
                     return await channel.Service.GetQueuePlanMetric(year, month, day, hour, minute, second);
                 }
                 catch (FaultException exception)
@@ -136,11 +117,10 @@ namespace Queue.Services.Portal
 
         public async Task<QueuePlanServiceMetric> GetQueuePlanServiceMetric(int year, int month, int day, int hours, int minute, int second, string serviceId)
         {
-            using (var channel = ChannelBuilder.CreateChannel())
+            using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
-                    await channel.Service.OpenUserSession(CurrentAdministrator.SessionId);
                     return await channel.Service.GetQueuePlanServiceMetric(year, month, day, hours, minute, second, Guid.Parse(serviceId));
                 }
                 catch (FaultException exception)
@@ -150,10 +130,9 @@ namespace Queue.Services.Portal
             }
         }
 
-        protected struct ExtendHttpHeaders
+        public virtual Stream Index()
         {
-            public const string LOCATION = "Location";
-            public const string SESSION = "SessionId";
+            return GetContent("index.html");
         }
     }
 }

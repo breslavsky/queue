@@ -32,8 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Junte.WCF.Common">
-      <HintPath>..\packages\Junte.WCF.Common.1.0.0.15\lib\net45\Junte.WCF.Common.dll</HintPath>
+    <Reference Include="Junte.WCF.Common, Version=1.0.0.35, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.WCF.Common.1.0.0.35\lib\net45\Junte.WCF.Common.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -61,6 +62,7 @@
     <Compile Include="Client\PortalClientServiceHost.cs" />
     <Compile Include="Client\PortalClientServiceProvider.cs" />
     <Compile Include="ContentType.cs" />
+    <Compile Include="ExtendHttpHeaders.cs" />
     <Compile Include="PortalService.cs" />
     <Compile Include="PortalServiceHost.cs" />
     <Compile Include="PortalServiceProvider.cs" />

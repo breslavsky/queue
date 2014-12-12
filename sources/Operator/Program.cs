@@ -37,7 +37,7 @@ namespace Queue.Operator
                         settings.IsRemember = loginForm.IsRemember;
                         settings.Save();
 
-                        var mainForm = new MainForm(loginForm.ChannelBuilder, (QueueOperator)loginForm.User);
+                        var mainForm = new OperatorForm(loginForm.ChannelBuilder, (QueueOperator)loginForm.User);
                         Application.Run(mainForm);
 
                         if (mainForm.IsLogout)

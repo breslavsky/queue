@@ -5,7 +5,7 @@ namespace Queue.Model
 {
     [JoinedSubclass(Table = "service_weekday_schedule", ExtendsType = typeof(Schedule), Lazy = false, DynamicUpdate = true)]
     [Key(Column = "ScheduleId", ForeignKey = "ServiceWeekdayScheduleToScheduleReference")]
-    public class ServiceWeekdaySchedule : Schedule
+    public class ServiceWeekdaySchedule : ServiceSchedule
     {
         public ServiceWeekdaySchedule()
             : base()
@@ -18,14 +18,11 @@ namespace Queue.Model
         [Property]
         public virtual DayOfWeek DayOfWeek { get; set; }
 
-        [ManyToOne(ClassType = typeof(Service), Column = "ServiceId", ForeignKey = "ServiceWeekdayScheduleToServiceReference")]
-        public virtual Service Service { get; set; }
-        
-        #endregion properties        
-        
+        #endregion properties
+
         public override string ToString()
         {
-            return string.Format("Регулярное расписание для услуги на {0}", DayOfWeek);
+            return string.Format("Регулярное расписание для услуги {0} на {1}", Service, DayOfWeek);
         }
     }
 }

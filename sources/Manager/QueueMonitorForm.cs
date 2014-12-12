@@ -3,13 +3,13 @@ using Junte.UI.WinForms;
 using Junte.WCF.Common;
 using log4net;
 using Queue.Common;
+using Queue.Operator;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
-using OperatorUI = Queue.Operator;
 using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Manager
@@ -32,7 +32,7 @@ namespace Queue.Manager
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
 
             queueMonitorControl.Options = QueueMonitorControlOptions.ClientRequestEdit
@@ -64,10 +64,9 @@ namespace Queue.Manager
             {
                 try
                 {
-                    await channel.Service.OpenUserSession(currentUser.SessionId);
-                    var queueOperator = (QueueOperator)await channel.Service.GetUser(eventArgs.Operator.Id);
+                    var queueOperator = await channel.Service.GetUser(eventArgs.Operator.Id) as QueueOperator;
 
-                    var form = new OperatorUI.MainForm(channelBuilder, queueOperator);
+                    var form = new OperatorForm(channelBuilder, queueOperator);
                     FormClosing += (s, e) =>
                     {
                         form.Close();
@@ -160,7 +159,6 @@ namespace Queue.Manager
                 {
                     try
                     {
-                        await channel.Service.OpenUserSession(currentUser.SessionId);
                         await channel.Service.RefreshTodayQueuePlan();
                     }
                     catch (OperationCanceledException) { }

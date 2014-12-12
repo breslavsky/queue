@@ -31,7 +31,7 @@ namespace Queue.Administrator
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
 
             weekdayScheduleControl.Initialize(channelBuilder, currentUser);
@@ -52,7 +52,6 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    await channel.Service.OpenUserSession(currentUser.SessionId);
                     weekdayScheduleControl.Schedule = await taskPool.AddTask(channel.Service.GetDefaultWeekdaySchedule(dayOfWeek));
                 }
                 catch (OperationCanceledException) { }
@@ -86,7 +85,6 @@ namespace Queue.Administrator
                 {
                     exceptionScheduleDatePicker.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                     exceptionScheduleControl.Schedule = await taskPool.AddTask(channel.Service.GetDefaultExceptionSchedule(scheduleDate));
 
                     exceptionScheduleCheckBox.Checked = true;
@@ -119,8 +117,6 @@ namespace Queue.Administrator
         {
             using (var channel = channelManager.CreateChannel())
             {
-                await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-
                 if (exceptionScheduleCheckBox.Checked)
                 {
                     var scheduleDate = exceptionScheduleDatePicker.Value;

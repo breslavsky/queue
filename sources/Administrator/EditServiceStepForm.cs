@@ -19,14 +19,26 @@ namespace Queue.Administrator
     public partial class EditServiceStepForm : Queue.UI.WinForms.RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
         private ChannelManager<IServerTcpService> channelManager;
+        private User currentUser;
+        private Service service;
+        private Guid serviceId;
+        private ServiceStep serviceStep;
+        private Guid serviceStepId;
         private TaskPool taskPool;
 
-        private Guid serviceStepId { get; set; }
+        public EditServiceStepForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid serviceId, Guid? serviceStepId = null)
+        {
+            this.channelBuilder = channelBuilder;
+            this.currentUser = currentUser;
+            this.serviceId = serviceId;
+            this.serviceStepId = serviceStepId.HasValue ? serviceStepId.Value : Guid.Empty;
 
-        private ServiceStep serviceStep { get; set; }
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            taskPool = new TaskPool();
+
+            InitializeComponent();
+        }
 
         public ServiceStep ServiceStep
         {
@@ -39,16 +51,29 @@ namespace Queue.Administrator
             }
         }
 
-        public EditServiceStepForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid serviceStepId)
+        protected override void Dispose(bool disposing)
         {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-            this.serviceStepId = serviceStepId;
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+                if (taskPool != null)
+                {
+                    taskPool.Dispose();
+                }
+                if (channelManager != null)
+                {
+                    channelManager.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
-            taskPool = new TaskPool();
-
-            InitializeComponent();
+        private void EditServiceStepForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            taskPool.Cancel();
         }
 
         private async void EditServiceStepForm_Load(object sender, EventArgs e)
@@ -57,8 +82,14 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                    ServiceStep = await taskPool.AddTask(channel.Service.GetServiceStep(serviceStepId));
+                    service = await taskPool.AddTask(channel.Service.GetService(serviceId));
+
+                    ServiceStep = serviceStepId != Guid.Empty
+                        ? await taskPool.AddTask(channel.Service.GetServiceStep(serviceStepId))
+                        : new ServiceStep()
+                        {
+                            Service = service
+                        };
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -92,8 +123,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
-                    ServiceStep = await taskPool.AddTask(channel.Service.EditServiceStep(ServiceStep));
+                    await taskPool.AddTask(channel.Service.EditServiceStep(serviceStep));
 
                     DialogResult = DialogResult.OK;
                 }
@@ -114,31 +144,6 @@ namespace Queue.Administrator
                     saveButton.Enabled = true;
                 }
             }
-        }
-
-        private void EditServiceStepForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            taskPool.Cancel();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
-                if (taskPool != null)
-                {
-                    taskPool.Dispose();
-                }
-                if (channelManager != null)
-                {
-                    channelManager.Dispose();
-                }
-            }
-            base.Dispose(disposing);
         }
     }
 }

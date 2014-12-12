@@ -16,15 +16,12 @@ namespace Queue.Simulator
 {
     public partial class OperatorsForm : Queue.UI.WinForms.RichForm
     {
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
-        private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
-
-        private Random random;
-
         private CancellationTokenSource cancellationTokenSource;
+        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
+        private ChannelManager<IServerTcpService> channelManager;
+        private User currentUser;
+        private Random random;
+        private TaskPool taskPool;
 
         public OperatorsForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
@@ -34,7 +31,7 @@ namespace Queue.Simulator
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
 
             random = new Random();
@@ -52,6 +49,17 @@ namespace Queue.Simulator
             catch { }
         }
 
+        private void OperatorsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (cancellationTokenSource != null)
+            {
+                cancellationTokenSource.Cancel();
+            }
+
+            taskPool.Dispose();
+            channelManager.Dispose();
+        }
+
         private async void startButton_Click(object sender, EventArgs e)
         {
             int delay = (int)delayUpDown.Value * 1000;
@@ -63,7 +71,6 @@ namespace Queue.Simulator
                     startButton.Enabled = false;
 
                     log("Получение списка пользователей");
-                    await taskPool.AddTask(channel.Service.OpenUserSession(currentUser.SessionId));
                     var users = await taskPool.AddTask(channel.Service.GetUsers());
 
                     log(string.Format("Всего пользователей {0}", users.Length));
@@ -115,7 +122,6 @@ namespace Queue.Simulator
             {
                 try
                 {
-                    await taskPool.AddTask(channel.Service.OpenUserSession(queueOperator.SessionId));
                     await taskPool.AddTask(channel.Service.UserHeartbeat());
                     var clientRequest = (await channel.Service.GetCurrentClientRequestPlan()).ClientRequest;
                     if (clientRequest != null)
@@ -160,17 +166,6 @@ namespace Queue.Simulator
                     log(exception.ToString());
                 }
             }
-        }
-
-        private void OperatorsForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (cancellationTokenSource != null)
-            {
-                cancellationTokenSource.Cancel();
-            }
-
-            taskPool.Dispose();
-            channelManager.Dispose();
         }
     }
 }
