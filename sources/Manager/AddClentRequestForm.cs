@@ -122,11 +122,15 @@ namespace Queue.Manager
 
                     if (CurrentClient == null && !string.IsNullOrWhiteSpace(surname))
                     {
-                        var name = clientNameTextBox.Text.Trim();
-                        var patronymic = clientPatronymicTextBox.Text.Trim();
-                        var mobile = clientMobileTextBox.Text.Trim();
+                        Client client = new Client()
+                        {
+                            Surname = surname,
+                            Name = clientNameTextBox.Text.Trim(),
+                            Patronymic = clientPatronymicTextBox.Text.Trim(),
+                            Mobile = clientMobileTextBox.Text.Trim()
+                        };
 
-                        CurrentClient = await taskPool.AddTask(channel.Service.AddClient(surname, name, patronymic, string.Empty, mobile, string.Empty, string.Empty));
+                        CurrentClient = await taskPool.AddTask(channel.Service.EditClient(client));
                     }
 
                     var selectedItem = servicesTreeView.SelectedNode;

@@ -34,9 +34,9 @@
             this.сurrentScheduleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serviceRatingReportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.operatorsRatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scheduleReportMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.exceptionScheduleReportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.operatorsRatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.officesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBar = new System.Windows.Forms.StatusStrip();
@@ -140,8 +140,8 @@
             // clientRequestsMenu
             // 
             this.clientRequestsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addClientRequestMenuItem,
-            this.clientRequestsMenuItem});
+            this.clientRequestsMenuItem,
+            this.addClientRequestMenuItem});
             this.clientRequestsMenu.Image = ((System.Drawing.Image)(resources.GetObject("clientRequestsMenu.Image")));
             this.clientRequestsMenu.Name = "clientRequestsMenu";
             this.clientRequestsMenu.Size = new System.Drawing.Size(84, 20);
@@ -205,6 +205,13 @@
             this.serviceRatingReportMenuItem.Text = "Рейтинг услуг";
             this.serviceRatingReportMenuItem.Click += new System.EventHandler(this.serviceRatingReportMenuItem_Click);
             // 
+            // operatorsRatingToolStripMenuItem
+            // 
+            this.operatorsRatingToolStripMenuItem.Name = "operatorsRatingToolStripMenuItem";
+            this.operatorsRatingToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.operatorsRatingToolStripMenuItem.Text = "Рейтинг операторов";
+            this.operatorsRatingToolStripMenuItem.Click += new System.EventHandler(this.operatorsRatingToolStripMenuItem_Click);
+            // 
             // scheduleReportMenu
             // 
             this.scheduleReportMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -219,13 +226,6 @@
             this.exceptionScheduleReportMenuItem.Size = new System.Drawing.Size(223, 22);
             this.exceptionScheduleReportMenuItem.Text = "Исключения в расписании";
             this.exceptionScheduleReportMenuItem.Click += new System.EventHandler(this.exceptionScheduleReportMenuItem_Click);
-            // 
-            // operatorsRatingToolStripMenuItem
-            // 
-            this.operatorsRatingToolStripMenuItem.Name = "operatorsRatingToolStripMenuItem";
-            this.operatorsRatingToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.operatorsRatingToolStripMenuItem.Text = "Рейтинг операторов";
-            this.operatorsRatingToolStripMenuItem.Click += new System.EventHandler(this.operatorsRatingToolStripMenuItem_Click);
             // 
             // officesMenuItem
             // 
@@ -266,7 +266,7 @@
             this.currentDateTimeLabel.Size = new System.Drawing.Size(12, 17);
             this.currentDateTimeLabel.Text = "-";
             // 
-            // MainForm
+            // AdministratorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -275,7 +275,7 @@
             this.Controls.Add(this.statusBar);
             this.IsMdiContainer = true;
             this.MinimumSize = new System.Drawing.Size(900, 450);
-            this.Name = "MainForm";
+            this.Name = "AdministratorForm";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);

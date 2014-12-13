@@ -30,9 +30,6 @@ namespace Queue.Services.Contracts
         Task<Client[]> FindClients(int startIndex, int maxResults, string filter);
 
         [OperationContract]
-        Task<Client> AddClient(string surname, string name = null, string patronymic = null, string email = null, string mobile = null, string identity = null, string password = null);
-
-        [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task<Client> ClientLogin(string email, string password);
 
@@ -148,13 +145,6 @@ namespace Queue.Services.Contracts
         Task<ServiceGroup> GetServiceGroup(Guid serviceGroupId);
 
         [OperationContract]
-        Task<ServiceGroup> AddRootServiceGroup();
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ServiceGroup> AddServiceGroup(Guid parentServiceGroupId);
-
-        [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task<ServiceGroup> EditServiceGroup(ServiceGroup serviceGroup);
 
@@ -209,9 +199,6 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task<User> UserLogin(Guid userId, string password);
-
-        [OperationContract]
-        Task<User> AddUser(UserRole role);
 
         [OperationContract]
         Task<User> EditUser(User user);
@@ -282,14 +269,6 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task<Service[]> FindServices(string filter, int startIndex, int maxResults);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<Service> AddRootService();
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<Service> AddService(Guid serviceGroupId);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
@@ -402,10 +381,6 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ServiceParameter> AddServiceParameter(Guid serviceId, ServiceParameterType type);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
         Task<ServiceParameter> EditNumberServiceParameter(ServiceParameterNumber parameter);
 
         [OperationContract]
@@ -467,9 +442,6 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         Task<MediaConfig> EditMediaConfig(MediaConfig config);
-
-        [OperationContract]
-        Task<MediaConfigFile> AddMediaConfigFile();
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]

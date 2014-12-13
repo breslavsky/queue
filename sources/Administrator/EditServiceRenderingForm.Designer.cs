@@ -70,7 +70,7 @@ namespace Queue.Administrator
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(175, 110);
+            this.saveButton.Location = new System.Drawing.Point(240, 110);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 15;
@@ -92,7 +92,7 @@ namespace Queue.Administrator
             this.serviceStepControl.Enabled = false;
             this.serviceStepControl.Location = new System.Drawing.Point(110, 35);
             this.serviceStepControl.Name = "serviceStepControl";
-            this.serviceStepControl.Size = new System.Drawing.Size(140, 21);
+            this.serviceStepControl.Size = new System.Drawing.Size(205, 21);
             this.serviceStepControl.TabIndex = 18;
             this.serviceStepControl.UseResetButton = true;
             this.serviceStepControl.Leave += new System.EventHandler(this.serviceStepControl_Leave);
@@ -102,23 +102,24 @@ namespace Queue.Administrator
             this.operatorControl.Enabled = false;
             this.operatorControl.Location = new System.Drawing.Point(110, 10);
             this.operatorControl.Name = "operatorControl";
-            this.operatorControl.Size = new System.Drawing.Size(140, 21);
+            this.operatorControl.Size = new System.Drawing.Size(205, 21);
             this.operatorControl.TabIndex = 19;
             this.operatorControl.UseResetButton = false;
             this.operatorControl.Leave += new System.EventHandler(this.operatorControl_Leave);
             // 
             // modeСontrol
             // 
+            this.modeСontrol.Enabled = false;
             this.modeСontrol.Location = new System.Drawing.Point(110, 60);
             this.modeСontrol.Name = "modeСontrol";
-            this.modeСontrol.Size = new System.Drawing.Size(140, 21);
+            this.modeСontrol.Size = new System.Drawing.Size(205, 21);
             this.modeСontrol.TabIndex = 20;
             // 
             // EditServiceRenderingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(259, 141);
+            this.ClientSize = new System.Drawing.Size(321, 141);
             this.Controls.Add(this.modeСontrol);
             this.Controls.Add(this.serviceStepControl);
             this.Controls.Add(this.serviceStepLabel);

@@ -25,6 +25,9 @@ namespace Queue.Services.DTO
         public string Email { get; set; }
 
         [DataMember]
+        public string Password { get; set; }
+
+        [DataMember]
         public string Mobile { get; set; }
 
         [DataMember]

@@ -116,126 +116,6 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.Client> AddClient(string surname, string name = null, string patronymic = null, string email = null, string mobile = null, string identity = null, string password = null)
-        {
-            return await Task.Run(() =>
-            {
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    if (!string.IsNullOrWhiteSpace(email))
-                    {
-                        int count = session.CreateCriteria<Client>()
-                            .Add(Expression.Eq("Email", email))
-                            .SetProjection(Projections.RowCount())
-                            .UniqueResult<int>();
-
-                        if (count > 0)
-                        {
-                            throw new FaultException("Клиент с таким электронным адресом уже существует");
-                        }
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(identity))
-                    {
-                        int count = session.CreateCriteria<Client>()
-                            .Add(Expression.Eq("Identity", identity))
-                            .SetProjection(Projections.RowCount())
-                            .UniqueResult<int>();
-
-                        if (count > 0)
-                        {
-                            throw new FaultException("Клиент с данной идентификацией уже существует");
-                        }
-                    }
-
-                    Client client = null;
-
-                    if (string.IsNullOrWhiteSpace(email) && string.IsNullOrWhiteSpace(identity))
-                    {
-                        client = session.CreateCriteria<Client>()
-                            .Add(new Conjunction()
-                                .Add(Expression.Eq("Surname", surname))
-                                .Add(Expression.Eq("Name", name))
-                                .Add(Expression.Eq("Patronymic", patronymic)))
-                            .SetMaxResults(1)
-                            .UniqueResult<Client>();
-                    }
-
-                    if (client == null)
-                    {
-                        client = new Client()
-                        {
-                            Surname = surname,
-                            Name = name,
-                            Patronymic = patronymic,
-                            Email = email,
-                            Mobile = mobile,
-                            Identity = identity
-                        };
-
-                        if (!string.IsNullOrWhiteSpace(password))
-                        {
-                            try
-                            {
-                                client.SetPassword(password);
-                            }
-                            catch (Exception exception)
-                            {
-                                throw new FaultException(exception.Message);
-                            }
-                        }
-
-                        var errors = client.Validate();
-                        if (errors.Length > 0)
-                        {
-                            throw new FaultException(errors.First().Message);
-                        }
-
-                        session.Save(client);
-                        transaction.Commit();
-
-                        if (!string.IsNullOrWhiteSpace(email))
-                        {
-                            var сonfig = session.Get<SMTPConfig>(ConfigType.SMTP);
-                            if (сonfig == null)
-                            {
-                                throw new SystemException();
-                            }
-
-                            string template = @"Вы успешно зарегистрированы, Ваш пароль {Password}";
-
-                            string text = template
-                                .Replace("{Password}", password);
-
-                            using (var smtpClient = new SmtpClient(сonfig.Server, сonfig.Port))
-                            {
-                                try
-                                {
-                                    smtpClient.UseDefaultCredentials = false;
-                                    smtpClient.EnableSsl = сonfig.EnableSsl;
-                                    smtpClient.Credentials = new NetworkCredential(сonfig.User, сonfig.Password);
-
-                                    var message = new MailMessage(сonfig.From, email)
-                                    {
-                                        Subject = "Вы зарегистрированы",
-                                        Body = text
-                                    };
-                                    smtpClient.Send(message);
-                                }
-                                catch (Exception exception)
-                                {
-                                    logger.Error(exception);
-                                }
-                            }
-                        }
-                    }
-
-                    return Mapper.Map<Client, DTO.Client>(client);
-                }
-            });
-        }
-
         public async Task<DTO.Client> ClientLogin(string email, string password)
         {
             return await Task.Run(() =>
@@ -358,17 +238,78 @@ namespace Queue.Services.Server
                 {
                     var clientId = source.Id;
 
-                    var client = session.Get<Client>(clientId);
-                    if (client == null)
+                    string surname = source.Surname;
+                    string name = source.Name;
+                    string patronymic = source.Patronymic;
+                    string email = source.Email;
+                    string mobile = source.Mobile;
+                    string identity = source.Identity;
+
+                    Client client = null;
+
+                    if (clientId != Guid.Empty)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientId), string.Format("Клиент [{0}] не найден", clientId));
+                        client = session.Get<Client>(clientId);
+                        if (client == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientId), string.Format("Клиент [{0}] не найден", clientId));
+                        }
+                    }
+                    else
+                    {
+                        bool hasEmail = !string.IsNullOrWhiteSpace(email);
+
+                        if (hasEmail)
+                        {
+                            int count = session.CreateCriteria<Client>()
+                                .Add(Expression.Eq("Email", email))
+                                .SetProjection(Projections.RowCount())
+                                .UniqueResult<int>();
+
+                            if (count > 0)
+                            {
+                                throw new FaultException("Клиент с таким электронным адресом уже существует");
+                            }
+                        }
+
+                        bool hasIdentity = !string.IsNullOrWhiteSpace(identity);
+
+                        if (hasIdentity)
+                        {
+                            int count = session.CreateCriteria<Client>()
+                                .Add(Expression.Eq("Identity", identity))
+                                .SetProjection(Projections.RowCount())
+                                .UniqueResult<int>();
+
+                            if (count > 0)
+                            {
+                                throw new FaultException("Клиент с данной идентификацией уже существует");
+                            }
+                        }
+
+                        if (!hasEmail && !hasIdentity)
+                        {
+                            client = session.CreateCriteria<Client>()
+                                .Add(new Conjunction()
+                                    .Add(Expression.Eq("Surname", surname))
+                                    .Add(Expression.Eq("Name", name))
+                                    .Add(Expression.Eq("Patronymic", patronymic)))
+                                .SetMaxResults(1)
+                                .UniqueResult<Client>();
+                        }
+
+                        if (client == null)
+                        {
+                            client = new Client();
+                        }
                     }
 
-                    client.Surname = source.Surname;
-                    client.Name = source.Name;
-                    client.Patronymic = source.Patronymic;
-                    client.Email = source.Email;
-                    client.Mobile = source.Mobile;
+                    client.Surname = surname;
+                    client.Name = name;
+                    client.Patronymic = patronymic;
+                    client.Email = email;
+                    client.Mobile = mobile;
+                    client.Identity = identity;
 
                     var errors = client.Validate();
                     if (errors.Length > 0)
@@ -376,7 +317,56 @@ namespace Queue.Services.Server
                         throw new FaultException(errors.First().Message);
                     }
 
+                    string password = source.Password;
+
+                    if (!string.IsNullOrWhiteSpace(password))
+                    {
+                        try
+                        {
+                            client.SetPassword(password);
+                        }
+                        catch (Exception exception)
+                        {
+                            throw new FaultException(exception.Message);
+                        }
+                    }
+
                     session.Save(client);
+
+                    if (!string.IsNullOrWhiteSpace(email))
+                    {
+                        var сonfig = session.Get<SMTPConfig>(ConfigType.SMTP);
+                        if (сonfig == null)
+                        {
+                            throw new SystemException();
+                        }
+
+                        string template = @"Вы успешно зарегистрированы, Ваш пароль {Password}";
+
+                        string text = template
+                            .Replace("{Password}", password);
+
+                        using (var smtpClient = new SmtpClient(сonfig.Server, сonfig.Port))
+                        {
+                            try
+                            {
+                                smtpClient.EnableSsl = сonfig.EnableSsl;
+                                smtpClient.UseDefaultCredentials = false;
+                                smtpClient.Credentials = new NetworkCredential(сonfig.User, сonfig.Password);
+
+                                var message = new MailMessage(сonfig.From, email)
+                                {
+                                    Subject = "Вы зарегистрированы",
+                                    Body = text
+                                };
+                                smtpClient.Send(message);
+                            }
+                            catch (Exception exception)
+                            {
+                                logger.Error(exception);
+                            }
+                        }
+                    }
 
                     var queuePlan = queueInstance.TodayQueuePlan;
                     using (var locker = queuePlan.WriteLock())

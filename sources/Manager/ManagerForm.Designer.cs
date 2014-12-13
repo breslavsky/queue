@@ -77,8 +77,8 @@
             // clientRequestMenu
             // 
             this.clientRequestMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addClientRequestMenuItem,
-            this.clientRequestsMenuItem});
+            this.clientRequestsMenuItem,
+            this.addClientRequestMenuItem});
             this.clientRequestMenu.Image = ((System.Drawing.Image)(resources.GetObject("clientRequestMenu.Image")));
             this.clientRequestMenu.Name = "clientRequestMenu";
             this.clientRequestMenu.Size = new System.Drawing.Size(84, 20);
@@ -137,7 +137,7 @@
             this.currentDateTimeLabel.Size = new System.Drawing.Size(12, 17);
             this.currentDateTimeLabel.Text = "-";
             // 
-            // MainForm
+            // ManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -145,7 +145,7 @@
             this.Controls.Add(this.statusBar);
             this.Controls.Add(this.topMenu);
             this.IsMdiContainer = true;
-            this.Name = "MainForm";
+            this.Name = "ManagerForm";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
