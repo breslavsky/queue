@@ -25,12 +25,10 @@ namespace Queue.Administrator
         #region fields
 
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
         private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
-
         private MediaConfig config;
+        private User currentUser;
+        private TaskPool taskPool;
 
         #endregion fields
 
@@ -49,11 +47,8 @@ namespace Queue.Administrator
 
                     foreach (var f in config.MediaFiles)
                     {
-                        int index = mediaFilesGridView.Rows.Add();
-                        var row = mediaFilesGridView.Rows[index];
-
-                        row.Cells["nameColumn"].Value = f.Name;
-                        row.Tag = f;
+                        var row = mediaConfigFilesGridView.Rows[mediaConfigFilesGridView.Rows.Add()];
+                        MediaConfigFilesGridViewRow(row, f);
                     }
                 }
             }
@@ -75,28 +70,75 @@ namespace Queue.Administrator
             taskPool = new TaskPool();
         }
 
-        private void serviceUrlTextBox_Leave(object sender, EventArgs e)
+        private void addMediaConfigFileButton_Click(object sender, EventArgs e)
         {
-            if (config != null)
+            using (var f = new EditMediaConfigFileForm(channelBuilder, currentUser))
             {
-                config.ServiceUrl = serviceUrlTextBox.Text;
+                if (f.ShowDialog() == DialogResult.OK)
+                {
+                    var row = mediaConfigFilesGridView.Rows[mediaConfigFilesGridView.Rows.Add()];
+                    MediaConfigFilesGridViewRow(row, f.MediaConfigFile);
+                }
             }
         }
 
-        private void tickerTextBox_Leave(object sender, EventArgs e)
+        private void mediaConfigFilesGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (config != null)
+            int rowIndex = e.RowIndex,
+                columnIndex = e.ColumnIndex;
+
+            if (rowIndex >= 0 && columnIndex >= 0)
             {
-                config.Ticker = tickerTextBox.Text;
+                var row = mediaConfigFilesGridView.Rows[rowIndex];
+                MediaConfigFile mediaConfigFile = row.Tag as MediaConfigFile;
+
+                using (var f = new EditMediaConfigFileForm(channelBuilder, currentUser, mediaConfigFile.Id))
+                {
+                    if (f.ShowDialog() == DialogResult.OK)
+                    {
+                        MediaConfigFilesGridViewRow(row, f.MediaConfigFile);
+                    }
+                }
             }
         }
 
-        private void tickerSpeedTrackBar_Leave(object sender, EventArgs e)
+        private async void mediaConfigFilesGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            if (config != null)
+            if (MessageBox.Show("Вы действительно хотите удалить файл?",
+                                "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                config.TickerSpeed = tickerSpeedTrackBar.Value;
+                MediaConfigFile mediaConfigFile = e.Row.Tag as MediaConfigFile;
+
+                using (var channel = channelManager.CreateChannel())
+                {
+                    try
+                    {
+                        await channel.Service.DeleteMediaConfigFile(mediaConfigFile.Id);
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                }
             }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void MediaConfigFilesGridViewRow(DataGridViewRow row, MediaConfigFile mediaConfigFile)
+        {
+            row.Cells["nameColumn"].Value = mediaConfigFile.Name;
+            row.Tag = mediaConfigFile;
         }
 
         private async void saveButton_Click(object sender, EventArgs e)
@@ -128,182 +170,27 @@ namespace Queue.Administrator
             }
         }
 
-        private async void mediaFilesGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void serviceUrlTextBox_Leave(object sender, EventArgs e)
         {
-            int rowIndex = e.RowIndex;
-            if (rowIndex >= 0)
+            if (config != null)
             {
-                int columnIndex = e.ColumnIndex;
-                if (columnIndex >= 0)
-                {
-                    var row = mediaFilesGridView.Rows[rowIndex];
-                    var mediaConfigFile = (MediaConfigFile)row.Tag;
-
-                    string name = row.Cells["nameColumn"].Value as string;
-                    if (name != null)
-                    {
-                        mediaConfigFile.Name = name;
-                    }
-
-                    using (var channel = channelManager.CreateChannel())
-                    {
-                        try
-                        {
-                            await taskPool.AddTask(channel.Service.EditMediaConfigFile(mediaConfigFile));
-                        }
-                        catch (OperationCanceledException) { }
-                        catch (CommunicationObjectAbortedException) { }
-                        catch (ObjectDisposedException) { }
-                        catch (InvalidOperationException) { }
-                        catch (FaultException exception)
-                        {
-                            UIHelper.Warning(exception.Reason.ToString());
-                        }
-                        catch (Exception exception)
-                        {
-                            UIHelper.Warning(exception.Message);
-                        }
-                    }
-                }
+                config.ServiceUrl = serviceUrlTextBox.Text;
             }
         }
 
-        private async void mediaFilesGridView_CellClick(object sender, DataGridViewCellEventArgs eventArgs)
+        private void tickerSpeedTrackBar_Leave(object sender, EventArgs e)
         {
-            int rowIndex = eventArgs.RowIndex;
-            if (rowIndex >= 0)
+            if (config != null)
             {
-                int columnIndex = eventArgs.ColumnIndex;
-                if (columnIndex >= 0)
-                {
-                    var row = mediaFilesGridView.Rows[rowIndex];
-                    var cell = row.Cells[columnIndex];
-
-                    MediaConfigFile mediaConfigFile = (MediaConfigFile)row.Tag;
-
-                    switch (cell.OwningColumn.Name)
-                    {
-                        case "uploadColumn":
-                            if (selectMediaFileDialog.ShowDialog() == DialogResult.OK)
-                            {
-                                string fileName = selectMediaFileDialog.FileName;
-
-                                using (var channel = channelManager.CreateChannel())
-                                {
-                                    try
-                                    {
-                                        CancellationTokenSource uploadOperation = new CancellationTokenSource();
-
-                                        var progress = new ProgressMessageHandler();
-                                        progress.HttpSendProgress += new EventHandler<HttpProgressEventArgs>((s, e) =>
-                                        {
-                                            try
-                                            {
-                                                Invoke(new MethodInvoker(() =>
-                                                {
-                                                    uploadMediaFileProgressBar.Value = e.ProgressPercentage;
-                                                }));
-                                            }
-                                            catch (ObjectDisposedException)
-                                            {
-                                                uploadOperation.Cancel();
-                                            }
-                                        });
-
-                                        Uri uri = new Uri(string.Format("{0}/media-config/files/{1}/upload", serviceUrlTextBox.Text, mediaConfigFile.Id));
-
-                                        var message = new HttpRequestMessage()
-                                        {
-                                            Method = HttpMethod.Post,
-                                            Content = new StreamContent(File.OpenRead(selectMediaFileDialog.FileName)),
-                                            RequestUri = uri
-                                        };
-
-                                        var client = HttpClientFactory.Create(progress);
-
-                                        await taskPool.AddTask(client.SendAsync(message, uploadOperation.Token));
-                                    }
-                                    catch (OperationCanceledException) { }
-                                    catch (CommunicationObjectAbortedException) { }
-                                    catch (ObjectDisposedException) { }
-                                    catch (InvalidOperationException) { }
-                                    catch (FaultException exception)
-                                    {
-                                        UIHelper.Warning(exception.Reason.ToString());
-                                    }
-                                    catch (Exception exception)
-                                    {
-                                        UIHelper.Warning(exception.Message);
-                                    }
-                                }
-                            }
-                            break;
-
-                        case "deleteColumn":
-
-                            if (MessageBox.Show("Вы действительно хотите удалить файл?",
-                                "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                            {
-                                using (var channel = channelManager.CreateChannel())
-                                {
-                                    try
-                                    {
-                                        await channel.Service.DeleteMediaConfigFile(mediaConfigFile.Id);
-
-                                        mediaFilesGridView.Rows.Remove(row);
-                                    }
-                                    catch (OperationCanceledException) { }
-                                    catch (CommunicationObjectAbortedException) { }
-                                    catch (ObjectDisposedException) { }
-                                    catch (InvalidOperationException) { }
-                                    catch (FaultException exception)
-                                    {
-                                        UIHelper.Warning(exception.Reason.ToString());
-                                    }
-                                    catch (Exception exception)
-                                    {
-                                        UIHelper.Warning(exception.Message);
-                                    }
-                                }
-                            }
-                            break;
-                    }
-                }
+                config.TickerSpeed = tickerSpeedTrackBar.Value;
             }
         }
 
-        private async void addMediaFileButton_Click(object sender, EventArgs e)
+        private void tickerTextBox_Leave(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            if (config != null)
             {
-                try
-                {
-                    addMediaFileButton.Enabled = false;
-
-                    MediaConfigFile mediaConfigFile = await taskPool.AddTask(channel.Service.AddMediaConfigFile());
-
-                    int index = mediaFilesGridView.Rows.Add();
-                    var row = mediaFilesGridView.Rows[index];
-
-                    row.Cells["nameColumn"].Value = mediaConfigFile.Name;
-                    row.Tag = mediaConfigFile;
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    addMediaFileButton.Enabled = true;
-                }
+                config.Ticker = tickerTextBox.Text;
             }
         }
     }

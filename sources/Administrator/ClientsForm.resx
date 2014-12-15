@@ -117,10 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="nameColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="selectMediaFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="firstButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
+        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAVoUAAFaFAHOFPsYAAAAGHRFWHRTb2Z0d2FyZQBBZG9i
+        ZSBGaXJld29ya3NPsx9OAAAArElEQVQ4T6XMsQ0CMQwF0AMdEh3DZJubhBWQEBPQMMF11FSswB50VOb7
+        xI9s40MBiqfEP9/pROQvafiNt6CUIpS8LWFvM1dQcx9g7uEAD5vXC3FZmWwFp5ireiGWWMS5hnPMyS0r
+        W4QNXEOGWvsHtzBPbN8tq1C+hHli+25ZhfICxpCh1viByY5ZruqF5oqYd1leL8RSLL7etnC3mSuoTx8o
+        5IOd3eMv0rCddE/XOn2RN+1O9wAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="prevButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
+        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAVoUAAFaFAHOFPsYAAAAGHRFWHRTb2Z0d2FyZQBBZG9i
+        ZSBGaXJld29ya3NPsx9OAAAAq0lEQVQ4T6XMsQ3CMBQE0ICIRMca6S2mySKsQAET0DBButRUrMAedFSf
+        s+RvffsfVoDiSfb5zp2I/IWG3yguIYTiDGs4tbJiYM+wgTO8PmVRHqlU7OEKkrhM+2y8hVmLict0U493
+        cNeS4TL2wR4ettTCPhjgZkst7oMIDyuYbDFxmW6KDxQKl7rMsqge2vOxLrMsDxQe7fkAT5bpPT8wcQhj
+        K8sPv6LhctK9AT5GQhEXvFS0AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="nextButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
+        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAVoUAAFaFAHOFPsYAAAAGHRFWHRTb2Z0d2FyZQBBZG9i
+        ZSBGaXJld29ya3NPsx9OAAAAn0lEQVQ4T6WMwQmDUBBElQg5pY4U8O3GRtJCICUIlpBLCsghNdiIJy/Z
+        zMIXZnU3Kh4e/Hl/ZwoROYQr92BCSqkB0zt0jAk4GMCNC57jjgn4lMydCgvHmEDHSqsFz3HHhNmx8gxc
+        CTYNRLzB9chAD+q1gS/4BO4ydaIBPXyBs+e44w3oYQeqPy4cGMEDnHJ2HXdMyIflmmNcuQdXbkeKH0uq
+        P4oXHWOOAAAAAElFTkSuQmCC
+</value>
+  </data>
 </root>

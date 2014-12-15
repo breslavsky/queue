@@ -22,6 +22,8 @@ namespace Queue.Administrator
         private ChannelManager<IServerTcpService> channelManager;
         private User currentUser;
         private Service service;
+        private Guid serviceGroupId;
+        private ServiceGroup serviceGroup;
         private Guid serviceId;
         private TaskPool taskPool;
 
@@ -89,7 +91,7 @@ namespace Queue.Administrator
 
         #endregion properties
 
-        public EditServiceForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid serviceId)
+        public EditServiceForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? serviceGroupId = null, Guid? serviceId = null)
 
             : base()
         {
@@ -97,7 +99,10 @@ namespace Queue.Administrator
 
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
-            this.serviceId = serviceId;
+            this.serviceGroupId = serviceGroupId.HasValue
+                ? serviceGroupId.Value : Guid.Empty;
+            this.serviceId = serviceId.HasValue
+                ? serviceId.Value : Guid.Empty;
 
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
@@ -190,7 +195,22 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    Service = await taskPool.AddTask(channel.Service.GetService(serviceId));
+                    if (serviceGroupId != Guid.Empty)
+                    {
+                        serviceGroup = await taskPool.AddTask(channel.Service.GetServiceGroup(serviceGroupId));
+                    }
+
+                    if (serviceId != Guid.Empty)
+                    {
+                        Service = await taskPool.AddTask(channel.Service.GetService(serviceId));
+                    }
+                    else
+                    {
+                        Service = new Service()
+                        {
+                            ServiceGroup = serviceGroup
+                        };
+                    }
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

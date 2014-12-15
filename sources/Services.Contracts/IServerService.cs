@@ -166,14 +166,6 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<bool> ServiceGroupActivate(Guid serviceGroupId);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<bool> ServiceGroupDeactivate(Guid serviceGroupId);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
         Task DeleteServiceGroup(Guid serviceGroupId);
 
         [OperationContract]
@@ -289,10 +281,6 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task<bool> ServiceDown(Guid serviceId);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task ChangeServiceActivity(Guid serviceId, bool isActive);
 
         [OperationContract]
         Task<IdentifiedEntity[]> GetServiceStepList(Guid serviceId);

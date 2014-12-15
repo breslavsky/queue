@@ -73,67 +73,6 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.ServiceGroup> AddRootServiceGroup()
-        {
-            return await Task.Run(() =>
-            {
-                checkPermission(UserRole.Administrator);
-
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    var serviceGroup = new ServiceGroup();
-
-                    var errors = serviceGroup.Validate();
-                    if (errors.Length > 0)
-                    {
-                        logger.Error(ValidationError.ToException(errors));
-                    }
-
-                    session.Save(serviceGroup);
-                    transaction.Commit();
-
-                    return Mapper.Map<ServiceGroup, DTO.ServiceGroup>(serviceGroup);
-                }
-            });
-        }
-
-        public async Task<DTO.ServiceGroup> AddServiceGroup(Guid serviceGroupId)
-        {
-            return await Task.Run(() =>
-            {
-                checkPermission(UserRole.Administrator);
-
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    var serviceGroup = new ServiceGroup();
-
-                    if (serviceGroupId != null)
-                    {
-                        ServiceGroup parentGroup = session.Get<ServiceGroup>(serviceGroupId);
-                        if (parentGroup == null)
-                        {
-                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceGroupId), string.Format("Родительская группа услуг [{0}] не найдена", serviceGroupId));
-                        }
-
-                        serviceGroup.ParentGroup = parentGroup;
-                    }
-
-                    var errors = serviceGroup.Validate();
-                    if (errors.Length > 0)
-                    {
-                        logger.Error(ValidationError.ToException(errors));
-                    }
-
-                    session.Save(serviceGroup);
-                    transaction.Commit();
-
-                    return Mapper.Map<ServiceGroup, DTO.ServiceGroup>(serviceGroup);
-                }
-            });
-        }
-
         public async Task<DTO.ServiceGroup> EditServiceGroup(DTO.ServiceGroup source)
         {
             return await Task.Run(() =>
@@ -145,12 +84,23 @@ namespace Queue.Services.Server
                 {
                     var serviceGroupId = source.Id;
 
-                    var serviceGroup = session.Get<ServiceGroup>(serviceGroupId);
-                    if (serviceGroup == null)
+                    ServiceGroup serviceGroup;
+
+                    if (serviceGroupId != Guid.Empty)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceGroupId), string.Format("Группа услуг [{0}] не найдена", serviceGroupId));
+                        serviceGroup = session.Get<ServiceGroup>(serviceGroupId);
+                        if (serviceGroup == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceGroupId),
+                                string.Format("Группа услуг [{0}] не найдена", serviceGroupId));
+                        }
+                    }
+                    else
+                    {
+                        serviceGroup = new ServiceGroup();
                     }
 
+                    serviceGroup.IsActive = source.IsActive;
                     serviceGroup.Code = source.Code;
                     serviceGroup.Name = source.Name;
                     serviceGroup.Comment = source.Comment;
@@ -158,6 +108,24 @@ namespace Queue.Services.Server
                     serviceGroup.Columns = source.Columns;
                     serviceGroup.Rows = source.Rows;
                     serviceGroup.Color = source.Color;
+
+                    if (source.ParentGroup != null)
+                    {
+                        Guid parentGroupId = source.ParentGroup.Id;
+
+                        ServiceGroup parentGroup = session.Get<ServiceGroup>(parentGroupId);
+                        if (parentGroup == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(parentGroupId),
+                                string.Format("Группа услуг [{0}] не найдена", parentGroupId));
+                        }
+
+                        serviceGroup.ParentGroup = parentGroup;
+                    }
+                    else
+                    {
+                        serviceGroup.ParentGroup = null;
+                    }
 
                     var errors = serviceGroup.Validate();
                     if (errors.Length > 0)

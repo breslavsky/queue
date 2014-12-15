@@ -19,16 +19,20 @@ namespace Queue.Administrator
         private ChannelManager<IServerTcpService> channelManager;
         private User currentUser;
         private ServiceGroup serviceGroup;
+        private Guid parenGrouptId;
+        private ServiceGroup parentGroup;
         private Guid serviceGroupId;
         private TaskPool taskPool;
 
-        public EditServiceGroupForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? serviceGroupId = null)
+        public EditServiceGroupForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? parentId = null, Guid? serviceGroupId = null)
             : base()
         {
             InitializeComponent();
 
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
+            this.parenGrouptId = parentId.HasValue
+                ? parentId.Value : Guid.Empty;
             this.serviceGroupId = serviceGroupId.HasValue
                 ? serviceGroupId.Value : Guid.Empty;
 
@@ -158,31 +162,39 @@ namespace Queue.Administrator
 
         private async void ServiceGroupEdit_Load(object sender, EventArgs e)
         {
-            if (serviceGroupId != Guid.Empty)
+            using (var channel = channelManager.CreateChannel())
             {
-                using (var channel = channelManager.CreateChannel())
+                try
                 {
-                    try
+                    if (parenGrouptId != Guid.Empty)
+                    {
+                        parentGroup = await taskPool.AddTask(channel.Service.GetServiceGroup(parenGrouptId));
+                    }
+
+                    if (serviceGroupId != Guid.Empty)
                     {
                         ServiceGroup = await taskPool.AddTask(channel.Service.GetServiceGroup(serviceGroupId));
                     }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
+                    else
                     {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
+                        ServiceGroup = new ServiceGroup()
+                        {
+                            ParentGroup = parentGroup
+                        };
                     }
                 }
-            }
-            else
-            {
-                ServiceGroup = new ServiceGroup();
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
             }
         }
 

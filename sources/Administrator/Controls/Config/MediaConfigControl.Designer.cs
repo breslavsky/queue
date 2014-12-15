@@ -28,33 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tickerGroupBox = new System.Windows.Forms.GroupBox();
+            this.TickerLabel = new System.Windows.Forms.Label();
             this.tickerTextBox = new System.Windows.Forms.TextBox();
             this.tickerSpeedLabel = new System.Windows.Forms.Label();
-            this.TickerLabel = new System.Windows.Forms.Label();
             this.tickerSpeedTrackBar = new System.Windows.Forms.TrackBar();
             this.serviceUrlLabel = new System.Windows.Forms.Label();
             this.serviceUrlTextBox = new System.Windows.Forms.TextBox();
             this.saveButton = new System.Windows.Forms.Button();
-            this.uploadMediaFileProgressBar = new System.Windows.Forms.ProgressBar();
-            this.mediaFilesGridView = new System.Windows.Forms.DataGridView();
-            this.deleteColumn = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.mediaConfigFilesGridView = new System.Windows.Forms.DataGridView();
             this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.uploadColumn = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.addMediaFileButton = new System.Windows.Forms.Button();
+            this.addMediaConfigFileButton = new System.Windows.Forms.Button();
             this.selectMediaFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tickerGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tickerSpeedTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mediaFilesGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mediaConfigFilesGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // tickerGroupBox
             // 
+            this.tickerGroupBox.Controls.Add(this.TickerLabel);
             this.tickerGroupBox.Controls.Add(this.tickerTextBox);
             this.tickerGroupBox.Controls.Add(this.tickerSpeedLabel);
-            this.tickerGroupBox.Controls.Add(this.TickerLabel);
             this.tickerGroupBox.Controls.Add(this.tickerSpeedTrackBar);
             this.tickerGroupBox.Location = new System.Drawing.Point(10, 35);
             this.tickerGroupBox.Name = "tickerGroupBox";
@@ -62,6 +58,15 @@
             this.tickerGroupBox.TabIndex = 12;
             this.tickerGroupBox.TabStop = false;
             this.tickerGroupBox.Text = "Бегущая строка";
+            // 
+            // TickerLabel
+            // 
+            this.TickerLabel.AutoSize = true;
+            this.TickerLabel.Location = new System.Drawing.Point(10, 25);
+            this.TickerLabel.Name = "TickerLabel";
+            this.TickerLabel.Size = new System.Drawing.Size(37, 13);
+            this.TickerLabel.TabIndex = 1;
+            this.TickerLabel.Text = "Текст";
             // 
             // tickerTextBox
             // 
@@ -81,15 +86,6 @@
             this.tickerSpeedLabel.Size = new System.Drawing.Size(55, 13);
             this.tickerSpeedLabel.TabIndex = 4;
             this.tickerSpeedLabel.Text = "Скорость";
-            // 
-            // TickerLabel
-            // 
-            this.TickerLabel.AutoSize = true;
-            this.TickerLabel.Location = new System.Drawing.Point(10, 25);
-            this.TickerLabel.Name = "TickerLabel";
-            this.TickerLabel.Size = new System.Drawing.Size(37, 13);
-            this.TickerLabel.TabIndex = 1;
-            this.TickerLabel.Text = "Текст";
             // 
             // tickerSpeedTrackBar
             // 
@@ -121,60 +117,39 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(330, 200);
+            this.saveButton.Location = new System.Drawing.Point(435, 200);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 8;
             this.saveButton.Text = "Сохранить";
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
-            // uploadMediaFileProgressBar
+            // mediaConfigFilesGridView
             // 
-            this.uploadMediaFileProgressBar.Location = new System.Drawing.Point(15, 230);
-            this.uploadMediaFileProgressBar.Name = "uploadMediaFileProgressBar";
-            this.uploadMediaFileProgressBar.Size = new System.Drawing.Size(390, 15);
-            this.uploadMediaFileProgressBar.TabIndex = 9;
-            // 
-            // mediaFilesGridView
-            // 
-            this.mediaFilesGridView.AllowUserToAddRows = false;
-            this.mediaFilesGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mediaFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.mediaFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.mediaFilesGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.deleteColumn,
-            this.nameColumn,
-            this.uploadColumn});
-            this.mediaFilesGridView.Location = new System.Drawing.Point(13, 255);
-            this.mediaFilesGridView.Margin = new System.Windows.Forms.Padding(0);
-            this.mediaFilesGridView.MultiSelect = false;
-            this.mediaFilesGridView.Name = "mediaFilesGridView";
-            this.mediaFilesGridView.RowHeadersVisible = false;
-            this.mediaFilesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.mediaFilesGridView.Size = new System.Drawing.Size(392, 88);
-            this.mediaFilesGridView.TabIndex = 10;
-            this.mediaFilesGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mediaFilesGridView_CellClick);
-            this.mediaFilesGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.mediaFilesGridView_CellEndEdit);
-            // 
-            // deleteColumn
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.deleteColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.deleteColumn.FillWeight = 60F;
-            this.deleteColumn.HeaderText = "";
-            this.deleteColumn.Name = "deleteColumn";
-            this.deleteColumn.ReadOnly = true;
-            this.deleteColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.deleteColumn.Text = "[удалить]";
-            this.deleteColumn.UseColumnTextForLinkValue = true;
-            this.deleteColumn.Width = 60;
+            this.mediaConfigFilesGridView.AllowUserToAddRows = false;
+            this.mediaConfigFilesGridView.AllowUserToResizeColumns = false;
+            this.mediaConfigFilesGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mediaConfigFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.mediaConfigFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.mediaConfigFilesGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nameColumn});
+            this.mediaConfigFilesGridView.Location = new System.Drawing.Point(13, 235);
+            this.mediaConfigFilesGridView.Margin = new System.Windows.Forms.Padding(0);
+            this.mediaConfigFilesGridView.MultiSelect = false;
+            this.mediaConfigFilesGridView.Name = "mediaConfigFilesGridView";
+            this.mediaConfigFilesGridView.RowHeadersVisible = false;
+            this.mediaConfigFilesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.mediaConfigFilesGridView.Size = new System.Drawing.Size(497, 108);
+            this.mediaConfigFilesGridView.TabIndex = 10;
+            this.mediaConfigFilesGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.mediaConfigFilesGridView_CellMouseDoubleClick);
+            this.mediaConfigFilesGridView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.mediaConfigFilesGridView_UserDeletingRow);
             // 
             // nameColumn
             // 
@@ -182,26 +157,16 @@
             this.nameColumn.FillWeight = 80F;
             this.nameColumn.HeaderText = "Название";
             this.nameColumn.Name = "nameColumn";
-            this.nameColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
-            // uploadColumn
+            // addMediaConfigFileButton
             // 
-            this.uploadColumn.FillWeight = 60F;
-            this.uploadColumn.HeaderText = "";
-            this.uploadColumn.Name = "uploadColumn";
-            this.uploadColumn.Text = "Загрузить";
-            this.uploadColumn.UseColumnTextForButtonValue = true;
-            this.uploadColumn.Width = 80;
-            // 
-            // addMediaFileButton
-            // 
-            this.addMediaFileButton.Location = new System.Drawing.Point(13, 348);
-            this.addMediaFileButton.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.addMediaFileButton.Name = "addMediaFileButton";
-            this.addMediaFileButton.Size = new System.Drawing.Size(75, 25);
-            this.addMediaFileButton.TabIndex = 11;
-            this.addMediaFileButton.Text = "Добавить";
-            this.addMediaFileButton.Click += new System.EventHandler(this.addMediaFileButton_Click);
+            this.addMediaConfigFileButton.Location = new System.Drawing.Point(13, 348);
+            this.addMediaConfigFileButton.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.addMediaConfigFileButton.Name = "addMediaConfigFileButton";
+            this.addMediaConfigFileButton.Size = new System.Drawing.Size(75, 25);
+            this.addMediaConfigFileButton.TabIndex = 11;
+            this.addMediaConfigFileButton.Text = "Добавить";
+            this.addMediaConfigFileButton.Click += new System.EventHandler(this.addMediaConfigFileButton_Click);
             // 
             // selectMediaFileDialog
             // 
@@ -211,19 +176,18 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tickerGroupBox);
             this.Controls.Add(this.serviceUrlLabel);
             this.Controls.Add(this.serviceUrlTextBox);
+            this.Controls.Add(this.tickerGroupBox);
             this.Controls.Add(this.saveButton);
-            this.Controls.Add(this.uploadMediaFileProgressBar);
-            this.Controls.Add(this.mediaFilesGridView);
-            this.Controls.Add(this.addMediaFileButton);
+            this.Controls.Add(this.mediaConfigFilesGridView);
+            this.Controls.Add(this.addMediaConfigFileButton);
             this.Name = "MediaConfigControl";
             this.Size = new System.Drawing.Size(520, 380);
             this.tickerGroupBox.ResumeLayout(false);
             this.tickerGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tickerSpeedTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mediaFilesGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mediaConfigFilesGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -239,12 +203,9 @@
         private System.Windows.Forms.Label serviceUrlLabel;
         private System.Windows.Forms.TextBox serviceUrlTextBox;
         private System.Windows.Forms.Button saveButton;
-        private System.Windows.Forms.ProgressBar uploadMediaFileProgressBar;
-        private System.Windows.Forms.DataGridView mediaFilesGridView;
-        private System.Windows.Forms.DataGridViewLinkColumn deleteColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameColumn;
-        private System.Windows.Forms.DataGridViewButtonColumn uploadColumn;
-        private System.Windows.Forms.Button addMediaFileButton;
+        private System.Windows.Forms.DataGridView mediaConfigFilesGridView;
+        private System.Windows.Forms.Button addMediaConfigFileButton;
         private System.Windows.Forms.OpenFileDialog selectMediaFileDialog;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameColumn;
     }
 }

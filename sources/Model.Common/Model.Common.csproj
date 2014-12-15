@@ -144,7 +144,7 @@
     <Compile Include="UserRole.cs" />
     <Compile Include="WorkplaceModificator.cs" />
     <Compile Include="WorkplaceType.cs" />
-    <Compile Include="Копия WorkplaceType.cs" />
+    <Compile Include="AdministratorPermissions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

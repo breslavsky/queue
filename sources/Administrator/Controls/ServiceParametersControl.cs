@@ -90,10 +90,10 @@ namespace Queue.Administrator
                 try
                 {
                     addButton.Enabled = false;
-
-                    var parameter = await taskPool.AddTask(channel.Service.AddServiceParameter(service.Id, serviceParameterType));
-                    parameters.Add(parameter);
-                    listBox.SelectedItem = parameter;
+                    //TODO: create!
+                    //var parameter = await taskPool.AddTask(channel.Service.AddServiceParameter(service.Id, serviceParameterType));
+                    //parameters.Add(parameter);
+                    //listBox.SelectedItem = parameter;
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

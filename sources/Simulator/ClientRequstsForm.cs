@@ -44,7 +44,10 @@ namespace Queue.Simulator
 
                 try
                 {
-                    Client client = await channel.Service.AddClient(surname, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
+                    Client client = await channel.Service.EditClient(new Client()
+                    {
+                        Surname = surname
+                    });
 
                     var isPriority = random.Next(0, 1) == 1;
 

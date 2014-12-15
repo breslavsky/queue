@@ -1,5 +1,6 @@
 ﻿using Junte.UI.WPF;
 using Queue.Common;
+using Queue.Services.DTO;
 using Queue.UI.WPF.Types;
 using System;
 using System.ServiceModel;
@@ -65,13 +66,13 @@ namespace Queue.Terminal.Models.Pages
                         patronymic = words[2];
                     }
 
-                    Model.CurrentClient = await taskPool.AddTask(channel.Service.AddClient(surname.ToInOffer(),
-                                                                                            name.ToInOffer(),
-                                                                                            patronymic.ToInOffer(),
-                                                                                            string.Empty,
-                                                                                            string.Empty,
-                                                                                            string.Empty,
-                                                                                            string.Empty));
+                    Model.CurrentClient = await taskPool.AddTask(channel.Service.EditClient(new Client()
+                    {
+                        Surname = surname.ToInOffer(),
+                        Name = name.ToInOffer(),
+                        Patronymic = patronymic.ToInOffer()
+                    }));
+
                     navigator.NextPage();
                 }
                 catch (FaultException exception)

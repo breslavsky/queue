@@ -743,7 +743,8 @@ namespace Queue.Services.Server
                     var clientRequest = session.Get<ClientRequest>(clientRequestId);
                     if (clientRequest == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientRequestId), string.Format("Запрос клиента [{0}] не найден", clientRequestId));
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientRequestId),
+                            string.Format("Запрос клиента [{0}] не найден", clientRequestId));
                     }
 
                     if (!clientRequest.IsEditable)
@@ -770,7 +771,8 @@ namespace Queue.Services.Server
                         session.Save(new ClientRequestEvent()
                         {
                             ClientRequest = clientRequest,
-                            Message = string.Format("[{0}] {1} для запроса клиента [{2}]", currentUser, clientRequest.IsPriority ? "установил приоритет" : "снял приоритет", clientRequest)
+                            Message = string.Format("[{0}] {1} для запроса клиента [{2}]", currentUser,
+                                clientRequest.IsPriority ? "установил приоритет" : "снял приоритет", clientRequest)
                         });
                     }
 
@@ -781,7 +783,8 @@ namespace Queue.Services.Server
                         session.Save(new ClientRequestEvent()
                         {
                             ClientRequest = clientRequest,
-                            Message = string.Format("[{0}] изменил количество объектов на [{1}] для [{2}]", currentUser, clientRequest.Subjects, clientRequest)
+                            Message = string.Format("[{0}] изменил количество объектов на [{1}] для [{2}]",
+                                currentUser, clientRequest.Subjects, clientRequest)
                         });
                     }
 
@@ -792,7 +795,8 @@ namespace Queue.Services.Server
                         Service service = session.Get<Service>(serviceId);
                         if (service == null)
                         {
-                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId), string.Format("Услуга [{0}] не найдена", serviceId));
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId),
+                                string.Format("Услуга [{0}] не найдена", serviceId));
                         }
 
                         if (clientRequest.Service == null
@@ -819,7 +823,8 @@ namespace Queue.Services.Server
                         var serviceStep = session.Get<ServiceStep>(serviceStepId);
                         if (serviceStep == null)
                         {
-                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceStepId), string.Format("Этап услуги [{0}] не найден", serviceStepId));
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceStepId),
+                                string.Format("Этап услуги [{0}] не найден", serviceStepId));
                         }
 
                         if (clientRequest.ServiceStep == null
@@ -852,7 +857,8 @@ namespace Queue.Services.Server
                         var queueOperator = session.Get<Operator>(operatorId);
                         if (queueOperator == null)
                         {
-                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(operatorId), string.Format("Оператор [{0}] не найден", operatorId));
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(operatorId),
+                                string.Format("Оператор [{0}] не найден", operatorId));
                         }
 
                         if (clientRequest.Operator == null

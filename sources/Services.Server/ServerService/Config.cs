@@ -353,34 +353,6 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.MediaConfigFile> AddMediaConfigFile()
-        {
-            return await Task.Run(() =>
-            {
-                checkPermission(UserRole.Administrator);
-
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    var сonfig = session.Get<MediaConfig>(ConfigType.Media);
-                    if (сonfig == null)
-                    {
-                        throw new SystemException();
-                    }
-
-                    var mediaConfigFile = new MediaConfigFile()
-                    {
-                        MediaConfig = сonfig
-                    };
-
-                    session.Save(mediaConfigFile);
-                    transaction.Commit();
-
-                    return Mapper.Map<MediaConfigFile, DTO.MediaConfigFile>(mediaConfigFile);
-                }
-            });
-        }
-
         public async Task<DTO.MediaConfigFile> EditMediaConfigFile(DTO.MediaConfigFile source)
         {
             return await Task.Run(() =>
@@ -392,10 +364,19 @@ namespace Queue.Services.Server
                 {
                     var mediaConfigFileId = source.Id;
 
-                    var mediaConfigFile = session.Get<MediaConfigFile>(mediaConfigFileId);
-                    if (mediaConfigFile == null)
+                    MediaConfigFile mediaConfigFile;
+
+                    if (mediaConfigFileId != Guid.Empty)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(mediaConfigFileId), string.Format("Медиафайл [{0}] не найден", mediaConfigFileId));
+                        mediaConfigFile = session.Get<MediaConfigFile>(mediaConfigFileId);
+                        if (mediaConfigFile == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(mediaConfigFileId), string.Format("Медиафайл [{0}] не найден", mediaConfigFileId));
+                        }
+                    }
+                    else
+                    {
+                        mediaConfigFile = new MediaConfigFile();
                     }
 
                     mediaConfigFile.Name = source.Name;

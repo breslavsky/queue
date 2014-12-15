@@ -110,26 +110,21 @@ namespace Queue.Administrator
             }
         }
 
-        private async void addServiceGroupMenuItem_Click(object sender, EventArgs e)
+        private void addServiceGroupMenuItem_Click(object sender, EventArgs e)
         {
-            ServiceGroup selectedServiceGroup = null;
+            Guid? parentGroupId = null;
 
             var selectedNode = servicesTreeView.SelectedNode;
             if (selectedNode != null)
             {
-                selectedServiceGroup = selectedNode.Tag as ServiceGroup;
+                parentGroupId = (selectedNode.Tag as ServiceGroup).Id;
             }
 
-            using (var channel = channelManager.CreateChannel())
+            using (var f = new EditServiceGroupForm(channelBuilder, currentUser, parentGroupId))
             {
-                try
+                if (f.ShowDialog() == DialogResult.OK)
                 {
-                    addServiceGroupMenuItem.Enabled = false;
-
-                    var serviceGroup = selectedServiceGroup != null
-                        ? await taskPool.AddTask(channel.Service.AddServiceGroup(selectedServiceGroup.Id))
-                        : await taskPool.AddTask(channel.Service.AddRootServiceGroup());
-
+                    ServiceGroup serviceGroup = f.ServiceGroup;
                     var treeNode = new TreeNode(serviceGroup.ToString());
                     treeNode.Tag = serviceGroup;
 
@@ -142,56 +137,25 @@ namespace Queue.Administrator
                     {
                         servicesTreeView.Nodes.Add(treeNode);
                     }
-
-                    using (var f = new EditServiceGroupForm(channelBuilder, currentUser, serviceGroup.Id))
-                    {
-                        if (f.ShowDialog() == DialogResult.OK)
-                        {
-                            treeNode.Text = f.ServiceGroup.ToString();
-                        }
-                    }
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    addServiceGroupMenuItem.Enabled = true;
                 }
             }
         }
 
-        private async void addServiceMenuItem_Click(object sender, EventArgs e)
+        private void addServiceMenuItem_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            Guid? serviceGroupId = null;
+
+            var selectedNode = servicesTreeView.SelectedNode;
+            if (selectedNode != null)
             {
-                try
+                serviceGroupId = (selectedNode.Tag as ServiceGroup).Id;
+            }
+
+            using (var f = new EditServiceForm(channelBuilder, currentUser, serviceGroupId))
+            {
+                if (f.ShowDialog() == DialogResult.OK)
                 {
-                    addServiceMenuItem.Enabled = false;
-
-                    Service service;
-
-                    var selectedNode = servicesTreeView.SelectedNode;
-                    if (selectedNode != null)
-                    {
-                        var selectedServiceGroup = selectedNode.Tag as ServiceGroup;
-                        var selectedServiceGroupId = selectedServiceGroup.Id;
-
-                        service = await taskPool.AddTask(channel.Service.AddService(selectedServiceGroupId));
-                    }
-                    else
-                    {
-                        service = await taskPool.AddTask(channel.Service.AddRootService());
-                    }
+                    Service service = f.Service;
 
                     var treeNode = new TreeNode(service.ToString());
                     treeNode.Tag = service;
@@ -205,30 +169,6 @@ namespace Queue.Administrator
                     {
                         servicesTreeView.Nodes.Add(treeNode);
                     }
-
-                    using (var f = new EditServiceForm(channelBuilder, currentUser, service.Id))
-                    {
-                        if (f.ShowDialog() == DialogResult.OK)
-                        {
-                            treeNode.Text = f.Service.ToString();
-                        }
-                    }
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    addServiceMenuItem.Enabled = true;
                 }
             }
         }
@@ -482,21 +422,16 @@ namespace Queue.Administrator
                 {
                     if (typeof(ServiceGroup).IsInstanceOfType(checkedNode.Tag))
                     {
-                        var serviceGroup = (ServiceGroup)checkedNode.Tag;
-                        if (checkedNode.Checked)
-                        {
-                            await taskPool.AddTask(channel.Service.ServiceGroupActivate(serviceGroup.Id));
-                        }
-                        else
-                        {
-                            await taskPool.AddTask(channel.Service.ServiceGroupDeactivate(serviceGroup.Id));
-                        }
+                        ServiceGroup serviceGroup = checkedNode.Tag as ServiceGroup;
+                        serviceGroup.IsActive = checkedNode.Checked;
+                        await taskPool.AddTask(channel.Service.EditServiceGroup(serviceGroup));
                     }
 
                     if (typeof(Service).IsInstanceOfType(checkedNode.Tag))
                     {
-                        Service service = (Service)checkedNode.Tag;
-                        await taskPool.AddTask(channel.Service.ChangeServiceActivity(service.Id, checkedNode.Checked));
+                        Service service = checkedNode.Tag as Service;
+                        service.IsActive = checkedNode.Checked;
+                        await taskPool.AddTask(channel.Service.EditService(service));
                     }
                 }
                 catch (OperationCanceledException) { }

@@ -302,7 +302,15 @@ namespace Queue.Services.Portal
                 try
                 {
                     await channel.Service.CheckPIN(email, int.Parse(PIN));
-                    return await channel.Service.AddClient(surname, name, patronymic, email, mobile, string.Empty, PIN);
+                    return await channel.Service.EditClient(new Client()
+                    {
+                        Surname = surname,
+                        Name = name,
+                        Patronymic = patronymic,
+                        Email = email,
+                        Mobile = mobile,
+                        Password = PIN
+                    });
                 }
                 catch (FaultException exception)
                 {
@@ -394,8 +402,12 @@ namespace Queue.Services.Portal
 
                     try
                     {
-                        var client = await channel.Service.AddClient(userInfo["last_name"], userInfo["first_name"],
-                            string.Empty, string.Empty, string.Empty, identity, string.Empty);
+                        var client = await channel.Service.EditClient(new Client()
+                        {
+                            Surname = userInfo["last_name"],
+                            Name = userInfo["first_name"]
+                        });
+
                         return result(client.SessionId);
                     }
                     catch (Exception exception)

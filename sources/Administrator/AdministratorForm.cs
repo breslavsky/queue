@@ -4,7 +4,7 @@ using Junte.WCF.Common;
 using log4net;
 using Queue.Administrator.Reports;
 using Queue.Common;
-using Queue.Manager;
+using Queue.Administrator;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;

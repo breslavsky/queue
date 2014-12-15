@@ -240,6 +240,10 @@ namespace Queue.Administrator
                     }
                 }
             }
+            else
+            {
+                e.Cancel = true;
+            }
         }
 
         private void OfficesGridViewRenderRow(DataGridViewRow row, Office office)

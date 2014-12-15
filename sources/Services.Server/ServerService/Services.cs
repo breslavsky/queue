@@ -114,64 +114,6 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.Service> AddRootService()
-        {
-            return await Task.Run(() =>
-            {
-                checkPermission(UserRole.Administrator);
-
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    var service = new Service();
-
-                    var errors = service.Validate();
-                    if (errors.Length > 0)
-                    {
-                        logger.Error(ValidationError.ToException(errors));
-                    }
-
-                    session.Save(service);
-                    transaction.Commit();
-
-                    return Mapper.Map<Service, DTO.Service>(service);
-                }
-            });
-        }
-
-        public async Task<DTO.Service> AddService(Guid serviceGroupId)
-        {
-            return await Task.Run(() =>
-            {
-                checkPermission(UserRole.Administrator);
-
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    var service = new Service();
-
-                    var serviceGroup = session.Get<ServiceGroup>(serviceGroupId);
-                    if (serviceGroup == null)
-                    {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceGroupId), string.Format("Группа услуг [{0}] не найдена", serviceGroupId));
-                    }
-
-                    service.ServiceGroup = serviceGroup;
-
-                    var errors = service.Validate();
-                    if (errors.Length > 0)
-                    {
-                        logger.Error(ValidationError.ToException(errors));
-                    }
-
-                    session.Save(service);
-                    transaction.Commit();
-
-                    return Mapper.Map<Service, DTO.Service>(service);
-                }
-            });
-        }
-
         public async Task<DTO.Service> EditService(DTO.Service source)
         {
             return await Task.Run(() =>
@@ -183,12 +125,22 @@ namespace Queue.Services.Server
                 {
                     var serviceId = source.Id;
 
-                    var service = session.Get<Service>(serviceId);
-                    if (service == null)
+                    Service service;
+
+                    if (serviceId != Guid.Empty)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId), string.Format("Услуга [{0}] не найдена", serviceId));
+                        service = session.Get<Service>(serviceId);
+                        if (service == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId), string.Format("Услуга [{0}] не найдена", serviceId));
+                        }
+                    }
+                    else
+                    {
+                        service = new Service();
                     }
 
+                    service.IsActive = source.IsActive;
                     service.Code = source.Code;
                     service.Priority = source.Priority;
                     service.Name = source.Name;
@@ -205,6 +157,24 @@ namespace Queue.Services.Server
                     service.Type = source.Type;
                     service.LiveRegistrator = source.LiveRegistrator;
                     service.EarlyRegistrator = source.EarlyRegistrator;
+
+                    if (source.ServiceGroup != null)
+                    {
+                        Guid serviceGroupId = source.ServiceGroup.Id;
+
+                        ServiceGroup serviceGroup = session.Get<ServiceGroup>(serviceGroupId);
+                        if (serviceGroup == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceGroupId),
+                                string.Format("Группа услуг [{0}] не найдена", serviceGroupId));
+                        }
+
+                        service.ServiceGroup = serviceGroup;
+                    }
+                    else
+                    {
+                        service.ServiceGroup = null;
+                    }
 
                     var errors = service.Validate();
                     if (errors.Length > 0)
@@ -374,29 +344,6 @@ namespace Queue.Services.Server
                     transaction.Commit();
 
                     return true;
-                }
-            });
-        }
-
-        public async Task ChangeServiceActivity(Guid serviceId, bool isActive)
-        {
-            await Task.Run(() =>
-            {
-                checkPermission(UserRole.Administrator);
-
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    Service service = session.Get<Service>(serviceId);
-                    if (service == null)
-                    {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId), string.Format("Услуга [{0}] не найдена", serviceId));
-                    }
-
-                    service.IsActive = isActive;
-
-                    session.Save(service);
-                    transaction.Commit();
                 }
             });
         }
