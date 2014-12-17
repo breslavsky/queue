@@ -395,5 +395,10 @@ namespace Queue.Administrator
             usersTableLayoutPanel.Parent = usersTabs.SelectedTab;
             UsersGridViewRefresh();
         }
+
+        private void usersGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

@@ -22,9 +22,6 @@
             this.operatorsTabPage = new System.Windows.Forms.TabPage();
             this.usersTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.usersGridView = new System.Windows.Forms.DataGridView();
-            this.addUserButton = new System.Windows.Forms.Button();
-            this.managersTabPage = new System.Windows.Forms.TabPage();
-            this.administratorsTabPage = new System.Windows.Forms.TabPage();
             this.deleteColumn = new System.Windows.Forms.DataGridViewLinkColumn();
             this.roleColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.surnameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -37,6 +34,9 @@
             this.isInterruptionColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.InterruptionStartTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.InterruptionFinishTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.addUserButton = new System.Windows.Forms.Button();
+            this.managersTabPage = new System.Windows.Forms.TabPage();
+            this.administratorsTabPage = new System.Windows.Forms.TabPage();
             this.usersTabs.SuspendLayout();
             this.operatorsTabPage.SuspendLayout();
             this.usersTableLayoutPanel.SuspendLayout();
@@ -54,7 +54,7 @@
             this.usersTabs.Name = "usersTabs";
             this.usersTabs.Padding = new System.Drawing.Point(5, 5);
             this.usersTabs.SelectedIndex = 0;
-            this.usersTabs.Size = new System.Drawing.Size(894, 442);
+            this.usersTabs.Size = new System.Drawing.Size(1363, 442);
             this.usersTabs.TabIndex = 0;
             this.usersTabs.SelectedIndexChanged += new System.EventHandler(this.usersTabs_SelectedIndexChanged);
             // 
@@ -64,7 +64,7 @@
             this.operatorsTabPage.Location = new System.Drawing.Point(4, 26);
             this.operatorsTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.operatorsTabPage.Name = "operatorsTabPage";
-            this.operatorsTabPage.Size = new System.Drawing.Size(886, 412);
+            this.operatorsTabPage.Size = new System.Drawing.Size(1355, 412);
             this.operatorsTabPage.TabIndex = 0;
             this.operatorsTabPage.Tag = "4";
             this.operatorsTabPage.Text = "Операторы";
@@ -83,7 +83,7 @@
             this.usersTableLayoutPanel.RowCount = 2;
             this.usersTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.usersTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.usersTableLayoutPanel.Size = new System.Drawing.Size(886, 412);
+            this.usersTableLayoutPanel.Size = new System.Drawing.Size(1355, 412);
             this.usersTableLayoutPanel.TabIndex = 0;
             this.usersTableLayoutPanel.Tag = "";
             // 
@@ -121,42 +121,11 @@
             this.usersGridView.Name = "usersGridView";
             this.usersGridView.RowHeadersVisible = false;
             this.usersGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.usersGridView.Size = new System.Drawing.Size(886, 377);
+            this.usersGridView.Size = new System.Drawing.Size(1355, 377);
             this.usersGridView.TabIndex = 0;
             this.usersGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.usersGridView_CellClick);
+            this.usersGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.usersGridView_CellContentClick);
             this.usersGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.usersGridView_CellEndEdit);
-            // 
-            // addUserButton
-            // 
-            this.addUserButton.Location = new System.Drawing.Point(0, 382);
-            this.addUserButton.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.addUserButton.Name = "addUserButton";
-            this.addUserButton.Size = new System.Drawing.Size(75, 25);
-            this.addUserButton.TabIndex = 0;
-            this.addUserButton.Text = "Добавить";
-            this.addUserButton.Click += new System.EventHandler(this.addUserButton_Click);
-            // 
-            // managersTabPage
-            // 
-            this.managersTabPage.Location = new System.Drawing.Point(4, 26);
-            this.managersTabPage.Margin = new System.Windows.Forms.Padding(0);
-            this.managersTabPage.Name = "managersTabPage";
-            this.managersTabPage.Size = new System.Drawing.Size(886, 412);
-            this.managersTabPage.TabIndex = 0;
-            this.managersTabPage.Tag = "2";
-            this.managersTabPage.Text = "Менеджеры";
-            this.managersTabPage.UseVisualStyleBackColor = true;
-            // 
-            // administratorsTabPage
-            // 
-            this.administratorsTabPage.Location = new System.Drawing.Point(4, 26);
-            this.administratorsTabPage.Margin = new System.Windows.Forms.Padding(0);
-            this.administratorsTabPage.Name = "administratorsTabPage";
-            this.administratorsTabPage.Size = new System.Drawing.Size(886, 412);
-            this.administratorsTabPage.TabIndex = 0;
-            this.administratorsTabPage.Tag = "1";
-            this.administratorsTabPage.Text = "Администраторы";
-            this.administratorsTabPage.UseVisualStyleBackColor = true;
             // 
             // deleteColumn
             // 
@@ -253,11 +222,43 @@
             this.InterruptionFinishTimeColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.InterruptionFinishTimeColumn.Width = 150;
             // 
+            // addUserButton
+            // 
+            this.addUserButton.Location = new System.Drawing.Point(0, 382);
+            this.addUserButton.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.addUserButton.Name = "addUserButton";
+            this.addUserButton.Size = new System.Drawing.Size(75, 25);
+            this.addUserButton.TabIndex = 0;
+            this.addUserButton.Text = "Добавить";
+            this.addUserButton.Click += new System.EventHandler(this.addUserButton_Click);
+            // 
+            // managersTabPage
+            // 
+            this.managersTabPage.Location = new System.Drawing.Point(4, 26);
+            this.managersTabPage.Margin = new System.Windows.Forms.Padding(0);
+            this.managersTabPage.Name = "managersTabPage";
+            this.managersTabPage.Size = new System.Drawing.Size(1355, 412);
+            this.managersTabPage.TabIndex = 0;
+            this.managersTabPage.Tag = "2";
+            this.managersTabPage.Text = "Менеджеры";
+            this.managersTabPage.UseVisualStyleBackColor = true;
+            // 
+            // administratorsTabPage
+            // 
+            this.administratorsTabPage.Location = new System.Drawing.Point(4, 26);
+            this.administratorsTabPage.Margin = new System.Windows.Forms.Padding(0);
+            this.administratorsTabPage.Name = "administratorsTabPage";
+            this.administratorsTabPage.Size = new System.Drawing.Size(1355, 412);
+            this.administratorsTabPage.TabIndex = 0;
+            this.administratorsTabPage.Tag = "1";
+            this.administratorsTabPage.Text = "Администраторы";
+            this.administratorsTabPage.UseVisualStyleBackColor = true;
+            // 
             // UsersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(914, 462);
+            this.ClientSize = new System.Drawing.Size(1383, 462);
             this.Controls.Add(this.usersTabs);
             this.MinimumSize = new System.Drawing.Size(930, 500);
             this.Name = "UsersForm";
