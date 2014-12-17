@@ -27,7 +27,8 @@ namespace Queue.Services.Server
                     var client = session.Get<Client>(clientId);
                     if (client == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientId), string.Format("Клиент [{0}] не найден", clientId));
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientId),
+                            string.Format("Клиент [{0}] не найден", clientId));
                     }
 
                     return Mapper.Map<Client, DTO.Client>(client);
