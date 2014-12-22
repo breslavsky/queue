@@ -512,8 +512,10 @@
     <EmbeddedResource Include="Controls\ServiceStepsControl.resx">
       <DependentUpon>ServiceStepsControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Translate\MainForm.en-US.resx" />
+    <EmbeddedResource Include="Translate\AdministratorForm.en-US.resx" />
     <EmbeddedResource Include="Translate\OfficesForm.en-US.resx" />
+    <EmbeddedResource Include="Translate\UsersForm.en-US.resx" />
+    <EmbeddedResource Include="Translate\WorkplacesForm.en-US.resx" />
     <EmbeddedResource Include="WorkplacesForm.resx">
       <DependentUpon>WorkplacesForm.cs</DependentUpon>
     </EmbeddedResource>

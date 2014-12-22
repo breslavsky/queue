@@ -12,9 +12,9 @@ namespace Queue.Administrator
         [STAThread]
         private static void Main()
         {
-            //var culture = CultureInfo.CreateSpecificCulture("en-US");
+            var culture = CultureInfo.CreateSpecificCulture("en-US");
             //var culture = CultureInfo.CreateSpecificCulture("zh-CN");
-            //CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentCulture = culture;
             //CultureInfo.DefaultThreadCurrentUICulture = culture;
 
             Application.EnableVisualStyles();
