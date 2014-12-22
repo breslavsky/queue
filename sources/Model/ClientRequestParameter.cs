@@ -14,11 +14,11 @@ namespace Queue.Model
         [ManyToOne(ClassType = typeof(ClientRequest), Column = "ClientRequestId", ForeignKey = "ClientRequestParameterToClientRequestReference")]
         public virtual ClientRequest ClientRequest { get; set; }
 
-        [NotEmpty(Message = "Название параметра не может быть пустым")]
+        [NotNullNotEmpty(Message = "Название параметра не может быть пустым")]
         [Property]
         public virtual string Name { get; set; }
 
-        [NotEmpty(Message = "Значение параметра не может быть пустым")]
+        [NotNullNotEmpty(Message = "Значение параметра не может быть пустым")]
         [Property]
         public virtual string Value { get; set; }
 

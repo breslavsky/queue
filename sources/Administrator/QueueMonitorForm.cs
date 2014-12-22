@@ -90,9 +90,9 @@ namespace Queue.Administrator
 
         private void queueMonitorControl_ClientRequestEdit(object sender, QueueMonitorEventArgs e)
         {
-            using (var clientRequestForm = new EditClientRequestForm(channelBuilder, currentUser, e.ClientRequest.Id))
+            using (var f = new EditClientRequestForm(channelBuilder, currentUser, e.ClientRequest.Id))
             {
-                clientRequestForm.ShowDialog();
+                f.ShowDialog();
             }
         }
 

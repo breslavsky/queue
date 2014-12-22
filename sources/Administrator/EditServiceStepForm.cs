@@ -18,6 +18,8 @@ namespace Queue.Administrator
 {
     public partial class EditServiceStepForm : Queue.UI.WinForms.RichForm
     {
+        public event EventHandler<EventArgs> Saved;
+
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;
         private User currentUser;
@@ -88,7 +90,8 @@ namespace Queue.Administrator
                         ? await taskPool.AddTask(channel.Service.GetServiceStep(serviceStepId))
                         : new ServiceStep()
                         {
-                            Service = service
+                            Service = service,
+                            Name = "Новый этап"
                         };
                 }
                 catch (OperationCanceledException) { }
@@ -110,7 +113,7 @@ namespace Queue.Administrator
 
         private void nameTextBox_Leave(object sender, EventArgs e)
         {
-            ServiceStep.Name = nameTextBox.Text;
+            serviceStep.Name = nameTextBox.Text;
         }
 
         #endregion bindings
@@ -123,9 +126,12 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.EditServiceStep(serviceStep));
+                    ServiceStep = await taskPool.AddTask(channel.Service.EditServiceStep(serviceStep));
 
-                    DialogResult = DialogResult.OK;
+                    if (Saved != null)
+                    {
+                        Saved(this, EventArgs.Empty);
+                    }
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

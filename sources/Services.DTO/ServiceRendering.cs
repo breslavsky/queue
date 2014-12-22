@@ -9,11 +9,6 @@ namespace Queue.Services.DTO
     [DataContract]
     public class ServiceRendering : IdentifiedEntity
     {
-        public ServiceRendering()
-        {
-            Mode = ServiceRenderingMode.AllRequests;
-        }
-
         [DataMember]
         public Schedule Schedule { get; set; }
 

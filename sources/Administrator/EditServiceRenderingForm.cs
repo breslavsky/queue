@@ -13,6 +13,8 @@ namespace Queue.Administrator
 {
     public partial class EditServiceRenderingForm : Queue.UI.WinForms.RichForm
     {
+        public event EventHandler<EventArgs> Saved;
+
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;
         private User currentUser;
@@ -117,24 +119,24 @@ namespace Queue.Administrator
 
         #region bindings
 
-        private void modeСomboBox_Leave(object sender, EventArgs e)
-        {
-            ServiceRendering.Mode = modeСontrol.Selected<ServiceRenderingMode>();
-        }
-
         private void operatorControl_Leave(object sender, EventArgs e)
         {
-            ServiceRendering.Operator = operatorControl.Selected<QueueOperator>();
+            serviceRendering.Operator = operatorControl.Selected<QueueOperator>();
         }
 
         private void priorityUpDown_Leave(object sender, EventArgs e)
         {
-            ServiceRendering.Priority = (byte)priorityUpDown.Value;
+            serviceRendering.Priority = (byte)priorityUpDown.Value;
         }
 
         private void serviceStepControl_Leave(object sender, EventArgs e)
         {
-            ServiceRendering.ServiceStep = serviceStepControl.Selected<ServiceStep>();
+            serviceRendering.ServiceStep = serviceStepControl.Selected<ServiceStep>();
+        }
+
+        private void modeСontrol_Leave(object sender, EventArgs e)
+        {
+            serviceRendering.Mode = modeСontrol.Selected<ServiceRenderingMode>();
         }
 
         #endregion bindings
@@ -147,9 +149,12 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    ServiceRendering = await taskPool.AddTask(channel.Service.EditServiceRendering(ServiceRendering));
+                    ServiceRendering = await taskPool.AddTask(channel.Service.EditServiceRendering(serviceRendering));
 
-                    DialogResult = DialogResult.OK;
+                    if (Saved != null)
+                    {
+                        Saved(this, EventArgs.Empty);
+                    }
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

@@ -6,8 +6,7 @@ namespace Queue.Model.Common
     public enum UserRole
     {
         Administrator = 1,
-        Manager = 2,
-        Operator = 4,
-        All = Operator | Manager | Administrator
+        Operator = 2,
+        All = Operator | Administrator
     }
 }

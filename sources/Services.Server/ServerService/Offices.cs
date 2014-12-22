@@ -16,7 +16,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Offices);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -52,17 +52,16 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Offices);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    var officeId = source.Id;
-
                     Office office;
 
-                    if (officeId != Guid.Empty)
+                    if (!source.Empty())
                     {
+                        var officeId = source.Id;
                         office = session.Get<Office>(officeId);
                         if (office == null)
                         {
@@ -96,7 +95,7 @@ namespace Queue.Services.Server
         {
             await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Offices);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())

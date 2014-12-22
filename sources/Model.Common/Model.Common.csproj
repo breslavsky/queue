@@ -80,6 +80,14 @@
       <LastGenOutput>WorkplaceType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\WorkplaceType.ru-RU.resx" />
+    <EmbeddedResource Include="Translation\AdministratorPermissions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AdministratorPermissions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Translation\AdministratorPermissions.ru-RU.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AdministratorPermissions.ru-RU.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientRequestRegistrator.cs" />
@@ -138,6 +146,16 @@
     </Compile>
     <Compile Include="Translation\WorkplaceType.Designer.cs">
       <DependentUpon>WorkplaceType.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Translation\AdministratorPermissions.Designer.cs">
+      <DependentUpon>AdministratorPermissions.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Translation\AdministratorPermissions.ru-RU.Designer.cs">
+      <DependentUpon>AdministratorPermissions.ru-RU.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>

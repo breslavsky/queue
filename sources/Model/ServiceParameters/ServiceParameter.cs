@@ -10,18 +10,13 @@ namespace Queue.Model
     [Cache(Usage = CacheUsage.ReadWrite)]
     public abstract class ServiceParameter : IdentifiedEntity
     {
-        // TODO: см. выше...
-        public ServiceParameter()
-        {
-            Name = "Новый параметр";
-        }
-
         #region properties
 
         [NotNull(Message = "Для параметра не указана услуга")]
         [ManyToOne(ClassType = typeof(Service), Column = "ServiceId", ForeignKey = "ServiceParameterToServiceReference")]
         public virtual Service Service { get; set; }
 
+        [NotNullNotEmpty(Message = "Наименование параметра не указано")]
         [Property]
         public virtual string Name { get; set; }
 
@@ -44,9 +39,6 @@ namespace Queue.Model
             return string.Format("{0} {1}", Type, Name);
         }
 
-        public virtual ClientRequestParameter Compile(object value)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract virtual ClientRequestParameter Compile(object value);
     }
 }

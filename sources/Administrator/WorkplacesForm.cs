@@ -53,11 +53,19 @@ namespace Queue.Administrator
         {
             using (var f = new EditWorkplaceForm(channelBuilder, currentUser))
             {
-                if (f.ShowDialog() == DialogResult.OK)
+                DataGridViewRow row = null;
+
+                f.Saved += (s, eventArgs) =>
                 {
-                    var row = workplacesGridView.Rows[workplacesGridView.Rows.Add()];
+                    if (row == null)
+                    {
+                        row = workplacesGridView.Rows[workplacesGridView.Rows.Add()];
+                        row.Selected = true;
+                    }
                     WorkplacesGridViewRenderRow(row, f.Workplace);
-                }
+                };
+
+                f.ShowDialog();
             }
         }
 
@@ -107,10 +115,12 @@ namespace Queue.Administrator
 
                 using (var f = new EditWorkplaceForm(channelBuilder, currentUser, workplace.Id))
                 {
-                    if (f.ShowDialog() == DialogResult.OK)
+                    f.Saved += (s, eventArgs) =>
                     {
                         WorkplacesGridViewRenderRow(row, f.Workplace);
-                    }
+                    };
+
+                    f.ShowDialog();
                 }
             }
         }

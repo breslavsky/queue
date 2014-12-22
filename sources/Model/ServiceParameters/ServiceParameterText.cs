@@ -22,11 +22,11 @@ namespace Queue.Model
 
         #region properties
 
-        [Min(Value = 0, Message = "Минимальная длина поля должна быть больше нуля")]
+        [Min(Value = 1, Message = "Минимальная длина поля должна быть больше нуля")]
         [Property]
         public virtual int MinLength { get; set; }
 
-        [Min(Value = 0, Message = "Максимальная длина поля должна быть больше нуля")]
+        [Min(Value = 1, Message = "Максимальная длина поля должна быть больше нуля")]
         [Property]
         public virtual int MaxLength { get; set; }
 
@@ -42,7 +42,7 @@ namespace Queue.Model
             string text = (string)value;
             if (IsRequire && text.Length < 1)
             {
-                throw new Exception(string.Format("Поле [{0}] указано обязательно для заполнения", Name));
+                throw new Exception(string.Format("Поле [{0}] обязательно для заполнения", Name));
             }
             if (text.Length < MinLength)
             {

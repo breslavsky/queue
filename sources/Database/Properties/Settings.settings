@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Queue.Database.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Database" Type="Junte.Data.NHibernate.DatabaseSettings" Scope="User">
+    <Setting Name="Profiles" Type="Junte.UI.WinForms.NHibernate.Configuration.DatabaseSettingsProfiles" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

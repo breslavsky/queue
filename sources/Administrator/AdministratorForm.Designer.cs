@@ -27,8 +27,8 @@
             this.servicesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientRequestsMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.addClientRequestMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientRequestsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addClientRequestMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.queuePlanMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.queueMonitorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.сurrentScheduleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,6 +86,7 @@
             this.configMenuItem.ShortcutKeyDisplayString = "";
             this.configMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
             this.configMenuItem.Size = new System.Drawing.Size(95, 20);
+            this.configMenuItem.Tag = "Config";
             this.configMenuItem.Text = "Настройки";
             this.configMenuItem.Click += new System.EventHandler(this.configMenuItem_Click);
             // 
@@ -105,6 +106,7 @@
             // 
             this.usersMenuItem.Name = "usersMenuItem";
             this.usersMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.usersMenuItem.Tag = "Users";
             this.usersMenuItem.Text = "Пользователи";
             this.usersMenuItem.Click += new System.EventHandler(this.usersMenuItem_Click);
             // 
@@ -112,6 +114,7 @@
             // 
             this.workplacesMenuItem.Name = "workplacesMenuItem";
             this.workplacesMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.workplacesMenuItem.Tag = "Workplaces";
             this.workplacesMenuItem.Text = "Рабочие места";
             this.workplacesMenuItem.Click += new System.EventHandler(this.workplacesMenuItem_Click);
             // 
@@ -119,6 +122,7 @@
             // 
             this.defaultScheduleMenuItem.Name = "defaultScheduleMenuItem";
             this.defaultScheduleMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.defaultScheduleMenuItem.Tag = "DefaultSchedule";
             this.defaultScheduleMenuItem.Text = "Общее расписание";
             this.defaultScheduleMenuItem.Click += new System.EventHandler(this.defaultScheduleMenuItem_Click);
             // 
@@ -126,6 +130,7 @@
             // 
             this.servicesMenuItem.Name = "servicesMenuItem";
             this.servicesMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.servicesMenuItem.Tag = "Services";
             this.servicesMenuItem.Text = "Настройка услуг";
             this.servicesMenuItem.Click += new System.EventHandler(this.servicesMenuItem_Click);
             // 
@@ -134,6 +139,7 @@
             this.clientsMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("clientsMenuItem.Image")));
             this.clientsMenuItem.Name = "clientsMenuItem";
             this.clientsMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.clientsMenuItem.Tag = "Clients";
             this.clientsMenuItem.Text = "Клиенты";
             this.clientsMenuItem.Click += new System.EventHandler(this.clientsMenuItem_Click);
             // 
@@ -145,14 +151,8 @@
             this.clientRequestsMenu.Image = ((System.Drawing.Image)(resources.GetObject("clientRequestsMenu.Image")));
             this.clientRequestsMenu.Name = "clientRequestsMenu";
             this.clientRequestsMenu.Size = new System.Drawing.Size(84, 20);
+            this.clientRequestsMenu.Tag = "ClientsRequests";
             this.clientRequestsMenu.Text = "Запросы";
-            // 
-            // addClientRequestMenuItem
-            // 
-            this.addClientRequestMenuItem.Name = "addClientRequestMenuItem";
-            this.addClientRequestMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.addClientRequestMenuItem.Text = "Добавить запрос";
-            this.addClientRequestMenuItem.Click += new System.EventHandler(this.addClientRequestMenuItem_Click);
             // 
             // clientRequestsMenuItem
             // 
@@ -160,6 +160,13 @@
             this.clientRequestsMenuItem.Size = new System.Drawing.Size(169, 22);
             this.clientRequestsMenuItem.Text = "Список запросов";
             this.clientRequestsMenuItem.Click += new System.EventHandler(this.clientRequestsMenuItem_Click);
+            // 
+            // addClientRequestMenuItem
+            // 
+            this.addClientRequestMenuItem.Name = "addClientRequestMenuItem";
+            this.addClientRequestMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.addClientRequestMenuItem.Text = "Добавить запрос";
+            this.addClientRequestMenuItem.Click += new System.EventHandler(this.addClientRequestMenuItem_Click);
             // 
             // queuePlanMenu
             // 
@@ -176,6 +183,7 @@
             this.queueMonitorMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("queueMonitorMenuItem.Image")));
             this.queueMonitorMenuItem.Name = "queueMonitorMenuItem";
             this.queueMonitorMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.queueMonitorMenuItem.Tag = "QueuePlan";
             this.queueMonitorMenuItem.Text = "Монитор очереди";
             this.queueMonitorMenuItem.Click += new System.EventHandler(this.queueMonitorMenuItem_Click);
             // 
@@ -184,6 +192,7 @@
             this.сurrentScheduleMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("сurrentScheduleMenuItem.Image")));
             this.сurrentScheduleMenuItem.Name = "сurrentScheduleMenuItem";
             this.сurrentScheduleMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.сurrentScheduleMenuItem.Tag = "CurrentSchedule";
             this.сurrentScheduleMenuItem.Text = "Текущее расписание";
             this.сurrentScheduleMenuItem.Click += new System.EventHandler(this.сurrentScheduleMenuItem_Click);
             // 
@@ -196,6 +205,7 @@
             this.reportsMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("reportsMenuItem.Image")));
             this.reportsMenuItem.Name = "reportsMenuItem";
             this.reportsMenuItem.Size = new System.Drawing.Size(76, 20);
+            this.reportsMenuItem.Tag = "Reports";
             this.reportsMenuItem.Text = "Отчеты";
             // 
             // serviceRatingReportMenuItem
@@ -232,6 +242,7 @@
             this.officesMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("officesMenuItem.Image")));
             this.officesMenuItem.Name = "officesMenuItem";
             this.officesMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.officesMenuItem.Tag = "Offices";
             this.officesMenuItem.Text = "Филиалы";
             this.officesMenuItem.Click += new System.EventHandler(this.officesMenuItem_Click);
             // 

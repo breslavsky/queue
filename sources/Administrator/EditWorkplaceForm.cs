@@ -19,6 +19,8 @@ namespace Queue.Administrator
 {
     public partial class EditWorkplaceForm : Queue.UI.WinForms.RichForm
     {
+        public event EventHandler<EventArgs> Saved;
+
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;
         private User currentUser;
@@ -111,7 +113,10 @@ namespace Queue.Administrator
             }
             else
             {
-                Workplace = new Workplace();
+                Workplace = new Workplace()
+                {
+                    Number = 1
+                };
             }
         }
 
@@ -119,32 +124,32 @@ namespace Queue.Administrator
 
         private void commentTextBox_Leave(object sender, EventArgs e)
         {
-            Workplace.Comment = commentTextBox.Text;
+            workplace.Comment = commentTextBox.Text;
         }
 
         private void displayUpDown_Leave(object sender, EventArgs e)
         {
-            Workplace.Display = (byte)displayUpDown.Value;
+            workplace.Display = (byte)displayUpDown.Value;
         }
 
         private void modificatorControl_Leave(object sender, EventArgs e)
         {
-            Workplace.Modificator = modificatorControl.Selected<WorkplaceModificator>();
+            workplace.Modificator = modificatorControl.Selected<WorkplaceModificator>();
         }
 
         private void numberUpDown_Leave(object sender, EventArgs e)
         {
-            Workplace.Number = (int)numberUpDown.Value;
+            workplace.Number = (int)numberUpDown.Value;
         }
 
         private void segmentsUpDown_Leave(object sender, EventArgs e)
         {
-            Workplace.Segments = (byte)segmentsUpDown.Value;
+            workplace.Segments = (byte)segmentsUpDown.Value;
         }
 
         private void typeControl_Leave(object sender, EventArgs e)
         {
-            Workplace.Type = typeControl.Selected<WorkplaceType>();
+            workplace.Type = typeControl.Selected<WorkplaceType>();
         }
 
         #endregion bindings
@@ -157,9 +162,12 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.EditWorkplace(workplace));
+                    Workplace = await taskPool.AddTask(channel.Service.EditWorkplace(workplace));
 
-                    DialogResult = DialogResult.OK;
+                    if (Saved != null)
+                    {
+                        Saved(this, EventArgs.Empty);
+                    }
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

@@ -12,23 +12,13 @@ namespace Queue.Model
     [Cache(Usage = CacheUsage.ReadWrite)]
     public class Workplace : IdentifiedEntity
     {
-        public Workplace()
-        {
-            Type = WorkplaceType.Window;
-            Number = 1;
-            Modificator = WorkplaceModificator.None;
-            Display = 1;
-            Segments = 3;
-        }
-
         #region properties
 
         [Property]
         public virtual WorkplaceType Type { get; set; }
 
         [Property]
-        [Min(Value = 0, Message = "Номер рабочего места должен быть больше 1")]
-        [Max(Value = 10000, Message = "Номер рабочего места должен быть меньше 10000")]
+        [Length(Min = 0, Max = 1000, Message = "Номер рабочего места должен быть больше 1 и меньше 1000")]
         public virtual int Number { get; set; }
 
         [Property]

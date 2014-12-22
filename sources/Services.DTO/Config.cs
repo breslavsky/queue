@@ -92,25 +92,13 @@ namespace Queue.Services.DTO
 
         [DataMember]
         public int TickerSpeed { get; set; }
-
-        [DataMember]
-        public MediaConfigFile[] MediaFiles { get; set; }
     }
 
     [DataContract]
     public class MediaConfigFile : IdentifiedEntity
     {
         [DataMember]
-        public DateTime CreateDate { get; set; }
-
-        [DataMember]
         public string Name { get; set; }
-
-        [DataMember]
-        public long SortId { get; set; }
-
-        [DataMember]
-        public bool IsActive { get; set; }
 
         public override string ToString()
         {

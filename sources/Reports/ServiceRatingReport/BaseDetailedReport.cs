@@ -227,6 +227,7 @@ namespace Queue.Reports.ServiceRatingReport
             ServiceGroup current = service.ServiceGroup;
             ServiceGroupDto group = null;
 
+            //TODO: no no!
             while (true)
             {
                 ServiceGroupDto _group = FindServiceGroup(rootGroups, current.Id);

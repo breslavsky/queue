@@ -57,65 +57,53 @@ namespace Queue.Administrator
         private async void LoadConfig()
         {
             var selectedTab = сonfigTabControl.SelectedTab;
-            if (selectedTab.Tag == null)
+
+            using (var channel = channelManager.CreateChannel())
             {
-                using (var channel = channelManager.CreateChannel())
+                try
                 {
-                    try
+                    if (selectedTab.Equals(defaultConfigTabPage))
                     {
-                        switch (сonfigTabControl.SelectedIndex)
-                        {
-                            case 0:
-                                defaultConfigControl.Config = await taskPool.AddTask(channel.Service.GetDefaultConfig());
-
-                                break;
-
-                            case 1:
-                                couponConfigControl.Config = await taskPool.AddTask(channel.Service.GetCouponConfig());
-
-                                break;
-
-                            case 2:
-                                SMTPConfigControl.Config = await taskPool.AddTask(channel.Service.GetSMTPConfig());
-
-                                break;
-
-                            case 3:
-                                portalConfigControl.Config = await taskPool.AddTask(channel.Service.GetPortalConfig());
-
-                                break;
-
-                            case 4:
-                                mediaConfigControl.Config = await taskPool.AddTask(channel.Service.GetMediaConfig());
-
-                                break;
-
-                            case 5:
-                                terminalConfigControl.Config = await taskPool.AddTask(channel.Service.GetTerminalConfig());
-
-                                break;
-
-                            case 6:
-                                notificationConfigControl.Config = await taskPool.AddTask(channel.Service.GetNotificationConfig());
-
-                                break;
-                        }
+                        defaultConfigControl.Config = await taskPool.AddTask(channel.Service.GetDefaultConfig());
                     }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
+                    else if (selectedTab.Equals(couponConfigTabPage))
                     {
-                        UIHelper.Warning(exception.Reason.ToString());
+                        couponConfigControl.Config = await taskPool.AddTask(channel.Service.GetCouponConfig());
                     }
-                    catch (Exception exception)
+
+                    else if (selectedTab.Equals(SMTPConfigTabPage))
                     {
-                        UIHelper.Warning(exception.Message);
+                        SMTPConfigControl.Config = await taskPool.AddTask(channel.Service.GetSMTPConfig());
+                    }
+                    else if (selectedTab.Equals(portalConfigTabPage))
+                    {
+                        portalConfigControl.Config = await taskPool.AddTask(channel.Service.GetPortalConfig());
+                    }
+                    else if (selectedTab.Equals(mediaConfigTabPage))
+                    {
+                        mediaConfigControl.Config = await taskPool.AddTask(channel.Service.GetMediaConfig());
+                    }
+                    else if (selectedTab.Equals(terminalConfigTabPage))
+                    {
+                        terminalConfigControl.Config = await taskPool.AddTask(channel.Service.GetTerminalConfig());
+                    }
+                    else if (selectedTab.Equals(notificationTabPage))
+                    {
+                        notificationConfigControl.Config = await taskPool.AddTask(channel.Service.GetNotificationConfig());
                     }
                 }
-
-                selectedTab.Tag = true;
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
             }
         }
 

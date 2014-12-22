@@ -8,7 +8,8 @@ namespace Queue.Services.Media
 {
     public class MediaServiceHost : ServiceHost
     {
-        public MediaServiceHost(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser, string folder, Type serviceType, params Uri[] baseAddresses)
+        public MediaServiceHost(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser,
+            string folder, Type serviceType, params Uri[] baseAddresses)
             : base(serviceType, baseAddresses)
         {
             foreach (var d in this.ImplementedContracts.Values)

@@ -143,7 +143,8 @@ namespace Queue.Administrator
 
                             int subjects = (int)subjectsUpDown.Value;
 
-                            var currentClientId = CurrentClient != null ? CurrentClient.Id : Guid.Empty;
+                            var currentClientId = CurrentClient != null
+                                ? CurrentClient.Id : Guid.Empty;
 
                             if (liveRadioButton.Checked)
                             {
@@ -300,12 +301,12 @@ namespace Queue.Administrator
 
         private void clientNameTextBox_Leave(object sender, EventArgs e)
         {
-            clientNameTextBox.Text = clientNameTextBox.Text.ToInOffer();
+            clientNameTextBox.Text = clientNameTextBox.Text;
         }
 
         private void clientPatronymicTextBox_Leave(object sender, EventArgs e)
         {
-            clientPatronymicTextBox.Text = clientPatronymicTextBox.Text.ToInOffer();
+            clientPatronymicTextBox.Text = clientPatronymicTextBox.Text;
         }
 
         private void clientsListBox_SelectedValueChanged(object sender, EventArgs e)
@@ -342,7 +343,7 @@ namespace Queue.Administrator
 
         private void clientSurnameTextBox_Leave(object sender, EventArgs e)
         {
-            clientSurnameTextBox.Text = clientSurnameTextBox.Text.ToInOffer();
+            clientSurnameTextBox.Text = clientSurnameTextBox.Text;
         }
 
         private void earlyDatePicker_ValueChanged(object sender, EventArgs e)

@@ -229,7 +229,7 @@ namespace Queue.Services.Server
             UnSubscribe();
         }
 
-        private void checkPermission(UserRole role)
+        private void checkPermission(UserRole role, Enum permissions = null)
         {
             if (currentUser == null)
             {
@@ -239,12 +239,12 @@ namespace Queue.Services.Server
             if (currentUser is Administrator
                 && role.HasFlag(UserRole.Administrator))
             {
-                return;
-            }
+                Administrator administrator = currentUser as Administrator;
+                if (permissions != null && !administrator.Permissions.HasFlag(permissions))
+                {
+                    throw new FaultException("Недостаточно прав для доступа");
+                }
 
-            if (currentUser is Manager
-                && role.HasFlag(UserRole.Manager))
-            {
                 return;
             }
 

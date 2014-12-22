@@ -16,23 +16,17 @@ namespace Queue.Administrator
         #region fields
 
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
         private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
-
+        private User currentUser;
         private Service service;
-
-        private BindingList<ServiceParameter> parameters;
-
-        #endregion fields
-
-        #region properties
+        private TaskPool taskPool;
 
         public Service Service
         {
             set
             {
+                parametersGridView.Rows.Clear();
+
                 service = value;
                 if (service != null)
                 {
@@ -42,8 +36,12 @@ namespace Queue.Administrator
                         {
                             try
                             {
-                                parameters = new BindingList<ServiceParameter>(await taskPool.AddTask(channel.Service.GetServiceParameters(service.Id)));
-                                listBox.DataSource = parameters;
+                                foreach (var p in await taskPool.AddTask(channel.Service.GetServiceParameters(service.Id)))
+                                {
+                                    RenderParametersGridViewRow(parametersGridView.Rows[parametersGridView.Rows.Add()], p);
+                                }
+
+                                Enabled = true;
                             }
                             catch (OperationCanceledException) { }
                             catch (CommunicationObjectAbortedException) { }
@@ -63,13 +61,13 @@ namespace Queue.Administrator
             }
         }
 
-        #endregion properties
+        #endregion fields
 
         public ServiceParametersControl()
         {
             InitializeComponent();
 
-            parameterTypeComboBox.Items.AddRange(EnumItem<ServiceParameterType>.GetItems());
+            parameterTypeControl.Initialize<ServiceParameterType>();
         }
 
         public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
@@ -81,177 +79,150 @@ namespace Queue.Administrator
             taskPool = new TaskPool();
         }
 
-        private async void addButton_Click(object sender, EventArgs e)
+        private void addButton_Click(object sender, EventArgs e)
         {
-            var serviceParameterType = (ServiceParameterType)parameterTypeComboBox.SelectedValue;
+            DataGridViewRow row = null;
 
-            using (var channel = channelManager.CreateChannel())
+            switch (parameterTypeControl.Selected<ServiceParameterType>())
             {
-                try
+                case ServiceParameterType.Number:
+                    using (var f = new EditServiceParameterNumberForm(channelBuilder, currentUser, service.Id))
+                    {
+                        f.Saved += (s, eventArgs) =>
+                        {
+                            if (row == null)
+                            {
+                                row = parametersGridView.Rows[parametersGridView.Rows.Add()];
+                            }
+                            RenderParametersGridViewRow(row, f.ServiceParameterNumber);
+                        };
+
+                        f.ShowDialog();
+                    }
+                    break;
+
+                case ServiceParameterType.Text:
+                    using (var f = new EditServiceParameterTextForm(channelBuilder, currentUser, service.Id))
+                    {
+                        f.Saved += (s, eventArgs) =>
+                        {
+                            if (row == null)
+                            {
+                                row = parametersGridView.Rows[parametersGridView.Rows.Add()];
+                            }
+                            RenderParametersGridViewRow(row, f.ServiceParameterText);
+                        };
+
+                        f.ShowDialog();
+                    }
+                    break;
+
+                case ServiceParameterType.Options:
+                    using (var f = new EditServiceParameterOptionsForm(channelBuilder, currentUser, service.Id))
+                    {
+                        f.Saved += (s, eventArgs) =>
+                        {
+                            if (row == null)
+                            {
+                                row = parametersGridView.Rows[parametersGridView.Rows.Add()];
+                            }
+                            RenderParametersGridViewRow(row, f.ServiceParameterOptions);
+                        };
+
+                        f.ShowDialog();
+                    }
+                    break;
+            }
+        }
+
+        private void parametersGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            int rowIndex = e.RowIndex,
+                columnIndex = e.ColumnIndex;
+
+            if (rowIndex >= 0 && columnIndex >= 0)
+            {
+                var row = parametersGridView.Rows[rowIndex];
+                ServiceParameter parameter = row.Tag as ServiceParameter;
+
+                if (parameter is ServiceParameterNumber)
                 {
-                    addButton.Enabled = false;
-                    //TODO: create!
-                    //var parameter = await taskPool.AddTask(channel.Service.AddServiceParameter(service.Id, serviceParameterType));
-                    //parameters.Add(parameter);
-                    //listBox.SelectedItem = parameter;
+                    using (var f = new EditServiceParameterNumberForm(channelBuilder, currentUser, null, parameter.Id))
+                    {
+                        f.Saved += (s, eventArgs) =>
+                        {
+                            RenderParametersGridViewRow(row, f.ServiceParameterNumber);
+                        };
+
+                        f.ShowDialog();
+                    }
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
+                else if (parameter is ServiceParameterText)
                 {
-                    UIHelper.Warning(exception.Reason.ToString());
+                    using (var f = new EditServiceParameterTextForm(channelBuilder, currentUser, null, parameter.Id))
+                    {
+                        f.Saved += (s, eventArgs) =>
+                        {
+                            RenderParametersGridViewRow(row, f.ServiceParameterText);
+                        };
+
+                        f.ShowDialog();
+                    }
                 }
-                catch (Exception exception)
+                else if (parameter is ServiceParameterOptions)
                 {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    addButton.Enabled = true;
+                    using (var f = new EditServiceParameterOptionsForm(channelBuilder, currentUser, null, parameter.Id))
+                    {
+                        f.Saved += (s, eventArgs) =>
+                        {
+                            RenderParametersGridViewRow(row, f.ServiceParameterOptions);
+                        };
+
+                        f.ShowDialog();
+                    }
                 }
             }
         }
 
-        private void listBox_SelectedIndexChanged(object sender, EventArgs e)
+        private async void parametersGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            var parameter = listBox.SelectedItem as ServiceParameter;
-            if (parameter != null)
+            if (MessageBox.Show("Вы действительно хотите удалить параметр?",
+                "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                parameterMinLengthUpDown.Enabled = false;
-                parameterMaxLengthUpDown.Enabled = false;
-                parameterOptionsTextBox.Enabled = false;
-                parameterIsMultipleCheckBox.Enabled = false;
+                ServiceParameter parameter = e.Row.Tag as ServiceParameter;
 
-                parameterNameTextBox.Text = parameter.Name;
-                parameterToolTipTextBox.Text = parameter.ToolTip;
-                parameterIsRequireCheckBox.Checked = parameter.IsRequire;
-
-                if (parameter is ServiceParameterText)
+                using (var channel = channelManager.CreateChannel())
                 {
-                    var parameterText = parameter as ServiceParameterText;
-
-                    parameterMinLengthUpDown.Value = parameterText.MinLength;
-                    parameterMaxLengthUpDown.Value = parameterText.MaxLength;
-
-                    parameterMinLengthUpDown.Enabled = true;
-                    parameterMaxLengthUpDown.Enabled = true;
-                }
-                else
-
-                    if (parameter is ServiceParameterOptions)
+                    try
                     {
-                        var parameterOptions = parameter as ServiceParameterOptions;
-
-                        parameterOptionsTextBox.Text = parameterOptions.Options;
-                        parameterIsMultipleCheckBox.Checked = parameterOptions.IsMultiple;
-
-                        parameterOptionsTextBox.Enabled = true;
-                        parameterIsMultipleCheckBox.Enabled = true;
+                        await taskPool.AddTask(channel.Service.DeleteServiceParameter(parameter.Id));
                     }
-
-                parameterGroupBox.Enabled = true;
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                }
             }
             else
             {
-                parameterGroupBox.Enabled = false;
+                e.Cancel = true;
             }
         }
 
-        private async void saveButton_Click(object sender, EventArgs e)
+        private void RenderParametersGridViewRow(DataGridViewRow row, ServiceParameter parameter)
         {
-            var parameter = listBox.SelectedItem as ServiceParameter;
-            if (parameter != null)
-            {
-                var parameterId = parameter.Id;
-
-                string name = parameterNameTextBox.Text;
-                bool isRequire = parameterIsRequireCheckBox.Checked;
-                string toolTip = parameterToolTipTextBox.Text;
-
-                using (var channel = channelManager.CreateChannel())
-                {
-                    try
-                    {
-                        saveButton.Enabled = false;
-
-                        if (typeof(ServiceParameterNumber).IsInstanceOfType(parameter))
-                        {
-                            //parameter = await taskPool.AddTask(channel.Service.EditNumberServiceParameter(parameterId, name, toolTip, isRequire));
-                        }
-
-                        if (typeof(ServiceParameterText).IsInstanceOfType(parameter))
-                        {
-                            int minLength = (int)parameterMinLengthUpDown.Value;
-                            int maxLength = (int)parameterMaxLengthUpDown.Value;
-
-                            //parameter = await taskPool.AddTask(channel.Service.EditTextServiceParameter(parameterId, name, toolTip, isRequire, minLength, maxLength));
-                        }
-
-                        if (typeof(ServiceParameterOptions).IsInstanceOfType(parameter))
-                        {
-                            string options = parameterOptionsTextBox.Text;
-                            bool isMultiple = parameterIsMultipleCheckBox.Checked;
-
-                            //parameter = await taskPool.AddTask(channel.Service.EditOptionsServiceParameter(parameterId, name, toolTip, isRequire, options, isMultiple));
-                        }
-
-                        listBox.Items[listBox.SelectedIndex] = parameter;
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
-                    finally
-                    {
-                        saveButton.Enabled = true;
-                    }
-                }
-            }
-        }
-
-        private async void deleteButton_Click(object sender, EventArgs e)
-        {
-            var parameter = listBox.SelectedItem as ServiceParameter;
-            if (parameter != null)
-            {
-                using (var channel = channelManager.CreateChannel())
-                {
-                    try
-                    {
-                        deleteButton.Enabled = false;
-
-                        await taskPool.AddTask(taskPool.AddTask(channel.Service.DeleteServiceParameter(parameter.Id)));
-
-                        parameters.Remove(parameter);
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
-                    finally
-                    {
-                        deleteButton.Enabled = true;
-                    }
-                }
-            }
+            row.Cells["nameColumn"].Value = parameter.Name;
+            row.Cells["toolTipColumn"].Value = parameter.ToolTip;
+            row.Cells["isRequireColumn"].Value = parameter.IsRequire;
+            row.Tag = parameter;
         }
     }
 }

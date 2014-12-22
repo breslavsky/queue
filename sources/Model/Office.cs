@@ -8,17 +8,9 @@ namespace Queue.Model
     [Class(Table = "office", DynamicUpdate = true, Lazy = false)]
     public class Office : IdentifiedEntity
     {
-        //TODO:   Endpoint = "net.tcp://queue:4505"; вынести в константы
-        public Office()
-        {
-            Name = "Новый филиал";
-            Endpoint = "net.tcp://queue:4505";
-            SessionId = Guid.Empty;
-        }
-
         #region properties
 
-        [Length(Min = 1, Max = 255, Message = "Поле (название филиала) должно быть больше 1 и менее 255 символов")]
+        [NotNull(Message = "Название филиала не указано")]
         [Property]
         public virtual string Name { get; set; }
 

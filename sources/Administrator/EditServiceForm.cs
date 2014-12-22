@@ -16,6 +16,8 @@ namespace Queue.Administrator
 {
     public partial class EditServiceForm : Queue.UI.WinForms.RichForm
     {
+        public event EventHandler<EventArgs> Saved;
+
         #region fields
 
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
@@ -84,6 +86,11 @@ namespace Queue.Administrator
                         earlyRegistratorListBox.SetItemChecked(i, true);
                     }
                 }
+
+                parametersTabPage.Parent =
+                    exceptionScheduleTabPage.Parent =
+                    weekdayScheduleTabPage.Parent =
+                    stepsTabPage.Parent = service.Empty() ? null : serviceTabControl;
 
                 exceptionScheduleDatePicker.Value = ServerDateTime.Today;
             }
@@ -157,9 +164,12 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.EditService(service));
+                    Service = await taskPool.AddTask(channel.Service.EditService(service));
 
-                    DialogResult = DialogResult.OK;
+                    if (Saved != null)
+                    {
+                        Saved(this, EventArgs.Empty);
+                    }
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -178,10 +188,6 @@ namespace Queue.Administrator
                     saveButton.Enabled = true;
                 }
             }
-        }
-
-        private void saveAndCloseButton_Click(object sender, EventArgs e)
-        {
         }
 
         private void ServiceEditForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -208,7 +214,9 @@ namespace Queue.Administrator
                     {
                         Service = new Service()
                         {
-                            ServiceGroup = serviceGroup
+                            ServiceGroup = serviceGroup,
+                            Code = "0.0",
+                            Name = "Новая услуга"
                         };
                     }
                 }
@@ -231,22 +239,22 @@ namespace Queue.Administrator
 
         private void clientCallDelayUpDown_Leave(object sender, EventArgs e)
         {
-            Service.ClientCallDelay = TimeSpan.FromSeconds((double)clientCallDelayUpDown.Value);
+            service.ClientCallDelay = TimeSpan.FromSeconds((double)clientCallDelayUpDown.Value);
         }
 
         private void clientRequireCheckBox_Leave(object sender, EventArgs e)
         {
-            Service.ClientRequire = clientRequireCheckBox.Checked;
+            service.ClientRequire = clientRequireCheckBox.Checked;
         }
 
         private void codeTextBox_Leave(object sender, EventArgs e)
         {
-            Service.Code = codeTextBox.Text;
+            service.Code = codeTextBox.Text;
         }
 
         private void commentTextBox_Leave(object sender, EventArgs e)
         {
-            Service.Comment = commentTextBox.Text;
+            service.Comment = commentTextBox.Text;
         }
 
         private void descriptionTextBox_Click(object sender, EventArgs e)
@@ -263,77 +271,77 @@ namespace Queue.Administrator
 
         private void descriptionTextBox_Leave(object sender, EventArgs e)
         {
-            Service.Description = descriptionTextBox.Text;
+            service.Description = descriptionTextBox.Text;
         }
 
         private void earlyRegistratorListBox_Leave(object sender, EventArgs e)
         {
-            Service.EarlyRegistrator = ClientRequestRegistrator.None;
+            service.EarlyRegistrator = ClientRequestRegistrator.None;
 
             foreach (EnumItem<ClientRequestRegistrator> item in liveRegistratorListBox.CheckedItems)
             {
-                Service.EarlyRegistrator |= item.Value;
+                service.EarlyRegistrator |= item.Value;
             }
         }
 
         private void isPlanSubjectsCheckBox_Leave(object sender, EventArgs e)
         {
-            Service.IsPlanSubjects = isPlanSubjectsCheckBox.Checked;
+            service.IsPlanSubjects = isPlanSubjectsCheckBox.Checked;
         }
 
         private void linkTextBox_Leave(object sender, EventArgs e)
         {
-            Service.Link = linkTextBox.Text;
+            service.Link = linkTextBox.Text;
         }
 
         private void liveRegistratorListBox_Leave(object sender, EventArgs e)
         {
-            Service.LiveRegistrator = ClientRequestRegistrator.None;
+            service.LiveRegistrator = ClientRequestRegistrator.None;
 
             foreach (EnumItem<ClientRequestRegistrator> item in liveRegistratorListBox.CheckedItems)
             {
-                Service.LiveRegistrator |= item.Value;
+                service.LiveRegistrator |= item.Value;
             }
         }
 
         private void maxEarlyDaysUpDown_Leave(object sender, EventArgs e)
         {
-            Service.MaxEarlyDays = (int)maxEarlyDaysUpDown.Value;
+            service.MaxEarlyDays = (int)maxEarlyDaysUpDown.Value;
         }
 
         private void maxSubjectsUpDown_Leave(object sender, EventArgs e)
         {
-            Service.MaxSubjects = (int)maxSubjectsUpDown.Value;
+            service.MaxSubjects = (int)maxSubjectsUpDown.Value;
         }
 
         private void nameTextBox_Leave(object sender, EventArgs e)
         {
-            Service.Name = nameTextBox.Text;
+            service.Name = nameTextBox.Text;
         }
 
         private void priorityUpDown_Leave(object sender, EventArgs e)
         {
-            Service.Priority = (int)priorityUpDown.Value;
+            service.Priority = (int)priorityUpDown.Value;
         }
 
         private void serviceTypeListBox_Leave(object sender, EventArgs e)
         {
-            Service.Type = ServiceType.None;
+            service.Type = ServiceType.None;
 
             foreach (EnumItem<ServiceType> item in serviceTypeListBox.CheckedItems)
             {
-                Service.Type |= item.Value;
+                service.Type |= item.Value;
             }
         }
 
         private void tagsTextBox_Leave(object sender, EventArgs e)
         {
-            Service.Tags = tagsTextBox.Text;
+            service.Tags = tagsTextBox.Text;
         }
 
         private void timeIntervalRoundingUpDown_Leave(object sender, EventArgs e)
         {
-            Service.TimeIntervalRounding = TimeSpan.FromMinutes((double)timeIntervalRoundingUpDown.Value);
+            service.TimeIntervalRounding = TimeSpan.FromMinutes((double)timeIntervalRoundingUpDown.Value);
         }
 
         #endregion bindings
@@ -341,29 +349,17 @@ namespace Queue.Administrator
         private void serviceTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedTab = serviceTabControl.SelectedTab;
-            if (selectedTab.Tag == null)
+            if (selectedTab.Equals(stepsTabPage))
             {
-                switch (serviceTabControl.SelectedIndex)
-                {
-                    case 1:
-                        serviceStepsControl.Service = Service;
-                        break;
-
-                    case 2:
-                        LoadWeekdaySchedule();
-                        break;
-
-                    case 3:
-
-                        break;
-
-                    case 4:
-
-                        serviceParametersControl.Service = Service;
-                        break;
-                }
-
-                selectedTab.Tag = true;
+                serviceStepsControl.Service = Service;
+            }
+            else if (selectedTab.Equals(weekdayScheduleTabPage))
+            {
+                LoadWeekdaySchedule();
+            }
+            else if (selectedTab.Equals(parametersTabPage))
+            {
+                serviceParametersControl.Service = Service;
             }
         }
 
@@ -377,7 +373,7 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    weekdayScheduleControl.Schedule = await taskPool.AddTask(channel.Service.GetServiceWeekdaySchedule(Service.Id, dayOfWeek));
+                    weekdayScheduleControl.Schedule = await taskPool.AddTask(channel.Service.GetServiceWeekdaySchedule(service.Id, dayOfWeek));
 
                     weekdayScheduleCheckBox.Checked = true;
                 }
@@ -418,7 +414,7 @@ namespace Queue.Administrator
 
                     if (weekdayScheduleCheckBox.Checked)
                     {
-                        weekdayScheduleControl.Schedule = await taskPool.AddTask(channel.Service.AddServiceWeekdaySchedule(Service.Id, dayOfWeek));
+                        weekdayScheduleControl.Schedule = await taskPool.AddTask(channel.Service.AddServiceWeekdaySchedule(service.Id, dayOfWeek));
                     }
                     else
                     {
@@ -476,7 +472,7 @@ namespace Queue.Administrator
 
                     if (exceptionScheduleCheckBox.Checked)
                     {
-                        exceptionScheduleControl.Schedule = await taskPool.AddTask(channel.Service.AddServiceExceptionSchedule(Service.Id, scheduleDate));
+                        exceptionScheduleControl.Schedule = await taskPool.AddTask(channel.Service.AddServiceExceptionSchedule(service.Id, scheduleDate));
                     }
                     else
                     {
@@ -519,7 +515,7 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    exceptionScheduleControl.Schedule = await taskPool.AddTask(channel.Service.GetServiceExceptionSchedule(Service.Id, scheduleDate));
+                    exceptionScheduleControl.Schedule = await taskPool.AddTask(channel.Service.GetServiceExceptionSchedule(service.Id, scheduleDate));
 
                     exceptionScheduleCheckBox.Checked = true;
                 }

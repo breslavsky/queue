@@ -122,22 +122,34 @@ namespace Queue.Administrator
 
             using (var f = new EditServiceGroupForm(channelBuilder, currentUser, parentGroupId))
             {
-                if (f.ShowDialog() == DialogResult.OK)
-                {
-                    ServiceGroup serviceGroup = f.ServiceGroup;
-                    var treeNode = new TreeNode(serviceGroup.ToString());
-                    treeNode.Tag = serviceGroup;
+                TreeNode treeNode = null;
 
-                    if (selectedNode != null)
+                f.Saved += (s, eventArgs) =>
+                {
+                    if (treeNode == null)
                     {
-                        selectedNode.Nodes.Add(treeNode);
-                        selectedNode.Expand();
+                        treeNode = new TreeNode();
+                        treeNode.Tag = f.ServiceGroup;
+
+                        if (selectedNode != null)
+                        {
+                            selectedNode.Nodes.Add(treeNode);
+                            selectedNode.Expand();
+                        }
+                        else
+                        {
+                            servicesTreeView.Nodes.Add(treeNode);
+                        }
+
+                        servicesTreeView.SelectedNode = treeNode;
                     }
-                    else
-                    {
-                        servicesTreeView.Nodes.Add(treeNode);
-                    }
-                }
+
+                    treeNode.Text = f.ServiceGroup.ToString();
+                };
+
+                f.ShowDialog();
+
+                ServiceGroup serviceGroup = f.ServiceGroup;
             }
         }
 
@@ -153,23 +165,32 @@ namespace Queue.Administrator
 
             using (var f = new EditServiceForm(channelBuilder, currentUser, serviceGroupId))
             {
-                if (f.ShowDialog() == DialogResult.OK)
+                TreeNode treeNode = null;
+
+                f.Saved += (s, eventArgs) =>
                 {
-                    Service service = f.Service;
-
-                    var treeNode = new TreeNode(service.ToString());
-                    treeNode.Tag = service;
-
-                    if (selectedNode != null)
+                    if (treeNode == null)
                     {
-                        selectedNode.Nodes.Add(treeNode);
-                        selectedNode.Expand();
+                        treeNode = new TreeNode();
+                        treeNode.Tag = f.Service;
+
+                        if (selectedNode != null)
+                        {
+                            selectedNode.Nodes.Add(treeNode);
+                            selectedNode.Expand();
+                        }
+                        else
+                        {
+                            servicesTreeView.Nodes.Add(treeNode);
+                        }
+
+                        servicesTreeView.SelectedNode = treeNode;
                     }
-                    else
-                    {
-                        servicesTreeView.Nodes.Add(treeNode);
-                    }
-                }
+
+                    treeNode.Text = f.Service.ToString();
+                };
+
+                f.ShowDialog();
             }
         }
 
@@ -180,29 +201,33 @@ namespace Queue.Administrator
             {
                 var serviceGroup = selectedNode.Tag as ServiceGroup;
 
-                using (var f = new EditServiceGroupForm(channelBuilder, currentUser, serviceGroup.Id))
+                using (var f = new EditServiceGroupForm(channelBuilder, currentUser, null, serviceGroup.Id))
                 {
-                    if (f.ShowDialog() == DialogResult.OK)
+                    f.Saved += (s, eventArgs) =>
                     {
                         selectedNode.Text = f.ServiceGroup.ToString();
-                    }
+                    };
+
+                    f.ShowDialog();
                 }
             }
         }
 
-        private void editServiceMenuItem_Click(object sender, EventArgs eventArgs)
+        private void editServiceMenuItem_Click(object sender, EventArgs e)
         {
             var selectedNode = servicesTreeView.SelectedNode;
             if (selectedNode != null)
             {
                 var service = selectedNode.Tag as Service;
 
-                using (var f = new EditServiceForm(channelBuilder, currentUser, service.Id))
+                using (var f = new EditServiceForm(channelBuilder, currentUser, null, service.Id))
                 {
-                    if (f.ShowDialog() == DialogResult.OK)
+                    f.Saved += (s, eventArgs) =>
                     {
                         selectedNode.Text = f.Service.ToString();
-                    }
+                    };
+
+                    f.ShowDialog();
                 }
             }
         }

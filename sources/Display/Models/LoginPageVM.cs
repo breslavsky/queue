@@ -30,7 +30,7 @@ namespace Queue.Display.Models
         private bool isRemember;
         private RichPage owner;
         private LoginSettings settings;
-        private List<KeyValuePair<Guid, string>> workplaces;
+        private IdentifiedEntity[] workplaces;
         private Guid selectedWorkplace;
 
         private Lazy<ICommand> connectCommand;
@@ -54,7 +54,7 @@ namespace Queue.Display.Models
             set { SetProperty(ref isConnected, value); }
         }
 
-        public List<KeyValuePair<Guid, string>> Workplaces
+        public IdentifiedEntity[] Workplaces
         {
             get { return workplaces; }
             set { SetProperty(ref workplaces, value); }
@@ -154,18 +154,10 @@ namespace Queue.Display.Models
 
                 try
                 {
-                    Workplaces = (await taskPool.AddTask(channel.Service.GetWorkplacesList()))
-                                                                                .Select(w => w)
-                                                                                .ToList();
+                    Workplaces = await taskPool.AddTask(channel.Service.GetWorkplacesList());
 
-                    if (settings != null && settings.WorkplaceId != Guid.Empty)
-                    {
-                        SelectedWorkplace = settings.WorkplaceId;
-                    }
-                    else
-                    {
-                        SelectedWorkplace = Workplaces.First().Key;
-                    }
+                    SelectedWorkplace = settings != null && settings.WorkplaceId != Guid.Empty
+                        ? settings.WorkplaceId : Workplaces.First().Id;
 
                     IsConnected = true;
                 }

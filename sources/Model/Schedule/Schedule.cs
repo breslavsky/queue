@@ -10,6 +10,7 @@ namespace Queue.Model
     [Cache(Usage = CacheUsage.ReadWrite)]
     public abstract class Schedule : IdentifiedEntity
     {
+        //TODO: delete!
         public Schedule()
         {
             StartTime = new TimeSpan(10, 0, 0);

@@ -101,7 +101,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Users);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -117,31 +117,11 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.Operator[]> GetOperators()
-        {
-            return await Task.Run(() =>
-            {
-                checkPermission(UserRole.Manager | UserRole.Administrator);
-
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    var users = session.CreateCriteria<Operator>()
-                        .AddOrder(Order.Asc("Surname"))
-                        .AddOrder(Order.Asc("Name"))
-                        .AddOrder(Order.Asc("Patronymic"))
-                        .List<Operator>();
-
-                    return Mapper.Map<IList<Operator>, DTO.Operator[]>(users);
-                }
-            });
-        }
-
         public async Task<DTO.User> GetUser(Guid userId)
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Manager | UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Users);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -150,11 +130,6 @@ namespace Queue.Services.Server
                     if (user == null)
                     {
                         throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(userId), string.Format("Пользователь [{0}] не найден", userId));
-                    }
-
-                    if (user is Administrator || user is Manager)
-                    {
-                        checkPermission(UserRole.Administrator);
                     }
 
                     return Mapper.Map<User, DTO.User>(user);
@@ -174,10 +149,6 @@ namespace Queue.Services.Server
                     {
                         case UserRole.Administrator:
                             userType = typeof(Administrator);
-                            break;
-
-                        case UserRole.Manager:
-                            userType = typeof(Manager);
                             break;
 
                         case UserRole.Operator:
@@ -208,7 +179,8 @@ namespace Queue.Services.Server
                     var user = session.Get<User>(userId);
                     if (user == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(userId), string.Format("Пользователь [{0}] не найден", userId));
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(userId),
+                            string.Format("Пользователь [{0}] не найден", userId));
                     }
 
                     if (!user.CheckPassword(password))
@@ -258,23 +230,28 @@ namespace Queue.Services.Server
         {
             await Task.Run(() =>
             {
+                checkPermission(UserRole.All);
+
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
                     User user = session.Get<User>(userId);
                     if (user == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(userId), string.Format("Пользователь [{0}] не найден", userId));
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(userId),
+                            string.Format("Пользователь [{0}] не найден", userId));
                     }
 
                     if (user is Administrator)
                     {
-                        checkPermission(UserRole.Administrator);
+                        checkPermission(UserRole.Administrator, AdministratorPermissions.Users);
                     }
-
-                    if (user is Manager || user is Operator)
+                    else
                     {
-                        checkPermission(UserRole.Administrator | UserRole.Manager);
+                        if (!user.Equals(currentUser))
+                        {
+                            throw new FaultException("Пароль возможно изменить только самому себе");
+                        }
                     }
 
                     try
@@ -292,95 +269,130 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.User> AddUser(UserRole role)
+        public async Task<DTO.Administrator> EditAdministrator(DTO.Administrator source)
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Users);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    User user;
+                    Administrator administrator;
 
-                    switch (role)
+                    if (!source.Empty())
                     {
-                        case UserRole.Administrator:
-                            user = new Administrator();
-                            break;
-
-                        case UserRole.Manager:
-                            user = new Manager();
-                            break;
-
-                        case UserRole.Operator:
-                            var workplace = session.CreateCriteria<Workplace>()
-                                .AddOrder(Order.Asc("Number"))
-                                .SetMaxResults(1)
-                                .UniqueResult<Workplace>();
-                            if (workplace == null)
-                            {
-                                throw new FaultException("Добавьте хотя бы одно рабочее место в справочник");
-                            }
-
-                            user = new Operator()
-                            {
-                                Workplace = workplace
-                            };
-                            break;
-
-                        default:
-                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(role), "Указанная роль пользователя не найдена");
+                        var administratorId = source.Id;
+                        administrator = session.Get<Administrator>(administratorId);
+                        if (administrator == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(administratorId),
+                                string.Format("Администратор [{0}] не найден", administratorId));
+                        }
+                    }
+                    else
+                    {
+                        administrator = new Administrator();
                     }
 
-                    session.Save(user);
-                    transaction.Commit();
+                    administrator.Surname = source.Surname;
+                    administrator.Name = source.Name;
+                    administrator.Patronymic = source.Patronymic;
+                    administrator.Email = source.Email;
+                    administrator.Mobile = source.Mobile;
+                    administrator.Permissions = source.Permissions;
 
-                    return Mapper.Map<User, DTO.User>(user);
-                }
-            });
-        }
-
-        public async Task<DTO.User> EditUser(DTO.User source)
-        {
-            return await Task.Run(() =>
-            {
-                checkPermission(UserRole.Administrator);
-
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
-                {
-                    var userId = source.Id;
-
-                    var user = session.Get<User>(userId);
-                    if (user == null)
-                    {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(userId), string.Format("Пользователь [{0}] не найден", userId));
-                    }
-
-                    user.Surname = source.Surname;
-                    user.Name = source.Name;
-                    user.Patronymic = source.Patronymic;
-                    user.Email = source.Email;
-                    user.Mobile = source.Mobile;
-
-                    var errors = user.Validate();
+                    var errors = administrator.Validate();
                     if (errors.Length > 0)
                     {
                         throw new FaultException(errors.First().Message);
                     }
 
-                    session.Save(user);
+                    session.Save(administrator);
 
                     var todayQueuePlan = queueInstance.TodayQueuePlan;
                     using (var locker = todayQueuePlan.WriteLock())
                     {
                         transaction.Commit();
 
-                        todayQueuePlan.Put(user);
+                        todayQueuePlan.Put(administrator);
                     }
 
-                    return Mapper.Map<User, DTO.User>(user);
+                    return Mapper.Map<Administrator, DTO.Administrator>(administrator);
+                }
+            });
+        }
+
+        public async Task<DTO.Operator> EditOperator(DTO.Operator source)
+        {
+            return await Task.Run(() =>
+            {
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Users);
+
+                using (var session = sessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    Operator queueOperator;
+
+                    if (!source.Empty())
+                    {
+                        var operatorId = source.Id;
+                        queueOperator = session.Get<Operator>(operatorId);
+                        if (queueOperator == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(operatorId),
+                                string.Format("Оператор [{0}] не найден", operatorId));
+                        }
+                    }
+                    else
+                    {
+                        queueOperator = new Operator();
+                    }
+
+                    queueOperator.Surname = source.Surname;
+                    queueOperator.Name = source.Name;
+                    queueOperator.Patronymic = source.Patronymic;
+                    queueOperator.Email = source.Email;
+                    queueOperator.Mobile = source.Mobile;
+                    queueOperator.IsInterruption = source.IsInterruption;
+                    queueOperator.InterruptionStartTime = source.InterruptionStartTime;
+                    queueOperator.InterruptionFinishTime = source.InterruptionFinishTime;
+
+                    if (source.Workplace != null)
+                    {
+                        Guid workplaceId = source.Workplace.Id;
+
+                        Workplace workplace = session.Get<Workplace>(workplaceId);
+                        if (workplace == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(workplaceId),
+                                string.Format("Рабочее место [{0}] не найдено", workplaceId));
+                        }
+
+                        queueOperator.Workplace = workplace;
+                    }
+                    else
+                    {
+                        queueOperator.Workplace = null;
+                    }
+
+                    var errors = queueOperator.Validate();
+                    if (errors.Length > 0)
+                    {
+                        throw new FaultException(errors.First().Message);
+                    }
+
+                    session.Save(queueOperator);
+
+                    var todayQueuePlan = queueInstance.TodayQueuePlan;
+                    using (var locker = todayQueuePlan.WriteLock())
+                    {
+                        transaction.Commit();
+
+                        todayQueuePlan.Put(queueOperator);
+                    }
+
+                    return Mapper.Map<Operator, DTO.Operator>(queueOperator);
                 }
             });
         }
@@ -389,7 +401,7 @@ namespace Queue.Services.Server
         {
             await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Users);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())

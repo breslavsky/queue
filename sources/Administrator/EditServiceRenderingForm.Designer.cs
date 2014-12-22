@@ -114,6 +114,7 @@ namespace Queue.Administrator
             this.modeСontrol.Name = "modeСontrol";
             this.modeСontrol.Size = new System.Drawing.Size(205, 21);
             this.modeСontrol.TabIndex = 20;
+            this.modeСontrol.Leave += new System.EventHandler(this.modeСontrol_Leave);
             // 
             // EditServiceRenderingForm
             // 

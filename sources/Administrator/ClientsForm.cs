@@ -70,10 +70,12 @@ namespace Queue.Administrator
 
                 using (var f = new EditClientForm(channelBuilder, currentUser, client.Id))
                 {
-                    if (f.ShowDialog() == DialogResult.OK)
+                    f.Saved += (s, eventArgs) =>
                     {
                         ClientsGridViewRenderRow(row, f.Client);
-                    }
+                    };
+
+                    f.ShowDialog();
                 }
             }
         }
@@ -149,6 +151,55 @@ namespace Queue.Administrator
         {
             startIndex = 0;
             RefreshClientsGridView();
+        }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            using (var f = new EditClientForm(channelBuilder, currentUser))
+            {
+                DataGridViewRow row = null;
+
+                f.Saved += (s, eventArgs) =>
+                {
+                    if (row == null)
+                    {
+                        row = clientsGridView.Rows[clientsGridView.Rows.Add()];
+                        row.Selected = true;
+                    }
+                    ClientsGridViewRenderRow(row, f.Client);
+                };
+
+                f.ShowDialog();
+            }
+        }
+
+        private async void clientsGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно хотите удалить клиента?",
+                "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Client client = e.Row.Tag as Client;
+
+                using (var channel = channelManager.CreateChannel())
+                {
+                    try
+                    {
+                        await taskPool.AddTask(channel.Service.DeleteClient(client.Id));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                }
+            }
         }
     }
 }

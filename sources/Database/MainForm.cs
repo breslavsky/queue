@@ -1,6 +1,7 @@
 ﻿using Junte.Data.NHibernate;
 using Junte.UI.WinForms;
 using Junte.UI.WinForms.NHibernate;
+using Junte.UI.WinForms.NHibernate.Configuration;
 using log4net;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
@@ -38,63 +39,8 @@ namespace Queue.Database
 
             container = new UnityContainer();
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
-        }
 
-        private void log(string message)
-        {
-            logTextBox.AppendText(string.Format("{0:T} {1}", DateTime.Now, message));
-            logTextBox.AppendText(Environment.NewLine);
-        }
-
-        private void connectButton_Click(object sender, EventArgs eventArgs)
-        {
-            using (var loginForm = new LoginForm(settings.Database ?? new DatabaseSettingsProfiles()))
-            {
-                if (loginForm.ShowDialog() == DialogResult.OK)
-                {
-                    sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, loginForm.Settings);
-                    container.RegisterInstance<ISessionProvider>(sessionProvider);
-
-                    settings.Database = loginForm.Settings;
-                    settings.Save();
-
-                    schemaMenu.Enabled = dataMenu.Enabled = true;
-                    connectButton.Enabled = false;
-
-                    var model = Assembly.Load("Queue.Model");
-                    log(string.Format("Версия модели данных: {0}", model.GetName().Version));
-                }
-            }
-        }
-
-        private void schemaValidateMenu_Click(object sender, EventArgs e)
-        {
-            log("Проверка структуры базы данных");
-
-            try
-            {
-                sessionProvider.SchemaValidate();
-                log("Структура базы данных верна");
-            }
-            catch (Exception exception)
-            {
-                log(exception.Message);
-            }
-        }
-
-        private void schemaUpdateMenuItem_Click(object sender, EventArgs e)
-        {
-            log("Обновление структуры базы данных");
-
-            try
-            {
-                sessionProvider.SchemaUpdate();
-                log("Структура базы данных обновлена");
-            }
-            catch (Exception exception)
-            {
-                log(exception.Message);
-            }
+            settings.Profiles = settings.Profiles ?? new DatabaseSettingsProfiles();
         }
 
         private void checkPatchesMenuItem_Click(object sender, EventArgs e)
@@ -105,74 +51,120 @@ namespace Queue.Database
                 var schemeConfig = session.Get<SchemeConfig>(ConfigType.Scheme);
                 if (schemeConfig != null)
                 {
-                    log(string.Format("Текущий патч базы данных = {0}", schemeConfig.Version));
+                    Log(string.Format("Текущий патч базы данных = {0}", schemeConfig.Version));
 
                     int maxPatch = Scheme.Patches.Max(x => x.Key);
-                    log(string.Format("Доступный патч обновления = {0}", maxPatch));
+                    Log(string.Format("Доступный патч обновления = {0}", maxPatch));
                 }
                 else
                 {
-                    log("Конфигурация модели данных не найдена в базе данных");
+                    Log("Конфигурация модели данных не найдена в базе данных");
                 }
             }
         }
 
-        private void installPatchesMenuItem_Click(object sender, EventArgs e)
+        private void connectButton_Click(object sender, EventArgs eventArgs)
         {
+            using (var f = new LoginForm(settings.Profiles, DatabaseConnect))
+            {
+                f.ShowDialog();
+            }
+        }
+
+        private void damaskImportMenuItem_Click(object sender, EventArgs e)
+        {
+            new DamaskForm().ShowDialog();
+        }
+
+        private bool DatabaseConnect(DatabaseSettings s)
+        {
+            sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, s);
+            container.RegisterInstance<ISessionProvider>(sessionProvider);
+
+            settings.Save();
+
+            schemaMenu.Enabled = dataMenu.Enabled = true;
+            connectButton.Enabled = false;
+
+            var model = Assembly.Load("Queue.Model");
+            Log(string.Format("Версия модели данных: {0}", model.GetName().Version));
+
+            return true;
+        }
+
+        private void demoDataMenuItem_Click(object sender, EventArgs e)
+        {
+            Log("Загрузка демонстрационных данных");
+
             using (var session = sessionProvider.OpenSession())
             using (var transaction = session.BeginTransaction())
             {
-                var schemeConfig = session.Get<SchemeConfig>(ConfigType.Scheme);
-                if (schemeConfig != null)
+                Log("Загрузка рабочих мест");
+
+                int count = session.CreateCriteria<Workplace>()
+                    .SetProjection(Projections.Count(Projections.Id()))
+                    .UniqueResult<int>();
+                if (count == 0)
                 {
-                    log(string.Format("Текущий патч базы данных = {0}", schemeConfig.Version));
+                    var workplace1 = new Workplace();
+                    workplace1.Type = WorkplaceType.Window;
+                    workplace1.Number = 1;
+                    session.Save(workplace1);
 
-                    int maxPatch = Scheme.Patches.Max(x => x.Key);
-                    log(string.Format("Доступный патч обновления = {0}", maxPatch));
+                    var workplace2 = new Workplace();
+                    workplace2.Type = WorkplaceType.Window;
+                    workplace2.Number = 2;
+                    session.Save(workplace2);
 
-                    for (int currentPatch = schemeConfig.Version + 1;
-                        currentPatch <= maxPatch; currentPatch++)
+                    var workplace3 = new Workplace();
+                    workplace3.Type = WorkplaceType.Window;
+                    workplace3.Number = 3;
+                    session.Save(workplace3);
+                }
+
+                Log("Загрузка операторов");
+
+                count = session.CreateCriteria<Operator>()
+                    .SetProjection(Projections.Count(Projections.Id()))
+                    .UniqueResult<int>();
+                if (count == 0)
+                {
+                    var queueOperator1 = new Operator()
                     {
-                        if (Scheme.Patches.ContainsKey(currentPatch))
-                        {
-                            string sql = Scheme.Patches[currentPatch];
+                        Name = "Денис",
+                        Surname = "Сидоров"
+                    };
+                    session.Save(queueOperator1);
 
-                            log(string.Format("Приминение патча [{0}]", sql));
+                    var queueOperator2 = new Operator()
+                    {
+                        Name = "Андрей",
+                        Surname = "Шитиков"
+                    };
+                    session.Save(queueOperator2);
 
-                            try
-                            {
-                                session.CreateSQLQuery(sql).ExecuteUpdate();
-                            }
-                            catch (Exception exception)
-                            {
-                                log(exception.Message);
-                                return;
-                            }
-                        }
-                    }
-
-                    schemeConfig.Version = maxPatch;
-                    session.Save(schemeConfig);
-
-                    transaction.Commit();
-
-                    log("Обновление завершено");
+                    var queueOperator3 = new Operator()
+                    {
+                        Name = "Ирина",
+                        Surname = "Меньшова"
+                    };
+                    session.Save(queueOperator3);
                 }
-                else
-                {
-                    log("Конфигурация модели данных не найдена в базе данных");
-                }
+
+                transaction.Commit();
             }
+
+            Log("Загрузка демонстрационных данных завершена");
         }
 
         private void initDataMenuItem_Click(object sender, EventArgs e)
         {
-            log("Инициализация данных");
+            Log("Инициализация данных");
 
             using (var session = sessionProvider.OpenSession())
             using (var transaction = session.BeginTransaction())
             {
-                log("Инициализация конфигурации");
+                Log("Инициализация конфигурации");
 
                 int maxPatch = Scheme.Patches.Max(x => x.Key);
 
@@ -256,7 +248,6 @@ namespace Queue.Database
 
                     var mediaConfigFile = new MediaConfigFile()
                     {
-                        MediaConfig = mediaConfig,
                         Name = "Демонстрационый файл (файл не загружен)"
                     };
                     session.Save(mediaConfigFile);
@@ -285,7 +276,7 @@ namespace Queue.Database
                     session.Save(notificationConfig);
                 }
 
-                log("Инициализация администратора");
+                Log("Инициализация администратора");
 
                 int count = session.CreateCriteria<Administrator>()
                     .SetProjection(Projections.Count(Projections.Id()))
@@ -299,7 +290,7 @@ namespace Queue.Database
                     session.Save(administrator);
                 }
 
-                log("Инициализация расписания по уполчанию");
+                Log("Инициализация расписания по уполчанию");
 
                 #region monday
 
@@ -312,7 +303,7 @@ namespace Queue.Database
                     schedule1.DayOfWeek = DayOfWeek.Monday;
                     session.Save(schedule1);
 
-                    log("Создано расписание на понедельник");
+                    Log("Создано расписание на понедельник");
                 }
 
                 #endregion monday
@@ -404,77 +395,61 @@ namespace Queue.Database
                 transaction.Commit();
             }
 
-            log("Данные инициализорованы");
+            Log("Данные инициализорованы");
         }
 
-        private void demoDataMenuItem_Click(object sender, EventArgs e)
+        private void installPatchesMenuItem_Click(object sender, EventArgs e)
         {
-            log("Загрузка демонстрационных данных");
-
             using (var session = sessionProvider.OpenSession())
             using (var transaction = session.BeginTransaction())
             {
-                log("Загрузка рабочих мест");
-
-                int count = session.CreateCriteria<Workplace>()
-                    .SetProjection(Projections.Count(Projections.Id()))
-                    .UniqueResult<int>();
-                if (count == 0)
+                var schemeConfig = session.Get<SchemeConfig>(ConfigType.Scheme);
+                if (schemeConfig != null)
                 {
-                    var workplace1 = new Workplace();
-                    workplace1.Type = WorkplaceType.Window;
-                    workplace1.Number = 1;
-                    session.Save(workplace1);
+                    Log(string.Format("Текущий патч базы данных = {0}", schemeConfig.Version));
 
-                    var workplace2 = new Workplace();
-                    workplace2.Type = WorkplaceType.Window;
-                    workplace2.Number = 2;
-                    session.Save(workplace2);
+                    int maxPatch = Scheme.Patches.Max(x => x.Key);
+                    Log(string.Format("Доступный патч обновления = {0}", maxPatch));
 
-                    var workplace3 = new Workplace();
-                    workplace3.Type = WorkplaceType.Window;
-                    workplace3.Number = 3;
-                    session.Save(workplace3);
+                    for (int currentPatch = schemeConfig.Version + 1;
+                        currentPatch <= maxPatch; currentPatch++)
+                    {
+                        if (Scheme.Patches.ContainsKey(currentPatch))
+                        {
+                            string sql = Scheme.Patches[currentPatch];
+
+                            Log(string.Format("Приминение патча [{0}]", sql));
+
+                            try
+                            {
+                                session.CreateSQLQuery(sql).ExecuteUpdate();
+                            }
+                            catch (Exception exception)
+                            {
+                                Log(exception.Message);
+                                return;
+                            }
+                        }
+                    }
+
+                    schemeConfig.Version = maxPatch;
+                    session.Save(schemeConfig);
+
+                    transaction.Commit();
+
+                    Log("Обновление завершено");
                 }
-
-                log("Загрузка операторов");
-
-                count = session.CreateCriteria<Operator>()
-                    .SetProjection(Projections.Count(Projections.Id()))
-                    .UniqueResult<int>();
-                if (count == 0)
+                else
                 {
-                    var queueOperator1 = new Operator()
-                    {
-                        Name = "Денис",
-                        Surname = "Сидоров"
-                    };
-                    session.Save(queueOperator1);
-
-                    var queueOperator2 = new Operator()
-                    {
-                        Name = "Андрей",
-                        Surname = "Шитиков"
-                    };
-                    session.Save(queueOperator2);
-
-                    var queueOperator3 = new Operator()
-                    {
-                        Name = "Ирина",
-                        Surname = "Меньшова"
-                    };
-                    session.Save(queueOperator3);
+                    Log("Конфигурация модели данных не найдена в базе данных");
                 }
-
-                transaction.Commit();
             }
-
-            log("Загрузка демонстрационных данных завершена");
         }
 
-        private void damaskImportMenuItem_Click(object sender, EventArgs e)
+        private void Log(string message)
         {
-            new DamaskForm().ShowDialog();
+            logTextBox.AppendText(string.Format("{0:T} {1}", DateTime.Now, message));
+            logTextBox.AppendText(Environment.NewLine);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -482,6 +457,36 @@ namespace Queue.Database
             if (sessionProvider != null)
             {
                 sessionProvider.Dispose();
+            }
+        }
+
+        private void schemaUpdateMenuItem_Click(object sender, EventArgs e)
+        {
+            Log("Обновление структуры базы данных");
+
+            try
+            {
+                sessionProvider.SchemaUpdate();
+                Log("Структура базы данных обновлена");
+            }
+            catch (Exception exception)
+            {
+                Log(exception.Message);
+            }
+        }
+
+        private void schemaValidateMenu_Click(object sender, EventArgs e)
+        {
+            Log("Проверка структуры базы данных");
+
+            try
+            {
+                sessionProvider.SchemaValidate();
+                Log("Структура базы данных верна");
+            }
+            catch (Exception exception)
+            {
+                Log(exception.Message);
             }
         }
     }

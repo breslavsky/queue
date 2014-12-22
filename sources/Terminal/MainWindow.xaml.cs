@@ -60,7 +60,7 @@ namespace Queue.Terminal
         {
             Properties.Settings settings = Properties.Settings.Default;
 
-            LoginPage result = new LoginPage(UserRole.Manager);
+            LoginPage result = new LoginPage(UserRole.Administrator);
             result.Model.ApplyUserSettings(new UserLoginSettings()
             {
                 Endpoint = settings.Endpoint,
@@ -137,7 +137,7 @@ namespace Queue.Terminal
             container.RegisterInstance<ChannelManager<IServerTcpService>>(channelManager);
             container.RegisterInstance<ClientRequestModel>(new ClientRequestModel()
             {
-                CurrentManager = (Manager)loginPage.Model.User,
+                CurrentAdministrator = (Administrator)loginPage.Model.User,
                 QueueType = ClientRequestType.Live
             });
 

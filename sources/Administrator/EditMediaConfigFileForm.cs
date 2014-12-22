@@ -22,12 +22,14 @@ namespace Queue.Administrator
 {
     public partial class EditMediaConfigFileForm : Queue.UI.WinForms.RichForm
     {
+        public event EventHandler<EventArgs> Saved;
+
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;
         private User currentUser;
         private MediaConfig mediaConfig;
-        private MediaConfigFile mediaConfigFile;
         private Guid mediaConfigFileId;
+        private MediaConfigFile mediaConfigFile;
         private TaskPool taskPool;
 
         #region properties
@@ -89,7 +91,7 @@ namespace Queue.Administrator
 
                     if (mediaConfigFileId != Guid.Empty)
                     {
-                        MediaConfigFile = await taskPool.AddTask(channel.Service.EditMediaConfigFile(mediaConfigFile));
+                        MediaConfigFile = await taskPool.AddTask(channel.Service.GetMediaConfigFile(mediaConfigFileId));
                     }
                     else
                     {
@@ -124,9 +126,12 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.EditMediaConfigFile(mediaConfigFile));
+                    MediaConfigFile = await taskPool.AddTask(channel.Service.EditMediaConfigFile(mediaConfigFile));
 
-                    DialogResult = DialogResult.OK;
+                    if (Saved != null)
+                    {
+                        Saved(this, EventArgs.Empty);
+                    }
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

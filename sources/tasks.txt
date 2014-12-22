@@ -1,78 +1,22 @@
 1. ѕроверить и прорефакторить Combobox
-1. ѕеределать часть форм: пользователь
 ”даление в гридах
 4. ѕортал, медиа службы вынести как сервер
-5. XP больше не поддерживаетс€
 6. labels во весь без autosize
-7. параметры услуги
 
+закрыть конструкторы
 решить что-то с версией объектов
-
-проверить сообщени€ валидации
 сохранение настроек через configuration
 
-убрать закрытие запросов в Build
 смена времени и даты запроса в редактировании талона
-
-UserSettings
-
-OpenUserSession -> var channel = channelManager.CreateChannel(SessionId)
+liveRegistratorListBox.Items.AddRange(registrators1.ToArray());
 
 sealed
-
-DialogResult.OK
-
 счетчик времени одинаковый
-
 InfoFormat
-
 сброс!
+
 
 if (!clientRequest.Equals(source))
 {
 	throw new FaultException("“екущий запрос клиента не соответствует запросу клиента дл€ изминени€");
-}
-
-if (targetOperatorPlan.Operator.HasGone)
-{
-    using (var session = sessionProvider.OpenSession())
-    using (var transaction = session.BeginTransaction())
-    {
-        var clientRequest = session.Merge(conditionClientRequest);
-
-        string message;
-
-        switch (clientRequest.State)
-        {
-            case ClientRequestState.Calling:
-                clientRequest.Return();
-                message = "«апрос был возвращен в очередь из-за потери св€зи с оператором";
-                break;
-
-            case ClientRequestState.Rendering:
-                clientRequest.Rendered(schedule.ClientInterval);
-                message = "«апрос был принудительно закрыт из-за потери св€зи с оператором";
-                break;
-
-            default:
-                goto Continue;
-        }
-
-        var queueEvent = new ClientRequestEvent()
-        {
-            ClientRequest = clientRequest,
-            Message = message
-        };
-        session.Save(queueEvent);
-
-        session.Save(clientRequest);
-        transaction.Commit();
-
-        Put(clientRequest);
-
-        continue;
-    }
-
-//TODO: подумать
-Continue: ;
 }

@@ -98,20 +98,19 @@
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.Data.Common, Version=1.0.0.20, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.Data.Common.1.0.0.20\lib\net45\Junte.Data.Common.dll</HintPath>
+    <Reference Include="Junte.Data.Common">
+      <HintPath>..\packages\Junte.Data.Common.1.0.0.50\lib\net45\Junte.Data.Common.dll</HintPath>
     </Reference>
     <Reference Include="Junte.Data.NHibernate, Version=1.1.0.120, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.Data.NHibernate.1.1.0.120\lib\net45\Junte.Data.NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.UI.WinForms, Version=1.0.0.60, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.UI.WinForms.1.0.0.60\lib\net45\Junte.UI.WinForms.dll</HintPath>
+    <Reference Include="Junte.UI.WinForms">
+      <HintPath>..\packages\Junte.UI.WinForms.1.0.0.65\lib\net45\Junte.UI.WinForms.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.UI.WinForms.NHibernate">
-      <HintPath>..\packages\Junte.UI.WinForms.NHibernate.1.1.3.0\lib\net45\Junte.UI.WinForms.NHibernate.dll</HintPath>
+    <Reference Include="Junte.UI.WinForms.NHibernate, Version=1.1.5.85, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.UI.WinForms.NHibernate.1.1.5.85\lib\net45\Junte.UI.WinForms.NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -150,8 +149,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\winapicp.1.1\lib\Microsoft.WindowsAPICodePack.ShellExtensions.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate">
-      <HintPath>..\packages\NHibernate.4.0.1.4000\lib\net40\NHibernate.dll</HintPath>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NHibernate.4.0.2.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate.Mapping.Attributes, Version=3.2.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -203,6 +203,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Scheme.cs" />
     <Compile Include="SchemePatches.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -237,11 +242,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
@@ -291,6 +291,8 @@
     <Content Include="SchemePatches\001.sql" />
     <Content Include="SchemePatches\002.sql" />
     <Content Include="SchemePatches\003.sql" />
+    <Content Include="SchemePatches\004.sql" />
+    <Content Include="SchemePatches\005.sql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

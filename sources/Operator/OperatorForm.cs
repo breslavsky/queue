@@ -33,7 +33,7 @@ namespace Queue.Operator
         private readonly ServerCallback callbackObject;
         private readonly DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private readonly ChannelManager<IServerTcpService> channelManager;
-        private readonly User currentUser;
+        private readonly QueueOperator currentUser;
         private readonly Timer pingTimer;
         private readonly TaskPool taskPool;
         private ClientRequestPlan currentClientRequestPlan;
@@ -45,7 +45,7 @@ namespace Queue.Operator
             InitializeComponent();
 
             this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            this.currentUser = currentUser as QueueOperator;
 
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();

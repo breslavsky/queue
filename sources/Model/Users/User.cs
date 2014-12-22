@@ -12,16 +12,13 @@ namespace Queue.Model
     [Cache(Usage = CacheUsage.ReadWrite)]
     public class User : IdentifiedEntity
     {
-        private const int GoneTimeout = 60;
+        public const int GoneTimeout = 60;
 
         private const int HeartbitTimeout = 20;
 
         public User()
         {
             CreateDate = DateTime.Now;
-            SessionId = Guid.NewGuid();
-            Heartbeat = DateTime.Now;
-            Surname = "Новый пользователь";
         }
 
         #region properties
@@ -39,7 +36,7 @@ namespace Queue.Model
         public virtual UserRole Role { get; set; }
 
         [Property]
-        [NotNullNotEmpty(Message = "Не указано поле (фамилия)")]
+        [NotNullNotEmpty(Message = "Фамилия пользователя не указана")]
         public virtual string Surname { get; set; }
 
         [Property]
@@ -59,12 +56,12 @@ namespace Queue.Model
 
         public virtual bool Online
         {
-            get { return DateTime.Now - Heartbeat < TimeSpan.FromSeconds(HeartbitTimeout); }
+            get { return Heartbeat > DateTime.Now - TimeSpan.FromSeconds(HeartbitTimeout); }
         }
 
         public virtual bool HasGone
         {
-            get { return DateTime.Now - Heartbeat > TimeSpan.FromSeconds(GoneTimeout); }
+            get { return Heartbeat < DateTime.Now - TimeSpan.FromSeconds(GoneTimeout); }
         }
 
         #endregion properties

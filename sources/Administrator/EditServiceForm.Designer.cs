@@ -74,7 +74,6 @@
             this.fridayTabPage = new System.Windows.Forms.TabPage();
             this.saturdayTabPage = new System.Windows.Forms.TabPage();
             this.sundayTabPage = new System.Windows.Forms.TabPage();
-            this.saveAndCloseButton = new System.Windows.Forms.Button();
             this.parametersTabPage.SuspendLayout();
             this.exceptionScheduleTabPage.SuspendLayout();
             this.commonTabPage.SuspendLayout();
@@ -158,7 +157,6 @@
             // 
             // commonTabPage
             // 
-            this.commonTabPage.Controls.Add(this.saveAndCloseButton);
             this.commonTabPage.Controls.Add(this.servicePropertiesTabControl);
             this.commonTabPage.Controls.Add(this.saveButton);
             this.commonTabPage.Location = new System.Drawing.Point(4, 26);
@@ -558,7 +556,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(605, 420);
+            this.saveButton.Location = new System.Drawing.Point(745, 420);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(85, 25);
             this.saveButton.TabIndex = 0;
@@ -737,15 +735,6 @@
             this.sundayTabPage.Text = "Воскресенье";
             this.sundayTabPage.UseVisualStyleBackColor = true;
             // 
-            // saveAndCloseButton
-            // 
-            this.saveAndCloseButton.Location = new System.Drawing.Point(695, 420);
-            this.saveAndCloseButton.Name = "saveAndCloseButton";
-            this.saveAndCloseButton.Size = new System.Drawing.Size(134, 25);
-            this.saveAndCloseButton.TabIndex = 15;
-            this.saveAndCloseButton.Text = "Записать и закрыть";
-            this.saveAndCloseButton.Click += new System.EventHandler(this.saveAndCloseButton_Click);
-            // 
             // EditServiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -847,7 +836,6 @@
         private System.Windows.Forms.CheckBox isPlanSubjectsCheckBox;
         private System.Windows.Forms.TextBox linkTextBox;
         private System.Windows.Forms.Label linkLabel;
-        private System.Windows.Forms.Button saveAndCloseButton;
 
     }
 }

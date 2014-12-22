@@ -58,6 +58,8 @@ namespace Queue.Services.Server
         protected override void Configure()
         {
             Mapper.CreateMap<Workplace, DTO.Workplace>();
+            Mapper.CreateMap<Workplace, DTO.IdentifiedEntity>()
+                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
 
             //ConfigurationIsValid
             Mapper.AssertConfigurationIsValid();
@@ -83,7 +85,6 @@ namespace Queue.Services.Server
 
             Mapper.CreateMap<User, DTO.User>()
                 .Include<Administrator, DTO.Administrator>()
-                .Include<Manager, DTO.Manager>()
                 .Include<Operator, DTO.Operator>();
 
             Mapper.CreateMap<User, DTO.IdentifiedEntity>()
@@ -91,10 +92,6 @@ namespace Queue.Services.Server
 
             Mapper.CreateMap<Administrator, DTO.Administrator>();
             Mapper.CreateMap<Administrator, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
-            Mapper.CreateMap<Manager, DTO.Manager>();
-            Mapper.CreateMap<Manager, DTO.IdentifiedEntity>()
                 .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
 
             Mapper.CreateMap<Operator, DTO.Operator>();

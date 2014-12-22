@@ -38,19 +38,40 @@ namespace Queue.Administrator
         {
             set
             {
-                config = value;
-                if (config != null)
+                Invoke(new MethodInvoker(async () =>
                 {
-                    serviceUrlTextBox.Text = config.ServiceUrl;
-                    tickerTextBox.Text = config.Ticker;
-                    tickerSpeedTrackBar.Value = config.TickerSpeed;
-
-                    foreach (var f in config.MediaFiles)
+                    config = value;
+                    if (config != null)
                     {
-                        var row = mediaConfigFilesGridView.Rows[mediaConfigFilesGridView.Rows.Add()];
-                        MediaConfigFilesGridViewRow(row, f);
+                        serviceUrlTextBox.Text = config.ServiceUrl;
+                        tickerTextBox.Text = config.Ticker;
+                        tickerSpeedTrackBar.Value = config.TickerSpeed;
+
+                        using (var channel = channelManager.CreateChannel())
+                        {
+                            try
+                            {
+                                foreach (var f in await taskPool.AddTask(channel.Service.GetMediaConfigFiles()))
+                                {
+                                    var row = mediaConfigFilesGridView.Rows[mediaConfigFilesGridView.Rows.Add()];
+                                    MediaConfigFilesGridViewRow(row, f);
+                                }
+                            }
+                            catch (OperationCanceledException) { }
+                            catch (CommunicationObjectAbortedException) { }
+                            catch (ObjectDisposedException) { }
+                            catch (InvalidOperationException) { }
+                            catch (FaultException exception)
+                            {
+                                UIHelper.Warning(exception.Reason.ToString());
+                            }
+                            catch (Exception exception)
+                            {
+                                UIHelper.Warning(exception.Message);
+                            }
+                        }
                     }
-                }
+                }));
             }
         }
 
@@ -74,11 +95,18 @@ namespace Queue.Administrator
         {
             using (var f = new EditMediaConfigFileForm(channelBuilder, currentUser))
             {
-                if (f.ShowDialog() == DialogResult.OK)
+                DataGridViewRow row = null;
+
+                f.Saved += (s, eventArgs) =>
                 {
-                    var row = mediaConfigFilesGridView.Rows[mediaConfigFilesGridView.Rows.Add()];
+                    if (row == null)
+                    {
+                        row = mediaConfigFilesGridView.Rows[mediaConfigFilesGridView.Rows.Add()];
+                    }
                     MediaConfigFilesGridViewRow(row, f.MediaConfigFile);
-                }
+                };
+
+                f.ShowDialog();
             }
         }
 
@@ -94,10 +122,12 @@ namespace Queue.Administrator
 
                 using (var f = new EditMediaConfigFileForm(channelBuilder, currentUser, mediaConfigFile.Id))
                 {
-                    if (f.ShowDialog() == DialogResult.OK)
+                    f.Saved += (s, eventArgs) =>
                     {
                         MediaConfigFilesGridViewRow(row, f.MediaConfigFile);
-                    }
+                    };
+
+                    f.ShowDialog();
                 }
             }
         }
@@ -113,7 +143,7 @@ namespace Queue.Administrator
                 {
                     try
                     {
-                        await channel.Service.DeleteMediaConfigFile(mediaConfigFile.Id);
+                        await taskPool.AddTask(channel.Service.DeleteMediaConfigFile(mediaConfigFile.Id));
                     }
                     catch (OperationCanceledException) { }
                     catch (CommunicationObjectAbortedException) { }
@@ -149,7 +179,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.EditMediaConfig(config));
+                    config = await taskPool.AddTask(channel.Service.EditMediaConfig(config));
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -172,26 +202,17 @@ namespace Queue.Administrator
 
         private void serviceUrlTextBox_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.ServiceUrl = serviceUrlTextBox.Text;
-            }
+            config.ServiceUrl = serviceUrlTextBox.Text;
         }
 
         private void tickerSpeedTrackBar_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.TickerSpeed = tickerSpeedTrackBar.Value;
-            }
+            config.TickerSpeed = tickerSpeedTrackBar.Value;
         }
 
         private void tickerTextBox_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.Ticker = tickerTextBox.Text;
-            }
+            config.Ticker = tickerTextBox.Text;
         }
     }
 }

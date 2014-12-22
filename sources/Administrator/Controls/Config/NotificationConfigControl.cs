@@ -62,10 +62,7 @@ namespace Queue.Administrator
 
         private void clientRequestsLengthUpDown_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.ClientRequestsLength = (int)clientRequestsLengthUpDown.Value;
-            }
+            config.ClientRequestsLength = (int)clientRequestsLengthUpDown.Value;
         }
 
         private async void saveButton_Click(object sender, EventArgs e)
@@ -76,7 +73,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.EditNotificationConfig(config));
+                    config = await taskPool.AddTask(channel.Service.EditNotificationConfig(config));
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

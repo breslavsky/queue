@@ -12,11 +12,10 @@ namespace Queue.Model
     {
         public ServiceStep()
         {
-            Name = "Новый этап";
             SortId = DateTime.Now.Ticks;
         }
 
-        [Length(1, 255, Message = "Поле (наименование этапа) должно быть больше 1 и менее 255 символов")]
+        [NotNullNotEmpty(Message = "Наименование этапа не указано")]
         [Property]
         public virtual string Name { get; set; }
 

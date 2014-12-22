@@ -12,6 +12,8 @@ namespace Queue.Administrator
 {
     public partial class EditClientForm : Queue.UI.WinForms.RichForm
     {
+        public event EventHandler<EventArgs> Saved;
+
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;
         private Client client;
@@ -19,14 +21,15 @@ namespace Queue.Administrator
         private User currentUser;
         private TaskPool taskPool;
 
-        public EditClientForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid clientId)
+        public EditClientForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? clientId = null)
             : base()
         {
             InitializeComponent();
 
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
-            this.clientId = clientId;
+            this.clientId = clientId.HasValue
+                ? clientId.Value : Guid.Empty;
 
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
@@ -49,24 +52,34 @@ namespace Queue.Administrator
 
         private async void EditClientForm_Load(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            if (clientId != Guid.Empty)
             {
-                try
+                using (var channel = channelManager.CreateChannel())
                 {
-                    Client = await taskPool.AddTask(channel.Service.GetClient(clientId));
+                    try
+                    {
+                        Client = await taskPool.AddTask(channel.Service.GetClient(clientId));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
+            }
+            else
+            {
+                Client = new Client()
                 {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
+                    Surname = "Новый клиент"
+                };
             }
         }
 
@@ -76,20 +89,34 @@ namespace Queue.Administrator
             channelManager.Dispose();
         }
 
+        #region bindings
+
         private void emailTextBox_Leave(object sender, EventArgs e)
         {
-            Client.Email = emailTextBox.Text;
+            client.Email = emailTextBox.Text;
         }
 
         private void mobileTextBox_Leave(object sender, EventArgs e)
         {
-            Client.Mobile = mobileTextBox.Text;
+            client.Mobile = mobileTextBox.Text;
         }
 
         private void nameTextBox_Leave(object sender, EventArgs e)
         {
-            Client.Name = nameTextBox.Text;
+            client.Name = nameTextBox.Text;
         }
+
+        private void patronymicTextBox_Leave(object sender, EventArgs e)
+        {
+            client.Patronymic = patronymicTextBox.Text;
+        }
+
+        private void surnameTextBox_Leave(object sender, EventArgs e)
+        {
+            client.Surname = surnameTextBox.Text;
+        }
+
+        #endregion bindings
 
         private async void passwordButton_Click(object sender, EventArgs e)
         {
@@ -103,7 +130,7 @@ namespace Queue.Administrator
                         {
                             passwordButton.Enabled = false;
 
-                            await taskPool.AddTask(channel.Service.ChangeClientPassword(Client.Id, f.Password));
+                            await taskPool.AddTask(channel.Service.ChangeClientPassword(client.Id, f.Password));
                         }
                         catch (OperationCanceledException) { }
                         catch (CommunicationObjectAbortedException) { }
@@ -126,11 +153,6 @@ namespace Queue.Administrator
             }
         }
 
-        private void patronymicTextBox_Leave(object sender, EventArgs e)
-        {
-            Client.Patronymic = patronymicTextBox.Text;
-        }
-
         private async void saveButton_Click(object sender, EventArgs e)
         {
             using (var channel = channelManager.CreateChannel())
@@ -139,9 +161,12 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    Client = await taskPool.AddTask(channel.Service.EditClient(Client));
+                    Client = await taskPool.AddTask(channel.Service.EditClient(client));
 
-                    DialogResult = DialogResult.OK;
+                    if (Saved != null)
+                    {
+                        Saved(this, EventArgs.Empty);
+                    }
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -160,11 +185,6 @@ namespace Queue.Administrator
                     saveButton.Enabled = true;
                 }
             }
-        }
-
-        private void surnameTextBox_Leave(object sender, EventArgs e)
-        {
-            Client.Surname = surnameTextBox.Text;
         }
     }
 }

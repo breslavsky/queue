@@ -60,11 +60,19 @@ namespace Queue.Administrator
         {
             using (var f = new EditOfficeForm(channelBuilder, currentUser))
             {
-                if (f.ShowDialog() == DialogResult.OK)
+                DataGridViewRow row = null;
+
+                f.Saved += (s, eventArgs) =>
                 {
-                    var row = officesGridView.Rows[officesGridView.Rows.Add()];
+                    if (row == null)
+                    {
+                        row = officesGridView.Rows[officesGridView.Rows.Add()];
+                    }
+
                     OfficesGridViewRenderRow(row, f.Office);
-                }
+                };
+
+                f.ShowDialog();
             }
         }
 
@@ -205,10 +213,12 @@ namespace Queue.Administrator
 
                 using (var f = new EditOfficeForm(channelBuilder, currentUser, office.Id))
                 {
-                    if (f.ShowDialog() == DialogResult.OK)
+                    f.Saved += (s, eventArgs) =>
                     {
                         OfficesGridViewRenderRow(row, f.Office);
-                    }
+                    };
+
+                    f.ShowDialog();
                 }
             }
         }

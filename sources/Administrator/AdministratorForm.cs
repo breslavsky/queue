@@ -2,18 +2,21 @@
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
 using log4net;
+using Queue.Administrator;
 using Queue.Administrator.Reports;
 using Queue.Common;
-using Queue.Administrator;
+using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Timers;
 using System.Windows.Forms;
 using QIcons = Queue.UI.Common.Icons;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 using Timer = System.Timers.Timer;
 
 namespace Queue.Administrator
@@ -24,7 +27,7 @@ namespace Queue.Administrator
         private static readonly ILog logger = LogManager.GetLogger(typeof(AdministratorForm));
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
+        private QueueAdministrator currentUser;
         private Channel<IServerTcpService> pingChannel;
         private Timer pingTimer;
         private TaskPool taskPool;
@@ -35,7 +38,7 @@ namespace Queue.Administrator
             InitializeComponent();
 
             this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            this.currentUser = currentUser as QueueAdministrator;
 
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
@@ -46,6 +49,8 @@ namespace Queue.Administrator
             pingTimer.Elapsed += pingTimer_Elapsed;
 
             Text = currentUser.ToString();
+
+            CheckPermissions();
         }
 
         public bool IsLogout { get; private set; }
@@ -86,6 +91,23 @@ namespace Queue.Administrator
         private void addClientRequestMenuItem_Click(object sender, EventArgs eventArgs)
         {
             ShowForm<AddClentRequestForm>(() => new AddClentRequestForm(channelBuilder, currentUser));
+        }
+
+        private void CheckPermissions()
+        {
+            var items = new List<ToolStripMenuItem>(topMenu.Items.Cast<ToolStripMenuItem>());
+            items.AddRange(dictionariesMenu.DropDownItems.Cast<ToolStripMenuItem>());
+            items.AddRange(clientRequestsMenu.DropDownItems.Cast<ToolStripMenuItem>());
+
+            foreach (ToolStripMenuItem c in items)
+            {
+                string p = c.Tag as string;
+                if (!string.IsNullOrEmpty(p))
+                {
+                    AdministratorPermissions permission = (AdministratorPermissions)Enum.Parse(typeof(AdministratorPermissions), p);
+                    c.Visible = currentUser.Permissions.HasFlag(permission);
+                }
+            }
         }
 
         private void clientRequestsMenuItem_Click(object sender, EventArgs eventArgs)

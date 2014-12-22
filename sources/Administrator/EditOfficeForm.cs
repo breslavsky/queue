@@ -18,6 +18,8 @@ namespace Queue.Administrator
 {
     public partial class EditOfficeForm : Queue.UI.WinForms.RichForm
     {
+        public event EventHandler<EventArgs> Saved;
+
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;
         private User currentUser;
@@ -105,7 +107,11 @@ namespace Queue.Administrator
             }
             else
             {
-                Office = new Office();
+                Office = new Office()
+                {
+                    Name = "Новый филиал",
+                    Endpoint = "net.tcp://queue:4505"
+                };
             }
         }
 
@@ -126,9 +132,12 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.EditOffice(office));
+                    Office = await taskPool.AddTask(channel.Service.EditOffice(office));
 
-                    DialogResult = DialogResult.OK;
+                    if (Saved != null)
+                    {
+                        Saved(this, EventArgs.Empty);
+                    }
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

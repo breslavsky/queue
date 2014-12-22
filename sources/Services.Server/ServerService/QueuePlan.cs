@@ -207,7 +207,8 @@ namespace Queue.Services.Server
 
                                     case ClientRequestState.Rendering:
                                         message = string.Format("Начало обслуживания клиента [{0}] у оператора [{1}]", client, queueOperator);
-                                        clientRequest.Rendering();
+                                        var schedule = todayQueuePlan.GetServiceSchedule(clientRequest.Service);
+                                        clientRequest.Rendering(schedule.ClientInterval);
                                         break;
 
                                     default:
@@ -228,8 +229,7 @@ namespace Queue.Services.Server
 
                                         using (var locker = todayQueuePlan.ReadLock())
                                         {
-                                            var schedule = todayQueuePlan.GetServiceSchedule(clientRequest.Service);
-                                            clientRequest.Rendered(schedule.ClientInterval);
+                                            clientRequest.Rendered();
                                         }
 
                                         message = string.Format("Завершено обслуживание клиента [{0}] у оператора [{1}] с производительностью {2:00.00}%", client, queueOperator, clientRequest.Productivity);
@@ -634,7 +634,7 @@ namespace Queue.Services.Server
         {
             await Task.Run(() =>
             {
-                checkPermission(UserRole.Manager | UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.QueuePlan);
 
                 var queuePlan = queueInstance.TodayQueuePlan;
 

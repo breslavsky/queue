@@ -19,7 +19,6 @@
             this.commentLabel = new System.Windows.Forms.Label();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.nameLabel = new System.Windows.Forms.Label();
-            this.iconImageBox = new System.Windows.Forms.PictureBox();
             this.codeTextBox = new System.Windows.Forms.TextBox();
             this.codeLabel = new System.Windows.Forms.Label();
             this.colorButton = new System.Windows.Forms.Button();
@@ -32,7 +31,6 @@
             this.rowsUpDown = new System.Windows.Forms.NumericUpDown();
             this.rowsLabel = new System.Windows.Forms.Label();
             this.columnsLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.iconImageBox)).BeginInit();
             this.layoutGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.columnsUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rowsUpDown)).BeginInit();
@@ -73,16 +71,6 @@
             this.nameLabel.Size = new System.Drawing.Size(83, 13);
             this.nameLabel.TabIndex = 0;
             this.nameLabel.Text = "Наименование";
-            // 
-            // iconImageBox
-            // 
-            this.iconImageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.iconImageBox.Location = new System.Drawing.Point(330, 20);
-            this.iconImageBox.Name = "iconImageBox";
-            this.iconImageBox.Size = new System.Drawing.Size(64, 64);
-            this.iconImageBox.TabIndex = 0;
-            this.iconImageBox.TabStop = false;
-            this.iconImageBox.Click += new System.EventHandler(this.iconImageBox_Click);
             // 
             // codeTextBox
             // 
@@ -209,7 +197,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(414, 432);
+            this.ClientSize = new System.Drawing.Size(414, 436);
             this.Controls.Add(this.layoutGroupBox);
             this.Controls.Add(this.commentTextBox);
             this.Controls.Add(this.descriptionLabel);
@@ -218,7 +206,6 @@
             this.Controls.Add(this.codeTextBox);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.nameTextBox);
-            this.Controls.Add(this.iconImageBox);
             this.Controls.Add(this.commentLabel);
             this.Controls.Add(this.colorPanel);
             this.Controls.Add(this.colorButton);
@@ -232,7 +219,6 @@
             this.Text = "Редактирование группы услуг";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ServiceGroupEditForm_FormClosing);
             this.Load += new System.EventHandler(this.ServiceGroupEdit_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.iconImageBox)).EndInit();
             this.layoutGroupBox.ResumeLayout(false);
             this.layoutGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.columnsUpDown)).EndInit();
@@ -248,7 +234,6 @@
         private System.Windows.Forms.Label commentLabel;
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.Label nameLabel;
-        private System.Windows.Forms.PictureBox iconImageBox;
         private System.Windows.Forms.TextBox codeTextBox;
         private System.Windows.Forms.Label codeLabel;
         private System.Windows.Forms.Button colorButton;

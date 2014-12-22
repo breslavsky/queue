@@ -12,19 +12,14 @@ namespace Queue.Model
     {
         public ServiceGroup()
         {
-            Code = "0.0";
-            Name = "Новая группа услуг";
-            Icon = new byte[] { };
-            Columns = 2;
-            Rows = 5;
             SortId = DateTime.Now.Ticks;
         }
 
-        [Length(1, 15, Message = "Поле (код группы услуг) должно быть больше 1 и менее 15 символов")]
+        [NotNullNotEmpty(Message = "Код группы услуг не указан")]
         [Property]
         public virtual string Code { get; set; }
 
-        [Length(1, 255, Message = "Поле (название группы услуг) должно быть больше 1 и менее 255 символов")]
+        [Length(Message = "Название группы услуг не указано")]
         [Property]
         public virtual string Name { get; set; }
 

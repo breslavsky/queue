@@ -88,6 +88,24 @@ namespace Queue.Database {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на update _user set Role = &apos;Administrator&apos; where Role = &apos;Manager&apos;;.
+        /// </summary>
+        internal static string _004 {
+            get {
+                return ResourceManager.GetString("_004", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на update _user set [Permissions] = 511 where Role  = &apos;Administrator&apos;;.
+        /// </summary>
+        internal static string _005 {
+            get {
+                return ResourceManager.GetString("_005", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на ALTER TABLE _client_request DROP CONSTRAINT ClientRequestToClientReference;
         ///ALTER TABLE _client_request ADD CONSTRAINT ClientRequestToClientReference FOREIGN KEY(ClientId)
         ///REFERENCES _client (Id)

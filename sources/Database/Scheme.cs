@@ -18,7 +18,9 @@ namespace Queue.Database
         {
             {1, SchemePatches._001},
             {2, SchemePatches._002},
-            {3, SchemePatches._003}
+            {3, SchemePatches._003},
+            {4, SchemePatches._004},
+            {5, SchemePatches._005}
         };
     }
 }

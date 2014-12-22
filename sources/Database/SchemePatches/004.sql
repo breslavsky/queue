@@ -1,0 +1,1 @@
+﻿update _user set Role = 'Administrator' where Role = 'Manager';

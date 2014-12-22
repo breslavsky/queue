@@ -92,7 +92,7 @@ namespace Queue.Terminal.Models.Pages
 
                 try
                 {
-                    await channel.Service.OpenUserSession(Model.CurrentManager.SessionId);
+                    await channel.Service.OpenUserSession(Model.CurrentAdministrator.SessionId);
 
                     var parameters = new Dictionary<Guid, object>();
 

@@ -14,7 +14,6 @@ namespace Queue.Model
         public Client()
         {
             RegisterDate = DateTime.Now;
-            SessionId = Guid.NewGuid();
         }
 
         #region properties
@@ -25,7 +24,7 @@ namespace Queue.Model
         [Property]
         public virtual Guid SessionId { get; set; }
 
-        [Length(Min = 1, Max = 255, Message = "Поле (фамилия) должно быть больше 1 и менее 255 символов")]
+        [NotNullNotEmpty(Message = "Фамилия не указана")]
         [Property]
         public virtual string Surname { get; set; }
 

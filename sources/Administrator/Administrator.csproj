@@ -218,6 +218,12 @@
     <Compile Include="DefaultScheduleForm.Designer.cs">
       <DependentUpon>DefaultScheduleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditAdministratorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditAdministratorForm.Designer.cs">
+      <DependentUpon>EditAdministratorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditClientForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -235,6 +241,12 @@
     </Compile>
     <Compile Include="EditMediaConfigFileForm.Designer.cs">
       <DependentUpon>EditMediaConfigFileForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditServiceParameterNumberForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditServiceParameterNumberForm.Designer.cs">
+      <DependentUpon>EditServiceParameterNumberForm.cs</DependentUpon>
     </Compile>
     <Compile Include="EditOfficeForm.cs">
       <SubType>Form</SubType>
@@ -370,11 +382,29 @@
     <Compile Include="ServicesForm.Designer.cs">
       <DependentUpon>ServicesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExceptionScheduleReportForm.cs">
+    <Compile Include="Reports\ExceptionScheduleReportForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ExceptionScheduleReportForm.Designer.cs">
+    <Compile Include="Reports\ExceptionScheduleReportForm.Designer.cs">
       <DependentUpon>ExceptionScheduleReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditOperatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditOperatorForm.Designer.cs">
+      <DependentUpon>EditOperatorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditServiceParameterTextForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditServiceParameterTextForm.Designer.cs">
+      <DependentUpon>EditServiceParameterTextForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditServiceParameterOptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditServiceParameterOptionsForm.Designer.cs">
+      <DependentUpon>EditServiceParameterOptionsForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AddClentRequestForm.resx">
       <DependentUpon>AddClentRequestForm.cs</DependentUpon>
@@ -403,6 +433,9 @@
     <EmbeddedResource Include="DefaultScheduleForm.resx">
       <DependentUpon>DefaultScheduleForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditAdministratorForm.resx">
+      <DependentUpon>EditAdministratorForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditClientForm.resx">
       <DependentUpon>EditClientForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -411,6 +444,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditMediaConfigFileForm.resx">
       <DependentUpon>EditMediaConfigFileForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditServiceParameterNumberForm.resx">
+      <DependentUpon>EditServiceParameterNumberForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditOfficeForm.resx">
       <DependentUpon>EditOfficeForm.cs</DependentUpon>
@@ -490,8 +526,17 @@
     <EmbeddedResource Include="ServicesForm.resx">
       <DependentUpon>ServicesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExceptionScheduleReportForm.resx">
+    <EmbeddedResource Include="Reports\ExceptionScheduleReportForm.resx">
       <DependentUpon>ExceptionScheduleReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditOperatorForm.resx">
+      <DependentUpon>EditOperatorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditServiceParameterTextForm.resx">
+      <DependentUpon>EditServiceParameterTextForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditServiceParameterOptionsForm.resx">
+      <DependentUpon>EditServiceParameterOptionsForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config">

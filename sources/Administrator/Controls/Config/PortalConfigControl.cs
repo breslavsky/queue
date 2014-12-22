@@ -77,10 +77,7 @@ namespace Queue.Administrator
 
         private void headerTextBox_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.Header = headerTextBox.Text;
-            }
+            config.Header = headerTextBox.Text;
         }
 
         private void footerTextBox_Click(object sender, EventArgs e)
@@ -97,18 +94,12 @@ namespace Queue.Administrator
 
         private void footerTextBox_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.Footer = footerTextBox.Text;
-            }
+            config.Footer = footerTextBox.Text;
         }
 
         private void portalCurrentDayRecordingCheckBox_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.CurrentDayRecording = currentDayRecordingCheckBox.Checked;
-            }
+            config.CurrentDayRecording = currentDayRecordingCheckBox.Checked;
         }
 
         private async void saveButton_Click(object sender, EventArgs e)
@@ -119,7 +110,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.EditPortalConfig(config));
+                    config = await taskPool.AddTask(channel.Service.EditPortalConfig(config));
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

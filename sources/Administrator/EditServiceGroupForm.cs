@@ -15,12 +15,14 @@ namespace Queue.Administrator
 {
     public partial class EditServiceGroupForm : Queue.UI.WinForms.RichForm
     {
+        public event EventHandler<EventArgs> Saved;
+
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;
         private User currentUser;
-        private ServiceGroup serviceGroup;
         private Guid parenGrouptId;
         private ServiceGroup parentGroup;
+        private ServiceGroup serviceGroup;
         private Guid serviceGroupId;
         private TaskPool taskPool;
 
@@ -56,13 +58,6 @@ namespace Queue.Administrator
                 if (!string.IsNullOrWhiteSpace(serviceGroup.Color))
                 {
                     colorPanel.BackColor = ColorTranslator.FromHtml(serviceGroup.Color);
-                }
-
-                //TODO: create!
-                byte[] icon = new byte[] { };
-                if (icon.Length > 0)
-                {
-                    iconImageBox.Image = Image.FromStream(new MemoryStream(icon));
                 }
             }
         }
@@ -110,36 +105,20 @@ namespace Queue.Administrator
             }
         }
 
-        private void iconImageBox_Click(object sender, EventArgs e)
-        {
-            var fileDialog = new OpenFileDialog()
-            {
-                InitialDirectory = Application.StartupPath
-            };
-            if (fileDialog.ShowDialog() == DialogResult.OK)
-            {
-                string filePath = fileDialog.FileName.ToString();
-                iconImageBox.Image = Image.FromStream(new MemoryStream(File.ReadAllBytes(filePath)));
-            }
-        }
-
         private async void saveButton_Click(object sender, EventArgs e)
         {
-            var memoryStream = new MemoryStream();
-            if (iconImageBox.Image != null)
-            {
-                iconImageBox.Image.Save(memoryStream, ImageFormat.Png);
-            }
-
             using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.EditServiceGroup(serviceGroup));
+                    ServiceGroup = await taskPool.AddTask(channel.Service.EditServiceGroup(serviceGroup));
 
-                    DialogResult = DialogResult.OK;
+                    if (Saved != null)
+                    {
+                        Saved(this, EventArgs.Empty);
+                    }
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -179,7 +158,11 @@ namespace Queue.Administrator
                     {
                         ServiceGroup = new ServiceGroup()
                         {
-                            ParentGroup = parentGroup
+                            ParentGroup = parentGroup,
+                            Code = "0.0",
+                            Name = "Новая группа услуг",
+                            Columns = 2,
+                            Rows = 5
                         };
                     }
                 }

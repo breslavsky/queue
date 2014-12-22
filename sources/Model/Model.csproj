@@ -110,7 +110,6 @@
     <Compile Include="ServiceParameters\ServiceParameterText.cs" />
     <Compile Include="ServiceRendering.cs" />
     <Compile Include="Users\Administrator.cs" />
-    <Compile Include="Users\Manager.cs" />
     <Compile Include="Users\Operator.cs" />
     <Compile Include="Users\User.cs" />
     <Compile Include="Workplace.cs" />

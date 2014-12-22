@@ -4,24 +4,25 @@ using Junte.WCF.Common;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
+using Queue.Services.DTO;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
-using DTO = Queue.Services.DTO;
+using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator.Reports
 {
     public partial class OperatorRatingReportForm : Queue.UI.WinForms.RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private DTO.User currentUser;
+        private User currentUser;
 
         private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
-        public OperatorRatingReportForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, DTO.User currentUser)
+        public OperatorRatingReportForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
         {
             InitializeComponent();
 
@@ -63,7 +64,7 @@ namespace Queue.Administrator.Reports
             {
                 try
                 {
-                    foreach (DTO.Operator op in await channel.Service.GetOperators())
+                    foreach (IdentifiedEntity op in await channel.Service.GetUserList(UserRole.Operator))
                     {
                         operatorsListBox.Items.Add(op, true);
                     }
@@ -181,7 +182,7 @@ namespace Queue.Administrator.Reports
         private Guid[] GetSelectedOperators()
         {
             return operatorsListBox.CheckedItems
-                                        .Cast<DTO.Operator>()
+                                        .Cast<QueueOperator>()
                                         .Select(o => o.Id)
                                         .ToArray();
         }

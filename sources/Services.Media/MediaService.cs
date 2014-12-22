@@ -9,7 +9,10 @@ using System.ServiceModel.Web;
 
 namespace Queue.Services.Media
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple, IncludeExceptionDetailInFaults = true, UseSynchronizationContext = false)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall,
+        ConcurrencyMode = ConcurrencyMode.Multiple,
+        IncludeExceptionDetailInFaults = true,
+        UseSynchronizationContext = false)]
     public partial class MediaService : IMediaService
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(MediaService));

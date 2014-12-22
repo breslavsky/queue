@@ -25,7 +25,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Manager | UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -136,7 +136,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Manager | UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -148,14 +148,16 @@ namespace Queue.Services.Server
                         client = session.Get<Client>(clientId);
                         if (client == null)
                         {
-                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientId), string.Format("Клиент [{0}] не найден", clientId));
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientId),
+                                string.Format("Клиент [{0}] не найден", clientId));
                         }
                     }
 
                     var service = session.Get<Service>(serviceId);
                     if (service == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId), string.Format("Услуга [{0}] не найдена", serviceId));
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId),
+                            string.Format("Услуга [{0}] не найдена", serviceId));
                     }
 
                     if (!service.IsActive)
@@ -311,7 +313,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Manager | UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -323,14 +325,16 @@ namespace Queue.Services.Server
                         client = session.Get<Client>(clientId);
                         if (client == null)
                         {
-                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientId), string.Format("Клиент [{0}] не найден", clientId));
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientId),
+                                string.Format("Клиент [{0}] не найден", clientId));
                         }
                     }
 
                     var service = session.Get<Service>(serviceId);
                     if (service == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId), string.Format("Услуга [{0}] не найдена", serviceId));
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId),
+                            string.Format("Услуга [{0}] не найдена", serviceId));
                     }
 
                     if (!service.IsActive)
@@ -733,7 +737,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Manager | UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -903,7 +907,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Manager | UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -954,7 +958,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Manager | UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())

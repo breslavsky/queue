@@ -11,11 +11,9 @@ namespace Queue.Model
     [Cache(Usage = CacheUsage.ReadWrite)]
     public class Event : IdentifiedEntity
     {
-        //см. выше
         public Event()
         {
             CreateDate = DateTime.Now;
-            Type = EventType.Info;
         }
 
         #region properties
@@ -26,7 +24,7 @@ namespace Queue.Model
         [Property]
         public virtual EventType Type { get; set; }
 
-        [NotEmpty(Message = "Для события не указано сообщение")]
+        [NotNullNotEmpty(Message = "Для события не указано сообщение")]
         [Property(Length = DataLength._1M)]
         public virtual string Message { get; set; }
 

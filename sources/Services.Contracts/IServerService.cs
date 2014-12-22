@@ -179,9 +179,6 @@ namespace Queue.Services.Contracts
         Task<User[]> GetUsers();
 
         [OperationContract]
-        Task<Operator[]> GetOperators();
-
-        [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task<User> GetUser(Guid userId);
 
@@ -193,7 +190,12 @@ namespace Queue.Services.Contracts
         Task<User> UserLogin(Guid userId, string password);
 
         [OperationContract]
-        Task<User> EditUser(User user);
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<Administrator> EditAdministrator(Administrator administrator);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<Operator> EditOperator(Operator user);
 
         [OperationContract]
         Task DeleteUser(Guid userId);
@@ -201,10 +203,6 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task ChangeUserPassword(Guid userId, string password);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<Operator> EditOperator(Operator queueOperator);
 
         [OperationContract]
         Task<Office[]> GetOffices();
@@ -222,7 +220,7 @@ namespace Queue.Services.Contracts
         Task DeleteOffice(Guid officeId);
 
         [OperationContract]
-        Task<IDictionary<Guid, string>> GetWorkplacesList();
+        Task<IdentifiedEntity[]> GetWorkplacesList();
 
         [OperationContract]
         Task<Workplace[]> GetWorkplaces();
@@ -365,19 +363,23 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<ServiceParameter> GetServiceParameter(Guid serviceParameterId);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
         Task<ServiceParameter[]> GetServiceParameters(Guid serviceId);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ServiceParameter> EditNumberServiceParameter(ServiceParameterNumber parameter);
+        Task<ServiceParameterNumber> EditServiceParameterNumber(ServiceParameterNumber parameter);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ServiceParameter> EditTextServiceParameter(ServiceParameterText parameter);
+        Task<ServiceParameterText> EditServiceParameterText(ServiceParameterText parameter);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ServiceParameter> EditOptionsServiceParameter(ServiceParameterOptions parameter);
+        Task<ServiceParameterOptions> EditServiceParameterOptions(ServiceParameterOptions parameter);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
@@ -430,6 +432,13 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         Task<MediaConfig> EditMediaConfig(MediaConfig config);
+
+        [OperationContract]
+        Task<MediaConfigFile[]> GetMediaConfigFiles();
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<MediaConfigFile> GetMediaConfigFile(Guid mediaConfigFileId);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]

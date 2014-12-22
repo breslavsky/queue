@@ -19,7 +19,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Manager | UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Clients);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -60,7 +60,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Clients);
 
                 if (string.IsNullOrWhiteSpace(identity))
                 {
@@ -88,7 +88,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Manager | UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Clients);
 
                 using (var session = sessionProvider.OpenSession())
                 {
@@ -231,13 +231,11 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Manager | UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Clients);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    var clientId = source.Id;
-
                     string surname = source.Surname;
                     string name = source.Name;
                     string patronymic = source.Patronymic;
@@ -247,8 +245,9 @@ namespace Queue.Services.Server
 
                     Client client = null;
 
-                    if (clientId != Guid.Empty)
+                    if (!source.Empty())
                     {
+                        var clientId = source.Id;
                         client = session.Get<Client>(clientId);
                         if (client == null)
                         {
@@ -385,7 +384,7 @@ namespace Queue.Services.Server
         {
             await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator | UserRole.Manager);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Clients);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -415,7 +414,7 @@ namespace Queue.Services.Server
         {
             await Task.Run(() =>
             {
-                checkPermission(UserRole.Manager | UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Clients);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())

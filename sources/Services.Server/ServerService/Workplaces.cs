@@ -14,25 +14,20 @@ namespace Queue.Services.Server
 {
     public partial class ServerService
     {
-        public async Task<IDictionary<Guid, string>> GetWorkplacesList()
+        public async Task<DTO.IdentifiedEntity[]> GetWorkplacesList()
         {
             return await Task.Run(() =>
             {
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    var workplaces = new Dictionary<Guid, string>();
-
-                    foreach (var workplace in session.CreateCriteria<Workplace>()
+                    var workplaces = session.CreateCriteria<Workplace>()
                         .AddOrder(Order.Asc("Type"))
                         .AddOrder(Order.Asc("Number"))
                         .AddOrder(Order.Asc("Modificator"))
-                        .List<Workplace>())
-                    {
-                        workplaces[workplace.Id] = workplace.ToString();
-                    }
+                        .List<Workplace>();
 
-                    return workplaces;
+                    return Mapper.Map<IList<Workplace>, DTO.IdentifiedEntity[]>(workplaces);
                 }
             });
         }
@@ -77,17 +72,16 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Workplaces);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    var workplaceId = source.Id;
-
                     Workplace workplace;
 
-                    if (workplaceId != Guid.Empty)
+                    if (!source.Empty())
                     {
+                        var workplaceId = source.Id;
                         workplace = session.Get<Workplace>(workplaceId);
                         if (workplace == null)
                         {
@@ -124,7 +118,7 @@ namespace Queue.Services.Server
         {
             await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Workplaces);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())

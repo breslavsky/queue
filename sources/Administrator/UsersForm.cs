@@ -11,7 +11,6 @@ using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
-using QueueManager = Queue.Services.DTO.Manager;
 using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
@@ -55,31 +54,41 @@ namespace Queue.Administrator
             base.Dispose(disposing);
         }
 
-        private async void addUserButton_Click(object sender, EventArgs e)
+        private void addUserButton_Click(object sender, EventArgs e)
         {
-            int userRole = Convert.ToInt32(usersTabs.SelectedTab.Tag);
+            DataGridViewRow row = null;
 
-            using (var channel = channelManager.CreateChannel())
+            if (usersTabs.SelectedTab.Equals(operatorsTabPage))
             {
-                try
+                using (var f = new EditOperatorForm(channelBuilder, currentUser))
                 {
-                    //TODO: create!
-                    //var user = await taskPool.AddTask(channel.Service.AddUser((UserRole)userRole));
-                    //var row = usersGridView.Rows[usersGridView.Rows.Add()];
+                    f.Saved += (s, eventArgs) =>
+                    {
+                        if (row == null)
+                        {
+                            row = usersGridView.Rows[usersGridView.Rows.Add()];
+                        }
+                        RenderUsersGridRow(row, f.Operator);
+                    };
 
-                    //RenderUsersGridRow(row, user);
+                    f.ShowDialog();
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
+            }
+            else if (usersTabs.SelectedTab.Equals(administratorsTabPage))
+            {
+                using (var f = new EditAdministratorForm(channelBuilder, currentUser))
                 {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
+                    f.Saved += (s, eventArgs) =>
+                    {
+                        if (row == null)
+                        {
+                            row = usersGridView.Rows[usersGridView.Rows.Add()];
+                            row.Selected = true;
+                        }
+                        RenderUsersGridRow(row, f.Administrator);
+                    };
+
+                    f.ShowDialog();
                 }
             }
         }
@@ -91,10 +100,11 @@ namespace Queue.Administrator
             row.Cells["patronymicColumn"].Value = user.Patronymic;
             row.Cells["emailColumn"].Value = user.Email;
             row.Cells["mobileColumn"].Value = user.Mobile;
-            if (user is QueueOperator)
-            {
-                var queueOperator = (QueueOperator)user;
 
+            var queueOperator = user as QueueOperator;
+
+            if (queueOperator != null)
+            {
                 var workplace = queueOperator.Workplace;
                 if (workplace != null)
                 {
@@ -119,17 +129,9 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    workplaceColumn.DisplayMember = "Key";
-                    workplaceColumn.ValueMember = "Value";
-                    workplaceColumn.DataSource = (await taskPool.AddTask(channel.Service.GetWorkplaces()))
-                                                .Select(w => new KeyValuePair<string, Workplace>(w.ToString(), w))
-                                                .ToList();
-
                     foreach (var user in await taskPool.AddTask(channel.Service.GetUsers()))
                     {
-                        int index = usersGridView.Rows.Add();
-                        var row = usersGridView.Rows[index];
-
+                        var row = usersGridView.Rows[usersGridView.Rows.Add()];
                         RenderUsersGridRow(row, user);
                     }
 
@@ -150,242 +152,38 @@ namespace Queue.Administrator
             }
         }
 
-        private async void usersGridView_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int rowIndex = e.RowIndex;
-            if (rowIndex >= 0)
-            {
-                int columnIndex = e.ColumnIndex;
-                if (columnIndex >= 0)
-                {
-                    var row = usersGridView.Rows[rowIndex];
-                    var cell = row.Cells[columnIndex];
-
-                    User user = row.Tag as User;
-
-                    switch (cell.OwningColumn.Name)
-                    {
-                        case "passwordColumn":
-                            using (PasswordForm passwordForm = new PasswordForm())
-                            {
-                                if (passwordForm.ShowDialog() == DialogResult.OK)
-                                {
-                                    using (var channel = channelManager.CreateChannel())
-                                    {
-                                        try
-                                        {
-                                            row.ReadOnly = true;
-
-                                            await taskPool.AddTask(channel.Service.ChangeUserPassword(user.Id, passwordForm.Password));
-                                        }
-                                        catch (OperationCanceledException) { }
-                                        catch (CommunicationObjectAbortedException) { }
-                                        catch (ObjectDisposedException) { }
-                                        catch (InvalidOperationException) { }
-                                        catch (FaultException exception)
-                                        {
-                                            UIHelper.Warning(exception.Reason.ToString());
-                                        }
-                                        catch (Exception exception)
-                                        {
-                                            UIHelper.Warning(exception.Message);
-                                        }
-                                        finally
-                                        {
-                                            row.ReadOnly = false;
-                                        }
-                                    }
-                                }
-                            }
-                            break;
-
-                        case "deleteColumn":
-
-                            if (MessageBox.Show("Вы действительно хотите удалить пользователя?", "Подтвердите удаление",
-                                MessageBoxButtons.YesNo) == DialogResult.Yes)
-                            {
-                                using (var channel = channelManager.CreateChannel())
-                                {
-                                    try
-                                    {
-                                        await taskPool.AddTask(channel.Service.DeleteUser(user.Id));
-
-                                        usersGridView.Rows.Remove(row);
-                                    }
-                                    catch (OperationCanceledException) { }
-                                    catch (CommunicationObjectAbortedException) { }
-                                    catch (ObjectDisposedException) { }
-                                    catch (InvalidOperationException) { }
-                                    catch (FaultException exception)
-                                    {
-                                        UIHelper.Warning(exception.Reason.ToString());
-                                    }
-                                    catch (Exception exception)
-                                    {
-                                        UIHelper.Warning(exception.Message);
-                                    }
-                                }
-                            }
-                            break;
-                    }
-                }
-            }
-        }
-
-        private async void usersGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            int rowIndex = e.RowIndex;
-            if (rowIndex >= 0)
-            {
-                int columnIndex = e.ColumnIndex;
-                if (columnIndex >= 0)
-                {
-                    var row = usersGridView.Rows[rowIndex];
-                    var user = row.Tag as User;
-
-                    string surname = row.Cells["surnameColumn"].Value as string;
-                    if (surname != null)
-                    {
-                        user.Surname = surname;
-                    }
-
-                    string name = row.Cells["nameColumn"].Value as string;
-                    if (name != null)
-                    {
-                        user.Name = name;
-                    }
-
-                    string patronymic = row.Cells["patronymicColumn"].Value as string;
-                    if (patronymic != null)
-                    {
-                        user.Patronymic = patronymic;
-                    }
-
-                    string email = row.Cells["emailColumn"].Value as string;
-                    if (email != null)
-                    {
-                        user.Email = email;
-                    }
-
-                    string mobile = row.Cells["mobileColumn"].Value as string;
-                    if (mobile != null)
-                    {
-                        user.Mobile = mobile;
-                    }
-
-                    using (var channel = channelManager.CreateChannel())
-                    {
-                        try
-                        {
-                            if (user is QueueOperator)
-                            {
-                                var queueOperator = user as QueueOperator;
-
-                                var workplace = row.Cells["workplaceColumn"].Value as Workplace;
-                                if (workplace != null)
-                                {
-                                    queueOperator.Workplace = workplace;
-                                }
-
-                                queueOperator.IsInterruption = (bool)row.Cells["isInterruptionColumn"].Value;
-
-                                string interruptionStartTime = row.Cells["InterruptionStartTimeColumn"].Value as string;
-                                if (interruptionStartTime != null)
-                                {
-                                    try
-                                    {
-                                        queueOperator.InterruptionStartTime = TimeSpan.Parse(interruptionStartTime);
-                                    }
-                                    catch
-                                    {
-                                        UIHelper.Warning("Время начала перерыва указано не верно");
-                                        return;
-                                    }
-                                }
-
-                                string interruptionFinishTime = row.Cells["InterruptionFinishTimeColumn"].Value as string;
-                                if (interruptionFinishTime != null)
-                                {
-                                    try
-                                    {
-                                        queueOperator.InterruptionFinishTime = TimeSpan.Parse(interruptionFinishTime);
-                                    }
-                                    catch
-                                    {
-                                        UIHelper.Warning("Время окончания перерыва указано не верно");
-                                        return;
-                                    }
-                                }
-
-                                await taskPool.AddTask(channel.Service.EditOperator(queueOperator));
-                            }
-                            else
-                            {
-                                await taskPool.AddTask(channel.Service.EditUser(user));
-                            }
-                        }
-                        catch (OperationCanceledException) { }
-                        catch (CommunicationObjectAbortedException) { }
-                        catch (ObjectDisposedException) { }
-                        catch (InvalidOperationException) { }
-                        catch (FaultException exception)
-                        {
-                            UIHelper.Warning(exception.Reason.ToString());
-                        }
-                        catch (Exception exception)
-                        {
-                            UIHelper.Warning(exception.Message);
-                        }
-                    }
-                }
-            }
-        }
-
         private void UsersGridViewRefresh()
         {
-            int userRole = Convert.ToInt32(usersTabs.SelectedTab.Tag);
-            switch ((UserRole)userRole)
+            if (usersTabs.SelectedTab.Equals(operatorsTabPage))
             {
-                case UserRole.Operator:
-                    workplaceColumn.Visible = true;
-                    isInterruptionColumn.Visible = true;
-                    InterruptionStartTimeColumn.Visible = true;
+                workplaceColumn.Visible =
+                    isInterruptionColumn.Visible =
+                    InterruptionStartTimeColumn.Visible =
                     InterruptionFinishTimeColumn.Visible = true;
-                    break;
-
-                default:
-                    workplaceColumn.Visible = false;
-                    isInterruptionColumn.Visible = false;
-                    InterruptionStartTimeColumn.Visible = false;
+            }
+            else if (usersTabs.SelectedTab.Equals(administratorsTabPage))
+            {
+                workplaceColumn.Visible =
+                    isInterruptionColumn.Visible =
+                    InterruptionStartTimeColumn.Visible =
                     InterruptionFinishTimeColumn.Visible = false;
-                    break;
             }
 
             foreach (DataGridViewRow row in usersGridView.Rows)
             {
                 row.Visible = false;
-                switch ((UserRole)userRole)
+
+                User user = row.Tag as User;
+
+                if (usersTabs.SelectedTab.Equals(operatorsTabPage)
+                    && user is QueueOperator)
                 {
-                    case UserRole.Administrator:
-                        if (typeof(QueueAdministrator).IsInstanceOfType(row.Tag))
-                        {
-                            row.Visible = true;
-                        }
-                        break;
-
-                    case UserRole.Manager:
-                        if (typeof(QueueManager).IsInstanceOfType(row.Tag))
-                        {
-                            row.Visible = true;
-                        }
-                        break;
-
-                    case UserRole.Operator:
-                        if (typeof(QueueOperator).IsInstanceOfType(row.Tag))
-                        {
-                            row.Visible = true;
-                        }
-                        break;
+                    row.Visible = true;
+                }
+                else if (usersTabs.SelectedTab.Equals(administratorsTabPage)
+                    && user is QueueAdministrator)
+                {
+                    row.Visible = true;
                 }
             }
         }
@@ -394,6 +192,72 @@ namespace Queue.Administrator
         {
             usersTableLayoutPanel.Parent = usersTabs.SelectedTab;
             UsersGridViewRefresh();
+        }
+
+        private async void usersGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно хотите удалить пользователя?", "Подтвердите удаление",
+                                MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                User user = e.Row.Tag as User;
+
+                using (var channel = channelManager.CreateChannel())
+                {
+                    try
+                    {
+                        await taskPool.AddTask(channel.Service.DeleteUser(user.Id));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                }
+            }
+        }
+
+        private void usersGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            int rowIndex = e.RowIndex,
+                columnIndex = e.ColumnIndex;
+
+            if (rowIndex >= 0 && columnIndex >= 0)
+            {
+                var row = usersGridView.Rows[rowIndex];
+                User user = row.Tag as User;
+
+                if (user is QueueOperator)
+                {
+                    using (var f = new EditOperatorForm(channelBuilder, currentUser, user.Id))
+                    {
+                        f.Saved += (s, eventArgs) =>
+                        {
+                            RenderUsersGridRow(row, f.Operator);
+                        };
+
+                        f.ShowDialog();
+                    }
+                }
+                else if (user is QueueAdministrator)
+                {
+                    using (var f = new EditAdministratorForm(channelBuilder, currentUser, user.Id))
+                    {
+                        f.Saved += (s, eventArgs) =>
+                        {
+                            RenderUsersGridRow(row, f.Administrator);
+                        };
+
+                        f.ShowDialog();
+                    }
+                }
+            }
         }
     }
 }

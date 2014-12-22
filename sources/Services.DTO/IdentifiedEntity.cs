@@ -12,6 +12,11 @@ namespace Queue.Services.DTO
         [DataMember]
         public string Presentation { get; set; }
 
+        public bool Empty()
+        {
+            return Id == Guid.Empty;
+        }
+
         public override bool Equals(object obj)
         {
             return obj != null && obj.GetHashCode() == GetHashCode();

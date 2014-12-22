@@ -116,15 +116,22 @@ namespace Queue.Administrator
             row.Tag = serviceRendering;
         }
 
-        private void addServiceRenderingButton_Click(object sender, EventArgs eventArgs)
+        private void addServiceRenderingButton_Click(object sender, EventArgs e)
         {
+            DataGridViewRow row = null;
+
             using (var f = new EditServiceRenderingForm(channelBuilder, currentUser, schedule.Id))
             {
-                if (f.ShowDialog() == DialogResult.OK)
+                f.Saved += (s, eventArgs) =>
                 {
-                    var row = serviceRenderingsGridView.Rows[serviceRenderingsGridView.Rows.Add()];
+                    if (row == null)
+                    {
+                        row = serviceRenderingsGridView.Rows[serviceRenderingsGridView.Rows.Add()];
+                    }
                     ServiceRenderingsGridViewRenderRow(row, f.ServiceRendering);
-                }
+                };
+
+                f.ShowDialog();
             }
         }
 
@@ -162,10 +169,12 @@ namespace Queue.Administrator
 
                 using (var f = new EditServiceRenderingForm(channelBuilder, currentUser, schedule.Id, serviceRendering.Id))
                 {
-                    if (f.ShowDialog() == DialogResult.OK)
+                    f.Saved += (s, eventArgs) =>
                     {
                         ServiceRenderingsGridViewRenderRow(row, f.ServiceRendering);
-                    }
+                    };
+
+                    f.ShowDialog();
                 }
             }
         }
@@ -179,110 +188,80 @@ namespace Queue.Administrator
 
         private void isWorkedCheckBox_Leave(object sender, EventArgs e)
         {
-            if (schedule != null)
-            {
-                schedule.IsWorked = isWorkedCheckBox.Checked;
-            }
+            schedule.IsWorked = isWorkedCheckBox.Checked;
         }
 
         private void startTimeTextBox_Leave(object sender, EventArgs e)
         {
-            if (schedule != null)
+            try
             {
-                try
-                {
-                    schedule.StartTime = TimeSpan.Parse(startTimeTextBox.Text);
-                }
-                catch
-                {
-                    throw new FormatException("Ошибочный формат времени");
-                }
+                schedule.StartTime = TimeSpan.Parse(startTimeTextBox.Text);
+            }
+            catch
+            {
+                throw new FormatException("Ошибочный формат времени");
             }
         }
 
         private void finishTimeTextBox_Leave(object sender, EventArgs e)
         {
-            if (schedule != null)
+            try
             {
-                try
-                {
-                    schedule.FinishTime = TimeSpan.Parse(finishTimeTextBox.Text);
-                }
-                catch
-                {
-                    throw new FormatException("Ошибочный формат времени");
-                }
+                schedule.FinishTime = TimeSpan.Parse(finishTimeTextBox.Text);
+            }
+            catch
+            {
+                throw new FormatException("Ошибочный формат времени");
             }
         }
 
         private void isInterruptionCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (schedule != null)
-            {
-                interruptionPanel.Enabled = isInterruptionCheckBox.Checked;
-            }
+            interruptionPanel.Enabled = isInterruptionCheckBox.Checked;
         }
 
         private void isInterruptionCheckBox_Leave(object sender, EventArgs e)
         {
-            if (schedule != null)
-            {
-                schedule.IsInterruption = isInterruptionCheckBox.Checked;
-            }
+            schedule.IsInterruption = isInterruptionCheckBox.Checked;
         }
 
         private void interruptionStartTimeTextBox_Leave(object sender, EventArgs e)
         {
-            if (schedule != null)
+            try
             {
-                try
-                {
-                    schedule.InterruptionStartTime = TimeSpan.Parse(interruptionStartTimeTextBox.Text);
-                }
-                catch
-                {
-                    throw new FormatException("Ошибочный формат времени");
-                }
+                schedule.InterruptionStartTime = TimeSpan.Parse(interruptionStartTimeTextBox.Text);
+            }
+            catch
+            {
+                throw new FormatException("Ошибочный формат времени");
             }
         }
 
         private void interruptionFinishTimeTextBox_Leave(object sender, EventArgs e)
         {
-            if (schedule != null)
+            try
             {
-                try
-                {
-                    schedule.InterruptionFinishTime = TimeSpan.Parse(interruptionFinishTimeTextBox.Text);
-                }
-                catch
-                {
-                    throw new FormatException("Ошибочный формат времени");
-                }
+                schedule.InterruptionFinishTime = TimeSpan.Parse(interruptionFinishTimeTextBox.Text);
+            }
+            catch
+            {
+                throw new FormatException("Ошибочный формат времени");
             }
         }
 
         private void clientIntervalUpDown_Leave(object sender, EventArgs e)
         {
-            if (schedule != null)
-            {
-                schedule.ClientInterval = TimeSpan.FromMinutes((double)clientIntervalUpDown.Value);
-            }
+            schedule.ClientInterval = TimeSpan.FromMinutes((double)clientIntervalUpDown.Value);
         }
 
         private void intersectionUpDown_Leave(object sender, EventArgs e)
         {
-            if (schedule != null)
-            {
-                schedule.Intersection = TimeSpan.FromMinutes((double)intersectionUpDown.Value);
-            }
+            schedule.Intersection = TimeSpan.FromMinutes((double)intersectionUpDown.Value);
         }
 
         private void maxClientRequestsUpDown_Leave(object sender, EventArgs e)
         {
-            if (schedule != null)
-            {
-                schedule.ClientInterval = TimeSpan.FromMinutes((double)clientIntervalUpDown.Value);
-            }
+            schedule.ClientInterval = TimeSpan.FromMinutes((double)clientIntervalUpDown.Value);
         }
 
         private void renderingModeControl_SelectedChanged(object sender, EventArgs e)
@@ -293,48 +272,36 @@ namespace Queue.Administrator
 
         private void renderingModeComboBox_Leave(object sender, EventArgs e)
         {
-            if (schedule != null)
-            {
-                schedule.RenderingMode = renderingModeControl.Selected<ServiceRenderingMode>();
-            }
+            schedule.RenderingMode = renderingModeControl.Selected<ServiceRenderingMode>();
         }
 
         private void earlyStartTimeTextBox_Leave(object sender, EventArgs e)
         {
-            if (schedule != null)
+            try
             {
-                try
-                {
-                    schedule.EarlyStartTime = TimeSpan.Parse(earlyStartTimeTextBox.Text);
-                }
-                catch
-                {
-                    throw new FormatException("Ошибочный формат времени");
-                }
+                schedule.EarlyStartTime = TimeSpan.Parse(earlyStartTimeTextBox.Text);
+            }
+            catch
+            {
+                throw new FormatException("Ошибочный формат времени");
             }
         }
 
         private void earlyFinishTimeTextBox_Leave(object sender, EventArgs e)
         {
-            if (schedule != null)
+            try
             {
-                try
-                {
-                    schedule.EarlyFinishTime = TimeSpan.Parse(earlyFinishTimeTextBox.Text);
-                }
-                catch
-                {
-                    throw new FormatException("Ошибочный формат времени");
-                }
+                schedule.EarlyFinishTime = TimeSpan.Parse(earlyFinishTimeTextBox.Text);
+            }
+            catch
+            {
+                throw new FormatException("Ошибочный формат времени");
             }
         }
 
         private void earlyReservationUpDown_Leave(object sender, EventArgs e)
         {
-            if (schedule != null)
-            {
-                schedule.EarlyReservation = (int)earlyReservationUpDown.Value;
-            }
+            schedule.EarlyReservation = (int)earlyReservationUpDown.Value;
         }
 
         #endregion bindings
@@ -347,7 +314,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.EditSchedule(schedule));
+                    schedule = await taskPool.AddTask(channel.Service.EditSchedule(schedule));
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

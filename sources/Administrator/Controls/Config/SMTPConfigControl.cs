@@ -67,50 +67,32 @@ namespace Queue.Administrator
 
         private void serverTextBox_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.Server = serverTextBox.Text;
-            }
+            config.Server = serverTextBox.Text;
         }
 
         private void portUpDown_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.Port = (int)portUpDown.Value;
-            }
+            config.Port = (int)portUpDown.Value;
         }
 
         private void enableSslCheckBox_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.EnableSsl = enableSslCheckBox.Checked;
-            }
+            config.EnableSsl = enableSslCheckBox.Checked;
         }
 
         private void userTextBox_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.User = userTextBox.Text;
-            }
+            config.User = userTextBox.Text;
         }
 
         private void passwordTextBox_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.Password = passwordTextBox.Text;
-            }
+            config.Password = passwordTextBox.Text;
         }
 
         private void fromTextBox_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.From = fromTextBox.Text;
-            }
+            config.From = fromTextBox.Text;
         }
 
         private async void saveButton_Click(object sender, EventArgs e)
@@ -121,7 +103,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.EditSMTPConfig(config));
+                    config = await taskPool.AddTask(channel.Service.EditSMTPConfig(config));
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

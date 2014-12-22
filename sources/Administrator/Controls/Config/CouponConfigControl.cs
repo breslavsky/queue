@@ -75,10 +75,7 @@ namespace Queue.Administrator
 
         private void couponTemplateEditor_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.Template = couponTemplateEditor.Text;
-            }
+            config.Template = couponTemplateEditor.Text;
         }
 
         private void previewLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs eventArgs)
@@ -132,7 +129,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.EditCouponConfig(config));
+                    config = await taskPool.AddTask(channel.Service.EditCouponConfig(config));
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

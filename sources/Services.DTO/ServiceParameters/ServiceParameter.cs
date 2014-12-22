@@ -6,8 +6,11 @@ namespace Queue.Services.DTO
     [KnownType(typeof(ServiceParameterNumber))]
     [KnownType(typeof(ServiceParameterText))]
     [KnownType(typeof(ServiceParameterOptions))]
-    public abstract class ServiceParameter : IdentifiedEntity
+    public class ServiceParameter : IdentifiedEntity
     {
+        [DataMember]
+        public Service Service { get; set; }
+
         [DataMember]
         public string Name { get; set; }
 

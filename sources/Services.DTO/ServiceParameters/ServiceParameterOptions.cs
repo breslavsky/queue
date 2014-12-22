@@ -2,7 +2,6 @@
 
 namespace Queue.Services.DTO
 {
-    [DataContract]
     public class ServiceParameterOptions : ServiceParameter
     {
         [DataMember]

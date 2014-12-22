@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using NHibernate.Criterion;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Resources;
 using Queue.Services.Common;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
@@ -39,7 +41,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Config);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -94,7 +96,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Config);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -145,7 +147,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Config);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -191,7 +193,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Config);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -211,7 +213,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Config);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -249,7 +251,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Config);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -269,7 +271,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Config);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -322,7 +324,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Config);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -353,21 +355,58 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.MediaConfigFile> EditMediaConfigFile(DTO.MediaConfigFile source)
+        public async Task<DTO.MediaConfigFile[]> GetMediaConfigFiles()
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Config);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    var mediaConfigFileId = source.Id;
+                    var files = session.CreateCriteria<MediaConfigFile>()
+                        .AddOrder(Order.Asc("Name"))
+                        .List<MediaConfigFile>();
 
+                    return Mapper.Map<IList<MediaConfigFile>, DTO.MediaConfigFile[]>(files);
+                }
+            });
+        }
+
+        public async Task<DTO.MediaConfigFile> GetMediaConfigFile(Guid mediaConfigFileId)
+        {
+            return await Task.Run(() =>
+            {
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Config);
+
+                using (var session = sessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    var mediaConfigFile = session.Get<MediaConfigFile>(mediaConfigFileId);
+                    if (mediaConfigFile == null)
+                    {
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(mediaConfigFileId), string.Format("Медиафайл [{0}] не найден", mediaConfigFileId));
+                    }
+
+                    return Mapper.Map<MediaConfigFile, DTO.MediaConfigFile>(mediaConfigFile);
+                }
+            });
+        }
+
+        public async Task<DTO.MediaConfigFile> EditMediaConfigFile(DTO.MediaConfigFile source)
+        {
+            return await Task.Run(() =>
+            {
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Config);
+
+                using (var session = sessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
                     MediaConfigFile mediaConfigFile;
 
-                    if (mediaConfigFileId != Guid.Empty)
+                    if (!source.Empty())
                     {
+                        var mediaConfigFileId = source.Id;
                         mediaConfigFile = session.Get<MediaConfigFile>(mediaConfigFileId);
                         if (mediaConfigFile == null)
                         {
@@ -399,7 +438,7 @@ namespace Queue.Services.Server
         {
             await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Config);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -420,8 +459,6 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.All);
-
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
@@ -440,7 +477,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Config);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -494,7 +531,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                checkPermission(UserRole.Administrator, AdministratorPermissions.Config);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())

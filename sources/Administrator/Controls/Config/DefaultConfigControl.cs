@@ -66,57 +66,42 @@ namespace Queue.Administrator
 
         private void queueNameTextBox_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.QueueName = queueNameTextBox.Text;
-            }
+            config.QueueName = queueNameTextBox.Text;
         }
 
         private void maxClientRequestsUpDown_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.MaxClientRequests = (int)maxClientRequestsUpDown.Value;
-            }
+            config.MaxClientRequests = (int)maxClientRequestsUpDown.Value;
         }
 
         private void maxRenderingTimeUpDown_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.MaxRenderingTime = (int)maxRenderingTimeUpDown.Value;
-            }
+            config.MaxRenderingTime = (int)maxRenderingTimeUpDown.Value;
         }
 
         private void workStartTimeTextBox_Leave(object sender, EventArgs e)
         {
-            if (config != null)
+            try
             {
-                try
-                {
-                    config.WorkStartTime = TimeSpan.Parse(workStartTimeTextBox.Text);
-                }
-                catch
-                {
-                    UIHelper.Warning("Ошибочный формат времени начала рабочего дня");
-                    return;
-                }
+                config.WorkStartTime = TimeSpan.Parse(workStartTimeTextBox.Text);
+            }
+            catch
+            {
+                UIHelper.Warning("Ошибочный формат времени начала рабочего дня");
+                return;
             }
         }
 
         private void workFinishTimeTextBox_Leave(object sender, EventArgs e)
         {
-            if (config != null)
+            try
             {
-                try
-                {
-                    config.WorkFinishTime = TimeSpan.Parse(workFinishTimeTextBox.Text);
-                }
-                catch
-                {
-                    UIHelper.Warning("Ошибочный формат времени окончания рабочего дня");
-                    return;
-                }
+                config.WorkFinishTime = TimeSpan.Parse(workFinishTimeTextBox.Text);
+            }
+            catch
+            {
+                UIHelper.Warning("Ошибочный формат времени окончания рабочего дня");
+                return;
             }
         }
 
@@ -128,7 +113,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.EditDefaultConfig(config));
+                    config = await taskPool.AddTask(channel.Service.EditDefaultConfig(config));
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

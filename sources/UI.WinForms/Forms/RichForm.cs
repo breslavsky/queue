@@ -16,13 +16,12 @@ namespace Queue.UI.WinForms
             Load += RichForm_Load;
         }
 
-        public IEnumerable<Control> GetAll(Control control, Type type)
+        public IEnumerable<Control> ControlList(Control control = null)
         {
-            var controls = control.Controls.Cast<Control>();
+            var controls = (control != null ? control.Controls : Controls).Cast<Control>();
 
-            return controls.SelectMany(ctrl => GetAll(ctrl, type))
-                                      .Concat(controls)
-                                      .Where(c => c.GetType() == type);
+            return controls.SelectMany(c => ControlList(c))
+                .Concat(controls);
         }
 
         private void RichForm_Load(object sender, EventArgs e)

@@ -36,6 +36,8 @@ namespace Queue.Administrator
         {
             set
             {
+                stepsGridView.Rows.Clear();
+
                 service = value;
                 if (service != null)
                 {
@@ -45,11 +47,12 @@ namespace Queue.Administrator
                         {
                             try
                             {
-                                serviceStepsGridView.Rows.Clear();
                                 foreach (var s in await taskPool.AddTask(channel.Service.GetServiceSteps(service.Id)))
                                 {
-                                    ServiceStepsGridViewRenderRow(serviceStepsGridView.Rows[serviceStepsGridView.Rows.Add()], s);
+                                    RenderStepsGridViewRow(stepsGridView.Rows[stepsGridView.Rows.Add()], s);
                                 }
+
+                                Enabled = true;
                             }
                             catch (OperationCanceledException) { }
                             catch (CommunicationObjectAbortedException) { }
@@ -85,7 +88,7 @@ namespace Queue.Administrator
             taskPool = new TaskPool();
         }
 
-        private void ServiceStepsGridViewRenderRow(DataGridViewRow row, ServiceStep serviceStep)
+        private void RenderStepsGridViewRow(DataGridViewRow row, ServiceStep serviceStep)
         {
             row.Cells["nameColumn"].Value = serviceStep.Name;
             row.Tag = serviceStep;
@@ -95,15 +98,22 @@ namespace Queue.Administrator
         {
             using (var f = new EditServiceStepForm(channelBuilder, currentUser, service.Id))
             {
-                if (f.ShowDialog() == DialogResult.OK)
+                DataGridViewRow row = null;
+
+                f.Saved += (s, eventArgs) =>
                 {
-                    var row = serviceStepsGridView.Rows[serviceStepsGridView.Rows.Add()];
-                    ServiceStepsGridViewRenderRow(row, f.ServiceStep);
-                }
+                    if (row == null)
+                    {
+                        row = stepsGridView.Rows[stepsGridView.Rows.Add()];
+                    }
+                    RenderStepsGridViewRow(row, f.ServiceStep);
+                };
+
+                f.ShowDialog();
             }
         }
 
-        private async void serviceStepsGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        private async void stepsGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
             ServiceStep serviceStep = e.Row.Tag as ServiceStep;
 
@@ -132,19 +142,21 @@ namespace Queue.Administrator
             }
         }
 
-        private void serviceStepsGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void stepsGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                var row = serviceStepsGridView.Rows[e.RowIndex];
+                var row = stepsGridView.Rows[e.RowIndex];
                 ServiceStep serviceStep = row.Tag as ServiceStep;
 
                 using (var f = new EditServiceStepForm(channelBuilder, currentUser, service.Id, serviceStep.Id))
                 {
-                    if (f.ShowDialog() == DialogResult.OK)
+                    f.Saved += (s, eventArgs) =>
                     {
-                        ServiceStepsGridViewRenderRow(row, f.ServiceStep);
-                    }
+                        RenderStepsGridViewRow(row, f.ServiceStep);
+                    };
+
+                    f.ShowDialog();
                 }
             }
         }

@@ -239,10 +239,11 @@ namespace Queue.Notification.Models
             ticker.SetSpeed(mediaConfig.TickerSpeed);
             ticker.Start();
 
-            foreach (MediaConfigFile f in mediaConfig.MediaFiles)
-            {
-                vlcControl.Medias.Add(new LocationMedia(string.Format(MediaFileUriPattern, mediaConfig.ServiceUrl, f.Id)));
-            }
+            //TODO: переделать на запрос на сервер
+            //foreach (MediaConfigFile f in mediaConfig.MediaFiles)
+            //{
+            //    vlcControl.Medias.Add(new LocationMedia(string.Format(MediaFileUriPattern, mediaConfig.ServiceUrl, f.Id)));
+            //}
 
             vlcControl.Stop();
             vlcControl.Play();

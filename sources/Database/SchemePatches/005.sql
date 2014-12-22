@@ -1,0 +1,1 @@
+﻿update _user set [Permissions] = 511 where Role  = 'Administrator';

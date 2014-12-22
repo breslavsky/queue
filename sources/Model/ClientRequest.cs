@@ -24,9 +24,6 @@ namespace Queue.Model
         public ClientRequest()
         {
             CreateDate = DateTime.Now;
-            Type = ClientRequestType.Live;
-            RequestDate = DateTime.MinValue;
-            State = ClientRequestState.Waiting;
         }
 
         #region properties
@@ -81,6 +78,9 @@ namespace Queue.Model
         [Min(Value = 1, Message = "Количество объектов не может быть менее 1")]
         [Property]
         public virtual int Subjects { get; set; }
+
+        [Property]
+        public virtual TimeSpan ClientInterval { get; set; }
 
         [Property]
         public virtual TimeSpan WaitingStartTime { get; set; }
@@ -223,17 +223,18 @@ namespace Queue.Model
             Close(ClientRequestState.Absence);
         }
 
-        public virtual void Rendering()
+        public virtual void Rendering(TimeSpan clientInterval)
         {
+            ClientInterval = clientInterval;
             CallingFinishTime = RenderStartTime = DateTime.Now.TimeOfDay;
             State = ClientRequestState.Rendering;
         }
 
-        public virtual void Rendered(TimeSpan clientInterval)
+        public virtual void Rendered()
         {
             RenderFinishTime = DateTime.Now.TimeOfDay;
 
-            Productivity = (float)clientInterval.Ticks / (RenderFinishTime - RenderStartTime).Ticks * 100;
+            Productivity = (float)ClientInterval.Ticks / (RenderFinishTime - RenderStartTime).Ticks * 100;
 
             Close(ClientRequestState.Rendered);
         }

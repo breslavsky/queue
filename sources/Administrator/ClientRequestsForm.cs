@@ -102,10 +102,14 @@ namespace Queue.Administrator
                 var row = clientRequestsGridView.Rows[e.RowIndex];
                 var clientRequest = row.Tag as ClientRequest;
 
-                using (var form = new EditClientRequestForm(channelBuilder, currentUser, clientRequest.Id))
+                using (var f = new EditClientRequestForm(channelBuilder, currentUser, clientRequest.Id))
                 {
-                    form.ShowDialog();
-                    RenderClientRequestsGridViewRow(row, form.ClientRequest);
+                    f.Saved += (s, eventArgs) =>
+                    {
+                        RenderClientRequestsGridViewRow(row, f.ClientRequest);
+                    };
+
+                    f.ShowDialog();
                 }
             }
         }

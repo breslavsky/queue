@@ -10,11 +10,6 @@ namespace Queue.Model
     [Cache(Usage = CacheUsage.ReadWrite)]
     public class ServiceRendering : IdentifiedEntity
     {
-        public ServiceRendering()
-        {
-            Mode = ServiceRenderingMode.AllRequests;
-        }
-
         #region properties
 
         [NotNull(Message = "Для обслуживания услуги не указано расписание")]

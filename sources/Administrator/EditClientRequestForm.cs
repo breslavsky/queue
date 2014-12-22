@@ -25,6 +25,8 @@ namespace Queue.Administrator
 {
     public partial class EditClientRequestForm : Queue.UI.WinForms.RichForm
     {
+        public event EventHandler<EventArgs> Saved;
+
         private static Properties.Settings settings = Properties.Settings.Default;
 
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
@@ -138,7 +140,7 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    operatorControl.Initialize<QueueOperator>(await taskPool.AddTask(channel.Service.GetOperators()));
+                    operatorControl.Initialize<QueueOperator>(await taskPool.AddTask(channel.Service.GetUserList(UserRole.Operator)));
 
                     ClientRequest = await taskPool.AddTask(channel.Service.GetClientRequest(clientRequestId));
                 }
@@ -384,9 +386,12 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    clientRequest = await taskPool.AddTask(channel.Service.EditClientRequest(clientRequest));
+                    ClientRequest = await taskPool.AddTask(channel.Service.EditClientRequest(clientRequest));
 
-                    DialogResult = DialogResult.OK;
+                    if (Saved != null)
+                    {
+                        Saved(this, EventArgs.Empty);
+                    }
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tickerGroupBox = new System.Windows.Forms.GroupBox();
             this.TickerLabel = new System.Windows.Forms.Label();
             this.tickerTextBox = new System.Windows.Forms.TextBox();
@@ -129,14 +129,14 @@
             this.mediaConfigFilesGridView.AllowUserToAddRows = false;
             this.mediaConfigFilesGridView.AllowUserToResizeColumns = false;
             this.mediaConfigFilesGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mediaConfigFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mediaConfigFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.mediaConfigFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mediaConfigFilesGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nameColumn});
@@ -144,6 +144,7 @@
             this.mediaConfigFilesGridView.Margin = new System.Windows.Forms.Padding(0);
             this.mediaConfigFilesGridView.MultiSelect = false;
             this.mediaConfigFilesGridView.Name = "mediaConfigFilesGridView";
+            this.mediaConfigFilesGridView.ReadOnly = true;
             this.mediaConfigFilesGridView.RowHeadersVisible = false;
             this.mediaConfigFilesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.mediaConfigFilesGridView.Size = new System.Drawing.Size(497, 108);
@@ -157,6 +158,7 @@
             this.nameColumn.FillWeight = 80F;
             this.nameColumn.HeaderText = "Название";
             this.nameColumn.Name = "nameColumn";
+            this.nameColumn.ReadOnly = true;
             // 
             // addMediaConfigFileButton
             // 

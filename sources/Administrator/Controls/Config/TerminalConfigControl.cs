@@ -65,34 +65,22 @@ namespace Queue.Administrator
 
         private void PINUpDown_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.PIN = (int)PINUpDown.Value;
-            }
+            config.PIN = (int)PINUpDown.Value;
         }
 
         private void columnsUpDown_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.Columns = (int)columnsUpDown.Value;
-            }
+            config.Columns = (int)columnsUpDown.Value;
         }
 
         private void rowsUpDown_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.Rows = (int)rowsUpDown.Value;
-            }
+            config.Rows = (int)rowsUpDown.Value;
         }
 
         private void currentDayRecordingCheckBox_Leave(object sender, EventArgs e)
         {
-            if (config != null)
-            {
-                config.CurrentDayRecording = currentDayRecordingCheckBox.Checked;
-            }
+            config.CurrentDayRecording = currentDayRecordingCheckBox.Checked;
         }
 
         private async void saveButton_Click(object sender, EventArgs e)
@@ -103,7 +91,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    await taskPool.AddTask(channel.Service.EditTerminalConfig(config));
+                    config = await taskPool.AddTask(channel.Service.EditTerminalConfig(config));
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

@@ -57,7 +57,7 @@ namespace Queue.Terminal.Core
             set { SetProperty(ref subjectsCount, value); }
         }
 
-        public Manager CurrentManager { get; set; }
+        public Administrator CurrentAdministrator { get; set; }
 
         public void Reset()
         {

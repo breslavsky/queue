@@ -8,16 +8,19 @@ using System.Text.RegularExpressions;
 
 namespace Queue.Model
 {
-    [Subclass(ExtendsType = typeof(ServiceParameter), DiscriminatorValueObject = ServiceParameterType.Options, Lazy = false, DynamicUpdate = true)]
+    [Subclass(ExtendsType = typeof(ServiceParameter),
+        DiscriminatorValueObject = ServiceParameterType.Options,
+        Lazy = false,
+        DynamicUpdate = true)]
     public class ServiceParameterOptions : ServiceParameter
     {
         #region properties
 
         [Property]
-        public virtual string Options { get; set; }
+        public virtual bool IsMultiple { get; set; }
 
         [Property]
-        public virtual bool IsMultiple { get; set; }
+        public virtual string Options { get; set; }
 
         #endregion properties
 
