@@ -513,6 +513,7 @@
       <DependentUpon>ServiceStepsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Translate\AdministratorForm.en-US.resx" />
+    <EmbeddedResource Include="Translate\ManagerForm.en-US.resx" />
     <EmbeddedResource Include="Translate\OfficesForm.en-US.resx" />
     <EmbeddedResource Include="Translate\QueueMonitorForm.en-US.resx" />
     <EmbeddedResource Include="Translate\ServicesForm.en-US.resx" />
