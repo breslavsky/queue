@@ -34,7 +34,7 @@ namespace Queue.Services.DTO
 
         public T Cast<T>() where T : IdentifiedEntity
         {
-            var instance = Activator.CreateInstance<T>();
+            T instance = Activator.CreateInstance<T>();
             instance.Id = Id;
             instance.Presentation = Presentation;
             return instance;

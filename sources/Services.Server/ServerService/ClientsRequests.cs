@@ -25,7 +25,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -136,7 +136,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -313,7 +313,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -737,7 +737,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -919,7 +919,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -970,7 +970,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.ClientsRequests);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())

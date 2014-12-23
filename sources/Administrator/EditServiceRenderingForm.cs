@@ -90,10 +90,10 @@ namespace Queue.Administrator
                     if (schedule is ServiceSchedule)
                     {
                         Service service = (schedule as ServiceSchedule).Service;
-                        serviceStepControl.Initialize<ServiceStep>(await taskPool.AddTask(channel.Service.GetServiceStepList(service.Id)));
+                        serviceStepControl.Initialize(await taskPool.AddTask(channel.Service.GetServiceStepList(service.Id)));
                     }
 
-                    operatorControl.Initialize<QueueOperator>(await taskPool.AddTask(channel.Service.GetUserList(UserRole.Operator)));
+                    operatorControl.Initialize(await taskPool.AddTask(channel.Service.GetUserList(UserRole.Operator)));
 
                     ServiceRendering = serviceRenderingId != Guid.Empty ?
                         await taskPool.AddTask(channel.Service.GetServiceRendering(serviceRenderingId))

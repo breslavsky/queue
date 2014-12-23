@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Junte.Data.NHibernate;
 using Queue.Model;
 using System.Drawing;
 
@@ -17,9 +18,6 @@ namespace Queue.Services.Server
         protected override void Configure()
         {
             Mapper.CreateMap<Color, string>().ConvertUsing(new ColorTypeConverter());
-
-            //ConfigurationIsValid
-            Mapper.AssertConfigurationIsValid();
         }
     }
 
@@ -47,9 +45,6 @@ namespace Queue.Services.Server
             Mapper.CreateMap<PortalConfig, DTO.PortalConfig>();
             Mapper.CreateMap<MediaConfig, DTO.MediaConfig>();
             Mapper.CreateMap<NotificationConfig, DTO.NotificationConfig>();
-
-            //ConfigurationIsValid
-            Mapper.AssertConfigurationIsValid();
         }
     }
 
@@ -60,9 +55,6 @@ namespace Queue.Services.Server
             Mapper.CreateMap<Workplace, DTO.Workplace>();
             Mapper.CreateMap<Workplace, DTO.IdentifiedEntity>()
                 .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
-            //ConfigurationIsValid
-            Mapper.AssertConfigurationIsValid();
         }
     }
 
@@ -71,9 +63,6 @@ namespace Queue.Services.Server
         protected override void Configure()
         {
             Mapper.CreateMap<Client, DTO.Client>();
-
-            //ConfigurationIsValid
-            Mapper.AssertConfigurationIsValid();
         }
     }
 
@@ -87,19 +76,8 @@ namespace Queue.Services.Server
                 .Include<Administrator, DTO.Administrator>()
                 .Include<Operator, DTO.Operator>();
 
-            Mapper.CreateMap<User, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
             Mapper.CreateMap<Administrator, DTO.Administrator>();
-            Mapper.CreateMap<Administrator, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
             Mapper.CreateMap<Operator, DTO.Operator>();
-            Mapper.CreateMap<Operator, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
-            //ConfigurationIsValid
-            Mapper.AssertConfigurationIsValid();
         }
     }
 
@@ -108,9 +86,6 @@ namespace Queue.Services.Server
         protected override void Configure()
         {
             Mapper.CreateMap<Office, DTO.Office>();
-
-            //ConfigurationIsValid
-            Mapper.AssertConfigurationIsValid();
         }
     }
 
@@ -182,9 +157,6 @@ namespace Queue.Services.Server
             Mapper.CreateMap<ServiceExceptionSchedule, DTO.ServiceExceptionSchedule>();
             Mapper.CreateMap<ServiceExceptionSchedule, DTO.IdentifiedEntity>()
                 .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
-            //ConfigurationIsValid
-            Mapper.AssertConfigurationIsValid();
         }
     }
 
@@ -200,9 +172,6 @@ namespace Queue.Services.Server
 
             Mapper.CreateMap<QueuePlanMetric, DTO.QueuePlanMetric>();
             Mapper.CreateMap<QueuePlanServiceMetric, DTO.QueuePlanServiceMetric>();
-
-            //ConfigurationIsValid
-            Mapper.AssertConfigurationIsValid();
         }
     }
 
@@ -215,9 +184,6 @@ namespace Queue.Services.Server
             Mapper.CreateMap<ClientRequest, DTO.ClientRequest>();
             Mapper.CreateMap<ClientRequestParameter, DTO.ClientRequestParameter>();
             Mapper.CreateMap<ClientRequestPlan, DTO.ClientRequestPlan>();
-
-            //ConfigurationIsValid
-            Mapper.AssertConfigurationIsValid();
         }
     }
 
@@ -234,9 +200,6 @@ namespace Queue.Services.Server
 
             Mapper.CreateMap<UserEvent, DTO.UserEvent>();
             Mapper.CreateMap<ClientRequestEvent, DTO.ClientRequestEvent>();
-
-            //ConfigurationIsValid
-            Mapper.AssertConfigurationIsValid();
         }
     }
 
@@ -252,9 +215,6 @@ namespace Queue.Services.Server
             Mapper.CreateMap<OperatorPlanMetrics, DTO.OperatorPlanMetrics>();
             Mapper.CreateMap<NotDistributedClientRequest, DTO.QueuePlan.NotDistributedClientRequest>();
             Mapper.CreateMap<ServiceFreeTime, DTO.ServiceFreeTime>();
-
-            //ConfigurationIsValid
-            Mapper.AssertConfigurationIsValid();
         }
     }
 
@@ -272,6 +232,15 @@ namespace Queue.Services.Server
             Mapper.AddProfile(new ClientRequestDTOProfile());
             Mapper.AddProfile(new EventDTOProfile());
             Mapper.AddProfile(new QueuePlanDTOProfile());
+
+            Mapper.CreateMap<IdentifiedEntity, DTO.IdentifiedEntity>()
+
+                .Include<User, DTO.IdentifiedEntity>()
+                .Include<Administrator, DTO.IdentifiedEntity>()
+                .Include<Operator, DTO.IdentifiedEntity>()
+                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
+
+            Mapper.AssertConfigurationIsValid();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Junte.Data.NHibernate;
-using Junte.UI.WinForms;
 using Junte.UI.WinForms.NHibernate;
+using Junte.UI.WinForms.NHibernate.Configuration;
 using log4net;
 using NHibernate;
 using NHibernate.Criterion;
@@ -34,6 +34,8 @@ namespace Queue.Metric
 
             updateTimer = new Timer();
             updateTimer.Elapsed += updateTimer_Elapsed;
+
+            settings.Profiles = settings.Profiles ?? new DatabaseSettingsProfiles();
         }
 
         private void updateTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -230,67 +232,28 @@ namespace Queue.Metric
 
         private void connectButton_Click(object sender, EventArgs eventArgs)
         {
-            using (LoginForm loginForm = new LoginForm(settings.Database ?? new DatabaseSettings()))
+            using (LoginForm f = new LoginForm(settings.Profiles, DatabaseConnect))
             {
-                loginForm.OnLogin += (s, e) =>
-                {
-                    try
-                    {
-                        sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, e.Settings);
-                        settings.Database = e.Settings;
-                        settings.Save();
-
-                        loginForm.DialogResult = DialogResult.OK;
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Error(exception.InnerException);
-                    }
-                };
-
-                if (loginForm.ShowDialog() != DialogResult.OK)
-                {
-                    return;
-                }
+                f.ShowDialog();
             }
+        }
 
-            if (isValidateCheckBox.Checked)
-            {
-                bool isSchemeValid = false;
-
-                try
-                {
-                    sessionProvider.SchemaValidate();
-                    isSchemeValid = true;
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(string.Format("База данных не обновлена [{0}]. Будет произведено обновление базы данных.", exception.Message));
-                }
-
-                if (!isSchemeValid)
-                {
-                    try
-                    {
-                        sessionProvider.SchemaUpdate();
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                        return;
-                    }
-                }
-            }
+        private bool DatabaseConnect(DatabaseSettings s)
+        {
+            sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, s);
+            settings.Save();
 
             databaseGroupBox.Enabled = false;
 
             updateTimer.Start();
 
-            FormClosing += (e, s) =>
+            FormClosing += (sender, eventArgs) =>
             {
                 sessionProvider.Dispose();
                 updateTimer.Stop();
             };
+
+            return true;
         }
     }
 }

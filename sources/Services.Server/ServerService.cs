@@ -9,12 +9,8 @@ using Queue.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.ServiceModel.Description;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace Queue.Services.Server
 {
@@ -49,7 +45,7 @@ namespace Queue.Services.Server
             }
             catch { }
 
-            logger.Debug(string.Format("Создан новый экземпляр службы [{0}]", sessionId));
+            logger.DebugFormat("Создан новый экземпляр службы [{0}]", sessionId);
 
             try
             {
@@ -229,7 +225,7 @@ namespace Queue.Services.Server
             UnSubscribe();
         }
 
-        private void checkPermission(UserRole role, Enum permissions = null)
+        private void CheckPermission(UserRole role, Enum permissions = null)
         {
             if (currentUser == null)
             {

@@ -75,8 +75,8 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    serviceControl.Initialize<Service>(await taskPool.AddTask(channel.Service.GetServiceList()));
-                    operatorControl.Initialize<QueueOperator>(await taskPool.AddTask(channel.Service.GetUserList(UserRole.Operator)));
+                    serviceControl.Initialize(await taskPool.AddTask(channel.Service.GetServiceList()));
+                    operatorControl.Initialize(await taskPool.AddTask(channel.Service.GetUserList(UserRole.Operator)));
 
                     RefreshClienRequestsGridView();
                 }

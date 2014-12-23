@@ -5,14 +5,7 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using QueueOperator = Queue.Services.DTO.Operator;
 
@@ -75,7 +68,7 @@ namespace Queue.Administrator
                 {
                     try
                     {
-                        workplaceControl.Initialize<QueueOperator>(await taskPool.AddTask(channel.Service.GetWorkplacesList()));
+                        workplaceControl.Initialize(await taskPool.AddTask(channel.Service.GetWorkplacesList()));
 
                         Operator = await taskPool.AddTask(channel.Service.GetUser(operatorId)) as QueueOperator;
                     }

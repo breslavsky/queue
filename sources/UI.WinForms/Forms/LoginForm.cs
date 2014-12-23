@@ -98,7 +98,7 @@ namespace Queue.UI.WinForms
                 {
                     connectButton.Enabled = false;
 
-                    usersControl.Initialize<User>(await taskPool.AddTask(channel.Service.GetUserList(userRole)));
+                    usersControl.Initialize(await taskPool.AddTask(channel.Service.GetUserList(userRole)));
                     if (UserId != Guid.Empty)
                     {
                         usersControl.Select<User>(new User() { Id = UserId });

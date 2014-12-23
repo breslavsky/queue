@@ -84,7 +84,7 @@ namespace Queue.Administrator
                     {
                         try
                         {
-                            serviceStepControl.Initialize<ServiceStep>(await channel.Service.GetServiceStepList(service.Id));
+                            serviceStepControl.Initialize(await channel.Service.GetServiceStepList(service.Id));
                             serviceStepControl.Select<ServiceStep>(clientRequest.ServiceStep);
 
                             eventsGridView.Rows.Clear();
@@ -140,7 +140,7 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    operatorControl.Initialize<QueueOperator>(await taskPool.AddTask(channel.Service.GetUserList(UserRole.Operator)));
+                    operatorControl.Initialize(await taskPool.AddTask(channel.Service.GetUserList(UserRole.Operator)));
 
                     ClientRequest = await taskPool.AddTask(channel.Service.GetClientRequest(clientRequestId));
                 }

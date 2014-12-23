@@ -39,7 +39,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.DefaultSchedule);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.DefaultSchedule);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -64,7 +64,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.DefaultSchedule);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.DefaultSchedule);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -139,7 +139,7 @@ namespace Queue.Services.Server
 
         public async Task<DTO.Schedule> GetServiceWeekdaySchedule(Guid serviceId, DayOfWeek dayOfWeek)
         {
-            checkPermission(UserRole.Administrator, AdministratorPermissions.Services);
+            CheckPermission(UserRole.Administrator, AdministratorPermissions.Services);
 
             return await Task.Run(() =>
             {
@@ -171,7 +171,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.Services);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.Services);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -251,7 +251,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.Services);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.Services);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -283,7 +283,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.Services);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.Services);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -400,7 +400,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                CheckPermission(UserRole.Administrator);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -453,7 +453,7 @@ namespace Queue.Services.Server
         {
             await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator);
+                CheckPermission(UserRole.Administrator);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -523,7 +523,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.Services);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.Services);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -625,7 +625,7 @@ namespace Queue.Services.Server
         {
             await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.Services);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.Services);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())

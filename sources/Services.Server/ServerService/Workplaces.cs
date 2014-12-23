@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Junte.Data.NHibernate;
 using NHibernate.Criterion;
 using Queue.Model;
 using Queue.Model.Common;
@@ -72,7 +71,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.Workplaces);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.Workplaces);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -118,7 +117,7 @@ namespace Queue.Services.Server
         {
             await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.Workplaces);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.Workplaces);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())

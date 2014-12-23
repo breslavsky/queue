@@ -5,7 +5,6 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
 using System.ServiceModel;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Queue.Administrator

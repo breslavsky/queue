@@ -513,7 +513,7 @@ namespace Queue.Services.Server
         /// </summary>
         public ServiceRendering[] GetServiceRenderings(Schedule schedule, ServiceStep serviceStep, ServiceRenderingMode serviceRenderingMode)
         {
-            var key = new ServiceRenderingKey(schedule, serviceStep, serviceRenderingMode);
+            ServiceRenderingKey key = new ServiceRenderingKey(schedule, serviceStep, serviceRenderingMode);
 
             if (!serviceRenderings.ContainsKey(key))
             {

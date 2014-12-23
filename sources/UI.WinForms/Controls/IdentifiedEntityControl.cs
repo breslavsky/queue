@@ -27,7 +27,7 @@ namespace Queue.UI.WinForms
             InitializeComponent();
         }
 
-        public void Initialize<T>(IdentifiedEntity[] entities) where T : IdentifiedEntity
+        public void Initialize(IdentifiedEntity[] entities)
         {
             frozen = true;
 

@@ -17,7 +17,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.Reports);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.Reports);
                 return GenerateReport(new ServiceRatingReport(services, detailLavel, settings));
             });
         }
@@ -26,7 +26,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                checkPermission(UserRole.Administrator, AdministratorPermissions.Reports);
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.Reports);
                 return GenerateReport(new OperatorRatingReport(operators, detailLavel, settings));
             });
         }

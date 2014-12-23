@@ -174,9 +174,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(269, 295);
-            this.Controls.Add(this.permissionsLabel);
-            this.Controls.Add(this.permissionsListBox);
-            this.Controls.Add(this.passwordButton);
             this.Controls.Add(this.surnameLabel);
             this.Controls.Add(this.surnameTextBox);
             this.Controls.Add(this.nameLabel);
@@ -187,6 +184,9 @@
             this.Controls.Add(this.emailTextBox);
             this.Controls.Add(this.mobileLabel);
             this.Controls.Add(this.mobileTextBox);
+            this.Controls.Add(this.permissionsLabel);
+            this.Controls.Add(this.permissionsListBox);
+            this.Controls.Add(this.passwordButton);
             this.Controls.Add(this.saveButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "EditAdministratorForm";
