@@ -127,10 +127,10 @@
     <value>E-mail address</value>
   </data>
   <data name="InterruptionFinishTimeColumn.HeaderText" xml:space="preserve">
-    <value>End of interruption</value>
+    <value>Interruption finish</value>
   </data>
   <data name="InterruptionStartTimeColumn.HeaderText" xml:space="preserve">
-    <value>Start of interruption</value>
+    <value>Interruption start</value>
   </data>
   <data name="isInterruptionColumn.HeaderText" xml:space="preserve">
     <value>Interruption</value>

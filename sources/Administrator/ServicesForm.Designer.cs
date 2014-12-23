@@ -73,7 +73,7 @@
             this.deleteServiceGroupMenuItem,
             this.deleteServiceMenuItem});
             this.contextMenuStrip.Name = "serviceCategoriesTreeMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(203, 136);
+            this.contextMenuStrip.Size = new System.Drawing.Size(203, 158);
             this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
             // 
             // addServiceGroupMenuItem

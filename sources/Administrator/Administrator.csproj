@@ -514,6 +514,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Translate\AdministratorForm.en-US.resx" />
     <EmbeddedResource Include="Translate\OfficesForm.en-US.resx" />
+    <EmbeddedResource Include="Translate\ServicesForm.en-US.resx" />
     <EmbeddedResource Include="Translate\UsersForm.en-US.resx" />
     <EmbeddedResource Include="Translate\WorkplacesForm.en-US.resx" />
     <EmbeddedResource Include="WorkplacesForm.resx">
