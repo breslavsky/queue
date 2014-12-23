@@ -30,15 +30,15 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QueueMonitorForm));
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.elementHost = new System.Windows.Forms.Integration.ElementHost();
-            this.queueMonitorControl = new Queue.Administrator.QueueMonitorControl();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.refreshButton = new System.Windows.Forms.Button();
+            this.planDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.loadButton = new System.Windows.Forms.Button();
             this.numberLabel = new System.Windows.Forms.Label();
-            this.searchButton = new System.Windows.Forms.Button();
             this.numberUpDown = new System.Windows.Forms.NumericUpDown();
-            this.planDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.searchButton = new System.Windows.Forms.Button();
+            this.refreshButton = new System.Windows.Forms.Button();
+            this.elementHost = new System.Windows.Forms.Integration.ElementHost();
+            this.queueMonitorControl = new Queue.Administrator.QueueMonitorControl();
             this.mainTableLayoutPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numberUpDown)).BeginInit();
@@ -60,18 +60,6 @@
             this.mainTableLayoutPanel.Size = new System.Drawing.Size(830, 580);
             this.mainTableLayoutPanel.TabIndex = 0;
             // 
-            // elementHost
-            // 
-            this.elementHost.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
-            this.elementHost.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.elementHost.Location = new System.Drawing.Point(0, 35);
-            this.elementHost.Margin = new System.Windows.Forms.Padding(0);
-            this.elementHost.Name = "elementHost";
-            this.elementHost.Size = new System.Drawing.Size(830, 545);
-            this.elementHost.TabIndex = 0;
-            this.elementHost.Text = "elementHost1";
-            this.elementHost.Child = this.queueMonitorControl;
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.planDateTimePicker);
@@ -87,18 +75,13 @@
             this.panel1.Size = new System.Drawing.Size(830, 35);
             this.panel1.TabIndex = 0;
             // 
-            // refreshButton
+            // planDateTimePicker
             // 
-            this.refreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.refreshButton.Image = ((System.Drawing.Image)(resources.GetObject("refreshButton.Image")));
-            this.refreshButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.refreshButton.Location = new System.Drawing.Point(695, 5);
-            this.refreshButton.Name = "refreshButton";
-            this.refreshButton.Size = new System.Drawing.Size(130, 25);
-            this.refreshButton.TabIndex = 0;
-            this.refreshButton.Text = "Перезагрузить";
-            this.refreshButton.UseVisualStyleBackColor = true;
-            this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
+            this.planDateTimePicker.Location = new System.Drawing.Point(5, 5);
+            this.planDateTimePicker.Name = "planDateTimePicker";
+            this.planDateTimePicker.Size = new System.Drawing.Size(140, 20);
+            this.planDateTimePicker.TabIndex = 0;
+            this.planDateTimePicker.Value = new System.DateTime(2013, 1, 1, 0, 0, 0, 0);
             // 
             // loadButton
             // 
@@ -118,16 +101,6 @@
             this.numberLabel.Size = new System.Drawing.Size(41, 13);
             this.numberLabel.TabIndex = 0;
             this.numberLabel.Text = "Номер";
-            // 
-            // searchButton
-            // 
-            this.searchButton.Location = new System.Drawing.Point(351, 5);
-            this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(75, 25);
-            this.searchButton.TabIndex = 0;
-            this.searchButton.Text = "Найти";
-            this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // numberUpDown
             // 
@@ -151,13 +124,41 @@
             0,
             0});
             // 
-            // planDateTimePicker
+            // searchButton
             // 
-            this.planDateTimePicker.Location = new System.Drawing.Point(5, 5);
-            this.planDateTimePicker.Name = "planDateTimePicker";
-            this.planDateTimePicker.Size = new System.Drawing.Size(140, 20);
-            this.planDateTimePicker.TabIndex = 0;
-            this.planDateTimePicker.Value = new System.DateTime(2013, 1, 1, 0, 0, 0, 0);
+            this.searchButton.Location = new System.Drawing.Point(351, 5);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(75, 25);
+            this.searchButton.TabIndex = 0;
+            this.searchButton.Text = "Найти";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            // 
+            // refreshButton
+            // 
+            this.refreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.refreshButton.Image = ((System.Drawing.Image)(resources.GetObject("refreshButton.Image")));
+            this.refreshButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.refreshButton.Location = new System.Drawing.Point(695, 5);
+            this.refreshButton.Name = "refreshButton";
+            this.refreshButton.Size = new System.Drawing.Size(130, 25);
+            this.refreshButton.TabIndex = 0;
+            this.refreshButton.Text = "Перезагрузить";
+            this.refreshButton.UseVisualStyleBackColor = true;
+            this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
+            // 
+            // elementHost
+            // 
+            this.elementHost.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
+            this.elementHost.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.elementHost.Location = new System.Drawing.Point(0, 35);
+            this.elementHost.Margin = new System.Windows.Forms.Padding(0);
+            this.elementHost.Name = "elementHost";
+            this.elementHost.Size = new System.Drawing.Size(830, 545);
+            this.elementHost.TabIndex = 0;
+            this.elementHost.Text = "elementHost1";
+            this.elementHost.ChildChanged += new System.EventHandler<System.Windows.Forms.Integration.ChildChangedEventArgs>(this.elementHost_ChildChanged);
+            this.elementHost.Child = this.queueMonitorControl;
             // 
             // QueueMonitorForm
             // 
