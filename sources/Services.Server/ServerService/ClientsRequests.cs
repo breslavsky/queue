@@ -792,6 +792,18 @@ namespace Queue.Services.Server
                         });
                     }
 
+                    if (clientRequest.RequestTime != source.RequestTime)
+                    {
+                        clientRequest.RequestTime = source.RequestTime;
+
+                        session.Save(new ClientRequestEvent()
+                        {
+                            ClientRequest = clientRequest,
+                            Message = string.Format("[{0}] изменил время запроса с на [{1:hh\\:mm}]",
+                                currentUser, clientRequest.RequestTime)
+                        });
+                    }
+
                     if (source.Service != null)
                     {
                         Guid serviceId = source.Service.Id;

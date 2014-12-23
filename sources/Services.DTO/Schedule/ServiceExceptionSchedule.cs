@@ -6,6 +6,11 @@ namespace Queue.Services.DTO
     [DataContract]
     public class ServiceExceptionSchedule : ServiceSchedule
     {
+        public ServiceExceptionSchedule()
+            : base()
+        {
+        }
+
         [DataMember]
         public DateTime ScheduleDate { get; set; }
     }

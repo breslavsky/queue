@@ -11,6 +11,7 @@ namespace Queue.Services.DTO
     {
         [DataMember]
         public string Name { get; set; }
+
         [DataMember]
         public string Value { get; set; }
 

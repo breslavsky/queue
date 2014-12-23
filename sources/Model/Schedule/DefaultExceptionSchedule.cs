@@ -10,12 +10,6 @@ namespace Queue.Model
     [Key(Column = "ScheduleId", ForeignKey = "DefaultExceptionScheduleToScheduleReference")]
     public class DefaultExceptionSchedule : Schedule
     {
-        public DefaultExceptionSchedule()
-            : base()
-        {
-            ScheduleDate = DateTime.Now;
-        }
-
         #region properties
 
         [Property(Index = "ScheduleDate")]

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.stateLabel = new System.Windows.Forms.Label();
             this.numberLabel = new System.Windows.Forms.Label();
             this.parametersLabel = new System.Windows.Forms.Label();
@@ -59,7 +59,6 @@
             this.clientTextBlock = new System.Windows.Forms.Label();
             this.serviceTextBlock = new System.Windows.Forms.Label();
             this.stateTextBlock = new System.Windows.Forms.Label();
-            this.requestTimeTextBlock = new System.Windows.Forms.Label();
             this.requestTimeLabel = new System.Windows.Forms.Label();
             this.serviceTypeLabel = new System.Windows.Forms.Label();
             this.serviceTypeTextBlock = new System.Windows.Forms.Label();
@@ -69,6 +68,7 @@
             this.operatorControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.serviceStepControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.typeControl = new Queue.UI.WinForms.EnumItemControl();
+            this.requestTimeTextBox = new System.Windows.Forms.MaskedTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.parametersGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).BeginInit();
@@ -108,14 +108,14 @@
             this.parametersGridView.AllowUserToAddRows = false;
             this.parametersGridView.AllowUserToDeleteRows = false;
             this.parametersGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.parametersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.parametersGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.parameterNameColumn,
@@ -177,14 +177,14 @@
             this.eventsGridView.AllowUserToAddRows = false;
             this.eventsGridView.AllowUserToDeleteRows = false;
             this.eventsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.eventsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.eventsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.eventsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.eventsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.createDateColumn,
@@ -380,16 +380,6 @@
             this.stateTextBlock.Size = new System.Drawing.Size(120, 20);
             this.stateTextBlock.TabIndex = 6;
             // 
-            // requestTimeTextBlock
-            // 
-            this.requestTimeTextBlock.BackColor = System.Drawing.Color.White;
-            this.requestTimeTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.requestTimeTextBlock.Location = new System.Drawing.Point(115, 55);
-            this.requestTimeTextBlock.Name = "requestTimeTextBlock";
-            this.requestTimeTextBlock.Padding = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.requestTimeTextBlock.Size = new System.Drawing.Size(60, 20);
-            this.requestTimeTextBlock.TabIndex = 8;
-            // 
             // requestTimeLabel
             // 
             this.requestTimeLabel.Location = new System.Drawing.Point(5, 55);
@@ -429,6 +419,7 @@
             // 
             // editPanel
             // 
+            this.editPanel.Controls.Add(this.requestTimeTextBox);
             this.editPanel.Controls.Add(this.saveButton);
             this.editPanel.Controls.Add(this.operatorControl);
             this.editPanel.Controls.Add(this.serviceStepControl);
@@ -439,7 +430,6 @@
             this.editPanel.Controls.Add(this.requestDateLabel);
             this.editPanel.Controls.Add(this.requestDateTextBlock);
             this.editPanel.Controls.Add(this.requestTimeLabel);
-            this.editPanel.Controls.Add(this.requestTimeTextBlock);
             this.editPanel.Controls.Add(this.subjectsLabel);
             this.editPanel.Controls.Add(this.subjectsUpDown);
             this.editPanel.Controls.Add(this.clientLabel);
@@ -495,11 +485,22 @@
             // typeControl
             // 
             this.typeControl.Enabled = false;
-            this.typeControl.Location = new System.Drawing.Point(180, 55);
+            this.typeControl.Location = new System.Drawing.Point(200, 55);
             this.typeControl.Name = "typeControl";
-            this.typeControl.Size = new System.Drawing.Size(135, 21);
+            this.typeControl.Size = new System.Drawing.Size(115, 21);
             this.typeControl.TabIndex = 17;
             this.typeControl.Leave += new System.EventHandler(this.typeControl_Leave);
+            // 
+            // requestTimeTextBox
+            // 
+            this.requestTimeTextBox.Location = new System.Drawing.Point(115, 55);
+            this.requestTimeTextBox.Mask = "00:00";
+            this.requestTimeTextBox.Name = "requestTimeTextBox";
+            this.requestTimeTextBox.Size = new System.Drawing.Size(35, 20);
+            this.requestTimeTextBox.TabIndex = 21;
+            this.requestTimeTextBox.Text = "0000";
+            this.requestTimeTextBox.ValidatingType = typeof(System.DateTime);
+            this.requestTimeTextBox.Leave += new System.EventHandler(this.requestTimeTextBox_Leave);
             // 
             // EditClientRequestForm
             // 
@@ -559,7 +560,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn messageColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn parameterNameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn parameterValueColumn;
-        private System.Windows.Forms.Label requestTimeTextBlock;
         private System.Windows.Forms.Label requestTimeLabel;
         private System.Windows.Forms.Label serviceTypeLabel;
         private System.Windows.Forms.Label serviceTypeTextBlock;
@@ -569,5 +569,6 @@
         private UI.WinForms.IdentifiedEntityControl operatorControl;
         private UI.WinForms.IdentifiedEntityControl serviceStepControl;
         private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.MaskedTextBox requestTimeTextBox;
     }
 }

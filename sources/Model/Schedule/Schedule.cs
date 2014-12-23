@@ -10,24 +10,6 @@ namespace Queue.Model
     [Cache(Usage = CacheUsage.ReadWrite)]
     public abstract class Schedule : IdentifiedEntity
     {
-        //TODO: delete!
-        public Schedule()
-        {
-            StartTime = new TimeSpan(10, 0, 0);
-            FinishTime = new TimeSpan(18, 0, 0);
-            IsWorked = true;
-            IsInterruption = true;
-            InterruptionStartTime = new TimeSpan(12, 0, 0);
-            InterruptionFinishTime = new TimeSpan(13, 0, 0);
-            ClientInterval = new TimeSpan(0, 10, 0);
-            Intersection = TimeSpan.Zero;
-            MaxClientRequests = byte.MaxValue;
-            RenderingMode = ServiceRenderingMode.AllRequests;
-            EarlyStartTime = new TimeSpan(10, 0, 0);
-            EarlyFinishTime = new TimeSpan(18, 0, 0);
-            EarlyReservation = 50;
-        }
-
         #region properties
 
         [Property]

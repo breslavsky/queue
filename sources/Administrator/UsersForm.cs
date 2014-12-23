@@ -152,6 +152,72 @@ namespace Queue.Administrator
             }
         }
 
+        private void usersGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            int rowIndex = e.RowIndex,
+                columnIndex = e.ColumnIndex;
+
+            if (rowIndex >= 0 && columnIndex >= 0)
+            {
+                var row = usersGridView.Rows[rowIndex];
+                User user = row.Tag as User;
+
+                if (user is QueueOperator)
+                {
+                    using (var f = new EditOperatorForm(channelBuilder, currentUser, user.Id))
+                    {
+                        f.Saved += (s, eventArgs) =>
+                        {
+                            RenderUsersGridRow(row, f.Operator);
+                        };
+
+                        f.ShowDialog();
+                    }
+                }
+                else if (user is QueueAdministrator)
+                {
+                    using (var f = new EditAdministratorForm(channelBuilder, currentUser, user.Id))
+                    {
+                        f.Saved += (s, eventArgs) =>
+                        {
+                            RenderUsersGridRow(row, f.Administrator);
+                        };
+
+                        f.ShowDialog();
+                    }
+                }
+            }
+        }
+
+        private async void usersGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно хотите удалить пользователя?", "Подтвердите удаление",
+                MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                User user = e.Row.Tag as User;
+
+                using (var channel = channelManager.CreateChannel())
+                {
+                    try
+                    {
+                        await taskPool.AddTask(channel.Service.DeleteUser(user.Id));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                }
+            }
+        }
+
         private void UsersGridViewRefresh()
         {
             if (usersTabs.SelectedTab.Equals(operatorsTabPage))
@@ -192,72 +258,6 @@ namespace Queue.Administrator
         {
             usersTableLayoutPanel.Parent = usersTabs.SelectedTab;
             UsersGridViewRefresh();
-        }
-
-        private async void usersGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
-        {
-            if (MessageBox.Show("Вы действительно хотите удалить пользователя?", "Подтвердите удаление",
-                                MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                User user = e.Row.Tag as User;
-
-                using (var channel = channelManager.CreateChannel())
-                {
-                    try
-                    {
-                        await taskPool.AddTask(channel.Service.DeleteUser(user.Id));
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
-                }
-            }
-        }
-
-        private void usersGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            int rowIndex = e.RowIndex,
-                columnIndex = e.ColumnIndex;
-
-            if (rowIndex >= 0 && columnIndex >= 0)
-            {
-                var row = usersGridView.Rows[rowIndex];
-                User user = row.Tag as User;
-
-                if (user is QueueOperator)
-                {
-                    using (var f = new EditOperatorForm(channelBuilder, currentUser, user.Id))
-                    {
-                        f.Saved += (s, eventArgs) =>
-                        {
-                            RenderUsersGridRow(row, f.Operator);
-                        };
-
-                        f.ShowDialog();
-                    }
-                }
-                else if (user is QueueAdministrator)
-                {
-                    using (var f = new EditAdministratorForm(channelBuilder, currentUser, user.Id))
-                    {
-                        f.Saved += (s, eventArgs) =>
-                        {
-                            RenderUsersGridRow(row, f.Administrator);
-                        };
-
-                        f.ShowDialog();
-                    }
-                }
-            }
         }
     }
 }

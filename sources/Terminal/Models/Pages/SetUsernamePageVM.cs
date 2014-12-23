@@ -68,9 +68,9 @@ namespace Queue.Terminal.Models.Pages
 
                     Model.CurrentClient = await taskPool.AddTask(channel.Service.EditClient(new Client()
                     {
-                        Surname = surname.ToInOffer(),
-                        Name = name.ToInOffer(),
-                        Patronymic = patronymic.ToInOffer()
+                        Surname = surname,
+                        Name = name,
+                        Patronymic = patronymic
                     }));
 
                     navigator.NextPage();

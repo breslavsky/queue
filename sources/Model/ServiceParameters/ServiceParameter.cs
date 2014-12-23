@@ -39,6 +39,6 @@ namespace Queue.Model
             return string.Format("{0} {1}", Type, Name);
         }
 
-        public abstract virtual ClientRequestParameter Compile(object value);
+        public abstract ClientRequestParameter Compile(object value);
     }
 }

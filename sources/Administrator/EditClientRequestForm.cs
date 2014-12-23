@@ -66,7 +66,7 @@ namespace Queue.Administrator
                     numberTextBlock.Text = clientRequest.Number.ToString();
                     isPriorityCheckBox.Checked = clientRequest.IsPriority;
                     requestDateTextBlock.Text = clientRequest.RequestDate.ToShortDateString();
-                    requestTimeTextBlock.Text = clientRequest.RequestTime.ToString("hh\\:mm\\:ss");
+                    requestTimeTextBox.Text = clientRequest.RequestTime.ToString("hh\\:mm");
                     subjectsUpDown.Value = clientRequest.Subjects;
                     typeControl.Select<ClientRequestType>(clientRequest.Type);
                     clientTextBlock.Text = clientRequest.Client != null ? clientRequest.Client.ToString() : string.Empty;
@@ -347,6 +347,19 @@ namespace Queue.Administrator
         private void operatorsControl_Leave(object sender, EventArgs e)
         {
             clientRequest.Operator = operatorControl.Selected<QueueOperator>();
+        }
+
+        private void requestTimeTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                clientRequest.RequestTime = TimeSpan.Parse(requestTimeTextBox.Text);
+            }
+            catch
+            {
+                UIHelper.Warning("Ошибочный формат времени запроса");
+                return;
+            }
         }
 
         private void serviceChangeLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

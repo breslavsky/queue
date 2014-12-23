@@ -7,12 +7,6 @@ namespace Queue.Model
     [Key(Column = "ScheduleId", ForeignKey = "ServiceExceptionScheduleToScheduleReference")]
     public class ServiceExceptionSchedule : ServiceSchedule
     {
-        public ServiceExceptionSchedule()
-            : base()
-        {
-            ScheduleDate = DateTime.Now;
-        }
-
         #region properties
 
         [Property(Index = "ScheduleDate")]

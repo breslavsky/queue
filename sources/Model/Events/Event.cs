@@ -9,7 +9,7 @@ namespace Queue.Model
 {
     [Class(Table = "event", DynamicUpdate = true, Lazy = false)]
     [Cache(Usage = CacheUsage.ReadWrite)]
-    public class Event : IdentifiedEntity
+    public abstract class Event : IdentifiedEntity
     {
         public Event()
         {

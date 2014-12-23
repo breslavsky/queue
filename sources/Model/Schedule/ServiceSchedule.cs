@@ -3,7 +3,7 @@ using System;
 
 namespace Queue.Model
 {
-    public class ServiceSchedule : Schedule
+    public abstract class ServiceSchedule : Schedule
     {
         #region properties
 

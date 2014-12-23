@@ -7,18 +7,12 @@ namespace Queue.Model
     [Key(Column = "ScheduleId", ForeignKey = "DefaultWeekdayScheduleToScheduleReference")]
     public class DefaultWeekdaySchedule : Schedule
     {
-        //TODO: см. выше
-        public DefaultWeekdaySchedule()
-            : base()
-        {
-            DayOfWeek = DayOfWeek.Monday;
-        }
-
         #region properties
 
         [Property(Index = "DayOfWeek")]
         public virtual DayOfWeek DayOfWeek { get; set; }
-        #endregion properties     
+
+        #endregion properties
 
         public override string ToString()
         {
