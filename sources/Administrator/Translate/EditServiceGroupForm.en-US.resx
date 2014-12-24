@@ -120,9 +120,6 @@
   <data name="codeLabel.Text" xml:space="preserve">
     <value>Code</value>
   </data>
-  <data name="colorButton.Text" xml:space="preserve">
-    <value>Select</value>
-  </data>
   <data name="columnsLabel.Text" xml:space="preserve">
     <value>Columns</value>
   </data>

@@ -20,18 +20,18 @@ namespace Queue.Reports.ServiceRatingReport
 {
     public abstract class BaseDetailedReport<T>
     {
-        protected ServiceRatingReportSettings settings;
         protected Guid[] servicesIds;
-
-        protected ISessionProvider SessionProvider
-        {
-            get { return ServiceLocator.Current.GetInstance<ISessionProvider>(); }
-        }
+        protected ServiceRatingReportSettings settings;
 
         public BaseDetailedReport(Guid[] servicesIds, ServiceRatingReportSettings settings)
         {
             this.settings = settings;
             this.servicesIds = servicesIds;
+        }
+
+        protected ISessionProvider SessionProvider
+        {
+            get { return ServiceLocator.Current.GetInstance<ISessionProvider>(); }
         }
 
         public HSSFWorkbook Generate()
@@ -90,13 +90,16 @@ namespace Queue.Reports.ServiceRatingReport
             }
         }
 
-        protected abstract DateTime GetStartDate();
+        protected ICellStyle CreateCellBoldStyle(IWorkbook workBook)
+        {
+            ICellStyle boldCellStyle = workBook.CreateCellStyle();
 
-        protected abstract DateTime GetFinishDate();
+            IFont font = workBook.CreateFont();
+            font.Boldweight = 1000;
+            boldCellStyle.SetFont(font);
 
-        protected abstract ProjectionList GetProjections();
-
-        protected abstract void RenderData(ISheet worksheet, T[] data);
+            return boldCellStyle;
+        }
 
         protected ProjectionList GetCommonProjections()
         {
@@ -152,33 +155,9 @@ namespace Queue.Reports.ServiceRatingReport
             return projections;
         }
 
-        protected void RenderRating(IRow row, ServiceRating rating)
-        {
-            ICell cell = row.CreateCell(5);
-            cell.SetCellValue(rating.Total);
-            cell = row.CreateCell(6);
-            cell.SetCellValue(rating.Live);
-            cell = row.CreateCell(7);
-            cell.SetCellValue(rating.Early);
-            cell = row.CreateCell(8);
-            cell.SetCellValue(rating.Waiting);
-            cell = row.CreateCell(9);
-            cell.SetCellValue(rating.Absence);
-            cell = row.CreateCell(10);
-            cell.SetCellValue(rating.Rendered);
-            cell = row.CreateCell(11);
-            cell.SetCellValue(rating.Canceled);
-            cell = row.CreateCell(12);
-            cell.SetCellValue(rating.Rendered != 0 ? Math.Round(rating.RenderTime.TotalMinutes / rating.Rendered) : 0);
-            cell = row.CreateCell(13);
-            cell.SetCellValue(rating.Rendered != 0 ? Math.Round(rating.WaitingTime.TotalMinutes / rating.Rendered) : 0);
-            cell = row.CreateCell(14);
-            cell.SetCellValue(rating.SubjectsTotal);
-            cell = row.CreateCell(15);
-            cell.SetCellValue(rating.SubjectsLive);
-            cell = row.CreateCell(16);
-            cell.SetCellValue(rating.SubjectsEarly);
-        }
+        protected abstract DateTime GetFinishDate();
+
+        protected abstract ProjectionList GetProjections();
 
         protected ServiceGroupDto GetServicesHierarchy()
         {
@@ -219,6 +198,102 @@ namespace Queue.Reports.ServiceRatingReport
                         ServicesGroups = rootGroups.ToArray(),
                         Services = rootServices.ToArray()
                     };
+            }
+        }
+
+        protected abstract DateTime GetStartDate();
+
+        protected abstract void RenderData(ISheet worksheet, T[] data);
+
+        protected void RenderRating(IRow row, ServiceRating rating)
+        {
+            ICell cell = row.CreateCell(5);
+            cell.SetCellValue(rating.Total);
+            cell = row.CreateCell(6);
+            cell.SetCellValue(rating.Live);
+            cell = row.CreateCell(7);
+            cell.SetCellValue(rating.Early);
+            cell = row.CreateCell(8);
+            cell.SetCellValue(rating.Waiting);
+            cell = row.CreateCell(9);
+            cell.SetCellValue(rating.Absence);
+            cell = row.CreateCell(10);
+            cell.SetCellValue(rating.Rendered);
+            cell = row.CreateCell(11);
+            cell.SetCellValue(rating.Canceled);
+            cell = row.CreateCell(12);
+            cell.SetCellValue(rating.Rendered != 0 ? Math.Round(rating.RenderTime.TotalMinutes / rating.Rendered) : 0);
+            cell = row.CreateCell(13);
+            cell.SetCellValue(rating.Rendered != 0 ? Math.Round(rating.WaitingTime.TotalMinutes / rating.Rendered) : 0);
+            cell = row.CreateCell(14);
+            cell.SetCellValue(rating.SubjectsTotal);
+            cell = row.CreateCell(15);
+            cell.SetCellValue(rating.SubjectsLive);
+            cell = row.CreateCell(16);
+            cell.SetCellValue(rating.SubjectsEarly);
+        }
+
+        protected void WriteBoldCell(IRow row, int cellIndex, Action<ICell> setValue)
+        {
+            ICell cell = row.CreateCell(cellIndex);
+            setValue(cell);
+            cell.CellStyle = CreateCellBoldStyle(row.Sheet.Workbook);
+        }
+
+        protected void WriteServiceData(ISheet worksheet, ServiceRating[] ratings, ServiceDto service, ref int rowIndex)
+        {
+            IRow row = worksheet.CreateRow(rowIndex++);
+            ICell cell = row.CreateCell(4);
+            cell.SetCellValue(service.Name);
+
+            if (settings.IsServiceTypes && service.Type != ServiceType.None)
+            {
+                cell.CellStyle = CreateCellBoldStyle(worksheet.Workbook);
+
+                ResourceManager translation = Translation.ServiceType.ResourceManager;
+
+                foreach (ServiceType serviceType in Enum.GetValues(typeof(ServiceType)))
+                {
+                    row = worksheet.CreateRow(rowIndex++);
+                    cell = row.CreateCell(4);
+                    cell.SetCellValue(translation.GetString(serviceType.ToString()));
+
+                    RenderRating(row, ratings.FirstOrDefault(r => r.Service.Id == service.Id && r.ServiceType.Equals(serviceType)) ??
+                                        new ServiceRating());
+                }
+            }
+            else
+            {
+                RenderRating(row, ratings.FirstOrDefault(r => r.Service.Id == service.Id) ??
+                                        new ServiceRating());
+            }
+        }
+
+        protected void WriteServiceGroupData(ISheet worksheet, ServiceRating[] ratings, ServiceGroupDto group, ref int rowIndex)
+        {
+            WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(group.Name));
+
+            foreach (ServiceGroupDto subGroup in group.ServicesGroups)
+            {
+                WriteServiceGroupData(worksheet, ratings, subGroup, ref rowIndex);
+            }
+
+            foreach (ServiceDto service in group.Services)
+            {
+                WriteServiceData(worksheet, ratings, service, ref rowIndex);
+            }
+        }
+
+        protected void WriteServicesRatings(ISheet worksheet, ServiceRating[] ratings, ServiceGroupDto root, ref int rowIndex)
+        {
+            foreach (ServiceGroupDto subGroup in root.ServicesGroups)
+            {
+                WriteServiceGroupData(worksheet, ratings, subGroup, ref rowIndex);
+            }
+
+            foreach (ServiceDto service in root.Services)
+            {
+                WriteServiceData(worksheet, ratings, service, ref rowIndex);
             }
         }
 
@@ -288,6 +363,16 @@ namespace Queue.Reports.ServiceRatingReport
             return null;
         }
 
+        private IList<ServiceDto> GetGroupServices(ISession session, ServiceGroup group)
+        {
+            return session.QueryOver<Service>()
+                     .Where(s => s.ServiceGroup == group)
+                     .OrderBy(s => s.SortId).Asc
+                     .List()
+                     .Select(s => new ServiceDto(s))
+                     .ToList();
+        }
+
         private IList<ServiceGroupDto> GetServicesGroups(ISession session, ServiceGroup parent = null)
         {
             IList<ServiceGroup> groups = session.QueryOver<ServiceGroup>()
@@ -310,88 +395,17 @@ namespace Queue.Reports.ServiceRatingReport
             return result;
         }
 
-        private IList<ServiceDto> GetGroupServices(ISession session, ServiceGroup group)
+        protected class ServiceDto
         {
-            return session.QueryOver<Service>()
-                     .Where(s => s.ServiceGroup == group)
-                     .OrderBy(s => s.SortId).Asc
-                     .List()
-                     .Select(s => new ServiceDto(s))
-                     .ToList();
-        }
+            public Guid Id;
+            public string Name;
+            public ServiceType Type;
 
-        protected ICellStyle CreateCellBoldStyle(IWorkbook workBook)
-        {
-            ICellStyle boldCellStyle = workBook.CreateCellStyle();
-
-            IFont font = workBook.CreateFont();
-            font.Boldweight = 1000;
-            boldCellStyle.SetFont(font);
-
-            return boldCellStyle;
-        }
-
-        protected void WriteBoldCell(IRow row, int cellIndex, Action<ICell> setValue)
-        {
-            ICell cell = row.CreateCell(cellIndex);
-            setValue(cell);
-            cell.CellStyle = CreateCellBoldStyle(row.Sheet.Workbook);
-        }
-
-        protected void WriteServicesRatings(ISheet worksheet, ServiceRating[] ratings, ServiceGroupDto root, ref int rowIndex)
-        {
-            foreach (ServiceGroupDto subGroup in root.ServicesGroups)
+            public ServiceDto(Service source)
             {
-                WriteServiceGroupData(worksheet, ratings, subGroup, ref rowIndex);
-            }
-
-            foreach (ServiceDto service in root.Services)
-            {
-                WriteServiceData(worksheet, ratings, service, ref rowIndex);
-            }
-        }
-
-        protected void WriteServiceGroupData(ISheet worksheet, ServiceRating[] ratings, ServiceGroupDto group, ref int rowIndex)
-        {
-            WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(group.Name));
-
-            foreach (ServiceGroupDto subGroup in group.ServicesGroups)
-            {
-                WriteServiceGroupData(worksheet, ratings, subGroup, ref rowIndex);
-            }
-
-            foreach (ServiceDto service in group.Services)
-            {
-                WriteServiceData(worksheet, ratings, service, ref rowIndex);
-            }
-        }
-
-        protected void WriteServiceData(ISheet worksheet, ServiceRating[] ratings, ServiceDto service, ref int rowIndex)
-        {
-            IRow row = worksheet.CreateRow(rowIndex++);
-            ICell cell = row.CreateCell(4);
-            cell.SetCellValue(service.Name);
-
-            if (settings.IsServiceTypes && service.Type != ServiceType.None)
-            {
-                cell.CellStyle = CreateCellBoldStyle(worksheet.Workbook);
-
-                ResourceManager translation = Translation.ServiceType.ResourceManager;
-
-                foreach (ServiceType serviceType in Enum.GetValues(typeof(ServiceType)))
-                {
-                    row = worksheet.CreateRow(rowIndex++);
-                    cell = row.CreateCell(4);
-                    cell.SetCellValue(translation.GetString(serviceType.ToString()));
-
-                    RenderRating(row, ratings.FirstOrDefault(r => r.Service.Id == service.Id && r.ServiceType.Equals(serviceType)) ??
-                                        new ServiceRating());
-                }
-            }
-            else
-            {
-                RenderRating(row, ratings.FirstOrDefault(r => r.Service.Id == service.Id) ??
-                                        new ServiceRating());
+                Id = source.Id;
+                Name = source.ToString();
+                Type = source.Type;
             }
         }
 
@@ -412,20 +426,6 @@ namespace Queue.Reports.ServiceRatingReport
                 Name = source.Name;
                 Services = new List<ServiceDto>();
                 ServicesGroups = new List<ServiceGroupDto>();
-            }
-        }
-
-        protected class ServiceDto
-        {
-            public Guid Id;
-            public string Name;
-            public ServiceType Type;
-
-            public ServiceDto(Service source)
-            {
-                Id = source.Id;
-                Name = source.ToString();
-                Type = source.Type;
             }
         }
     }

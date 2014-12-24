@@ -22,7 +22,6 @@
             this.codeTextBox = new System.Windows.Forms.TextBox();
             this.codeLabel = new System.Windows.Forms.Label();
             this.colorButton = new System.Windows.Forms.Button();
-            this.colorPanel = new System.Windows.Forms.Panel();
             this.descriptionLabel = new System.Windows.Forms.Label();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.commentTextBox = new System.Windows.Forms.TextBox();
@@ -91,21 +90,12 @@
             // 
             // colorButton
             // 
-            this.colorButton.Location = new System.Drawing.Point(180, 35);
+            this.colorButton.Location = new System.Drawing.Point(80, 35);
             this.colorButton.Name = "colorButton";
-            this.colorButton.Size = new System.Drawing.Size(80, 25);
+            this.colorButton.Size = new System.Drawing.Size(30, 25);
             this.colorButton.TabIndex = 0;
-            this.colorButton.Text = "Выбрать";
             this.colorButton.Click += new System.EventHandler(this.colorButton_Click);
-            // 
-            // colorPanel
-            // 
-            this.colorPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.colorPanel.Location = new System.Drawing.Point(85, 35);
-            this.colorPanel.Name = "colorPanel";
-            this.colorPanel.Size = new System.Drawing.Size(90, 25);
-            this.colorPanel.TabIndex = 0;
-            this.colorPanel.Leave += new System.EventHandler(this.colorPanel_Leave);
+            this.colorButton.Leave += new System.EventHandler(this.colorButton_Leave);
             // 
             // descriptionLabel
             // 
@@ -207,7 +197,6 @@
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.commentLabel);
-            this.Controls.Add(this.colorPanel);
             this.Controls.Add(this.colorButton);
             this.Controls.Add(this.saveButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -237,7 +226,6 @@
         private System.Windows.Forms.TextBox codeTextBox;
         private System.Windows.Forms.Label codeLabel;
         private System.Windows.Forms.Button colorButton;
-        private System.Windows.Forms.Panel colorPanel;
         private System.Windows.Forms.Label descriptionLabel;
         private System.Windows.Forms.TextBox descriptionTextBox;
         private System.Windows.Forms.TextBox commentTextBox;

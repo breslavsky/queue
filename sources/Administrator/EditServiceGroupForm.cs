@@ -57,7 +57,7 @@ namespace Queue.Administrator
                 rowsUpDown.Value = serviceGroup.Rows;
                 if (!string.IsNullOrWhiteSpace(serviceGroup.Color))
                 {
-                    colorPanel.BackColor = ColorTranslator.FromHtml(serviceGroup.Color);
+                    colorButton.BackColor = ColorTranslator.FromHtml(serviceGroup.Color);
                 }
             }
         }
@@ -88,7 +88,7 @@ namespace Queue.Administrator
             {
                 if (d.ShowDialog() == DialogResult.OK)
                 {
-                    colorPanel.BackColor = d.Color;
+                    colorButton.BackColor = d.Color;
                 }
             }
         }
@@ -188,9 +188,9 @@ namespace Queue.Administrator
             serviceGroup.Code = codeTextBox.Text;
         }
 
-        private void colorPanel_Leave(object sender, EventArgs e)
+        private void colorButton_Leave(object sender, EventArgs e)
         {
-            serviceGroup.Color = ColorTranslator.ToHtml(colorPanel.BackColor);
+            serviceGroup.Color = ColorTranslator.ToHtml(colorButton.BackColor);
         }
 
         private void columnsUpDown_Leave(object sender, EventArgs e)
