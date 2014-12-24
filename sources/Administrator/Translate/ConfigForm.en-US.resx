@@ -117,10 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="currentScheduleCheckBox.Text" xml:space="preserve">
-    <value>Define schedule</value>
+  <data name="couponConfigTabPage.Text" xml:space="preserve">
+    <value>Coupon template</value>
+  </data>
+  <data name="defaultConfigTabPage.Text" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="mediaConfigTabPage.Text" xml:space="preserve">
+    <value>Media</value>
+  </data>
+  <data name="notificationTabPage.Text" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="portalConfigTabPage.Text" xml:space="preserve">
+    <value>Portal</value>
+  </data>
+  <data name="SMTPConfigTabPage.Text" xml:space="preserve">
+    <value>Sending mail</value>
+  </data>
+  <data name="terminalConfigTabPage.Text" xml:space="preserve">
+    <value>Terminal</value>
   </data>
   <data name="Text" xml:space="preserve">
-    <value>Current schedule</value>
+    <value>Settings</value>
   </data>
 </root>
