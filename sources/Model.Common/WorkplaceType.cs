@@ -1,6 +1,4 @@
-﻿using Translation = Queue.Model.Common.Translation;
-
-namespace Queue.Model.Common
+﻿namespace Queue.Model.Common
 {
     public enum WorkplaceType
     {

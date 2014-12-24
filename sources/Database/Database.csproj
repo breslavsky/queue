@@ -293,6 +293,7 @@
     <Content Include="SchemePatches\003.sql" />
     <Content Include="SchemePatches\004.sql" />
     <Content Include="SchemePatches\005.sql" />
+    <Content Include="SchemePatches\006.sql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

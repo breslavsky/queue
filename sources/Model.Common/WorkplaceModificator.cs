@@ -27,7 +27,7 @@
     {
         public static string Translate(this WorkplaceModificator value)
         {
-            return Translation.WorkplaceModificator.ResourceManager.GetString(value.Translate());
+            return Translation.WorkplaceModificator.ResourceManager.GetString(value.ToString());
         }
     }
 }

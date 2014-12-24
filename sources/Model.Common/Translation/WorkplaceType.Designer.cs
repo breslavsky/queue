@@ -22,7 +22,7 @@ namespace Queue.Model.Common.Translation {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class WorkplaceType {
+    public class WorkplaceType {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Queue.Model.Common.Translation {
         ///   Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Model.Common.Translation.WorkplaceType", typeof(WorkplaceType).Assembly);
@@ -51,7 +51,7 @@ namespace Queue.Model.Common.Translation {
         ///   обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Area.
         /// </summary>
-        internal static string Area {
+        public static string Area {
             get {
                 return ResourceManager.GetString("Area", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Box.
         /// </summary>
-        internal static string Box {
+        public static string Box {
             get {
                 return ResourceManager.GetString("Box", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Cabinet.
         /// </summary>
-        internal static string Cabinet {
+        public static string Cabinet {
             get {
                 return ResourceManager.GetString("Cabinet", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Department.
         /// </summary>
-        internal static string Department {
+        public static string Department {
             get {
                 return ResourceManager.GetString("Department", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Room.
         /// </summary>
-        internal static string Room {
+        public static string Room {
             get {
                 return ResourceManager.GetString("Room", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Window.
         /// </summary>
-        internal static string Window {
+        public static string Window {
             get {
                 return ResourceManager.GetString("Window", resourceCulture);
             }

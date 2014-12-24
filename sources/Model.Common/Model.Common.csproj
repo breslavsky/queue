@@ -35,53 +35,53 @@
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
     <EmbeddedResource Include="Translation\ClientRequestRegistrator.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientRequestRegistrator.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\ClientRequestRegistrator.ru-RU.resx" />
     <EmbeddedResource Include="Translation\ClientRequestState.resx">
       <SubType>Designer</SubType>
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientRequestState.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\ClientRequestState.ru-RU.resx" />
     <EmbeddedResource Include="Translation\ClientRequestType.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientRequestType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\ClientRequestType.ru-RU.resx" />
     <EmbeddedResource Include="Translation\ServiceParameterType.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ServiceParameterType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\ServiceParameterType.ru-RU.resx" />
     <EmbeddedResource Include="Translation\ServiceRatingDetailLavel.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ServiceRatingDetailLavel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\ServiceRatingDetailLavel.ru-RU.resx" />
     <EmbeddedResource Include="Translation\ServiceRenderingMode.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ServiceRenderingMode.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\ServiceRenderingMode.ru-RU.resx" />
     <EmbeddedResource Include="Translation\ServiceType.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ServiceType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\ServiceType.ru-RU.resx" />
     <EmbeddedResource Include="Translation\WorkplaceModificator.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>WorkplaceModificator.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\WorkplaceModificator.ru-RU.resx" />
     <EmbeddedResource Include="Translation\WorkplaceType.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>WorkplaceType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\WorkplaceType.ru-RU.resx" />
     <EmbeddedResource Include="Translation\AdministratorPermissions.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AdministratorPermissions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\AdministratorPermissions.ru-RU.resx" />

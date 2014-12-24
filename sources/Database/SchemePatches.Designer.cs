@@ -106,6 +106,15 @@ namespace Queue.Database {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на update _user set [Permissions] = 511 where Role  = &apos;Administrator&apos;;.
+        /// </summary>
+        internal static string _006 {
+            get {
+                return ResourceManager.GetString("_006", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на ALTER TABLE _client_request DROP CONSTRAINT ClientRequestToClientReference;
         ///ALTER TABLE _client_request ADD CONSTRAINT ClientRequestToClientReference FOREIGN KEY(ClientId)
         ///REFERENCES _client (Id)

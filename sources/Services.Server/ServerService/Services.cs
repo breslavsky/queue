@@ -153,7 +153,7 @@ namespace Queue.Services.Server
                     service.ClientRequire = source.ClientRequire;
                     service.ClientCallDelay = source.ClientCallDelay;
                     service.TimeIntervalRounding = source.TimeIntervalRounding;
-                    service.Type = source.Type;
+                    service.IsUseType = source.IsUseType;
                     service.LiveRegistrator = source.LiveRegistrator;
                     service.EarlyRegistrator = source.EarlyRegistrator;
 

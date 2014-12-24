@@ -1,5 +1,6 @@
 ﻿using Junte.Data.Common;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Queue.UI.WinForms.Controls
@@ -15,6 +16,7 @@ namespace Queue.UI.WinForms.Controls
         {
             listBox.Items.Clear();
             var items = EnumItem<T>.GetItems();
+            items.Where(i => (long)Enum.ToObject(typeof(T), i.Value) != 0);
             listBox.Items.AddRange(items);
             Enabled = items.Length > 0;
         }

@@ -22,7 +22,7 @@ namespace Queue.Model.Common.Translation {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ClientRequestState {
+    public class ClientRequestState {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Queue.Model.Common.Translation {
         ///   Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Model.Common.Translation.ClientRequestState", typeof(ClientRequestState).Assembly);
@@ -51,7 +51,7 @@ namespace Queue.Model.Common.Translation {
         ///   обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Absence.
         /// </summary>
-        internal static string Absence {
+        public static string Absence {
             get {
                 return ResourceManager.GetString("Absence", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Calling.
         /// </summary>
-        internal static string Calling {
+        public static string Calling {
             get {
                 return ResourceManager.GetString("Calling", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Canceled.
         /// </summary>
-        internal static string Canceled {
+        public static string Canceled {
             get {
                 return ResourceManager.GetString("Canceled", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Postponed.
         /// </summary>
-        internal static string Postponed {
+        public static string Postponed {
             get {
                 return ResourceManager.GetString("Postponed", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Rendered.
         /// </summary>
-        internal static string Rendered {
+        public static string Rendered {
             get {
                 return ResourceManager.GetString("Rendered", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Rendering.
         /// </summary>
-        internal static string Rendering {
+        public static string Rendering {
             get {
                 return ResourceManager.GetString("Rendering", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Waiting.
         /// </summary>
-        internal static string Waiting {
+        public static string Waiting {
             get {
                 return ResourceManager.GetString("Waiting", resourceCulture);
             }

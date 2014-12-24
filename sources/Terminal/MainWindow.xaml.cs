@@ -83,7 +83,7 @@ namespace Queue.Terminal
             content.NavigationService.Navigate(new TerminalWindow());
 
             CreateResetTimer();
-            this.MakeFullScreenWindowStyle();
+            this.FullScreenWindow();
         }
 
         private async Task InitializeContainer()

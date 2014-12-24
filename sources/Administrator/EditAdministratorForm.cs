@@ -43,11 +43,7 @@ namespace Queue.Administrator
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
 
-            var permissions = EnumItem<AdministratorPermissions>.GetItems().ToList();
-            permissions.RemoveAll(t => t.Value == AdministratorPermissions.None
-                || t.Value == AdministratorPermissions.All);
-
-            permissionsListBox.Items.AddRange(permissions.ToArray());
+            permissionsFlagsControl.Initialize<AdministratorPermissions>();
         }
 
         public QueueAdministrator Administrator
@@ -62,17 +58,7 @@ namespace Queue.Administrator
                 patronymicTextBox.Text = administrator.Patronymic;
                 emailTextBox.Text = administrator.Email;
                 mobileTextBox.Text = administrator.Mobile;
-
-                var items = permissionsListBox.Items;
-
-                for (int i = 0; i < items.Count; i++)
-                {
-                    var item = items[i] as EnumItem<AdministratorPermissions>;
-                    if (administrator.Permissions.HasFlag(item.Value))
-                    {
-                        permissionsListBox.SetItemChecked(i, true);
-                    }
-                }
+                permissionsFlagsControl.Select<AdministratorPermissions>(administrator.Permissions);
             }
         }
 
@@ -142,14 +128,9 @@ namespace Queue.Administrator
             administrator.Surname = surnameTextBox.Text;
         }
 
-        private void permissionsListBox_Leave(object sender, EventArgs e)
+        private void permissionsFlagsControl_Leave(object sender, EventArgs e)
         {
-            administrator.Permissions = AdministratorPermissions.None;
-
-            foreach (EnumItem<AdministratorPermissions> item in permissionsListBox.CheckedItems)
-            {
-                administrator.Permissions |= item.Value;
-            }
+            administrator.Permissions = permissionsFlagsControl.Selected<AdministratorPermissions>();
         }
 
         #endregion bindings

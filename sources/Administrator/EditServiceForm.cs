@@ -50,43 +50,13 @@ namespace Queue.Administrator
                 linkTextBox.Text = service.Link;
                 maxSubjectsUpDown.Value = service.MaxSubjects;
                 maxEarlyDaysUpDown.Value = service.MaxEarlyDays;
+                isUseTypeCheckBox.Checked = service.IsUseType;
                 isPlanSubjectsCheckBox.Checked = service.IsPlanSubjects;
                 clientCallDelayUpDown.Value = (int)service.ClientCallDelay.TotalSeconds;
                 clientRequireCheckBox.Checked = service.ClientRequire;
                 timeIntervalRoundingUpDown.Value = (int)service.TimeIntervalRounding.TotalMinutes;
-
-                var items = serviceTypeListBox.Items;
-
-                for (int i = 0; i < items.Count; i++)
-                {
-                    var item = items[i] as EnumItem<ServiceType>;
-                    if (service.Type.HasFlag(item.Value))
-                    {
-                        serviceTypeListBox.SetItemChecked(i, true);
-                    }
-                }
-
-                items = liveRegistratorListBox.Items;
-
-                for (int i = 0; i < items.Count; i++)
-                {
-                    var item = items[i] as EnumItem<ClientRequestRegistrator>;
-                    if (service.LiveRegistrator.HasFlag(item.Value))
-                    {
-                        liveRegistratorListBox.SetItemChecked(i, true);
-                    }
-                }
-
-                items = earlyRegistratorListBox.Items;
-
-                for (int i = 0; i < items.Count; i++)
-                {
-                    var item = items[i] as EnumItem<ClientRequestRegistrator>;
-                    if (service.EarlyRegistrator.HasFlag(item.Value))
-                    {
-                        earlyRegistratorListBox.SetItemChecked(i, true);
-                    }
-                }
+                liveRegistratorFlagsControl.Select<ClientRequestRegistrator>(service.LiveRegistrator);
+                earlyRegistratorFlagsControl.Select<ClientRequestRegistrator>(service.EarlyRegistrator);
 
                 parametersTabPage.Parent =
                     exceptionScheduleTabPage.Parent =
@@ -115,21 +85,8 @@ namespace Queue.Administrator
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
 
-            var types = EnumItem<ServiceType>.GetItems().ToList();
-            types.RemoveAll(t => t.Value == ServiceType.None);
-
-            serviceTypeListBox.Items.AddRange(types.ToArray());
-
-            var registrators1 = EnumItem<ClientRequestRegistrator>.GetItems().ToList();
-            registrators1.RemoveAll(t => t.Value == ClientRequestRegistrator.None
-                || t.Value == ClientRequestRegistrator.Portal);
-
-            liveRegistratorListBox.Items.AddRange(registrators1.ToArray());
-
-            var registrators2 = EnumItem<ClientRequestRegistrator>.GetItems().ToList();
-            registrators2.RemoveAll(t => t.Value == ClientRequestRegistrator.None);
-
-            earlyRegistratorListBox.Items.AddRange(registrators2.ToArray());
+            liveRegistratorFlagsControl.Initialize<ClientRequestRegistrator>();
+            earlyRegistratorFlagsControl.Initialize<ClientRequestRegistrator>();
 
             serviceStepsControl.Initialize(channelBuilder, currentUser);
             weekdayScheduleControl.Initialize(channelBuilder, currentUser);
@@ -275,14 +232,9 @@ namespace Queue.Administrator
             service.Description = descriptionTextBox.Text;
         }
 
-        private void earlyRegistratorListBox_Leave(object sender, EventArgs e)
+        private void liveRegistratorFlagsControl_Leave(object sender, EventArgs e)
         {
-            service.EarlyRegistrator = ClientRequestRegistrator.None;
-
-            foreach (EnumItem<ClientRequestRegistrator> item in liveRegistratorListBox.CheckedItems)
-            {
-                service.EarlyRegistrator |= item.Value;
-            }
+            service.LiveRegistrator = liveRegistratorFlagsControl.Selected<ClientRequestRegistrator>();
         }
 
         private void isPlanSubjectsCheckBox_Leave(object sender, EventArgs e)
@@ -295,14 +247,9 @@ namespace Queue.Administrator
             service.Link = linkTextBox.Text;
         }
 
-        private void liveRegistratorListBox_Leave(object sender, EventArgs e)
+        private void earlyRegistratorFlagsControl_Leave(object sender, EventArgs e)
         {
-            service.LiveRegistrator = ClientRequestRegistrator.None;
-
-            foreach (EnumItem<ClientRequestRegistrator> item in liveRegistratorListBox.CheckedItems)
-            {
-                service.LiveRegistrator |= item.Value;
-            }
+            service.EarlyRegistrator = earlyRegistratorFlagsControl.Selected<ClientRequestRegistrator>();
         }
 
         private void maxEarlyDaysUpDown_Leave(object sender, EventArgs e)
@@ -323,16 +270,6 @@ namespace Queue.Administrator
         private void priorityUpDown_Leave(object sender, EventArgs e)
         {
             service.Priority = (int)priorityUpDown.Value;
-        }
-
-        private void serviceTypeListBox_Leave(object sender, EventArgs e)
-        {
-            service.Type = ServiceType.None;
-
-            foreach (EnumItem<ServiceType> item in serviceTypeListBox.CheckedItems)
-            {
-                service.Type |= item.Value;
-            }
         }
 
         private void tagsTextBox_Leave(object sender, EventArgs e)
@@ -542,15 +479,9 @@ namespace Queue.Administrator
 
         #endregion exception schedule
 
-        private void serviceStepsControl_Load(object sender, EventArgs e)
+        private void isUseTypeCheckBox_Leave(object sender, EventArgs e)
         {
-
+            service.IsUseType = isUseTypeCheckBox.Checked;
         }
-
-        private void weekdayScheduleControl_Load(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }

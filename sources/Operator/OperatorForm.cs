@@ -111,21 +111,10 @@ namespace Queue.Operator
                             var service = clientRequest.Service;
                             serviceTextBlock.Text = service.ToString();
 
-                            if (service.Type != ServiceType.None)
+                            if (service.IsUseType)
                             {
-                                var serviceTypes = new List<ServiceType>() { ServiceType.None };
-                                foreach (ServiceType type in Enum.GetValues(typeof(ServiceType)))
-                                {
-                                    if (type != ServiceType.None && service.Type.HasFlag(type))
-                                    {
-                                        serviceTypes.Add(type);
-                                    }
-                                }
-                                if (serviceTypes.Count > 0)
-                                {
-                                    serviceTypeControl.Initialize<ServiceType>(serviceTypes.ToArray());
-                                    serviceTypeControl.Select<ServiceType>(clientRequest.ServiceType);
-                                }
+                                serviceTypeControl.Initialize<ServiceType>();
+                                serviceTypeControl.Select<ServiceType>(clientRequest.ServiceType);
                             }
 
                             using (var channel = channelManager.CreateChannel())

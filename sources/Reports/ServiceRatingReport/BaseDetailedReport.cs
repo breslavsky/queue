@@ -244,7 +244,7 @@ namespace Queue.Reports.ServiceRatingReport
             ICell cell = row.CreateCell(4);
             cell.SetCellValue(service.Name);
 
-            if (settings.IsServiceTypes && service.Type != ServiceType.None)
+            if (settings.IsServiceTypes && service.IsUseType)
             {
                 cell.CellStyle = CreateCellBoldStyle(worksheet.Workbook);
 
@@ -395,13 +395,13 @@ namespace Queue.Reports.ServiceRatingReport
         {
             public Guid Id;
             public string Name;
-            public ServiceType Type;
+            public bool IsUseType;
 
             public ServiceDto(Service source)
             {
                 Id = source.Id;
                 Name = source.ToString();
-                Type = source.Type;
+                IsUseType = source.IsUseType;
             }
         }
 

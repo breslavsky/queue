@@ -221,7 +221,7 @@ namespace Queue.Services.Server
                                 {
                                     case ClientRequestState.Rendered:
 
-                                        if (clientRequest.Service.Type != ServiceType.None
+                                        if (clientRequest.Service.IsUseType
                                             && clientRequest.ServiceType == ServiceType.None)
                                         {
                                             throw new Exception("Укажите тип услуги перед окончанием обслуживания");

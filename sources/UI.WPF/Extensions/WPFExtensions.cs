@@ -105,7 +105,7 @@ namespace Queue.UI.WPF
             parent.Children.Add(targetControl);
         }
 
-        public static void MakeFullScreenWindowStyle(this MetroWindow window)
+        public static void FullScreenWindow(this MetroWindow window)
         {
             window.WindowState = WindowState.Maximized;
             window.WindowStyle = WindowStyle.None;
@@ -118,7 +118,6 @@ namespace Queue.UI.WPF
 
             window.UseNoneWindowStyle = true;
             window.TitlebarHeight = 0;
-            window.ShowWindowCommandsOnTop = false;
         }
     }
 }

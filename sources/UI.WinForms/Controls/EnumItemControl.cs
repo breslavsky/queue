@@ -16,16 +16,12 @@ namespace Queue.UI.WinForms
 
         private bool frozen = true;
 
-        public void Initialize<T>(T[] require = null) where T : struct
+        public void Initialize<T>() where T : struct
         {
             frozen = true;
 
             comboBox.Items.Clear();
             var items = EnumItem<T>.GetItems();
-            //TODO: create!
-            if (require != null)
-            {
-            }
             comboBox.Items.AddRange(items);
             Enabled = items.Length > 0;
             comboBox.SelectedItem = items.FirstOrDefault();

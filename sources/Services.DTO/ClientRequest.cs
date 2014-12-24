@@ -71,9 +71,6 @@ namespace Queue.Services.DTO
         public int Version { get; set; }
 
         [DataMember]
-        public string Color { get; set; }
-
-        [DataMember]
         public bool IsEditable { get; set; }
 
         [DataMember]
@@ -81,6 +78,51 @@ namespace Queue.Services.DTO
 
         [DataMember]
         public ClientRequestParameter[] Parameters { get; set; }
+
+        public virtual string Color
+        {
+            get
+            {
+                if (IsClosed)
+                {
+                    switch (State)
+                    {
+                        case ClientRequestState.Rendered:
+                            return "GreenYellow";
+
+                        case ClientRequestState.Absence:
+                            return "LightPink";
+
+                        case ClientRequestState.Canceled:
+                            return "Silver";
+                    }
+                }
+                else
+                {
+                    switch (State)
+                    {
+                        case ClientRequestState.Waiting:
+                            switch (Type)
+                            {
+                                case ClientRequestType.Early:
+                                    return "LightSeaGreen";
+
+                                case ClientRequestType.Live:
+                                    return "BurlyWood";
+                            }
+                            break;
+
+                        case ClientRequestState.Calling:
+                            return "Yellow";
+
+                        case ClientRequestState.Rendering:
+                            return "LightBlue";
+                    }
+                }
+
+                return "BurlyWood";
+            }
+        }
 
         public bool IsRecent(ClientRequest target)
         {

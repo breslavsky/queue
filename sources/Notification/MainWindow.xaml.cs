@@ -70,7 +70,7 @@ namespace Queue.Notification
                 Top = screen.WorkingArea.Top;
             }
 
-            this.MakeFullScreenWindowStyle();
+            this.FullScreenWindow();
         }
 
         private void SaveSettings()

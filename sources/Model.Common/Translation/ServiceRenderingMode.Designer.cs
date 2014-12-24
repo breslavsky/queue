@@ -22,7 +22,7 @@ namespace Queue.Model.Common.Translation {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ServiceRenderingMode {
+    public class ServiceRenderingMode {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Queue.Model.Common.Translation {
         ///   Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Model.Common.Translation.ServiceRenderingMode", typeof(ServiceRenderingMode).Assembly);
@@ -51,7 +51,7 @@ namespace Queue.Model.Common.Translation {
         ///   обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на All requests.
         /// </summary>
-        internal static string AllRequests {
+        public static string AllRequests {
             get {
                 return ResourceManager.GetString("AllRequests", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Early requests.
         /// </summary>
-        internal static string EarlyRequests {
+        public static string EarlyRequests {
             get {
                 return ResourceManager.GetString("EarlyRequests", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Live requests.
         /// </summary>
-        internal static string LiveRequests {
+        public static string LiveRequests {
             get {
                 return ResourceManager.GetString("LiveRequests", resourceCulture);
             }

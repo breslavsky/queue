@@ -86,7 +86,7 @@ namespace Queue.Model
         public virtual TimeSpan TimeIntervalRounding { get; set; }
 
         [Property]
-        public virtual ServiceType Type { get; set; }
+        public virtual bool IsUseType { get; set; }
 
         #endregion properties
 

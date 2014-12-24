@@ -5,7 +5,6 @@ using NHibernate.Validator.Constraints;
 using Queue.Model.Common;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace Queue.Model
 {
@@ -129,51 +128,6 @@ namespace Queue.Model
             {
                 return State == ClientRequestState.Calling
                     || State == ClientRequestState.Rendering;
-            }
-        }
-
-        public virtual Color Color
-        {
-            get
-            {
-                if (IsClosed)
-                {
-                    switch (State)
-                    {
-                        case ClientRequestState.Rendered:
-                            return Color.GreenYellow;
-
-                        case ClientRequestState.Absence:
-                            return Color.LightPink;
-
-                        case ClientRequestState.Canceled:
-                            return Color.Silver;
-                    }
-                }
-                else
-                {
-                    switch (State)
-                    {
-                        case ClientRequestState.Waiting:
-                            switch (Type)
-                            {
-                                case ClientRequestType.Early:
-                                    return Color.LightSeaGreen;
-
-                                case ClientRequestType.Live:
-                                    return Color.BurlyWood;
-                            }
-                            break;
-
-                        case ClientRequestState.Calling:
-                            return Color.Yellow;
-
-                        case ClientRequestState.Rendering:
-                            return Color.LightBlue;
-                    }
-                }
-
-                return Color.BurlyWood;
             }
         }
 

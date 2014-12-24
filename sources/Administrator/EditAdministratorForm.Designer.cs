@@ -41,8 +41,7 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.passwordButton = new System.Windows.Forms.Button();
             this.permissionsLabel = new System.Windows.Forms.Label();
-            this.permissionsListBox = new System.Windows.Forms.CheckedListBox();
-            this.enumFlagsControl1 = new Queue.UI.WinForms.Controls.EnumFlagsControl();
+            this.permissionsFlagsControl = new Queue.UI.WinForms.Controls.EnumFlagsControl();
             this.SuspendLayout();
             // 
             // surnameLabel
@@ -58,7 +57,7 @@
             // 
             this.surnameTextBox.Location = new System.Drawing.Point(120, 5);
             this.surnameTextBox.Name = "surnameTextBox";
-            this.surnameTextBox.Size = new System.Drawing.Size(135, 20);
+            this.surnameTextBox.Size = new System.Drawing.Size(140, 20);
             this.surnameTextBox.TabIndex = 6;
             this.surnameTextBox.Leave += new System.EventHandler(this.surnameTextBox_Leave);
             // 
@@ -133,7 +132,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(185, 260);
+            this.saveButton.Location = new System.Drawing.Point(185, 365);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 14;
@@ -143,7 +142,7 @@
             // 
             // passwordButton
             // 
-            this.passwordButton.Location = new System.Drawing.Point(105, 260);
+            this.passwordButton.Location = new System.Drawing.Point(105, 365);
             this.passwordButton.Name = "passwordButton";
             this.passwordButton.Size = new System.Drawing.Size(75, 25);
             this.passwordButton.TabIndex = 16;
@@ -160,29 +159,19 @@
             this.permissionsLabel.TabIndex = 17;
             this.permissionsLabel.Text = "Права доступа";
             // 
-            // permissionsListBox
+            // permissionsFlagsControl
             // 
-            this.permissionsListBox.CheckOnClick = true;
-            this.permissionsListBox.FormattingEnabled = true;
-            this.permissionsListBox.Location = new System.Drawing.Point(25, 160);
-            this.permissionsListBox.Name = "permissionsListBox";
-            this.permissionsListBox.Size = new System.Drawing.Size(235, 94);
-            this.permissionsListBox.TabIndex = 18;
-            this.permissionsListBox.Leave += new System.EventHandler(this.permissionsListBox_Leave);
-            // 
-            // enumFlagsControl1
-            // 
-            this.enumFlagsControl1.Location = new System.Drawing.Point(105, 135);
-            this.enumFlagsControl1.Name = "enumFlagsControl1";
-            this.enumFlagsControl1.Size = new System.Drawing.Size(150, 80);
-            this.enumFlagsControl1.TabIndex = 19;
+            this.permissionsFlagsControl.Location = new System.Drawing.Point(10, 160);
+            this.permissionsFlagsControl.Name = "permissionsFlagsControl";
+            this.permissionsFlagsControl.Size = new System.Drawing.Size(250, 200);
+            this.permissionsFlagsControl.TabIndex = 19;
+            this.permissionsFlagsControl.Leave += new System.EventHandler(this.permissionsFlagsControl_Leave);
             // 
             // EditAdministratorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(269, 295);
-            this.Controls.Add(this.enumFlagsControl1);
+            this.ClientSize = new System.Drawing.Size(269, 396);
             this.Controls.Add(this.surnameLabel);
             this.Controls.Add(this.surnameTextBox);
             this.Controls.Add(this.nameLabel);
@@ -194,7 +183,7 @@
             this.Controls.Add(this.mobileLabel);
             this.Controls.Add(this.mobileTextBox);
             this.Controls.Add(this.permissionsLabel);
-            this.Controls.Add(this.permissionsListBox);
+            this.Controls.Add(this.permissionsFlagsControl);
             this.Controls.Add(this.passwordButton);
             this.Controls.Add(this.saveButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -222,7 +211,6 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button passwordButton;
         private System.Windows.Forms.Label permissionsLabel;
-        private System.Windows.Forms.CheckedListBox permissionsListBox;
-        private UI.WinForms.Controls.EnumFlagsControl enumFlagsControl1;
+        private UI.WinForms.Controls.EnumFlagsControl permissionsFlagsControl;
     }
 }

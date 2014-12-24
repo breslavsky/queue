@@ -37,7 +37,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(315, 365);
+            this.saveButton.Location = new System.Drawing.Point(325, 405);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(80, 25);
             this.saveButton.TabIndex = 0;
@@ -58,7 +58,7 @@
             this.nameTextBox.Location = new System.Drawing.Point(20, 95);
             this.nameTextBox.Multiline = true;
             this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(375, 45);
+            this.nameTextBox.Size = new System.Drawing.Size(385, 45);
             this.nameTextBox.TabIndex = 0;
             this.nameTextBox.Leave += new System.EventHandler(this.nameTextBox_Leave);
             // 
@@ -112,7 +112,7 @@
             this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
             this.descriptionTextBox.ReadOnly = true;
-            this.descriptionTextBox.Size = new System.Drawing.Size(380, 85);
+            this.descriptionTextBox.Size = new System.Drawing.Size(390, 85);
             this.descriptionTextBox.TabIndex = 4;
             this.descriptionTextBox.Click += new System.EventHandler(this.descriptionTextBox_Click);
             this.descriptionTextBox.Leave += new System.EventHandler(this.descriptionTextBox_Leave);
@@ -122,7 +122,7 @@
             this.commentTextBox.Location = new System.Drawing.Point(20, 175);
             this.commentTextBox.Multiline = true;
             this.commentTextBox.Name = "commentTextBox";
-            this.commentTextBox.Size = new System.Drawing.Size(375, 60);
+            this.commentTextBox.Size = new System.Drawing.Size(385, 60);
             this.commentTextBox.TabIndex = 5;
             this.commentTextBox.Leave += new System.EventHandler(this.commentTextBox_Leave);
             // 

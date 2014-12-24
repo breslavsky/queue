@@ -24,6 +24,8 @@
             this.commonTabPage = new System.Windows.Forms.TabPage();
             this.servicePropertiesTabControl = new System.Windows.Forms.TabControl();
             this.commonPropertiesTabPage = new System.Windows.Forms.TabPage();
+            this.earlyRegistratorFlagsControl = new Queue.UI.WinForms.Controls.EnumFlagsControl();
+            this.liveRegistratorFlagsControl = new Queue.UI.WinForms.Controls.EnumFlagsControl();
             this.codeLabel = new System.Windows.Forms.Label();
             this.codeTextBox = new System.Windows.Forms.TextBox();
             this.nameLabel = new System.Windows.Forms.Label();
@@ -33,12 +35,9 @@
             this.commentLabel = new System.Windows.Forms.Label();
             this.commentTextBox = new System.Windows.Forms.TextBox();
             this.earlyRegistratorLabel = new System.Windows.Forms.Label();
-            this.earlyRegistratorListBox = new System.Windows.Forms.CheckedListBox();
-            this.serviceTypeLabel = new System.Windows.Forms.Label();
-            this.serviceTypeListBox = new System.Windows.Forms.CheckedListBox();
             this.liveRegistratorLabel = new System.Windows.Forms.Label();
-            this.liveRegistratorListBox = new System.Windows.Forms.CheckedListBox();
             this.additionalPropertiesTabPage = new System.Windows.Forms.TabPage();
+            this.isUseTypeCheckBox = new System.Windows.Forms.CheckBox();
             this.clientCallDelayLabel = new System.Windows.Forms.Label();
             this.clientCallDelayUpDown = new System.Windows.Forms.NumericUpDown();
             this.clientCallDelaySecondsLabel = new System.Windows.Forms.Label();
@@ -181,6 +180,8 @@
             // 
             // commonPropertiesTabPage
             // 
+            this.commonPropertiesTabPage.Controls.Add(this.earlyRegistratorFlagsControl);
+            this.commonPropertiesTabPage.Controls.Add(this.liveRegistratorFlagsControl);
             this.commonPropertiesTabPage.Controls.Add(this.codeLabel);
             this.commonPropertiesTabPage.Controls.Add(this.codeTextBox);
             this.commonPropertiesTabPage.Controls.Add(this.nameLabel);
@@ -190,11 +191,7 @@
             this.commonPropertiesTabPage.Controls.Add(this.commentLabel);
             this.commonPropertiesTabPage.Controls.Add(this.commentTextBox);
             this.commonPropertiesTabPage.Controls.Add(this.earlyRegistratorLabel);
-            this.commonPropertiesTabPage.Controls.Add(this.earlyRegistratorListBox);
-            this.commonPropertiesTabPage.Controls.Add(this.serviceTypeLabel);
-            this.commonPropertiesTabPage.Controls.Add(this.serviceTypeListBox);
             this.commonPropertiesTabPage.Controls.Add(this.liveRegistratorLabel);
-            this.commonPropertiesTabPage.Controls.Add(this.liveRegistratorListBox);
             this.commonPropertiesTabPage.Location = new System.Drawing.Point(4, 26);
             this.commonPropertiesTabPage.Name = "commonPropertiesTabPage";
             this.commonPropertiesTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -202,6 +199,22 @@
             this.commonPropertiesTabPage.TabIndex = 0;
             this.commonPropertiesTabPage.Text = "Основные параметры";
             this.commonPropertiesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // earlyRegistratorFlagsControl
+            // 
+            this.earlyRegistratorFlagsControl.Location = new System.Drawing.Point(600, 145);
+            this.earlyRegistratorFlagsControl.Name = "earlyRegistratorFlagsControl";
+            this.earlyRegistratorFlagsControl.Size = new System.Drawing.Size(180, 65);
+            this.earlyRegistratorFlagsControl.TabIndex = 29;
+            this.earlyRegistratorFlagsControl.Leave += new System.EventHandler(this.earlyRegistratorFlagsControl_Leave);
+            // 
+            // liveRegistratorFlagsControl
+            // 
+            this.liveRegistratorFlagsControl.Location = new System.Drawing.Point(380, 145);
+            this.liveRegistratorFlagsControl.Name = "liveRegistratorFlagsControl";
+            this.liveRegistratorFlagsControl.Size = new System.Drawing.Size(180, 65);
+            this.liveRegistratorFlagsControl.TabIndex = 27;
+            this.liveRegistratorFlagsControl.Leave += new System.EventHandler(this.liveRegistratorFlagsControl_Leave);
             // 
             // codeLabel
             // 
@@ -283,35 +296,6 @@
             this.earlyRegistratorLabel.TabIndex = 0;
             this.earlyRegistratorLabel.Text = "Регистраторы по записи";
             // 
-            // earlyRegistratorListBox
-            // 
-            this.earlyRegistratorListBox.CheckOnClick = true;
-            this.earlyRegistratorListBox.FormattingEnabled = true;
-            this.earlyRegistratorListBox.Location = new System.Drawing.Point(605, 145);
-            this.earlyRegistratorListBox.Name = "earlyRegistratorListBox";
-            this.earlyRegistratorListBox.Size = new System.Drawing.Size(170, 64);
-            this.earlyRegistratorListBox.TabIndex = 0;
-            this.earlyRegistratorListBox.Leave += new System.EventHandler(this.earlyRegistratorListBox_Leave);
-            // 
-            // serviceTypeLabel
-            // 
-            this.serviceTypeLabel.AutoSize = true;
-            this.serviceTypeLabel.Location = new System.Drawing.Point(590, 10);
-            this.serviceTypeLabel.Name = "serviceTypeLabel";
-            this.serviceTypeLabel.Size = new System.Drawing.Size(70, 13);
-            this.serviceTypeLabel.TabIndex = 13;
-            this.serviceTypeLabel.Text = "Типы услуги";
-            // 
-            // serviceTypeListBox
-            // 
-            this.serviceTypeListBox.CheckOnClick = true;
-            this.serviceTypeListBox.FormattingEnabled = true;
-            this.serviceTypeListBox.Location = new System.Drawing.Point(605, 30);
-            this.serviceTypeListBox.Name = "serviceTypeListBox";
-            this.serviceTypeListBox.Size = new System.Drawing.Size(170, 79);
-            this.serviceTypeListBox.TabIndex = 12;
-            this.serviceTypeListBox.Leave += new System.EventHandler(this.serviceTypeListBox_Leave);
-            // 
             // liveRegistratorLabel
             // 
             this.liveRegistratorLabel.AutoSize = true;
@@ -320,16 +304,6 @@
             this.liveRegistratorLabel.Size = new System.Drawing.Size(158, 13);
             this.liveRegistratorLabel.TabIndex = 0;
             this.liveRegistratorLabel.Text = "Регистраторы живой очереди";
-            // 
-            // liveRegistratorListBox
-            // 
-            this.liveRegistratorListBox.CheckOnClick = true;
-            this.liveRegistratorListBox.FormattingEnabled = true;
-            this.liveRegistratorListBox.Location = new System.Drawing.Point(380, 145);
-            this.liveRegistratorListBox.Name = "liveRegistratorListBox";
-            this.liveRegistratorListBox.Size = new System.Drawing.Size(180, 64);
-            this.liveRegistratorListBox.TabIndex = 0;
-            this.liveRegistratorListBox.Leave += new System.EventHandler(this.liveRegistratorListBox_Leave);
             // 
             // additionalPropertiesTabPage
             // 
@@ -348,6 +322,7 @@
             this.additionalPropertiesTabPage.Controls.Add(this.priorityUpDown);
             this.additionalPropertiesTabPage.Controls.Add(this.clientRequireCheckBox);
             this.additionalPropertiesTabPage.Controls.Add(this.isPlanSubjectsCheckBox);
+            this.additionalPropertiesTabPage.Controls.Add(this.isUseTypeCheckBox);
             this.additionalPropertiesTabPage.Controls.Add(this.descriptionLabel);
             this.additionalPropertiesTabPage.Controls.Add(this.descriptionTextBox);
             this.additionalPropertiesTabPage.Controls.Add(this.linkLabel);
@@ -359,6 +334,17 @@
             this.additionalPropertiesTabPage.TabIndex = 1;
             this.additionalPropertiesTabPage.Text = "Дополнительные параметры";
             this.additionalPropertiesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // isUseTypeCheckBox
+            // 
+            this.isUseTypeCheckBox.AutoSize = true;
+            this.isUseTypeCheckBox.Location = new System.Drawing.Point(305, 80);
+            this.isUseTypeCheckBox.Name = "isUseTypeCheckBox";
+            this.isUseTypeCheckBox.Size = new System.Drawing.Size(159, 17);
+            this.isUseTypeCheckBox.TabIndex = 31;
+            this.isUseTypeCheckBox.Text = "Разделить по типам услуг";
+            this.isUseTypeCheckBox.UseVisualStyleBackColor = true;
+            this.isUseTypeCheckBox.Leave += new System.EventHandler(this.isUseTypeCheckBox_Leave);
             // 
             // clientCallDelayLabel
             // 
@@ -598,7 +584,6 @@
             this.serviceStepsControl.Name = "serviceStepsControl";
             this.serviceStepsControl.Size = new System.Drawing.Size(830, 450);
             this.serviceStepsControl.TabIndex = 0;
-            this.serviceStepsControl.Load += new System.EventHandler(this.serviceStepsControl_Load);
             // 
             // weekdayScheduleTabPage
             // 
@@ -662,7 +647,6 @@
             this.weekdayScheduleControl.Schedule = null;
             this.weekdayScheduleControl.Size = new System.Drawing.Size(790, 310);
             this.weekdayScheduleControl.TabIndex = 0;
-            this.weekdayScheduleControl.Load += new System.EventHandler(this.weekdayScheduleControl_Load);
             // 
             // weekdayScheduleCheckBox
             // 
@@ -798,9 +782,7 @@
         private System.Windows.Forms.TabPage sundayTabPage;
         private System.Windows.Forms.CheckBox weekdayScheduleCheckBox;
         private System.Windows.Forms.Label liveRegistratorLabel;
-        private System.Windows.Forms.CheckedListBox liveRegistratorListBox;
         private System.Windows.Forms.Label earlyRegistratorLabel;
-        private System.Windows.Forms.CheckedListBox earlyRegistratorListBox;
         private System.Windows.Forms.NumericUpDown maxSubjectsUpDown;
         private System.Windows.Forms.Label maxSubjectsLabel;
         private System.Windows.Forms.Label maxEarlyDaysLabel;
@@ -821,8 +803,6 @@
         private System.Windows.Forms.TabControl servicePropertiesTabControl;
         private System.Windows.Forms.TabPage commonPropertiesTabPage;
         private System.Windows.Forms.TextBox nameTextBox;
-        private System.Windows.Forms.CheckedListBox serviceTypeListBox;
-        private System.Windows.Forms.Label serviceTypeLabel;
         private System.Windows.Forms.TextBox commentTextBox;
         private System.Windows.Forms.Label commentLabel;
         private System.Windows.Forms.Label nameLabel;
@@ -838,6 +818,9 @@
         private System.Windows.Forms.CheckBox isPlanSubjectsCheckBox;
         private System.Windows.Forms.TextBox linkTextBox;
         private System.Windows.Forms.Label linkLabel;
+        private UI.WinForms.Controls.EnumFlagsControl earlyRegistratorFlagsControl;
+        private UI.WinForms.Controls.EnumFlagsControl liveRegistratorFlagsControl;
+        private System.Windows.Forms.CheckBox isUseTypeCheckBox;
 
     }
 }

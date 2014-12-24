@@ -57,7 +57,7 @@ namespace Queue.Services.DTO
         public TimeSpan TimeIntervalRounding { get; set; }
 
         [DataMember]
-        public ServiceType Type { get; set; }
+        public bool IsUseType { get; set; }
 
         [DataMember]
         public ClientRequestRegistrator LiveRegistrator { get; set; }

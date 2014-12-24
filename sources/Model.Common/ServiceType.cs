@@ -3,7 +3,7 @@
 namespace Queue.Model.Common
 {
     [Flags]
-    public enum ServiceType
+    public enum ServiceType : long
     {
         None = 0,
         Consultation = 1,
