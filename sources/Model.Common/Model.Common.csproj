@@ -40,43 +40,43 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\ClientRequestRegistrator.ru-RU.resx" />
     <EmbeddedResource Include="Translation\ClientRequestState.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ClientRequestState.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ClientRequestState.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\ClientRequestState.ru-RU.resx" />
     <EmbeddedResource Include="Translation\ClientRequestType.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientRequestType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\ClientRequestType.ru-RU.resx" />
     <EmbeddedResource Include="Translation\ServiceParameterType.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ServiceParameterType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\ServiceParameterType.ru-RU.resx" />
     <EmbeddedResource Include="Translation\ServiceRatingDetailLavel.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ServiceRatingDetailLavel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\ServiceRatingDetailLavel.ru-RU.resx" />
     <EmbeddedResource Include="Translation\ServiceRenderingMode.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ServiceRenderingMode.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\ServiceRenderingMode.ru-RU.resx" />
     <EmbeddedResource Include="Translation\ServiceType.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ServiceType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\ServiceType.ru-RU.resx" />
     <EmbeddedResource Include="Translation\WorkplaceModificator.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>WorkplaceModificator.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\WorkplaceModificator.ru-RU.resx" />
     <EmbeddedResource Include="Translation\WorkplaceType.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>WorkplaceType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translation\WorkplaceType.ru-RU.resx" />
@@ -84,17 +84,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AdministratorPermissions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Translation\AdministratorPermissions.ru-RU.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AdministratorPermissions.ru-RU.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Translation\AdministratorPermissions.ru-RU.resx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientRequestRegistrator.cs" />
     <Compile Include="ClientRequestState.cs" />
     <Compile Include="ClientRequestType.cs" />
     <Compile Include="ConfigType.cs" />
-    <Compile Include="EnumItem.cs" />
     <Compile Include="EventType.cs" />
     <Compile Include="Reports\OperatorRatingReportSettings.cs" />
     <Compile Include="PIN.cs" />
@@ -104,60 +100,55 @@
     <Compile Include="Reports\ServiceRatingReportSettings.cs" />
     <Compile Include="ServiceRenderingMode.cs" />
     <Compile Include="ServiceType.cs" />
-    <Compile Include="Translation\ClientRequestRegistrator.Designer.cs">
-      <DependentUpon>ClientRequestRegistrator.resx</DependentUpon>
+    <Compile Include="Translation\AdministratorPermissions.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>AdministratorPermissions.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Translation\ClientRequestRegistrator.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClientRequestRegistrator.resx</DependentUpon>
     </Compile>
     <Compile Include="Translation\ClientRequestState.Designer.cs">
-      <DependentUpon>ClientRequestState.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>ClientRequestState.resx</DependentUpon>
     </Compile>
     <Compile Include="Translation\ClientRequestType.Designer.cs">
-      <DependentUpon>ClientRequestType.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>ClientRequestType.resx</DependentUpon>
     </Compile>
     <Compile Include="Translation\ServiceParameterType.Designer.cs">
-      <DependentUpon>ServiceParameterType.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceParameterType.resx</DependentUpon>
     </Compile>
     <Compile Include="Translation\ServiceRatingDetailLavel.Designer.cs">
-      <DependentUpon>ServiceRatingDetailLavel.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceRatingDetailLavel.resx</DependentUpon>
     </Compile>
     <Compile Include="Translation\ServiceRenderingMode.Designer.cs">
-      <DependentUpon>ServiceRenderingMode.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceRenderingMode.resx</DependentUpon>
     </Compile>
     <Compile Include="Translation\ServiceType.Designer.cs">
-      <DependentUpon>ServiceType.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceType.resx</DependentUpon>
     </Compile>
     <Compile Include="Translation\WorkplaceModificator.Designer.cs">
-      <DependentUpon>WorkplaceModificator.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>WorkplaceModificator.resx</DependentUpon>
     </Compile>
     <Compile Include="Translation\WorkplaceType.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>WorkplaceType.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Translation\AdministratorPermissions.Designer.cs">
-      <DependentUpon>AdministratorPermissions.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Translation\AdministratorPermissions.ru-RU.Designer.cs">
-      <DependentUpon>AdministratorPermissions.ru-RU.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="UserRole.cs" />
     <Compile Include="WorkplaceModificator.cs" />

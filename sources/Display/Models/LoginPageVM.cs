@@ -154,7 +154,7 @@ namespace Queue.Display.Models
 
                 try
                 {
-                    Workplaces = await taskPool.AddTask(channel.Service.GetWorkplacesList());
+                    Workplaces = await taskPool.AddTask(channel.Service.GetWorkplacesLinks());
 
                     SelectedWorkplace = settings != null && settings.WorkplaceId != Guid.Empty
                         ? settings.WorkplaceId : Workplaces.First().Id;

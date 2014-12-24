@@ -117,16 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="allReguests" xml:space="preserve">
-    <value>Все запросы</value>
+  <data name="en_EN" xml:space="preserve">
+    <value>English</value>
   </data>
-  <data name="earlyReguests" xml:space="preserve">
-    <value>Только предварительная запись</value>
+  <data name="ru_RU" xml:space="preserve">
+    <value>Russian</value>
   </data>
-  <data name="liveReguests" xml:space="preserve">
-    <value>Только живая очередь</value>
-  </data>
-  <data name="queueServer" xml:space="preserve">
-    <value />
+  <data name="zh_CN" xml:space="preserve">
+    <value>Chinese</value>
   </data>
 </root>

@@ -68,7 +68,7 @@ namespace Queue.Administrator
                 {
                     try
                     {
-                        workplaceControl.Initialize(await taskPool.AddTask(channel.Service.GetWorkplacesList()));
+                        workplaceControl.Initialize(await taskPool.AddTask(channel.Service.GetWorkplacesLinks()));
 
                         Operator = await taskPool.AddTask(channel.Service.GetUser(operatorId)) as QueueOperator;
                     }

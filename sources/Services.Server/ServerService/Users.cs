@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Junte.Data.NHibernate;
 using NHibernate.Criterion;
 using Queue.Model;
 using Queue.Model.Common;
@@ -137,7 +138,7 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.IdentifiedEntity[]> GetUserList(UserRole userRole)
+        public async Task<DTO.IdentifiedEntity[]> GetUserLinks(UserRole userRole)
         {
             return await Task.Run(() =>
             {
@@ -163,8 +164,8 @@ namespace Queue.Services.Server
                         .AddOrder(Order.Asc("Surname"))
                         .AddOrder(Order.Asc("Name"))
                         .AddOrder(Order.Asc("Patronymic"))
-                        .List<User>();
-                    return Mapper.Map<IList<User>, DTO.IdentifiedEntity[]>(users);
+                        .List<IdentifiedEntity>();
+                    return Mapper.Map<IList<IdentifiedEntity>, DTO.IdentifiedEntity[]>(users);
                 }
             });
         }

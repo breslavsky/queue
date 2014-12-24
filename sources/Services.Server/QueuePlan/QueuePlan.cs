@@ -158,6 +158,7 @@ namespace Queue.Services.Server
 
                     if (conditionClientRequest.RequestDate != PlanDate)
                     {
+                        Report.Add("Дата запроса не соответствует дате плана очереди");
                         continue;
                     }
 
@@ -282,8 +283,8 @@ namespace Queue.Services.Server
 
             if (OnCurrentClientRequestPlanUpdated != null)
             {
-                logger.Info(string.Format("Запуск обработчика для события [OnCurrentClientRequestPlanUpdated] с кол-вом слушателей [{0}]",
-                    OnCurrentClientRequestPlanUpdated.GetInvocationList().Length));
+                logger.InfoFormat("Запуск обработчика для события [OnCurrentClientRequestPlanUpdated] с кол-вом слушателей [{0}]",
+                    OnCurrentClientRequestPlanUpdated.GetInvocationList().Length);
 
                 foreach (var o in OperatorsPlans)
                 {
@@ -303,8 +304,8 @@ namespace Queue.Services.Server
 
             if (OnOperatorPlanMetricsUpdated != null)
             {
-                logger.Info(string.Format("Запуск обработчика для события [OnOperatorPlanMetricsUpdated] с кол-вом слушателей [{0}]",
-                    OnOperatorPlanMetricsUpdated.GetInvocationList().Length));
+                logger.InfoFormat("Запуск обработчика для события [OnOperatorPlanMetricsUpdated] с кол-вом слушателей [{0}]",
+                    OnOperatorPlanMetricsUpdated.GetInvocationList().Length);
 
                 foreach (var o in OperatorsPlans)
                 {
@@ -317,7 +318,7 @@ namespace Queue.Services.Server
 
             Version++;
 
-            logger.Info(string.Format("Построение плана очереди завершено с версией [{0}]", Version));
+            logger.InfoFormat("Построение плана очереди завершено с версией [{0}]", Version);
 
             if (OnBuilded != null)
             {
@@ -595,7 +596,7 @@ namespace Queue.Services.Server
         /// </summary>
         public void Load(DateTime planDate)
         {
-            logger.Debug(string.Format("Загрузка плана очереди на дату [{0}]", planDate));
+            logger.DebugFormat("Загрузка плана очереди на дату [{0}]", planDate);
 
             PlanDate = planDate.Date;
             PlanTime = TimeSpan.Zero;
@@ -611,7 +612,7 @@ namespace Queue.Services.Server
         /// <returns></returns>
         public void Put(Entity entity)
         {
-            logger.InfoFormat("Помещен объект в хранилище {0}", entity);
+            logger.InfoFormat("Объект помещен в хранилище {0}", entity);
             storage.Put(entity);
         }
 
@@ -636,7 +637,7 @@ namespace Queue.Services.Server
                 foreach (var o in operators)
                 {
                     OperatorsPlans.Add(new OperatorPlan(storage.Put(o)));
-                    logger.Debug(string.Format("Загружен оператор [{0}]", o));
+                    logger.DebugFormat("Загружен оператор [{0}]", o);
                 }
 
                 logger.Info("Загрузка запросов");
@@ -651,7 +652,7 @@ namespace Queue.Services.Server
                 foreach (var r in openedClientRequests)
                 {
                     clientRequests.Add(storage.Put(r));
-                    logger.Debug(string.Format("Загружен [{0}] запрос", r.Number));
+                    logger.DebugFormat("Загружен [{0}] запрос", r.Number);
                 }
 
                 LastNumber = session.CreateCriteria<ClientRequest>()

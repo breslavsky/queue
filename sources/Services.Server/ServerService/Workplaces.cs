@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Junte.Data.NHibernate;
 using NHibernate.Criterion;
 using Queue.Model;
 using Queue.Model.Common;
@@ -13,7 +14,7 @@ namespace Queue.Services.Server
 {
     public partial class ServerService
     {
-        public async Task<DTO.IdentifiedEntity[]> GetWorkplacesList()
+        public async Task<DTO.IdentifiedEntity[]> GetWorkplacesLinks()
         {
             return await Task.Run(() =>
             {
@@ -24,9 +25,9 @@ namespace Queue.Services.Server
                         .AddOrder(Order.Asc("Type"))
                         .AddOrder(Order.Asc("Number"))
                         .AddOrder(Order.Asc("Modificator"))
-                        .List<Workplace>();
+                        .List<IdentifiedEntity>();
 
-                    return Mapper.Map<IList<Workplace>, DTO.IdentifiedEntity[]>(workplaces);
+                    return Mapper.Map<IList<IdentifiedEntity>, DTO.IdentifiedEntity[]>(workplaces);
                 }
             });
         }

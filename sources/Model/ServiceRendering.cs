@@ -2,7 +2,6 @@
 using NHibernate.Mapping.Attributes;
 using NHibernate.Validator.Constraints;
 using Queue.Model.Common;
-using Translation = Queue.Model.Common.Translation;
 
 namespace Queue.Model
 {
@@ -33,8 +32,7 @@ namespace Queue.Model
 
         public override string ToString()
         {
-            return string.Format("[{0}] {1}", Operator,
-                Translation.ServiceRenderingMode.ResourceManager.GetString(Mode.ToString()));
+            return string.Format("[{0}] {1}", Operator, Mode.Translate());
         }
     }
 }

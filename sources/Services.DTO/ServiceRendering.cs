@@ -2,7 +2,6 @@
 using System;
 using System.Resources;
 using System.Runtime.Serialization;
-using Translation = Queue.Model.Common.Translation;
 
 namespace Queue.Services.DTO
 {
@@ -26,9 +25,7 @@ namespace Queue.Services.DTO
 
         public override string ToString()
         {
-            var translation = Translation.ServiceRenderingMode.ResourceManager;
-
-            return string.Format("[{0}] {1}", Operator, translation.GetString(Mode.ToString()));
+            return string.Format("[{0}] {1}", Operator, Mode.Translate());
         }
     }
 }

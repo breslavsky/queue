@@ -5,19 +5,22 @@ using System.Drawing;
 
 namespace Queue.Services.Server
 {
-    public class ColorTypeConverter : ITypeConverter<Color, string>
+    /*public class ColorTypeConverter : ITypeConverter<Color, string>
     {
         public string Convert(ResolutionContext context)
         {
             return ColorTranslator.ToHtml((Color)context.SourceValue);
         }
-    }
+    }*/
 
     public class ParticularDTOProfile : Profile
     {
         protected override void Configure()
         {
-            Mapper.CreateMap<Color, string>().ConvertUsing(new ColorTypeConverter());
+            //TODO: trash?
+            //Mapper.CreateMap<Color, string>().ConvertUsing(new ColorTypeConverter());
+            Mapper.CreateMap<IdentifiedEntity, DTO.IdentifiedEntity>()
+                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
         }
     }
 
@@ -53,8 +56,6 @@ namespace Queue.Services.Server
         protected override void Configure()
         {
             Mapper.CreateMap<Workplace, DTO.Workplace>();
-            Mapper.CreateMap<Workplace, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
         }
     }
 
@@ -96,38 +97,18 @@ namespace Queue.Services.Server
             Mapper.AddProfile(new UserDTOProfile());
 
             Mapper.CreateMap<ServiceGroup, DTO.ServiceGroup>();
-            Mapper.CreateMap<ServiceGroup, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
             Mapper.CreateMap<Service, DTO.Service>();
-            Mapper.CreateMap<Service, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
 
             Mapper.CreateMap<ServiceStep, DTO.ServiceStep>();
-            Mapper.CreateMap<ServiceStep, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
             Mapper.CreateMap<ServiceRendering, DTO.ServiceRendering>();
-            Mapper.CreateMap<ServiceRendering, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
             Mapper.CreateMap<ServiceParameter, DTO.ServiceParameter>()
                  .Include<ServiceParameterNumber, DTO.ServiceParameterNumber>()
                  .Include<ServiceParameterText, DTO.ServiceParameterText>()
                  .Include<ServiceParameterOptions, DTO.ServiceParameterOptions>();
 
             Mapper.CreateMap<ServiceParameterNumber, DTO.ServiceParameterNumber>();
-            Mapper.CreateMap<ServiceParameterNumber, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
             Mapper.CreateMap<ServiceParameterText, DTO.ServiceParameterText>();
-            Mapper.CreateMap<ServiceParameterText, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
             Mapper.CreateMap<ServiceParameterOptions, DTO.ServiceParameterOptions>();
-            Mapper.CreateMap<ServiceParameterOptions, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
             Mapper.CreateMap<Schedule, DTO.Schedule>()
                  .Include<DefaultWeekdaySchedule, DTO.DefaultWeekdaySchedule>()
                  .Include<DefaultExceptionSchedule, DTO.DefaultExceptionSchedule>()
@@ -135,28 +116,11 @@ namespace Queue.Services.Server
                  .Include<ServiceWeekdaySchedule, DTO.ServiceWeekdaySchedule>()
                  .Include<ServiceExceptionSchedule, DTO.ServiceExceptionSchedule>();
 
-            Mapper.CreateMap<Schedule, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
             Mapper.CreateMap<DefaultWeekdaySchedule, DTO.DefaultWeekdaySchedule>();
-            Mapper.CreateMap<DefaultWeekdaySchedule, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
             Mapper.CreateMap<DefaultExceptionSchedule, DTO.DefaultExceptionSchedule>();
-            Mapper.CreateMap<DefaultExceptionSchedule, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
             Mapper.CreateMap<ServiceSchedule, DTO.ServiceSchedule>();
-            Mapper.CreateMap<ServiceSchedule, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
             Mapper.CreateMap<ServiceWeekdaySchedule, DTO.ServiceWeekdaySchedule>();
-            Mapper.CreateMap<ServiceWeekdaySchedule, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
-
             Mapper.CreateMap<ServiceExceptionSchedule, DTO.ServiceExceptionSchedule>();
-            Mapper.CreateMap<ServiceExceptionSchedule, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
         }
     }
 
@@ -232,13 +196,6 @@ namespace Queue.Services.Server
             Mapper.AddProfile(new ClientRequestDTOProfile());
             Mapper.AddProfile(new EventDTOProfile());
             Mapper.AddProfile(new QueuePlanDTOProfile());
-
-            Mapper.CreateMap<IdentifiedEntity, DTO.IdentifiedEntity>()
-
-                .Include<User, DTO.IdentifiedEntity>()
-                .Include<Administrator, DTO.IdentifiedEntity>()
-                .Include<Operator, DTO.IdentifiedEntity>()
-                .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
 
             Mapper.AssertConfigurationIsValid();
         }

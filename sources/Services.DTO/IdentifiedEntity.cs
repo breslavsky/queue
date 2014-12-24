@@ -36,7 +36,6 @@ namespace Queue.Services.DTO
         {
             T instance = Activator.CreateInstance<T>();
             instance.Id = Id;
-            instance.Presentation = Presentation;
             return instance;
         }
     }

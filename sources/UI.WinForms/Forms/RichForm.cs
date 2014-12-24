@@ -11,6 +11,9 @@ namespace Queue.UI.WinForms
 {
     public class RichForm : Junte.UI.WinForms.RichForm
     {
+        private const string ResourcePathTemplate = "{Namespace}.Translate.{Name}";
+        private IList<DictionaryEntry> defaultTranslation = new List<DictionaryEntry>();
+
         public RichForm()
         {
             Load += RichForm_Load;
@@ -24,6 +27,58 @@ namespace Queue.UI.WinForms
                 .Concat(controls);
         }
 
+        internal void Translate()
+        {
+            var type = this.GetType();
+            var resourcePath = ResourcePathTemplate
+                .Replace("{Namespace}", type.Namespace)
+                .Replace("{Name}", type.Name);
+
+            IEnumerable<DictionaryEntry> entries;
+
+            try
+            {
+                entries = new ResourceManager(resourcePath, type.Assembly)
+                    .GetResourceSet(CultureInfo.CurrentCulture, true, true).Cast<DictionaryEntry>();
+            }
+            catch
+            {
+                entries = defaultTranslation;
+            }
+
+            //TODO: использовать иерархию компонентов
+
+            foreach (DictionaryEntry entry in entries)
+            {
+                object component = this;
+
+                string key = entry.Key.ToString();
+                string[] name = key.Split('.');
+
+                if (name.Length > 1)
+                {
+                    var componentInfo = GetType().GetField(name.First(), BindingFlags.NonPublic | BindingFlags.Instance);
+                    if (componentInfo != null)
+                    {
+                        component = componentInfo.GetValue(this);
+                    }
+                }
+
+                var propertyInfo = component.GetType().GetProperty(name.Last());
+                if (propertyInfo != null)
+                {
+                    string value = entry.Value.ToString();
+
+                    if (!defaultTranslation.Any(x => x.Key.Equals(key)))
+                    {
+                        defaultTranslation.Add(new DictionaryEntry(key, propertyInfo.GetValue(component)));
+                    }
+
+                    propertyInfo.SetValue(component, value);
+                }
+            }
+        }
+
         private void RichForm_Load(object sender, EventArgs e)
         {
             if (DesignMode)
@@ -31,41 +86,7 @@ namespace Queue.UI.WinForms
                 return;
             }
 
-            var type = this.GetType();
-            var resourcePath = string.Format("{0}.Translate.{1}", type.Namespace, type.Name);
-
-            try
-            {
-                var entries = new ResourceManager(resourcePath, type.Assembly)
-                    .GetResourceSet(CultureInfo.CurrentCulture, true, true);
-
-                var text = entries.GetString("Text");
-                if (text != null)
-                {
-                    Text = text;
-                }
-
-                foreach (DictionaryEntry entry in entries)
-                {
-                    string[] name = entry.Key.ToString().Split('.');
-                    if (name.Length > 1)
-                    {
-                        var componentInfo = GetType().GetField(name.First(), BindingFlags.NonPublic | BindingFlags.Instance);
-                        if (componentInfo != null)
-                        {
-                            var component = componentInfo.GetValue(this);
-
-                            var propertyInfo = component.GetType().GetProperty(name.Skip(1).First());
-                            if (propertyInfo != null)
-                            {
-                                string value = entry.Value.ToString();
-                                propertyInfo.SetValue(component, value);
-                            }
-                        }
-                    }
-                }
-            }
-            catch { }
+            Translate();
         }
     }
 }

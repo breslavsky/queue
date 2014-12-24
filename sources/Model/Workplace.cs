@@ -4,7 +4,6 @@ using NHibernate.Validator.Constraints;
 using Queue.Model.Common;
 using System;
 using System.Resources;
-using Translation = Queue.Model.Common.Translation;
 
 namespace Queue.Model
 {
@@ -37,10 +36,7 @@ namespace Queue.Model
 
         public override string ToString()
         {
-            ResourceManager workplaceTypeTranslation = Translation.WorkplaceType.ResourceManager;
-            ResourceManager workplaceModificatorTranslation = Translation.WorkplaceModificator.ResourceManager;
-
-            return string.Format("{0} {1}{2}", workplaceTypeTranslation.GetString(Type.ToString()), Number, workplaceModificatorTranslation.GetString(Modificator.ToString()));
+            return string.Format("{0} {1}{2}", Type.Translate(), Number, Modificator.Translate());
         }
     }
 }

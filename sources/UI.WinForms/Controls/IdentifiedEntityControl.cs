@@ -40,7 +40,8 @@ namespace Queue.UI.WinForms
 
         public T Selected<T>() where T : IdentifiedEntity
         {
-            return comboBox.SelectedItem != null ? (comboBox.SelectedItem as IdentifiedEntity).Cast<T>() : null;
+            return comboBox.SelectedItem != null
+                ? (comboBox.SelectedItem as IdentifiedEntity).Cast<T>() : null;
         }
 
         public void Select<T>(T value) where T : IdentifiedEntity

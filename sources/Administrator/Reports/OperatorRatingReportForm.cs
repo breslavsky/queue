@@ -64,7 +64,7 @@ namespace Queue.Administrator.Reports
             {
                 try
                 {
-                    foreach (IdentifiedEntity op in await channel.Service.GetUserList(UserRole.Operator))
+                    foreach (IdentifiedEntity op in await channel.Service.GetUserLinks(UserRole.Operator))
                     {
                         operatorsListBox.Items.Add(op, true);
                     }

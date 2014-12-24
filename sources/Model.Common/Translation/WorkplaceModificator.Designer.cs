@@ -22,7 +22,7 @@ namespace Queue.Model.Common.Translation {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class WorkplaceModificator {
+    internal class WorkplaceModificator {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Queue.Model.Common.Translation {
         ///   Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Model.Common.Translation.WorkplaceModificator", typeof(WorkplaceModificator).Assembly);
@@ -51,7 +51,7 @@ namespace Queue.Model.Common.Translation {
         ///   обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на a.
         /// </summary>
-        public static string A_EN {
+        internal static string A_EN {
             get {
                 return ResourceManager.GetString("A_EN", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на b.
         /// </summary>
-        public static string B_EN {
+        internal static string B_EN {
             get {
                 return ResourceManager.GetString("B_EN", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на c.
         /// </summary>
-        public static string C_EN {
+        internal static string C_EN {
             get {
                 return ResourceManager.GetString("C_EN", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на char1.
         /// </summary>
-        public static string CHAR1 {
+        internal static string CHAR1 {
             get {
                 return ResourceManager.GetString("CHAR1", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на char2.
         /// </summary>
-        public static string CHAR2 {
+        internal static string CHAR2 {
             get {
                 return ResourceManager.GetString("CHAR2", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на char3.
         /// </summary>
-        public static string CHAR3 {
+        internal static string CHAR3 {
             get {
                 return ResourceManager.GetString("CHAR3", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на char4.
         /// </summary>
-        public static string CHAR4 {
+        internal static string CHAR4 {
             get {
                 return ResourceManager.GetString("CHAR4", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на char5.
         /// </summary>
-        public static string CHAR5 {
+        internal static string CHAR5 {
             get {
                 return ResourceManager.GetString("CHAR5", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на char6.
         /// </summary>
-        public static string CHAR6 {
+        internal static string CHAR6 {
             get {
                 return ResourceManager.GetString("CHAR6", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на char7.
         /// </summary>
-        public static string CHAR7 {
+        internal static string CHAR7 {
             get {
                 return ResourceManager.GetString("CHAR7", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на char8.
         /// </summary>
-        public static string CHAR8 {
+        internal static string CHAR8 {
             get {
                 return ResourceManager.GetString("CHAR8", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на d.
         /// </summary>
-        public static string D_EN {
+        internal static string D_EN {
             get {
                 return ResourceManager.GetString("D_EN", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на e.
         /// </summary>
-        public static string E_EN {
+        internal static string E_EN {
             get {
                 return ResourceManager.GetString("E_EN", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на f.
         /// </summary>
-        public static string F_EN {
+        internal static string F_EN {
             get {
                 return ResourceManager.GetString("F_EN", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на g.
         /// </summary>
-        public static string G_EN {
+        internal static string G_EN {
             get {
                 return ResourceManager.GetString("G_EN", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на h.
         /// </summary>
-        public static string H_EN {
+        internal static string H_EN {
             get {
                 return ResourceManager.GetString("H_EN", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Queue.Model.Common.Translation {
         /// <summary>
         ///   Ищет локализованную строку, похожую на  .
         /// </summary>
-        public static string None {
+        internal static string None {
             get {
                 return ResourceManager.GetString("None", resourceCulture);
             }

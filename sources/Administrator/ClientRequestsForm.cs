@@ -75,8 +75,8 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    serviceControl.Initialize(await taskPool.AddTask(channel.Service.GetServiceList()));
-                    operatorControl.Initialize(await taskPool.AddTask(channel.Service.GetUserList(UserRole.Operator)));
+                    serviceControl.Initialize(await taskPool.AddTask(channel.Service.GetServiceLinks()));
+                    operatorControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(UserRole.Operator)));
 
                     RefreshClienRequestsGridView();
                 }
@@ -209,7 +209,7 @@ namespace Queue.Administrator
             row.Cells["clientColumn"].Value = clientRequest.Client;
             row.Cells["operatorColumn"].Value = clientRequest.Operator;
             row.Cells["serviceColumn"].Value = clientRequest.Service;
-            row.Cells["stateColumn"].Value = Translation.ClientRequestState.ResourceManager.GetString(clientRequest.State.ToString());
+            row.Cells["stateColumn"].Value = clientRequest.State.Translate();
 
             row.Tag = clientRequest;
             row.DefaultCellStyle.BackColor = ColorTranslator.FromHtml(clientRequest.Color);

@@ -15,7 +15,7 @@ namespace Queue.Services.Server
 {
     public partial class ServerService
     {
-        public async Task<DTO.IdentifiedEntity[]> GetServiceList()
+        public async Task<DTO.IdentifiedEntity[]> GetServiceLinks()
         {
             return await Task.Run(() =>
             {
@@ -25,9 +25,9 @@ namespace Queue.Services.Server
                     var services = session.CreateCriteria<Service>()
                         .AddOrder(Order.Asc("ServiceGroup"))
                         .AddOrder(Order.Asc("Code"))
-                        .List<Service>();
+                        .List<IdentifiedEntity>();
 
-                    return Mapper.Map<IList<Service>, DTO.IdentifiedEntity[]>(services);
+                    return Mapper.Map<IList<IdentifiedEntity>, DTO.IdentifiedEntity[]>(services);
                 }
             });
         }
@@ -347,7 +347,7 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.IdentifiedEntity[]> GetServiceStepList(Guid serviceId)
+        public async Task<DTO.IdentifiedEntity[]> GetServiceStepLinks(Guid serviceId)
         {
             return await Task.Run(() =>
             {
@@ -363,8 +363,8 @@ namespace Queue.Services.Server
                     var serviceSteps = session.CreateCriteria<ServiceStep>()
                         .Add(Restrictions.Eq("Service", service))
                         .AddOrder(Order.Asc("SortId"))
-                        .List<ServiceStep>();
-                    return Mapper.Map<IList<ServiceStep>, DTO.IdentifiedEntity[]>(serviceSteps);
+                        .List<IdentifiedEntity>();
+                    return Mapper.Map<IList<IdentifiedEntity>, DTO.IdentifiedEntity[]>(serviceSteps);
                 }
             });
         }

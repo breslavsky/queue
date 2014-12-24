@@ -1,30 +1,33 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
+using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
+using System.Globalization;
 using System.ServiceModel;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
     public partial class LoginForm : Queue.UI.WinForms.RichForm
     {
-        private readonly UserRole userRole;
-
         private readonly TaskPool taskPool;
-
+        private readonly UserRole userRole;
         private ChannelManager<IServerTcpService> channelManager;
 
         public LoginForm(UserRole userRole)
             : base()
         {
+            this.userRole = userRole;
+
             InitializeComponent();
 
-            this.userRole = userRole;
+            languageControl.Initialize<Language>();
 
             taskPool = new TaskPool();
         }
@@ -37,7 +40,11 @@ namespace Queue.UI.WinForms
             set { endpointTextBox.Text = value; }
         }
 
-        public Guid UserId { get; set; }
+        public bool IsRemember
+        {
+            get { return rememberCheckBox.Checked; }
+            set { rememberCheckBox.Checked = value; }
+        }
 
         public string Password
         {
@@ -51,21 +58,9 @@ namespace Queue.UI.WinForms
             }
         }
 
-        public bool IsRemember
-        {
-            get { return rememberCheckBox.Checked; }
-            set { rememberCheckBox.Checked = value; }
-        }
-
         public User User { get; private set; }
 
-        private void LoginForm_Load(object sender, EventArgs e)
-        {
-            if (IsRemember)
-            {
-                connect();
-            }
-        }
+        public Guid UserId { get; set; }
 
         private async void connect()
         {
@@ -98,7 +93,7 @@ namespace Queue.UI.WinForms
                 {
                     connectButton.Enabled = false;
 
-                    usersControl.Initialize(await taskPool.AddTask(channel.Service.GetUserList(userRole)));
+                    usersControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(userRole)));
                     if (UserId != Guid.Empty)
                     {
                         usersControl.Select<User>(new User() { Id = UserId });
@@ -133,6 +128,26 @@ namespace Queue.UI.WinForms
             {
                 login();
             }
+        }
+
+        private void connectButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                connect();
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
+            }
+        }
+
+        private void languageControl_SelectedChanged(object sender, EventArgs e)
+        {
+            Language language = languageControl.Selected<Language>();
+            language.SetCurrent();
+
+            Translate();
         }
 
         private async void login()
@@ -177,11 +192,22 @@ namespace Queue.UI.WinForms
             login();
         }
 
-        private void passwordTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            taskPool.Dispose();
+            if (channelManager != null)
             {
-                login();
+                channelManager.Dispose();
+            }
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            languageControl.Select<Language>(CultureInfo.CurrentCulture.GetLanguage());
+
+            if (IsRemember)
+            {
+                connect();
             }
         }
 
@@ -190,15 +216,11 @@ namespace Queue.UI.WinForms
             passwordTextBox.SelectAll();
         }
 
-        private void connectButton_Click(object sender, EventArgs e)
+        private void passwordTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            try
+            if (e.KeyCode == Keys.Enter)
             {
-                connect();
-            }
-            catch (Exception exception)
-            {
-                UIHelper.Warning(exception.Message);
+                login();
             }
         }
 
@@ -214,15 +236,6 @@ namespace Queue.UI.WinForms
                 {
                     UIHelper.Warning(exception.Message);
                 }
-            }
-        }
-
-        private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            taskPool.Dispose();
-            if (channelManager != null)
-            {
-                channelManager.Dispose();
             }
         }
     }

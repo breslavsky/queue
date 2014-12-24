@@ -1,4 +1,5 @@
-﻿using Queue.Services.DTO;
+﻿using Queue.Model.Common;
+using Queue.Services.DTO;
 using Queue.UI.WPF;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,6 @@ using Color = System.Windows.Media.Color;
 using Path = System.IO.Path;
 using QIcons = Queue.UI.Common.Icons;
 using QueueOperator = Queue.Services.DTO.QueuePlan.Operator;
-using Translation = Queue.Model.Common.Translation;
 using WindowState = Xceed.Wpf.Toolkit.WindowState;
 
 namespace Queue.Administrator
@@ -304,9 +304,10 @@ namespace Queue.Administrator
                     textBlock = new TextBlock();
                     textBlock.Padding = new Thickness(5, 5, 5, 5);
 
-                    var translation = Translation.ClientRequestType.ResourceManager;
-
-                    textBlock.Inlines.Add(new Run(string.Format("[{0}] {1}", clientRequest.Number, translation.GetString(clientRequest.Type.ToString()))) { FontWeight = FontWeights.Bold });
+                    textBlock.Inlines.Add(new Run(string.Format("[{0}] {1}", clientRequest.Number, clientRequest.Type.Translate()))
+                    {
+                        FontWeight = FontWeights.Bold
+                    });
                     textBlock.Inlines.Add(new LineBreak());
 
                     var client = clientRequest.Client;
@@ -318,8 +319,7 @@ namespace Queue.Administrator
                     textBlock.Inlines.Add(string.Format("{0:hh\\:mm\\:ss} - {1:hh\\:mm\\:ss}", clientRequestPlan.StartTime, clientRequestPlan.FinishTime));
                     textBlock.Inlines.Add(new LineBreak());
 
-                    translation = Translation.ClientRequestState.ResourceManager;
-                    textBlock.Inlines.Add(translation.GetString(clientRequest.State.ToString()));
+                    textBlock.Inlines.Add(clientRequest.State.Translate());
 
                     if (queuePlanTime > TimeSpan.Zero)
                     {
@@ -402,9 +402,10 @@ namespace Queue.Administrator
                 textBlock = new TextBlock();
                 textBlock.Padding = new Thickness(5, 5, 5, 5);
 
-                var translation = Translation.ClientRequestType.ResourceManager;
-
-                textBlock.Inlines.Add(new Run(string.Format("[{0}] {1}", clientRequest.Number, translation.GetString(clientRequest.Type.ToString()))) { FontWeight = FontWeights.Bold });
+                textBlock.Inlines.Add(new Run(string.Format("[{0}] {1}", clientRequest.Number, clientRequest.Type.Translate()))
+                {
+                    FontWeight = FontWeights.Bold
+                });
                 textBlock.Inlines.Add(new LineBreak());
                 textBlock.Inlines.Add(new Run(clientRequest.RequestTime.ToString("hh\\:mm\\:ss")) { FontWeight = FontWeights.Bold });
                 textBlock.Inlines.Add(new LineBreak());

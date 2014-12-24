@@ -40,6 +40,7 @@
             this.loginButton = new System.Windows.Forms.Button();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.loginLabel = new System.Windows.Forms.Label();
+            this.languageControl = new Queue.UI.WinForms.EnumItemControl();
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
             this.productNameLabel = new System.Windows.Forms.Label();
             this.connectionGroupBox.SuspendLayout();
@@ -52,7 +53,7 @@
             this.connectionGroupBox.Controls.Add(this.connectButton);
             this.connectionGroupBox.Controls.Add(this.serverLabel);
             this.connectionGroupBox.Controls.Add(this.endpointTextBox);
-            this.connectionGroupBox.Location = new System.Drawing.Point(10, 110);
+            this.connectionGroupBox.Location = new System.Drawing.Point(10, 135);
             this.connectionGroupBox.Name = "connectionGroupBox";
             this.connectionGroupBox.Size = new System.Drawing.Size(330, 70);
             this.connectionGroupBox.TabIndex = 0;
@@ -94,7 +95,7 @@
             this.loginGroupBox.Controls.Add(this.passwordTextBox);
             this.loginGroupBox.Controls.Add(this.loginLabel);
             this.loginGroupBox.Enabled = false;
-            this.loginGroupBox.Location = new System.Drawing.Point(10, 190);
+            this.loginGroupBox.Location = new System.Drawing.Point(10, 215);
             this.loginGroupBox.Name = "loginGroupBox";
             this.loginGroupBox.Size = new System.Drawing.Size(330, 120);
             this.loginGroupBox.TabIndex = 0;
@@ -103,6 +104,7 @@
             // 
             // usersControl
             // 
+            this.usersControl.Enabled = false;
             this.usersControl.Location = new System.Drawing.Point(100, 25);
             this.usersControl.Name = "usersControl";
             this.usersControl.Size = new System.Drawing.Size(220, 21);
@@ -158,10 +160,19 @@
             this.loginLabel.TabIndex = 0;
             this.loginLabel.Text = "Пользователь";
             // 
+            // languageControl
+            // 
+            this.languageControl.Enabled = false;
+            this.languageControl.Location = new System.Drawing.Point(225, 5);
+            this.languageControl.Name = "languageControl";
+            this.languageControl.Size = new System.Drawing.Size(115, 21);
+            this.languageControl.TabIndex = 2;
+            this.languageControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.languageControl_SelectedChanged);
+            // 
             // logoPictureBox
             // 
             this.logoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("logoPictureBox.Image")));
-            this.logoPictureBox.Location = new System.Drawing.Point(10, 5);
+            this.logoPictureBox.Location = new System.Drawing.Point(10, 30);
             this.logoPictureBox.Name = "logoPictureBox";
             this.logoPictureBox.Size = new System.Drawing.Size(330, 100);
             this.logoPictureBox.TabIndex = 1;
@@ -169,7 +180,7 @@
             // 
             // productNameLabel
             // 
-            this.productNameLabel.Location = new System.Drawing.Point(135, 85);
+            this.productNameLabel.Location = new System.Drawing.Point(135, 110);
             this.productNameLabel.Name = "productNameLabel";
             this.productNameLabel.Size = new System.Drawing.Size(202, 15);
             this.productNameLabel.TabIndex = 2;
@@ -180,7 +191,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(349, 326);
+            this.ClientSize = new System.Drawing.Size(349, 342);
+            this.Controls.Add(this.languageControl);
             this.Controls.Add(this.productNameLabel);
             this.Controls.Add(this.logoPictureBox);
             this.Controls.Add(this.connectionGroupBox);
@@ -216,6 +228,7 @@
         private System.Windows.Forms.PictureBox logoPictureBox;
         private System.Windows.Forms.Label productNameLabel;
         private IdentifiedEntityControl usersControl;
+        private EnumItemControl languageControl;
     }
 }
 

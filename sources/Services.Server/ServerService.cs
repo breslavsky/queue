@@ -53,7 +53,7 @@ namespace Queue.Services.Server
             }
             catch
             {
-                logger.Debug(string.Format("Не удалось получить канал обратного вызова [{0}]", sessionId));
+                logger.DebugFormat("Не удалось получить канал обратного вызова [{0}]", sessionId);
             }
 
             subscriptions = new Dictionary<ServerServiceEventType, Subscribtion>();
@@ -92,7 +92,7 @@ namespace Queue.Services.Server
             {
                 lock (subscriptions)
                 {
-                    logger.Debug(string.Format("Подписка на событие [{0}] для [{1}]", eventType, sessionId));
+                    logger.DebugFormat("Подписка на событие [{0}] для [{1}]", eventType, sessionId);
 
                     switch (eventType)
                     {
@@ -160,7 +160,7 @@ namespace Queue.Services.Server
             {
                 lock (subscriptions)
                 {
-                    logger.Debug(string.Format("Отписка от события [{0}] для [{1}]", eventType, sessionId));
+                    logger.DebugFormat("Отписка от события [{0}] для [{1}]", eventType, sessionId);
 
                     switch (eventType)
                     {
@@ -196,7 +196,7 @@ namespace Queue.Services.Server
 
         public void UnSubscribe()
         {
-            logger.Info(string.Format("Экземпляр службы уничтожен [{0}]", sessionId));
+            logger.InfoFormat("Экземпляр службы уничтожен [{0}]", sessionId);
             try
             {
                 var eventTypes = subscriptions.Keys.ToArray();
@@ -213,14 +213,14 @@ namespace Queue.Services.Server
 
         private void channel_Closing(object sender, EventArgs e)
         {
-            logger.Info(string.Format("Канал службы закрывается [{0}]", sessionId));
+            logger.InfoFormat("Канал службы закрывается [{0}]", sessionId);
 
             UnSubscribe();
         }
 
         private void channel_Faulted(object sender, EventArgs e)
         {
-            logger.Info(string.Format("В канале службы произошла ошибка [{0}]", sessionId));
+            logger.InfoFormat("В канале службы произошла ошибка [{0}]", sessionId);
 
             UnSubscribe();
         }

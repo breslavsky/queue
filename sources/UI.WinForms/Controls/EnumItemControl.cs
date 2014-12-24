@@ -1,4 +1,5 @@
-﻿using Queue.Model.Common;
+﻿using Junte.Data.Common;
+using Queue.Model.Common;
 using Queue.Services.DTO;
 using System;
 using System.Linq;
