@@ -516,6 +516,7 @@
       <DependentUpon>ServiceStepsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Translate\AdministratorForm.en-US.resx" />
+    <EmbeddedResource Include="Translate\EditServiceForm.en-US.resx" />
     <EmbeddedResource Include="Translate\EditServiceGroupForm.en-US.resx" />
     <EmbeddedResource Include="Translate\EditServiceParameterNumberForm.en-US.resx" />
     <EmbeddedResource Include="Translate\EditServiceParameterOptionsForm.en-US.resx" />
