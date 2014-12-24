@@ -12,9 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Resources;
 using System.ServiceModel;
-using Translation = Queue.Model.Common.Translation;
 
 namespace Queue.Reports.ServiceRatingReport
 {
@@ -250,13 +248,11 @@ namespace Queue.Reports.ServiceRatingReport
             {
                 cell.CellStyle = CreateCellBoldStyle(worksheet.Workbook);
 
-                ResourceManager translation = Translation.ServiceType.ResourceManager;
-
                 foreach (ServiceType serviceType in Enum.GetValues(typeof(ServiceType)))
                 {
                     row = worksheet.CreateRow(rowIndex++);
                     cell = row.CreateCell(4);
-                    cell.SetCellValue(translation.GetString(serviceType.ToString()));
+                    cell.SetCellValue(serviceType.Translate());
 
                     RenderRating(row, ratings.FirstOrDefault(r => r.Service.Id == service.Id && r.ServiceType.Equals(serviceType)) ??
                                         new ServiceRating());

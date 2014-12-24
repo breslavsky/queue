@@ -1,6 +1,4 @@
-﻿using Translation = Queue.Model.Common.Translation;
-
-namespace Queue.Model.Common
+﻿namespace Queue.Model.Common
 {
     public enum WorkplaceModificator
     {
@@ -29,7 +27,7 @@ namespace Queue.Model.Common
     {
         public static string Translate(this WorkplaceModificator value)
         {
-            return Translation.WorkplaceModificator.ResourceManager.GetString(value.ToString());
+            return Translation.WorkplaceModificator.ResourceManager.GetString(value.Translate());
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using Queue.Services.DTO;
+﻿using Queue.Model.Common;
+using Queue.Services.DTO;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Drawing = System.Drawing;
-using Translation = Queue.Model.Common.Translation;
 
 namespace Queue.Notification.UserControls
 {
@@ -19,7 +19,7 @@ namespace Queue.Notification.UserControls
             InitializeComponent();
 
             this.Workplace = request.Operator.Workplace.ToString();
-            this.State = Translation.ClientRequestState.ResourceManager.GetString(request.State.ToString());
+            this.State = request.State.Translate();
 
             Drawing.Color c = Drawing.ColorTranslator.FromHtml(request.Color);
             StateBrush = new SolidColorBrush(Color.FromRgb(c.R, c.G, c.B));

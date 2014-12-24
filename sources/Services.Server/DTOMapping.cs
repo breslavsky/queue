@@ -1,24 +1,13 @@
 ﻿using AutoMapper;
 using Junte.Data.NHibernate;
 using Queue.Model;
-using System.Drawing;
 
 namespace Queue.Services.Server
 {
-    /*public class ColorTypeConverter : ITypeConverter<Color, string>
-    {
-        public string Convert(ResolutionContext context)
-        {
-            return ColorTranslator.ToHtml((Color)context.SourceValue);
-        }
-    }*/
-
     public class ParticularDTOProfile : Profile
     {
         protected override void Configure()
         {
-            //TODO: trash?
-            //Mapper.CreateMap<Color, string>().ConvertUsing(new ColorTypeConverter());
             Mapper.CreateMap<IdentifiedEntity, DTO.IdentifiedEntity>()
                 .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
         }

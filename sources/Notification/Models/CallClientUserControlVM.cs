@@ -1,6 +1,6 @@
-﻿using Queue.Services.DTO;
+﻿using Queue.Model.Common;
+using Queue.Services.DTO;
 using Queue.UI.WPF.Types;
-using Translation = Queue.Model.Common.Translation;
 
 namespace Queue.Notification.Models
 {
@@ -39,7 +39,7 @@ namespace Queue.Notification.Models
         {
             Number = request.Number;
             Workplace workplace = request.Operator.Workplace;
-            WorkplaceType = Translation.WorkplaceType.ResourceManager.GetString(workplace.Type.ToString());
+            WorkplaceType = workplace.Type.Translate();
             WorkplaceNumber = workplace.Number;
 
             Active = true;

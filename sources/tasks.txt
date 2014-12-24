@@ -11,6 +11,8 @@ liveRegistratorListBox.Items.AddRange(registrators1.ToArray());
 этапы услуг
 счетчик времени одинаковый
 
+enum translate
+
 
 if (!clientRequest.Equals(source))
 {
