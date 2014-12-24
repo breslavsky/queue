@@ -89,6 +89,12 @@
     <Compile Include="Controls\DigitalTimer.Designer.cs">
       <DependentUpon>DigitalTimer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\EnumFlagsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EnumFlagsControl.Designer.cs">
+      <DependentUpon>EnumFlagsControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\EnumItemControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -152,10 +158,19 @@
     <Compile Include="Forms\SelectServiceForm.Designer.cs">
       <DependentUpon>SelectServiceForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TimePicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TimePicker.Designer.cs">
+      <DependentUpon>TimePicker.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\DigitalTimer.resx">
       <DependentUpon>DigitalTimer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EnumFlagsControl.resx">
+      <DependentUpon>EnumFlagsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SelectServiceControl.resx">
       <DependentUpon>SelectServiceControl.cs</DependentUpon>
@@ -190,6 +205,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SelectServiceForm.resx">
       <DependentUpon>SelectServiceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TimePicker.resx">
+      <DependentUpon>TimePicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Translate\LoginForm.en-US.resx" />
     <EmbeddedResource Include="Translate\LoginForm.zh-CN.resx" />

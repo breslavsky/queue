@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.stateLabel = new System.Windows.Forms.Label();
             this.numberLabel = new System.Windows.Forms.Label();
             this.parametersLabel = new System.Windows.Forms.Label();
@@ -55,7 +55,6 @@
             this.couponMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.numberTextBlock = new System.Windows.Forms.Label();
-            this.requestDateTextBlock = new System.Windows.Forms.Label();
             this.clientTextBlock = new System.Windows.Forms.Label();
             this.serviceTextBlock = new System.Windows.Forms.Label();
             this.stateTextBlock = new System.Windows.Forms.Label();
@@ -64,11 +63,12 @@
             this.serviceTypeTextBlock = new System.Windows.Forms.Label();
             this.serviceStepLabel = new System.Windows.Forms.Label();
             this.editPanel = new System.Windows.Forms.Panel();
+            this.requestDatePicker = new System.Windows.Forms.DateTimePicker();
             this.saveButton = new System.Windows.Forms.Button();
             this.operatorControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.serviceStepControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.typeControl = new Queue.UI.WinForms.EnumItemControl();
-            this.requestTimeTextBox = new System.Windows.Forms.MaskedTextBox();
+            this.requestTimePicker = new Queue.UI.WinForms.TimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.parametersGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).BeginInit();
@@ -108,14 +108,14 @@
             this.parametersGridView.AllowUserToAddRows = false;
             this.parametersGridView.AllowUserToDeleteRows = false;
             this.parametersGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.parametersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.parametersGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.parameterNameColumn,
@@ -177,14 +177,14 @@
             this.eventsGridView.AllowUserToAddRows = false;
             this.eventsGridView.AllowUserToDeleteRows = false;
             this.eventsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.eventsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.eventsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.eventsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.eventsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.createDateColumn,
@@ -340,16 +340,6 @@
             this.numberTextBlock.Size = new System.Drawing.Size(60, 20);
             this.numberTextBlock.TabIndex = 1;
             // 
-            // requestDateTextBlock
-            // 
-            this.requestDateTextBlock.BackColor = System.Drawing.Color.White;
-            this.requestDateTextBlock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.requestDateTextBlock.Location = new System.Drawing.Point(115, 30);
-            this.requestDateTextBlock.Name = "requestDateTextBlock";
-            this.requestDateTextBlock.Padding = new System.Windows.Forms.Padding(2);
-            this.requestDateTextBlock.Size = new System.Drawing.Size(85, 20);
-            this.requestDateTextBlock.TabIndex = 2;
-            // 
             // clientTextBlock
             // 
             this.clientTextBlock.BackColor = System.Drawing.Color.White;
@@ -419,7 +409,8 @@
             // 
             // editPanel
             // 
-            this.editPanel.Controls.Add(this.requestTimeTextBox);
+            this.editPanel.Controls.Add(this.requestTimePicker);
+            this.editPanel.Controls.Add(this.requestDatePicker);
             this.editPanel.Controls.Add(this.saveButton);
             this.editPanel.Controls.Add(this.operatorControl);
             this.editPanel.Controls.Add(this.serviceStepControl);
@@ -428,7 +419,6 @@
             this.editPanel.Controls.Add(this.numberTextBlock);
             this.editPanel.Controls.Add(this.isPriorityCheckBox);
             this.editPanel.Controls.Add(this.requestDateLabel);
-            this.editPanel.Controls.Add(this.requestDateTextBlock);
             this.editPanel.Controls.Add(this.requestTimeLabel);
             this.editPanel.Controls.Add(this.subjectsLabel);
             this.editPanel.Controls.Add(this.subjectsUpDown);
@@ -451,6 +441,14 @@
             this.editPanel.Size = new System.Drawing.Size(635, 315);
             this.editPanel.TabIndex = 16;
             this.editPanel.EnabledChanged += new System.EventHandler(this.editPanel_EnabledChanged);
+            // 
+            // requestDatePicker
+            // 
+            this.requestDatePicker.Location = new System.Drawing.Point(115, 30);
+            this.requestDatePicker.Name = "requestDatePicker";
+            this.requestDatePicker.Size = new System.Drawing.Size(150, 20);
+            this.requestDatePicker.TabIndex = 22;
+            this.requestDatePicker.Leave += new System.EventHandler(this.requestDatePicker_Leave);
             // 
             // saveButton
             // 
@@ -485,22 +483,20 @@
             // typeControl
             // 
             this.typeControl.Enabled = false;
-            this.typeControl.Location = new System.Drawing.Point(200, 55);
+            this.typeControl.Location = new System.Drawing.Point(155, 55);
             this.typeControl.Name = "typeControl";
             this.typeControl.Size = new System.Drawing.Size(115, 21);
             this.typeControl.TabIndex = 17;
             this.typeControl.Leave += new System.EventHandler(this.typeControl_Leave);
             // 
-            // requestTimeTextBox
+            // requestTimePicker
             // 
-            this.requestTimeTextBox.Location = new System.Drawing.Point(115, 55);
-            this.requestTimeTextBox.Mask = "00:00";
-            this.requestTimeTextBox.Name = "requestTimeTextBox";
-            this.requestTimeTextBox.Size = new System.Drawing.Size(35, 20);
-            this.requestTimeTextBox.TabIndex = 21;
-            this.requestTimeTextBox.Text = "0000";
-            this.requestTimeTextBox.ValidatingType = typeof(System.DateTime);
-            this.requestTimeTextBox.Leave += new System.EventHandler(this.requestTimeTextBox_Leave);
+            this.requestTimePicker.Location = new System.Drawing.Point(115, 55);
+            this.requestTimePicker.Name = "requestTimePicker";
+            this.requestTimePicker.Size = new System.Drawing.Size(35, 20);
+            this.requestTimePicker.TabIndex = 23;
+            this.requestTimePicker.Value = System.TimeSpan.Parse("00:00:00");
+            this.requestTimePicker.Leave += new System.EventHandler(this.requestTimePicker_Leave);
             // 
             // EditClientRequestForm
             // 
@@ -552,7 +548,6 @@
         private System.Windows.Forms.ToolStripMenuItem couponMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportMenuItem;
         private System.Windows.Forms.Label numberTextBlock;
-        private System.Windows.Forms.Label requestDateTextBlock;
         private System.Windows.Forms.Label clientTextBlock;
         private System.Windows.Forms.Label serviceTextBlock;
         private System.Windows.Forms.Label stateTextBlock;
@@ -569,6 +564,7 @@
         private UI.WinForms.IdentifiedEntityControl operatorControl;
         private UI.WinForms.IdentifiedEntityControl serviceStepControl;
         private System.Windows.Forms.Button saveButton;
-        private System.Windows.Forms.MaskedTextBox requestTimeTextBox;
+        private System.Windows.Forms.DateTimePicker requestDatePicker;
+        private UI.WinForms.TimePicker requestTimePicker;
     }
 }

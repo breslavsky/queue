@@ -42,6 +42,7 @@
             this.passwordButton = new System.Windows.Forms.Button();
             this.permissionsLabel = new System.Windows.Forms.Label();
             this.permissionsListBox = new System.Windows.Forms.CheckedListBox();
+            this.enumFlagsControl1 = new Queue.UI.WinForms.Controls.EnumFlagsControl();
             this.SuspendLayout();
             // 
             // surnameLabel
@@ -169,11 +170,19 @@
             this.permissionsListBox.TabIndex = 18;
             this.permissionsListBox.Leave += new System.EventHandler(this.permissionsListBox_Leave);
             // 
+            // enumFlagsControl1
+            // 
+            this.enumFlagsControl1.Location = new System.Drawing.Point(105, 135);
+            this.enumFlagsControl1.Name = "enumFlagsControl1";
+            this.enumFlagsControl1.Size = new System.Drawing.Size(150, 80);
+            this.enumFlagsControl1.TabIndex = 19;
+            // 
             // EditAdministratorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(269, 295);
+            this.Controls.Add(this.enumFlagsControl1);
             this.Controls.Add(this.surnameLabel);
             this.Controls.Add(this.surnameTextBox);
             this.Controls.Add(this.nameLabel);
@@ -214,5 +223,6 @@
         private System.Windows.Forms.Button passwordButton;
         private System.Windows.Forms.Label permissionsLabel;
         private System.Windows.Forms.CheckedListBox permissionsListBox;
+        private UI.WinForms.Controls.EnumFlagsControl enumFlagsControl1;
     }
 }

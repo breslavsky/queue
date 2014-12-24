@@ -14,7 +14,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Xml;
-using Translation = Queue.Model.Common.Translation;
 using ValidationError = Junte.Data.NHibernate.ValidationError;
 
 namespace Queue.Services.Server
@@ -792,6 +791,18 @@ namespace Queue.Services.Server
                         });
                     }
 
+                    if (clientRequest.RequestDate != source.RequestDate)
+                    {
+                        clientRequest.RequestDate = source.RequestDate;
+
+                        session.Save(new ClientRequestEvent()
+                        {
+                            ClientRequest = clientRequest,
+                            Message = string.Format("[{0}] изменил дату запроса с на [{1}]",
+                                currentUser, clientRequest.RequestDate)
+                        });
+                    }
+
                     if (clientRequest.RequestTime != source.RequestTime)
                     {
                         clientRequest.RequestTime = source.RequestTime;
@@ -907,7 +918,9 @@ namespace Queue.Services.Server
                     using (var locker = todayQueuePlan.WriteLock())
                     {
                         transaction.Commit();
-                        todayQueuePlan.Put(clientRequest);
+
+                        todayQueuePlan.AddClientRequest(clientRequest);
+                        todayQueuePlan.Build(DateTime.Now.TimeOfDay);
                     }
 
                     return Mapper.Map<ClientRequest, DTO.ClientRequest>(clientRequest);
@@ -978,7 +991,8 @@ namespace Queue.Services.Server
                     var clientRequest = session.Get<ClientRequest>(clientRequestId);
                     if (clientRequest == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientRequestId), string.Format("Запрос клиента [{0}] не найден", clientRequestId));
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientRequestId),
+                            string.Format("Запрос клиента [{0}] не найден", clientRequestId));
                     }
 
                     try
@@ -993,13 +1007,11 @@ namespace Queue.Services.Server
                     clientRequest.Version++;
                     session.Save(clientRequest);
 
-                    var queueEvent = new ClientRequestEvent()
+                    session.Save(new ClientRequestEvent()
                     {
                         ClientRequest = clientRequest,
                         Message = string.Format("[{0}] восстановил запрос клиента [{0}]", currentUser, clientRequest)
-                    };
-
-                    session.Save(queueEvent);
+                    });
 
                     var todayQueuePlan = queueInstance.TodayQueuePlan;
                     using (var locker = todayQueuePlan.WriteLock())
@@ -1009,8 +1021,6 @@ namespace Queue.Services.Server
                         todayQueuePlan.AddClientRequest(clientRequest);
                         todayQueuePlan.Build(DateTime.Now.TimeOfDay);
                     }
-
-                    queueInstance.Event(queueEvent);
 
                     return Mapper.Map<ClientRequest, DTO.ClientRequest>(clientRequest);
                 }

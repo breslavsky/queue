@@ -36,7 +36,7 @@ namespace Queue.Services.Server
                     string template = @"Ваш PIN-код {PIN}";
 
                     string text = template
-                        .Replace("{PIN}", PIN.Create(email).ToString());
+                        .Replace("{PIN}", PINUtils.Create(email).ToString());
 
                     using (SmtpClient smtpClient = new SmtpClient(сonfig.Server, сonfig.Port))
                     {
@@ -75,7 +75,7 @@ namespace Queue.Services.Server
                     throw new FaultException("Не верный электронный адрес");
                 }
 
-                if (!PIN.Check(email, source))
+                if (!PINUtils.Check(email, source))
                 {
                     throw new FaultException("Указан не верный PIN-код");
                 }

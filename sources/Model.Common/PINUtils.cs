@@ -2,8 +2,7 @@
 
 namespace Data.Model.Common
 {
-    //TODO: непонятна суть этого класса.... это больше похоже на PINUtils
-    public static class PIN
+    public static class PINUtils
     {
         public static int Create(string email)
         {

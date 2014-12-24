@@ -79,7 +79,11 @@ namespace Queue.Services.Server
         /// <returns></returns>
         public void AddClientRequest(ClientRequest clientRequest)
         {
-            clientRequests.Add(storage.Put(clientRequest));
+            clientRequest = storage.Put(clientRequest);
+            if (!clientRequests.Contains(clientRequest))
+            {
+                clientRequests.Add(clientRequest);
+            }
         }
 
         public void Build()
