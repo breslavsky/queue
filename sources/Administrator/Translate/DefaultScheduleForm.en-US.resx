@@ -117,82 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="codeLabel.Text" xml:space="preserve">
-    <value>Code</value>
-  </data>
-  <data name="commentLabel.Text" xml:space="preserve">
-    <value>Comment</value>
-  </data>
-  <data name="commonPropertiesTabPage.Text" xml:space="preserve">
-    <value>Common properties</value>
-  </data>
-  <data name="commonTabPage.Text" xml:space="preserve">
-    <value>Common information</value>
-  </data>
-  <data name="liveRegistratorLabel.Text" xml:space="preserve">
-    <value>Live registrator</value>
-  </data>
-  <data name="nameLabel.Text" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="serviceTypeLabel.Text" xml:space="preserve">
-    <value>Service types</value>
-  </data>
-  <data name="tagsLabel.Text" xml:space="preserve">
-    <value>Search tags</value>
-  </data>
-  <data name="Text" xml:space="preserve">
-    <value>Edit service</value>
-  </data>
-  <data name="additionalPropertiesTabPage.Text" xml:space="preserve">
-    <value>Additional properties</value>
-  </data>
-  <data name="clientCallDelayLabel.Text" xml:space="preserve">
-    <value>Delay call client</value>
-  </data>
-  <data name="clientCallDelaySecondsLabel.Text" xml:space="preserve">
-    <value>sec.</value>
-  </data>
-  <data name="clientRequireCheckBox.Text" xml:space="preserve">
-    <value>To require client</value>
-  </data>
-  <data name="descriptionLabel.Text" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="earlyRegistratorLabel.Text" xml:space="preserve">
-    <value>Registrators on record</value>
-  </data>
-  <data name="isPlanSubjectsCheckBox.Text" xml:space="preserve">
-    <value>To consider when planning the number of objects</value>
-  </data>
-  <data name="linkLabel.Text" xml:space="preserve">
-    <value>Link to information</value>
-  </data>
-  <data name="maxEarlyDaysDaysLabel.Text" xml:space="preserve">
-    <value>days</value>
-  </data>
-  <data name="maxEarlyDaysLabel.Text" xml:space="preserve">
-    <value>Pre-entry is available at</value>
-  </data>
-  <data name="maxSubjectsLabel.Text" xml:space="preserve">
-    <value>Max objects</value>
-  </data>
-  <data name="priorityLabel.Text" xml:space="preserve">
-    <value>Priority</value>
-  </data>
-  <data name="saveButton.Text" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="timeIntervalRoundingLabel.Text" xml:space="preserve">
-    <value>Rounding time intervals</value>
-  </data>
-  <data name="timeIntervalRoundingMinLabel.Text" xml:space="preserve">
-    <value>min.</value>
-  </data>
   <data name="exceptionScheduleCheckBox.Text" xml:space="preserve">
     <value>Define schedule</value>
   </data>
-  <data name="exceptionScheduleTabPage.Text" xml:space="preserve">
+  <data name="exceptionTabPage.Text" xml:space="preserve">
     <value>Exceptions in the schedule</value>
   </data>
   <data name="fridayTabPage.Text" xml:space="preserve">
@@ -204,11 +132,11 @@
   <data name="saturdayTabPage.Text" xml:space="preserve">
     <value>Saturday</value>
   </data>
-  <data name="stepsTabPage.Text" xml:space="preserve">
-    <value>Steps of services</value>
-  </data>
   <data name="sundayTabPage.Text" xml:space="preserve">
     <value>Sunday</value>
+  </data>
+  <data name="Text" xml:space="preserve">
+    <value>Default schedule</value>
   </data>
   <data name="thursdayTabPage.Text" xml:space="preserve">
     <value>Thursday</value>
@@ -219,13 +147,7 @@
   <data name="wednesdayTabPage.Text" xml:space="preserve">
     <value>Wednesday</value>
   </data>
-  <data name="weekdayScheduleCheckBox.Text" xml:space="preserve">
-    <value>Define schedule</value>
-  </data>
-  <data name="weekdayScheduleTabPage.Text" xml:space="preserve">
+  <data name="weekdayTabPage.Text" xml:space="preserve">
     <value>Weekday schedule</value>
-  </data>
-  <data name="parametersTabPage.Text" xml:space="preserve">
-    <value>Service parameters</value>
   </data>
 </root>

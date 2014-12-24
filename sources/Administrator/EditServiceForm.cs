@@ -541,5 +541,16 @@ namespace Queue.Administrator
         }
 
         #endregion exception schedule
+
+        private void serviceStepsControl_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void weekdayScheduleControl_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

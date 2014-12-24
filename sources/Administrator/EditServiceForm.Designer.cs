@@ -598,6 +598,7 @@
             this.serviceStepsControl.Name = "serviceStepsControl";
             this.serviceStepsControl.Size = new System.Drawing.Size(830, 450);
             this.serviceStepsControl.TabIndex = 0;
+            this.serviceStepsControl.Load += new System.EventHandler(this.serviceStepsControl_Load);
             // 
             // weekdayScheduleTabPage
             // 
@@ -661,6 +662,7 @@
             this.weekdayScheduleControl.Schedule = null;
             this.weekdayScheduleControl.Size = new System.Drawing.Size(790, 310);
             this.weekdayScheduleControl.TabIndex = 0;
+            this.weekdayScheduleControl.Load += new System.EventHandler(this.weekdayScheduleControl_Load);
             // 
             // weekdayScheduleCheckBox
             // 

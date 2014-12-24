@@ -117,115 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="codeLabel.Text" xml:space="preserve">
-    <value>Code</value>
+  <data name="clientColumn.HeaderText" xml:space="preserve">
+    <value>Client</value>
   </data>
-  <data name="commentLabel.Text" xml:space="preserve">
-    <value>Comment</value>
+  <data name="detailsCheckBox.Text" xml:space="preserve">
+    <value>Details</value>
   </data>
-  <data name="commonPropertiesTabPage.Text" xml:space="preserve">
-    <value>Common properties</value>
+  <data name="findButton.Text" xml:space="preserve">
+    <value>Find</value>
   </data>
-  <data name="commonTabPage.Text" xml:space="preserve">
-    <value>Common information</value>
+  <data name="numberColumn.HeaderText" xml:space="preserve">
+    <value>Number</value>
   </data>
-  <data name="liveRegistratorLabel.Text" xml:space="preserve">
-    <value>Live registrator</value>
+  <data name="operatorColumn.HeaderText" xml:space="preserve">
+    <value>Operator</value>
   </data>
-  <data name="nameLabel.Text" xml:space="preserve">
-    <value>Name</value>
+  <data name="operatorLabel.Text" xml:space="preserve">
+    <value>Operator</value>
   </data>
-  <data name="serviceTypeLabel.Text" xml:space="preserve">
-    <value>Service types</value>
+  <data name="queryLabel.Text" xml:space="preserve">
+    <value>Query:</value>
   </data>
-  <data name="tagsLabel.Text" xml:space="preserve">
-    <value>Search tags</value>
+  <data name="requestDateColumn.HeaderText" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="requestDateLabel.Text" xml:space="preserve">
+    <value>Date of request</value>
+  </data>
+  <data name="requestTimeColumn.HeaderText" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="serviceColumn.HeaderText" xml:space="preserve">
+    <value>Service</value>
+  </data>
+  <data name="serviceLabel.Text" xml:space="preserve">
+    <value>Service</value>
+  </data>
+  <data name="stateColumn.HeaderText" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="stateLabel.Text" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="subjectsColumn.HeaderText" xml:space="preserve">
+    <value>Objects</value>
   </data>
   <data name="Text" xml:space="preserve">
-    <value>Edit service</value>
-  </data>
-  <data name="additionalPropertiesTabPage.Text" xml:space="preserve">
-    <value>Additional properties</value>
-  </data>
-  <data name="clientCallDelayLabel.Text" xml:space="preserve">
-    <value>Delay call client</value>
-  </data>
-  <data name="clientCallDelaySecondsLabel.Text" xml:space="preserve">
-    <value>sec.</value>
-  </data>
-  <data name="clientRequireCheckBox.Text" xml:space="preserve">
-    <value>To require client</value>
-  </data>
-  <data name="descriptionLabel.Text" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="earlyRegistratorLabel.Text" xml:space="preserve">
-    <value>Registrators on record</value>
-  </data>
-  <data name="isPlanSubjectsCheckBox.Text" xml:space="preserve">
-    <value>To consider when planning the number of objects</value>
-  </data>
-  <data name="linkLabel.Text" xml:space="preserve">
-    <value>Link to information</value>
-  </data>
-  <data name="maxEarlyDaysDaysLabel.Text" xml:space="preserve">
-    <value>days</value>
-  </data>
-  <data name="maxEarlyDaysLabel.Text" xml:space="preserve">
-    <value>Pre-entry is available at</value>
-  </data>
-  <data name="maxSubjectsLabel.Text" xml:space="preserve">
-    <value>Max objects</value>
-  </data>
-  <data name="priorityLabel.Text" xml:space="preserve">
-    <value>Priority</value>
-  </data>
-  <data name="saveButton.Text" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="timeIntervalRoundingLabel.Text" xml:space="preserve">
-    <value>Rounding time intervals</value>
-  </data>
-  <data name="timeIntervalRoundingMinLabel.Text" xml:space="preserve">
-    <value>min.</value>
-  </data>
-  <data name="exceptionScheduleCheckBox.Text" xml:space="preserve">
-    <value>Define schedule</value>
-  </data>
-  <data name="exceptionScheduleTabPage.Text" xml:space="preserve">
-    <value>Exceptions in the schedule</value>
-  </data>
-  <data name="fridayTabPage.Text" xml:space="preserve">
-    <value>Friday</value>
-  </data>
-  <data name="mondayTabPage.Text" xml:space="preserve">
-    <value>Monday</value>
-  </data>
-  <data name="saturdayTabPage.Text" xml:space="preserve">
-    <value>Saturday</value>
-  </data>
-  <data name="stepsTabPage.Text" xml:space="preserve">
-    <value>Steps of services</value>
-  </data>
-  <data name="sundayTabPage.Text" xml:space="preserve">
-    <value>Sunday</value>
-  </data>
-  <data name="thursdayTabPage.Text" xml:space="preserve">
-    <value>Thursday</value>
-  </data>
-  <data name="tuesdayTabPage.Text" xml:space="preserve">
-    <value>Tuesday</value>
-  </data>
-  <data name="wednesdayTabPage.Text" xml:space="preserve">
-    <value>Wednesday</value>
-  </data>
-  <data name="weekdayScheduleCheckBox.Text" xml:space="preserve">
-    <value>Define schedule</value>
-  </data>
-  <data name="weekdayScheduleTabPage.Text" xml:space="preserve">
-    <value>Weekday schedule</value>
-  </data>
-  <data name="parametersTabPage.Text" xml:space="preserve">
-    <value>Service parameters</value>
+    <value>Requests</value>
   </data>
 </root>

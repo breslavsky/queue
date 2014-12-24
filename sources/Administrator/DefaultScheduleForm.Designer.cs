@@ -45,7 +45,7 @@
             this.exceptionTabPage.Location = new System.Drawing.Point(4, 26);
             this.exceptionTabPage.Name = "exceptionTabPage";
             this.exceptionTabPage.Padding = new System.Windows.Forms.Padding(5);
-            this.exceptionTabPage.Size = new System.Drawing.Size(836, 406);
+            this.exceptionTabPage.Size = new System.Drawing.Size(826, 396);
             this.exceptionTabPage.TabIndex = 0;
             this.exceptionTabPage.Text = "Исключения в расписании";
             this.exceptionTabPage.UseVisualStyleBackColor = true;
@@ -138,7 +138,7 @@
             this.tuesdayTabPage.Location = new System.Drawing.Point(4, 26);
             this.tuesdayTabPage.Name = "tuesdayTabPage";
             this.tuesdayTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tuesdayTabPage.Size = new System.Drawing.Size(818, 366);
+            this.tuesdayTabPage.Size = new System.Drawing.Size(808, 356);
             this.tuesdayTabPage.TabIndex = 0;
             this.tuesdayTabPage.Tag = "2";
             this.tuesdayTabPage.Text = "Вторник";
@@ -148,7 +148,7 @@
             // 
             this.wednesdayTabPage.Location = new System.Drawing.Point(4, 26);
             this.wednesdayTabPage.Name = "wednesdayTabPage";
-            this.wednesdayTabPage.Size = new System.Drawing.Size(818, 366);
+            this.wednesdayTabPage.Size = new System.Drawing.Size(808, 356);
             this.wednesdayTabPage.TabIndex = 0;
             this.wednesdayTabPage.Tag = "3";
             this.wednesdayTabPage.Text = "Среда";
@@ -158,7 +158,7 @@
             // 
             this.thursdayTabPage.Location = new System.Drawing.Point(4, 26);
             this.thursdayTabPage.Name = "thursdayTabPage";
-            this.thursdayTabPage.Size = new System.Drawing.Size(818, 366);
+            this.thursdayTabPage.Size = new System.Drawing.Size(808, 356);
             this.thursdayTabPage.TabIndex = 0;
             this.thursdayTabPage.Tag = "4";
             this.thursdayTabPage.Text = "Четверг";
@@ -168,7 +168,7 @@
             // 
             this.fridayTabPage.Location = new System.Drawing.Point(4, 26);
             this.fridayTabPage.Name = "fridayTabPage";
-            this.fridayTabPage.Size = new System.Drawing.Size(818, 366);
+            this.fridayTabPage.Size = new System.Drawing.Size(808, 356);
             this.fridayTabPage.TabIndex = 0;
             this.fridayTabPage.Tag = "5";
             this.fridayTabPage.Text = "Пятница";
@@ -178,7 +178,7 @@
             // 
             this.saturdayTabPage.Location = new System.Drawing.Point(4, 26);
             this.saturdayTabPage.Name = "saturdayTabPage";
-            this.saturdayTabPage.Size = new System.Drawing.Size(818, 366);
+            this.saturdayTabPage.Size = new System.Drawing.Size(808, 356);
             this.saturdayTabPage.TabIndex = 0;
             this.saturdayTabPage.Tag = "6";
             this.saturdayTabPage.Text = "Суббота";
@@ -188,7 +188,7 @@
             // 
             this.sundayTabPage.Location = new System.Drawing.Point(4, 26);
             this.sundayTabPage.Name = "sundayTabPage";
-            this.sundayTabPage.Size = new System.Drawing.Size(818, 366);
+            this.sundayTabPage.Size = new System.Drawing.Size(808, 356);
             this.sundayTabPage.TabIndex = 0;
             this.sundayTabPage.Tag = "0";
             this.sundayTabPage.Text = "Воскресенье";
