@@ -1,8 +1,8 @@
-﻿using Queue.Services.DTO;
+﻿using Queue.Model.Common;
+using Queue.Services.DTO;
 using Queue.UI.WPF.Types;
 using System.Windows.Media;
 using Drawing = System.Drawing;
-using Translation = Queue.Model.Common.Translation;
 
 namespace Queue.Display.Types
 {
@@ -42,7 +42,7 @@ namespace Queue.Display.Types
         private void Update()
         {
             Number = request.Number;
-            State = Translation.ClientRequestState.ResourceManager.GetString(request.State.ToString());
+            State = request.State.Traslate();
 
             Drawing.Color c = Drawing.ColorTranslator.FromHtml(request.Color);
             StateBrush = new SolidColorBrush(Color.FromRgb(c.R, c.G, c.B));

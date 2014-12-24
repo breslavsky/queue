@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Queue.Model.Common;
+using System;
 using System.Windows.Data;
-using Translation = Queue.Model.Common.Translation;
 
 namespace Queue.Terminal.Converters
 {
@@ -8,7 +8,7 @@ namespace Queue.Terminal.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return Translation.ClientRequestType.ResourceManager.GetString(value.ToString());
+            return value.Translate();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
