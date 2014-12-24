@@ -43,7 +43,7 @@ Unicode true
 RequestExecutionLevel admin
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "Setup_${PRODUCT_VERSION}.exe"
+OutFile "Server_${PRODUCT_VERSION}.exe"
 InstallDir "$PROGRAMFILES32\${PRODUCT_PUBLISHER}\${PRODUCT_NAME}"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
