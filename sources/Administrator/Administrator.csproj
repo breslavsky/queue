@@ -516,6 +516,7 @@
       <DependentUpon>ServiceStepsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Translate\AdministratorForm.en-US.resx" />
+    <EmbeddedResource Include="Translate\CurrentScheduleForm.en-US.resx" />
     <EmbeddedResource Include="Translate\DefaultScheduleForm.en-US.resx" />
     <EmbeddedResource Include="Translate\EditAdministratorForm.en-US.resx" />
     <EmbeddedResource Include="Translate\EditClientForm.en-US.resx" />
