@@ -515,6 +515,7 @@
     <EmbeddedResource Include="Controls\ServiceStepsControl.resx">
       <DependentUpon>ServiceStepsControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Translate\AddClentRequestForm.en-US.resx" />
     <EmbeddedResource Include="Translate\AdministratorForm.en-US.resx" />
     <EmbeddedResource Include="Translate\ClientRequestsForm.en-US.resx" />
     <EmbeddedResource Include="Translate\ClientsForm.en-US.resx" />
