@@ -15,7 +15,7 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <PublishUrl>\\ivanovo\release.queue.name\1.3\Queue.Database\</PublishUrl>
+    <PublishUrl>\\ivanovo\release.queue.name\1.4\Queue.Database\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -25,7 +25,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://release.queue.name/1.3/Queue.Database/</InstallUrl>
+    <InstallUrl>http://release.queue.name/1.4/Queue.Database/</InstallUrl>
     <SupportUrl>http://support.queue.name/</SupportUrl>
     <ErrorReportUrl>http://support.queue.name/</ErrorReportUrl>
     <ProductName>База данных очереди</ProductName>
