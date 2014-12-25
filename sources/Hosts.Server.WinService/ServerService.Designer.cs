@@ -31,6 +31,9 @@
             // 
             // ServerService
             // 
+            this.CanHandlePowerEvent = true;
+            this.CanHandleSessionChangeEvent = true;
+            this.CanShutdown = true;
             this.ServiceName = "ServerService";
 
         }

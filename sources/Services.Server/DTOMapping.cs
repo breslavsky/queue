@@ -161,7 +161,9 @@ namespace Queue.Services.Server
         protected override void Configure()
         {
             Mapper.CreateMap<QueuePlan, DTO.QueuePlan>();
-            Mapper.CreateMap<ClientRequest, DTO.QueuePlan.ClientRequest>();
+            Mapper.CreateMap<ClientRequest, DTO.QueuePlan.ClientRequest>()
+                .ForMember(x => x.Color, o => o.Ignore());
+
             Mapper.CreateMap<Operator, DTO.QueuePlan.Operator>();
             Mapper.CreateMap<ClientRequestPlan, DTO.QueuePlan.ClientRequestPlan>();
             Mapper.CreateMap<OperatorPlan, DTO.QueuePlan.OperatorPlan>();

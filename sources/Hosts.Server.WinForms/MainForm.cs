@@ -1,41 +1,121 @@
-﻿using Junte.UI.WinForms;
+﻿using Junte.Data.NHibernate;
+using Junte.UI.WinForms;
 using Queue.Server;
 using System;
 using System.Configuration;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Queue.Hosts.Server.WinForms
 {
     public partial class MainForm : Form
     {
+        private const string InstallServiceButtonTitle = "Установить сервис";
+        private const string UnistallServiceButtonTitle = "Удалить сервис";
+        private const string StartServiceButtonTitle = "Запустить сервис";
+        private const string StopServiceButtonTitle = "Остановить сервис";
+
         private Configuration configuration;
-
         private ServerSettings settings;
-
         private ServerInstance server;
+        private ServerServiceManager serviceManager;
 
         public MainForm()
         {
             InitializeComponent();
 
-            configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoaming);
+            serviceManager = new ServerServiceManager();
+
+            configuration = GetConfiguration();
             settings = configuration.GetSection("server") as ServerSettings;
+            if (settings == null)
+            {
+                settings = new ServerSettings()
+                    {
+                        Database = GetDefaultDatabaseSettings(),
+                        Services = GetDefaultServicesConfig(),
+                        Debug = true
+                    };
+                configuration.Sections.Add("server", settings);
+            }
 
             editDatabaseSettingsControl.Settings = settings.Database;
 
             debugCheckBox.Checked = settings.Debug;
+        }
 
-            var tcp = settings.Services.TcpService;
+        private Configuration GetConfiguration()
+        {
+            ExeConfigurationFileMap configMap = new ExeConfigurationFileMap();
+            configMap.ExeConfigFilename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                                                                    "Junte",
+                                                                    "Queue.Server",
+                                                                    "app.config");
+
+            return ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
+        }
+
+        private DatabaseSettings GetDefaultDatabaseSettings()
+        {
+            return new DatabaseSettings()
+                        {
+                            Server = "localhost",
+                            Name = "queue",
+                            Type = DatabaseType.MsSql,
+                            Integrated = true
+                        };
+        }
+
+        private ServicesConfig GetDefaultServicesConfig()
+        {
+            return new ServicesConfig()
+                        {
+                            HttpService = new HttpServiceConfig()
+                            {
+                                Enabled = false
+                            },
+                            TcpService = new TcpServiceConfig()
+                            {
+                                Enabled = true,
+                                Host = "localhost",
+                                Port = 4505
+                            }
+                        };
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            AdjustServiceSettings();
+            AdjustServiceState();
+        }
+
+        private void AdjustServiceSettings()
+        {
+            TcpServiceConfig tcp = settings.Services.TcpService;
 
             tcpCheckBox.Checked = tcp.Enabled;
             tcpHostTextBox.Text = tcp.Host;
             tcpPortUpDown.Value = tcp.Port;
 
-            var http = settings.Services.HttpService;
+            HttpServiceConfig http = settings.Services.HttpService;
 
             httpCheckBox.Checked = http.Enabled;
             httpHostTextBox.Text = http.Host;
             httpPortUpDown.Value = http.Port;
+        }
+
+        private void AdjustServiceState()
+        {
+            bool serviceInstalled = serviceManager.ServiceInstalled();
+
+            installServiseButton.Text = serviceInstalled ?
+                 UnistallServiceButtonTitle :
+                 InstallServiceButtonTitle;
+
+            runServiceButton.Enabled = serviceInstalled;
+            runServiceButton.Text = serviceManager.ServiceRunned() ?
+                                        StopServiceButtonTitle :
+                                        StartServiceButtonTitle;
         }
 
         private void startButton_Click(object sender, EventArgs eventArgs)
@@ -45,7 +125,7 @@ namespace Queue.Hosts.Server.WinForms
                 server = new ServerInstance(settings);
                 server.Start();
 
-                configuration.Save(ConfigurationSaveMode.Minimal);
+                configuration.Save();
 
                 panel.Enabled = false;
             }
@@ -111,5 +191,51 @@ namespace Queue.Hosts.Server.WinForms
         }
 
         #endregion bindings
+
+        private void installServiseButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (serviceManager.ServiceInstalled())
+                {
+                    serviceManager.UnistallService();
+                    MessageBox.Show("Сервис удален");
+                }
+                else
+                {
+                    serviceManager.InstallService();
+                    MessageBox.Show("Сервис установлен");
+                }
+            }
+            catch (Exception ex)
+            {
+                UIHelper.Error(ex);
+            }
+
+            AdjustServiceState();
+        }
+
+        private void runServiceButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (serviceManager.ServiceRunned())
+                {
+                    serviceManager.StopService();
+                    MessageBox.Show("Сервис остановлен");
+                }
+                else
+                {
+                    serviceManager.StartService();
+                    MessageBox.Show("Сервис запущен");
+                }
+            }
+            catch (Exception ex)
+            {
+                UIHelper.Error(ex);
+            }
+
+            AdjustServiceState();
+        }
     }
 }

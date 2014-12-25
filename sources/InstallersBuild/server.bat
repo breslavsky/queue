@@ -38,16 +38,16 @@ copy "..\Hosts.Server.WinForms\bin\Release\Queue.Hosts.Server.WinForms.exe.confi
 copy "..\Hosts.Server.WinForms\bin\Release\Junte.UI.WinForms.dll" "build"
 copy "..\Hosts.Server.WinForms\bin\Release\Junte.UI.WinForms.NHibernate.dll" "build"
 copy "..\Hosts.Server.WinForms\bin\Release\Microsoft.WindowsAPICodePack.dll" "build"
-copy "..\Hosts.Server.WinForms\bin\Release\Microsoft.WindowsAPICodePack.ExtendedLinguisticServices" "build"
-copy "..\Hosts.Server.WinForms\bin\Release\Microsoft.WindowsAPICodePack.Sensors" "build"
-copy "..\Hosts.Server.WinForms\bin\Release\Microsoft.WindowsAPICodePack.Shell" "build"
-copy "..\Hosts.Server.WinForms\bin\Release\Microsoft.WindowsAPICodePack.ShellExtensions" "build"
+copy "..\Hosts.Server.WinForms\bin\Release\Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll" "build"
+copy "..\Hosts.Server.WinForms\bin\Release\Microsoft.WindowsAPICodePack.Sensors.dll" "build"
+copy "..\Hosts.Server.WinForms\bin\Release\Microsoft.WindowsAPICodePack.Shell.dll" "build"
+copy "..\Hosts.Server.WinForms\bin\Release\Microsoft.WindowsAPICodePack.ShellExtensions.dll" "build"
 
 copy "server.nsi" "build"
 
 %MAKENSIS_PATH% "build\server.nsi"
 copy "build\%EXE_NAME%" "%EXE_NAME%"
-#rd /S /Q "build"
+rd /S /Q "build"
  
 
 

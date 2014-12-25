@@ -41,7 +41,7 @@
             // 
             this.serviceInstaller.Description = "Junte Queue Server Service";
             this.serviceInstaller.DisplayName = "Junte Queue Server";
-            this.serviceInstaller.ServiceName = "Junte Queue Server";
+            this.serviceInstaller.ServiceName = "JunteQueueServer";
             this.serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller

@@ -72,8 +72,6 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="build.bat" />
-    <None Include="BuildScript.nsi" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

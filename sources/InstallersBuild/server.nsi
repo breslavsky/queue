@@ -2,7 +2,9 @@ Unicode true
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Junte Queue Server"
-!define EXE_NAME "Queue.Hosts.Server.WinService.exe"
+!define EXE_NAME "Queue.Hosts.Server.WinForms.exe"
+!define SERVICE_EXE_NAME "Queue.Hosts.Server.WinService.exe"
+!define SERVICE_NAME "JunteQueueServer"
 !define PRODUCT_VERSION "1.0.0.0"
 !define PRODUCT_PUBLISHER "Junte"
 !define PRODUCT_WEB_SITE "http://junte.ru/"
@@ -10,7 +12,6 @@ Unicode true
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 !define NET_FRAMEWORK_DOWNLOAD_URL "http://download.microsoft.com/download/B/A/4/BA4A7E71-2906-4B2D-A0E1-80CF16844F5F/dotNetFx45_Full_setup.exe"
-!define WELCOME_TITLE "Вас приветствует программа "
 
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
@@ -44,7 +45,7 @@ RequestExecutionLevel admin
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 OutFile "Server_${PRODUCT_VERSION}.exe"
-InstallDir "$PROGRAMFILES32\${PRODUCT_PUBLISHER}\${PRODUCT_NAME}"
+InstallDir "$PROGRAMFILES64\${PRODUCT_PUBLISHER}\${PRODUCT_NAME}"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
 ShowUnInstDetails show
@@ -119,17 +120,20 @@ CompletedDotNet:
   Pop $5
   Pop $6
   Pop $7
-    
 SectionEnd
 
-Section "CopyFiles"
+Section CopyFiles
   SetShellVarContext all
   SetOutPath "$INSTDIR"
-  SetOverwrite ifnewer
   SetOverwrite try
+  
+  CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\${EXE_NAME}"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk" "$INSTDIR\uninst.exe"
+  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\${EXE_NAME}"
 
-  File "${EXE_NAME}"
-  File "${EXE_NAME}.config"
+  File "${SERVICE_EXE_NAME}"
+  File "${SERVICE_EXE_NAME}.config"
   File "AutoMapper.dll"
   File "AutoMapper.Net4.dll"
   File "FluentNHibernate.dll"
@@ -156,19 +160,16 @@ Section "CopyFiles"
   File "Queue.Services.Contracts.dll"
   File "Queue.Services.DTO.dll"
   File "Queue.Services.Server.dll"
-SectionEnd
-
-Section -InstallService
-  DetailPrint "Установка сервиса..."
-
-  ExecWait 'sc create "${PRODUCT_NAME}" binPath= "$INSTDIR\${EXE_NAME}" DisplayName= "${PRODUCT_NAME}" start= auto' $0
-  ${If} $0 != 0
-    DetailPrint "Сервис не установлен."
-    MessageBox MB_ICONINFORMATION|MB_OK "Не удалось установить сервис"
-    Abort
-  ${EndIf}
-
-  DetailPrint "Сервис успешно установлен"
+  
+  File "${EXE_NAME}"
+  File "${EXE_NAME}.config"
+  File "Junte.UI.WinForms.dll"
+  File "Junte.UI.WinForms.NHibernate.dll"
+  File "Microsoft.WindowsAPICodePack.dll"
+  File "Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll"
+  File "Microsoft.WindowsAPICodePack.Sensors.dll"
+  File "Microsoft.WindowsAPICodePack.Shell.dll"
+  File "Microsoft.WindowsAPICodePack.ShellExtensions.dll"
 SectionEnd
 
 Section -Post
@@ -182,14 +183,6 @@ Section -Post
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
 SectionEnd
 
-Section -RunService
-  ExecWait 'sc start "${PRODUCT_NAME}"' $0
-  ${If} $0 != 0
-    DetailPrint "Не удалось запустить сервис"
-    MessageBox MB_ICONINFORMATION|MB_OK "Не удалось запустить службу. Ошибка: $0"
-  ${EndIf}
-SectionEnd
-
 Function un.onUninstSuccess
   HideWindow
   MessageBox MB_ICONINFORMATION|MB_OK "Удаление программы $(^Name) было успешно завершено."
@@ -201,8 +194,12 @@ Function un.onInit
 FunctionEnd
 
 Section Uninstall
-  ExecWait 'sc stop "${PRODUCT_NAME}"'
-  ExecWait 'sc delete "${PRODUCT_NAME}"'
+  ExecWait 'sc stop "${SERVICE_NAME}"'
+  ExecWait 'sc delete "${SERVICE_NAME}"'
+
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk"
+  Delete "$DESKTOP\${PRODUCT_NAME}.lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk"
 
   RMDir /r "$INSTDIR"
 

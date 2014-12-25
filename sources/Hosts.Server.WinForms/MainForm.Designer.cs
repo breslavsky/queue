@@ -31,6 +31,10 @@
             this.components = new System.ComponentModel.Container();
             this.startButton = new System.Windows.Forms.Button();
             this.panel = new System.Windows.Forms.Panel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.runServiceButton = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.installServiseButton = new System.Windows.Forms.Button();
             this.debugCheckBox = new System.Windows.Forms.CheckBox();
             this.databaseGroupBox = new System.Windows.Forms.GroupBox();
             this.editDatabaseSettingsControl = new Junte.UI.WinForms.NHibernate.EditDatabaseSettingsUserControl();
@@ -43,18 +47,14 @@
             this.tcpPortUpDown = new System.Windows.Forms.NumericUpDown();
             this.tcpHostTextBox = new System.Windows.Forms.TextBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.installServiseButton = new System.Windows.Forms.Button();
-            this.runServiceButton = new System.Windows.Forms.Button();
             this.panel.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.databaseGroupBox.SuspendLayout();
             this.httpGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.httpPortUpDown)).BeginInit();
             this.tcpGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tcpPortUpDown)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // startButton
@@ -83,6 +83,46 @@
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(389, 419);
             this.panel.TabIndex = 2;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.runServiceButton);
+            this.groupBox2.Location = new System.Drawing.Point(204, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(173, 54);
+            this.groupBox2.TabIndex = 10;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Управление сервисом";
+            // 
+            // runServiceButton
+            // 
+            this.runServiceButton.Location = new System.Drawing.Point(16, 19);
+            this.runServiceButton.Name = "runServiceButton";
+            this.runServiceButton.Size = new System.Drawing.Size(127, 23);
+            this.runServiceButton.TabIndex = 1;
+            this.runServiceButton.Text = "Запустить сервис";
+            this.runServiceButton.UseVisualStyleBackColor = true;
+            this.runServiceButton.Click += new System.EventHandler(this.runServiceButton_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.installServiseButton);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(173, 54);
+            this.groupBox1.TabIndex = 9;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Установка сервиса";
+            // 
+            // installServiseButton
+            // 
+            this.installServiseButton.Location = new System.Drawing.Point(15, 19);
+            this.installServiseButton.Name = "installServiseButton";
+            this.installServiseButton.Size = new System.Drawing.Size(127, 23);
+            this.installServiseButton.TabIndex = 0;
+            this.installServiseButton.Text = "Установить сервис";
+            this.installServiseButton.UseVisualStyleBackColor = true;
+            this.installServiseButton.Click += new System.EventHandler(this.installServiseButton_Click);
             // 
             // debugCheckBox
             // 
@@ -216,44 +256,6 @@
             this.notifyIcon.Text = "notifyIcon1";
             this.notifyIcon.Visible = true;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.installServiseButton);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(173, 54);
-            this.groupBox1.TabIndex = 9;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Установка сервиса";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.runServiceButton);
-            this.groupBox2.Location = new System.Drawing.Point(204, 12);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(173, 54);
-            this.groupBox2.TabIndex = 10;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Управление сервисом";
-            // 
-            // installServiseButton
-            // 
-            this.installServiseButton.Location = new System.Drawing.Point(15, 19);
-            this.installServiseButton.Name = "installServiseButton";
-            this.installServiseButton.Size = new System.Drawing.Size(127, 23);
-            this.installServiseButton.TabIndex = 0;
-            this.installServiseButton.Text = "Установить сервис";
-            this.installServiseButton.UseVisualStyleBackColor = true;
-            // 
-            // runServiceButton
-            // 
-            this.runServiceButton.Location = new System.Drawing.Point(16, 19);
-            this.runServiceButton.Name = "runServiceButton";
-            this.runServiceButton.Size = new System.Drawing.Size(127, 23);
-            this.runServiceButton.TabIndex = 1;
-            this.runServiceButton.Text = "Запустить сервис";
-            this.runServiceButton.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -267,8 +269,11 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Сервер очереди";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel.ResumeLayout(false);
             this.panel.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.databaseGroupBox.ResumeLayout(false);
             this.httpGroupBox.ResumeLayout(false);
             this.httpGroupBox.PerformLayout();
@@ -276,8 +281,6 @@
             this.tcpGroupBox.ResumeLayout(false);
             this.tcpGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tcpPortUpDown)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
