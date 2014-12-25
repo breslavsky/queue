@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define ProductName="Junte Queue Server" ?>
+  <?define ProductVersion="1.0.0.0" ?>
+  <?define ProductCode="D2EAEE82-C9AF-4223-916F-7CBB5786D763"?>
+  <?define UpgradeCode="58088B57-52CE-4D31-8882-CB4A69FCAFDF"?>
+  <?define Manufacturer="Junte"?>
+  <?define AppExeName="Junte"?>
+
+  <Product Id="$(var.ProductCode)"
+          Name="$(var.ProductName)"
+          Language="1049"
+          Version="$(var.ProductVersion)"
+          Manufacturer="$(var.Manufacturer)"
+          UpgradeCode="$(var.UpgradeCode)">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)">
+          <Component Id="ProductComponent" Guid="2951145A-79A6-41E5-AF01-8396E4775A31">
+            <File Source="$(var.Hosts.Server.WinForms.TargetPath)" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetPath).config" />
+            <File Source="$(var.Hosts.Server.WinService.TargetPath)" />
+            <File Source="$(var.Hosts.Server.WinService.TargetPath).config" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\AutoMapper.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\AutoMapper.Net4.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\FluentNHibernate.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\ICSharpCode.SharpZipLib.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Iesi.Collections.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Junte.Data.Common.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Junte.Data.NHibernate.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Junte.Parallel.Common.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Junte.WCF.Common.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\log4net.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Microsoft.Practices.ServiceLocation.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Microsoft.Practices.Unity.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\NHibernate.Caches.SysCache2.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\NHibernate.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\NHibernate.Mapping.Attributes.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\NHibernate.Validator.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\NPOI.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Queue.Common.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Queue.Model.Common.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Queue.Model.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Queue.Reports.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Queue.Server.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Queue.Services.Common.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Queue.Services.Contracts.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Queue.Services.DTO.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Queue.Services.Server.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Junte.UI.WinForms.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Junte.UI.WinForms.NHibernate.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.Sensors.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.Shell.dll" />
+            <File Source="$(var.Hosts.Server.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.ShellExtensions.dll" />
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="$(var.ProductName)">
+          <Component Id="ApplicationShortcut" Guid="149F0678-5F58-434C-BC37-D0A50850F523">
+            <Shortcut Id="Shortcut"
+                 Name="$(var.ProductName)"
+                 Description="$(var.ProductName)"
+                 Target="[INSTALLFOLDER]$(var.Hosts.Server.WinForms.TargetFileName)"
+                 WorkingDirectory="INSTALLFOLDER" />
+            <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\$(var.Manufacturer)\$(var.ProductName)" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="ProductFeature" Title="$(var.ProductName)" Level="1">
+      <ComponentRef Id="ProductComponent" />
+      <ComponentRef Id="ApplicationShortcut" />
+    </Feature>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" ></Property>
+    <UIRef Id="WixUI_Minimal" />
+  </Product>
+</Wix>
