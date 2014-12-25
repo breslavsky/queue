@@ -20,7 +20,7 @@ namespace Queue.Terminal.Models.Pages
 
         public ICommand SearchCommand { get { return searchCommand.Value; } }
 
-        public event EventHandler OnSearch;
+        public event EventHandler OnSearch = delegate { };
 
         public SearchServicePageVM()
         {
@@ -35,11 +35,7 @@ namespace Queue.Terminal.Models.Pages
         private void Search()
         {
             searcher.Search(Filter);
-
-            if (OnSearch != null)
-            {
-                OnSearch(this, null);
-            }
+            OnSearch(this, null);
         }
     }
 }

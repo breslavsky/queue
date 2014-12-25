@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Queue.UI.WPF.Types
+namespace Queue.UI.WPF
 {
     //TODO: create configuration
     public class UserLoginSettings

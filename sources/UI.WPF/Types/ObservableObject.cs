@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Queue.UI.WPF.Types
+namespace Queue.UI.WPF
 {
     public class ObservableObject : INotifyPropertyChanged
     {

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media;
 
-namespace Queue.UI.WPF.Types
+namespace Queue.UI.WPF
 {
     public class AccentColorComboBoxItem
     {

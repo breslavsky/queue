@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Queue.UI.WPF.Types
+namespace Queue.UI.WPF
 {
-    //TODO: what is this?
     public class RelayCommand<T> : ICommand
     {
         private static bool CanExecute(T parameter)
