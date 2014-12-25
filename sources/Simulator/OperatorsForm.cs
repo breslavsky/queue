@@ -9,7 +9,6 @@ using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using QueueAdministrator = Queue.Services.DTO.Administrator;
 using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Simulator
@@ -118,14 +117,16 @@ namespace Queue.Simulator
 
         private async void UpdateCurrentClientRequest(QueueOperator queueOperator)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = channelManager.CreateChannel(queueOperator.SessionId))
             {
                 try
                 {
                     await taskPool.AddTask(channel.Service.UserHeartbeat());
-                    var clientRequest = (await channel.Service.GetCurrentClientRequestPlan()).ClientRequest;
-                    if (clientRequest != null)
+                    ClientRequestPlan clientRequestPlan = await channel.Service.GetCurrentClientRequestPlan();
+                    if (clientRequestPlan != null)
                     {
+                        ClientRequest clientRequest = clientRequestPlan.ClientRequest;
+
                         var state = ClientRequestState.Calling;
 
                         switch (clientRequest.State)

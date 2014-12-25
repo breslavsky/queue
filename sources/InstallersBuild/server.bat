@@ -49,5 +49,6 @@ copy "server.nsi" "build"
 copy "build\%EXE_NAME%" "%EXE_NAME%"
 rd /S /Q "build"
  
+pause
 
 
