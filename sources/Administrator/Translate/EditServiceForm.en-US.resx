@@ -228,4 +228,7 @@
   <data name="parametersTabPage.Text" xml:space="preserve">
     <value>Service parameters</value>
   </data>
+  <data name="isUseTypeCheckBox.Text" xml:space="preserve">
+    <value>Divided by types of services</value>
+  </data>
 </root>
