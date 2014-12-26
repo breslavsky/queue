@@ -1,6 +1,6 @@
 ﻿using Queue.Model.Common;
 using Queue.Services.DTO;
-using Queue.UI.WPF.Types;
+using Queue.UI.WPF;
 
 namespace Queue.Notification.Models
 {

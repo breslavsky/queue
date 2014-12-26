@@ -4,6 +4,7 @@ using Microsoft.Practices.ServiceLocation;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
+using Queue.UI.WPF;
 using Queue.UI.WPF.Types;
 
 namespace Queue.Terminal.Models.Pages

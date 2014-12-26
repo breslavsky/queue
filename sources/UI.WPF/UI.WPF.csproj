@@ -141,7 +141,6 @@
     <Compile Include="Types\AccentColorComboBoxItem.cs" />
     <Compile Include="Models\LoginPageViewModel.cs" />
     <Compile Include="IRichPage.cs" />
-    <Compile Include="Types\ObservableObject.cs" />
     <Compile Include="Types\RelayCommand.cs" />
     <Compile Include="Types\UserComboBoxItem.cs" />
     <Compile Include="Types\UserLoginSettings.cs" />

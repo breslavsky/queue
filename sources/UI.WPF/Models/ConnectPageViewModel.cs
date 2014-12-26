@@ -1,9 +1,9 @@
 ﻿using Junte.Parallel.Common;
+using Junte.UI.WPF.Types;
 using Junte.WCF.Common;
 using MahApps.Metro;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
-using Queue.UI.WPF.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;

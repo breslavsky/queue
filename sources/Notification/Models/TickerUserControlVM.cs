@@ -1,7 +1,7 @@
 ﻿using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Notification.Types;
-using Queue.UI.WPF.Types;
+using Queue.UI.WPF;
 using System;
 using System.Windows;
 using System.Windows.Media;

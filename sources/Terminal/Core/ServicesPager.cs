@@ -1,6 +1,6 @@
 ﻿using Queue.Terminal.Pages;
 using Queue.Terminal.UserControls;
-using Queue.UI.WPF.Types;
+using Queue.UI.WPF;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;

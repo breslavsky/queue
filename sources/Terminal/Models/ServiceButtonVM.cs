@@ -1,4 +1,5 @@
-﻿using Queue.UI.WPF.Types;
+﻿using Junte.UI.WPF.Types;
+using Queue.UI.WPF;
 using System;
 using System.Windows.Input;
 using System.Windows.Media;

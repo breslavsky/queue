@@ -1,4 +1,5 @@
 ﻿using Junte.Parallel.Common;
+using Junte.UI.WPF.Types;
 using Junte.WCF.Common;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
