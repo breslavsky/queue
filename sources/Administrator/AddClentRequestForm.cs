@@ -616,5 +616,10 @@ namespace Queue.Administrator
                 }
             }
         }
+
+        private void subjectsLabel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

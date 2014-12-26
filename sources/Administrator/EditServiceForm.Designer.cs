@@ -37,7 +37,6 @@
             this.earlyRegistratorLabel = new System.Windows.Forms.Label();
             this.liveRegistratorLabel = new System.Windows.Forms.Label();
             this.additionalPropertiesTabPage = new System.Windows.Forms.TabPage();
-            this.isUseTypeCheckBox = new System.Windows.Forms.CheckBox();
             this.clientCallDelayLabel = new System.Windows.Forms.Label();
             this.clientCallDelayUpDown = new System.Windows.Forms.NumericUpDown();
             this.clientCallDelaySecondsLabel = new System.Windows.Forms.Label();
@@ -53,6 +52,7 @@
             this.priorityUpDown = new System.Windows.Forms.NumericUpDown();
             this.clientRequireCheckBox = new System.Windows.Forms.CheckBox();
             this.isPlanSubjectsCheckBox = new System.Windows.Forms.CheckBox();
+            this.isUseTypeCheckBox = new System.Windows.Forms.CheckBox();
             this.descriptionLabel = new System.Windows.Forms.Label();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.linkLabel = new System.Windows.Forms.Label();
@@ -218,12 +218,12 @@
             // 
             // codeLabel
             // 
-            this.codeLabel.AutoSize = true;
-            this.codeLabel.Location = new System.Drawing.Point(10, 10);
+            this.codeLabel.Location = new System.Drawing.Point(10, 5);
             this.codeLabel.Name = "codeLabel";
-            this.codeLabel.Size = new System.Drawing.Size(26, 13);
+            this.codeLabel.Size = new System.Drawing.Size(340, 20);
             this.codeLabel.TabIndex = 20;
             this.codeLabel.Text = "Код";
+            this.codeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // codeTextBox
             // 
@@ -235,12 +235,12 @@
             // 
             // nameLabel
             // 
-            this.nameLabel.AutoSize = true;
             this.nameLabel.Location = new System.Drawing.Point(7, 62);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(83, 13);
+            this.nameLabel.Size = new System.Drawing.Size(343, 13);
             this.nameLabel.TabIndex = 18;
             this.nameLabel.Text = "Наименование";
+            this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // nameTextBox
             // 
@@ -253,12 +253,12 @@
             // 
             // tagsLabel
             // 
-            this.tagsLabel.AutoSize = true;
-            this.tagsLabel.Location = new System.Drawing.Point(370, 10);
+            this.tagsLabel.Location = new System.Drawing.Point(370, 5);
             this.tagsLabel.Name = "tagsLabel";
-            this.tagsLabel.Size = new System.Drawing.Size(90, 13);
+            this.tagsLabel.Size = new System.Drawing.Size(190, 18);
             this.tagsLabel.TabIndex = 26;
             this.tagsLabel.Text = "Поисковые тэги";
+            this.tagsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // tagsTextBox
             // 
@@ -271,12 +271,12 @@
             // 
             // commentLabel
             // 
-            this.commentLabel.AutoSize = true;
-            this.commentLabel.Location = new System.Drawing.Point(10, 210);
+            this.commentLabel.Location = new System.Drawing.Point(10, 205);
             this.commentLabel.Name = "commentLabel";
-            this.commentLabel.Size = new System.Drawing.Size(77, 13);
+            this.commentLabel.Size = new System.Drawing.Size(340, 18);
             this.commentLabel.TabIndex = 17;
             this.commentLabel.Text = "Комментарий";
+            this.commentLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // commentTextBox
             // 
@@ -289,21 +289,21 @@
             // 
             // earlyRegistratorLabel
             // 
-            this.earlyRegistratorLabel.AutoSize = true;
-            this.earlyRegistratorLabel.Location = new System.Drawing.Point(590, 125);
+            this.earlyRegistratorLabel.Location = new System.Drawing.Point(590, 120);
             this.earlyRegistratorLabel.Name = "earlyRegistratorLabel";
-            this.earlyRegistratorLabel.Size = new System.Drawing.Size(133, 13);
+            this.earlyRegistratorLabel.Size = new System.Drawing.Size(190, 18);
             this.earlyRegistratorLabel.TabIndex = 0;
             this.earlyRegistratorLabel.Text = "Регистраторы по записи";
+            this.earlyRegistratorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // liveRegistratorLabel
             // 
-            this.liveRegistratorLabel.AutoSize = true;
-            this.liveRegistratorLabel.Location = new System.Drawing.Point(365, 125);
+            this.liveRegistratorLabel.Location = new System.Drawing.Point(365, 120);
             this.liveRegistratorLabel.Name = "liveRegistratorLabel";
-            this.liveRegistratorLabel.Size = new System.Drawing.Size(158, 13);
+            this.liveRegistratorLabel.Size = new System.Drawing.Size(195, 18);
             this.liveRegistratorLabel.TabIndex = 0;
             this.liveRegistratorLabel.Text = "Регистраторы живой очереди";
+            this.liveRegistratorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // additionalPropertiesTabPage
             // 
@@ -334,17 +334,6 @@
             this.additionalPropertiesTabPage.TabIndex = 1;
             this.additionalPropertiesTabPage.Text = "Дополнительные параметры";
             this.additionalPropertiesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // isUseTypeCheckBox
-            // 
-            this.isUseTypeCheckBox.AutoSize = true;
-            this.isUseTypeCheckBox.Location = new System.Drawing.Point(305, 80);
-            this.isUseTypeCheckBox.Name = "isUseTypeCheckBox";
-            this.isUseTypeCheckBox.Size = new System.Drawing.Size(159, 17);
-            this.isUseTypeCheckBox.TabIndex = 31;
-            this.isUseTypeCheckBox.Text = "Разделить по типам услуг";
-            this.isUseTypeCheckBox.UseVisualStyleBackColor = true;
-            this.isUseTypeCheckBox.Leave += new System.EventHandler(this.isUseTypeCheckBox_Leave);
             // 
             // clientCallDelayLabel
             // 
@@ -503,14 +492,25 @@
             this.isPlanSubjectsCheckBox.UseVisualStyleBackColor = true;
             this.isPlanSubjectsCheckBox.Leave += new System.EventHandler(this.isPlanSubjectsCheckBox_Leave);
             // 
+            // isUseTypeCheckBox
+            // 
+            this.isUseTypeCheckBox.AutoSize = true;
+            this.isUseTypeCheckBox.Location = new System.Drawing.Point(305, 80);
+            this.isUseTypeCheckBox.Name = "isUseTypeCheckBox";
+            this.isUseTypeCheckBox.Size = new System.Drawing.Size(159, 17);
+            this.isUseTypeCheckBox.TabIndex = 31;
+            this.isUseTypeCheckBox.Text = "Разделить по типам услуг";
+            this.isUseTypeCheckBox.UseVisualStyleBackColor = true;
+            this.isUseTypeCheckBox.Leave += new System.EventHandler(this.isUseTypeCheckBox_Leave);
+            // 
             // descriptionLabel
             // 
-            this.descriptionLabel.AutoSize = true;
-            this.descriptionLabel.Location = new System.Drawing.Point(10, 185);
+            this.descriptionLabel.Location = new System.Drawing.Point(10, 180);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(93, 13);
+            this.descriptionLabel.Size = new System.Drawing.Size(200, 18);
             this.descriptionLabel.TabIndex = 27;
             this.descriptionLabel.Text = "Описание услуги";
+            this.descriptionLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // descriptionTextBox
             // 
@@ -524,12 +524,12 @@
             // 
             // linkLabel
             // 
-            this.linkLabel.AutoSize = true;
-            this.linkLabel.Location = new System.Drawing.Point(5, 295);
+            this.linkLabel.Location = new System.Drawing.Point(5, 290);
             this.linkLabel.Name = "linkLabel";
-            this.linkLabel.Size = new System.Drawing.Size(130, 13);
+            this.linkLabel.Size = new System.Drawing.Size(200, 18);
             this.linkLabel.TabIndex = 30;
             this.linkLabel.Text = "Ссылка на информацию";
+            this.linkLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // linkTextBox
             // 

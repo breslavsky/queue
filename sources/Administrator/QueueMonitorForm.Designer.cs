@@ -95,12 +95,12 @@
             // 
             // numberLabel
             // 
-            this.numberLabel.AutoSize = true;
             this.numberLabel.Location = new System.Drawing.Point(236, 10);
             this.numberLabel.Name = "numberLabel";
             this.numberLabel.Size = new System.Drawing.Size(41, 13);
             this.numberLabel.TabIndex = 0;
             this.numberLabel.Text = "Номер";
+            this.numberLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // numberUpDown
             // 
@@ -174,7 +174,6 @@
             this.Load += new System.EventHandler(this.QueueMonitorForm_Load);
             this.mainTableLayoutPanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numberUpDown)).EndInit();
             this.ResumeLayout(false);
 

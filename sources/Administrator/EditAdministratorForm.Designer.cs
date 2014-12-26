@@ -46,12 +46,12 @@
             // 
             // surnameLabel
             // 
-            this.surnameLabel.AutoSize = true;
-            this.surnameLabel.Location = new System.Drawing.Point(5, 10);
+            this.surnameLabel.Location = new System.Drawing.Point(5, 5);
             this.surnameLabel.Name = "surnameLabel";
-            this.surnameLabel.Size = new System.Drawing.Size(56, 13);
+            this.surnameLabel.Size = new System.Drawing.Size(110, 18);
             this.surnameLabel.TabIndex = 5;
             this.surnameLabel.Text = "Фамилия";
+            this.surnameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // surnameTextBox
             // 
@@ -63,12 +63,12 @@
             // 
             // nameLabel
             // 
-            this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(5, 35);
+            this.nameLabel.Location = new System.Drawing.Point(5, 30);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(29, 13);
+            this.nameLabel.Size = new System.Drawing.Size(110, 18);
             this.nameLabel.TabIndex = 7;
             this.nameLabel.Text = "Имя";
+            this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // nameTextBox
             // 
@@ -80,12 +80,12 @@
             // 
             // patronymicLabel
             // 
-            this.patronymicLabel.AutoSize = true;
-            this.patronymicLabel.Location = new System.Drawing.Point(5, 60);
+            this.patronymicLabel.Location = new System.Drawing.Point(5, 55);
             this.patronymicLabel.Name = "patronymicLabel";
-            this.patronymicLabel.Size = new System.Drawing.Size(54, 13);
+            this.patronymicLabel.Size = new System.Drawing.Size(110, 18);
             this.patronymicLabel.TabIndex = 9;
             this.patronymicLabel.Text = "Отчество";
+            this.patronymicLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // patronymicTextBox
             // 
@@ -97,12 +97,12 @@
             // 
             // emailLabel
             // 
-            this.emailLabel.AutoSize = true;
-            this.emailLabel.Location = new System.Drawing.Point(5, 85);
+            this.emailLabel.Location = new System.Drawing.Point(5, 80);
             this.emailLabel.Name = "emailLabel";
-            this.emailLabel.Size = new System.Drawing.Size(108, 13);
+            this.emailLabel.Size = new System.Drawing.Size(110, 20);
             this.emailLabel.TabIndex = 11;
             this.emailLabel.Text = "Электронный адрес";
+            this.emailLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // emailTextBox
             // 
@@ -114,12 +114,12 @@
             // 
             // mobileLabel
             // 
-            this.mobileLabel.AutoSize = true;
-            this.mobileLabel.Location = new System.Drawing.Point(5, 110);
+            this.mobileLabel.Location = new System.Drawing.Point(5, 105);
             this.mobileLabel.Name = "mobileLabel";
-            this.mobileLabel.Size = new System.Drawing.Size(66, 13);
+            this.mobileLabel.Size = new System.Drawing.Size(110, 18);
             this.mobileLabel.TabIndex = 13;
             this.mobileLabel.Text = "Мобильный";
+            this.mobileLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // mobileTextBox
             // 
@@ -152,12 +152,12 @@
             // 
             // permissionsLabel
             // 
-            this.permissionsLabel.AutoSize = true;
-            this.permissionsLabel.Location = new System.Drawing.Point(10, 140);
+            this.permissionsLabel.Location = new System.Drawing.Point(10, 135);
             this.permissionsLabel.Name = "permissionsLabel";
-            this.permissionsLabel.Size = new System.Drawing.Size(82, 13);
+            this.permissionsLabel.Size = new System.Drawing.Size(250, 18);
             this.permissionsLabel.TabIndex = 17;
             this.permissionsLabel.Text = "Права доступа";
+            this.permissionsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // permissionsFlagsControl
             // 

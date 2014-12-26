@@ -63,12 +63,12 @@
             this.serviceTypeTextBlock = new System.Windows.Forms.Label();
             this.serviceStepLabel = new System.Windows.Forms.Label();
             this.editPanel = new System.Windows.Forms.Panel();
+            this.requestTimePicker = new Queue.UI.WinForms.TimePicker();
             this.requestDatePicker = new System.Windows.Forms.DateTimePicker();
             this.saveButton = new System.Windows.Forms.Button();
             this.operatorControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.serviceStepControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.typeControl = new Queue.UI.WinForms.EnumItemControl();
-            this.requestTimePicker = new Queue.UI.WinForms.TimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.parametersGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).BeginInit();
@@ -89,7 +89,7 @@
             // 
             this.numberLabel.Location = new System.Drawing.Point(5, 5);
             this.numberLabel.Name = "numberLabel";
-            this.numberLabel.Size = new System.Drawing.Size(110, 20);
+            this.numberLabel.Size = new System.Drawing.Size(105, 20);
             this.numberLabel.TabIndex = 0;
             this.numberLabel.Text = "Номер";
             this.numberLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -149,7 +149,7 @@
             // 
             this.requestDateLabel.Location = new System.Drawing.Point(5, 30);
             this.requestDateLabel.Name = "requestDateLabel";
-            this.requestDateLabel.Size = new System.Drawing.Size(110, 20);
+            this.requestDateLabel.Size = new System.Drawing.Size(105, 20);
             this.requestDateLabel.TabIndex = 0;
             this.requestDateLabel.Text = "Дата запроса";
             this.requestDateLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -158,7 +158,7 @@
             // 
             this.clientLabel.Location = new System.Drawing.Point(5, 105);
             this.clientLabel.Name = "clientLabel";
-            this.clientLabel.Size = new System.Drawing.Size(110, 20);
+            this.clientLabel.Size = new System.Drawing.Size(105, 20);
             this.clientLabel.TabIndex = 0;
             this.clientLabel.Text = "Клиент";
             this.clientLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -167,7 +167,7 @@
             // 
             this.serviceLabel.Location = new System.Drawing.Point(5, 130);
             this.serviceLabel.Name = "serviceLabel";
-            this.serviceLabel.Size = new System.Drawing.Size(110, 55);
+            this.serviceLabel.Size = new System.Drawing.Size(105, 55);
             this.serviceLabel.TabIndex = 0;
             this.serviceLabel.Text = "Выбранная услуга";
             this.serviceLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -228,7 +228,7 @@
             this.operatorLabel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.operatorLabel.Location = new System.Drawing.Point(5, 280);
             this.operatorLabel.Name = "operatorLabel";
-            this.operatorLabel.Size = new System.Drawing.Size(110, 20);
+            this.operatorLabel.Size = new System.Drawing.Size(105, 20);
             this.operatorLabel.TabIndex = 0;
             this.operatorLabel.Text = "Оператор";
             this.operatorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -258,7 +258,7 @@
             // 
             this.subjectsLabel.Location = new System.Drawing.Point(5, 80);
             this.subjectsLabel.Name = "subjectsLabel";
-            this.subjectsLabel.Size = new System.Drawing.Size(110, 20);
+            this.subjectsLabel.Size = new System.Drawing.Size(105, 20);
             this.subjectsLabel.TabIndex = 0;
             this.subjectsLabel.Text = "Объектов";
             this.subjectsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -374,7 +374,7 @@
             // 
             this.requestTimeLabel.Location = new System.Drawing.Point(5, 55);
             this.requestTimeLabel.Name = "requestTimeLabel";
-            this.requestTimeLabel.Size = new System.Drawing.Size(110, 20);
+            this.requestTimeLabel.Size = new System.Drawing.Size(105, 20);
             this.requestTimeLabel.TabIndex = 9;
             this.requestTimeLabel.Text = "Время запроса";
             this.requestTimeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -383,7 +383,7 @@
             // 
             this.serviceTypeLabel.Location = new System.Drawing.Point(5, 205);
             this.serviceTypeLabel.Name = "serviceTypeLabel";
-            this.serviceTypeLabel.Size = new System.Drawing.Size(110, 20);
+            this.serviceTypeLabel.Size = new System.Drawing.Size(105, 20);
             this.serviceTypeLabel.TabIndex = 10;
             this.serviceTypeLabel.Text = "Тип услуги";
             this.serviceTypeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -402,7 +402,7 @@
             // 
             this.serviceStepLabel.Location = new System.Drawing.Point(5, 230);
             this.serviceStepLabel.Name = "serviceStepLabel";
-            this.serviceStepLabel.Size = new System.Drawing.Size(110, 20);
+            this.serviceStepLabel.Size = new System.Drawing.Size(105, 20);
             this.serviceStepLabel.TabIndex = 12;
             this.serviceStepLabel.Text = "Этап услуги";
             this.serviceStepLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -441,6 +441,15 @@
             this.editPanel.Size = new System.Drawing.Size(635, 315);
             this.editPanel.TabIndex = 16;
             this.editPanel.EnabledChanged += new System.EventHandler(this.editPanel_EnabledChanged);
+            // 
+            // requestTimePicker
+            // 
+            this.requestTimePicker.Location = new System.Drawing.Point(115, 55);
+            this.requestTimePicker.Name = "requestTimePicker";
+            this.requestTimePicker.Size = new System.Drawing.Size(35, 20);
+            this.requestTimePicker.TabIndex = 23;
+            this.requestTimePicker.Value = System.TimeSpan.Parse("00:00:00");
+            this.requestTimePicker.Leave += new System.EventHandler(this.requestTimePicker_Leave);
             // 
             // requestDatePicker
             // 
@@ -488,15 +497,6 @@
             this.typeControl.Size = new System.Drawing.Size(115, 21);
             this.typeControl.TabIndex = 17;
             this.typeControl.Leave += new System.EventHandler(this.typeControl_Leave);
-            // 
-            // requestTimePicker
-            // 
-            this.requestTimePicker.Location = new System.Drawing.Point(115, 55);
-            this.requestTimePicker.Name = "requestTimePicker";
-            this.requestTimePicker.Size = new System.Drawing.Size(35, 20);
-            this.requestTimePicker.TabIndex = 23;
-            this.requestTimePicker.Value = System.TimeSpan.Parse("00:00:00");
-            this.requestTimePicker.Leave += new System.EventHandler(this.requestTimePicker_Leave);
             // 
             // EditClientRequestForm
             // 

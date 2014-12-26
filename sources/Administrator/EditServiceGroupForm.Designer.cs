@@ -46,12 +46,12 @@
             // 
             // commentLabel
             // 
-            this.commentLabel.AutoSize = true;
             this.commentLabel.Location = new System.Drawing.Point(10, 150);
             this.commentLabel.Name = "commentLabel";
-            this.commentLabel.Size = new System.Drawing.Size(77, 13);
+            this.commentLabel.Size = new System.Drawing.Size(395, 18);
             this.commentLabel.TabIndex = 0;
             this.commentLabel.Text = "Комментарий";
+            this.commentLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // nameTextBox
             // 
@@ -64,12 +64,12 @@
             // 
             // nameLabel
             // 
-            this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(10, 75);
+            this.nameLabel.Location = new System.Drawing.Point(10, 70);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(83, 13);
+            this.nameLabel.Size = new System.Drawing.Size(395, 18);
             this.nameLabel.TabIndex = 0;
             this.nameLabel.Text = "Наименование";
+            this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // codeTextBox
             // 
@@ -81,12 +81,12 @@
             // 
             // codeLabel
             // 
-            this.codeLabel.AutoSize = true;
-            this.codeLabel.Location = new System.Drawing.Point(10, 20);
+            this.codeLabel.Location = new System.Drawing.Point(10, 15);
             this.codeLabel.Name = "codeLabel";
-            this.codeLabel.Size = new System.Drawing.Size(26, 13);
+            this.codeLabel.Size = new System.Drawing.Size(65, 18);
             this.codeLabel.TabIndex = 0;
             this.codeLabel.Text = "Код";
+            this.codeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // colorButton
             // 
@@ -99,12 +99,12 @@
             // 
             // descriptionLabel
             // 
-            this.descriptionLabel.AutoSize = true;
             this.descriptionLabel.Location = new System.Drawing.Point(10, 245);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(57, 13);
+            this.descriptionLabel.Size = new System.Drawing.Size(395, 18);
             this.descriptionLabel.TabIndex = 3;
             this.descriptionLabel.Text = "Описание";
+            this.descriptionLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // descriptionTextBox
             // 
@@ -167,21 +167,21 @@
             // 
             // rowsLabel
             // 
-            this.rowsLabel.AutoSize = true;
-            this.rowsLabel.Location = new System.Drawing.Point(125, 25);
+            this.rowsLabel.Location = new System.Drawing.Point(120, 25);
             this.rowsLabel.Name = "rowsLabel";
-            this.rowsLabel.Size = new System.Drawing.Size(37, 13);
+            this.rowsLabel.Size = new System.Drawing.Size(40, 13);
             this.rowsLabel.TabIndex = 4;
             this.rowsLabel.Text = "Строк";
+            this.rowsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // columnsLabel
             // 
-            this.columnsLabel.AutoSize = true;
-            this.columnsLabel.Location = new System.Drawing.Point(12, 25);
+            this.columnsLabel.Location = new System.Drawing.Point(5, 25);
             this.columnsLabel.Name = "columnsLabel";
-            this.columnsLabel.Size = new System.Drawing.Size(50, 13);
+            this.columnsLabel.Size = new System.Drawing.Size(55, 13);
             this.columnsLabel.TabIndex = 2;
             this.columnsLabel.Text = "Колонок";
+            this.columnsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // EditServiceGroupForm
             // 
@@ -209,7 +209,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ServiceGroupEditForm_FormClosing);
             this.Load += new System.EventHandler(this.ServiceGroupEdit_Load);
             this.layoutGroupBox.ResumeLayout(false);
-            this.layoutGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.columnsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rowsUpDown)).EndInit();
             this.ResumeLayout(false);

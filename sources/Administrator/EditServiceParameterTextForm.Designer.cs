@@ -46,12 +46,12 @@
             // 
             // nameLabel
             // 
-            this.nameLabel.AutoSize = true;
             this.nameLabel.Location = new System.Drawing.Point(5, 5);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(57, 13);
+            this.nameLabel.Size = new System.Drawing.Size(205, 15);
             this.nameLabel.TabIndex = 1;
             this.nameLabel.Text = "Название";
+            this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // nameTextBox
             // 
@@ -63,12 +63,12 @@
             // 
             // toolTipLabel
             // 
-            this.toolTipLabel.AutoSize = true;
-            this.toolTipLabel.Location = new System.Drawing.Point(5, 55);
+            this.toolTipLabel.Location = new System.Drawing.Point(5, 50);
             this.toolTipLabel.Name = "toolTipLabel";
-            this.toolTipLabel.Size = new System.Drawing.Size(63, 13);
+            this.toolTipLabel.Size = new System.Drawing.Size(205, 18);
             this.toolTipLabel.TabIndex = 3;
             this.toolTipLabel.Text = "Подсказка";
+            this.toolTipLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // toolTipTextBox
             // 
@@ -114,12 +114,12 @@
             // 
             // parameterMinLengthLabel
             // 
-            this.parameterMinLengthLabel.AutoSize = true;
-            this.parameterMinLengthLabel.Location = new System.Drawing.Point(10, 30);
+            this.parameterMinLengthLabel.Location = new System.Drawing.Point(10, 25);
             this.parameterMinLengthLabel.Name = "parameterMinLengthLabel";
-            this.parameterMinLengthLabel.Size = new System.Drawing.Size(111, 13);
+            this.parameterMinLengthLabel.Size = new System.Drawing.Size(135, 18);
             this.parameterMinLengthLabel.TabIndex = 0;
             this.parameterMinLengthLabel.Text = "Минимальная длина";
+            this.parameterMinLengthLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // parameterMinLengthUpDown
             // 
@@ -131,12 +131,12 @@
             // 
             // parameterMaxLengthLabel
             // 
-            this.parameterMaxLengthLabel.AutoSize = true;
-            this.parameterMaxLengthLabel.Location = new System.Drawing.Point(10, 55);
+            this.parameterMaxLengthLabel.Location = new System.Drawing.Point(10, 50);
             this.parameterMaxLengthLabel.Name = "parameterMaxLengthLabel";
-            this.parameterMaxLengthLabel.Size = new System.Drawing.Size(117, 13);
+            this.parameterMaxLengthLabel.Size = new System.Drawing.Size(135, 18);
             this.parameterMaxLengthLabel.TabIndex = 0;
             this.parameterMaxLengthLabel.Text = "Максимальная длина";
+            this.parameterMaxLengthLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // parameterMaxLengthUpDown
             // 
@@ -169,7 +169,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditServiceParameterTextForm_FormClosing);
             this.Load += new System.EventHandler(this.EditServiceParameterTextForm_Load);
             this.parameterLengthGroupBox.ResumeLayout(false);
-            this.parameterLengthGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.parameterMinLengthUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.parameterMaxLengthUpDown)).EndInit();
             this.ResumeLayout(false);

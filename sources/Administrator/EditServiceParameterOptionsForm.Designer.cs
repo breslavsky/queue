@@ -41,12 +41,12 @@
             // 
             // nameLabel
             // 
-            this.nameLabel.AutoSize = true;
             this.nameLabel.Location = new System.Drawing.Point(5, 5);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(57, 13);
+            this.nameLabel.Size = new System.Drawing.Size(195, 13);
             this.nameLabel.TabIndex = 1;
             this.nameLabel.Text = "Название";
+            this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // nameTextBox
             // 
@@ -58,12 +58,12 @@
             // 
             // toolTipLabel
             // 
-            this.toolTipLabel.AutoSize = true;
-            this.toolTipLabel.Location = new System.Drawing.Point(5, 55);
+            this.toolTipLabel.Location = new System.Drawing.Point(5, 50);
             this.toolTipLabel.Name = "toolTipLabel";
-            this.toolTipLabel.Size = new System.Drawing.Size(63, 13);
+            this.toolTipLabel.Size = new System.Drawing.Size(195, 18);
             this.toolTipLabel.TabIndex = 3;
             this.toolTipLabel.Text = "Подсказка";
+            this.toolTipLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // toolTipTextBox
             // 
@@ -96,12 +96,12 @@
             // 
             // optionsLabel
             // 
-            this.optionsLabel.AutoSize = true;
             this.optionsLabel.Location = new System.Drawing.Point(210, 5);
             this.optionsLabel.Name = "optionsLabel";
-            this.optionsLabel.Size = new System.Drawing.Size(57, 13);
+            this.optionsLabel.Size = new System.Drawing.Size(160, 13);
             this.optionsLabel.TabIndex = 7;
             this.optionsLabel.Text = "Варианты";
+            this.optionsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // optionsTextBox
             // 

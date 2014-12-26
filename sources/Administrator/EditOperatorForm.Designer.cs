@@ -52,7 +52,7 @@
             // 
             this.surnameLabel.Location = new System.Drawing.Point(5, 5);
             this.surnameLabel.Name = "surnameLabel";
-            this.surnameLabel.Size = new System.Drawing.Size(115, 20);
+            this.surnameLabel.Size = new System.Drawing.Size(110, 20);
             this.surnameLabel.TabIndex = 5;
             this.surnameLabel.Text = "Фамилия";
             this.surnameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -69,7 +69,7 @@
             // 
             this.nameLabel.Location = new System.Drawing.Point(5, 30);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(115, 20);
+            this.nameLabel.Size = new System.Drawing.Size(110, 20);
             this.nameLabel.TabIndex = 7;
             this.nameLabel.Text = "Имя";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -86,7 +86,7 @@
             // 
             this.patronymicLabel.Location = new System.Drawing.Point(5, 55);
             this.patronymicLabel.Name = "patronymicLabel";
-            this.patronymicLabel.Size = new System.Drawing.Size(115, 20);
+            this.patronymicLabel.Size = new System.Drawing.Size(110, 20);
             this.patronymicLabel.TabIndex = 9;
             this.patronymicLabel.Text = "Отчество";
             this.patronymicLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -103,7 +103,7 @@
             // 
             this.emailLabel.Location = new System.Drawing.Point(5, 80);
             this.emailLabel.Name = "emailLabel";
-            this.emailLabel.Size = new System.Drawing.Size(115, 20);
+            this.emailLabel.Size = new System.Drawing.Size(110, 20);
             this.emailLabel.TabIndex = 11;
             this.emailLabel.Text = "Электронный адрес";
             this.emailLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -120,7 +120,7 @@
             // 
             this.mobileLabel.Location = new System.Drawing.Point(5, 105);
             this.mobileLabel.Name = "mobileLabel";
-            this.mobileLabel.Size = new System.Drawing.Size(115, 18);
+            this.mobileLabel.Size = new System.Drawing.Size(110, 18);
             this.mobileLabel.TabIndex = 13;
             this.mobileLabel.Text = "Мобильный";
             this.mobileLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;

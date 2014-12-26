@@ -118,12 +118,12 @@
             // 
             // requestDateLabel
             // 
-            this.requestDateLabel.AutoSize = true;
             this.requestDateLabel.Location = new System.Drawing.Point(10, 50);
             this.requestDateLabel.Name = "requestDateLabel";
-            this.requestDateLabel.Size = new System.Drawing.Size(72, 13);
+            this.requestDateLabel.Size = new System.Drawing.Size(75, 20);
             this.requestDateLabel.TabIndex = 0;
             this.requestDateLabel.Text = "Дата записи";
+            this.requestDateLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // earlyDatePicker
             // 
@@ -156,7 +156,7 @@
             // 
             this.earlyRadioButton.Location = new System.Drawing.Point(122, 285);
             this.earlyRadioButton.Name = "earlyRadioButton";
-            this.earlyRadioButton.Size = new System.Drawing.Size(155, 20);
+            this.earlyRadioButton.Size = new System.Drawing.Size(148, 20);
             this.earlyRadioButton.TabIndex = 0;
             this.earlyRadioButton.Text = "Предварительная запись";
             this.earlyRadioButton.CheckedChanged += new System.EventHandler(this.earlyRadioButton_CheckedChanged);
@@ -276,13 +276,13 @@
             // 
             // queueTypePanel
             // 
-            this.queueTypePanel.Controls.Add(this.clearCurrentClientButton);
+            this.queueTypePanel.Controls.Add(this.clientGroupBox);
             this.queueTypePanel.Controls.Add(this.clientsListBox);
+            this.queueTypePanel.Controls.Add(this.clearCurrentClientButton);
             this.queueTypePanel.Controls.Add(this.queueTypeLiveGroupBox);
             this.queueTypePanel.Controls.Add(this.panel1);
             this.queueTypePanel.Controls.Add(this.subjectsUpDown);
             this.queueTypePanel.Controls.Add(this.subjectsLabel);
-            this.queueTypePanel.Controls.Add(this.clientGroupBox);
             this.queueTypePanel.Controls.Add(this.liveRadioButton);
             this.queueTypePanel.Controls.Add(this.earlyRadioButton);
             this.queueTypePanel.Controls.Add(this.queueTypeEarlyGroupBox);
@@ -386,12 +386,13 @@
             // 
             // subjectsLabel
             // 
-            this.subjectsLabel.AutoSize = true;
             this.subjectsLabel.Location = new System.Drawing.Point(15, 260);
             this.subjectsLabel.Name = "subjectsLabel";
-            this.subjectsLabel.Size = new System.Drawing.Size(57, 13);
+            this.subjectsLabel.Size = new System.Drawing.Size(65, 13);
             this.subjectsLabel.TabIndex = 0;
             this.subjectsLabel.Text = "Объектов";
+            this.subjectsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.subjectsLabel.Click += new System.EventHandler(this.subjectsLabel_Click);
             // 
             // mainTableLayoutPanel
             // 
@@ -424,11 +425,9 @@
             this.Load += new System.EventHandler(this.AddClientRequestForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AddClentRequestForm_KeyDown);
             this.queueTypeEarlyGroupBox.ResumeLayout(false);
-            this.queueTypeEarlyGroupBox.PerformLayout();
             this.clientGroupBox.ResumeLayout(false);
             this.clientGroupBox.PerformLayout();
             this.queueTypePanel.ResumeLayout(false);
-            this.queueTypePanel.PerformLayout();
             this.queueTypeLiveGroupBox.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

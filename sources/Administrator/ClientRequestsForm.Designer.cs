@@ -24,6 +24,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.findButton = new System.Windows.Forms.Button();
             this.requestDateCheckBox = new System.Windows.Forms.CheckBox();
             this.requestDatePanel = new System.Windows.Forms.GroupBox();
             this.requestDateLabel = new System.Windows.Forms.Label();
@@ -64,7 +65,6 @@
             this.operatorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serviceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.findButton = new System.Windows.Forms.Button();
             this.mainTableLayoutPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.requestDatePanel.SuspendLayout();
@@ -113,6 +113,16 @@
             this.panel1.Size = new System.Drawing.Size(1014, 120);
             this.panel1.TabIndex = 0;
             // 
+            // findButton
+            // 
+            this.findButton.Location = new System.Drawing.Point(480, 70);
+            this.findButton.Name = "findButton";
+            this.findButton.Size = new System.Drawing.Size(75, 25);
+            this.findButton.TabIndex = 4;
+            this.findButton.Text = "Найти";
+            this.findButton.UseVisualStyleBackColor = true;
+            this.findButton.Click += new System.EventHandler(this.findButton_Click);
+            // 
             // requestDateCheckBox
             // 
             this.requestDateCheckBox.AutoSize = true;
@@ -137,12 +147,12 @@
             // 
             // requestDateLabel
             // 
-            this.requestDateLabel.AutoSize = true;
-            this.requestDateLabel.Location = new System.Drawing.Point(5, 20);
+            this.requestDateLabel.Location = new System.Drawing.Point(5, 15);
             this.requestDateLabel.Name = "requestDateLabel";
-            this.requestDateLabel.Size = new System.Drawing.Size(78, 13);
+            this.requestDateLabel.Size = new System.Drawing.Size(80, 18);
             this.requestDateLabel.TabIndex = 0;
             this.requestDateLabel.Text = "Дата запроса";
+            this.requestDateLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // requestDatePicker
             // 
@@ -180,12 +190,12 @@
             // 
             // serviceLabel
             // 
-            this.serviceLabel.AutoSize = true;
             this.serviceLabel.Location = new System.Drawing.Point(5, 20);
             this.serviceLabel.Name = "serviceLabel";
-            this.serviceLabel.Size = new System.Drawing.Size(43, 13);
+            this.serviceLabel.Size = new System.Drawing.Size(45, 13);
             this.serviceLabel.TabIndex = 0;
             this.serviceLabel.Text = "Услуга";
+            this.serviceLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // serviceControl
             // 
@@ -234,12 +244,12 @@
             // 
             // operatorLabel
             // 
-            this.operatorLabel.AutoSize = true;
             this.operatorLabel.Location = new System.Drawing.Point(5, 20);
             this.operatorLabel.Name = "operatorLabel";
-            this.operatorLabel.Size = new System.Drawing.Size(56, 13);
+            this.operatorLabel.Size = new System.Drawing.Size(60, 13);
             this.operatorLabel.TabIndex = 0;
             this.operatorLabel.Text = "Оператор";
+            this.operatorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // stateCheckBox
             // 
@@ -264,12 +274,12 @@
             // 
             // stateLabel
             // 
-            this.stateLabel.AutoSize = true;
             this.stateLabel.Location = new System.Drawing.Point(5, 20);
             this.stateLabel.Name = "stateLabel";
-            this.stateLabel.Size = new System.Drawing.Size(61, 13);
+            this.stateLabel.Size = new System.Drawing.Size(65, 15);
             this.stateLabel.TabIndex = 0;
             this.stateLabel.Text = "Состояние";
+            this.stateLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // stateControl
             // 
@@ -282,12 +292,12 @@
             // 
             // queryLabel
             // 
-            this.queryLabel.AutoSize = true;
             this.queryLabel.Location = new System.Drawing.Point(10, 80);
             this.queryLabel.Name = "queryLabel";
-            this.queryLabel.Size = new System.Drawing.Size(47, 13);
+            this.queryLabel.Size = new System.Drawing.Size(50, 13);
             this.queryLabel.TabIndex = 0;
             this.queryLabel.Text = "Запрос:";
+            this.queryLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // queryTextBox
             // 
@@ -522,16 +532,6 @@
             this.stateColumn.ReadOnly = true;
             this.stateColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // findButton
-            // 
-            this.findButton.Location = new System.Drawing.Point(480, 70);
-            this.findButton.Name = "findButton";
-            this.findButton.Size = new System.Drawing.Size(75, 25);
-            this.findButton.TabIndex = 4;
-            this.findButton.Text = "Найти";
-            this.findButton.UseVisualStyleBackColor = true;
-            this.findButton.Click += new System.EventHandler(this.findButton_Click);
-            // 
             // ClientRequestsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -549,13 +549,9 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.requestDatePanel.ResumeLayout(false);
-            this.requestDatePanel.PerformLayout();
             this.servicePanel.ResumeLayout(false);
-            this.servicePanel.PerformLayout();
             this.operatorPanel.ResumeLayout(false);
-            this.operatorPanel.PerformLayout();
             this.statePanel.ResumeLayout(false);
-            this.statePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clientRequestsGridView)).EndInit();
             this.ResumeLayout(false);
 

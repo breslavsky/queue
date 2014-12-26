@@ -16,11 +16,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientsForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.queryLabel = new System.Windows.Forms.Label();
             this.queryTextBox = new System.Windows.Forms.TextBox();
+            this.addButton = new System.Windows.Forms.Button();
             this.findButton = new System.Windows.Forms.Button();
             this.firstButton = new System.Windows.Forms.Button();
             this.prevButton = new System.Windows.Forms.Button();
@@ -32,7 +33,6 @@
             this.patronymicColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.emailColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mobileColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.addButton = new System.Windows.Forms.Button();
             this.mainTableLayoutPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clientsGridView)).BeginInit();
@@ -71,12 +71,12 @@
             // 
             // queryLabel
             // 
-            this.queryLabel.AutoSize = true;
             this.queryLabel.Location = new System.Drawing.Point(10, 15);
             this.queryLabel.Name = "queryLabel";
-            this.queryLabel.Size = new System.Drawing.Size(47, 13);
+            this.queryLabel.Size = new System.Drawing.Size(45, 13);
             this.queryLabel.TabIndex = 0;
             this.queryLabel.Text = "Запрос:";
+            this.queryLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // queryTextBox
             // 
@@ -84,6 +84,16 @@
             this.queryTextBox.Name = "queryTextBox";
             this.queryTextBox.Size = new System.Drawing.Size(170, 20);
             this.queryTextBox.TabIndex = 0;
+            // 
+            // addButton
+            // 
+            this.addButton.Location = new System.Drawing.Point(315, 10);
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(75, 24);
+            this.addButton.TabIndex = 1;
+            this.addButton.Text = "Добавить";
+            this.addButton.UseVisualStyleBackColor = true;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
             // findButton
             // 
@@ -131,14 +141,14 @@
             this.clientsGridView.AllowUserToOrderColumns = true;
             this.clientsGridView.AllowUserToResizeColumns = false;
             this.clientsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.clientsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.clientsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.clientsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.clientsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.registerDateColumn,
@@ -207,16 +217,6 @@
             this.mobileColumn.Name = "mobileColumn";
             this.mobileColumn.ReadOnly = true;
             this.mobileColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // addButton
-            // 
-            this.addButton.Location = new System.Drawing.Point(315, 10);
-            this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(75, 24);
-            this.addButton.TabIndex = 1;
-            this.addButton.Text = "Добавить";
-            this.addButton.UseVisualStyleBackColor = true;
-            this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
             // ClientsForm
             // 
