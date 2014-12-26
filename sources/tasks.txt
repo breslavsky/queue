@@ -9,7 +9,6 @@ TimePicker везде где можно найти
 „то мне:
 решить что-то с версией объектов
 тотальна€ ошибка рендеринга талона!
-taskpool
 
 этапы услуг добить
 этапы услуг перемещение вверх вниз
@@ -19,3 +18,13 @@ if (!clientRequest.Equals(source))
 {
 	throw new FaultException("“екущий запрос клиента не соответствует запросу клиента дл€ изминени€");
 }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }

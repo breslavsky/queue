@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Queue.Services.Server
@@ -61,6 +62,10 @@ namespace Queue.Services.Server
             channel = OperationContext.Current.Channel;
             channel.Faulted += channel_Faulted;
             channel.Closing += channel_Closing;
+
+#if DEBUG
+            Thread.Sleep(1000);
+#endif
         }
 
         private IQueueInstance queueInstance

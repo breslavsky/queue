@@ -87,9 +87,9 @@
     <Reference Include="Junte.Data.Common">
       <HintPath>..\packages\Junte.Data.Common.1.0.0.50\lib\net45\Junte.Data.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.Parallel.Common, Version=1.0.0.20, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Junte.Parallel.Common, Version=1.0.0.45, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.Parallel.Common.1.0.0.20\lib\net40\Junte.Parallel.Common.dll</HintPath>
+      <HintPath>..\packages\Junte.Parallel.Common.1.0.0.45\lib\net40\Junte.Parallel.Common.dll</HintPath>
     </Reference>
     <Reference Include="Junte.UI.WinForms, Version=1.0.0.65, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -527,7 +527,6 @@
     <EmbeddedResource Include="Translate\EditServiceRenderingForm.en-US.resx" />
     <EmbeddedResource Include="Translate\EditServiceStepForm.en-US.resx" />
     <EmbeddedResource Include="Translate\EditWorkplaceForm.en-US.resx" />
-    <EmbeddedResource Include="Translate\ManagerForm.en-US.resx" />
     <EmbeddedResource Include="Translate\OfficesForm.en-US.resx" />
     <EmbeddedResource Include="Translate\QueueMonitorForm.en-US.resx" />
     <EmbeddedResource Include="Translate\ServicesForm.en-US.resx" />

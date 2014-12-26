@@ -27,9 +27,11 @@ namespace Queue.UI.WinForms
 
             InitializeComponent();
 
-            languageControl.Initialize<Language>();
-
             taskPool = new TaskPool();
+            taskPool.OnAddTask += taskPool_OnAddTask;
+            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
+
+            languageControl.Initialize<Language>();
         }
 
         public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
@@ -237,6 +239,16 @@ namespace Queue.UI.WinForms
                     UIHelper.Warning(exception.Message);
                 }
             }
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
     }
 }
