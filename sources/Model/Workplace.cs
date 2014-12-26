@@ -3,7 +3,6 @@ using NHibernate.Mapping.Attributes;
 using NHibernate.Validator.Constraints;
 using Queue.Model.Common;
 using System;
-using System.Resources;
 
 namespace Queue.Model
 {
@@ -17,7 +16,7 @@ namespace Queue.Model
         public virtual WorkplaceType Type { get; set; }
 
         [Property]
-        [Length(Min = 0, Max = 1000, Message = "Номер рабочего места должен быть больше 1 и меньше 1000")]
+        [Min(Value = 0, Message = "Номер рабочего места должен быть больше 0")]
         public virtual int Number { get; set; }
 
         [Property]
