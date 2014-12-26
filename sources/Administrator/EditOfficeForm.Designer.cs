@@ -25,7 +25,7 @@
             this.saveButton.Location = new System.Drawing.Point(205, 60);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
-            this.saveButton.TabIndex = 19;
+            this.saveButton.TabIndex = 1;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
@@ -36,7 +36,7 @@
             this.nameTextBox.Multiline = true;
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(180, 50);
-            this.nameTextBox.TabIndex = 18;
+            this.nameTextBox.TabIndex = 0;
             this.nameTextBox.Leave += new System.EventHandler(this.nameTextBox_Leave);
             // 
             // nameLabel
@@ -44,7 +44,7 @@
             this.nameLabel.Location = new System.Drawing.Point(5, 5);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(90, 20);
-            this.nameLabel.TabIndex = 17;
+            this.nameLabel.TabIndex = 0;
             this.nameLabel.Text = "Наименование";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 

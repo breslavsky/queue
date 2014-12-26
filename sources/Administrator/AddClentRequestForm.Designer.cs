@@ -37,8 +37,8 @@
             this.clientPatronymicTextBox = new System.Windows.Forms.TextBox();
             this.couponAutoPrintCheckBox = new System.Windows.Forms.CheckBox();
             this.queueTypePanel = new System.Windows.Forms.Panel();
-            this.clearCurrentClientButton = new System.Windows.Forms.Button();
             this.clientsListBox = new System.Windows.Forms.ListBox();
+            this.clearCurrentClientButton = new System.Windows.Forms.Button();
             this.queueTypeLiveGroupBox = new System.Windows.Forms.GroupBox();
             this.liveStatusLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -76,7 +76,7 @@
             this.addButton.Location = new System.Drawing.Point(195, 487);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(75, 25);
-            this.addButton.TabIndex = 0;
+            this.addButton.TabIndex = 12;
             this.addButton.Text = "Добавить";
             this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
@@ -85,7 +85,7 @@
             this.priorityCheckBox.Location = new System.Drawing.Point(65, 490);
             this.priorityCheckBox.Name = "priorityCheckBox";
             this.priorityCheckBox.Size = new System.Drawing.Size(130, 20);
-            this.priorityCheckBox.TabIndex = 0;
+            this.priorityCheckBox.TabIndex = 11;
             this.priorityCheckBox.Text = "Приоритет вызова";
             this.priorityCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -101,7 +101,7 @@
             this.queueTypeEarlyGroupBox.Margin = new System.Windows.Forms.Padding(5);
             this.queueTypeEarlyGroupBox.Name = "queueTypeEarlyGroupBox";
             this.queueTypeEarlyGroupBox.Size = new System.Drawing.Size(260, 110);
-            this.queueTypeEarlyGroupBox.TabIndex = 0;
+            this.queueTypeEarlyGroupBox.TabIndex = 9;
             this.queueTypeEarlyGroupBox.TabStop = false;
             this.queueTypeEarlyGroupBox.Text = "Предварительная запись";
             // 
@@ -130,7 +130,7 @@
             this.earlyDatePicker.Location = new System.Drawing.Point(90, 50);
             this.earlyDatePicker.Name = "earlyDatePicker";
             this.earlyDatePicker.Size = new System.Drawing.Size(160, 20);
-            this.earlyDatePicker.TabIndex = 0;
+            this.earlyDatePicker.TabIndex = 9;
             this.earlyDatePicker.ValueChanged += new System.EventHandler(this.earlyDatePicker_ValueChanged);
             // 
             // freeTimeLabel
@@ -150,14 +150,14 @@
             this.freeTimeComboBox.Location = new System.Drawing.Point(180, 80);
             this.freeTimeComboBox.Name = "freeTimeComboBox";
             this.freeTimeComboBox.Size = new System.Drawing.Size(70, 21);
-            this.freeTimeComboBox.TabIndex = 0;
+            this.freeTimeComboBox.TabIndex = 10;
             // 
             // earlyRadioButton
             // 
             this.earlyRadioButton.Location = new System.Drawing.Point(122, 285);
             this.earlyRadioButton.Name = "earlyRadioButton";
             this.earlyRadioButton.Size = new System.Drawing.Size(148, 20);
-            this.earlyRadioButton.TabIndex = 0;
+            this.earlyRadioButton.TabIndex = 9;
             this.earlyRadioButton.Text = "Предварительная запись";
             this.earlyRadioButton.CheckedChanged += new System.EventHandler(this.earlyRadioButton_CheckedChanged);
             // 
@@ -167,7 +167,7 @@
             this.liveRadioButton.Location = new System.Drawing.Point(15, 285);
             this.liveRadioButton.Name = "liveRadioButton";
             this.liveRadioButton.Size = new System.Drawing.Size(105, 20);
-            this.liveRadioButton.TabIndex = 0;
+            this.liveRadioButton.TabIndex = 8;
             this.liveRadioButton.TabStop = true;
             this.liveRadioButton.Text = "Живая очередь";
             this.liveRadioButton.UseVisualStyleBackColor = true;
@@ -197,7 +197,7 @@
             this.clientMobileTextBox.Mask = "8(999)-000-0000";
             this.clientMobileTextBox.Name = "clientMobileTextBox";
             this.clientMobileTextBox.Size = new System.Drawing.Size(90, 20);
-            this.clientMobileTextBox.TabIndex = 3;
+            this.clientMobileTextBox.TabIndex = 4;
             this.clientMobileTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.clientMobileTextBox_KeyDown);
             // 
             // mobileLabel
@@ -205,7 +205,7 @@
             this.mobileLabel.Location = new System.Drawing.Point(10, 120);
             this.mobileLabel.Name = "mobileLabel";
             this.mobileLabel.Size = new System.Drawing.Size(70, 20);
-            this.mobileLabel.TabIndex = 1;
+            this.mobileLabel.TabIndex = 19;
             this.mobileLabel.Text = "Мобильный";
             this.mobileLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -214,7 +214,7 @@
             this.surnameLabel.Location = new System.Drawing.Point(10, 30);
             this.surnameLabel.Name = "surnameLabel";
             this.surnameLabel.Size = new System.Drawing.Size(70, 20);
-            this.surnameLabel.TabIndex = 0;
+            this.surnameLabel.TabIndex = 16;
             this.surnameLabel.Text = "Фамилия";
             this.surnameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -223,7 +223,7 @@
             this.clientSurnameTextBox.Location = new System.Drawing.Point(85, 30);
             this.clientSurnameTextBox.Name = "clientSurnameTextBox";
             this.clientSurnameTextBox.Size = new System.Drawing.Size(135, 20);
-            this.clientSurnameTextBox.TabIndex = 0;
+            this.clientSurnameTextBox.TabIndex = 1;
             this.clientSurnameTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.clientSurnameTextBox_KeyDown);
             this.clientSurnameTextBox.Leave += new System.EventHandler(this.clientSurnameTextBox_Leave);
             // 
@@ -232,7 +232,7 @@
             this.nameLabel.Location = new System.Drawing.Point(10, 60);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(70, 20);
-            this.nameLabel.TabIndex = 0;
+            this.nameLabel.TabIndex = 17;
             this.nameLabel.Text = "Имя";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -241,7 +241,7 @@
             this.clientNameTextBox.Location = new System.Drawing.Point(85, 60);
             this.clientNameTextBox.Name = "clientNameTextBox";
             this.clientNameTextBox.Size = new System.Drawing.Size(90, 20);
-            this.clientNameTextBox.TabIndex = 0;
+            this.clientNameTextBox.TabIndex = 2;
             this.clientNameTextBox.Leave += new System.EventHandler(this.clientNameTextBox_Leave);
             // 
             // patronymicLabel
@@ -249,7 +249,7 @@
             this.patronymicLabel.Location = new System.Drawing.Point(10, 90);
             this.patronymicLabel.Name = "patronymicLabel";
             this.patronymicLabel.Size = new System.Drawing.Size(70, 20);
-            this.patronymicLabel.TabIndex = 0;
+            this.patronymicLabel.TabIndex = 18;
             this.patronymicLabel.Text = "Отчество";
             this.patronymicLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -258,7 +258,7 @@
             this.clientPatronymicTextBox.Location = new System.Drawing.Point(85, 90);
             this.clientPatronymicTextBox.Name = "clientPatronymicTextBox";
             this.clientPatronymicTextBox.Size = new System.Drawing.Size(135, 20);
-            this.clientPatronymicTextBox.TabIndex = 0;
+            this.clientPatronymicTextBox.TabIndex = 3;
             this.clientPatronymicTextBox.Leave += new System.EventHandler(this.clientPatronymicTextBox_Leave);
             // 
             // couponAutoPrintCheckBox
@@ -270,7 +270,7 @@
             this.couponAutoPrintCheckBox.Margin = new System.Windows.Forms.Padding(5);
             this.couponAutoPrintCheckBox.Name = "couponAutoPrintCheckBox";
             this.couponAutoPrintCheckBox.Size = new System.Drawing.Size(147, 17);
-            this.couponAutoPrintCheckBox.TabIndex = 0;
+            this.couponAutoPrintCheckBox.TabIndex = 14;
             this.couponAutoPrintCheckBox.Text = "Автоматическая печать";
             this.couponAutoPrintCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -293,17 +293,7 @@
             this.queueTypePanel.Margin = new System.Windows.Forms.Padding(0);
             this.queueTypePanel.Name = "queueTypePanel";
             this.queueTypePanel.Size = new System.Drawing.Size(280, 592);
-            this.queueTypePanel.TabIndex = 0;
-            // 
-            // clearCurrentClientButton
-            // 
-            this.clearCurrentClientButton.Location = new System.Drawing.Point(240, 175);
-            this.clearCurrentClientButton.Name = "clearCurrentClientButton";
-            this.clearCurrentClientButton.Size = new System.Drawing.Size(30, 70);
-            this.clearCurrentClientButton.TabIndex = 2;
-            this.clearCurrentClientButton.Text = "-";
-            this.clearCurrentClientButton.UseVisualStyleBackColor = true;
-            this.clearCurrentClientButton.Click += new System.EventHandler(this.clearCurrentClientButton_Click);
+            this.queueTypePanel.TabIndex = 1;
             // 
             // clientsListBox
             // 
@@ -312,8 +302,18 @@
             this.clientsListBox.Name = "clientsListBox";
             this.clientsListBox.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.clientsListBox.Size = new System.Drawing.Size(215, 69);
-            this.clientsListBox.TabIndex = 1;
+            this.clientsListBox.TabIndex = 5;
             this.clientsListBox.SelectedValueChanged += new System.EventHandler(this.clientsListBox_SelectedValueChanged);
+            // 
+            // clearCurrentClientButton
+            // 
+            this.clearCurrentClientButton.Location = new System.Drawing.Point(240, 175);
+            this.clearCurrentClientButton.Name = "clearCurrentClientButton";
+            this.clearCurrentClientButton.Size = new System.Drawing.Size(30, 70);
+            this.clearCurrentClientButton.TabIndex = 6;
+            this.clearCurrentClientButton.Text = "-";
+            this.clearCurrentClientButton.UseVisualStyleBackColor = true;
+            this.clearCurrentClientButton.Click += new System.EventHandler(this.clearCurrentClientButton_Click);
             // 
             // queueTypeLiveGroupBox
             // 
@@ -322,7 +322,7 @@
             this.queueTypeLiveGroupBox.Margin = new System.Windows.Forms.Padding(5);
             this.queueTypeLiveGroupBox.Name = "queueTypeLiveGroupBox";
             this.queueTypeLiveGroupBox.Size = new System.Drawing.Size(260, 45);
-            this.queueTypeLiveGroupBox.TabIndex = 0;
+            this.queueTypeLiveGroupBox.TabIndex = 8;
             this.queueTypeLiveGroupBox.TabStop = false;
             this.queueTypeLiveGroupBox.Text = "Живая очередь";
             // 
@@ -346,7 +346,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 530);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(280, 60);
-            this.panel1.TabIndex = 0;
+            this.panel1.TabIndex = 13;
             // 
             // printersComboBox
             // 
@@ -355,7 +355,7 @@
             this.printersComboBox.Location = new System.Drawing.Point(15, 5);
             this.printersComboBox.Name = "printersComboBox";
             this.printersComboBox.Size = new System.Drawing.Size(250, 21);
-            this.printersComboBox.TabIndex = 0;
+            this.printersComboBox.TabIndex = 13;
             this.printersComboBox.SelectionChangeCommitted += new System.EventHandler(this.printersComboBox_SelectionChangeCommitted);
             // 
             // printButton
@@ -363,7 +363,7 @@
             this.printButton.Location = new System.Drawing.Point(190, 30);
             this.printButton.Name = "printButton";
             this.printButton.Size = new System.Drawing.Size(75, 25);
-            this.printButton.TabIndex = 0;
+            this.printButton.TabIndex = 15;
             this.printButton.Text = "Печать";
             this.printButton.Click += new System.EventHandler(this.printButton_Click);
             // 
@@ -377,7 +377,7 @@
             0});
             this.subjectsUpDown.Name = "subjectsUpDown";
             this.subjectsUpDown.Size = new System.Drawing.Size(50, 20);
-            this.subjectsUpDown.TabIndex = 0;
+            this.subjectsUpDown.TabIndex = 7;
             this.subjectsUpDown.Value = new decimal(new int[] {
             1,
             0,

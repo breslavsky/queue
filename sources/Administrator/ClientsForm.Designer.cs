@@ -90,7 +90,7 @@
             this.addButton.Location = new System.Drawing.Point(315, 10);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(75, 24);
-            this.addButton.TabIndex = 1;
+            this.addButton.TabIndex = 2;
             this.addButton.Text = "Добавить";
             this.addButton.UseVisualStyleBackColor = true;
             this.addButton.Click += new System.EventHandler(this.addButton_Click);
@@ -100,7 +100,7 @@
             this.findButton.Location = new System.Drawing.Point(235, 10);
             this.findButton.Name = "findButton";
             this.findButton.Size = new System.Drawing.Size(75, 25);
-            this.findButton.TabIndex = 5;
+            this.findButton.TabIndex = 1;
             this.findButton.Text = "Найти";
             this.findButton.UseVisualStyleBackColor = true;
             this.findButton.Click += new System.EventHandler(this.findButton_Click);
@@ -112,7 +112,7 @@
             this.firstButton.Location = new System.Drawing.Point(785, 15);
             this.firstButton.Name = "firstButton";
             this.firstButton.Size = new System.Drawing.Size(25, 20);
-            this.firstButton.TabIndex = 0;
+            this.firstButton.TabIndex = 3;
             this.firstButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // prevButton
@@ -122,7 +122,7 @@
             this.prevButton.Location = new System.Drawing.Point(810, 15);
             this.prevButton.Name = "prevButton";
             this.prevButton.Size = new System.Drawing.Size(25, 20);
-            this.prevButton.TabIndex = 0;
+            this.prevButton.TabIndex = 4;
             this.prevButton.Click += new System.EventHandler(this.prevButton_Click);
             // 
             // nextButton
@@ -132,7 +132,7 @@
             this.nextButton.Location = new System.Drawing.Point(835, 15);
             this.nextButton.Name = "nextButton";
             this.nextButton.Size = new System.Drawing.Size(25, 20);
-            this.nextButton.TabIndex = 0;
+            this.nextButton.TabIndex = 5;
             this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
             // 
             // clientsGridView

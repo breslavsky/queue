@@ -29,7 +29,7 @@
             this.saveButton.Location = new System.Drawing.Point(205, 90);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
-            this.saveButton.TabIndex = 22;
+            this.saveButton.TabIndex = 2;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
@@ -40,7 +40,7 @@
             this.nameTextBox.Multiline = true;
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(180, 50);
-            this.nameTextBox.TabIndex = 21;
+            this.nameTextBox.TabIndex = 0;
             this.nameTextBox.Leave += new System.EventHandler(this.nameTextBox_Leave);
             // 
             // nameLabel
@@ -48,7 +48,7 @@
             this.nameLabel.Location = new System.Drawing.Point(5, 5);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(90, 20);
-            this.nameLabel.TabIndex = 20;
+            this.nameLabel.TabIndex = 0;
             this.nameLabel.Text = "Наименование";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -57,14 +57,14 @@
             this.uploadMediaFileProgressBar.Location = new System.Drawing.Point(5, 60);
             this.uploadMediaFileProgressBar.Name = "uploadMediaFileProgressBar";
             this.uploadMediaFileProgressBar.Size = new System.Drawing.Size(195, 25);
-            this.uploadMediaFileProgressBar.TabIndex = 23;
+            this.uploadMediaFileProgressBar.TabIndex = 0;
             // 
             // uploadButton
             // 
             this.uploadButton.Location = new System.Drawing.Point(205, 60);
             this.uploadButton.Name = "uploadButton";
             this.uploadButton.Size = new System.Drawing.Size(75, 25);
-            this.uploadButton.TabIndex = 24;
+            this.uploadButton.TabIndex = 1;
             this.uploadButton.Text = "Загрузить";
             this.uploadButton.UseVisualStyleBackColor = true;
             this.uploadButton.Click += new System.EventHandler(this.uploadButton_Click);

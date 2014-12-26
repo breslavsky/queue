@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.stateLabel = new System.Windows.Forms.Label();
             this.numberLabel = new System.Windows.Forms.Label();
             this.parametersLabel = new System.Windows.Forms.Label();
@@ -108,14 +108,14 @@
             this.parametersGridView.AllowUserToAddRows = false;
             this.parametersGridView.AllowUserToDeleteRows = false;
             this.parametersGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.parametersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.parametersGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.parameterNameColumn,
@@ -177,14 +177,14 @@
             this.eventsGridView.AllowUserToAddRows = false;
             this.eventsGridView.AllowUserToDeleteRows = false;
             this.eventsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.eventsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.eventsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.eventsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.eventsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.createDateColumn,
@@ -239,7 +239,7 @@
             this.serviceChangeLink.Location = new System.Drawing.Point(260, 185);
             this.serviceChangeLink.Name = "serviceChangeLink";
             this.serviceChangeLink.Size = new System.Drawing.Size(62, 13);
-            this.serviceChangeLink.TabIndex = 0;
+            this.serviceChangeLink.TabIndex = 9;
             this.serviceChangeLink.TabStop = true;
             this.serviceChangeLink.Text = "[изменить]";
             this.serviceChangeLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.serviceChangeLink_LinkClicked);
@@ -249,7 +249,7 @@
             this.isPriorityCheckBox.Location = new System.Drawing.Point(180, 5);
             this.isPriorityCheckBox.Name = "isPriorityCheckBox";
             this.isPriorityCheckBox.Size = new System.Drawing.Size(115, 20);
-            this.isPriorityCheckBox.TabIndex = 0;
+            this.isPriorityCheckBox.TabIndex = 1;
             this.isPriorityCheckBox.Text = "Приоритет вызова";
             this.isPriorityCheckBox.UseVisualStyleBackColor = true;
             this.isPriorityCheckBox.Leave += new System.EventHandler(this.isPriorityCheckBox_Leave);
@@ -273,7 +273,7 @@
             0});
             this.subjectsUpDown.Name = "subjectsUpDown";
             this.subjectsUpDown.Size = new System.Drawing.Size(60, 20);
-            this.subjectsUpDown.TabIndex = 0;
+            this.subjectsUpDown.TabIndex = 5;
             this.subjectsUpDown.Leave += new System.EventHandler(this.subjectsUpDown_Leave);
             // 
             // clientEditLink
@@ -282,7 +282,7 @@
             this.clientEditLink.Location = new System.Drawing.Point(260, 110);
             this.clientEditLink.Name = "clientEditLink";
             this.clientEditLink.Size = new System.Drawing.Size(62, 13);
-            this.clientEditLink.TabIndex = 0;
+            this.clientEditLink.TabIndex = 7;
             this.clientEditLink.TabStop = true;
             this.clientEditLink.Text = "[изменить]";
             this.clientEditLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.clientEditLink_LinkClicked);
@@ -338,7 +338,7 @@
             this.numberTextBlock.Name = "numberTextBlock";
             this.numberTextBlock.Padding = new System.Windows.Forms.Padding(2);
             this.numberTextBlock.Size = new System.Drawing.Size(60, 20);
-            this.numberTextBlock.TabIndex = 1;
+            this.numberTextBlock.TabIndex = 0;
             // 
             // clientTextBlock
             // 
@@ -348,7 +348,7 @@
             this.clientTextBlock.Name = "clientTextBlock";
             this.clientTextBlock.Padding = new System.Windows.Forms.Padding(2);
             this.clientTextBlock.Size = new System.Drawing.Size(140, 20);
-            this.clientTextBlock.TabIndex = 4;
+            this.clientTextBlock.TabIndex = 6;
             // 
             // serviceTextBlock
             // 
@@ -358,7 +358,7 @@
             this.serviceTextBlock.Name = "serviceTextBlock";
             this.serviceTextBlock.Padding = new System.Windows.Forms.Padding(2);
             this.serviceTextBlock.Size = new System.Drawing.Size(205, 55);
-            this.serviceTextBlock.TabIndex = 5;
+            this.serviceTextBlock.TabIndex = 8;
             // 
             // stateTextBlock
             // 
@@ -368,14 +368,14 @@
             this.stateTextBlock.Name = "stateTextBlock";
             this.stateTextBlock.Padding = new System.Windows.Forms.Padding(2);
             this.stateTextBlock.Size = new System.Drawing.Size(120, 20);
-            this.stateTextBlock.TabIndex = 6;
+            this.stateTextBlock.TabIndex = 12;
             // 
             // requestTimeLabel
             // 
             this.requestTimeLabel.Location = new System.Drawing.Point(5, 55);
             this.requestTimeLabel.Name = "requestTimeLabel";
             this.requestTimeLabel.Size = new System.Drawing.Size(105, 20);
-            this.requestTimeLabel.TabIndex = 9;
+            this.requestTimeLabel.TabIndex = 0;
             this.requestTimeLabel.Text = "Время запроса";
             this.requestTimeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -384,7 +384,7 @@
             this.serviceTypeLabel.Location = new System.Drawing.Point(5, 205);
             this.serviceTypeLabel.Name = "serviceTypeLabel";
             this.serviceTypeLabel.Size = new System.Drawing.Size(105, 20);
-            this.serviceTypeLabel.TabIndex = 10;
+            this.serviceTypeLabel.TabIndex = 0;
             this.serviceTypeLabel.Text = "Тип услуги";
             this.serviceTypeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -396,14 +396,14 @@
             this.serviceTypeTextBlock.Name = "serviceTypeTextBlock";
             this.serviceTypeTextBlock.Padding = new System.Windows.Forms.Padding(2);
             this.serviceTypeTextBlock.Size = new System.Drawing.Size(205, 20);
-            this.serviceTypeTextBlock.TabIndex = 11;
+            this.serviceTypeTextBlock.TabIndex = 10;
             // 
             // serviceStepLabel
             // 
             this.serviceStepLabel.Location = new System.Drawing.Point(5, 230);
             this.serviceStepLabel.Name = "serviceStepLabel";
             this.serviceStepLabel.Size = new System.Drawing.Size(105, 20);
-            this.serviceStepLabel.TabIndex = 12;
+            this.serviceStepLabel.TabIndex = 0;
             this.serviceStepLabel.Text = "Этап услуги";
             this.serviceStepLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -447,7 +447,7 @@
             this.requestTimePicker.Location = new System.Drawing.Point(115, 55);
             this.requestTimePicker.Name = "requestTimePicker";
             this.requestTimePicker.Size = new System.Drawing.Size(35, 20);
-            this.requestTimePicker.TabIndex = 23;
+            this.requestTimePicker.TabIndex = 3;
             this.requestTimePicker.Value = System.TimeSpan.Parse("00:00:00");
             this.requestTimePicker.Leave += new System.EventHandler(this.requestTimePicker_Leave);
             // 
@@ -456,7 +456,7 @@
             this.requestDatePicker.Location = new System.Drawing.Point(115, 30);
             this.requestDatePicker.Name = "requestDatePicker";
             this.requestDatePicker.Size = new System.Drawing.Size(150, 20);
-            this.requestDatePicker.TabIndex = 22;
+            this.requestDatePicker.TabIndex = 2;
             this.requestDatePicker.Leave += new System.EventHandler(this.requestDatePicker_Leave);
             // 
             // saveButton
@@ -464,7 +464,7 @@
             this.saveButton.Location = new System.Drawing.Point(330, 195);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
-            this.saveButton.TabIndex = 20;
+            this.saveButton.TabIndex = 14;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
@@ -475,7 +475,7 @@
             this.operatorControl.Location = new System.Drawing.Point(115, 280);
             this.operatorControl.Name = "operatorControl";
             this.operatorControl.Size = new System.Drawing.Size(205, 21);
-            this.operatorControl.TabIndex = 19;
+            this.operatorControl.TabIndex = 13;
             this.operatorControl.UseResetButton = true;
             this.operatorControl.Leave += new System.EventHandler(this.operatorsControl_Leave);
             // 
@@ -485,7 +485,7 @@
             this.serviceStepControl.Location = new System.Drawing.Point(115, 230);
             this.serviceStepControl.Name = "serviceStepControl";
             this.serviceStepControl.Size = new System.Drawing.Size(205, 21);
-            this.serviceStepControl.TabIndex = 18;
+            this.serviceStepControl.TabIndex = 11;
             this.serviceStepControl.UseResetButton = true;
             this.serviceStepControl.Leave += new System.EventHandler(this.serviceStepControl_Leave);
             // 
@@ -495,7 +495,7 @@
             this.typeControl.Location = new System.Drawing.Point(155, 55);
             this.typeControl.Name = "typeControl";
             this.typeControl.Size = new System.Drawing.Size(115, 21);
-            this.typeControl.TabIndex = 17;
+            this.typeControl.TabIndex = 4;
             this.typeControl.Leave += new System.EventHandler(this.typeControl_Leave);
             // 
             // EditClientRequestForm

@@ -118,7 +118,7 @@
             this.findButton.Location = new System.Drawing.Point(480, 70);
             this.findButton.Name = "findButton";
             this.findButton.Size = new System.Drawing.Size(75, 25);
-            this.findButton.TabIndex = 4;
+            this.findButton.TabIndex = 2;
             this.findButton.Text = "Найти";
             this.findButton.UseVisualStyleBackColor = true;
             this.findButton.Click += new System.EventHandler(this.findButton_Click);
@@ -185,7 +185,7 @@
             this.servicePanel.Location = new System.Drawing.Point(250, 5);
             this.servicePanel.Name = "servicePanel";
             this.servicePanel.Size = new System.Drawing.Size(510, 45);
-            this.servicePanel.TabIndex = 0;
+            this.servicePanel.TabIndex = 1;
             this.servicePanel.TabStop = false;
             // 
             // serviceLabel
@@ -205,7 +205,7 @@
             this.serviceControl.Location = new System.Drawing.Point(50, 15);
             this.serviceControl.Name = "serviceControl";
             this.serviceControl.Size = new System.Drawing.Size(455, 21);
-            this.serviceControl.TabIndex = 4;
+            this.serviceControl.TabIndex = 0;
             this.serviceControl.UseResetButton = false;
             this.serviceControl.Leave += new System.EventHandler(this.serviceControl_Leave);
             // 
@@ -229,7 +229,7 @@
             this.operatorPanel.Location = new System.Drawing.Point(785, 5);
             this.operatorPanel.Name = "operatorPanel";
             this.operatorPanel.Size = new System.Drawing.Size(220, 45);
-            this.operatorPanel.TabIndex = 0;
+            this.operatorPanel.TabIndex = 2;
             this.operatorPanel.TabStop = false;
             // 
             // operatorControl
@@ -238,7 +238,7 @@
             this.operatorControl.Location = new System.Drawing.Point(65, 15);
             this.operatorControl.Name = "operatorControl";
             this.operatorControl.Size = new System.Drawing.Size(150, 21);
-            this.operatorControl.TabIndex = 5;
+            this.operatorControl.TabIndex = 0;
             this.operatorControl.UseResetButton = false;
             this.operatorControl.Leave += new System.EventHandler(this.operatorControl_Leave);
             // 
@@ -257,7 +257,7 @@
             this.stateCheckBox.Location = new System.Drawing.Point(230, 75);
             this.stateCheckBox.Name = "stateCheckBox";
             this.stateCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.stateCheckBox.TabIndex = 2;
+            this.stateCheckBox.TabIndex = 0;
             this.stateCheckBox.UseVisualStyleBackColor = true;
             this.stateCheckBox.CheckedChanged += new System.EventHandler(this.stateCheckBox_CheckedChanged);
             // 
@@ -269,7 +269,7 @@
             this.statePanel.Location = new System.Drawing.Point(250, 55);
             this.statePanel.Name = "statePanel";
             this.statePanel.Size = new System.Drawing.Size(220, 45);
-            this.statePanel.TabIndex = 1;
+            this.statePanel.TabIndex = 4;
             this.statePanel.TabStop = false;
             // 
             // stateLabel
@@ -304,7 +304,7 @@
             this.queryTextBox.Location = new System.Drawing.Point(65, 75);
             this.queryTextBox.Name = "queryTextBox";
             this.queryTextBox.Size = new System.Drawing.Size(155, 20);
-            this.queryTextBox.TabIndex = 0;
+            this.queryTextBox.TabIndex = 1;
             this.queryTextBox.Leave += new System.EventHandler(this.queryTextBox_Leave);
             // 
             // detailsCheckBox
@@ -314,7 +314,7 @@
             this.detailsCheckBox.Location = new System.Drawing.Point(850, 80);
             this.detailsCheckBox.Name = "detailsCheckBox";
             this.detailsCheckBox.Size = new System.Drawing.Size(76, 17);
-            this.detailsCheckBox.TabIndex = 3;
+            this.detailsCheckBox.TabIndex = 0;
             this.detailsCheckBox.Text = "Подробно";
             this.detailsCheckBox.UseVisualStyleBackColor = true;
             this.detailsCheckBox.CheckedChanged += new System.EventHandler(this.detailsCheckBox_CheckedChanged);
@@ -326,7 +326,7 @@
             this.nextButton.Location = new System.Drawing.Point(985, 80);
             this.nextButton.Name = "nextButton";
             this.nextButton.Size = new System.Drawing.Size(25, 20);
-            this.nextButton.TabIndex = 0;
+            this.nextButton.TabIndex = 5;
             this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
             // 
             // prevButton
@@ -336,7 +336,7 @@
             this.prevButton.Location = new System.Drawing.Point(960, 80);
             this.prevButton.Name = "prevButton";
             this.prevButton.Size = new System.Drawing.Size(25, 20);
-            this.prevButton.TabIndex = 0;
+            this.prevButton.TabIndex = 4;
             this.prevButton.Click += new System.EventHandler(this.prevButton_Click);
             // 
             // firstButton
@@ -346,7 +346,7 @@
             this.firstButton.Location = new System.Drawing.Point(935, 80);
             this.firstButton.Name = "firstButton";
             this.firstButton.Size = new System.Drawing.Size(25, 20);
-            this.firstButton.TabIndex = 0;
+            this.firstButton.TabIndex = 3;
             this.firstButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // clientRequestsGridView
