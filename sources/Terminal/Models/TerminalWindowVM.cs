@@ -38,7 +38,7 @@ namespace Queue.Terminal.Models
         private ChannelManager<IServerTcpService> channelManager;
         private Navigator navigator;
         private DefaultConfig defaultConfig;
-        private IRichPage screen;
+        private IMainWindow screen;
 
         public ClientRequestModel Model
         {
@@ -75,7 +75,7 @@ namespace Queue.Terminal.Models
             Model = ServiceLocator.Current.GetInstance<ClientRequestModel>();
             request.PropertyChanged += model_PropertyChanged;
 
-            screen = ServiceLocator.Current.GetInstance<IRichPage>();
+            screen = ServiceLocator.Current.GetInstance<IMainWindow>();
             container = ServiceLocator.Current.GetInstance<IUnityContainer>();
             taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
             channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();

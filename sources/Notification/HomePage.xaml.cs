@@ -24,7 +24,7 @@ namespace Queue.Notification
         {
             InitializeComponent();
 
-            ServiceLocator.Current.GetInstance<IUnityContainer>().RegisterInstance<IRichPage>(this);
+            ServiceLocator.Current.GetInstance<IUnityContainer>().RegisterInstance<IMainWindow>(this);
 
             model = new HomePageVM();
             model.RequestUpdated += model_CurrentClientRequestPlanUpdated;

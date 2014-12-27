@@ -1,8 +1,8 @@
 ﻿using Junte.UI.WPF;
+using Junte.UI.WPF.Types;
 using Queue.Model.Common;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Types;
 using System;
 using System.Collections.Generic;
 using System.IO;

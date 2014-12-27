@@ -106,7 +106,7 @@ namespace Queue.Terminal
 
                 Content = rootObject;
 
-                ServiceLocator.Current.GetInstance<IUnityContainer>().RegisterInstance<IRichPage>(this);
+                ServiceLocator.Current.GetInstance<IUnityContainer>().RegisterInstance<IMainWindow>(this);
                 DataContext = new TerminalWindowVM();
 
                 ServiceLocator.Current.GetInstance<Navigator>().SetNavigationService(pageFrame.NavigationService);

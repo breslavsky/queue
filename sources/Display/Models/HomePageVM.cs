@@ -1,4 +1,5 @@
 ﻿using Junte.Parallel.Common;
+using Junte.UI.WPF.Types;
 using Junte.WCF.Common;
 using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
@@ -7,7 +8,6 @@ using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
-using Queue.UI.WPF;
 using Queue.UI.WPF.Enums;
 using System;
 using System.Collections.Generic;

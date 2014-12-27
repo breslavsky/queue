@@ -1,4 +1,5 @@
 ﻿using Junte.UI.WPF;
+using Junte.UI.WPF.Types;
 using Junte.WCF.Common;
 using Microsoft.Practices.ServiceLocation;
 using Queue.Services.Contracts;
@@ -28,7 +29,7 @@ namespace Queue.Terminal.Models
         private bool hasResults;
         private int currentPage;
 
-        private IRichPage screen;
+        private IMainWindow screen;
         private ChannelManager<IServerTcpService> channelManager;
         private Navigator navigator;
         private ClientRequestModel request;
@@ -62,7 +63,7 @@ namespace Queue.Terminal.Models
             NextCommand = new RelayCommand(Next);
             PrevCommand = new RelayCommand(Prev);
 
-            screen = ServiceLocator.Current.GetInstance<IRichPage>();
+            screen = ServiceLocator.Current.GetInstance<IMainWindow>();
             channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
             navigator = ServiceLocator.Current.GetInstance<Navigator>();
             request = ServiceLocator.Current.GetInstance<ClientRequestModel>();

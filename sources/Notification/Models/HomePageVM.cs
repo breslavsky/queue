@@ -1,8 +1,8 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WPF;
+using Junte.UI.WPF.Types;
 using Junte.WCF.Common;
 using Microsoft.Practices.ServiceLocation;
-using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Notification.Types;
@@ -17,9 +17,7 @@ using System;
 using System.Media;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Threading;
-using Vlc.DotNet.Core.Medias;
 using Vlc.DotNet.Wpf;
 
 namespace Queue.Notification.Models
@@ -32,7 +30,7 @@ namespace Queue.Notification.Models
         private bool disposed = false;
 
         private ITicker ticker;
-        private IRichPage screen;
+        private IMainWindow screen;
         private ServerState serverState;
         private DateTime currentDateTime;
         private string currentDateTimeText;
@@ -79,7 +77,7 @@ namespace Queue.Notification.Models
         {
             this.channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
             this.taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
-            this.screen = ServiceLocator.Current.GetInstance<IRichPage>();
+            this.screen = ServiceLocator.Current.GetInstance<IMainWindow>();
             this.ticker = ServiceLocator.Current.GetInstance<ITicker>();
 
             CallClientModel = new CallClientUserControlVM();

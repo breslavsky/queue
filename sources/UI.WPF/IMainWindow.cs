@@ -2,8 +2,7 @@
 
 namespace Queue.UI.WPF.Types
 {
-    //TODO: why?
-    public interface IRichPage
+    public interface IMainWindow
     {
         LoadingControl ShowLoading();
 

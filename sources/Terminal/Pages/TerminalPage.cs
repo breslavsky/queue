@@ -15,7 +15,7 @@ namespace Queue.Terminal.Pages
         protected ClientRequestModel terminalModel;
         protected TaskPool taskPool;
         protected ChannelManager<IServerTcpService> channelManager;
-        protected IRichPage screen;
+        protected IMainWindow screen;
         protected TerminalConfig terminalConfig;
         protected Navigator navigator;
 
@@ -23,7 +23,7 @@ namespace Queue.Terminal.Pages
         {
             this.terminalModel = ServiceLocator.Current.GetInstance<ClientRequestModel>();
             this.taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
-            this.screen = ServiceLocator.Current.GetInstance<IRichPage>();
+            this.screen = ServiceLocator.Current.GetInstance<IMainWindow>();
             this.navigator = ServiceLocator.Current.GetInstance<Navigator>();
             this.channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
             this.terminalConfig = ServiceLocator.Current.GetInstance<TerminalConfig>();

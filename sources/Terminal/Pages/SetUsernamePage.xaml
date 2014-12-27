@@ -1,7 +1,7 @@
 ﻿<pages:TerminalPage x:Class="Queue.Terminal.Pages.SetUsernamePage"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:pages="clr-namespace:Queue.Terminal.Pages"
@@ -20,7 +20,7 @@
         <TextBox x:Name="usernameTextBox"
                  Grid.Column="0"
                  VerticalAlignment="Top"
-                 Controls:TextboxHelper.Watermark="Фамилия Имя Отчество"
+                 Controls:TextBoxHelper.Watermark="Фамилия Имя Отчество"
                  FontSize="30"
                  Text="{Binding Username}" />
         <Viewbox Grid.Row="1">

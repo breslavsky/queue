@@ -1,7 +1,7 @@
 ﻿using Junte.UI.WPF;
+using Junte.UI.WPF.Types;
 using Queue.Model.Common;
 using Queue.Terminal.Types;
-using Queue.UI.WPF.Types;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;

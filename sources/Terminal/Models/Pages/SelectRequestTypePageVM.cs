@@ -1,9 +1,9 @@
 ﻿using Junte.UI.WPF;
+using Junte.UI.WPF.Types;
 using Junte.WCF.Common;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
-using Queue.UI.WPF.Types;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;

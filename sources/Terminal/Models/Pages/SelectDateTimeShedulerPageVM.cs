@@ -1,10 +1,10 @@
 ﻿using Junte.UI.WPF;
+using Junte.UI.WPF.Types;
 using Junte.WCF.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.UI.WPF;
 using Queue.UI.WPF.Controls.Sheduler;
-using Queue.UI.WPF.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;

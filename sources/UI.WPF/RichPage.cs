@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Queue.UI.WPF
 {
-    public class RichPage : Page, IRichPage
+    public class RichPage : Page, IMainWindow
     {
         private LoadingControl loading;
         private NoticeControl notice;

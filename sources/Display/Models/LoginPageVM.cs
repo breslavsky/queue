@@ -1,5 +1,6 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WPF;
+using Junte.UI.WPF.Types;
 using Junte.WCF.Common;
 using MahApps.Metro;
 using Queue.Display.Types;
