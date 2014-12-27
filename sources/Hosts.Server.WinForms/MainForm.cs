@@ -1,5 +1,6 @@
 ﻿using Junte.Data.NHibernate;
 using Junte.UI.WinForms;
+using Queue.Hosts.Server.WinForms.Properties;
 using Queue.Server;
 using System;
 using System.Configuration;
@@ -87,6 +88,13 @@ namespace Queue.Hosts.Server.WinForms
         {
             AdjustServiceSettings();
             AdjustServiceState();
+
+            serviceStateTimer.Start();
+        }
+
+        private void serviceStateTimer_Tick(object sender, EventArgs e)
+        {
+            AdjustServiceState();
         }
 
         private void AdjustServiceSettings()
@@ -113,34 +121,87 @@ namespace Queue.Hosts.Server.WinForms
                  InstallServiceButtonTitle;
 
             runServiceButton.Enabled = serviceInstalled;
-            runServiceButton.Text = serviceManager.ServiceRunned() ?
+
+            bool runned = serviceManager.ServiceRunned();
+            runServiceButton.Text = runned ?
                                         StopServiceButtonTitle :
                                         StartServiceButtonTitle;
+
+            serviceStatePicture.Image = runned ?
+                                            Resources.online.ToBitmap() :
+                                            Resources.offline.ToBitmap();
         }
 
         private void startButton_Click(object sender, EventArgs eventArgs)
         {
+            StartServer();
+        }
+
+        private void stopButton_Click(object sender, EventArgs e)
+        {
             try
             {
-                server = new ServerInstance(settings);
-                server.Start();
-
-                configuration.Save();
-
-                panel.Enabled = false;
+                StopServer();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                UIHelper.Error(e);
+                UIHelper.Error(ex);
+            }
+        }
+
+        private void saveButton_Click(object sender, System.EventArgs e)
+        {
+            try
+            {
+                configuration.Save();
+                MessageBox.Show("Настройки сохранены");
+            }
+            catch (Exception ex)
+            {
+                UIHelper.Error(ex);
             }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (server != null)
+            try
             {
-                server.Stop();
+                StopServer();
             }
+            catch { }
+        }
+
+        private void StartServer()
+        {
+            try
+            {
+                startButton.Enabled = false;
+
+                server = new ServerInstance(settings);
+                server.Start();
+
+                startButton.Enabled = false;
+                stopButton.Enabled = true;
+            }
+            catch (Exception e)
+            {
+                startButton.Enabled = true;
+                UIHelper.Error(e);
+            }
+        }
+
+        private void StopServer()
+        {
+            if (server == null)
+            {
+                return;
+            }
+
+            server.Stop();
+            server = null;
+
+            startButton.Enabled = true;
+            stopButton.Enabled = false;
         }
 
         #region bindings
