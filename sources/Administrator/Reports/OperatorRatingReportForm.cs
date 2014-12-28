@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
+using System.Windows.Forms;
 using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator.Reports
@@ -31,6 +32,8 @@ namespace Queue.Administrator.Reports
 
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
+            taskPool.OnAddTask += taskPool_OnAddTask;
+            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
             int currentYear = ServerDateTime.Today.Year;
             for (int year = currentYear - 5; year <= currentYear; year++)
@@ -38,6 +41,16 @@ namespace Queue.Administrator.Reports
                 startYearComboBox.Items.Add(year);
             }
             startYearComboBox.SelectedIndex = startYearComboBox.Items.Count - 1;
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         private void OperatorRatingReportForm_Load(object sender, System.EventArgs e)

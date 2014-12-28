@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DateTimeUtils.cs" />
+    <Compile Include="EnumItem.cs" />
     <Compile Include="ObservableCollectionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerTime.cs" />

@@ -35,8 +35,6 @@ namespace Queue.Administrator
         public AdministratorForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
         {
-            InitializeComponent();
-
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser as QueueAdministrator;
 
@@ -47,6 +45,8 @@ namespace Queue.Administrator
 
             pingTimer = new Timer();
             pingTimer.Elapsed += pingTimer_Elapsed;
+
+            InitializeComponent();
 
             Text = currentUser.ToString();
 

@@ -79,15 +79,27 @@ namespace Queue.Administrator
         public AddClentRequestForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
         {
-            InitializeComponent();
-
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
+            taskPool.OnAddTask += taskPool_OnAddTask;
+            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
+
+            InitializeComponent();
 
             clientsListBox.DisplayMember = string.Empty;
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         protected override void Dispose(bool disposing)
@@ -619,7 +631,6 @@ namespace Queue.Administrator
 
         private void subjectsLabel_Click(object sender, EventArgs e)
         {
-
         }
     }
 }

@@ -8,6 +8,8 @@ namespace Queue.Model
     [Key(Column = "ConfigId", ForeignKey = "CouponConfigToConfigReference")]
     public class CouponConfig : Config
     {
+        private const int TemplateLength = 1024 * 1024;
+
         public CouponConfig()
         {
             Type = ConfigType.Coupon;
@@ -15,7 +17,7 @@ namespace Queue.Model
 
         #region properties
 
-        [Property(Length = DataLength._1M)]
+        [Property(Length = TemplateLength)]
         public virtual string Template { get; set; }
 
         #endregion properties

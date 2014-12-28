@@ -14,12 +14,6 @@ if (!clientRequest.Equals(source))
 	throw new FaultException("Текущий запрос клиента не соответствует запросу клиента для изминения");
 }
 
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
+InitializeComponent();
 
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
+
