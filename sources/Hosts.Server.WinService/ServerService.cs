@@ -9,7 +9,7 @@ namespace Queue.Hosts.Server.WinService
 {
     public partial class ServerService : ServiceBase
     {
-        private static readonly ILog logger = LogManager.GetLogger(typeof(ServerService));
+        private readonly ILog logger = LogManager.GetLogger(typeof(ServerService));
 
         private ServerInstance server;
 

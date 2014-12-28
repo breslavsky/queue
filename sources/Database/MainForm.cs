@@ -1,25 +1,18 @@
 ﻿using Junte.Data.NHibernate;
-using Junte.UI.WinForms;
 using Junte.UI.WinForms.NHibernate;
 using Junte.UI.WinForms.NHibernate.Configuration;
 using log4net;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using NHibernate;
 using NHibernate.Criterion;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Resources;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.ServiceModel;
-using System.ServiceModel.Description;
-using System.ServiceModel.Web;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DialogResult = System.Windows.Forms.DialogResult;
 
 namespace Queue.Database
 {
@@ -45,8 +38,8 @@ namespace Queue.Database
 
         private void checkPatchesMenuItem_Click(object sender, EventArgs e)
         {
-            using (var session = sessionProvider.OpenSession())
-            using (var transaction = session.BeginTransaction())
+            using (ISession session = sessionProvider.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
             {
                 var schemeConfig = session.Get<SchemeConfig>(ConfigType.Scheme);
                 if (schemeConfig != null)
@@ -65,9 +58,9 @@ namespace Queue.Database
 
         private void connectButton_Click(object sender, EventArgs eventArgs)
         {
-            using (var f = new LoginForm(settings.Profiles, DatabaseConnect))
+            using (LoginForm form = new LoginForm(settings.Profiles, DatabaseConnect))
             {
-                f.ShowDialog();
+                form.ShowDialog();
             }
         }
 
@@ -96,8 +89,8 @@ namespace Queue.Database
         {
             Log("Загрузка демонстрационных данных");
 
-            using (var session = sessionProvider.OpenSession())
-            using (var transaction = session.BeginTransaction())
+            using (ISession session = sessionProvider.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
             {
                 Log("Загрузка рабочих мест");
 

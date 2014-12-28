@@ -29,28 +29,29 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.startButton = new System.Windows.Forms.Button();
             this.panel = new System.Windows.Forms.Panel();
+            this.stopButton = new System.Windows.Forms.Button();
             this.serviceGroupBox = new System.Windows.Forms.GroupBox();
             this.serviceStatePicture = new System.Windows.Forms.PictureBox();
             this.runServiceButton = new System.Windows.Forms.Button();
             this.installServiseButton = new System.Windows.Forms.Button();
             this.settingsGroupBox = new System.Windows.Forms.GroupBox();
+            this.httpCheckBox = new System.Windows.Forms.CheckBox();
+            this.tcpCheckBox = new System.Windows.Forms.CheckBox();
             this.saveButton = new System.Windows.Forms.Button();
+            this.debugCheckBox = new System.Windows.Forms.CheckBox();
             this.databaseGroupBox = new System.Windows.Forms.GroupBox();
             this.editDatabaseSettingsControl = new Junte.UI.WinForms.NHibernate.EditDatabaseSettingsUserControl();
-            this.debugCheckBox = new System.Windows.Forms.CheckBox();
             this.tcpGroupBox = new System.Windows.Forms.GroupBox();
             this.tcpPortUpDown = new System.Windows.Forms.NumericUpDown();
             this.tcpHostTextBox = new System.Windows.Forms.TextBox();
-            this.tcpCheckBox = new System.Windows.Forms.CheckBox();
             this.httpGroupBox = new System.Windows.Forms.GroupBox();
             this.httpPortUpDown = new System.Windows.Forms.NumericUpDown();
             this.httpHostTextBox = new System.Windows.Forms.TextBox();
-            this.httpCheckBox = new System.Windows.Forms.CheckBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
-            this.stopButton = new System.Windows.Forms.Button();
             this.panel.SuspendLayout();
             this.serviceGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).BeginInit();
@@ -83,6 +84,17 @@
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(421, 460);
             this.panel.TabIndex = 2;
+            // 
+            // stopButton
+            // 
+            this.stopButton.Enabled = false;
+            this.stopButton.Location = new System.Drawing.Point(212, 416);
+            this.stopButton.Name = "stopButton";
+            this.stopButton.Size = new System.Drawing.Size(195, 30);
+            this.stopButton.TabIndex = 12;
+            this.stopButton.Text = "Остановитьсервер";
+            this.stopButton.UseVisualStyleBackColor = true;
+            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // serviceGroupBox
             // 
@@ -127,9 +139,11 @@
             // 
             // settingsGroupBox
             // 
+            this.settingsGroupBox.Controls.Add(this.httpCheckBox);
+            this.settingsGroupBox.Controls.Add(this.tcpCheckBox);
             this.settingsGroupBox.Controls.Add(this.saveButton);
-            this.settingsGroupBox.Controls.Add(this.databaseGroupBox);
             this.settingsGroupBox.Controls.Add(this.debugCheckBox);
+            this.settingsGroupBox.Controls.Add(this.databaseGroupBox);
             this.settingsGroupBox.Controls.Add(this.tcpGroupBox);
             this.settingsGroupBox.Controls.Add(this.httpGroupBox);
             this.settingsGroupBox.Location = new System.Drawing.Point(12, 12);
@@ -138,6 +152,30 @@
             this.settingsGroupBox.TabIndex = 11;
             this.settingsGroupBox.TabStop = false;
             this.settingsGroupBox.Text = "Настройки";
+            // 
+            // httpCheckBox
+            // 
+            this.httpCheckBox.AutoSize = true;
+            this.httpCheckBox.Location = new System.Drawing.Point(207, 226);
+            this.httpCheckBox.Name = "httpCheckBox";
+            this.httpCheckBox.Size = new System.Drawing.Size(94, 17);
+            this.httpCheckBox.TabIndex = 5;
+            this.httpCheckBox.Text = "HTTP-сервис";
+            this.httpCheckBox.UseVisualStyleBackColor = true;
+            this.httpCheckBox.CheckedChanged += new System.EventHandler(this.httpCheckBox_CheckedChanged);
+            this.httpCheckBox.Leave += new System.EventHandler(this.httpCheckBox_Leave);
+            // 
+            // tcpCheckBox
+            // 
+            this.tcpCheckBox.AutoSize = true;
+            this.tcpCheckBox.Location = new System.Drawing.Point(25, 226);
+            this.tcpCheckBox.Name = "tcpCheckBox";
+            this.tcpCheckBox.Size = new System.Drawing.Size(86, 17);
+            this.tcpCheckBox.TabIndex = 3;
+            this.tcpCheckBox.Text = "TCP-сервис";
+            this.tcpCheckBox.UseVisualStyleBackColor = true;
+            this.tcpCheckBox.CheckedChanged += new System.EventHandler(this.tcpCheckBox_CheckedChanged);
+            this.tcpCheckBox.Leave += new System.EventHandler(this.tcpCheckBox_Leave);
             // 
             // saveButton
             // 
@@ -148,6 +186,17 @@
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // debugCheckBox
+            // 
+            this.debugCheckBox.AutoSize = true;
+            this.debugCheckBox.Location = new System.Drawing.Point(15, 296);
+            this.debugCheckBox.Name = "debugCheckBox";
+            this.debugCheckBox.Size = new System.Drawing.Size(105, 17);
+            this.debugCheckBox.TabIndex = 8;
+            this.debugCheckBox.Text = "Режим отладки";
+            this.debugCheckBox.UseVisualStyleBackColor = true;
+            this.debugCheckBox.Leave += new System.EventHandler(this.debugCheckBox_Leave);
             // 
             // databaseGroupBox
             // 
@@ -163,26 +212,13 @@
             // 
             this.editDatabaseSettingsControl.Location = new System.Drawing.Point(15, 15);
             this.editDatabaseSettingsControl.Name = "editDatabaseSettingsControl";
-            this.editDatabaseSettingsControl.Settings = null;
             this.editDatabaseSettingsControl.Size = new System.Drawing.Size(340, 186);
             this.editDatabaseSettingsControl.TabIndex = 0;
-            // 
-            // debugCheckBox
-            // 
-            this.debugCheckBox.AutoSize = true;
-            this.debugCheckBox.Location = new System.Drawing.Point(15, 296);
-            this.debugCheckBox.Name = "debugCheckBox";
-            this.debugCheckBox.Size = new System.Drawing.Size(105, 17);
-            this.debugCheckBox.TabIndex = 8;
-            this.debugCheckBox.Text = "Режим отладки";
-            this.debugCheckBox.UseVisualStyleBackColor = true;
-            this.debugCheckBox.Leave += new System.EventHandler(this.debugCheckBox_Leave);
             // 
             // tcpGroupBox
             // 
             this.tcpGroupBox.Controls.Add(this.tcpPortUpDown);
             this.tcpGroupBox.Controls.Add(this.tcpHostTextBox);
-            this.tcpGroupBox.Controls.Add(this.tcpCheckBox);
             this.tcpGroupBox.Enabled = false;
             this.tcpGroupBox.Location = new System.Drawing.Point(15, 230);
             this.tcpGroupBox.Name = "tcpGroupBox";
@@ -216,25 +252,12 @@
             this.tcpHostTextBox.TabIndex = 0;
             this.tcpHostTextBox.Leave += new System.EventHandler(this.tcpHostTextBox_Leave);
             // 
-            // tcpCheckBox
-            // 
-            this.tcpCheckBox.AutoSize = true;
-            this.tcpCheckBox.Location = new System.Drawing.Point(6, 0);
-            this.tcpCheckBox.Name = "tcpCheckBox";
-            this.tcpCheckBox.Size = new System.Drawing.Size(86, 17);
-            this.tcpCheckBox.TabIndex = 3;
-            this.tcpCheckBox.Text = "TCP-сервис";
-            this.tcpCheckBox.UseVisualStyleBackColor = true;
-            this.tcpCheckBox.CheckedChanged += new System.EventHandler(this.tcpCheckBox_CheckedChanged);
-            this.tcpCheckBox.Leave += new System.EventHandler(this.tcpCheckBox_Leave);
-            // 
             // httpGroupBox
             // 
             this.httpGroupBox.Controls.Add(this.httpPortUpDown);
             this.httpGroupBox.Controls.Add(this.httpHostTextBox);
-            this.httpGroupBox.Controls.Add(this.httpCheckBox);
             this.httpGroupBox.Enabled = false;
-            this.httpGroupBox.Location = new System.Drawing.Point(201, 230);
+            this.httpGroupBox.Location = new System.Drawing.Point(200, 230);
             this.httpGroupBox.Name = "httpGroupBox";
             this.httpGroupBox.Size = new System.Drawing.Size(180, 60);
             this.httpGroupBox.TabIndex = 4;
@@ -266,38 +289,17 @@
             this.httpHostTextBox.TabIndex = 0;
             this.httpHostTextBox.Leave += new System.EventHandler(this.httpHostTextBox_Leave);
             // 
-            // httpCheckBox
-            // 
-            this.httpCheckBox.AutoSize = true;
-            this.httpCheckBox.Location = new System.Drawing.Point(7, 0);
-            this.httpCheckBox.Name = "httpCheckBox";
-            this.httpCheckBox.Size = new System.Drawing.Size(94, 17);
-            this.httpCheckBox.TabIndex = 5;
-            this.httpCheckBox.Text = "HTTP-сервис";
-            this.httpCheckBox.UseVisualStyleBackColor = true;
-            this.httpCheckBox.CheckedChanged += new System.EventHandler(this.httpCheckBox_CheckedChanged);
-            this.httpCheckBox.Leave += new System.EventHandler(this.httpCheckBox_Leave);
-            // 
             // notifyIcon
             // 
-            this.notifyIcon.Text = "notifyIcon1";
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "Junte Queue Server";
             this.notifyIcon.Visible = true;
+            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
             // 
             // serviceStateTimer
             // 
-            this.serviceStateTimer.Interval = 5000;
+            this.serviceStateTimer.Interval = 1000;
             this.serviceStateTimer.Tick += new System.EventHandler(this.serviceStateTimer_Tick);
-            // 
-            // stopButton
-            // 
-            this.stopButton.Enabled = false;
-            this.stopButton.Location = new System.Drawing.Point(212, 416);
-            this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(195, 30);
-            this.stopButton.TabIndex = 12;
-            this.stopButton.Text = "Остановитьсервер";
-            this.stopButton.UseVisualStyleBackColor = true;
-            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // MainForm
             // 
@@ -306,6 +308,7 @@
             this.ClientSize = new System.Drawing.Size(421, 460);
             this.Controls.Add(this.panel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(235, 255);
             this.Name = "MainForm";
@@ -313,6 +316,7 @@
             this.Text = "Сервер очереди";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.panel.ResumeLayout(false);
             this.serviceGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).EndInit();

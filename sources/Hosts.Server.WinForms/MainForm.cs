@@ -1,5 +1,6 @@
 ﻿using Junte.Data.NHibernate;
 using Junte.UI.WinForms;
+using log4net;
 using Queue.Hosts.Server.WinForms.Properties;
 using Queue.Server;
 using System;
@@ -11,6 +12,8 @@ namespace Queue.Hosts.Server.WinForms
 {
     public partial class MainForm : Form
     {
+        private readonly ILog logger = LogManager.GetLogger(typeof(MainForm));
+
         private const string InstallServiceButtonTitle = "Установить сервис";
         private const string UnistallServiceButtonTitle = "Удалить сервис";
         private const string StartServiceButtonTitle = "Запустить сервис";
@@ -20,29 +23,35 @@ namespace Queue.Hosts.Server.WinForms
         private ServerSettings settings;
         private ServerInstance server;
         private ServerServiceManager serviceManager;
+        private bool started;
 
         public MainForm()
         {
             InitializeComponent();
+            logger.Info("test");
 
             serviceManager = new ServerServiceManager();
+            LoadConfiguration();
 
+            editDatabaseSettingsControl.Settings = settings.Database;
+            debugCheckBox.Checked = settings.Debug;
+        }
+
+        private void LoadConfiguration()
+        {
             configuration = GetConfiguration();
             settings = configuration.GetSection("server") as ServerSettings;
+
             if (settings == null)
             {
                 settings = new ServerSettings()
-                    {
-                        Database = GetDefaultDatabaseSettings(),
-                        Services = GetDefaultServicesConfig(),
-                        Debug = true
-                    };
+                {
+                    Database = GetDefaultDatabaseSettings(),
+                    Services = GetDefaultServicesConfig(),
+                    Debug = true
+                };
                 configuration.Sections.Add("server", settings);
             }
-
-            editDatabaseSettingsControl.Settings = settings.Database;
-
-            debugCheckBox.Checked = settings.Debug;
         }
 
         private Configuration GetConfiguration()
@@ -73,7 +82,9 @@ namespace Queue.Hosts.Server.WinForms
                         {
                             HttpService = new HttpServiceConfig()
                             {
-                                Enabled = false
+                                Enabled = false,
+                                Host = "localhost",
+                                Port = 4506
                             },
                             TcpService = new TcpServiceConfig()
                             {
@@ -86,6 +97,8 @@ namespace Queue.Hosts.Server.WinForms
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Text = string.Format("Сервер очереди v.{0}", typeof(ServerInstance).Assembly.GetName().Version);
+
             AdjustServiceSettings();
             AdjustServiceState();
 
@@ -130,6 +143,9 @@ namespace Queue.Hosts.Server.WinForms
             serviceStatePicture.Image = runned ?
                                             Resources.online.ToBitmap() :
                                             Resources.offline.ToBitmap();
+
+            startButton.Enabled = !started && !runned;
+            stopButton.Enabled = started && !runned;
         }
 
         private void startButton_Click(object sender, EventArgs eventArgs)
@@ -149,10 +165,11 @@ namespace Queue.Hosts.Server.WinForms
             }
         }
 
-        private void saveButton_Click(object sender, System.EventArgs e)
+        private void saveButton_Click(object sender, EventArgs e)
         {
             try
             {
+                editDatabaseSettingsControl.Save();
                 configuration.Save();
                 MessageBox.Show("Настройки сохранены");
             }
@@ -164,6 +181,12 @@ namespace Queue.Hosts.Server.WinForms
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if ((started) && (!UIHelper.Question("Сервер запущен. В случае выхода из программы он будет остановлен. Продолжить?")))
+            {
+                e.Cancel = true;
+                return;
+            }
+
             try
             {
                 StopServer();
@@ -177,11 +200,13 @@ namespace Queue.Hosts.Server.WinForms
             {
                 startButton.Enabled = false;
 
+                editDatabaseSettingsControl.Save();
                 server = new ServerInstance(settings);
                 server.Start();
 
                 startButton.Enabled = false;
                 stopButton.Enabled = true;
+                started = true;
             }
             catch (Exception e)
             {
@@ -202,6 +227,8 @@ namespace Queue.Hosts.Server.WinForms
 
             startButton.Enabled = true;
             stopButton.Enabled = false;
+
+            started = false;
         }
 
         #region bindings
@@ -297,6 +324,20 @@ namespace Queue.Hosts.Server.WinForms
             }
 
             AdjustServiceState();
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                this.Hide();
+            }
+        }
+
+        private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
         }
     }
 }

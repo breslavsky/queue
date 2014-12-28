@@ -23,6 +23,7 @@
     <Cultures>ru-RU</Cultures>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Files.wxs" />
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +52,9 @@
       <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
     </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="server.ico" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--
