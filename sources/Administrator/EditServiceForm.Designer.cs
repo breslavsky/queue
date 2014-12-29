@@ -734,8 +734,8 @@
             this.Name = "EditServiceForm";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Редактирование услуги";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ServiceEditForm_FormClosing);
-            this.Load += new System.EventHandler(this.ServiceEditForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditServiceForm_FormClosing);
+            this.Load += new System.EventHandler(this.EditServiceForm_Load);
             this.parametersTabPage.ResumeLayout(false);
             this.exceptionScheduleTabPage.ResumeLayout(false);
             this.exceptionScheduleTabPage.PerformLayout();

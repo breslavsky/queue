@@ -8,6 +8,9 @@ namespace Queue.Model
     [Key(Column = "ConfigId", ForeignKey = "PortalConfigToConfigReference")]
     public class PortalConfig : Config
     {
+        private const int HeaderLength = 1024 * 500;
+        private const int FooterLength = 1024 * 500;
+
         public PortalConfig()
         {
             Type = ConfigType.Portal;
@@ -15,10 +18,10 @@ namespace Queue.Model
 
         #region properties
 
-        [Property(Length = DataLength._500K)]
+        [Property(Length = HeaderLength)]
         public virtual string Header { get; set; }
 
-        [Property(Length = DataLength._500K)]
+        [Property(Length = FooterLength)]
         public virtual string Footer { get; set; }
 
         [Property]

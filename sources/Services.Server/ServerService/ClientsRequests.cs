@@ -268,10 +268,10 @@ namespace Queue.Services.Server
                     clientRequest.RequestTime = requestTime;
                     clientRequest.Type = ClientRequestType.Early;
 
-                    var errors = clientRequest.Validate();
-                    if (errors.Length > 0)
+                    var error = clientRequest.Validate().FirstOrDefault();
+                    if (error != null)
                     {
-                        throw ValidationError.ToException(errors);
+                        throw new FaultException(error.Message);
                     }
 
                     session.Save(clientRequest);
@@ -433,10 +433,10 @@ namespace Queue.Services.Server
                     clientRequest.IsPriority = isPriority;
                     clientRequest.Type = ClientRequestType.Live;
 
-                    var errors = clientRequest.Validate();
-                    if (errors.Length > 0)
+                    var error = clientRequest.Validate().FirstOrDefault();
+                    if (error != null)
                     {
-                        throw ValidationError.ToException(errors);
+                        throw new FaultException(error.Message);
                     }
 
                     session.Save(clientRequest);

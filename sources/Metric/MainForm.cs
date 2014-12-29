@@ -9,6 +9,7 @@ using NHibernate.Type;
 using Queue.Model;
 using Queue.Model.Common;
 using System;
+using System.Linq;
 using System.Timers;
 using System.Windows.Forms;
 using Timer = System.Timers.Timer;
@@ -100,7 +101,7 @@ namespace Queue.Metric
                         var errors = m.Validate();
                         if (errors.Length > 0)
                         {
-                            logger.Error(ValidationError.ToException(errors));
+                            logger.Error(errors);
                         }
 
                         session.Save(m);
@@ -153,10 +154,10 @@ namespace Queue.Metric
                             m.Productivity /= m.Rendered;
                         }
 
-                        var errors = m.Validate();
-                        if (errors.Length > 0)
+                        var error = m.Validate().FirstOrDefault();
+                        if (error != null)
                         {
-                            logger.Error(ValidationError.ToException(errors));
+                            logger.Error(error.Message);
                         }
 
                         session.Save(m);
@@ -202,10 +203,10 @@ namespace Queue.Metric
                             m.Productivity /= m.Rendered;
                         }
 
-                        var errors = m.Validate();
-                        if (errors.Length > 0)
+                        var error = m.Validate().FirstOrDefault();
+                        if (error != null)
                         {
-                            logger.Error(ValidationError.ToException(errors));
+                            logger.Error(error.Message);
                         }
 
                         session.Save(m);

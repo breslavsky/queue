@@ -160,17 +160,19 @@ namespace Queue.Administrator
             }
         }
 
-        private void ServiceEditForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void EditServiceForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Cancel();
         }
 
-        private async void ServiceEditForm_Load(object sender, EventArgs e)
+        private async void EditServiceForm_Load(object sender, EventArgs e)
         {
             using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
+                    Enabled = false;
+
                     if (serviceGroupId != Guid.Empty)
                     {
                         serviceGroup = await taskPool.AddTask(channel.Service.GetServiceGroup(serviceGroupId));
@@ -189,6 +191,8 @@ namespace Queue.Administrator
                             Name = "Новая услуга"
                         };
                     }
+
+                    Enabled = true;
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

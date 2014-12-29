@@ -8,7 +8,7 @@ namespace Queue.Services.Server
     {
         protected override void Configure()
         {
-            Mapper.CreateMap<IdentifiedEntity, DTO.IdentifiedEntity>()
+            Mapper.CreateMap<IdentifiedEntity, DTO.IdentifiedEntityLink>()
                 .ForMember(d => d.Presentation, o => o.MapFrom(s => s.ToString()));
         }
     }

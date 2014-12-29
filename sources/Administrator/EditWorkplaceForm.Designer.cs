@@ -65,7 +65,7 @@
             this.numberUpDown.Location = new System.Drawing.Point(105, 40);
             this.numberUpDown.Name = "numberUpDown";
             this.numberUpDown.Size = new System.Drawing.Size(60, 20);
-            this.numberUpDown.TabIndex = 7;
+            this.numberUpDown.TabIndex = 2;
             this.numberUpDown.Leave += new System.EventHandler(this.numberUpDown_Leave);
             // 
             // modificatorLabel
@@ -114,7 +114,7 @@
             0});
             this.segmentsUpDown.Name = "segmentsUpDown";
             this.segmentsUpDown.Size = new System.Drawing.Size(60, 20);
-            this.segmentsUpDown.TabIndex = 13;
+            this.segmentsUpDown.TabIndex = 6;
             this.segmentsUpDown.Leave += new System.EventHandler(this.segmentsUpDown_Leave);
             // 
             // displayUpDown
@@ -127,7 +127,7 @@
             0});
             this.displayUpDown.Name = "displayUpDown";
             this.displayUpDown.Size = new System.Drawing.Size(60, 20);
-            this.displayUpDown.TabIndex = 14;
+            this.displayUpDown.TabIndex = 5;
             this.displayUpDown.Leave += new System.EventHandler(this.displayUpDown_Leave);
             // 
             // saveButton
@@ -135,7 +135,7 @@
             this.saveButton.Location = new System.Drawing.Point(180, 240);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
-            this.saveButton.TabIndex = 15;
+            this.saveButton.TabIndex = 7;
             this.saveButton.Text = "Записать";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
@@ -146,7 +146,7 @@
             this.typeControl.Location = new System.Drawing.Point(105, 5);
             this.typeControl.Name = "typeControl";
             this.typeControl.Size = new System.Drawing.Size(150, 21);
-            this.typeControl.TabIndex = 16;
+            this.typeControl.TabIndex = 1;
             this.typeControl.Leave += new System.EventHandler(this.typeControl_Leave);
             // 
             // modificatorControl
@@ -155,7 +155,7 @@
             this.modificatorControl.Location = new System.Drawing.Point(105, 65);
             this.modificatorControl.Name = "modificatorControl";
             this.modificatorControl.Size = new System.Drawing.Size(150, 21);
-            this.modificatorControl.TabIndex = 17;
+            this.modificatorControl.TabIndex = 3;
             this.modificatorControl.Leave += new System.EventHandler(this.modificatorControl_Leave);
             // 
             // EditWorkplaceForm

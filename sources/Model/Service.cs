@@ -13,6 +13,9 @@ namespace Queue.Model
     [Cache(Usage = CacheUsage.ReadWrite)]
     public class Service : IdentifiedEntity
     {
+        private const int DescriptionLength = 1024 * 500;
+        private const int TagsLength = 1024 * 500;
+
         public Service()
         {
             SortId = DateTime.Now.Ticks;
@@ -42,7 +45,7 @@ namespace Queue.Model
         [Property]
         public virtual string Comment { get; set; }
 
-        [Property(Length = DataLength._500K)]
+        [Property(Length = DescriptionLength)]
         public virtual string Description { get; set; }
 
         [Property]
@@ -79,7 +82,7 @@ namespace Queue.Model
         [Property]
         public virtual long SortId { get; set; }
 
-        [Property(Length = DataLength._1K)]
+        [Property(Length = TagsLength)]
         public virtual string Tags { get; set; }
 
         [Property]

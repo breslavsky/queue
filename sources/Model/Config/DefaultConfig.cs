@@ -17,7 +17,7 @@ namespace Queue.Model
 
         #region properties
 
-        [Property(Length = DataLength._1K)]
+        [Property(Length = 255)]
         public virtual string QueueName { get; set; }
 
         [Property]

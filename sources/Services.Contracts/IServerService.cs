@@ -183,7 +183,7 @@ namespace Queue.Services.Contracts
         Task<User> GetUser(Guid userId);
 
         [OperationContract]
-        Task<IdentifiedEntity[]> GetUserLinks(UserRole userRole);
+        Task<IdentifiedEntityLink[]> GetUserLinks(UserRole userRole);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
@@ -220,7 +220,7 @@ namespace Queue.Services.Contracts
         Task DeleteOffice(Guid officeId);
 
         [OperationContract]
-        Task<IdentifiedEntity[]> GetWorkplacesLinks();
+        Task<IdentifiedEntityLink[]> GetWorkplacesLinks();
 
         [OperationContract]
         Task<Workplace[]> GetWorkplaces();
@@ -242,7 +242,7 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<IdentifiedEntity[]> GetServiceLinks();
+        Task<IdentifiedEntityLink[]> GetServiceLinks();
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
@@ -281,7 +281,7 @@ namespace Queue.Services.Contracts
         Task<bool> ServiceDown(Guid serviceId);
 
         [OperationContract]
-        Task<IdentifiedEntity[]> GetServiceStepLinks(Guid serviceId);
+        Task<IdentifiedEntityLink[]> GetServiceStepLinks(Guid serviceId);
 
         [OperationContract]
         Task<ServiceStep[]> GetServiceSteps(Guid serviceId);

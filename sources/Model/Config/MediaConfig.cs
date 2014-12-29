@@ -9,6 +9,8 @@ namespace Queue.Model
     [Key(Column = "ConfigId", ForeignKey = "MediaConfigToConfigReference")]
     public class MediaConfig : Config
     {
+        private const int TickerLength = 1024 * 500;
+
         #region fields
 
         private IList<MediaConfigFile> mediaFiles = new List<MediaConfigFile>();
@@ -25,7 +27,7 @@ namespace Queue.Model
         [Property]
         public virtual string ServiceUrl { get; set; }
 
-        [Property(Length = DataLength._500K)]
+        [Property(Length = TickerLength)]
         public virtual string Ticker { get; set; }
 
         [Property]

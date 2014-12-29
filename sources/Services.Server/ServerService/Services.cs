@@ -15,7 +15,7 @@ namespace Queue.Services.Server
 {
     public partial class ServerService
     {
-        public async Task<DTO.IdentifiedEntity[]> GetServiceLinks()
+        public async Task<DTO.IdentifiedEntityLink[]> GetServiceLinks()
         {
             return await Task.Run(() =>
             {
@@ -27,7 +27,7 @@ namespace Queue.Services.Server
                         .AddOrder(Order.Asc("Code"))
                         .List<IdentifiedEntity>();
 
-                    return Mapper.Map<IList<IdentifiedEntity>, DTO.IdentifiedEntity[]>(services);
+                    return Mapper.Map<IList<IdentifiedEntity>, DTO.IdentifiedEntityLink[]>(services);
                 }
             });
         }
@@ -347,7 +347,7 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.IdentifiedEntity[]> GetServiceStepLinks(Guid serviceId)
+        public async Task<DTO.IdentifiedEntityLink[]> GetServiceStepLinks(Guid serviceId)
         {
             return await Task.Run(() =>
             {
@@ -364,7 +364,7 @@ namespace Queue.Services.Server
                         .Add(Restrictions.Eq("Service", service))
                         .AddOrder(Order.Asc("SortId"))
                         .List<IdentifiedEntity>();
-                    return Mapper.Map<IList<IdentifiedEntity>, DTO.IdentifiedEntity[]>(serviceSteps);
+                    return Mapper.Map<IList<IdentifiedEntity>, DTO.IdentifiedEntityLink[]>(serviceSteps);
                 }
             });
         }

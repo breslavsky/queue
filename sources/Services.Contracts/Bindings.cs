@@ -6,6 +6,8 @@ namespace Queue.Services.Contracts
 {
     public static class Bindings
     {
+        private const int MaxReceivedMessageSize = 1024 * 1024 * 50;
+
         public static NetNamedPipeBinding NetNamedPipeBinding
         {
             get
@@ -13,7 +15,7 @@ namespace Queue.Services.Contracts
                 return new NetNamedPipeBinding(NetNamedPipeSecurityMode.None)
                 {
                     TransferMode = TransferMode.Buffered,
-                    MaxReceivedMessageSize = DataLength._150M,
+                    MaxReceivedMessageSize = MaxReceivedMessageSize,
                     CloseTimeout = TimeSpan.MaxValue
                 };
             }
@@ -26,7 +28,7 @@ namespace Queue.Services.Contracts
                 return new NetTcpBinding(SecurityMode.None)
                 {
                     TransferMode = TransferMode.Buffered,
-                    MaxReceivedMessageSize = DataLength._150M,
+                    MaxReceivedMessageSize = MaxReceivedMessageSize,
                     CloseTimeout = TimeSpan.MaxValue
                 };
             }
@@ -39,7 +41,7 @@ namespace Queue.Services.Contracts
                 return new BasicHttpBinding()
                 {
                     TransferMode = TransferMode.Buffered,
-                    MaxReceivedMessageSize = DataLength._150M,
+                    MaxReceivedMessageSize = MaxReceivedMessageSize,
                     CloseTimeout = TimeSpan.MaxValue
                 };
             }
@@ -52,7 +54,7 @@ namespace Queue.Services.Contracts
                 return new WebHttpBinding(WebHttpSecurityMode.None)
                 {
                     TransferMode = TransferMode.Streamed,
-                    MaxReceivedMessageSize = DataLength._150M,
+                    MaxReceivedMessageSize = MaxReceivedMessageSize,
                     CloseTimeout = TimeSpan.MaxValue
                 };
             }

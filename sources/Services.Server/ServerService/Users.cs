@@ -138,7 +138,7 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.IdentifiedEntity[]> GetUserLinks(UserRole userRole)
+        public async Task<DTO.IdentifiedEntityLink[]> GetUserLinks(UserRole userRole)
         {
             return await Task.Run(() =>
             {
@@ -165,7 +165,7 @@ namespace Queue.Services.Server
                         .AddOrder(Order.Asc("Name"))
                         .AddOrder(Order.Asc("Patronymic"))
                         .List<IdentifiedEntity>();
-                    return Mapper.Map<IList<IdentifiedEntity>, DTO.IdentifiedEntity[]>(users);
+                    return Mapper.Map<IList<IdentifiedEntity>, DTO.IdentifiedEntityLink[]>(users);
                 }
             });
         }

@@ -14,7 +14,7 @@ namespace Queue.Services.Server
 {
     public partial class ServerService
     {
-        public async Task<DTO.IdentifiedEntity[]> GetWorkplacesLinks()
+        public async Task<DTO.IdentifiedEntityLink[]> GetWorkplacesLinks()
         {
             return await Task.Run(() =>
             {
@@ -27,7 +27,7 @@ namespace Queue.Services.Server
                         .AddOrder(Order.Asc("Modificator"))
                         .List<IdentifiedEntity>();
 
-                    return Mapper.Map<IList<IdentifiedEntity>, DTO.IdentifiedEntity[]>(workplaces);
+                    return Mapper.Map<IList<IdentifiedEntity>, DTO.IdentifiedEntityLink[]>(workplaces);
                 }
             });
         }

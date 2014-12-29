@@ -121,7 +121,7 @@ namespace Queue.Operator
                             {
                                 try
                                 {
-                                    serviceStepControl.Initialize(await taskPool.AddTask(channel.Service.GetServiceSteps(service.Id)));
+                                    serviceStepControl.Initialize(await taskPool.AddTask(channel.Service.GetServiceStepLinks(service.Id)));
                                     serviceStepControl.Select<ServiceStep>(clientRequest.ServiceStep);
                                 }
                                 catch (Exception exception)

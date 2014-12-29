@@ -16,4 +16,8 @@ if (!clientRequest.Equals(source))
 
 InitializeComponent();
 
+Enabled = false;
+
+на формах
+
 

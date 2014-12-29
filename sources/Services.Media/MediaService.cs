@@ -15,6 +15,8 @@ namespace Queue.Services.Media
         UseSynchronizationContext = false)]
     public partial class MediaService : IMediaService
     {
+        private const int BufferLength = 1024 * 1024;
+
         private static readonly ILog logger = LogManager.GetLogger(typeof(MediaService));
 
         public MediaService(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser, string folder)
@@ -41,7 +43,7 @@ namespace Queue.Services.Media
 
             using (var fileStream = File.Open(file, FileMode.Create))
             {
-                byte[] buffer = new byte[DataLength._1M];
+                byte[] buffer = new byte[BufferLength];
 
                 int readed = 0;
                 do

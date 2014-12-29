@@ -10,6 +10,8 @@ namespace Queue.Model
     [Cache(Usage = CacheUsage.ReadWrite)]
     public class ServiceGroup : IdentifiedEntity
     {
+        private const int DescriptionLength = 1024 * 500;
+
         public ServiceGroup()
         {
             SortId = DateTime.Now.Ticks;
@@ -26,7 +28,7 @@ namespace Queue.Model
         [Property]
         public virtual string Comment { get; set; }
 
-        [Property(Length = DataLength._500K)]
+        [Property(Length = DescriptionLength)]
         public virtual string Description { get; set; }
 
         [Range(Min = 1, Max = 10, Message = "Количество колонок должно быть от 1 до 10")]

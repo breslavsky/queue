@@ -103,11 +103,15 @@ namespace Queue.Administrator
         {
             if (workplaceId != Guid.Empty)
             {
+                Enabled = false;
+
                 using (var channel = channelManager.CreateChannel())
                 {
                     try
                     {
                         Workplace = await taskPool.AddTask(channel.Service.GetWorkplace(workplaceId));
+
+                        Enabled = true;
                     }
                     catch (OperationCanceledException) { }
                     catch (CommunicationObjectAbortedException) { }

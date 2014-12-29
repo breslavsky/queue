@@ -167,10 +167,10 @@ namespace Queue.Services.Server
                         parameter.Service = null;
                     }
 
-                    var errors = parameter.Validate();
-                    if (errors.Length > 0)
+                    var error = parameter.Validate().FirstOrDefault();
+                    if (error != null)
                     {
-                        throw ValidationError.ToException(errors);
+                        throw new FaultException(error.Message);
                     }
 
                     session.Save(parameter);
@@ -231,10 +231,10 @@ namespace Queue.Services.Server
                         parameter.Service = null;
                     }
 
-                    var errors = parameter.Validate();
-                    if (errors.Length > 0)
+                    var error = parameter.Validate().FirstOrDefault();
+                    if (error != null)
                     {
-                        throw ValidationError.ToException(errors);
+                        throw new FaultException(error.Message);
                     }
 
                     session.Save(parameter);

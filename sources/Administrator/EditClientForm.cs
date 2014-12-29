@@ -66,11 +66,15 @@ namespace Queue.Administrator
         {
             if (clientId != Guid.Empty)
             {
+                Enabled = false;
+
                 using (var channel = channelManager.CreateChannel())
                 {
                     try
                     {
                         Client = await taskPool.AddTask(channel.Service.GetClient(clientId));
+
+                        Enabled = true;
                     }
                     catch (OperationCanceledException) { }
                     catch (CommunicationObjectAbortedException) { }

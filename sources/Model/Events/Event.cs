@@ -11,6 +11,8 @@ namespace Queue.Model
     [Cache(Usage = CacheUsage.ReadWrite)]
     public abstract class Event : IdentifiedEntity
     {
+        private const int MessageLength = 1024 * 500;
+
         public Event()
         {
             CreateDate = DateTime.Now;
@@ -25,7 +27,7 @@ namespace Queue.Model
         public virtual EventType Type { get; set; }
 
         [NotNullNotEmpty(Message = "Для события не указано сообщение")]
-        [Property(Length = DataLength._1M)]
+        [Property(Length = MessageLength)]
         public virtual string Message { get; set; }
 
         #endregion properties

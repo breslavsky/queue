@@ -27,7 +27,7 @@ namespace Queue.UI.WinForms
             InitializeComponent();
         }
 
-        public void Initialize(IdentifiedEntity[] entities)
+        public void Initialize(IdentifiedEntityLink[] entities)
         {
             frozen = true;
 
@@ -41,7 +41,7 @@ namespace Queue.UI.WinForms
         public T Selected<T>() where T : IdentifiedEntity
         {
             return comboBox.SelectedItem != null
-                ? (comboBox.SelectedItem as IdentifiedEntity).Cast<T>() : null;
+                ? (comboBox.SelectedItem as IdentifiedEntityLink).Cast<T>() : null;
         }
 
         public void Select<T>(T value) where T : IdentifiedEntity
