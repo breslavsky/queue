@@ -110,6 +110,7 @@
             this.serviceParametersControl.Name = "serviceParametersControl";
             this.serviceParametersControl.Size = new System.Drawing.Size(830, 450);
             this.serviceParametersControl.TabIndex = 0;
+            this.serviceParametersControl.Load += new System.EventHandler(this.serviceParametersControl_Load);
             // 
             // exceptionScheduleTabPage
             // 
@@ -130,7 +131,7 @@
             this.exceptionScheduleControl.Name = "exceptionScheduleControl";
             this.exceptionScheduleControl.Schedule = null;
             this.exceptionScheduleControl.Size = new System.Drawing.Size(790, 310);
-            this.exceptionScheduleControl.TabIndex = 0;
+            this.exceptionScheduleControl.TabIndex = 2;
             // 
             // exceptionScheduleDatePicker
             // 
@@ -147,7 +148,7 @@
             this.exceptionScheduleCheckBox.Location = new System.Drawing.Point(20, 40);
             this.exceptionScheduleCheckBox.Name = "exceptionScheduleCheckBox";
             this.exceptionScheduleCheckBox.Size = new System.Drawing.Size(150, 17);
-            this.exceptionScheduleCheckBox.TabIndex = 0;
+            this.exceptionScheduleCheckBox.TabIndex = 1;
             this.exceptionScheduleCheckBox.Tag = "2";
             this.exceptionScheduleCheckBox.Text = "Определить расписание";
             this.exceptionScheduleCheckBox.UseVisualStyleBackColor = true;
@@ -176,7 +177,7 @@
             this.servicePropertiesTabControl.Padding = new System.Drawing.Point(5, 5);
             this.servicePropertiesTabControl.SelectedIndex = 0;
             this.servicePropertiesTabControl.Size = new System.Drawing.Size(825, 410);
-            this.servicePropertiesTabControl.TabIndex = 14;
+            this.servicePropertiesTabControl.TabIndex = 0;
             // 
             // commonPropertiesTabPage
             // 
@@ -205,7 +206,7 @@
             this.earlyRegistratorFlagsControl.Location = new System.Drawing.Point(600, 145);
             this.earlyRegistratorFlagsControl.Name = "earlyRegistratorFlagsControl";
             this.earlyRegistratorFlagsControl.Size = new System.Drawing.Size(180, 65);
-            this.earlyRegistratorFlagsControl.TabIndex = 29;
+            this.earlyRegistratorFlagsControl.TabIndex = 4;
             this.earlyRegistratorFlagsControl.Leave += new System.EventHandler(this.earlyRegistratorFlagsControl_Leave);
             // 
             // liveRegistratorFlagsControl
@@ -213,7 +214,7 @@
             this.liveRegistratorFlagsControl.Location = new System.Drawing.Point(380, 145);
             this.liveRegistratorFlagsControl.Name = "liveRegistratorFlagsControl";
             this.liveRegistratorFlagsControl.Size = new System.Drawing.Size(180, 65);
-            this.liveRegistratorFlagsControl.TabIndex = 27;
+            this.liveRegistratorFlagsControl.TabIndex = 3;
             this.liveRegistratorFlagsControl.Leave += new System.EventHandler(this.liveRegistratorFlagsControl_Leave);
             // 
             // codeLabel
@@ -221,7 +222,7 @@
             this.codeLabel.Location = new System.Drawing.Point(10, 5);
             this.codeLabel.Name = "codeLabel";
             this.codeLabel.Size = new System.Drawing.Size(340, 20);
-            this.codeLabel.TabIndex = 20;
+            this.codeLabel.TabIndex = 0;
             this.codeLabel.Text = "Код";
             this.codeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -230,7 +231,7 @@
             this.codeTextBox.Location = new System.Drawing.Point(20, 35);
             this.codeTextBox.Name = "codeTextBox";
             this.codeTextBox.Size = new System.Drawing.Size(60, 20);
-            this.codeTextBox.TabIndex = 19;
+            this.codeTextBox.TabIndex = 0;
             this.codeTextBox.Leave += new System.EventHandler(this.codeTextBox_Leave);
             // 
             // nameLabel
@@ -238,7 +239,7 @@
             this.nameLabel.Location = new System.Drawing.Point(7, 62);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(343, 13);
-            this.nameLabel.TabIndex = 18;
+            this.nameLabel.TabIndex = 0;
             this.nameLabel.Text = "Наименование";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -248,7 +249,7 @@
             this.nameTextBox.Multiline = true;
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(330, 110);
-            this.nameTextBox.TabIndex = 11;
+            this.nameTextBox.TabIndex = 1;
             this.nameTextBox.Leave += new System.EventHandler(this.nameTextBox_Leave);
             // 
             // tagsLabel
@@ -256,7 +257,7 @@
             this.tagsLabel.Location = new System.Drawing.Point(370, 5);
             this.tagsLabel.Name = "tagsLabel";
             this.tagsLabel.Size = new System.Drawing.Size(190, 18);
-            this.tagsLabel.TabIndex = 26;
+            this.tagsLabel.TabIndex = 0;
             this.tagsLabel.Text = "Поисковые тэги";
             this.tagsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -266,7 +267,7 @@
             this.tagsTextBox.Multiline = true;
             this.tagsTextBox.Name = "tagsTextBox";
             this.tagsTextBox.Size = new System.Drawing.Size(175, 80);
-            this.tagsTextBox.TabIndex = 25;
+            this.tagsTextBox.TabIndex = 2;
             this.tagsTextBox.LocationChanged += new System.EventHandler(this.tagsTextBox_Leave);
             // 
             // commentLabel
@@ -274,7 +275,7 @@
             this.commentLabel.Location = new System.Drawing.Point(10, 205);
             this.commentLabel.Name = "commentLabel";
             this.commentLabel.Size = new System.Drawing.Size(340, 18);
-            this.commentLabel.TabIndex = 17;
+            this.commentLabel.TabIndex = 0;
             this.commentLabel.Text = "Комментарий";
             this.commentLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -284,7 +285,7 @@
             this.commentTextBox.Multiline = true;
             this.commentTextBox.Name = "commentTextBox";
             this.commentTextBox.Size = new System.Drawing.Size(785, 135);
-            this.commentTextBox.TabIndex = 16;
+            this.commentTextBox.TabIndex = 5;
             this.commentTextBox.Leave += new System.EventHandler(this.commentTextBox_Leave);
             // 
             // earlyRegistratorLabel
@@ -340,7 +341,7 @@
             this.clientCallDelayLabel.Location = new System.Drawing.Point(5, 10);
             this.clientCallDelayLabel.Name = "clientCallDelayLabel";
             this.clientCallDelayLabel.Size = new System.Drawing.Size(205, 30);
-            this.clientCallDelayLabel.TabIndex = 6;
+            this.clientCallDelayLabel.TabIndex = 0;
             this.clientCallDelayLabel.Text = "Задержка вызова клиента";
             this.clientCallDelayLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -354,7 +355,7 @@
             0});
             this.clientCallDelayUpDown.Name = "clientCallDelayUpDown";
             this.clientCallDelayUpDown.Size = new System.Drawing.Size(50, 20);
-            this.clientCallDelayUpDown.TabIndex = 7;
+            this.clientCallDelayUpDown.TabIndex = 0;
             this.clientCallDelayUpDown.Leave += new System.EventHandler(this.clientCallDelayUpDown_Leave);
             // 
             // clientCallDelaySecondsLabel
@@ -363,7 +364,7 @@
             this.clientCallDelaySecondsLabel.Location = new System.Drawing.Point(270, 25);
             this.clientCallDelaySecondsLabel.Name = "clientCallDelaySecondsLabel";
             this.clientCallDelaySecondsLabel.Size = new System.Drawing.Size(28, 13);
-            this.clientCallDelaySecondsLabel.TabIndex = 8;
+            this.clientCallDelaySecondsLabel.TabIndex = 0;
             this.clientCallDelaySecondsLabel.Text = "сек.";
             // 
             // timeIntervalRoundingLabel
@@ -371,7 +372,7 @@
             this.timeIntervalRoundingLabel.Location = new System.Drawing.Point(5, 40);
             this.timeIntervalRoundingLabel.Name = "timeIntervalRoundingLabel";
             this.timeIntervalRoundingLabel.Size = new System.Drawing.Size(205, 30);
-            this.timeIntervalRoundingLabel.TabIndex = 11;
+            this.timeIntervalRoundingLabel.TabIndex = 0;
             this.timeIntervalRoundingLabel.Text = "Округление временных интервалов";
             this.timeIntervalRoundingLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -385,7 +386,7 @@
             0});
             this.timeIntervalRoundingUpDown.Name = "timeIntervalRoundingUpDown";
             this.timeIntervalRoundingUpDown.Size = new System.Drawing.Size(50, 20);
-            this.timeIntervalRoundingUpDown.TabIndex = 6;
+            this.timeIntervalRoundingUpDown.TabIndex = 1;
             this.timeIntervalRoundingUpDown.Leave += new System.EventHandler(this.timeIntervalRoundingUpDown_Leave);
             // 
             // timeIntervalRoundingMinLabel
@@ -394,7 +395,7 @@
             this.timeIntervalRoundingMinLabel.Location = new System.Drawing.Point(270, 55);
             this.timeIntervalRoundingMinLabel.Name = "timeIntervalRoundingMinLabel";
             this.timeIntervalRoundingMinLabel.Size = new System.Drawing.Size(27, 13);
-            this.timeIntervalRoundingMinLabel.TabIndex = 12;
+            this.timeIntervalRoundingMinLabel.TabIndex = 0;
             this.timeIntervalRoundingMinLabel.Text = "мин";
             // 
             // maxSubjectsLabel
@@ -416,7 +417,7 @@
             0});
             this.maxSubjectsUpDown.Name = "maxSubjectsUpDown";
             this.maxSubjectsUpDown.Size = new System.Drawing.Size(50, 20);
-            this.maxSubjectsUpDown.TabIndex = 0;
+            this.maxSubjectsUpDown.TabIndex = 2;
             this.maxSubjectsUpDown.Leave += new System.EventHandler(this.maxSubjectsUpDown_Leave);
             // 
             // maxEarlyDaysLabel
@@ -424,7 +425,7 @@
             this.maxEarlyDaysLabel.Location = new System.Drawing.Point(5, 100);
             this.maxEarlyDaysLabel.Name = "maxEarlyDaysLabel";
             this.maxEarlyDaysLabel.Size = new System.Drawing.Size(205, 30);
-            this.maxEarlyDaysLabel.TabIndex = 3;
+            this.maxEarlyDaysLabel.TabIndex = 0;
             this.maxEarlyDaysLabel.Text = "Предварительная запись доступна на";
             this.maxEarlyDaysLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -438,7 +439,7 @@
             0});
             this.maxEarlyDaysUpDown.Name = "maxEarlyDaysUpDown";
             this.maxEarlyDaysUpDown.Size = new System.Drawing.Size(50, 20);
-            this.maxEarlyDaysUpDown.TabIndex = 4;
+            this.maxEarlyDaysUpDown.TabIndex = 3;
             this.maxEarlyDaysUpDown.Leave += new System.EventHandler(this.maxEarlyDaysUpDown_Leave);
             // 
             // maxEarlyDaysDaysLabel
@@ -447,7 +448,7 @@
             this.maxEarlyDaysDaysLabel.Location = new System.Drawing.Point(270, 115);
             this.maxEarlyDaysDaysLabel.Name = "maxEarlyDaysDaysLabel";
             this.maxEarlyDaysDaysLabel.Size = new System.Drawing.Size(31, 13);
-            this.maxEarlyDaysDaysLabel.TabIndex = 5;
+            this.maxEarlyDaysDaysLabel.TabIndex = 0;
             this.maxEarlyDaysDaysLabel.Text = "дней";
             // 
             // priorityLabel
@@ -455,7 +456,7 @@
             this.priorityLabel.Location = new System.Drawing.Point(5, 130);
             this.priorityLabel.Name = "priorityLabel";
             this.priorityLabel.Size = new System.Drawing.Size(205, 30);
-            this.priorityLabel.TabIndex = 26;
+            this.priorityLabel.TabIndex = 0;
             this.priorityLabel.Text = "Приоритет услуги";
             this.priorityLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -469,7 +470,7 @@
             0});
             this.priorityUpDown.Name = "priorityUpDown";
             this.priorityUpDown.Size = new System.Drawing.Size(50, 20);
-            this.priorityUpDown.TabIndex = 25;
+            this.priorityUpDown.TabIndex = 4;
             this.priorityUpDown.Leave += new System.EventHandler(this.priorityUpDown_Leave);
             // 
             // clientRequireCheckBox
@@ -477,7 +478,7 @@
             this.clientRequireCheckBox.Location = new System.Drawing.Point(305, 10);
             this.clientRequireCheckBox.Name = "clientRequireCheckBox";
             this.clientRequireCheckBox.Size = new System.Drawing.Size(180, 30);
-            this.clientRequireCheckBox.TabIndex = 8;
+            this.clientRequireCheckBox.TabIndex = 5;
             this.clientRequireCheckBox.Text = "Требовать клиента";
             this.clientRequireCheckBox.UseVisualStyleBackColor = true;
             this.clientRequireCheckBox.Leave += new System.EventHandler(this.clientRequireCheckBox_Leave);
@@ -487,7 +488,7 @@
             this.isPlanSubjectsCheckBox.Location = new System.Drawing.Point(305, 40);
             this.isPlanSubjectsCheckBox.Name = "isPlanSubjectsCheckBox";
             this.isPlanSubjectsCheckBox.Size = new System.Drawing.Size(180, 30);
-            this.isPlanSubjectsCheckBox.TabIndex = 13;
+            this.isPlanSubjectsCheckBox.TabIndex = 6;
             this.isPlanSubjectsCheckBox.Text = "Учитывать при планировании кол-во объектов";
             this.isPlanSubjectsCheckBox.UseVisualStyleBackColor = true;
             this.isPlanSubjectsCheckBox.Leave += new System.EventHandler(this.isPlanSubjectsCheckBox_Leave);
@@ -498,7 +499,7 @@
             this.isUseTypeCheckBox.Location = new System.Drawing.Point(305, 80);
             this.isUseTypeCheckBox.Name = "isUseTypeCheckBox";
             this.isUseTypeCheckBox.Size = new System.Drawing.Size(159, 17);
-            this.isUseTypeCheckBox.TabIndex = 31;
+            this.isUseTypeCheckBox.TabIndex = 7;
             this.isUseTypeCheckBox.Text = "Разделить по типам услуг";
             this.isUseTypeCheckBox.UseVisualStyleBackColor = true;
             this.isUseTypeCheckBox.Leave += new System.EventHandler(this.isUseTypeCheckBox_Leave);
@@ -508,7 +509,7 @@
             this.descriptionLabel.Location = new System.Drawing.Point(10, 180);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(200, 18);
-            this.descriptionLabel.TabIndex = 27;
+            this.descriptionLabel.TabIndex = 0;
             this.descriptionLabel.Text = "Описание услуги";
             this.descriptionLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -519,7 +520,7 @@
             this.descriptionTextBox.Name = "descriptionTextBox";
             this.descriptionTextBox.ReadOnly = true;
             this.descriptionTextBox.Size = new System.Drawing.Size(790, 75);
-            this.descriptionTextBox.TabIndex = 28;
+            this.descriptionTextBox.TabIndex = 8;
             this.descriptionTextBox.Click += new System.EventHandler(this.descriptionTextBox_Click);
             // 
             // linkLabel
@@ -527,7 +528,7 @@
             this.linkLabel.Location = new System.Drawing.Point(5, 290);
             this.linkLabel.Name = "linkLabel";
             this.linkLabel.Size = new System.Drawing.Size(200, 18);
-            this.linkLabel.TabIndex = 30;
+            this.linkLabel.TabIndex = 0;
             this.linkLabel.Text = "Ссылка на информацию";
             this.linkLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -537,7 +538,7 @@
             this.linkTextBox.Multiline = true;
             this.linkTextBox.Name = "linkTextBox";
             this.linkTextBox.Size = new System.Drawing.Size(790, 50);
-            this.linkTextBox.TabIndex = 29;
+            this.linkTextBox.TabIndex = 9;
             this.linkTextBox.Leave += new System.EventHandler(this.linkTextBox_Leave);
             // 
             // saveButton
@@ -545,7 +546,7 @@
             this.saveButton.Location = new System.Drawing.Point(745, 420);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(85, 25);
-            this.saveButton.TabIndex = 0;
+            this.saveButton.TabIndex = 10;
             this.saveButton.Text = "Записать";
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 

@@ -49,7 +49,7 @@
             this.nameLabel.Location = new System.Drawing.Point(5, 5);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(205, 15);
-            this.nameLabel.TabIndex = 1;
+            this.nameLabel.TabIndex = 0;
             this.nameLabel.Text = "Название";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -58,7 +58,7 @@
             this.nameTextBox.Location = new System.Drawing.Point(10, 25);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(200, 20);
-            this.nameTextBox.TabIndex = 2;
+            this.nameTextBox.TabIndex = 0;
             this.nameTextBox.Leave += new System.EventHandler(this.nameTextBox_Leave);
             // 
             // toolTipLabel
@@ -66,7 +66,7 @@
             this.toolTipLabel.Location = new System.Drawing.Point(5, 50);
             this.toolTipLabel.Name = "toolTipLabel";
             this.toolTipLabel.Size = new System.Drawing.Size(205, 18);
-            this.toolTipLabel.TabIndex = 3;
+            this.toolTipLabel.TabIndex = 0;
             this.toolTipLabel.Text = "Подсказка";
             this.toolTipLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -76,7 +76,7 @@
             this.toolTipTextBox.Multiline = true;
             this.toolTipTextBox.Name = "toolTipTextBox";
             this.toolTipTextBox.Size = new System.Drawing.Size(200, 50);
-            this.toolTipTextBox.TabIndex = 4;
+            this.toolTipTextBox.TabIndex = 1;
             this.toolTipTextBox.Leave += new System.EventHandler(this.toolTipTextBox_Leave);
             // 
             // isRequireCheckBox
@@ -85,7 +85,7 @@
             this.isRequireCheckBox.Location = new System.Drawing.Point(10, 135);
             this.isRequireCheckBox.Name = "isRequireCheckBox";
             this.isRequireCheckBox.Size = new System.Drawing.Size(183, 17);
-            this.isRequireCheckBox.TabIndex = 5;
+            this.isRequireCheckBox.TabIndex = 2;
             this.isRequireCheckBox.Text = "Обязательное для заполнения";
             this.isRequireCheckBox.UseVisualStyleBackColor = true;
             this.isRequireCheckBox.Leave += new System.EventHandler(this.isRequireCheckBox_Leave);
@@ -95,7 +95,7 @@
             this.saveButton.Location = new System.Drawing.Point(135, 250);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
-            this.saveButton.TabIndex = 6;
+            this.saveButton.TabIndex = 5;
             this.saveButton.Text = "Сохранить";
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
@@ -108,7 +108,7 @@
             this.parameterLengthGroupBox.Location = new System.Drawing.Point(10, 160);
             this.parameterLengthGroupBox.Name = "parameterLengthGroupBox";
             this.parameterLengthGroupBox.Size = new System.Drawing.Size(200, 85);
-            this.parameterLengthGroupBox.TabIndex = 7;
+            this.parameterLengthGroupBox.TabIndex = 3;
             this.parameterLengthGroupBox.TabStop = false;
             this.parameterLengthGroupBox.Text = "Ограничение длины";
             // 
@@ -126,7 +126,7 @@
             this.parameterMinLengthUpDown.Location = new System.Drawing.Point(150, 25);
             this.parameterMinLengthUpDown.Name = "parameterMinLengthUpDown";
             this.parameterMinLengthUpDown.Size = new System.Drawing.Size(40, 20);
-            this.parameterMinLengthUpDown.TabIndex = 0;
+            this.parameterMinLengthUpDown.TabIndex = 3;
             this.parameterMinLengthUpDown.Leave += new System.EventHandler(this.parameterMinLengthUpDown_Leave);
             // 
             // parameterMaxLengthLabel
@@ -148,7 +148,7 @@
             0});
             this.parameterMaxLengthUpDown.Name = "parameterMaxLengthUpDown";
             this.parameterMaxLengthUpDown.Size = new System.Drawing.Size(40, 20);
-            this.parameterMaxLengthUpDown.TabIndex = 0;
+            this.parameterMaxLengthUpDown.TabIndex = 4;
             this.parameterMaxLengthUpDown.Leave += new System.EventHandler(this.parameterMaxLengthUpDown_Leave);
             // 
             // EditServiceParameterTextForm

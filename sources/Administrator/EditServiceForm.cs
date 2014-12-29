@@ -495,5 +495,10 @@ namespace Queue.Administrator
         {
             service.IsUseType = isUseTypeCheckBox.Checked;
         }
+
+        private void serviceParametersControl_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

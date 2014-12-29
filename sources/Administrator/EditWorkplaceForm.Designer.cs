@@ -39,7 +39,7 @@
             this.commentTextBox.Multiline = true;
             this.commentTextBox.Name = "commentTextBox";
             this.commentTextBox.Size = new System.Drawing.Size(245, 65);
-            this.commentTextBox.TabIndex = 4;
+            this.commentTextBox.TabIndex = 3;
             this.commentTextBox.Leave += new System.EventHandler(this.commentTextBox_Leave);
             // 
             // typeLabel
@@ -47,7 +47,7 @@
             this.typeLabel.Location = new System.Drawing.Point(10, 10);
             this.typeLabel.Name = "typeLabel";
             this.typeLabel.Size = new System.Drawing.Size(90, 20);
-            this.typeLabel.TabIndex = 5;
+            this.typeLabel.TabIndex = 0;
             this.typeLabel.Text = "Тип";
             this.typeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -56,7 +56,7 @@
             this.numberLabel.Location = new System.Drawing.Point(10, 40);
             this.numberLabel.Name = "numberLabel";
             this.numberLabel.Size = new System.Drawing.Size(90, 20);
-            this.numberLabel.TabIndex = 6;
+            this.numberLabel.TabIndex = 0;
             this.numberLabel.Text = "Номер";
             this.numberLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -65,7 +65,7 @@
             this.numberUpDown.Location = new System.Drawing.Point(105, 40);
             this.numberUpDown.Name = "numberUpDown";
             this.numberUpDown.Size = new System.Drawing.Size(60, 20);
-            this.numberUpDown.TabIndex = 7;
+            this.numberUpDown.TabIndex = 1;
             this.numberUpDown.Leave += new System.EventHandler(this.numberUpDown_Leave);
             // 
             // modificatorLabel
@@ -73,7 +73,7 @@
             this.modificatorLabel.Location = new System.Drawing.Point(10, 65);
             this.modificatorLabel.Name = "modificatorLabel";
             this.modificatorLabel.Size = new System.Drawing.Size(90, 20);
-            this.modificatorLabel.TabIndex = 8;
+            this.modificatorLabel.TabIndex = 0;
             this.modificatorLabel.Text = "Модификатор";
             this.modificatorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -82,7 +82,7 @@
             this.label1.Location = new System.Drawing.Point(10, 95);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(245, 20);
-            this.label1.TabIndex = 9;
+            this.label1.TabIndex = 0;
             this.label1.Text = "Комментарий";
             this.label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -91,7 +91,7 @@
             this.displayLabel.Location = new System.Drawing.Point(10, 190);
             this.displayLabel.Name = "displayLabel";
             this.displayLabel.Size = new System.Drawing.Size(100, 20);
-            this.displayLabel.TabIndex = 10;
+            this.displayLabel.TabIndex = 0;
             this.displayLabel.Text = "Номер табло";
             this.displayLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -100,7 +100,7 @@
             this.segmentsLabel.Location = new System.Drawing.Point(10, 215);
             this.segmentsLabel.Name = "segmentsLabel";
             this.segmentsLabel.Size = new System.Drawing.Size(100, 20);
-            this.segmentsLabel.TabIndex = 12;
+            this.segmentsLabel.TabIndex = 0;
             this.segmentsLabel.Text = "Кол-во сегментов";
             this.segmentsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -114,7 +114,7 @@
             0});
             this.segmentsUpDown.Name = "segmentsUpDown";
             this.segmentsUpDown.Size = new System.Drawing.Size(60, 20);
-            this.segmentsUpDown.TabIndex = 13;
+            this.segmentsUpDown.TabIndex = 5;
             this.segmentsUpDown.Leave += new System.EventHandler(this.segmentsUpDown_Leave);
             // 
             // displayUpDown
@@ -127,7 +127,7 @@
             0});
             this.displayUpDown.Name = "displayUpDown";
             this.displayUpDown.Size = new System.Drawing.Size(60, 20);
-            this.displayUpDown.TabIndex = 14;
+            this.displayUpDown.TabIndex = 4;
             this.displayUpDown.Leave += new System.EventHandler(this.displayUpDown_Leave);
             // 
             // saveButton
@@ -135,7 +135,7 @@
             this.saveButton.Location = new System.Drawing.Point(180, 240);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
-            this.saveButton.TabIndex = 15;
+            this.saveButton.TabIndex = 6;
             this.saveButton.Text = "Записать";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
@@ -146,7 +146,7 @@
             this.typeControl.Location = new System.Drawing.Point(105, 5);
             this.typeControl.Name = "typeControl";
             this.typeControl.Size = new System.Drawing.Size(150, 21);
-            this.typeControl.TabIndex = 16;
+            this.typeControl.TabIndex = 0;
             this.typeControl.Leave += new System.EventHandler(this.typeControl_Leave);
             // 
             // modificatorControl
@@ -155,7 +155,7 @@
             this.modificatorControl.Location = new System.Drawing.Point(105, 65);
             this.modificatorControl.Name = "modificatorControl";
             this.modificatorControl.Size = new System.Drawing.Size(150, 21);
-            this.modificatorControl.TabIndex = 17;
+            this.modificatorControl.TabIndex = 2;
             this.modificatorControl.Leave += new System.EventHandler(this.modificatorControl_Leave);
             // 
             // EditWorkplaceForm

@@ -40,7 +40,7 @@
             this.saveButton.Location = new System.Drawing.Point(325, 405);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(80, 25);
-            this.saveButton.TabIndex = 0;
+            this.saveButton.TabIndex = 7;
             this.saveButton.Text = "Сохранить";
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
@@ -59,7 +59,7 @@
             this.nameTextBox.Multiline = true;
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(385, 45);
-            this.nameTextBox.TabIndex = 0;
+            this.nameTextBox.TabIndex = 2;
             this.nameTextBox.Leave += new System.EventHandler(this.nameTextBox_Leave);
             // 
             // nameLabel
@@ -93,7 +93,7 @@
             this.colorButton.Location = new System.Drawing.Point(80, 35);
             this.colorButton.Name = "colorButton";
             this.colorButton.Size = new System.Drawing.Size(30, 25);
-            this.colorButton.TabIndex = 0;
+            this.colorButton.TabIndex = 1;
             this.colorButton.Click += new System.EventHandler(this.colorButton_Click);
             this.colorButton.Leave += new System.EventHandler(this.colorButton_Leave);
             // 
@@ -102,7 +102,7 @@
             this.descriptionLabel.Location = new System.Drawing.Point(10, 245);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(395, 18);
-            this.descriptionLabel.TabIndex = 3;
+            this.descriptionLabel.TabIndex = 0;
             this.descriptionLabel.Text = "Описание";
             this.descriptionLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -123,7 +123,7 @@
             this.commentTextBox.Multiline = true;
             this.commentTextBox.Name = "commentTextBox";
             this.commentTextBox.Size = new System.Drawing.Size(385, 60);
-            this.commentTextBox.TabIndex = 5;
+            this.commentTextBox.TabIndex = 3;
             this.commentTextBox.Leave += new System.EventHandler(this.commentTextBox_Leave);
             // 
             // layoutGroupBox
@@ -135,7 +135,7 @@
             this.layoutGroupBox.Location = new System.Drawing.Point(15, 365);
             this.layoutGroupBox.Name = "layoutGroupBox";
             this.layoutGroupBox.Size = new System.Drawing.Size(230, 55);
-            this.layoutGroupBox.TabIndex = 6;
+            this.layoutGroupBox.TabIndex = 5;
             this.layoutGroupBox.TabStop = false;
             this.layoutGroupBox.Text = "Расположение услуг";
             // 
@@ -149,7 +149,7 @@
             0});
             this.columnsUpDown.Name = "columnsUpDown";
             this.columnsUpDown.Size = new System.Drawing.Size(50, 20);
-            this.columnsUpDown.TabIndex = 1;
+            this.columnsUpDown.TabIndex = 5;
             this.columnsUpDown.Leave += new System.EventHandler(this.columnsUpDown_Leave);
             // 
             // rowsUpDown
@@ -162,7 +162,7 @@
             0});
             this.rowsUpDown.Name = "rowsUpDown";
             this.rowsUpDown.Size = new System.Drawing.Size(50, 20);
-            this.rowsUpDown.TabIndex = 3;
+            this.rowsUpDown.TabIndex = 6;
             this.rowsUpDown.Leave += new System.EventHandler(this.rowsUpDown_Leave);
             // 
             // rowsLabel
@@ -170,7 +170,7 @@
             this.rowsLabel.Location = new System.Drawing.Point(120, 25);
             this.rowsLabel.Name = "rowsLabel";
             this.rowsLabel.Size = new System.Drawing.Size(40, 13);
-            this.rowsLabel.TabIndex = 4;
+            this.rowsLabel.TabIndex = 0;
             this.rowsLabel.Text = "Строк";
             this.rowsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -179,7 +179,7 @@
             this.columnsLabel.Location = new System.Drawing.Point(5, 25);
             this.columnsLabel.Name = "columnsLabel";
             this.columnsLabel.Size = new System.Drawing.Size(55, 13);
-            this.columnsLabel.TabIndex = 2;
+            this.columnsLabel.TabIndex = 0;
             this.columnsLabel.Text = "Колонок";
             this.columnsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 

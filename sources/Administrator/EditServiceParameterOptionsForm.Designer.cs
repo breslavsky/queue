@@ -44,7 +44,7 @@
             this.nameLabel.Location = new System.Drawing.Point(5, 5);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(195, 13);
-            this.nameLabel.TabIndex = 1;
+            this.nameLabel.TabIndex = 0;
             this.nameLabel.Text = "Название";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -53,7 +53,7 @@
             this.nameTextBox.Location = new System.Drawing.Point(10, 25);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(190, 20);
-            this.nameTextBox.TabIndex = 2;
+            this.nameTextBox.TabIndex = 0;
             this.nameTextBox.Leave += new System.EventHandler(this.nameTextBox_Leave);
             // 
             // toolTipLabel
@@ -61,7 +61,7 @@
             this.toolTipLabel.Location = new System.Drawing.Point(5, 50);
             this.toolTipLabel.Name = "toolTipLabel";
             this.toolTipLabel.Size = new System.Drawing.Size(195, 18);
-            this.toolTipLabel.TabIndex = 3;
+            this.toolTipLabel.TabIndex = 0;
             this.toolTipLabel.Text = "Подсказка";
             this.toolTipLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -71,7 +71,7 @@
             this.toolTipTextBox.Multiline = true;
             this.toolTipTextBox.Name = "toolTipTextBox";
             this.toolTipTextBox.Size = new System.Drawing.Size(190, 50);
-            this.toolTipTextBox.TabIndex = 4;
+            this.toolTipTextBox.TabIndex = 1;
             this.toolTipTextBox.Leave += new System.EventHandler(this.toolTipTextBox_Leave);
             // 
             // isRequireCheckBox
@@ -80,7 +80,7 @@
             this.isRequireCheckBox.Location = new System.Drawing.Point(10, 135);
             this.isRequireCheckBox.Name = "isRequireCheckBox";
             this.isRequireCheckBox.Size = new System.Drawing.Size(183, 17);
-            this.isRequireCheckBox.TabIndex = 5;
+            this.isRequireCheckBox.TabIndex = 3;
             this.isRequireCheckBox.Text = "Обязательное для заполнения";
             this.isRequireCheckBox.UseVisualStyleBackColor = true;
             this.isRequireCheckBox.Leave += new System.EventHandler(this.isRequireCheckBox_Leave);
@@ -90,7 +90,7 @@
             this.saveButton.Location = new System.Drawing.Point(300, 165);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
-            this.saveButton.TabIndex = 6;
+            this.saveButton.TabIndex = 5;
             this.saveButton.Text = "Сохранить";
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
@@ -99,7 +99,7 @@
             this.optionsLabel.Location = new System.Drawing.Point(210, 5);
             this.optionsLabel.Name = "optionsLabel";
             this.optionsLabel.Size = new System.Drawing.Size(160, 13);
-            this.optionsLabel.TabIndex = 7;
+            this.optionsLabel.TabIndex = 0;
             this.optionsLabel.Text = "Варианты";
             this.optionsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -109,7 +109,7 @@
             this.optionsTextBox.Multiline = true;
             this.optionsTextBox.Name = "optionsTextBox";
             this.optionsTextBox.Size = new System.Drawing.Size(160, 100);
-            this.optionsTextBox.TabIndex = 8;
+            this.optionsTextBox.TabIndex = 2;
             this.optionsTextBox.Leave += new System.EventHandler(this.optionsTextBox_Leave);
             // 
             // isMultipleCheckBox
@@ -118,7 +118,7 @@
             this.isMultipleCheckBox.Location = new System.Drawing.Point(210, 135);
             this.isMultipleCheckBox.Name = "isMultipleCheckBox";
             this.isMultipleCheckBox.Size = new System.Drawing.Size(145, 17);
-            this.isMultipleCheckBox.TabIndex = 9;
+            this.isMultipleCheckBox.TabIndex = 4;
             this.isMultipleCheckBox.Text = "Множественный выбор";
             this.isMultipleCheckBox.UseVisualStyleBackColor = true;
             this.isMultipleCheckBox.Leave += new System.EventHandler(this.isMultipleCheckBox_Leave);

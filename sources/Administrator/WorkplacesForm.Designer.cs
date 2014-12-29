@@ -21,13 +21,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.workplacesGridView = new System.Windows.Forms.DataGridView();
-            this.addWorkplaceButton = new System.Windows.Forms.Button();
             this.typeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.modificatorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.commentColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.displayColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.segmentsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.addWorkplaceButton = new System.Windows.Forms.Button();
             this.mainTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.workplacesGridView)).BeginInit();
             this.SuspendLayout();
@@ -79,16 +79,6 @@
             this.workplacesGridView.TabIndex = 0;
             this.workplacesGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.workplacesGridView_CellMouseDoubleClick);
             this.workplacesGridView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.workplacesGridView_UserDeletingRow);
-            // 
-            // addWorkplaceButton
-            // 
-            this.addWorkplaceButton.Location = new System.Drawing.Point(0, 412);
-            this.addWorkplaceButton.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.addWorkplaceButton.Name = "addWorkplaceButton";
-            this.addWorkplaceButton.Size = new System.Drawing.Size(75, 25);
-            this.addWorkplaceButton.TabIndex = 0;
-            this.addWorkplaceButton.Text = "Добавить";
-            this.addWorkplaceButton.Click += new System.EventHandler(this.addWorkplaceButton_Click);
             // 
             // typeColumn
             // 
@@ -144,6 +134,16 @@
             this.segmentsColumn.Name = "segmentsColumn";
             this.segmentsColumn.ReadOnly = true;
             this.segmentsColumn.Width = 160;
+            // 
+            // addWorkplaceButton
+            // 
+            this.addWorkplaceButton.Location = new System.Drawing.Point(0, 412);
+            this.addWorkplaceButton.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.addWorkplaceButton.Name = "addWorkplaceButton";
+            this.addWorkplaceButton.Size = new System.Drawing.Size(75, 25);
+            this.addWorkplaceButton.TabIndex = 1;
+            this.addWorkplaceButton.Text = "Добавить";
+            this.addWorkplaceButton.Click += new System.EventHandler(this.addWorkplaceButton_Click);
             // 
             // WorkplacesForm
             // 

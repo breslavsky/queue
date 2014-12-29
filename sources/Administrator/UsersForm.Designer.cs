@@ -21,8 +21,6 @@
             this.operatorsTabPage = new System.Windows.Forms.TabPage();
             this.usersTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.usersGridView = new System.Windows.Forms.DataGridView();
-            this.addUserButton = new System.Windows.Forms.Button();
-            this.usersTabs = new System.Windows.Forms.TabControl();
             this.roleColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.surnameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -33,6 +31,8 @@
             this.isInterruptionColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.InterruptionStartTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.InterruptionFinishTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.addUserButton = new System.Windows.Forms.Button();
+            this.usersTabs = new System.Windows.Forms.TabControl();
             this.operatorsTabPage.SuspendLayout();
             this.usersTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.usersGridView)).BeginInit();
@@ -117,30 +117,6 @@
             this.usersGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.usersGridView_CellMouseDoubleClick);
             this.usersGridView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.usersGridView_UserDeletingRow);
             // 
-            // addUserButton
-            // 
-            this.addUserButton.Location = new System.Drawing.Point(0, 382);
-            this.addUserButton.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.addUserButton.Name = "addUserButton";
-            this.addUserButton.Size = new System.Drawing.Size(75, 25);
-            this.addUserButton.TabIndex = 0;
-            this.addUserButton.Text = "Добавить";
-            this.addUserButton.Click += new System.EventHandler(this.addUserButton_Click);
-            // 
-            // usersTabs
-            // 
-            this.usersTabs.Controls.Add(this.operatorsTabPage);
-            this.usersTabs.Controls.Add(this.administratorsTabPage);
-            this.usersTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.usersTabs.Location = new System.Drawing.Point(10, 10);
-            this.usersTabs.Margin = new System.Windows.Forms.Padding(5);
-            this.usersTabs.Name = "usersTabs";
-            this.usersTabs.Padding = new System.Drawing.Point(5, 5);
-            this.usersTabs.SelectedIndex = 0;
-            this.usersTabs.Size = new System.Drawing.Size(894, 442);
-            this.usersTabs.TabIndex = 0;
-            this.usersTabs.SelectedIndexChanged += new System.EventHandler(this.usersTabs_SelectedIndexChanged);
-            // 
             // roleColumn
             // 
             this.roleColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -223,6 +199,30 @@
             this.InterruptionFinishTimeColumn.ReadOnly = true;
             this.InterruptionFinishTimeColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.InterruptionFinishTimeColumn.Width = 150;
+            // 
+            // addUserButton
+            // 
+            this.addUserButton.Location = new System.Drawing.Point(0, 382);
+            this.addUserButton.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.addUserButton.Name = "addUserButton";
+            this.addUserButton.Size = new System.Drawing.Size(75, 25);
+            this.addUserButton.TabIndex = 1;
+            this.addUserButton.Text = "Добавить";
+            this.addUserButton.Click += new System.EventHandler(this.addUserButton_Click);
+            // 
+            // usersTabs
+            // 
+            this.usersTabs.Controls.Add(this.operatorsTabPage);
+            this.usersTabs.Controls.Add(this.administratorsTabPage);
+            this.usersTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.usersTabs.Location = new System.Drawing.Point(10, 10);
+            this.usersTabs.Margin = new System.Windows.Forms.Padding(5);
+            this.usersTabs.Name = "usersTabs";
+            this.usersTabs.Padding = new System.Drawing.Point(5, 5);
+            this.usersTabs.SelectedIndex = 0;
+            this.usersTabs.Size = new System.Drawing.Size(894, 442);
+            this.usersTabs.TabIndex = 0;
+            this.usersTabs.SelectedIndexChanged += new System.EventHandler(this.usersTabs_SelectedIndexChanged);
             // 
             // UsersForm
             // 

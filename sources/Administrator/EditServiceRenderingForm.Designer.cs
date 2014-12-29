@@ -33,7 +33,7 @@ namespace Queue.Administrator
             this.operatorLabel.Location = new System.Drawing.Point(10, 10);
             this.operatorLabel.Name = "operatorLabel";
             this.operatorLabel.Size = new System.Drawing.Size(95, 20);
-            this.operatorLabel.TabIndex = 5;
+            this.operatorLabel.TabIndex = 0;
             this.operatorLabel.Text = "Оператор";
             this.operatorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -42,7 +42,7 @@ namespace Queue.Administrator
             this.serviceStepLabel.Location = new System.Drawing.Point(10, 35);
             this.serviceStepLabel.Name = "serviceStepLabel";
             this.serviceStepLabel.Size = new System.Drawing.Size(95, 20);
-            this.serviceStepLabel.TabIndex = 8;
+            this.serviceStepLabel.TabIndex = 0;
             this.serviceStepLabel.Text = "Этап услуги";
             this.serviceStepLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -51,7 +51,7 @@ namespace Queue.Administrator
             this.priorityLabel.Location = new System.Drawing.Point(10, 85);
             this.priorityLabel.Name = "priorityLabel";
             this.priorityLabel.Size = new System.Drawing.Size(95, 20);
-            this.priorityLabel.TabIndex = 10;
+            this.priorityLabel.TabIndex = 0;
             this.priorityLabel.Text = "Приоритет";
             this.priorityLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -65,7 +65,7 @@ namespace Queue.Administrator
             0});
             this.priorityUpDown.Name = "priorityUpDown";
             this.priorityUpDown.Size = new System.Drawing.Size(60, 20);
-            this.priorityUpDown.TabIndex = 14;
+            this.priorityUpDown.TabIndex = 3;
             this.priorityUpDown.Leave += new System.EventHandler(this.priorityUpDown_Leave);
             // 
             // saveButton
@@ -73,7 +73,7 @@ namespace Queue.Administrator
             this.saveButton.Location = new System.Drawing.Point(240, 110);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
-            this.saveButton.TabIndex = 15;
+            this.saveButton.TabIndex = 4;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
@@ -83,7 +83,7 @@ namespace Queue.Administrator
             this.mode.Location = new System.Drawing.Point(10, 60);
             this.mode.Name = "mode";
             this.mode.Size = new System.Drawing.Size(95, 20);
-            this.mode.TabIndex = 17;
+            this.mode.TabIndex = 0;
             this.mode.Text = "Режим";
             this.mode.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -93,7 +93,7 @@ namespace Queue.Administrator
             this.serviceStepControl.Location = new System.Drawing.Point(110, 35);
             this.serviceStepControl.Name = "serviceStepControl";
             this.serviceStepControl.Size = new System.Drawing.Size(205, 21);
-            this.serviceStepControl.TabIndex = 18;
+            this.serviceStepControl.TabIndex = 1;
             this.serviceStepControl.UseResetButton = true;
             this.serviceStepControl.Leave += new System.EventHandler(this.serviceStepControl_Leave);
             // 
@@ -103,7 +103,7 @@ namespace Queue.Administrator
             this.operatorControl.Location = new System.Drawing.Point(110, 10);
             this.operatorControl.Name = "operatorControl";
             this.operatorControl.Size = new System.Drawing.Size(205, 21);
-            this.operatorControl.TabIndex = 19;
+            this.operatorControl.TabIndex = 0;
             this.operatorControl.UseResetButton = false;
             this.operatorControl.Leave += new System.EventHandler(this.operatorControl_Leave);
             // 
@@ -113,7 +113,7 @@ namespace Queue.Administrator
             this.modeСontrol.Location = new System.Drawing.Point(110, 60);
             this.modeСontrol.Name = "modeСontrol";
             this.modeСontrol.Size = new System.Drawing.Size(205, 21);
-            this.modeСontrol.TabIndex = 20;
+            this.modeСontrol.TabIndex = 2;
             this.modeСontrol.Leave += new System.EventHandler(this.modeСontrol_Leave);
             // 
             // EditServiceRenderingForm
