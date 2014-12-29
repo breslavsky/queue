@@ -128,10 +128,10 @@
             // 
             // layoutGroupBox
             // 
-            this.layoutGroupBox.Controls.Add(this.columnsUpDown);
-            this.layoutGroupBox.Controls.Add(this.rowsUpDown);
-            this.layoutGroupBox.Controls.Add(this.rowsLabel);
             this.layoutGroupBox.Controls.Add(this.columnsLabel);
+            this.layoutGroupBox.Controls.Add(this.columnsUpDown);
+            this.layoutGroupBox.Controls.Add(this.rowsLabel);
+            this.layoutGroupBox.Controls.Add(this.rowsUpDown);
             this.layoutGroupBox.Location = new System.Drawing.Point(15, 365);
             this.layoutGroupBox.Name = "layoutGroupBox";
             this.layoutGroupBox.Size = new System.Drawing.Size(230, 55);
@@ -188,16 +188,16 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(414, 436);
-            this.Controls.Add(this.layoutGroupBox);
-            this.Controls.Add(this.commentTextBox);
-            this.Controls.Add(this.descriptionLabel);
-            this.Controls.Add(this.descriptionTextBox);
             this.Controls.Add(this.codeLabel);
             this.Controls.Add(this.codeTextBox);
+            this.Controls.Add(this.colorButton);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.commentLabel);
-            this.Controls.Add(this.colorButton);
+            this.Controls.Add(this.commentTextBox);
+            this.Controls.Add(this.descriptionLabel);
+            this.Controls.Add(this.descriptionTextBox);
+            this.Controls.Add(this.layoutGroupBox);
             this.Controls.Add(this.saveButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;

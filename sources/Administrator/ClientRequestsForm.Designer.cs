@@ -91,21 +91,21 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.findButton);
             this.panel1.Controls.Add(this.requestDateCheckBox);
             this.panel1.Controls.Add(this.requestDatePanel);
             this.panel1.Controls.Add(this.serviceCheckBox);
             this.panel1.Controls.Add(this.servicePanel);
             this.panel1.Controls.Add(this.operatorCheckBox);
             this.panel1.Controls.Add(this.operatorPanel);
-            this.panel1.Controls.Add(this.stateCheckBox);
-            this.panel1.Controls.Add(this.statePanel);
             this.panel1.Controls.Add(this.queryLabel);
             this.panel1.Controls.Add(this.queryTextBox);
+            this.panel1.Controls.Add(this.stateCheckBox);
+            this.panel1.Controls.Add(this.statePanel);
+            this.panel1.Controls.Add(this.findButton);
             this.panel1.Controls.Add(this.detailsCheckBox);
-            this.panel1.Controls.Add(this.nextButton);
-            this.panel1.Controls.Add(this.prevButton);
             this.panel1.Controls.Add(this.firstButton);
+            this.panel1.Controls.Add(this.prevButton);
+            this.panel1.Controls.Add(this.nextButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
@@ -223,8 +223,8 @@
             // operatorPanel
             // 
             this.operatorPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.operatorPanel.Controls.Add(this.operatorControl);
             this.operatorPanel.Controls.Add(this.operatorLabel);
+            this.operatorPanel.Controls.Add(this.operatorControl);
             this.operatorPanel.Enabled = false;
             this.operatorPanel.Location = new System.Drawing.Point(785, 5);
             this.operatorPanel.Name = "operatorPanel";

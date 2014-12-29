@@ -78,11 +78,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 121);
-            this.Controls.Add(this.uploadButton);
-            this.Controls.Add(this.uploadMediaFileProgressBar);
-            this.Controls.Add(this.saveButton);
-            this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.nameLabel);
+            this.Controls.Add(this.nameTextBox);
+            this.Controls.Add(this.uploadMediaFileProgressBar);
+            this.Controls.Add(this.uploadButton);
+            this.Controls.Add(this.saveButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "EditMediaConfigFileForm";
             this.Text = "Изменить видео-файл";

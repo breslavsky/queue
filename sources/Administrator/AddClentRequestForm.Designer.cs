@@ -175,14 +175,14 @@
             // 
             // clientGroupBox
             // 
-            this.clientGroupBox.Controls.Add(this.clientMobileTextBox);
-            this.clientGroupBox.Controls.Add(this.mobileLabel);
             this.clientGroupBox.Controls.Add(this.surnameLabel);
             this.clientGroupBox.Controls.Add(this.clientSurnameTextBox);
             this.clientGroupBox.Controls.Add(this.nameLabel);
             this.clientGroupBox.Controls.Add(this.clientNameTextBox);
             this.clientGroupBox.Controls.Add(this.patronymicLabel);
             this.clientGroupBox.Controls.Add(this.clientPatronymicTextBox);
+            this.clientGroupBox.Controls.Add(this.mobileLabel);
+            this.clientGroupBox.Controls.Add(this.clientMobileTextBox);
             this.clientGroupBox.Location = new System.Drawing.Point(10, 13);
             this.clientGroupBox.Margin = new System.Windows.Forms.Padding(5);
             this.clientGroupBox.Name = "clientGroupBox";
@@ -279,15 +279,15 @@
             this.queueTypePanel.Controls.Add(this.clientGroupBox);
             this.queueTypePanel.Controls.Add(this.clientsListBox);
             this.queueTypePanel.Controls.Add(this.clearCurrentClientButton);
-            this.queueTypePanel.Controls.Add(this.queueTypeLiveGroupBox);
-            this.queueTypePanel.Controls.Add(this.panel1);
-            this.queueTypePanel.Controls.Add(this.subjectsUpDown);
             this.queueTypePanel.Controls.Add(this.subjectsLabel);
+            this.queueTypePanel.Controls.Add(this.subjectsUpDown);
             this.queueTypePanel.Controls.Add(this.liveRadioButton);
             this.queueTypePanel.Controls.Add(this.earlyRadioButton);
+            this.queueTypePanel.Controls.Add(this.queueTypeLiveGroupBox);
             this.queueTypePanel.Controls.Add(this.queueTypeEarlyGroupBox);
             this.queueTypePanel.Controls.Add(this.priorityCheckBox);
             this.queueTypePanel.Controls.Add(this.addButton);
+            this.queueTypePanel.Controls.Add(this.panel1);
             this.queueTypePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.queueTypePanel.Location = new System.Drawing.Point(404, 0);
             this.queueTypePanel.Margin = new System.Windows.Forms.Padding(0);
@@ -341,8 +341,8 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.printersComboBox);
-            this.panel1.Controls.Add(this.printButton);
             this.panel1.Controls.Add(this.couponAutoPrintCheckBox);
+            this.panel1.Controls.Add(this.printButton);
             this.panel1.Location = new System.Drawing.Point(0, 530);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(280, 60);

@@ -96,12 +96,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(209, 196);
-            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.toolTipLabel);
             this.Controls.Add(this.toolTipTextBox);
             this.Controls.Add(this.isRequireCheckBox);
+            this.Controls.Add(this.saveButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "EditServiceParameterNumberForm";
             this.Text = "Редактирование параметра";
