@@ -14,7 +14,7 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <PublishUrl>\\192.168.2.210\release.queue.name\1.2\Queue.Portal\</PublishUrl>
+    <PublishUrl>\\ivanovo\release.queue.name\1.4\Queue.Portal\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -24,14 +24,15 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://release.queue.name/1.2/Queue.Portal/</InstallUrl>
+    <InstallUrl>http://release.queue.name/1.4/Queue.Portal/</InstallUrl>
     <ProductName>Портал очереди</ProductName>
     <PublisherName>Junte Ltd.</PublisherName>
+    <SuiteName>Junte Queue System</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>121</ApplicationRevision>
-    <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
+    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationVersion>1.4.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -98,16 +99,6 @@
     <Reference Include="Junte.WCF.Common, Version=1.0.0.35, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.WCF.Common.1.0.0.35\lib\net45\Junte.WCF.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="MetroFramework">
-      <HintPath>..\packages\MetroFramework.RunTime.1.2.0.3\lib\net40-Client\MetroFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="MetroFramework.Design">
-      <HintPath>..\packages\MetroFramework.Design.1.2.0.3\lib\net40\MetroFramework.Design.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MetroFramework.Fonts">
-      <HintPath>..\packages\MetroFramework.Fonts.1.2.0.3\lib\net40\MetroFramework.Fonts.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack">
       <HintPath>..\packages\winapicp.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
@@ -223,7 +214,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MetroFramework.txt" />
     <Content Include="portal.ico" />
     <Content Include="www\clientaccesspolicy.xml" />
     <Content Include="www\flot\excanvas.js" />

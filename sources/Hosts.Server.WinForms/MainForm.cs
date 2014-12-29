@@ -28,7 +28,6 @@ namespace Queue.Hosts.Server.WinForms
         public MainForm()
         {
             InitializeComponent();
-            logger.Info("test");
 
             serviceManager = new ServerServiceManager();
             LoadConfiguration();
@@ -97,7 +96,7 @@ namespace Queue.Hosts.Server.WinForms
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Text = string.Format("Сервер очереди v.{0}", typeof(ServerInstance).Assembly.GetName().Version);
+            Text += string.Format(" ({0})", typeof(ServerInstance).Assembly.GetName().Version);
 
             AdjustServiceSettings();
             AdjustServiceState();

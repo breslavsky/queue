@@ -1,4 +1,4 @@
-﻿namespace Queue.Notification.Types
+﻿namespace Queue.Notification
 {
     public interface ITicker
     {

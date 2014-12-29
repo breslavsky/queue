@@ -3,6 +3,7 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:ui_common="clr-namespace:Queue.UI.WPF;assembly=Queue.UI.WPF"
+                      Title="Терминал записи"
                       Width="640"
                       Height="480"
                       IgnoreTaskbarOnMaximize="True"

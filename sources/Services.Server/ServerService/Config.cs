@@ -160,15 +160,17 @@ namespace Queue.Services.Server
 
                     var template = source.Template;
 
+                    Exception exception = null;
+
                     var thread = new Thread(new ThreadStart(() =>
                     {
                         try
                         {
                             var grid = (Grid)XamlReader.Load(XmlReader.Create(new StringReader(template)));
                         }
-                        catch (Exception exception)
+                        catch (Exception e)
                         {
-                            throw new FaultException(exception.Message);
+                            exception = e;
                         }
                     }));
 
@@ -176,6 +178,11 @@ namespace Queue.Services.Server
                     thread.IsBackground = true;
                     thread.Start();
                     thread.Join();
+
+                    if (exception != null)
+                    {
+                        throw new FaultException(exception.Message);
+                    }
 
                     сonfig.Template = template;
 
@@ -359,8 +366,6 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                CheckPermission(UserRole.Administrator, AdministratorPermissions.Config);
-
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {

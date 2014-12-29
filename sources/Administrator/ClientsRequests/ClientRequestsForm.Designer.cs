@@ -171,7 +171,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.servicePanel.Controls.Add(this.serviceLabel);
             this.servicePanel.Controls.Add(this.serviceControl);
-            this.servicePanel.Enabled = false;
             this.servicePanel.Location = new System.Drawing.Point(250, 5);
             this.servicePanel.Name = "servicePanel";
             this.servicePanel.Size = new System.Drawing.Size(510, 45);
@@ -191,7 +190,6 @@
             // 
             this.serviceControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.serviceControl.Enabled = false;
             this.serviceControl.Location = new System.Drawing.Point(50, 15);
             this.serviceControl.Name = "serviceControl";
             this.serviceControl.Size = new System.Drawing.Size(455, 21);
@@ -233,7 +231,6 @@
             // 
             // operatorControl
             // 
-            this.operatorControl.Enabled = false;
             this.operatorControl.Location = new System.Drawing.Point(65, 15);
             this.operatorControl.Name = "operatorControl";
             this.operatorControl.Size = new System.Drawing.Size(150, 21);
@@ -290,7 +287,6 @@
             // 
             // stateControl
             // 
-            this.stateControl.Enabled = false;
             this.stateControl.Location = new System.Drawing.Point(75, 15);
             this.stateControl.Name = "stateControl";
             this.stateControl.Size = new System.Drawing.Size(140, 21);

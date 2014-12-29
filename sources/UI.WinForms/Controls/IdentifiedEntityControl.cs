@@ -33,7 +33,7 @@ namespace Queue.UI.WinForms
 
             comboBox.Items.Clear();
             comboBox.Items.AddRange(entities);
-            Enabled = entities.Length > 0;
+            comboBox.Enabled = entities.Length > 0;
 
             frozen = false;
         }
@@ -56,7 +56,7 @@ namespace Queue.UI.WinForms
         public void Clear()
         {
             comboBox.Items.Clear();
-            Enabled = false;
+            comboBox.Enabled = false;
         }
 
         private void resetButton_VisibleChanged(object sender, System.EventArgs e)

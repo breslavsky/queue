@@ -3,7 +3,7 @@ using MahApps.Metro.Controls;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Display.Models;
-using Queue.Display.Types;
+
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
@@ -26,7 +26,7 @@ namespace Queue.Display
         {
             InitializeComponent();
 
-            Title = string.Format("Информационное табло (ver. {0})", Assembly.GetExecutingAssembly().GetName().Version);
+            Title = string.Format("Информационное табло ({0})", Assembly.GetExecutingAssembly().GetName().Version);
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)

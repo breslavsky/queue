@@ -37,7 +37,7 @@ namespace Queue.Terminal
         {
             InitializeComponent();
 
-            Title = string.Format("Терминал записи табло (ver. {0})", Assembly.GetExecutingAssembly().GetName().Version);
+            Title += string.Format(" ({0})", Assembly.GetExecutingAssembly().GetName().Version);
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

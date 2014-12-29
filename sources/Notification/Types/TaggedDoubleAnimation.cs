@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace Queue.Notification.Types
+namespace Queue.Notification
 {
     public class TaggedDoubleAnimation : DoubleAnimation
     {

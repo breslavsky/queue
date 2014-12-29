@@ -1,5 +1,7 @@
 ﻿using Junte.Data.Common;
 using Junte.Data.NHibernate;
+using NHibernate;
+using NHibernate.Criterion;
 using NHibernate.Mapping.Attributes;
 using NHibernate.Validator.Constraints;
 using Queue.Model.Common;
@@ -191,6 +193,31 @@ namespace Queue.Model
             Productivity = (float)ClientInterval.Ticks / (RenderFinishTime - RenderStartTime).Ticks * 100;
 
             Close(ClientRequestState.Rendered);
+        }
+
+        public virtual void FirstStep(ISession session)
+        {
+            ServiceStep = Service.GetFirstStep(session);
+        }
+
+        public virtual bool NextStep(ISession session)
+        {
+            if (ServiceStep != null)
+            {
+                var nextStep = session.CreateCriteria<ServiceStep>()
+                    .Add(Restrictions.Eq("Service", Service))
+                    .Add(Restrictions.Gt("SortId", ServiceStep.SortId))
+                    .AddOrder(Order.Asc("SortId"))
+                    .SetMaxResults(1)
+                    .UniqueResult<ServiceStep>();
+                if (nextStep != null)
+                {
+                    ServiceStep = nextStep;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public virtual void Return()

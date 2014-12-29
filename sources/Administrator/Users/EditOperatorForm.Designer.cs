@@ -156,7 +156,6 @@
             // 
             // workplaceControl
             // 
-            this.workplaceControl.Enabled = false;
             this.workplaceControl.Location = new System.Drawing.Point(120, 130);
             this.workplaceControl.Name = "workplaceControl";
             this.workplaceControl.Size = new System.Drawing.Size(140, 21);

@@ -144,11 +144,8 @@
   <data name="formsMenuItem.Text" xml:space="preserve">
     <value>Window</value>
   </data>
-  <data name="logoutButton.Text" xml:space="preserve">
-    <value>Logout</value>
-  </data>
   <data name="logoutMenuItem.Text" xml:space="preserve">
-    <value>Exit</value>
+    <value>Logout</value>
   </data>
   <data name="officesMenuItem.Text" xml:space="preserve">
     <value>Offices</value>

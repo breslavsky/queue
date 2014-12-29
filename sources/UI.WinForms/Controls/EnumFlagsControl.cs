@@ -19,7 +19,7 @@ namespace Queue.UI.WinForms.Controls
             var items = EnumItem<T>.GetItems();
             items.Where(i => (long)Enum.ToObject(typeof(T), i.Value) != 0);
             listBox.Items.AddRange(items);
-            Enabled = items.Length > 0;
+            listBox.Enabled = items.Length > 0;
         }
 
         public void Select<T>(T value) where T : struct

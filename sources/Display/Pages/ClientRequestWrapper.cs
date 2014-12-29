@@ -4,7 +4,7 @@ using Queue.Services.DTO;
 using System.Windows.Media;
 using Drawing = System.Drawing;
 
-namespace Queue.Display.Types
+namespace Queue.Display
 {
     public class ClientRequestWrapper : ObservableObject
     {

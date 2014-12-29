@@ -59,6 +59,8 @@ namespace Queue.Operator
 
             Text = string.Format("{0} | {1}", currentUser, (currentUser as QueueOperator).Workplace);
 
+            serviceTypeControl.Initialize<ServiceType>();
+
             callbackObject = new ServerCallback();
             callbackObject.OnCurrentClientRequestPlanUpdated += callbackObject_CurrentClientRequestPlanUpdated;
             callbackObject.OnOperatorPlanMetricsUpdated += callbackObject_OnOperatorPlanMetricsUpdated;
@@ -111,11 +113,8 @@ namespace Queue.Operator
                             var service = clientRequest.Service;
                             serviceTextBlock.Text = service.ToString();
 
-                            if (service.IsUseType)
-                            {
-                                serviceTypeControl.Initialize<ServiceType>();
-                                serviceTypeControl.Select<ServiceType>(clientRequest.ServiceType);
-                            }
+                            serviceTypeControl.Select<ServiceType>(clientRequest.ServiceType);
+                            serviceTypeControl.Enabled = service.IsUseType;
 
                             using (var channel = channelManager.CreateChannel())
                             {
@@ -129,6 +128,8 @@ namespace Queue.Operator
                                     logger.Warn(exception);
                                 }
                             }
+
+                            serviceStepControl.Enabled = true;
 
                             stateTextBlock.Text = clientRequest.State.Translate();
                             stateTextBlock.BackColor = ColorTranslator.FromHtml(clientRequest.Color);
@@ -240,9 +241,8 @@ namespace Queue.Operator
                     case 3:
                         step3Panel.Visible = true;
                         subjectsPanel.Enabled =
-                            serviceChangeLink.Enabled =
-                            serviceTypeControl.Enabled =
-                            serviceStepControl.Enabled = true;
+                            serviceChangeLink.Enabled = true;
+
                         break;
                 }
             }

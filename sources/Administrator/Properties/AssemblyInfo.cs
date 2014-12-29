@@ -10,8 +10,8 @@ using System.Resources;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Junte Ltd.")]
-[assembly: AssemblyProduct("Junte Queue")]
-[assembly: AssemblyCopyright("Junte Ltd. Copyright ©  2014")]
+[assembly: AssemblyProduct("Junte Queue System")]
+[assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("Junte")]
 [assembly: AssemblyCulture("")]
 
@@ -33,6 +33,6 @@ using System.Resources;
 // Можно задать все значения или принять номер построения и номер редакции по умолчанию, 
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.3.1.0")]
-[assembly: AssemblyFileVersion("1.3.1.0")]
-[assembly: NeutralResourcesLanguageAttribute("")]
+[assembly: AssemblyVersion("1.4.0.0")]
+[assembly: AssemblyFileVersion("1.4.0.0")]
+[assembly: NeutralResourcesLanguageAttribute("ru")]

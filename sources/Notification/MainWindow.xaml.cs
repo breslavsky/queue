@@ -28,7 +28,7 @@ namespace Queue.Notification
         {
             InitializeComponent();
 
-            Title = string.Format("Служба оповещения (ver. {0})", Assembly.GetExecutingAssembly().GetName().Version);
+            Title += string.Format(" ({0})", Assembly.GetExecutingAssembly().GetName().Version);
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

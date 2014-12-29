@@ -89,7 +89,6 @@ namespace Queue.Administrator
             // 
             // serviceStepControl
             // 
-            this.serviceStepControl.Enabled = false;
             this.serviceStepControl.Location = new System.Drawing.Point(110, 35);
             this.serviceStepControl.Name = "serviceStepControl";
             this.serviceStepControl.Size = new System.Drawing.Size(205, 21);
@@ -109,7 +108,6 @@ namespace Queue.Administrator
             // 
             // modeСontrol
             // 
-            this.modeСontrol.Enabled = false;
             this.modeСontrol.Location = new System.Drawing.Point(110, 60);
             this.modeСontrol.Name = "modeСontrol";
             this.modeСontrol.Size = new System.Drawing.Size(205, 21);

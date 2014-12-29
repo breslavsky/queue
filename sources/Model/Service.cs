@@ -1,5 +1,6 @@
 ﻿using Junte.Data.Common;
 using Junte.Data.NHibernate;
+using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Mapping.Attributes;
 using NHibernate.Validator.Constraints;
@@ -69,7 +70,7 @@ namespace Queue.Model
         [Property]
         public virtual int MaxSubjects { get; set; }
 
-        [Length(Message = "Название услуги не указано")]
+        [NotNullNotEmpty(Message = "Название услуги не указано")]
         [Property(Length = 1000)]
         public virtual string Name { get; set; }
 
@@ -90,6 +91,15 @@ namespace Queue.Model
 
         [Property]
         public virtual bool IsUseType { get; set; }
+
+        public virtual ServiceStep GetFirstStep(ISession session)
+        {
+            return session.CreateCriteria<ServiceStep>()
+                .Add(Restrictions.Eq("Service", this))
+                .AddOrder(Order.Asc("SortId"))
+                .SetMaxResults(1)
+                .UniqueResult<ServiceStep>();
+        }
 
         #endregion properties
 

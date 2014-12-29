@@ -3,7 +3,7 @@ using Junte.UI.WPF;
 using Junte.UI.WPF.Types;
 using Junte.WCF.Common;
 using MahApps.Metro;
-using Queue.Display.Types;
+
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -31,7 +31,7 @@ namespace Queue.Display.Models
         private bool isRemember;
         private RichPage owner;
         private LoginSettings settings;
-        private IdentifiedEntity[] workplaces;
+        private IdentifiedEntityLink[] workplaces;
         private Guid selectedWorkplace;
 
         private Lazy<ICommand> connectCommand;
@@ -55,7 +55,7 @@ namespace Queue.Display.Models
             set { SetProperty(ref isConnected, value); }
         }
 
-        public IdentifiedEntity[] Workplaces
+        public IdentifiedEntityLink[] Workplaces
         {
             get { return workplaces; }
             set { SetProperty(ref workplaces, value); }

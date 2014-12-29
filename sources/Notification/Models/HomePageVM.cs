@@ -5,7 +5,6 @@ using Junte.WCF.Common;
 using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
 using Queue.Model.Common;
-using Queue.Notification.Types;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -18,6 +17,7 @@ using System.Media;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using Vlc.DotNet.Core.Medias;
 using Vlc.DotNet.Wpf;
 
 namespace Queue.Notification.Models
@@ -96,7 +96,8 @@ namespace Queue.Notification.Models
 
                 try
                 {
-                    ReadMediaConfig(await taskPool.AddTask(channel.Service.GetMediaConfig()));
+                    ReadMediaConfig(await taskPool.AddTask(channel.Service.GetMediaConfig()),
+                        await taskPool.AddTask(channel.Service.GetMediaConfigFiles()));
                     ReadNotificationConfig(await taskPool.AddTask(channel.Service.GetNotificationConfig()));
                 }
                 catch (OperationCanceledException) { }
@@ -189,10 +190,6 @@ namespace Queue.Notification.Models
         {
             switch (e.Config.Type)
             {
-                case ConfigType.Media:
-                    ReadMediaConfig(e.Config as MediaConfig);
-                    break;
-
                 case ConfigType.Notification:
                     ReadNotificationConfig(e.Config as NotificationConfig);
                     break;
@@ -231,17 +228,16 @@ namespace Queue.Notification.Models
             }
         }
 
-        private void ReadMediaConfig(MediaConfig mediaConfig)
+        private void ReadMediaConfig(MediaConfig mediaConfig, MediaConfigFile[] mediaFiles)
         {
             ticker.SetTicker(mediaConfig.Ticker);
             ticker.SetSpeed(mediaConfig.TickerSpeed);
             ticker.Start();
 
-            //TODO: переделать на запрос на сервер
-            //foreach (MediaConfigFile f in mediaConfig.MediaFiles)
-            //{
-            //    vlcControl.Medias.Add(new LocationMedia(string.Format(MediaFileUriPattern, mediaConfig.ServiceUrl, f.Id)));
-            //}
+            foreach (MediaConfigFile f in mediaFiles)
+            {
+                vlcControl.Medias.Add(new LocationMedia(string.Format(MediaFileUriPattern, mediaConfig.ServiceUrl, f.Id)));
+            }
 
             vlcControl.Stop();
             vlcControl.Play();

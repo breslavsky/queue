@@ -2,7 +2,7 @@
 using System.IO;
 using System.Media;
 
-namespace Queue.Notification.Types
+namespace Queue.Notification
 {
     public static class SoundPlayerExtensions
     {

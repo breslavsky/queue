@@ -40,13 +40,55 @@ namespace Queue.Services.DTO
             public bool IsClosed { get; set; }
 
             [DataMember]
-            public string Color { get; set; }
-
-            [DataMember]
             public bool IsEditable { get; set; }
 
             [DataMember]
             public bool IsRestorable { get; set; }
+
+            public virtual string Color
+            {
+                get
+                {
+                    if (IsClosed)
+                    {
+                        switch (State)
+                        {
+                            case ClientRequestState.Rendered:
+                                return "GreenYellow";
+
+                            case ClientRequestState.Absence:
+                                return "LightPink";
+
+                            case ClientRequestState.Canceled:
+                                return "Silver";
+                        }
+                    }
+                    else
+                    {
+                        switch (State)
+                        {
+                            case ClientRequestState.Waiting:
+                                switch (Type)
+                                {
+                                    case ClientRequestType.Early:
+                                        return "LightSeaGreen";
+
+                                    case ClientRequestType.Live:
+                                        return "BurlyWood";
+                                }
+                                break;
+
+                            case ClientRequestState.Calling:
+                                return "Yellow";
+
+                            case ClientRequestState.Rendering:
+                                return "LightBlue";
+                        }
+                    }
+
+                    return "BurlyWood";
+                }
+            }
 
             public override string ToString()
             {

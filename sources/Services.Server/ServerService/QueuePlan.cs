@@ -188,12 +188,14 @@ namespace Queue.Services.Server
                                 switch (state)
                                 {
                                     case ClientRequestState.Calling:
-                                        message = string.Format("Клиент [{0}] вызывается к оператору [{1}] на рабочее место [{2}]", client, queueOperator, queueOperator.Workplace);
+                                        message = string.Format("Клиент [{0}] вызывается к оператору [{1}] на рабочее место [{2}]",
+                                            client, queueOperator, queueOperator.Workplace);
                                         clientRequest.Calling(queueOperator);
                                         break;
 
                                     default:
-                                        throw new Exception(string.Format("Изменение состояния с [{0}] на [{1}] заявки клиента [{2}] не допустимо", clientRequest.State, state, clientRequest));
+                                        throw new Exception(string.Format("Изменение состояния с [{0}] на [{1}] заявки клиента [{2}] не допустимо",
+                                            clientRequest.State, state, clientRequest));
                                 }
                                 break;
 
@@ -212,7 +214,8 @@ namespace Queue.Services.Server
                                         break;
 
                                     default:
-                                        throw new Exception(string.Format("Изменение состояния с [{0}] на [{1}] заявки клиента [{2}] не допустимо", clientRequest.State, state, clientRequest));
+                                        throw new Exception(string.Format("Изменение состояния с [{0}] на [{1}] заявки клиента [{2}] не допустимо",
+                                            clientRequest.State, state, clientRequest));
                                 }
                                 break;
 
@@ -229,19 +232,29 @@ namespace Queue.Services.Server
 
                                         using (var locker = todayQueuePlan.ReadLock())
                                         {
-                                            clientRequest.Rendered();
+                                            if (!clientRequest.NextStep(session))
+                                            {
+                                                clientRequest.Rendered();
+                                                message = string.Format("Завершено обслуживание клиента [{0}] у оператора [{1}] с производительностью {2:00.00}%",
+                                                    client, queueOperator, clientRequest.Productivity);
+                                            }
+                                            else
+                                            {
+                                                message = string.Format("Запросу установлен следующий этап оказания услуги [{0}]", clientRequest.ServiceStep);
+                                            }
                                         }
 
-                                        message = string.Format("Завершено обслуживание клиента [{0}] у оператора [{1}] с производительностью {2:00.00}%", client, queueOperator, clientRequest.Productivity);
                                         break;
 
                                     default:
-                                        throw new Exception(string.Format("Изменение состояния с [{0}] на [{1}] заявки клиента [{2}] не допустимо", clientRequest.State, state, clientRequest));
+                                        throw new Exception(string.Format("Изменение состояния с [{0}] на [{1}] заявки клиента [{2}] не допустимо",
+                                            clientRequest.State, state, clientRequest));
                                 }
                                 break;
 
                             default:
-                                throw new Exception(string.Format("Заявка клиента [{0}] находиться в не допустимом состоянии [{1}]", clientRequest, clientRequest.State));
+                                throw new Exception(string.Format("Заявка клиента [{0}] находиться в не допустимом состоянии [{1}]",
+                                    clientRequest, clientRequest.State));
                         }
 
                         clientRequest.Version++;
@@ -435,6 +448,7 @@ namespace Queue.Services.Server
                                 || !clientRequest.Service.Equals(service))
                             {
                                 clientRequest.Service = service;
+                                clientRequest.FirstStep(session);
 
                                 session.Save(new ClientRequestEvent()
                                 {
@@ -571,17 +585,11 @@ namespace Queue.Services.Server
                         queuePlan.Build();
                     }
 
-                    var firstServiceStep = session.CreateCriteria<ServiceStep>()
-                        .Add(Restrictions.Eq("Service", service))
-                        .AddOrder(Order.Asc("SortId"))
-                        .SetMaxResults(1)
-                        .UniqueResult<ServiceStep>();
-
                     try
                     {
                         using (var locker = queuePlan.ReadLock())
                         {
-                            var serviceFreeTime = queuePlan.GetServiceFreeTime(service, firstServiceStep, requestType);
+                            var serviceFreeTime = queuePlan.GetServiceFreeTime(service, service.GetFirstStep(session), requestType);
                             return Mapper.Map<ServiceFreeTime, DTO.ServiceFreeTime>(serviceFreeTime);
                         }
                     }

@@ -133,7 +133,6 @@
             // 
             // parameterTypeControl
             // 
-            this.parameterTypeControl.Enabled = false;
             this.parameterTypeControl.Location = new System.Drawing.Point(2, 0);
             this.parameterTypeControl.Name = "parameterTypeControl";
             this.parameterTypeControl.Size = new System.Drawing.Size(125, 21);

@@ -58,10 +58,12 @@ namespace Queue.UI.WinForms
                 if (name.Length > 1)
                 {
                     var componentInfo = GetType().GetField(name.First(), BindingFlags.NonPublic | BindingFlags.Instance);
-                    if (componentInfo != null)
+                    if (componentInfo == null)
                     {
-                        component = componentInfo.GetValue(this);
+                        continue;
                     }
+
+                    component = componentInfo.GetValue(this);
                 }
 
                 var propertyInfo = component.GetType().GetProperty(name.Last());

@@ -2,7 +2,7 @@
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace Queue.Notification.Types
+namespace Queue.Notification
 {
     public class CustomAnimationTimer
     {

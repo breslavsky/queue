@@ -26,15 +26,15 @@ namespace Queue.Services.Server
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(QueuePlan));
 
-        private readonly List<ClientRequest> clientRequests = new List<ClientRequest>();
+        private List<ClientRequest> clientRequests = new List<ClientRequest>();
 
-        private readonly Dictionary<ServiceRenderingKey, ServiceRendering[]> serviceRenderings
+        private Dictionary<ServiceRenderingKey, ServiceRendering[]> serviceRenderings
             = new Dictionary<ServiceRenderingKey, ServiceRendering[]>();
 
-        private readonly Dictionary<Service, Schedule> serviceSchedule
+        private Dictionary<Service, Schedule> serviceSchedule
             = new Dictionary<Service, Schedule>();
 
-        private readonly EntityStorage storage = new EntityStorage();
+        private EntityStorage storage = new EntityStorage();
 
         public QueuePlan()
         {
@@ -79,11 +79,7 @@ namespace Queue.Services.Server
         /// <returns></returns>
         public void AddClientRequest(ClientRequest clientRequest)
         {
-            clientRequest = storage.Put(clientRequest);
-            if (!clientRequests.Contains(clientRequest))
-            {
-                clientRequests.Add(clientRequest);
-            }
+            clientRequests.Add(storage.Put(clientRequest));
         }
 
         public void Build()
@@ -145,6 +141,8 @@ namespace Queue.Services.Server
                     Predicate = new Predicate<ClientRequest>(r => r.Type == ClientRequestType.Live)
                 }
             };
+
+            clientRequests = clientRequests.Distinct().ToList();
 
             foreach (var condition in conditions)
             {

@@ -63,12 +63,12 @@
             this.serviceTypeTextBlock = new System.Windows.Forms.Label();
             this.serviceStepLabel = new System.Windows.Forms.Label();
             this.editPanel = new System.Windows.Forms.Panel();
-            this.requestTimePicker = new Queue.UI.WinForms.TimePicker();
             this.requestDatePicker = new System.Windows.Forms.DateTimePicker();
-            this.saveButton = new System.Windows.Forms.Button();
-            this.operatorControl = new Queue.UI.WinForms.IdentifiedEntityControl();
-            this.serviceStepControl = new Queue.UI.WinForms.IdentifiedEntityControl();
+            this.requestTimePicker = new Queue.UI.WinForms.TimePicker();
             this.typeControl = new Queue.UI.WinForms.EnumItemControl();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.serviceStepControl = new Queue.UI.WinForms.IdentifiedEntityControl();
+            this.operatorControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             ((System.ComponentModel.ISupportInitialize)(this.parametersGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).BeginInit();
@@ -125,7 +125,7 @@
             this.parametersGridView.Name = "parametersGridView";
             this.parametersGridView.ReadOnly = true;
             this.parametersGridView.RowHeadersVisible = false;
-            this.parametersGridView.Size = new System.Drawing.Size(295, 155);
+            this.parametersGridView.Size = new System.Drawing.Size(295, 305);
             this.parametersGridView.TabIndex = 0;
             // 
             // parameterNameColumn
@@ -189,13 +189,13 @@
             this.eventsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.createDateColumn,
             this.messageColumn});
-            this.eventsGridView.Location = new System.Drawing.Point(10, 375);
+            this.eventsGridView.Location = new System.Drawing.Point(10, 405);
             this.eventsGridView.MultiSelect = false;
             this.eventsGridView.Name = "eventsGridView";
             this.eventsGridView.ReadOnly = true;
             this.eventsGridView.RowHeadersVisible = false;
             this.eventsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.eventsGridView.Size = new System.Drawing.Size(615, 150);
+            this.eventsGridView.Size = new System.Drawing.Size(615, 120);
             this.eventsGridView.TabIndex = 0;
             // 
             // createDateColumn
@@ -216,7 +216,7 @@
             // 
             // eventsLabel
             // 
-            this.eventsLabel.Location = new System.Drawing.Point(10, 350);
+            this.eventsLabel.Location = new System.Drawing.Point(10, 375);
             this.eventsLabel.Name = "eventsLabel";
             this.eventsLabel.Size = new System.Drawing.Size(615, 20);
             this.eventsLabel.TabIndex = 0;
@@ -438,9 +438,17 @@
             this.editPanel.Controls.Add(this.parametersGridView);
             this.editPanel.Location = new System.Drawing.Point(0, 25);
             this.editPanel.Name = "editPanel";
-            this.editPanel.Size = new System.Drawing.Size(635, 315);
+            this.editPanel.Size = new System.Drawing.Size(635, 340);
             this.editPanel.TabIndex = 16;
             this.editPanel.EnabledChanged += new System.EventHandler(this.editPanel_EnabledChanged);
+            // 
+            // requestDatePicker
+            // 
+            this.requestDatePicker.Location = new System.Drawing.Point(115, 30);
+            this.requestDatePicker.Name = "requestDatePicker";
+            this.requestDatePicker.Size = new System.Drawing.Size(150, 20);
+            this.requestDatePicker.TabIndex = 2;
+            this.requestDatePicker.Leave += new System.EventHandler(this.requestDatePicker_Leave);
             // 
             // requestTimePicker
             // 
@@ -451,17 +459,17 @@
             this.requestTimePicker.Value = System.TimeSpan.Parse("00:00:00");
             this.requestTimePicker.Leave += new System.EventHandler(this.requestTimePicker_Leave);
             // 
-            // requestDatePicker
+            // typeControl
             // 
-            this.requestDatePicker.Location = new System.Drawing.Point(115, 30);
-            this.requestDatePicker.Name = "requestDatePicker";
-            this.requestDatePicker.Size = new System.Drawing.Size(150, 20);
-            this.requestDatePicker.TabIndex = 2;
-            this.requestDatePicker.Leave += new System.EventHandler(this.requestDatePicker_Leave);
+            this.typeControl.Location = new System.Drawing.Point(155, 55);
+            this.typeControl.Name = "typeControl";
+            this.typeControl.Size = new System.Drawing.Size(115, 21);
+            this.typeControl.TabIndex = 4;
+            this.typeControl.Leave += new System.EventHandler(this.typeControl_Leave);
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(330, 195);
+            this.saveButton.Location = new System.Drawing.Point(240, 310);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 14;
@@ -469,19 +477,8 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
-            // operatorControl
-            // 
-            this.operatorControl.Enabled = false;
-            this.operatorControl.Location = new System.Drawing.Point(115, 280);
-            this.operatorControl.Name = "operatorControl";
-            this.operatorControl.Size = new System.Drawing.Size(205, 21);
-            this.operatorControl.TabIndex = 13;
-            this.operatorControl.UseResetButton = true;
-            this.operatorControl.Leave += new System.EventHandler(this.operatorsControl_Leave);
-            // 
             // serviceStepControl
             // 
-            this.serviceStepControl.Enabled = false;
             this.serviceStepControl.Location = new System.Drawing.Point(115, 230);
             this.serviceStepControl.Name = "serviceStepControl";
             this.serviceStepControl.Size = new System.Drawing.Size(205, 21);
@@ -489,14 +486,14 @@
             this.serviceStepControl.UseResetButton = true;
             this.serviceStepControl.Leave += new System.EventHandler(this.serviceStepControl_Leave);
             // 
-            // typeControl
+            // operatorControl
             // 
-            this.typeControl.Enabled = false;
-            this.typeControl.Location = new System.Drawing.Point(155, 55);
-            this.typeControl.Name = "typeControl";
-            this.typeControl.Size = new System.Drawing.Size(115, 21);
-            this.typeControl.TabIndex = 4;
-            this.typeControl.Leave += new System.EventHandler(this.typeControl_Leave);
+            this.operatorControl.Location = new System.Drawing.Point(115, 280);
+            this.operatorControl.Name = "operatorControl";
+            this.operatorControl.Size = new System.Drawing.Size(205, 21);
+            this.operatorControl.TabIndex = 13;
+            this.operatorControl.UseResetButton = true;
+            this.operatorControl.Leave += new System.EventHandler(this.operatorsControl_Leave);
             // 
             // EditClientRequestForm
             // 

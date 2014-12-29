@@ -1,7 +1,7 @@
 ﻿using Queue.Services.DTO;
 using System;
 
-namespace Queue.Notification.Types
+namespace Queue.Notification
 {
     public class ClientRequestWrap
     {

@@ -104,7 +104,6 @@
             // 
             // usersControl
             // 
-            this.usersControl.Enabled = false;
             this.usersControl.Location = new System.Drawing.Point(100, 25);
             this.usersControl.Name = "usersControl";
             this.usersControl.Size = new System.Drawing.Size(220, 21);
@@ -162,7 +161,6 @@
             // 
             // languageControl
             // 
-            this.languageControl.Enabled = false;
             this.languageControl.Location = new System.Drawing.Point(225, 5);
             this.languageControl.Name = "languageControl";
             this.languageControl.Size = new System.Drawing.Size(115, 21);

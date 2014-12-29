@@ -36,7 +36,7 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [WebGet(UriTemplate = PortalServiceMap.FindServices, ResponseFormat = WebMessageFormat.Json)]
-        Task<Service[]> FindServices(string filter);
+        Task<Service[]> FindServices(string query);
 
         [OperationContract]
         [WebGet(UriTemplate = PortalServiceMap.GetQueuePlanMetric, ResponseFormat = WebMessageFormat.Json)]

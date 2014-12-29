@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?define ProductName="Junte Queue Server" ?>
-  <?define ProductVersion="1.0.0.0" ?>
+  <?define ProductVersion="1.4.0.0" ?>
   <?define ProductCode="D2EAEE82-C9AF-4223-916F-7CBB5786D763"?>
   <?define UpgradeCode="58088B57-52CE-4D31-8882-CB4A69FCAFDF"?>
-  <?define Manufacturer="Junte"?>
-  <?define AppExeName="Junte"?>
+  <?define Manufacturer="Junte Ltd."?>
+  <?define AppExeName="JunteQueueServer"?>
   <?define ServiceName="JunteQueueServer"?>
 
   <Product Id="$(var.ProductCode)"

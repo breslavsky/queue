@@ -449,7 +449,6 @@
             // 
             // renderingModeControl
             // 
-            this.renderingModeControl.Enabled = false;
             this.renderingModeControl.Location = new System.Drawing.Point(10, 130);
             this.renderingModeControl.Name = "renderingModeControl";
             this.renderingModeControl.Size = new System.Drawing.Size(195, 21);

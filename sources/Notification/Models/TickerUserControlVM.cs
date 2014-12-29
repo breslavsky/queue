@@ -1,7 +1,6 @@
 ﻿using Junte.UI.WPF.Types;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
-using Queue.Notification.Types;
 using System;
 using System.Windows;
 using System.Windows.Media;

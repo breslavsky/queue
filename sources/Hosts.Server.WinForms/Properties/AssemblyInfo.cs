@@ -3,10 +3,10 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Resources;
 
-// Управление общими сведениями о сборке осуществляется с помощью 
-// набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
-// связанные со сборкой.
-[assembly: AssemblyTitle("Queue Portal")]
+// Общие сведения об этой сборке предоставляются следующим набором 
+// атрибутов. Отредактируйте значения этих атрибутов, чтобы изменить
+// общие сведения об этой сборке.
+[assembly: AssemblyTitle("Queue Server WinForms Host")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Junte Ltd.")]
@@ -15,13 +15,13 @@ using System.Resources;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// Параметр ComVisible со значением FALSE делает типы в сборке невидимыми 
-// для COM-компонентов.  Если требуется обратиться к типу в этой сборке через 
-// COM, задайте атрибуту ComVisible значение TRUE для этого типа.
+// Установка значения False в параметре ComVisible делает типы в этой сборке невидимыми 
+// для COM-компонентов. Если необходим доступ к типу в этой сборке из 
+// COM, следует установить атрибут ComVisible в TRUE для этого типа.
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("0365dd77-32eb-40d3-ab34-c32f3d84750a")]
+[assembly: Guid("36f462eb-2818-448e-b6ec-bd619acaea41")]
 
 // Сведения о версии сборки состоят из следующих четырех значений:
 //
@@ -30,9 +30,6 @@ using System.Resources;
 //      Номер построения
 //      Редакция
 //
-// Можно задать все значения или принять номер построения и номер редакции по умолчанию, 
-// используя "*", как показано ниже:
-// [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.4.0.0")]
 [assembly: AssemblyFileVersion("1.4.0.0")]
 [assembly: NeutralResourcesLanguageAttribute("ru")]

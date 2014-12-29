@@ -185,11 +185,13 @@ namespace Queue.Services.Server
                         queuePlan.Build();
                     }
 
-                    var firstServiceStep = session.CreateCriteria<ServiceStep>()
-                        .Add(Restrictions.Eq("Service", service))
-                        .AddOrder(Order.Asc("SortId"))
-                        .SetMaxResults(1)
-                        .UniqueResult<ServiceStep>();
+                    var clientRequest = new ClientRequest()
+                    {
+                        Client = client,
+                        Service = service,
+                        ServiceStep = service.GetFirstStep(session),
+                        Subjects = subjects
+                    };
 
                     using (var locker = queuePlan.ReadLock())
                     {
@@ -209,7 +211,8 @@ namespace Queue.Services.Server
 
                         try
                         {
-                            var freeTime = queuePlan.GetServiceFreeTime(service, firstServiceStep, ClientRequestType.Early, subjects);
+                            var freeTime = queuePlan.GetServiceFreeTime(service, clientRequest.ServiceStep,
+                                ClientRequestType.Early, subjects);
                             var timeIntervals = freeTime.TimeIntervals;
                             if (timeIntervals.Length == 0)
                             {
@@ -233,14 +236,6 @@ namespace Queue.Services.Server
                     }
 
                     logger.Info("Добавление нового запроса в план очереди");
-
-                    var clientRequest = new ClientRequest()
-                    {
-                        Client = client,
-                        Service = service,
-                        ServiceStep = firstServiceStep,
-                        Subjects = subjects
-                    };
 
                     /*foreach (var p in service.Parameters)
                     {
@@ -346,11 +341,14 @@ namespace Queue.Services.Server
                         throw new FaultException("Выбранная услуга требует наличие клиента");
                     }
 
-                    var firstServiceStep = session.CreateCriteria<ServiceStep>()
-                        .Add(Restrictions.Eq("Service", service))
-                        .AddOrder(Order.Asc("SortId"))
-                        .SetMaxResults(1)
-                        .UniqueResult<ServiceStep>();
+                    var clientRequest = new ClientRequest()
+                    {
+                        Client = client,
+                        Service = service,
+                        ServiceStep = service.GetFirstStep(session),
+                        Subjects = subjects,
+                        IsPriority = client != null && client.VIP
+                    };
 
                     var currentTime = DateTime.Now.TimeOfDay;
 
@@ -381,7 +379,8 @@ namespace Queue.Services.Server
 
                         try
                         {
-                            var freeTime = todayQueuePlan.GetServiceFreeTime(service, firstServiceStep, ClientRequestType.Live, service.IsPlanSubjects ? subjects : 1);
+                            var freeTime = todayQueuePlan.GetServiceFreeTime(service, clientRequest.ServiceStep,
+                                ClientRequestType.Live, service.IsPlanSubjects ? subjects : 1);
                             var timeIntervals = freeTime.TimeIntervals;
                             if (timeIntervals.Length == 0)
                             {
@@ -395,15 +394,6 @@ namespace Queue.Services.Server
                     }
 
                     logger.Info("Добавление нового запроса в план очереди");
-
-                    var clientRequest = new ClientRequest()
-                    {
-                        Client = client,
-                        Service = service,
-                        ServiceStep = firstServiceStep,
-                        Subjects = subjects,
-                        IsPriority = client != null && client.VIP
-                    };
 
                     /*foreach (var p in service.Parameters)
                     {
@@ -481,208 +471,210 @@ namespace Queue.Services.Server
 
                     string output = string.Empty;
 
+                    Exception exception = null;
+
                     var thread = new Thread(new ThreadStart(() =>
                     {
-                        var couponConfig = session.Get<CouponConfig>(ConfigType.Coupon);
-
-                        var xmlReader = new XmlTextReader(new StringReader(couponConfig.Template));
-                        var grid = XamlReader.Load(xmlReader) as Grid;
-
-                        var defaultConfig = session.Get<DefaultConfig>(ConfigType.Default);
-
-                        object element = grid.FindName("queueName");
-                        if (element != null)
+                        try
                         {
-                            try
-                            {
-                                ((TextBlock)element).Text = defaultConfig.QueueName;
-                            }
-                            catch { }
-                        }
+                            var couponConfig = session.Get<CouponConfig>(ConfigType.Coupon);
 
-                        element = grid.FindName("clientRequestBlock");
-                        if (element != null)
-                        {
-                            var clientRequestBlock = (FrameworkElement)element;
-                            clientRequestBlock.Visibility = Visibility.Visible;
+                            var xmlReader = new XmlTextReader(new StringReader(couponConfig.Template));
+                            var grid = XamlReader.Load(xmlReader) as Grid;
 
-                            element = clientRequestBlock.FindName("number");
+                            var defaultConfig = session.Get<DefaultConfig>(ConfigType.Default);
+
+                            object element = grid.FindName("queueName");
                             if (element != null)
                             {
                                 try
                                 {
-                                    ((TextBlock)element).Text = clientRequest.Number.ToString();
+                                    ((TextBlock)element).Text = defaultConfig.QueueName;
                                 }
                                 catch { }
                             }
-                            element = clientRequestBlock.FindName("createDate");
+
+                            element = grid.FindName("clientRequestBlock");
                             if (element != null)
                             {
-                                try
+                                var clientRequestBlock = (FrameworkElement)element;
+                                clientRequestBlock.Visibility = Visibility.Visible;
+
+                                element = clientRequestBlock.FindName("number");
+                                if (element != null)
                                 {
-                                    ((TextBlock)element).Text = clientRequest.CreateDate.ToString();
-                                }
-                                catch { }
-                            }
-                            element = clientRequestBlock.FindName("requestDate");
-                            if (element != null)
-                            {
-                                try
-                                {
-                                    ((TextBlock)element).Text = clientRequest.RequestDate.ToShortDateString();
-                                }
-                                catch { }
-                            }
-                            element = clientRequestBlock.FindName("requestTime");
-                            if (element != null)
-                            {
-                                try
-                                {
-                                    ((TextBlock)element).Text = clientRequest.RequestTime.ToString("hh\\:mm\\:ss");
-                                }
-                                catch { }
-                            }
-                            element = clientRequestBlock.FindName("subjects");
-                            if (element != null)
-                            {
-                                try
-                                {
-                                    ((TextBlock)element).Text = clientRequest.Subjects.ToString();
-                                }
-                                catch { }
-                            }
-                        }
-
-                        var client = clientRequest.Client;
-
-                        element = grid.FindName("clientBlock");
-                        if (client != null && element != null)
-                        {
-                            var clientBlock = (FrameworkElement)element;
-                            clientBlock.Visibility = Visibility.Visible;
-
-                            element = clientBlock.FindName("client");
-                            if (element != null)
-                            {
-                                ((TextBlock)element).Text = client.ToString();
-                            }
-                        }
-
-                        element = grid.FindName("parametersGrid");
-                        if (element != null)
-                        {
-                            var parametersGrid = ((Grid)element);
-                            parametersGrid.Visibility = Visibility.Visible;
-
-                            int row = 0;
-                            foreach (var p in clientRequest.Parameters)
-                            {
-                                parametersGrid.RowDefinitions.Add(new RowDefinition());
-
-                                var label = new Label()
-                                {
-                                    Content = p.Name
-                                };
-                                label.SetValue(Grid.ColumnProperty, 0);
-                                label.SetValue(Grid.RowProperty, row);
-                                parametersGrid.Children.Add(label);
-
-                                var textBlock = new TextBlock()
-                                {
-                                    Text = p.Value
-                                };
-                                textBlock.SetValue(Grid.ColumnProperty, 1);
-                                textBlock.SetValue(Grid.RowProperty, row);
-                                parametersGrid.Children.Add(textBlock);
-
-                                row++;
-                            }
-                        }
-
-                        var service = clientRequest.Service;
-
-                        element = grid.FindName("serviceBlock");
-                        if (element != null)
-                        {
-                            var serviceBlock = (FrameworkElement)element;
-                            serviceBlock.Visibility = Visibility.Visible;
-
-                            element = serviceBlock.FindName("serviceName");
-                            if (element != null)
-                            {
-                                try
-                                {
-                                    ((TextBlock)element).Text = service.ToString();
-                                }
-                                catch { }
-                            }
-                        }
-
-                        var requestDate = clientRequest.RequestDate;
-                        var isRequestDateToday = requestDate == DateTime.Today;
-
-                        element = grid.FindName("workplacesBlock");
-                        if (element != null)
-                        {
-                            var workplacesBlock = (FrameworkElement)element;
-                            workplacesBlock.Visibility = Visibility.Visible;
-
-                            element = workplacesBlock.FindName("workplaces");
-                            if (element != null)
-                            {
-                                QueuePlan queuePlan;
-
-                                if (isRequestDateToday)
-                                {
-                                    queuePlan = queueInstance.TodayQueuePlan;
-                                }
-                                else
-                                {
-                                    queuePlan = new QueuePlan();
-                                    queuePlan.Load(requestDate);
-                                    queuePlan.Build();
-                                }
-
-                                var workplaces = new List<string>();
-
-                                using (var locker = queuePlan.ReadLock())
-                                {
-                                    var serviceRenderingMode = clientRequest.Type == ClientRequestType.Early
-                                        ? ServiceRenderingMode.EarlyRequests
-                                        : ServiceRenderingMode.LiveRequests;
-
-                                    var schedule = queuePlan.GetServiceSchedule(clientRequest.Service);
-                                    foreach (var r in queuePlan.GetServiceRenderings(schedule, clientRequest.ServiceStep, serviceRenderingMode))
+                                    try
                                     {
-                                        var workplace = r.Operator.Workplace;
-                                        if (workplace != null)
+                                        ((TextBlock)element).Text = clientRequest.Number.ToString();
+                                    }
+                                    catch { }
+                                }
+                                element = clientRequestBlock.FindName("createDate");
+                                if (element != null)
+                                {
+                                    try
+                                    {
+                                        ((TextBlock)element).Text = clientRequest.CreateDate.ToString();
+                                    }
+                                    catch { }
+                                }
+                                element = clientRequestBlock.FindName("requestDate");
+                                if (element != null)
+                                {
+                                    try
+                                    {
+                                        ((TextBlock)element).Text = clientRequest.RequestDate.ToShortDateString();
+                                    }
+                                    catch { }
+                                }
+                                element = clientRequestBlock.FindName("requestTime");
+                                if (element != null)
+                                {
+                                    try
+                                    {
+                                        ((TextBlock)element).Text = clientRequest.RequestTime.ToString("hh\\:mm\\:ss");
+                                    }
+                                    catch { }
+                                }
+                                element = clientRequestBlock.FindName("subjects");
+                                if (element != null)
+                                {
+                                    try
+                                    {
+                                        ((TextBlock)element).Text = clientRequest.Subjects.ToString();
+                                    }
+                                    catch { }
+                                }
+                            }
+
+                            var client = clientRequest.Client;
+
+                            element = grid.FindName("clientBlock");
+                            if (client != null && element != null)
+                            {
+                                var clientBlock = (FrameworkElement)element;
+                                clientBlock.Visibility = Visibility.Visible;
+
+                                element = clientBlock.FindName("client");
+                                if (element != null)
+                                {
+                                    ((TextBlock)element).Text = client.ToString();
+                                }
+                            }
+
+                            element = grid.FindName("parametersGrid");
+                            if (element != null)
+                            {
+                                var parametersGrid = ((Grid)element);
+                                parametersGrid.Visibility = Visibility.Visible;
+
+                                int row = 0;
+                                foreach (var p in clientRequest.Parameters)
+                                {
+                                    parametersGrid.RowDefinitions.Add(new RowDefinition());
+
+                                    var label = new Label()
+                                    {
+                                        Content = p.Name
+                                    };
+                                    label.SetValue(Grid.ColumnProperty, 0);
+                                    label.SetValue(Grid.RowProperty, row);
+                                    parametersGrid.Children.Add(label);
+
+                                    var textBlock = new TextBlock()
+                                    {
+                                        Text = p.Value
+                                    };
+                                    textBlock.SetValue(Grid.ColumnProperty, 1);
+                                    textBlock.SetValue(Grid.RowProperty, row);
+                                    parametersGrid.Children.Add(textBlock);
+
+                                    row++;
+                                }
+                            }
+
+                            var service = clientRequest.Service;
+
+                            element = grid.FindName("serviceBlock");
+                            if (element != null)
+                            {
+                                var serviceBlock = (FrameworkElement)element;
+                                serviceBlock.Visibility = Visibility.Visible;
+
+                                element = serviceBlock.FindName("serviceName");
+                                if (element != null)
+                                {
+                                    try
+                                    {
+                                        ((TextBlock)element).Text = service.ToString();
+                                    }
+                                    catch { }
+                                }
+                            }
+
+                            var requestDate = clientRequest.RequestDate;
+                            var isRequestDateToday = requestDate == DateTime.Today;
+
+                            element = grid.FindName("workplacesBlock");
+                            if (element != null)
+                            {
+                                var workplacesBlock = (FrameworkElement)element;
+                                workplacesBlock.Visibility = Visibility.Visible;
+
+                                element = workplacesBlock.FindName("workplaces");
+                                if (element != null)
+                                {
+                                    QueuePlan queuePlan;
+
+                                    if (isRequestDateToday)
+                                    {
+                                        queuePlan = queueInstance.TodayQueuePlan;
+                                    }
+                                    else
+                                    {
+                                        queuePlan = new QueuePlan();
+                                        queuePlan.Load(requestDate);
+                                        queuePlan.Build();
+                                    }
+
+                                    var workplaces = new List<string>();
+
+                                    using (var locker = queuePlan.ReadLock())
+                                    {
+                                        var serviceRenderingMode = clientRequest.Type == ClientRequestType.Early
+                                            ? ServiceRenderingMode.EarlyRequests
+                                            : ServiceRenderingMode.LiveRequests;
+
+                                        var schedule = queuePlan.GetServiceSchedule(clientRequest.Service);
+                                        foreach (var r in queuePlan.GetServiceRenderings(schedule, clientRequest.ServiceStep, serviceRenderingMode))
                                         {
-                                            workplaces.Add(workplace.ToString());
+                                            var workplace = r.Operator.Workplace;
+                                            if (workplace != null)
+                                            {
+                                                workplaces.Add(workplace.ToString());
+                                            }
+                                        }
+                                        if (workplaces.Count > 0)
+                                        {
+                                            try
+                                            {
+                                                ((TextBlock)element).Text = string.Join(", ", workplaces);
+                                            }
+                                            catch { }
                                         }
                                     }
-                                    if (workplaces.Count > 0)
-                                    {
-                                        try
-                                        {
-                                            ((TextBlock)element).Text = string.Join(", ", workplaces);
-                                        }
-                                        catch { }
-                                    }
                                 }
                             }
-                        }
 
-                        element = grid.FindName("stateBlock");
-                        if (element != null)
-                        {
-                            var stateBlock = (StackPanel)element;
-
-                            if (clientRequest.Type == ClientRequestType.Live && isRequestDateToday)
+                            element = grid.FindName("stateBlock");
+                            if (element != null)
                             {
-                                stateBlock.Visibility = Visibility.Visible;
+                                var stateBlock = (StackPanel)element;
 
-                                try
+                                if (clientRequest.Type == ClientRequestType.Live && isRequestDateToday)
                                 {
+                                    stateBlock.Visibility = Visibility.Visible;
+
                                     var todayQueuePlan = queueInstance.TodayQueuePlan;
                                     using (var locker = todayQueuePlan.ReadLock())
                                     {
@@ -712,20 +704,25 @@ namespace Queue.Services.Server
                                         }
                                     }
                                 }
-                                catch (Exception exception)
-                                {
-                                    logger.Warn(exception);
-                                }
                             }
-                        }
 
-                        output = XamlWriter.Save(grid);
+                            output = XamlWriter.Save(grid);
+                        }
+                        catch (Exception e)
+                        {
+                            exception = e;
+                        }
                     }));
 
                     thread.SetApartmentState(ApartmentState.STA);
                     thread.IsBackground = true;
                     thread.Start();
                     thread.Join();
+
+                    if (exception != null)
+                    {
+                        throw new FaultException(exception.Message);
+                    }
 
                     return output;
                 }
@@ -830,6 +827,7 @@ namespace Queue.Services.Server
                             || !clientRequest.Service.Equals(service))
                         {
                             clientRequest.Service = service;
+                            clientRequest.FirstStep(session);
 
                             session.Save(new ClientRequestEvent()
                             {
@@ -838,7 +836,7 @@ namespace Queue.Services.Server
                             });
                         }
                     }
-                    else
+                    else if (clientRequest.Service != null)
                     {
                         clientRequest.Service = null;
                     }
@@ -866,7 +864,7 @@ namespace Queue.Services.Server
                             });
                         }
                     }
-                    else
+                    else if (clientRequest.ServiceStep != null)
                     {
                         clientRequest.ServiceStep = null;
 
@@ -900,7 +898,7 @@ namespace Queue.Services.Server
                             });
                         }
                     }
-                    else
+                    else if (clientRequest.Operator != null)
                     {
                         clientRequest.Operator = null;
 

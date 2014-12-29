@@ -1,4 +1,4 @@
-﻿namespace Queue.Display.Types
+﻿namespace Queue.Display
 {
     public class LoginSettings
     {

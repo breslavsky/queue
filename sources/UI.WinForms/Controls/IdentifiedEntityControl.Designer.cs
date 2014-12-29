@@ -63,7 +63,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.resetButton);
             this.Controls.Add(this.comboBox);
-            this.Enabled = false;
             this.Name = "IdentifiedEntityControl";
             this.Size = new System.Drawing.Size(154, 21);
             this.ResumeLayout(false);

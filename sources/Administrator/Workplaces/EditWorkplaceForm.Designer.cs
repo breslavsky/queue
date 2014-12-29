@@ -142,7 +142,6 @@
             // 
             // typeControl
             // 
-            this.typeControl.Enabled = false;
             this.typeControl.Location = new System.Drawing.Point(105, 5);
             this.typeControl.Name = "typeControl";
             this.typeControl.Size = new System.Drawing.Size(150, 21);

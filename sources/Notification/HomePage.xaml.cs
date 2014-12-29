@@ -28,7 +28,7 @@ namespace Queue.Notification
 
             model = new HomePageVM();
             model.RequestUpdated += model_CurrentClientRequestPlanUpdated;
-            model.RequestsLengthChanged += model_ClientRequestsLengthChanged; ;
+            model.RequestsLengthChanged += model_ClientRequestsLengthChanged;
 
             DataContext = model;
         }

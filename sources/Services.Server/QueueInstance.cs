@@ -18,8 +18,8 @@ namespace Queue.Services.Server
     public class QueueInstance : IQueueInstance
     {
         private const long OperatorHasGoneTimerInterval = TicksInterval._30Seconds;
-        private const long TodayQueuePlanBuildInterval = TicksInterval._1Minute;
-        private const long TodayQueuePlanLoadInterval = TicksInterval._10Seconds;
+        private const long TodayQueuePlanBuildInterval = TicksInterval._10Seconds;
+        private const long TodayQueuePlanLoadInterval = TicksInterval._1Minute;
         private static readonly ILog logger = LogManager.GetLogger(typeof(QueueInstance));
 
         private Timer operatorHasGoneTimer;

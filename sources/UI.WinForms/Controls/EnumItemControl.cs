@@ -24,7 +24,7 @@ namespace Queue.UI.WinForms
             comboBox.Items.Clear();
             var items = EnumItem<T>.GetItems();
             comboBox.Items.AddRange(items);
-            Enabled = items.Length > 0;
+            comboBox.Enabled = items.Length > 0;
             comboBox.SelectedItem = items.FirstOrDefault();
 
             frozen = false;
@@ -47,7 +47,7 @@ namespace Queue.UI.WinForms
         public void Clear()
         {
             comboBox.Items.Clear();
-            Enabled = false;
+            comboBox.Enabled = false;
         }
 
         private void comboBox_SelectedIndexChanged(object sender, EventArgs e)

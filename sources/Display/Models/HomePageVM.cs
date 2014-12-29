@@ -3,7 +3,7 @@ using Junte.UI.WPF.Types;
 using Junte.WCF.Common;
 using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
-using Queue.Display.Types;
+
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;

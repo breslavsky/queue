@@ -400,7 +400,6 @@ namespace Queue.Operator
             // 
             // serviceTypeControl
             // 
-            this.serviceTypeControl.Enabled = false;
             this.serviceTypeControl.Location = new System.Drawing.Point(120, 210);
             this.serviceTypeControl.Name = "serviceTypeControl";
             this.serviceTypeControl.Size = new System.Drawing.Size(200, 21);
@@ -418,7 +417,6 @@ namespace Queue.Operator
             // 
             // serviceStepControl
             // 
-            this.serviceStepControl.Enabled = false;
             this.serviceStepControl.Location = new System.Drawing.Point(120, 240);
             this.serviceStepControl.Name = "serviceStepControl";
             this.serviceStepControl.Size = new System.Drawing.Size(200, 21);

@@ -46,10 +46,10 @@
                                                     Mode=OneWay}"
                               SelectedValue="{Binding SelectedWorkplace,
                                                       Mode=TwoWay}"
-                              SelectedValuePath="Key">
+                              SelectedValuePath="Id">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Value}" />
+                                <TextBlock Text="{Binding Presentation}" />
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>

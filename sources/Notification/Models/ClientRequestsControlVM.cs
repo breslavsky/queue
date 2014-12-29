@@ -1,6 +1,6 @@
 ﻿using Junte.UI.WPF.Types;
 using Queue.Model.Common;
-using Queue.Notification.Types;
+
 using Queue.Notification.UserControls;
 using Queue.Services.DTO;
 using Queue.UI.WPF;

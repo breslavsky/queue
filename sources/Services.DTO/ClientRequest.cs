@@ -79,6 +79,7 @@ namespace Queue.Services.DTO
         [DataMember]
         public ClientRequestParameter[] Parameters { get; set; }
 
+        //TODO: дублирование, придумать по лучше
         public virtual string Color
         {
             get
