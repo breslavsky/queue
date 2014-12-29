@@ -41,7 +41,7 @@
             this.nameLabel.Location = new System.Drawing.Point(5, 0);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(195, 18);
-            this.nameLabel.TabIndex = 1;
+            this.nameLabel.TabIndex = 0;
             this.nameLabel.Text = "Название";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -50,7 +50,7 @@
             this.nameTextBox.Location = new System.Drawing.Point(10, 25);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(190, 20);
-            this.nameTextBox.TabIndex = 2;
+            this.nameTextBox.TabIndex = 0;
             this.nameTextBox.Leave += new System.EventHandler(this.nameTextBox_Leave);
             // 
             // toolTipLabel
@@ -58,7 +58,7 @@
             this.toolTipLabel.Location = new System.Drawing.Point(5, 50);
             this.toolTipLabel.Name = "toolTipLabel";
             this.toolTipLabel.Size = new System.Drawing.Size(195, 18);
-            this.toolTipLabel.TabIndex = 3;
+            this.toolTipLabel.TabIndex = 0;
             this.toolTipLabel.Text = "Подсказка";
             this.toolTipLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -68,7 +68,7 @@
             this.toolTipTextBox.Multiline = true;
             this.toolTipTextBox.Name = "toolTipTextBox";
             this.toolTipTextBox.Size = new System.Drawing.Size(190, 50);
-            this.toolTipTextBox.TabIndex = 4;
+            this.toolTipTextBox.TabIndex = 1;
             this.toolTipTextBox.Leave += new System.EventHandler(this.toolTipTextBox_Leave);
             // 
             // isRequireCheckBox
@@ -77,7 +77,7 @@
             this.isRequireCheckBox.Location = new System.Drawing.Point(10, 135);
             this.isRequireCheckBox.Name = "isRequireCheckBox";
             this.isRequireCheckBox.Size = new System.Drawing.Size(183, 17);
-            this.isRequireCheckBox.TabIndex = 5;
+            this.isRequireCheckBox.TabIndex = 2;
             this.isRequireCheckBox.Text = "Обязательное для заполнения";
             this.isRequireCheckBox.UseVisualStyleBackColor = true;
             this.isRequireCheckBox.Leave += new System.EventHandler(this.isRequireCheckBox_Leave);
@@ -87,7 +87,7 @@
             this.saveButton.Location = new System.Drawing.Point(125, 160);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
-            this.saveButton.TabIndex = 6;
+            this.saveButton.TabIndex = 3;
             this.saveButton.Text = "Сохранить";
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
@@ -96,12 +96,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(209, 196);
-            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.toolTipLabel);
             this.Controls.Add(this.toolTipTextBox);
             this.Controls.Add(this.isRequireCheckBox);
+            this.Controls.Add(this.saveButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "EditServiceParameterNumberForm";
             this.Text = "Редактирование параметра";

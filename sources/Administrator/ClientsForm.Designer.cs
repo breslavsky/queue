@@ -57,8 +57,8 @@
             // 
             this.panel1.Controls.Add(this.queryLabel);
             this.panel1.Controls.Add(this.queryTextBox);
-            this.panel1.Controls.Add(this.addButton);
             this.panel1.Controls.Add(this.findButton);
+            this.panel1.Controls.Add(this.addButton);
             this.panel1.Controls.Add(this.firstButton);
             this.panel1.Controls.Add(this.prevButton);
             this.panel1.Controls.Add(this.nextButton);

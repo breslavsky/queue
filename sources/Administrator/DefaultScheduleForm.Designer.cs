@@ -39,9 +39,9 @@
             // 
             // exceptionTabPage
             // 
-            this.exceptionTabPage.Controls.Add(this.exceptionScheduleControl);
             this.exceptionTabPage.Controls.Add(this.exceptionScheduleDatePicker);
             this.exceptionTabPage.Controls.Add(this.exceptionScheduleCheckBox);
+            this.exceptionTabPage.Controls.Add(this.exceptionScheduleControl);
             this.exceptionTabPage.Location = new System.Drawing.Point(4, 26);
             this.exceptionTabPage.Name = "exceptionTabPage";
             this.exceptionTabPage.Padding = new System.Windows.Forms.Padding(5);

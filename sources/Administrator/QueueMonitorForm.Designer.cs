@@ -88,7 +88,7 @@
             this.loadButton.Location = new System.Drawing.Point(151, 5);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(75, 25);
-            this.loadButton.TabIndex = 0;
+            this.loadButton.TabIndex = 1;
             this.loadButton.Text = "Загрузить";
             this.loadButton.UseVisualStyleBackColor = true;
             this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
@@ -97,7 +97,7 @@
             // 
             this.numberLabel.Location = new System.Drawing.Point(236, 10);
             this.numberLabel.Name = "numberLabel";
-            this.numberLabel.Size = new System.Drawing.Size(41, 13);
+            this.numberLabel.Size = new System.Drawing.Size(44, 13);
             this.numberLabel.TabIndex = 0;
             this.numberLabel.Text = "Номер";
             this.numberLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -117,7 +117,7 @@
             0});
             this.numberUpDown.Name = "numberUpDown";
             this.numberUpDown.Size = new System.Drawing.Size(65, 20);
-            this.numberUpDown.TabIndex = 0;
+            this.numberUpDown.TabIndex = 2;
             this.numberUpDown.Value = new decimal(new int[] {
             1,
             0,
@@ -129,7 +129,7 @@
             this.searchButton.Location = new System.Drawing.Point(351, 5);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(75, 25);
-            this.searchButton.TabIndex = 0;
+            this.searchButton.TabIndex = 3;
             this.searchButton.Text = "Найти";
             this.searchButton.UseVisualStyleBackColor = true;
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
@@ -142,7 +142,7 @@
             this.refreshButton.Location = new System.Drawing.Point(695, 5);
             this.refreshButton.Name = "refreshButton";
             this.refreshButton.Size = new System.Drawing.Size(130, 25);
-            this.refreshButton.TabIndex = 0;
+            this.refreshButton.TabIndex = 4;
             this.refreshButton.Text = "Перезагрузить";
             this.refreshButton.UseVisualStyleBackColor = true;
             this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
@@ -155,7 +155,7 @@
             this.elementHost.Margin = new System.Windows.Forms.Padding(0);
             this.elementHost.Name = "elementHost";
             this.elementHost.Size = new System.Drawing.Size(830, 545);
-            this.elementHost.TabIndex = 0;
+            this.elementHost.TabIndex = 5;
             this.elementHost.Text = "elementHost1";
             this.elementHost.ChildChanged += new System.EventHandler<System.Windows.Forms.Integration.ChildChangedEventArgs>(this.elementHost_ChildChanged);
             this.elementHost.Child = this.queueMonitorControl;
