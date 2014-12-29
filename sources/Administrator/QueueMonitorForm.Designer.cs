@@ -97,7 +97,7 @@
             // 
             this.numberLabel.Location = new System.Drawing.Point(236, 10);
             this.numberLabel.Name = "numberLabel";
-            this.numberLabel.Size = new System.Drawing.Size(41, 13);
+            this.numberLabel.Size = new System.Drawing.Size(44, 13);
             this.numberLabel.TabIndex = 0;
             this.numberLabel.Text = "Номер";
             this.numberLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;

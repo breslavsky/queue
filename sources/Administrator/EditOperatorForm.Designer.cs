@@ -190,7 +190,7 @@
             this.interruptionLabel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.interruptionLabel.Location = new System.Drawing.Point(5, 180);
             this.interruptionLabel.Name = "interruptionLabel";
-            this.interruptionLabel.Size = new System.Drawing.Size(110, 20);
+            this.interruptionLabel.Size = new System.Drawing.Size(105, 20);
             this.interruptionLabel.TabIndex = 0;
             this.interruptionLabel.Text = "Время перерыва";
             this.interruptionLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;

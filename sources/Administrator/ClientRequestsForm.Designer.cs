@@ -24,7 +24,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.findButton = new System.Windows.Forms.Button();
             this.requestDateCheckBox = new System.Windows.Forms.CheckBox();
             this.requestDatePanel = new System.Windows.Forms.GroupBox();
             this.requestDateLabel = new System.Windows.Forms.Label();
@@ -35,18 +34,19 @@
             this.serviceControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.operatorCheckBox = new System.Windows.Forms.CheckBox();
             this.operatorPanel = new System.Windows.Forms.GroupBox();
-            this.operatorControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.operatorLabel = new System.Windows.Forms.Label();
+            this.operatorControl = new Queue.UI.WinForms.IdentifiedEntityControl();
+            this.queryLabel = new System.Windows.Forms.Label();
+            this.queryTextBox = new System.Windows.Forms.TextBox();
             this.stateCheckBox = new System.Windows.Forms.CheckBox();
             this.statePanel = new System.Windows.Forms.GroupBox();
             this.stateLabel = new System.Windows.Forms.Label();
             this.stateControl = new Queue.UI.WinForms.EnumItemControl();
-            this.queryLabel = new System.Windows.Forms.Label();
-            this.queryTextBox = new System.Windows.Forms.TextBox();
+            this.findButton = new System.Windows.Forms.Button();
             this.detailsCheckBox = new System.Windows.Forms.CheckBox();
-            this.nextButton = new System.Windows.Forms.Button();
-            this.prevButton = new System.Windows.Forms.Button();
             this.firstButton = new System.Windows.Forms.Button();
+            this.prevButton = new System.Windows.Forms.Button();
+            this.nextButton = new System.Windows.Forms.Button();
             this.clientRequestsGridView = new System.Windows.Forms.DataGridView();
             this.numberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.requestDateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -113,16 +113,6 @@
             this.panel1.Size = new System.Drawing.Size(1014, 120);
             this.panel1.TabIndex = 0;
             // 
-            // findButton
-            // 
-            this.findButton.Location = new System.Drawing.Point(480, 70);
-            this.findButton.Name = "findButton";
-            this.findButton.Size = new System.Drawing.Size(75, 25);
-            this.findButton.TabIndex = 2;
-            this.findButton.Text = "Найти";
-            this.findButton.UseVisualStyleBackColor = true;
-            this.findButton.Click += new System.EventHandler(this.findButton_Click);
-            // 
             // requestDateCheckBox
             // 
             this.requestDateCheckBox.AutoSize = true;
@@ -171,7 +161,7 @@
             this.serviceCheckBox.Location = new System.Drawing.Point(230, 25);
             this.serviceCheckBox.Name = "serviceCheckBox";
             this.serviceCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.serviceCheckBox.TabIndex = 0;
+            this.serviceCheckBox.TabIndex = 1;
             this.serviceCheckBox.UseVisualStyleBackColor = true;
             this.serviceCheckBox.CheckedChanged += new System.EventHandler(this.serviceCheckBox_CheckedChanged);
             // 
@@ -185,7 +175,7 @@
             this.servicePanel.Location = new System.Drawing.Point(250, 5);
             this.servicePanel.Name = "servicePanel";
             this.servicePanel.Size = new System.Drawing.Size(510, 45);
-            this.servicePanel.TabIndex = 1;
+            this.servicePanel.TabIndex = 2;
             this.servicePanel.TabStop = false;
             // 
             // serviceLabel
@@ -205,7 +195,7 @@
             this.serviceControl.Location = new System.Drawing.Point(50, 15);
             this.serviceControl.Name = "serviceControl";
             this.serviceControl.Size = new System.Drawing.Size(455, 21);
-            this.serviceControl.TabIndex = 0;
+            this.serviceControl.TabIndex = 2;
             this.serviceControl.UseResetButton = false;
             this.serviceControl.Leave += new System.EventHandler(this.serviceControl_Leave);
             // 
@@ -216,7 +206,7 @@
             this.operatorCheckBox.Location = new System.Drawing.Point(765, 25);
             this.operatorCheckBox.Name = "operatorCheckBox";
             this.operatorCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.operatorCheckBox.TabIndex = 0;
+            this.operatorCheckBox.TabIndex = 3;
             this.operatorCheckBox.UseVisualStyleBackColor = true;
             this.operatorCheckBox.CheckedChanged += new System.EventHandler(this.operatorCheckBox_CheckedChanged);
             // 
@@ -232,16 +222,6 @@
             this.operatorPanel.TabIndex = 2;
             this.operatorPanel.TabStop = false;
             // 
-            // operatorControl
-            // 
-            this.operatorControl.Enabled = false;
-            this.operatorControl.Location = new System.Drawing.Point(65, 15);
-            this.operatorControl.Name = "operatorControl";
-            this.operatorControl.Size = new System.Drawing.Size(150, 21);
-            this.operatorControl.TabIndex = 0;
-            this.operatorControl.UseResetButton = false;
-            this.operatorControl.Leave += new System.EventHandler(this.operatorControl_Leave);
-            // 
             // operatorLabel
             // 
             this.operatorLabel.Location = new System.Drawing.Point(5, 20);
@@ -251,13 +231,40 @@
             this.operatorLabel.Text = "Оператор";
             this.operatorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
+            // operatorControl
+            // 
+            this.operatorControl.Enabled = false;
+            this.operatorControl.Location = new System.Drawing.Point(65, 15);
+            this.operatorControl.Name = "operatorControl";
+            this.operatorControl.Size = new System.Drawing.Size(150, 21);
+            this.operatorControl.TabIndex = 3;
+            this.operatorControl.UseResetButton = false;
+            this.operatorControl.Leave += new System.EventHandler(this.operatorControl_Leave);
+            // 
+            // queryLabel
+            // 
+            this.queryLabel.Location = new System.Drawing.Point(10, 80);
+            this.queryLabel.Name = "queryLabel";
+            this.queryLabel.Size = new System.Drawing.Size(50, 13);
+            this.queryLabel.TabIndex = 0;
+            this.queryLabel.Text = "Запрос:";
+            this.queryLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // queryTextBox
+            // 
+            this.queryTextBox.Location = new System.Drawing.Point(65, 75);
+            this.queryTextBox.Name = "queryTextBox";
+            this.queryTextBox.Size = new System.Drawing.Size(155, 20);
+            this.queryTextBox.TabIndex = 4;
+            this.queryTextBox.Leave += new System.EventHandler(this.queryTextBox_Leave);
+            // 
             // stateCheckBox
             // 
             this.stateCheckBox.AutoSize = true;
             this.stateCheckBox.Location = new System.Drawing.Point(230, 75);
             this.stateCheckBox.Name = "stateCheckBox";
             this.stateCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.stateCheckBox.TabIndex = 0;
+            this.stateCheckBox.TabIndex = 5;
             this.stateCheckBox.UseVisualStyleBackColor = true;
             this.stateCheckBox.CheckedChanged += new System.EventHandler(this.stateCheckBox_CheckedChanged);
             // 
@@ -269,7 +276,7 @@
             this.statePanel.Location = new System.Drawing.Point(250, 55);
             this.statePanel.Name = "statePanel";
             this.statePanel.Size = new System.Drawing.Size(220, 45);
-            this.statePanel.TabIndex = 4;
+            this.statePanel.TabIndex = 6;
             this.statePanel.TabStop = false;
             // 
             // stateLabel
@@ -287,25 +294,18 @@
             this.stateControl.Location = new System.Drawing.Point(75, 15);
             this.stateControl.Name = "stateControl";
             this.stateControl.Size = new System.Drawing.Size(140, 21);
-            this.stateControl.TabIndex = 4;
+            this.stateControl.TabIndex = 6;
             this.stateControl.Leave += new System.EventHandler(this.stateControl_Leave);
             // 
-            // queryLabel
+            // findButton
             // 
-            this.queryLabel.Location = new System.Drawing.Point(10, 80);
-            this.queryLabel.Name = "queryLabel";
-            this.queryLabel.Size = new System.Drawing.Size(50, 13);
-            this.queryLabel.TabIndex = 0;
-            this.queryLabel.Text = "Запрос:";
-            this.queryLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // queryTextBox
-            // 
-            this.queryTextBox.Location = new System.Drawing.Point(65, 75);
-            this.queryTextBox.Name = "queryTextBox";
-            this.queryTextBox.Size = new System.Drawing.Size(155, 20);
-            this.queryTextBox.TabIndex = 1;
-            this.queryTextBox.Leave += new System.EventHandler(this.queryTextBox_Leave);
+            this.findButton.Location = new System.Drawing.Point(480, 70);
+            this.findButton.Name = "findButton";
+            this.findButton.Size = new System.Drawing.Size(75, 25);
+            this.findButton.TabIndex = 7;
+            this.findButton.Text = "Найти";
+            this.findButton.UseVisualStyleBackColor = true;
+            this.findButton.Click += new System.EventHandler(this.findButton_Click);
             // 
             // detailsCheckBox
             // 
@@ -314,30 +314,10 @@
             this.detailsCheckBox.Location = new System.Drawing.Point(850, 80);
             this.detailsCheckBox.Name = "detailsCheckBox";
             this.detailsCheckBox.Size = new System.Drawing.Size(76, 17);
-            this.detailsCheckBox.TabIndex = 0;
+            this.detailsCheckBox.TabIndex = 8;
             this.detailsCheckBox.Text = "Подробно";
             this.detailsCheckBox.UseVisualStyleBackColor = true;
             this.detailsCheckBox.CheckedChanged += new System.EventHandler(this.detailsCheckBox_CheckedChanged);
-            // 
-            // nextButton
-            // 
-            this.nextButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.nextButton.Image = ((System.Drawing.Image)(resources.GetObject("nextButton.Image")));
-            this.nextButton.Location = new System.Drawing.Point(985, 80);
-            this.nextButton.Name = "nextButton";
-            this.nextButton.Size = new System.Drawing.Size(25, 20);
-            this.nextButton.TabIndex = 5;
-            this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
-            // 
-            // prevButton
-            // 
-            this.prevButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.prevButton.Image = ((System.Drawing.Image)(resources.GetObject("prevButton.Image")));
-            this.prevButton.Location = new System.Drawing.Point(960, 80);
-            this.prevButton.Name = "prevButton";
-            this.prevButton.Size = new System.Drawing.Size(25, 20);
-            this.prevButton.TabIndex = 4;
-            this.prevButton.Click += new System.EventHandler(this.prevButton_Click);
             // 
             // firstButton
             // 
@@ -346,8 +326,28 @@
             this.firstButton.Location = new System.Drawing.Point(935, 80);
             this.firstButton.Name = "firstButton";
             this.firstButton.Size = new System.Drawing.Size(25, 20);
-            this.firstButton.TabIndex = 3;
+            this.firstButton.TabIndex = 9;
             this.firstButton.Click += new System.EventHandler(this.resetButton_Click);
+            // 
+            // prevButton
+            // 
+            this.prevButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.prevButton.Image = ((System.Drawing.Image)(resources.GetObject("prevButton.Image")));
+            this.prevButton.Location = new System.Drawing.Point(960, 80);
+            this.prevButton.Name = "prevButton";
+            this.prevButton.Size = new System.Drawing.Size(25, 20);
+            this.prevButton.TabIndex = 10;
+            this.prevButton.Click += new System.EventHandler(this.prevButton_Click);
+            // 
+            // nextButton
+            // 
+            this.nextButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.nextButton.Image = ((System.Drawing.Image)(resources.GetObject("nextButton.Image")));
+            this.nextButton.Location = new System.Drawing.Point(985, 80);
+            this.nextButton.Name = "nextButton";
+            this.nextButton.Size = new System.Drawing.Size(25, 20);
+            this.nextButton.TabIndex = 11;
+            this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
             // 
             // clientRequestsGridView
             // 
