@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.saveButton = new System.Windows.Forms.Button();
             this.addServiceRenderingButton = new System.Windows.Forms.Button();
             this.serviceRenderingsGridView = new System.Windows.Forms.DataGridView();
@@ -98,14 +98,14 @@
             this.serviceRenderingsGridView.AllowUserToAddRows = false;
             this.serviceRenderingsGridView.AllowUserToResizeColumns = false;
             this.serviceRenderingsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.serviceRenderingsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.serviceRenderingsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.serviceRenderingsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.serviceRenderingsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.operatorColumn,
@@ -151,8 +151,8 @@
             // 
             // priorityColumn
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.priorityColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.priorityColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.priorityColumn.HeaderText = "Приоритет";
             this.priorityColumn.Name = "priorityColumn";
             this.priorityColumn.ReadOnly = true;
@@ -454,6 +454,7 @@
             this.renderingModeControl.Size = new System.Drawing.Size(195, 21);
             this.renderingModeControl.TabIndex = 1;
             this.renderingModeControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.renderingModeControl_SelectedChanged);
+            this.renderingModeControl.Leave += new System.EventHandler(this.renderingModeControl_Leave);
             // 
             // serviceRenderingsLabel
             // 

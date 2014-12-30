@@ -52,6 +52,8 @@ namespace Queue.Administrator
                     earlyFinishTimeTextBox.Text = schedule.FinishTime.ToString("hh\\:mm");
                     earlyReservationUpDown.Value = schedule.EarlyReservation;
 
+                    RenderingModeUpdate();
+
                     Invoke(new MethodInvoker(async () =>
                     {
                         using (var channel = channelManager.CreateChannel())
@@ -141,6 +143,7 @@ namespace Queue.Administrator
                         row = serviceRenderingsGridView.Rows[serviceRenderingsGridView.Rows.Add()];
                     }
                     ServiceRenderingsGridViewRenderRow(row, f.ServiceRendering);
+                    f.Close();
                 };
 
                 f.ShowDialog();
@@ -277,6 +280,16 @@ namespace Queue.Administrator
         }
 
         private void renderingModeControl_SelectedChanged(object sender, EventArgs e)
+        {
+            RenderingModeUpdate();
+        }
+
+        private void renderingModeControl_Leave(object sender, EventArgs e)
+        {
+            schedule.RenderingMode = renderingModeControl.Selected<ServiceRenderingMode>();
+        }
+
+        private void RenderingModeUpdate()
         {
             var selectedMode = renderingModeControl.Selected<ServiceRenderingMode>();
             earlyGroupBox.Enabled = selectedMode == ServiceRenderingMode.AllRequests;

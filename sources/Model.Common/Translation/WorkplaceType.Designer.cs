@@ -61,7 +61,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Area.
+        ///   Ищет локализованную строку, похожую на Область.
         /// </summary>
         public static string Area {
             get {
@@ -70,7 +70,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Box.
+        ///   Ищет локализованную строку, похожую на Бокс.
         /// </summary>
         public static string Box {
             get {
@@ -79,7 +79,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Cabinet.
+        ///   Ищет локализованную строку, похожую на Кабинет.
         /// </summary>
         public static string Cabinet {
             get {
@@ -88,7 +88,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Department.
+        ///   Ищет локализованную строку, похожую на Отдел.
         /// </summary>
         public static string Department {
             get {
@@ -97,7 +97,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Room.
+        ///   Ищет локализованную строку, похожую на Комната.
         /// </summary>
         public static string Room {
             get {
@@ -106,7 +106,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Window.
+        ///   Ищет локализованную строку, похожую на Окно.
         /// </summary>
         public static string Window {
             get {

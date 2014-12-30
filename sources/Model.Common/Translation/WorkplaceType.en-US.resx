@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Area" xml:space="preserve">
-    <value>Область</value>
+    <value>Area</value>
   </data>
   <data name="Box" xml:space="preserve">
-    <value>Бокс</value>
+    <value>Box</value>
   </data>
   <data name="Cabinet" xml:space="preserve">
-    <value>Кабинет</value>
+    <value>Cabinet</value>
   </data>
   <data name="Department" xml:space="preserve">
-    <value>Отдел</value>
+    <value>Department</value>
   </data>
   <data name="Room" xml:space="preserve">
-    <value>Комната</value>
+    <value>Room</value>
   </data>
   <data name="Window" xml:space="preserve">
-    <value>Окно</value>
+    <value>Window</value>
   </data>
 </root>

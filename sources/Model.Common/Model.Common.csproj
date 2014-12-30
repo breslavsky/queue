@@ -79,7 +79,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>WorkplaceType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Translation\WorkplaceType.ru-RU.resx" />
+    <EmbeddedResource Include="Translation\WorkplaceType.en-US.resx" />
     <EmbeddedResource Include="Translation\AdministratorPermissions.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AdministratorPermissions.Designer.cs</LastGenOutput>

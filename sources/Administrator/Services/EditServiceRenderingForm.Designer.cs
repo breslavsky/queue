@@ -98,7 +98,6 @@ namespace Queue.Administrator
             // 
             // operatorControl
             // 
-            this.operatorControl.Enabled = false;
             this.operatorControl.Location = new System.Drawing.Point(110, 10);
             this.operatorControl.Name = "operatorControl";
             this.operatorControl.Size = new System.Drawing.Size(205, 21);

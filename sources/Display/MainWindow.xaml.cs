@@ -26,6 +26,7 @@ namespace Queue.Display
         {
             InitializeComponent();
 
+            //TODO: вынести в разметку!
             Title = string.Format("Информационное табло ({0})", Assembly.GetExecutingAssembly().GetName().Version);
         }
 

@@ -171,6 +171,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.servicePanel.Controls.Add(this.serviceLabel);
             this.servicePanel.Controls.Add(this.serviceControl);
+            this.servicePanel.Enabled = false;
             this.servicePanel.Location = new System.Drawing.Point(250, 5);
             this.servicePanel.Name = "servicePanel";
             this.servicePanel.Size = new System.Drawing.Size(510, 45);
