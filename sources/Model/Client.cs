@@ -55,7 +55,7 @@ namespace Queue.Model
         {
             if (string.IsNullOrWhiteSpace(password))
             {
-                throw new Exception("Пароль не может быть пустым");
+                throw new ArgumentException("Пароль не может быть пустым");
             }
 
             MD5 Md5 = new MD5CryptoServiceProvider();

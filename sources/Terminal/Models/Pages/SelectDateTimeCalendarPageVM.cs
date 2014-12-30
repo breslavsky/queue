@@ -1,6 +1,9 @@
 ﻿using Junte.UI.WPF;
 using Junte.UI.WPF.Types;
+using Junte.WCF.Common;
 using Queue.Model.Common;
+using Queue.Services.Contracts;
+using Queue.Services.DTO;
 using Queue.Terminal.Types;
 using System;
 using System.Collections.ObjectModel;
@@ -107,52 +110,56 @@ namespace Queue.Terminal.Models.Pages
             SelectedHour = null;
             SelectedMinute = null;
 
-            if (model.SelectedService != null && model.SelectedDate.HasValue)
+            if (model.SelectedService == null || !model.SelectedDate.HasValue)
             {
-                using (var channel = channelManager.CreateChannel())
+                return;
+            }
+
+            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            {
+                var loading = screen.ShowLoading();
+
+                try
                 {
-                    var loading = screen.ShowLoading();
+                    ServiceFreeTime freeTime = await taskPool.AddTask(channel.Service.GetServiceFreeTime(model.SelectedService.Id, model.SelectedDate.Value, ClientRequestType.Early));
+                    TimeSpan[] timeIntervals = freeTime.TimeIntervals;
 
-                    try
+                    if (timeIntervals.Length == 0)
                     {
-                        var freeTime = await taskPool.AddTask(channel.Service.GetServiceFreeTime(model.SelectedService.Id, model.SelectedDate.Value, ClientRequestType.Early));
-                        var timeIntervals = freeTime.TimeIntervals;
+                        return;
+                    }
 
-                        if (timeIntervals.Length > 0)
+                    foreach (var timeInterval in timeIntervals)
+                    {
+                        EarlyRequestHour hour = AvailableHours.SingleOrDefault(h => h.Hour == timeInterval.Hours);
+                        if (hour == null)
                         {
-                            foreach (var timeInterval in timeIntervals)
+                            hour = new EarlyRequestHour()
                             {
-                                EarlyRequestHour hour = AvailableHours.SingleOrDefault(h => h.Hour == timeInterval.Hours);
-                                if (hour == null)
-                                {
-                                    hour = new EarlyRequestHour()
-                                    {
-                                        Hour = timeInterval.Hours
-                                    };
-                                    AvailableHours.Add(hour);
-                                }
+                                Hour = timeInterval.Hours
+                            };
+                            AvailableHours.Add(hour);
+                        }
 
-                                if (!hour.Minutes.Exists(m => m == timeInterval.Minutes))
-                                {
-                                    hour.Minutes.Add(timeInterval.Minutes);
-                                }
-                            }
-
-                            SelectedHour = AvailableHours.Count > 0 ? AvailableHours[0] : null;
+                        if (!hour.Minutes.Exists(m => m == timeInterval.Minutes))
+                        {
+                            hour.Minutes.Add(timeInterval.Minutes);
                         }
                     }
-                    catch (FaultException exception)
-                    {
-                        screen.ShowWarning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(null, exception.Message);
-                    }
-                    finally
-                    {
-                        loading.Hide();
-                    }
+
+                    SelectedHour = AvailableHours.Count > 0 ? AvailableHours[0] : null;
+                }
+                catch (FaultException exception)
+                {
+                    screen.ShowWarning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(null, exception.Message);
+                }
+                finally
+                {
+                    loading.Hide();
                 }
             }
         }

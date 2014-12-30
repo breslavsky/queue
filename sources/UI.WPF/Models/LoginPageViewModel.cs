@@ -19,7 +19,7 @@ namespace Queue.UI.WPF.Pages.Models
 {
     public class LoginPageViewModel : ObservableObject, IDisposable
     {
-        private RichPage owner;
+        private LoginPage owner;
         private string endpoint;
         private bool isConnected;
         private string password;
@@ -37,7 +37,7 @@ namespace Queue.UI.WPF.Pages.Models
 
         private UserLoginSettings settings;
 
-        public LoginPageViewModel(UserRole userRole, RichPage owner)
+        public LoginPageViewModel(UserRole userRole, LoginPage owner)
         {
             this.userRole = userRole;
             this.owner = owner;
@@ -139,6 +139,8 @@ namespace Queue.UI.WPF.Pages.Models
             {
                 SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == settings.Accent);
             }
+
+            owner.AdjustModel();
         }
 
         public async void Connect()
