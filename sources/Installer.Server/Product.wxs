@@ -5,7 +5,6 @@
   <?define ProductCode="D2EAEE82-C9AF-4223-916F-7CBB5786D763"?>
   <?define UpgradeCode="58088B57-52CE-4D31-8882-CB4A69FCAFDF"?>
   <?define Manufacturer="Junte Ltd."?>
-  <?define AppExeName="JunteQueueServer"?>
   <?define ServiceName="JunteQueueServer"?>
 
   <Product Id="$(var.ProductCode)"
