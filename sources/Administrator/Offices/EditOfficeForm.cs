@@ -97,11 +97,15 @@ namespace Queue.Administrator
         {
             if (officeId != Guid.Empty)
             {
+                Enabled = false;
+
                 using (var channel = channelManager.CreateChannel())
                 {
                     try
                     {
                         Office = await taskPool.AddTask(channel.Service.GetOffice(officeId));
+
+                        Enabled = true;
                     }
                     catch (OperationCanceledException) { }
                     catch (CommunicationObjectAbortedException) { }

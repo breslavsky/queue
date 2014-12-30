@@ -187,6 +187,7 @@ namespace Queue.Administrator
                     f.Saved += (s, eventArgs) =>
                     {
                         ServiceRenderingsGridViewRenderRow(row, f.ServiceRendering);
+                        f.Close();
                     };
 
                     f.ShowDialog();

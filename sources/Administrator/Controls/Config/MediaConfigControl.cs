@@ -47,6 +47,8 @@ namespace Queue.Administrator
                         tickerTextBox.Text = config.Ticker;
                         tickerSpeedTrackBar.Value = config.TickerSpeed;
 
+                        mediaConfigFilesGridView.Rows.Clear();
+
                         using (var channel = channelManager.CreateChannel())
                         {
                             try
@@ -116,6 +118,7 @@ namespace Queue.Administrator
                         row = mediaConfigFilesGridView.Rows[mediaConfigFilesGridView.Rows.Add()];
                     }
                     MediaConfigFilesGridViewRow(row, f.MediaConfigFile);
+                    f.Close();
                 };
 
                 f.ShowDialog();
@@ -137,6 +140,7 @@ namespace Queue.Administrator
                     f.Saved += (s, eventArgs) =>
                     {
                         MediaConfigFilesGridViewRow(row, f.MediaConfigFile);
+                        f.Close();
                     };
 
                     f.ShowDialog();

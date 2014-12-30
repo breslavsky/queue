@@ -80,6 +80,8 @@ namespace Queue.Administrator
 
         private async void EditServiceParameterTextForm_Load(object sender, EventArgs e)
         {
+            Enabled = false;
+
             using (var channel = channelManager.CreateChannel())
             {
                 try
@@ -98,6 +100,8 @@ namespace Queue.Administrator
                             MinLength = 1,
                             MaxLength = 30
                         };
+
+                    Enabled = true;
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

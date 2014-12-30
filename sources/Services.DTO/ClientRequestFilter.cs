@@ -39,5 +39,7 @@ namespace Queue.Services.DTO
 
         [DataMember]
         public string Query { get; set; }
+
+        //TODO: create validate
     }
 }

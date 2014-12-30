@@ -473,7 +473,7 @@
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 14;
-            this.saveButton.Text = "Сохранить";
+            this.saveButton.Text = "Записать";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 

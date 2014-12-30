@@ -81,6 +81,7 @@ namespace Queue.Administrator
                             row = usersGridView.Rows[usersGridView.Rows.Add()];
                         }
                         RenderUsersGridRow(row, f.Operator);
+                        f.Close();
                     };
 
                     f.ShowDialog();
@@ -98,6 +99,7 @@ namespace Queue.Administrator
                             row.Selected = true;
                         }
                         RenderUsersGridRow(row, f.Administrator);
+                        f.Close();
                     };
 
                     f.ShowDialog();
@@ -181,6 +183,7 @@ namespace Queue.Administrator
                         f.Saved += (s, eventArgs) =>
                         {
                             RenderUsersGridRow(row, f.Operator);
+                            f.Close();
                         };
 
                         f.ShowDialog();
@@ -193,6 +196,7 @@ namespace Queue.Administrator
                         f.Saved += (s, eventArgs) =>
                         {
                             RenderUsersGridRow(row, f.Administrator);
+                            f.Close();
                         };
 
                         f.ShowDialog();

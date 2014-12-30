@@ -94,6 +94,8 @@ namespace Queue.Administrator
 
         private async void EditServiceRenderingForm_Load(object sender, EventArgs e)
         {
+            Enabled = false;
+
             using (var channel = channelManager.CreateChannel())
             {
                 try
@@ -113,6 +115,8 @@ namespace Queue.Administrator
                         {
                             Schedule = schedule
                         };
+
+                    Enabled = true;
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

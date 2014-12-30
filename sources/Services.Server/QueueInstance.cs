@@ -273,6 +273,8 @@ namespace Queue.Services.Server
                 todayQueuePlanBuildTimer.Interval = TodayQueuePlanBuildInterval;
             }
 
+            logger.Info("Запуск построения плана очереди");
+
             try
             {
                 if (DateTime.Now.TimeOfDay - TodayQueuePlan.PlanTime >
@@ -304,6 +306,8 @@ namespace Queue.Services.Server
             {
                 todayQueuePlanLoadTimer.Interval = TodayQueuePlanLoadInterval;
             }
+
+            logger.Info("Запуск смены даты плана очереди");
 
             try
             {

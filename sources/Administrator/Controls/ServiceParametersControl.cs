@@ -107,6 +107,7 @@ namespace Queue.Administrator
                                 row = parametersGridView.Rows[parametersGridView.Rows.Add()];
                             }
                             RenderParametersGridViewRow(row, f.ServiceParameterNumber);
+                            f.Close();
                         };
 
                         f.ShowDialog();
@@ -123,6 +124,7 @@ namespace Queue.Administrator
                                 row = parametersGridView.Rows[parametersGridView.Rows.Add()];
                             }
                             RenderParametersGridViewRow(row, f.ServiceParameterText);
+                            f.Close();
                         };
 
                         f.ShowDialog();
@@ -139,6 +141,7 @@ namespace Queue.Administrator
                                 row = parametersGridView.Rows[parametersGridView.Rows.Add()];
                             }
                             RenderParametersGridViewRow(row, f.ServiceParameterOptions);
+                            f.Close();
                         };
 
                         f.ShowDialog();
@@ -164,6 +167,7 @@ namespace Queue.Administrator
                         f.Saved += (s, eventArgs) =>
                         {
                             RenderParametersGridViewRow(row, f.ServiceParameterNumber);
+                            f.Close();
                         };
 
                         f.ShowDialog();
@@ -176,6 +180,7 @@ namespace Queue.Administrator
                         f.Saved += (s, eventArgs) =>
                         {
                             RenderParametersGridViewRow(row, f.ServiceParameterText);
+                            f.Close();
                         };
 
                         f.ShowDialog();
@@ -188,6 +193,7 @@ namespace Queue.Administrator
                         f.Saved += (s, eventArgs) =>
                         {
                             RenderParametersGridViewRow(row, f.ServiceParameterOptions);
+                            f.Close();
                         };
 
                         f.ShowDialog();

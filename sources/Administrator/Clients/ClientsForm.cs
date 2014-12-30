@@ -84,6 +84,7 @@ namespace Queue.Administrator
                     f.Saved += (s, eventArgs) =>
                     {
                         ClientsGridViewRenderRow(row, f.Client);
+                        f.Close();
                     };
 
                     f.ShowDialog();
@@ -178,6 +179,7 @@ namespace Queue.Administrator
                         row.Selected = true;
                     }
                     ClientsGridViewRenderRow(row, f.Client);
+                    f.Close();
                 };
 
                 f.ShowDialog();

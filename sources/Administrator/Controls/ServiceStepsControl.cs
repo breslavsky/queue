@@ -119,6 +119,7 @@ namespace Queue.Administrator
                         row = stepsGridView.Rows[stepsGridView.Rows.Add()];
                     }
                     RenderStepsGridViewRow(row, f.ServiceStep);
+                    f.Close();
                 };
 
                 f.ShowDialog();
@@ -161,11 +162,12 @@ namespace Queue.Administrator
                 var row = stepsGridView.Rows[e.RowIndex];
                 ServiceStep serviceStep = row.Tag as ServiceStep;
 
-                using (var f = new EditServiceStepForm(channelBuilder, currentUser, service.Id, serviceStep.Id))
+                using (var f = new EditServiceStepForm(channelBuilder, currentUser, null, serviceStep.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {
                         RenderStepsGridViewRow(row, f.ServiceStep);
+                        f.Close();
                     };
 
                     f.ShowDialog();

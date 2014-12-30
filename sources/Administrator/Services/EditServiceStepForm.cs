@@ -29,12 +29,14 @@ namespace Queue.Administrator
         private Guid serviceStepId;
         private TaskPool taskPool;
 
-        public EditServiceStepForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid serviceId, Guid? serviceStepId = null)
+        public EditServiceStepForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? serviceId, Guid? serviceStepId = null)
         {
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
-            this.serviceId = serviceId;
-            this.serviceStepId = serviceStepId.HasValue ? serviceStepId.Value : Guid.Empty;
+            this.serviceId = serviceId.HasValue
+                ? serviceId.Value : Guid.Empty;
+            this.serviceStepId = serviceStepId.HasValue
+                ? serviceStepId.Value : Guid.Empty;
 
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
@@ -92,11 +94,16 @@ namespace Queue.Administrator
 
         private async void EditServiceStepForm_Load(object sender, EventArgs e)
         {
+            Enabled = false;
+
             using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
-                    service = await taskPool.AddTask(channel.Service.GetService(serviceId));
+                    if (serviceId != Guid.Empty)
+                    {
+                        service = await taskPool.AddTask(channel.Service.GetService(serviceId));
+                    }
 
                     ServiceStep = serviceStepId != Guid.Empty
                         ? await taskPool.AddTask(channel.Service.GetServiceStep(serviceStepId))
@@ -105,6 +112,8 @@ namespace Queue.Administrator
                             Service = service,
                             Name = "Новый этап"
                         };
+
+                    Enabled = true;
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

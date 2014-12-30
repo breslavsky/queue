@@ -92,7 +92,7 @@
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(195, 30);
             this.stopButton.TabIndex = 12;
-            this.stopButton.Text = "Остановитьсервер";
+            this.stopButton.Text = "Остановить сервер";
             this.stopButton.UseVisualStyleBackColor = true;
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 

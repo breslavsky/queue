@@ -153,6 +153,8 @@ namespace Queue.Administrator
 
         private async void ServiceGroupEdit_Load(object sender, EventArgs e)
         {
+            Enabled = false;
+
             using (var channel = channelManager.CreateChannel())
             {
                 try
@@ -177,6 +179,8 @@ namespace Queue.Administrator
                             Rows = 5
                         };
                     }
+
+                    Enabled = true;
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

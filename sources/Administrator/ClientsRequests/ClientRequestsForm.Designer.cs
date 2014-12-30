@@ -16,12 +16,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientRequestsForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.requestDateCheckBox = new System.Windows.Forms.CheckBox();
@@ -174,7 +174,7 @@
             this.servicePanel.Enabled = false;
             this.servicePanel.Location = new System.Drawing.Point(250, 5);
             this.servicePanel.Name = "servicePanel";
-            this.servicePanel.Size = new System.Drawing.Size(510, 45);
+            this.servicePanel.Size = new System.Drawing.Size(550, 45);
             this.servicePanel.TabIndex = 2;
             this.servicePanel.TabStop = false;
             // 
@@ -193,16 +193,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.serviceControl.Location = new System.Drawing.Point(50, 15);
             this.serviceControl.Name = "serviceControl";
-            this.serviceControl.Size = new System.Drawing.Size(455, 21);
+            this.serviceControl.Size = new System.Drawing.Size(495, 21);
             this.serviceControl.TabIndex = 2;
             this.serviceControl.UseResetButton = false;
             this.serviceControl.Leave += new System.EventHandler(this.serviceControl_Leave);
             // 
             // operatorCheckBox
             // 
-            this.operatorCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.operatorCheckBox.AutoSize = true;
-            this.operatorCheckBox.Location = new System.Drawing.Point(765, 25);
+            this.operatorCheckBox.Location = new System.Drawing.Point(230, 75);
             this.operatorCheckBox.Name = "operatorCheckBox";
             this.operatorCheckBox.Size = new System.Drawing.Size(15, 14);
             this.operatorCheckBox.TabIndex = 3;
@@ -211,11 +210,10 @@
             // 
             // operatorPanel
             // 
-            this.operatorPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.operatorPanel.Controls.Add(this.operatorLabel);
             this.operatorPanel.Controls.Add(this.operatorControl);
             this.operatorPanel.Enabled = false;
-            this.operatorPanel.Location = new System.Drawing.Point(785, 5);
+            this.operatorPanel.Location = new System.Drawing.Point(250, 55);
             this.operatorPanel.Name = "operatorPanel";
             this.operatorPanel.Size = new System.Drawing.Size(220, 45);
             this.operatorPanel.TabIndex = 2;
@@ -259,7 +257,7 @@
             // stateCheckBox
             // 
             this.stateCheckBox.AutoSize = true;
-            this.stateCheckBox.Location = new System.Drawing.Point(230, 75);
+            this.stateCheckBox.Location = new System.Drawing.Point(475, 75);
             this.stateCheckBox.Name = "stateCheckBox";
             this.stateCheckBox.Size = new System.Drawing.Size(15, 14);
             this.stateCheckBox.TabIndex = 5;
@@ -271,7 +269,7 @@
             this.statePanel.Controls.Add(this.stateLabel);
             this.statePanel.Controls.Add(this.stateControl);
             this.statePanel.Enabled = false;
-            this.statePanel.Location = new System.Drawing.Point(250, 55);
+            this.statePanel.Location = new System.Drawing.Point(495, 55);
             this.statePanel.Name = "statePanel";
             this.statePanel.Size = new System.Drawing.Size(220, 45);
             this.statePanel.TabIndex = 6;
@@ -296,7 +294,7 @@
             // 
             // findButton
             // 
-            this.findButton.Location = new System.Drawing.Point(480, 70);
+            this.findButton.Location = new System.Drawing.Point(720, 70);
             this.findButton.Name = "findButton";
             this.findButton.Size = new System.Drawing.Size(75, 25);
             this.findButton.TabIndex = 7;
@@ -351,14 +349,14 @@
             this.clientRequestsGridView.AllowUserToAddRows = false;
             this.clientRequestsGridView.AllowUserToDeleteRows = false;
             this.clientRequestsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.clientRequestsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle13.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.clientRequestsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.clientRequestsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.clientRequestsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.numberColumn,
@@ -392,8 +390,8 @@
             // 
             // numberColumn
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.numberColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.numberColumn.DefaultCellStyle = dataGridViewCellStyle14;
             this.numberColumn.HeaderText = "Номер";
             this.numberColumn.Name = "numberColumn";
             this.numberColumn.ReadOnly = true;
@@ -402,8 +400,8 @@
             // 
             // requestDateColumn
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.requestDateColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.requestDateColumn.DefaultCellStyle = dataGridViewCellStyle15;
             this.requestDateColumn.HeaderText = "Дата";
             this.requestDateColumn.Name = "requestDateColumn";
             this.requestDateColumn.ReadOnly = true;
@@ -412,8 +410,8 @@
             // 
             // requestTimeColumn
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.requestTimeColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.requestTimeColumn.DefaultCellStyle = dataGridViewCellStyle16;
             this.requestTimeColumn.HeaderText = "Время";
             this.requestTimeColumn.Name = "requestTimeColumn";
             this.requestTimeColumn.ReadOnly = true;
@@ -480,9 +478,9 @@
             // 
             // productivityColumn
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.Format = "0";
-            this.productivityColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle17.Format = "0";
+            this.productivityColumn.DefaultCellStyle = dataGridViewCellStyle17;
             this.productivityColumn.HeaderText = "Производительность";
             this.productivityColumn.Name = "productivityColumn";
             this.productivityColumn.ReadOnly = true;
@@ -491,8 +489,8 @@
             // 
             // subjectsColumn
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.subjectsColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.subjectsColumn.DefaultCellStyle = dataGridViewCellStyle18;
             this.subjectsColumn.HeaderText = "Объектов";
             this.subjectsColumn.Name = "subjectsColumn";
             this.subjectsColumn.ReadOnly = true;

@@ -157,6 +157,7 @@ namespace Queue.Administrator
                     }
 
                     treeNode.Text = f.ServiceGroup.ToString();
+                    f.Close();
                 };
 
                 f.ShowDialog();
@@ -200,6 +201,7 @@ namespace Queue.Administrator
                     }
 
                     treeNode.Text = f.Service.ToString();
+                    f.Close();
                 };
 
                 f.ShowDialog();
@@ -218,6 +220,7 @@ namespace Queue.Administrator
                     f.Saved += (s, eventArgs) =>
                     {
                         selectedNode.Text = f.ServiceGroup.ToString();
+                        f.Close();
                     };
 
                     f.ShowDialog();
@@ -237,6 +240,7 @@ namespace Queue.Administrator
                     f.Saved += (s, eventArgs) =>
                     {
                         selectedNode.Text = f.Service.ToString();
+                        f.Close();
                     };
 
                     f.ShowDialog();

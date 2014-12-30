@@ -148,6 +148,8 @@ namespace Queue.Administrator
 
         private async void EditClientRequestForm_Load(object sender, EventArgs e)
         {
+            Enabled = false;
+
             using (var channel = channelManager.CreateChannel())
             {
                 try
@@ -155,6 +157,8 @@ namespace Queue.Administrator
                     operatorControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(UserRole.Operator)));
 
                     ClientRequest = await taskPool.AddTask(channel.Service.GetClientRequest(clientRequestId));
+
+                    Enabled = true;
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

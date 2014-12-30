@@ -119,7 +119,7 @@
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 7;
-            this.saveButton.Text = "Сохранить";
+            this.saveButton.Text = "Записать";
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // terminalPINLabel

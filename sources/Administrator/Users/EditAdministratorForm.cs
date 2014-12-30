@@ -91,6 +91,7 @@ namespace Queue.Administrator
                     try
                     {
                         Administrator = await taskPool.AddTask(channel.Service.GetUser(administratorId)) as QueueAdministrator;
+
                         Enabled = true;
                     }
                     catch (OperationCanceledException) { }

@@ -82,6 +82,7 @@ namespace Queue.Administrator
                     }
 
                     OfficesGridViewRenderRow(row, f.Office);
+                    f.Close();
                 };
 
                 f.ShowDialog();
@@ -228,6 +229,7 @@ namespace Queue.Administrator
                     f.Saved += (s, eventArgs) =>
                     {
                         OfficesGridViewRenderRow(row, f.Office);
+                        f.Close();
                     };
 
                     f.ShowDialog();

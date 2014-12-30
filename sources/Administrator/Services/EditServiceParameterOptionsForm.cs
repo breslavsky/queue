@@ -80,6 +80,8 @@ namespace Queue.Administrator
 
         private async void EditServiceParameterOptionsForm_Load(object sender, EventArgs e)
         {
+            Enabled = false;
+
             using (var channel = channelManager.CreateChannel())
             {
                 try
@@ -96,6 +98,8 @@ namespace Queue.Administrator
                             Service = service,
                             Name = "Новый параметр"
                         };
+
+                    Enabled = true;
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

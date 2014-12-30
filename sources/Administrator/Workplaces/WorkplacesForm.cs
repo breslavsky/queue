@@ -75,6 +75,7 @@ namespace Queue.Administrator
                         row.Selected = true;
                     }
                     WorkplacesGridViewRenderRow(row, f.Workplace);
+                    f.Close();
                 };
 
                 f.ShowDialog();
@@ -130,6 +131,7 @@ namespace Queue.Administrator
                     f.Saved += (s, eventArgs) =>
                     {
                         WorkplacesGridViewRenderRow(row, f.Workplace);
+                        f.Close();
                     };
 
                     f.ShowDialog();

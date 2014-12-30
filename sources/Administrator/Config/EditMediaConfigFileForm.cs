@@ -95,6 +95,8 @@ namespace Queue.Administrator
 
         private async void EditMediaConfigFileForm_Load(object sender, EventArgs e)
         {
+            Enabled = false;
+
             using (var channel = channelManager.CreateChannel())
             {
                 try
@@ -109,6 +111,8 @@ namespace Queue.Administrator
                     {
                         MediaConfigFile = new MediaConfigFile();
                     }
+
+                    Enabled = true;
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

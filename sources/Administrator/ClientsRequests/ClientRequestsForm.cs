@@ -119,6 +119,7 @@ namespace Queue.Administrator
                     f.Saved += (s, eventArgs) =>
                     {
                         RenderClientRequestsGridViewRow(row, f.ClientRequest);
+                        f.Close();
                     };
 
                     f.ShowDialog();

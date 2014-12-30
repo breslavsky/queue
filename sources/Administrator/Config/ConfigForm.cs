@@ -82,7 +82,6 @@ namespace Queue.Administrator
                     {
                         couponConfigControl.Config = await taskPool.AddTask(channel.Service.GetCouponConfig());
                     }
-
                     else if (selectedTab.Equals(SMTPConfigTabPage))
                     {
                         SMTPConfigControl.Config = await taskPool.AddTask(channel.Service.GetSMTPConfig());
