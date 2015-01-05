@@ -9,16 +9,9 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.IO.Packaging;
 using System.Linq;
-using System.Printing;
 using System.ServiceModel;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Markup;
-using System.Windows.Xps.Packaging;
-using System.Xml;
 using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
@@ -218,42 +211,42 @@ namespace Queue.Administrator
                 try
                 {
                     couponMenuItem.Enabled = false;
+                    //TODO переделать!!!!
+                    //var coupon = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequestId));
+                    //var xmlReader = new XmlTextReader(new StringReader(coupon));
+                    //var grid = (Grid)XamlReader.Load(xmlReader);
 
-                    var coupon = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequestId));
-                    var xmlReader = new XmlTextReader(new StringReader(coupon));
-                    var grid = (Grid)XamlReader.Load(xmlReader);
+                    //var xpsFile = Path.GetTempFileName() + ".xps";
 
-                    var xpsFile = Path.GetTempFileName() + ".xps";
+                    //using (var container = Package.Open(xpsFile, FileMode.Create))
+                    //{
+                    //    using (var document = new XpsDocument(container, CompressionOption.SuperFast))
+                    //    {
+                    //        var fixedPage = new FixedPage();
+                    //        fixedPage.Children.Add(grid);
 
-                    using (var container = Package.Open(xpsFile, FileMode.Create))
-                    {
-                        using (var document = new XpsDocument(container, CompressionOption.SuperFast))
-                        {
-                            var fixedPage = new FixedPage();
-                            fixedPage.Children.Add(grid);
+                    //        var pageConent = new PageContent();
+                    //        ((IAddChild)pageConent).AddChild(fixedPage);
 
-                            var pageConent = new PageContent();
-                            ((IAddChild)pageConent).AddChild(fixedPage);
+                    //        var fixedDocument = new FixedDocument();
+                    //        fixedDocument.Pages.Add(pageConent);
 
-                            var fixedDocument = new FixedDocument();
-                            fixedDocument.Pages.Add(pageConent);
+                    //        var xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(document);
+                    //        xpsDocumentWriter.Write(fixedDocument);
+                    //    }
+                    //}
 
-                            var xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(document);
-                            xpsDocumentWriter.Write(fixedDocument);
-                        }
-                    }
-
-                    PrintQueue printQueue;
-                    try
-                    {
-                        printQueue = new PrintServer().GetPrintQueue(settings.DefaultPrintQueue);
-                    }
-                    catch
-                    {
-                        UIHelper.Warning("Ошибка получения принтера, будет использован принтер по умолчанию");
-                        printQueue = LocalPrintServer.GetDefaultPrintQueue();
-                    }
-                    printQueue.AddJob(xpsFile, xpsFile, false);
+                    //PrintQueue printQueue;
+                    //try
+                    //{
+                    //    printQueue = new PrintServer().GetPrintQueue(settings.DefaultPrintQueue);
+                    //}
+                    //catch
+                    //{
+                    //    UIHelper.Warning("Ошибка получения принтера, будет использован принтер по умолчанию");
+                    //    printQueue = LocalPrintServer.GetDefaultPrintQueue();
+                    //}
+                    //printQueue.AddJob(xpsFile, xpsFile, false);
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

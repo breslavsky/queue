@@ -1,20 +1,15 @@
 ﻿using AutoMapper;
+using Junte.Parallel.Common;
+using NHibernate;
 using NHibernate.Criterion;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.ServiceModel;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Markup;
-using System.Xml;
-using ValidationError = Junte.Data.NHibernate.ValidationError;
 
 namespace Queue.Services.Server
 {
@@ -456,277 +451,90 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<string> GetClientRequestCoupon(Guid clientRequestId)
+        public async Task<DTO.CouponData> GetClientRequestCoupon(Guid clientRequestId)
         {
             return await Task.Run(() =>
             {
-                using (var session = sessionProvider.OpenSession())
-                using (var transaction = session.BeginTransaction())
+                using (ISession session = sessionProvider.OpenSession())
+                using (ITransaction transaction = session.BeginTransaction())
                 {
-                    var clientRequest = session.Get<ClientRequest>(clientRequestId);
+                    ClientRequest clientRequest = session.Get<ClientRequest>(clientRequestId);
                     if (clientRequest == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientRequestId), string.Format("Запрос клиента [{0}] не найден", clientRequestId));
+                        throw new FaultException<ObjectNotFoundFault>(
+                            new ObjectNotFoundFault(clientRequestId),
+                            string.Format("Запрос клиента [{0}] не найден", clientRequestId));
                     }
 
-                    string output = string.Empty;
+                    DefaultConfig defaultConfig = session.Get<DefaultConfig>(ConfigType.Default);
 
-                    Exception exception = null;
-
-                    var thread = new Thread(new ThreadStart(() =>
+                    DTO.CouponData result = new DTO.CouponData()
                     {
-                        try
-                        {
-                            var couponConfig = session.Get<CouponConfig>(ConfigType.Coupon);
+                        QueueName = defaultConfig.QueueName,
+                        IsToday = clientRequest.RequestDate == DateTime.Today,
+                        Number = clientRequest.Number,
+                        CreateDate = clientRequest.CreateDate,
+                        RequestDate = clientRequest.RequestDate,
+                        RequestTime = clientRequest.RequestTime,
+                        Subjects = clientRequest.Subjects,
+                        Client = clientRequest.Client == null ? string.Empty : clientRequest.Client.ToString(),
+                        Parameters = clientRequest.Parameters.Select(p => new DTO.CouponDataParam()
+                                                                        {
+                                                                            Name = p.Name,
+                                                                            Value = p.Value
+                                                                        }).ToArray(),
+                        Service = clientRequest.Service.ToString(),
+                        Workplaces = GetCouponWorkplaces(clientRequest)
+                    };
 
-                            var xmlReader = new XmlTextReader(new StringReader(couponConfig.Template));
-                            var grid = XamlReader.Load(xmlReader) as Grid;
-
-                            var defaultConfig = session.Get<DefaultConfig>(ConfigType.Default);
-
-                            object element = grid.FindName("queueName");
-                            if (element != null)
-                            {
-                                try
-                                {
-                                    ((TextBlock)element).Text = defaultConfig.QueueName;
-                                }
-                                catch { }
-                            }
-
-                            element = grid.FindName("clientRequestBlock");
-                            if (element != null)
-                            {
-                                var clientRequestBlock = (FrameworkElement)element;
-                                clientRequestBlock.Visibility = Visibility.Visible;
-
-                                element = clientRequestBlock.FindName("number");
-                                if (element != null)
-                                {
-                                    try
-                                    {
-                                        ((TextBlock)element).Text = clientRequest.Number.ToString();
-                                    }
-                                    catch { }
-                                }
-                                element = clientRequestBlock.FindName("createDate");
-                                if (element != null)
-                                {
-                                    try
-                                    {
-                                        ((TextBlock)element).Text = clientRequest.CreateDate.ToString();
-                                    }
-                                    catch { }
-                                }
-                                element = clientRequestBlock.FindName("requestDate");
-                                if (element != null)
-                                {
-                                    try
-                                    {
-                                        ((TextBlock)element).Text = clientRequest.RequestDate.ToShortDateString();
-                                    }
-                                    catch { }
-                                }
-                                element = clientRequestBlock.FindName("requestTime");
-                                if (element != null)
-                                {
-                                    try
-                                    {
-                                        ((TextBlock)element).Text = clientRequest.RequestTime.ToString("hh\\:mm\\:ss");
-                                    }
-                                    catch { }
-                                }
-                                element = clientRequestBlock.FindName("subjects");
-                                if (element != null)
-                                {
-                                    try
-                                    {
-                                        ((TextBlock)element).Text = clientRequest.Subjects.ToString();
-                                    }
-                                    catch { }
-                                }
-                            }
-
-                            var client = clientRequest.Client;
-
-                            element = grid.FindName("clientBlock");
-                            if (client != null && element != null)
-                            {
-                                var clientBlock = (FrameworkElement)element;
-                                clientBlock.Visibility = Visibility.Visible;
-
-                                element = clientBlock.FindName("client");
-                                if (element != null)
-                                {
-                                    ((TextBlock)element).Text = client.ToString();
-                                }
-                            }
-
-                            element = grid.FindName("parametersGrid");
-                            if (element != null)
-                            {
-                                var parametersGrid = ((Grid)element);
-                                parametersGrid.Visibility = Visibility.Visible;
-
-                                int row = 0;
-                                foreach (var p in clientRequest.Parameters)
-                                {
-                                    parametersGrid.RowDefinitions.Add(new RowDefinition());
-
-                                    var label = new Label()
-                                    {
-                                        Content = p.Name
-                                    };
-                                    label.SetValue(Grid.ColumnProperty, 0);
-                                    label.SetValue(Grid.RowProperty, row);
-                                    parametersGrid.Children.Add(label);
-
-                                    var textBlock = new TextBlock()
-                                    {
-                                        Text = p.Value
-                                    };
-                                    textBlock.SetValue(Grid.ColumnProperty, 1);
-                                    textBlock.SetValue(Grid.RowProperty, row);
-                                    parametersGrid.Children.Add(textBlock);
-
-                                    row++;
-                                }
-                            }
-
-                            var service = clientRequest.Service;
-
-                            element = grid.FindName("serviceBlock");
-                            if (element != null)
-                            {
-                                var serviceBlock = (FrameworkElement)element;
-                                serviceBlock.Visibility = Visibility.Visible;
-
-                                element = serviceBlock.FindName("serviceName");
-                                if (element != null)
-                                {
-                                    try
-                                    {
-                                        ((TextBlock)element).Text = service.ToString();
-                                    }
-                                    catch { }
-                                }
-                            }
-
-                            var requestDate = clientRequest.RequestDate;
-                            var isRequestDateToday = requestDate == DateTime.Today;
-
-                            element = grid.FindName("workplacesBlock");
-                            if (element != null)
-                            {
-                                var workplacesBlock = (FrameworkElement)element;
-                                workplacesBlock.Visibility = Visibility.Visible;
-
-                                element = workplacesBlock.FindName("workplaces");
-                                if (element != null)
-                                {
-                                    QueuePlan queuePlan;
-
-                                    if (isRequestDateToday)
-                                    {
-                                        queuePlan = queueInstance.TodayQueuePlan;
-                                    }
-                                    else
-                                    {
-                                        queuePlan = new QueuePlan();
-                                        queuePlan.Load(requestDate);
-                                        queuePlan.Build();
-                                    }
-
-                                    var workplaces = new List<string>();
-
-                                    using (var locker = queuePlan.ReadLock())
-                                    {
-                                        var serviceRenderingMode = clientRequest.Type == ClientRequestType.Early
-                                            ? ServiceRenderingMode.EarlyRequests
-                                            : ServiceRenderingMode.LiveRequests;
-
-                                        var schedule = queuePlan.GetServiceSchedule(clientRequest.Service);
-                                        foreach (var r in queuePlan.GetServiceRenderings(schedule, clientRequest.ServiceStep, serviceRenderingMode))
-                                        {
-                                            var workplace = r.Operator.Workplace;
-                                            if (workplace != null)
-                                            {
-                                                workplaces.Add(workplace.ToString());
-                                            }
-                                        }
-                                        if (workplaces.Count > 0)
-                                        {
-                                            try
-                                            {
-                                                ((TextBlock)element).Text = string.Join(", ", workplaces);
-                                            }
-                                            catch { }
-                                        }
-                                    }
-                                }
-                            }
-
-                            element = grid.FindName("stateBlock");
-                            if (element != null)
-                            {
-                                var stateBlock = (StackPanel)element;
-
-                                if (clientRequest.Type == ClientRequestType.Live && isRequestDateToday)
-                                {
-                                    stateBlock.Visibility = Visibility.Visible;
-
-                                    var todayQueuePlan = queueInstance.TodayQueuePlan;
-                                    using (var locker = todayQueuePlan.ReadLock())
-                                    {
-                                        foreach (var o in todayQueuePlan.OperatorsPlans)
-                                        {
-                                            var clientRequestPlan = o.ClientRequestPlans
-                                                .FirstOrDefault(p => p.ClientRequest.Equals(clientRequest));
-                                            if (clientRequestPlan != null)
-                                            {
-                                                element = grid.FindName("position");
-                                                if (element != null)
-                                                {
-                                                    ((TextBlock)element).Text = clientRequestPlan.Position.ToString();
-                                                }
-
-                                                var waitingTime = clientRequestPlan.StartTime - DateTime.Now.TimeOfDay;
-                                                element = grid.FindName("waitingTime");
-                                                if (element != null)
-                                                {
-                                                    try
-                                                    {
-                                                        ((TextBlock)element).Text = Math.Round(waitingTime.TotalMinutes).ToString();
-                                                    }
-                                                    catch { }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                            output = XamlWriter.Save(grid);
-                        }
-                        catch (Exception e)
-                        {
-                            exception = e;
-                        }
-                    }));
-
-                    thread.SetApartmentState(ApartmentState.STA);
-                    thread.IsBackground = true;
-                    thread.Start();
-                    thread.Join();
-
-                    if (exception != null)
+                    if (clientRequest.Type == ClientRequestType.Live && result.IsToday)
                     {
-                        throw new FaultException(exception.Message);
+                        QueuePlan todayQueuePlan = queueInstance.TodayQueuePlan;
+                        using (Synchronized.ReadLocker locker = todayQueuePlan.ReadLock())
+                        {
+                            ClientRequestPlan plan = todayQueuePlan.OperatorsPlans
+                                             .SelectMany(p => p.ClientRequestPlans)
+                                             .SingleOrDefault(p => p.Equals(clientRequest));
+                            if (plan != null)
+                            {
+                                result.Position = plan.Position;
+                                result.WaitingTime = plan.StartTime - DateTime.Now.TimeOfDay;
+                            }
+                        }
                     }
 
-                    return output;
+                    return result;
                 }
             });
+        }
+
+        private string[] GetCouponWorkplaces(ClientRequest clientRequest)
+        {
+            QueuePlan queuePlan;
+
+            if (clientRequest.RequestDate == DateTime.Today)
+            {
+                queuePlan = queueInstance.TodayQueuePlan;
+            }
+            else
+            {
+                queuePlan = new QueuePlan();
+                queuePlan.Load(clientRequest.RequestDate);
+                queuePlan.Build();
+            }
+
+            using (Synchronized.ReadLocker locker = queuePlan.ReadLock())
+            {
+                ServiceRenderingMode serviceRenderingMode = clientRequest.Type == ClientRequestType.Early
+                                                    ? ServiceRenderingMode.EarlyRequests
+                                                    : ServiceRenderingMode.LiveRequests;
+
+                Schedule schedule = queuePlan.GetServiceSchedule(clientRequest.Service);
+                return queuePlan.GetServiceRenderings(schedule, clientRequest.ServiceStep, serviceRenderingMode)
+                      .Where(r => r.Operator.Workplace != null)
+                      .Select(r => r.Operator.Workplace.ToString())
+                      .ToArray();
+            }
         }
 
         public async Task<DTO.ClientRequest> EditClientRequest(DTO.ClientRequest source)

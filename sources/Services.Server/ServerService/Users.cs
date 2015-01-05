@@ -186,7 +186,7 @@ namespace Queue.Services.Server
 
                     if (!user.CheckPassword(password))
                     {
-                        throw new FaultException("Не верный пароль");
+                        throw new FaultException("Неверный пароль");
                     }
 
                     var hasGone = user.HasGone;

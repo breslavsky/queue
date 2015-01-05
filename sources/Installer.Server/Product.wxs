@@ -60,7 +60,7 @@
     </DirectoryRef>
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" ></Property>
-    <WixVariable Id="WixUIDialogBmp" Value="leftBanner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="mainBanner.bmp" />
     <WixVariable Id="WixUIBannerBmp" Value="topBAnner.bmp" />
     <UIRef Id="WixUI_Minimal" />
   </Product>

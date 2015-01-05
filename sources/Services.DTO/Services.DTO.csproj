@@ -39,6 +39,8 @@
     <Compile Include="ClientRequest.cs" />
     <Compile Include="ClientRequestParameter.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="CouponData.cs" />
+    <Compile Include="CouponDataParam.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Events\ClientRequestEvent.cs" />
     <Compile Include="Events\Event.cs" />

@@ -54,7 +54,7 @@
     </WixExtension>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="leftBanner.bmp" />
+    <Content Include="mainBanner.bmp" />
     <Content Include="server.ico" />
     <Content Include="topBanner.bmp" />
   </ItemGroup>

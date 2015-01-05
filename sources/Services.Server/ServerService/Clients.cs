@@ -131,7 +131,7 @@ namespace Queue.Services.Server
                 }
                 catch
                 {
-                    throw new FaultException("Указан не верный электронный адрес");
+                    throw new FaultException("Указан неверный электронный адрес");
                 }
 
                 using (var session = sessionProvider.OpenSession())
@@ -148,7 +148,7 @@ namespace Queue.Services.Server
 
                     if (!client.CheckPassword(password))
                     {
-                        throw new FaultException("Не верный пароль");
+                        throw new FaultException("Неверный пароль");
                     }
 
                     return Mapper.Map<Client, DTO.Client>(client);

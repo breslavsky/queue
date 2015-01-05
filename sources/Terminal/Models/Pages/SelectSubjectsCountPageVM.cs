@@ -1,24 +1,17 @@
 ﻿using Junte.UI.WPF;
 using Junte.UI.WPF.Types;
+using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.Packaging;
 using System.Printing;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Threading;
-using System.Windows.Xps;
-using System.Windows.Xps.Packaging;
-using System.Xml;
 
 namespace Queue.Terminal.Models.Pages
 {
@@ -123,9 +116,8 @@ namespace Queue.Terminal.Models.Pages
                             throw new SystemException();
                     }
 
-                    string coupon = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
-                    string xpsFile = CreateXPS(coupon);
-
+                    CouponData data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
+                    string xpsFile = XPSGenerator.FromXaml("", data);
                     try
                     {
                         PrintQueue defaultPrintQueue = LocalPrintServer.GetDefaultPrintQueue();
@@ -133,7 +125,6 @@ namespace Queue.Terminal.Models.Pages
                     }
                     catch
                     {
-                        //exception
                     }
 
                     CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
@@ -172,32 +163,6 @@ namespace Queue.Terminal.Models.Pages
                     loading.Hide();
                 }
             }
-        }
-
-        private string CreateXPS(string coupon)
-        {
-            string xpsFile = Path.GetTempFileName() + ".xps";
-
-            using (XmlTextReader xmlReader = new XmlTextReader(new StringReader(coupon)))
-            using (Package container = Package.Open(xpsFile, FileMode.Create))
-            using (XpsDocument document = new XpsDocument(container, CompressionOption.SuperFast))
-            {
-                Grid grid = (Grid)XamlReader.Load(xmlReader);
-
-                FixedPage fixedPage = new FixedPage();
-                fixedPage.Children.Add(grid);
-
-                PageContent pageConent = new PageContent();
-                ((IAddChild)pageConent).AddChild(fixedPage);
-
-                FixedDocument fixedDocument = new FixedDocument();
-                fixedDocument.Pages.Add(pageConent);
-
-                XpsDocumentWriter xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(document);
-                xpsDocumentWriter.Write(fixedDocument);
-            }
-
-            return xpsFile;
         }
 
         private void Prev()

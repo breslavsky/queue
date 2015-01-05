@@ -9,16 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Packaging;
 using System.Linq;
 using System.Printing;
 using System.ServiceModel;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Markup;
-using System.Windows.Xps.Packaging;
-using System.Xml;
 using SelectionMode = System.Windows.Forms.SelectionMode;
 
 namespace Queue.Administrator
@@ -186,38 +180,39 @@ namespace Queue.Administrator
                             subjectsUpDown.Value = Math.Min(1, subjectsUpDown.Maximum);
                             priorityCheckBox.Checked = false;
 
-                            string coupon = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
-                            var xmlReader = new XmlTextReader(new StringReader(coupon));
-                            var grid = (Grid)XamlReader.Load(xmlReader);
+                            //TODO сделать!!
+                            //string coupon = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
+                            //var xmlReader = new XmlTextReader(new StringReader(coupon));
+                            //var grid = (Grid)XamlReader.Load(xmlReader);
 
-                            xpsCouponFile = Path.GetTempFileName() + ".xps";
+                            //xpsCouponFile = Path.GetTempFileName() + ".xps";
 
-                            using (var container = Package.Open(xpsCouponFile, FileMode.Create))
-                            {
-                                using (var document = new XpsDocument(container, CompressionOption.SuperFast))
-                                {
-                                    var fixedPage = new FixedPage();
-                                    fixedPage.Children.Add(grid);
+                            //using (var container = Package.Open(xpsCouponFile, FileMode.Create))
+                            //{
+                            //    using (var document = new XpsDocument(container, CompressionOption.SuperFast))
+                            //    {
+                            //        var fixedPage = new FixedPage();
+                            //        fixedPage.Children.Add(grid);
 
-                                    var pageConent = new PageContent();
-                                    ((IAddChild)pageConent).AddChild(fixedPage);
+                            //        var pageConent = new PageContent();
+                            //        ((IAddChild)pageConent).AddChild(fixedPage);
 
-                                    var fixedDocument = new FixedDocument();
-                                    fixedDocument.Pages.Add(pageConent);
+                            //        var fixedDocument = new FixedDocument();
+                            //        fixedDocument.Pages.Add(pageConent);
 
-                                    var xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(document);
-                                    xpsDocumentWriter.Write(fixedDocument);
-                                }
-                            }
+                            //        var xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(document);
+                            //        xpsDocumentWriter.Write(fixedDocument);
+                            //    }
+                            //}
 
-                            if (couponAutoPrintCheckBox.Checked)
-                            {
-                                PrintCoupon();
-                            }
-                            else
-                            {
-                                Process.Start(xpsCouponFile);
-                            }
+                            //if (couponAutoPrintCheckBox.Checked)
+                            //{
+                            //    PrintCoupon();
+                            //}
+                            //else
+                            //{
+                            //    Process.Start(xpsCouponFile);
+                            //}
                         }
                     }
                     else

@@ -82,7 +82,7 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<string> GetClientRequestCoupon(Guid clientRequestId);
+        Task<CouponData> GetClientRequestCoupon(Guid clientRequestId);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]

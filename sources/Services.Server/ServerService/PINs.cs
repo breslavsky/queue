@@ -21,7 +21,7 @@ namespace Queue.Services.Server
                 }
                 catch
                 {
-                    throw new FaultException("Не верный электронный адрес");
+                    throw new FaultException("Неверный электронный адрес");
                 }
 
                 using (var session = sessionProvider.OpenSession())
@@ -72,12 +72,12 @@ namespace Queue.Services.Server
                 }
                 catch
                 {
-                    throw new FaultException("Не верный электронный адрес");
+                    throw new FaultException("Неверный электронный адрес");
                 }
 
                 if (!PINUtils.Check(email, source))
                 {
-                    throw new FaultException("Указан не верный PIN-код");
+                    throw new FaultException("Указан неверный PIN-код");
                 }
             });
         }

@@ -7,21 +7,13 @@ using Queue.Services.DTO;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Packaging;
 using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Markup;
-using System.Windows.Xps.Packaging;
-using System.Xml;
-using XamlReader = System.Windows.Markup.XamlReader;
 
 namespace Queue.Services.Portal
 {
@@ -159,33 +151,34 @@ namespace Queue.Services.Portal
             {
                 var xpsFile = Path.GetTempFileName() + ".xps";
 
-                var coupon = await channel.Service.GetClientRequestCoupon(Guid.Parse(requestId));
-                var thread = new Thread(new ThreadStart(() =>
-                {
-                    var xmlReader = new XmlTextReader(new StringReader(coupon));
-                    var grid = (Grid)XamlReader.Load(xmlReader);
+                //TODO сделать!!!!
+                //var coupon = await channel.Service.GetClientRequestCoupon(Guid.Parse(requestId));
+                //var thread = new Thread(new ThreadStart(() =>
+                //{
+                //    var xmlReader = new XmlTextReader(new StringReader(coupon));
+                //    var grid = (Grid)XamlReader.Load(xmlReader);
 
-                    using (var container = Package.Open(xpsFile, FileMode.Create))
-                    {
-                        using (var document = new XpsDocument(container, CompressionOption.SuperFast))
-                        {
-                            var fixedPage = new FixedPage();
-                            fixedPage.Children.Add(grid);
+                //    using (var container = Package.Open(xpsFile, FileMode.Create))
+                //    {
+                //        using (var document = new XpsDocument(container, CompressionOption.SuperFast))
+                //        {
+                //            var fixedPage = new FixedPage();
+                //            fixedPage.Children.Add(grid);
 
-                            var pageConent = new PageContent();
-                            ((IAddChild)pageConent).AddChild(fixedPage);
+                //            var pageConent = new PageContent();
+                //            ((IAddChild)pageConent).AddChild(fixedPage);
 
-                            var fixedDocument = new FixedDocument();
-                            fixedDocument.Pages.Add(pageConent);
+                //            var fixedDocument = new FixedDocument();
+                //            fixedDocument.Pages.Add(pageConent);
 
-                            var xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(document);
-                            xpsDocumentWriter.Write(fixedDocument);
-                        }
-                    }
-                }));
-                thread.SetApartmentState(ApartmentState.STA);
-                thread.Start();
-                thread.Join();
+                //            var xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(document);
+                //            xpsDocumentWriter.Write(fixedDocument);
+                //        }
+                //    }
+                //}));
+                //thread.SetApartmentState(ApartmentState.STA);
+                //thread.Start();
+                //thread.Join();
 
                 response.ContentType = "application/vnd.ms-xpsdocument";
                 return File.OpenRead(xpsFile);
