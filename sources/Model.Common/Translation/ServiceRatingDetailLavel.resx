@@ -118,15 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Day" xml:space="preserve">
-    <value>Day</value>
+    <value>День</value>
   </data>
   <data name="Hour" xml:space="preserve">
-    <value>Hour</value>
+    <value>Час</value>
   </data>
   <data name="Month" xml:space="preserve">
-    <value>Month</value>
+    <value>Месяц</value>
   </data>
   <data name="Year" xml:space="preserve">
-    <value>Year</value>
+    <value>Год</value>
   </data>
 </root>

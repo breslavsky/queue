@@ -61,7 +61,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Все.
+        ///   Looks up a localized string similar to All.
         /// </summary>
         public static string All {
             get {
@@ -70,7 +70,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Terminal.
+        ///   Looks up a localized string similar to Клиенты.
         /// </summary>
         public static string Clients {
             get {
@@ -79,7 +79,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ClientsRequests.
+        ///   Looks up a localized string similar to Запросы клиентов.
         /// </summary>
         public static string ClientsRequests {
             get {
@@ -88,7 +88,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Config.
+        ///   Looks up a localized string similar to Настройки.
         /// </summary>
         public static string Config {
             get {
@@ -97,7 +97,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CurrentSchedule.
+        ///   Looks up a localized string similar to Текущие расписание.
         /// </summary>
         public static string CurrentSchedule {
             get {
@@ -106,7 +106,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DefaultSchedule.
+        ///   Looks up a localized string similar to Расписание по умолчанию.
         /// </summary>
         public static string DefaultSchedule {
             get {
@@ -115,7 +115,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to None.
+        ///   Looks up a localized string similar to Нет.
         /// </summary>
         public static string None {
             get {
@@ -124,7 +124,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Offices.
+        ///   Looks up a localized string similar to Филаилы.
         /// </summary>
         public static string Offices {
             get {
@@ -133,7 +133,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to QueuePlan.
+        ///   Looks up a localized string similar to План очереди.
         /// </summary>
         public static string QueuePlan {
             get {
@@ -142,7 +142,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reports.
+        ///   Looks up a localized string similar to Отчеты.
         /// </summary>
         public static string Reports {
             get {
@@ -151,7 +151,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Services.
+        ///   Looks up a localized string similar to Услуги.
         /// </summary>
         public static string Services {
             get {
@@ -160,7 +160,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Users.
+        ///   Looks up a localized string similar to Пользователи.
         /// </summary>
         public static string Users {
             get {
@@ -169,7 +169,7 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Workplaces.
+        ///   Looks up a localized string similar to Рабочие места.
         /// </summary>
         public static string Workplaces {
             get {

@@ -117,13 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Manager" xml:space="preserve">
-    <value>Менеджер</value>
+  <data name="Day" xml:space="preserve">
+    <value>Day</value>
   </data>
-  <data name="Portal" xml:space="preserve">
-    <value>Портал</value>
+  <data name="Hour" xml:space="preserve">
+    <value>Hour</value>
   </data>
-  <data name="Terminal" xml:space="preserve">
-    <value>Терминал</value>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
   </data>
 </root>

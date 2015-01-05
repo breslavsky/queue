@@ -117,13 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Number" xml:space="preserve">
-    <value>Число</value>
+  <data name="All" xml:space="preserve">
+    <value>Все</value>
   </data>
-  <data name="Options" xml:space="preserve">
-    <value>Выбор</value>
+  <data name="Clients" xml:space="preserve">
+    <value>Terminal</value>
   </data>
-  <data name="Text" xml:space="preserve">
-    <value>Текст</value>
+  <data name="ClientsRequests" xml:space="preserve">
+    <value>ClientsRequests</value>
+  </data>
+  <data name="Config" xml:space="preserve">
+    <value>Config</value>
+  </data>
+  <data name="CurrentSchedule" xml:space="preserve">
+    <value>CurrentSchedule</value>
+  </data>
+  <data name="DefaultSchedule" xml:space="preserve">
+    <value>DefaultSchedule</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Offices" xml:space="preserve">
+    <value>Offices</value>
+  </data>
+  <data name="QueuePlan" xml:space="preserve">
+    <value>QueuePlan</value>
+  </data>
+  <data name="Reports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Workplaces" xml:space="preserve">
+    <value>Workplaces</value>
   </data>
 </root>

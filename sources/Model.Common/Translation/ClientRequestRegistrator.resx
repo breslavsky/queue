@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Manager" xml:space="preserve">
-    <value>Manager</value>
+    <value>Менеджер</value>
   </data>
   <data name="Portal" xml:space="preserve">
-    <value>Portal</value>
+    <value>Портал</value>
   </data>
   <data name="Terminal" xml:space="preserve">
-    <value>Terminal</value>
+    <value>Терминал</value>
   </data>
 </root>

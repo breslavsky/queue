@@ -118,15 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Consultation" xml:space="preserve">
-    <value>Consultation</value>
+    <value>Консультация</value>
   </data>
   <data name="None" xml:space="preserve">
-    <value>Not defined</value>
+    <value>Не определено</value>
   </data>
   <data name="ReceiptOfDocuments" xml:space="preserve">
-    <value>Receipt of documents</value>
+    <value>Прием документов</value>
   </data>
   <data name="ReleaseOfDocuments" xml:space="preserve">
-    <value>Release of documents</value>
+    <value>Выдача документов</value>
   </data>
 </root>

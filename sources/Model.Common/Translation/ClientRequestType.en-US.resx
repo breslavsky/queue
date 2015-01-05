@@ -117,28 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CHAR1" xml:space="preserve">
-    <value>а</value>
+  <data name="Early" xml:space="preserve">
+    <value>Early</value>
   </data>
-  <data name="CHAR2" xml:space="preserve">
-    <value>б</value>
-  </data>
-  <data name="CHAR3" xml:space="preserve">
-    <value>в</value>
-  </data>
-  <data name="CHAR4" xml:space="preserve">
-    <value>г</value>
-  </data>
-  <data name="CHAR5" xml:space="preserve">
-    <value>д</value>
-  </data>
-  <data name="CHAR6" xml:space="preserve">
-    <value>е</value>
-  </data>
-  <data name="CHAR7" xml:space="preserve">
-    <value>ж</value>
-  </data>
-  <data name="CHAR8" xml:space="preserve">
-    <value>з</value>
+  <data name="Live" xml:space="preserve">
+    <value>Live</value>
   </data>
 </root>

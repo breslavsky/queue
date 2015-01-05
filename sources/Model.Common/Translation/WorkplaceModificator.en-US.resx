@@ -117,16 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Consultation" xml:space="preserve">
-    <value>Консультация</value>
+  <data name="A_EN" xml:space="preserve">
+    <value>a</value>
+  </data>
+  <data name="B_EN" xml:space="preserve">
+    <value>b</value>
+  </data>
+  <data name="CHAR1" xml:space="preserve">
+    <value>char1</value>
+  </data>
+  <data name="CHAR2" xml:space="preserve">
+    <value>char2</value>
+  </data>
+  <data name="CHAR3" xml:space="preserve">
+    <value>char3</value>
+  </data>
+  <data name="CHAR4" xml:space="preserve">
+    <value>char4</value>
+  </data>
+  <data name="CHAR5" xml:space="preserve">
+    <value>char5</value>
+  </data>
+  <data name="CHAR6" xml:space="preserve">
+    <value>char6</value>
+  </data>
+  <data name="CHAR7" xml:space="preserve">
+    <value>char7</value>
+  </data>
+  <data name="CHAR8" xml:space="preserve">
+    <value>char8</value>
+  </data>
+  <data name="C_EN" xml:space="preserve">
+    <value>c</value>
+  </data>
+  <data name="D_EN" xml:space="preserve">
+    <value>d</value>
+  </data>
+  <data name="E_EN" xml:space="preserve">
+    <value>e</value>
+  </data>
+  <data name="F_EN" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="G_EN" xml:space="preserve">
+    <value>g</value>
+  </data>
+  <data name="H_EN" xml:space="preserve">
+    <value>h</value>
   </data>
   <data name="None" xml:space="preserve">
-    <value>Не определено</value>
-  </data>
-  <data name="ReceiptOfDocuments" xml:space="preserve">
-    <value>Прием документов</value>
-  </data>
-  <data name="ReleaseOfDocuments" xml:space="preserve">
-    <value>Выдача документов</value>
+    <value> </value>
   </data>
 </root>

@@ -118,24 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Absence" xml:space="preserve">
-    <value>Absence</value>
+    <value>Отсутствует</value>
   </data>
   <data name="Calling" xml:space="preserve">
-    <value>Calling</value>
+    <value>Вызывается</value>
   </data>
   <data name="Canceled" xml:space="preserve">
-    <value>Canceled</value>
+    <value>Отменен</value>
   </data>
   <data name="Postponed" xml:space="preserve">
-    <value>Postponed</value>
+    <value>Отложен</value>
   </data>
   <data name="Rendered" xml:space="preserve">
-    <value>Rendered</value>
+    <value>Обслужен</value>
   </data>
   <data name="Rendering" xml:space="preserve">
-    <value>Rendering</value>
+    <value>Обслуживается</value>
   </data>
   <data name="Waiting" xml:space="preserve">
-    <value>Waiting</value>
+    <value>Ожидание</value>
   </data>
 </root>

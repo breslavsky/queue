@@ -117,43 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="All" xml:space="preserve">
-    <value>All</value>
+  <data name="AllRequests" xml:space="preserve">
+    <value>All requests</value>
   </data>
-  <data name="Clients" xml:space="preserve">
-    <value>Клиенты</value>
+  <data name="EarlyRequests" xml:space="preserve">
+    <value>Early requests</value>
   </data>
-  <data name="ClientsRequests" xml:space="preserve">
-    <value>Запросы клиентов</value>
-  </data>
-  <data name="Config" xml:space="preserve">
-    <value>Настройки</value>
-  </data>
-  <data name="CurrentSchedule" xml:space="preserve">
-    <value>Текущие расписание</value>
-  </data>
-  <data name="DefaultSchedule" xml:space="preserve">
-    <value>Расписание по умолчанию</value>
-  </data>
-  <data name="None" xml:space="preserve">
-    <value>Нет</value>
-  </data>
-  <data name="Offices" xml:space="preserve">
-    <value>Филаилы</value>
-  </data>
-  <data name="QueuePlan" xml:space="preserve">
-    <value>План очереди</value>
-  </data>
-  <data name="Reports" xml:space="preserve">
-    <value>Отчеты</value>
-  </data>
-  <data name="Services" xml:space="preserve">
-    <value>Услуги</value>
-  </data>
-  <data name="Users" xml:space="preserve">
-    <value>Пользователи</value>
-  </data>
-  <data name="Workplaces" xml:space="preserve">
-    <value>Рабочие места</value>
+  <data name="LiveRequests" xml:space="preserve">
+    <value>Live requests</value>
   </data>
 </root>
