@@ -9,7 +9,6 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Types;
 using System;
 using System.Reflection;
 using System.ServiceModel;
@@ -155,6 +154,7 @@ namespace Queue.Terminal
                     await channel.Service.OpenUserSession(loginPage.Model.User.SessionId);
                     container.RegisterInstance<TerminalConfig>(await taskPool.AddTask(channel.Service.GetTerminalConfig()));
                     container.RegisterInstance<DefaultConfig>(await taskPool.AddTask(channel.Service.GetDefaultConfig()));
+                    container.RegisterInstance<CouponConfig>(await taskPool.AddTask(channel.Service.GetCouponConfig()));
                 }
                 catch (FaultException exception)
                 {

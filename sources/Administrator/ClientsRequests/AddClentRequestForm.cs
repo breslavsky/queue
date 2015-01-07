@@ -180,39 +180,19 @@ namespace Queue.Administrator
                             subjectsUpDown.Value = Math.Min(1, subjectsUpDown.Maximum);
                             priorityCheckBox.Checked = false;
 
-                            //TODO сделать!!
-                            //string coupon = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
-                            //var xmlReader = new XmlTextReader(new StringReader(coupon));
-                            //var grid = (Grid)XamlReader.Load(xmlReader);
+                            CouponData data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
+                            CouponConfig config = await taskPool.AddTask(channel.Service.GetCouponConfig());
 
-                            //xpsCouponFile = Path.GetTempFileName() + ".xps";
+                            xpsCouponFile = XPSGenerator.FromXaml(config.Template, data);
 
-                            //using (var container = Package.Open(xpsCouponFile, FileMode.Create))
-                            //{
-                            //    using (var document = new XpsDocument(container, CompressionOption.SuperFast))
-                            //    {
-                            //        var fixedPage = new FixedPage();
-                            //        fixedPage.Children.Add(grid);
-
-                            //        var pageConent = new PageContent();
-                            //        ((IAddChild)pageConent).AddChild(fixedPage);
-
-                            //        var fixedDocument = new FixedDocument();
-                            //        fixedDocument.Pages.Add(pageConent);
-
-                            //        var xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(document);
-                            //        xpsDocumentWriter.Write(fixedDocument);
-                            //    }
-                            //}
-
-                            //if (couponAutoPrintCheckBox.Checked)
-                            //{
-                            //    PrintCoupon();
-                            //}
-                            //else
-                            //{
-                            //    Process.Start(xpsCouponFile);
-                            //}
+                            if (couponAutoPrintCheckBox.Checked)
+                            {
+                                PrintCoupon();
+                            }
+                            else
+                            {
+                                Process.Start(xpsCouponFile);
+                            }
                         }
                     }
                     else

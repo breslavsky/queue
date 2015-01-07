@@ -484,7 +484,7 @@ namespace Queue.Services.Server
                                                                             Value = p.Value
                                                                         }).ToArray(),
                         Service = clientRequest.Service.ToString(),
-                        Workplaces = GetCouponWorkplaces(clientRequest)
+                        Workplaces = string.Join(", ", GetCouponWorkplaces(clientRequest))
                     };
 
                     if (clientRequest.Type == ClientRequestType.Live && result.IsToday)
@@ -497,6 +497,7 @@ namespace Queue.Services.Server
                                              .SingleOrDefault(p => p.Equals(clientRequest));
                             if (plan != null)
                             {
+                                result.HasState = true;
                                 result.Position = plan.Position;
                                 result.WaitingTime = plan.StartTime - DateTime.Now.TimeOfDay;
                             }

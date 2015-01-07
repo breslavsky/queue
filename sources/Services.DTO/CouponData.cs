@@ -34,7 +34,10 @@ namespace Queue.Services.DTO
         public string Service { get; set; }
 
         [DataMember]
-        public string[] Workplaces { get; set; }
+        public string Workplaces { get; set; }
+
+        [DataMember]
+        public bool HasState { get; set; }
 
         [DataMember]
         public int Position { get; set; }

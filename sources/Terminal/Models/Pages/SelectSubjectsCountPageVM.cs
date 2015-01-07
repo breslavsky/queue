@@ -1,5 +1,6 @@
 ﻿using Junte.UI.WPF;
 using Junte.UI.WPF.Types;
+using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.DTO;
@@ -117,7 +118,8 @@ namespace Queue.Terminal.Models.Pages
                     }
 
                     CouponData data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
-                    string xpsFile = XPSGenerator.FromXaml("", data);
+                    string template = ServiceLocator.Current.GetInstance<CouponConfig>().Template;
+                    string xpsFile = XPSGenerator.FromXaml(template, data);
                     try
                     {
                         PrintQueue defaultPrintQueue = LocalPrintServer.GetDefaultPrintQueue();

@@ -19,15 +19,11 @@ namespace Queue.Common
             using (Package container = Package.Open(xpsFile, FileMode.Create))
             using (XpsDocument document = new XpsDocument(container, CompressionOption.SuperFast))
             {
-                FrameworkElement grid = (FrameworkElement)XamlReader.Load(stream);
-                grid.DataContext = new
-                {
-                    Name = "Nau",
-                    Title = "Super"
-                };
+                FrameworkElement root = (FrameworkElement)XamlReader.Load(stream);
+                root.DataContext = dataContext;
 
                 FixedPage fixedPage = new FixedPage();
-                fixedPage.Children.Add(grid);
+                fixedPage.Children.Add(root);
 
                 PageContent pageConent = new PageContent();
                 ((IAddChild)pageConent).AddChild(fixedPage);

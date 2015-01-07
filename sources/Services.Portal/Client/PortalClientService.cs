@@ -1,5 +1,6 @@
 ﻿using Junte.WCF.Common;
 using log4net;
+using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
@@ -11,6 +12,7 @@ using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -149,36 +151,16 @@ namespace Queue.Services.Portal
         {
             using (var channel = channelManager.CreateChannel())
             {
-                var xpsFile = Path.GetTempFileName() + ".xps";
+                string xpsFile = string.Empty;
 
-                //TODO сделать!!!!
-                //var coupon = await channel.Service.GetClientRequestCoupon(Guid.Parse(requestId));
-                //var thread = new Thread(new ThreadStart(() =>
-                //{
-                //    var xmlReader = new XmlTextReader(new StringReader(coupon));
-                //    var grid = (Grid)XamlReader.Load(xmlReader);
+                CouponData data = await channel.Service.GetClientRequestCoupon(Guid.Parse(requestId));
+                CouponConfig config = await channel.Service.GetCouponConfig();
 
-                //    using (var container = Package.Open(xpsFile, FileMode.Create))
-                //    {
-                //        using (var document = new XpsDocument(container, CompressionOption.SuperFast))
-                //        {
-                //            var fixedPage = new FixedPage();
-                //            fixedPage.Children.Add(grid);
+                Thread thread = new Thread(new ThreadStart(() => xpsFile = XPSGenerator.FromXaml(config.Template, data)));
 
-                //            var pageConent = new PageContent();
-                //            ((IAddChild)pageConent).AddChild(fixedPage);
-
-                //            var fixedDocument = new FixedDocument();
-                //            fixedDocument.Pages.Add(pageConent);
-
-                //            var xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(document);
-                //            xpsDocumentWriter.Write(fixedDocument);
-                //        }
-                //    }
-                //}));
-                //thread.SetApartmentState(ApartmentState.STA);
-                //thread.Start();
-                //thread.Join();
+                thread.SetApartmentState(ApartmentState.STA);
+                thread.Start();
+                thread.Join();
 
                 response.ContentType = "application/vnd.ms-xpsdocument";
                 return File.OpenRead(xpsFile);

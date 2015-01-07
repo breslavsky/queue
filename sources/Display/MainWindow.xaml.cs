@@ -21,13 +21,16 @@ namespace Queue.Display
     {
         private DisplayLoginPage loginPage;
 
+        public Version Version { get; set; }
+
         public MainWindow()
             : base()
         {
             InitializeComponent();
 
-            //TODO: вынести в разметку!
-            Title = string.Format("Информационное табло ({0})", Assembly.GetExecutingAssembly().GetName().Version);
+            Version = Assembly.GetExecutingAssembly().GetName().Version;
+
+            DataContext = this;
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)

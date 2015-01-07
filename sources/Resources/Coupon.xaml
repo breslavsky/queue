@@ -19,16 +19,17 @@
         </Style>
     </Grid.Resources>
     <StackPanel Margin="5" VerticalAlignment="Top">
-        <TextBlock x:Name="queueName"
-                   HorizontalAlignment="Center"
+        <TextBlock HorizontalAlignment="Center"
                    FontSize="12"
-                   Text="-"
+                   Text="{Binding QueueName,
+                                  FallbackValue=-}"
                    TextWrapping="Wrap" />
-        <TextBlock x:Name="createDate"
-                   HorizontalAlignment="Right"
+        <TextBlock HorizontalAlignment="Right"
                    FontSize="12"
-                   Text="-" />
-        <GroupBox x:Name="clientRequestBlock" BorderBrush="Black">
+                   Text="{Binding CreateDate,
+                                  StringFormat={}{0:dd.MM.yyyy HH:mm:ss},
+                                  FallbackValue=-}" />
+        <GroupBox BorderBrush="Black">
             <GroupBox.Header>
                 <Label Content="Запрос" FontWeight="Bold" />
             </GroupBox.Header>
@@ -51,47 +52,63 @@
                            HorizontalAlignment="Left"
                            Content="Дата"
                            FontWeight="Bold" />
-                    <TextBlock x:Name="requestDate"
-                               Grid.Row="0"
+                    <TextBlock Grid.Row="0"
                                Grid.Column="1"
                                HorizontalAlignment="Left"
-                               Text="-" />
+                               Text="{Binding RequestDate,
+                                              StringFormat={}{0:dd.MM.yyyy},
+                                              FallbackValue=-}" />
                     <Label Grid.Row="1"
                            HorizontalAlignment="Left"
                            Content="Время"
                            FontWeight="Bold" />
-                    <TextBlock x:Name="requestTime"
-                               Grid.Row="1"
+                    <TextBlock Grid.Row="1"
                                Grid.Column="1"
-                               HorizontalAlignment="Left"
-                               Text="-" />
+                               HorizontalAlignment="Left">
+                        <TextBlock.Text>
+                            <MultiBinding FallbackValue="-" StringFormat="{}{0:00}:{1:00}:{2:00}">
+                                <Binding Path="RequestTime.Hours" />
+                                <Binding Path="RequestTime.Minutes" />
+                                <Binding Path="RequestTime.Seconds" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
                     <Label Grid.Row="2"
                            HorizontalAlignment="Left"
                            Content="Объектов"
                            FontWeight="Bold" />
-                    <TextBlock x:Name="subjects"
-                               Grid.Row="2"
+                    <TextBlock Grid.Row="2"
                                Grid.Column="1"
                                HorizontalAlignment="Left"
-                               Text="-" />
+                               Text="{Binding Subjects,
+                                              FallbackValue=-}" />
                 </Grid>
                 <Border Grid.Row="0"
                         Grid.Column="1"
                         BorderBrush="Black"
                         BorderThickness="1"
                         CornerRadius="5">
-                    <TextBlock x:Name="number"
-                               Grid.Row="0"
+                    <TextBlock Grid.Row="0"
                                Grid.Column="1"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                FontSize="25"
                                FontWeight="Bold"
-                               Text="000" />
+                               Text="{Binding Number,
+                                              FallbackValue=000}" />
                 </Border>
             </Grid>
         </GroupBox>
-        <StackPanel x:Name="stateBlock" Visibility="Collapsed">
+        <StackPanel>
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding HasState}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
             <GroupBox BorderBrush="Black">
                 <GroupBox.Header>
                     <Label Content="Очередь" FontWeight="Bold" />
@@ -109,49 +126,55 @@
                     <Label Grid.Row="0"
                            Content="Позиция"
                            FontWeight="Bold" />
-                    <TextBlock x:Name="position"
-                               Grid.Row="0"
+                    <TextBlock Grid.Row="0"
                                Grid.Column="1"
-                               Text="-" />
+                               Text="{Binding Position,
+                                              FallbackValue=-}" />
                     <Label Grid.Row="1"
                            Content="Время ожидания"
                            FontWeight="Bold" />
-                    <StackPanel Grid.Row="1"
-                                Grid.Column="1"
-                                Orientation="Horizontal">
-                        <TextBlock x:Name="waitingTime" Text="-" />
-                        <Grid Width="5" />
-                        <TextBlock Text="мин." />
-                    </StackPanel>
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="{Binding WaitingTime.TotalMinutes,
+                                              StringFormat={}{0:00} мин.,
+                                              FallbackValue=0 мин.}" />
                 </Grid>
             </GroupBox>
         </StackPanel>
-        <GroupBox x:Name="clientBlock"
-                  BorderBrush="Black"
-                  Visibility="Collapsed">
+        <GroupBox BorderBrush="Black">
+            <GroupBox.Style>
+                <Style TargetType="GroupBox">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Client}" Value="">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Client}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </GroupBox.Style>
             <GroupBox.Header>
                 <Label Content="Клиент" FontWeight="Bold" />
             </GroupBox.Header>
-            <TextBlock x:Name="client"
-                       FontWeight="Bold"
-                       Text="-" />
+            <TextBlock FontWeight="Bold" Text="{Binding Client, FallbackValue=-}" />
         </GroupBox>
-        <GroupBox x:Name="workplacesBlock" BorderBrush="Black">
+        <GroupBox BorderBrush="Black">
             <GroupBox.Header>
                 <Label Content="Места" FontWeight="Bold" />
             </GroupBox.Header>
-            <TextBlock x:Name="workplaces"
-                       Margin="0,5,0,0"
-                       Text="-"
+            <TextBlock Margin="0,5,0,0"
+                       Text="{Binding Workplaces,
+                                      FallbackValue=-}"
                        TextWrapping="Wrap" />
         </GroupBox>
-        <GroupBox x:Name="serviceBlock" BorderBrush="Black">
+        <GroupBox BorderBrush="Black">
             <GroupBox.Header>
                 <Label Content="Услуга" FontWeight="Bold" />
             </GroupBox.Header>
-            <TextBlock x:Name="serviceName"
-                       Margin="0,5,0,0"
-                       Text="-"
+            <TextBlock Margin="0,5,0,0"
+                       Text="{Binding Service,
+                                      FallbackValue=-}"
                        TextWrapping="Wrap" />
         </GroupBox>
     </StackPanel>

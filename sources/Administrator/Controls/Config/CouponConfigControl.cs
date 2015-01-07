@@ -1,27 +1,14 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
+using Queue.Common;
 using Queue.Resources;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.IO.Packaging;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Markup;
-using System.Windows.Xps.Packaging;
-using System.Xml;
 using UserControl = System.Windows.Forms.UserControl;
 
 namespace Queue.Administrator
@@ -92,40 +79,14 @@ namespace Queue.Administrator
 
         private void previewLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs eventArgs)
         {
-            Grid grid;
-
             try
             {
-                var xmlReader = new XmlTextReader(new StringReader(couponTemplateEditor.Text));
-                grid = (Grid)XamlReader.Load(xmlReader);
+                Process.Start(XPSGenerator.FromXaml(couponTemplateEditor.Text, null));
             }
             catch (Exception exception)
             {
                 UIHelper.Warning(exception.Message);
-                return;
             }
-
-            string xpsFile = Path.GetTempFileName() + ".xps";
-
-            using (var container = Package.Open(xpsFile, FileMode.Create))
-            {
-                using (var document = new XpsDocument(container, CompressionOption.SuperFast))
-                {
-                    var fixedPage = new FixedPage();
-                    fixedPage.Children.Add(grid);
-
-                    var pageConent = new PageContent();
-                    ((IAddChild)pageConent).AddChild(fixedPage);
-
-                    var fixedDocument = new FixedDocument();
-                    fixedDocument.Pages.Add(pageConent);
-
-                    var xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(document);
-                    xpsDocumentWriter.Write(fixedDocument);
-                }
-            }
-
-            Process.Start(xpsFile);
         }
 
         private void templateLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
