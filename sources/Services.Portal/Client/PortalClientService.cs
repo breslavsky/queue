@@ -153,7 +153,7 @@ namespace Queue.Services.Portal
             {
                 string xpsFile = string.Empty;
 
-                CouponData data = await channel.Service.GetClientRequestCoupon(Guid.Parse(requestId));
+                ClientRequestCoupon data = await channel.Service.GetClientRequestCoupon(Guid.Parse(requestId));
                 CouponConfig config = await channel.Service.GetCouponConfig();
 
                 Thread thread = new Thread(new ThreadStart(() => xpsFile = XPSGenerator.FromXaml(config.Template, data)));

@@ -117,7 +117,7 @@ namespace Queue.Terminal.Models.Pages
                             throw new SystemException();
                     }
 
-                    CouponData data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
+                    ClientRequestCoupon data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
                     string template = ServiceLocator.Current.GetInstance<CouponConfig>().Template;
                     string xpsFile = XPSGenerator.FromXaml(template, data);
                     try

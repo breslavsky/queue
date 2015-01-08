@@ -214,7 +214,7 @@ namespace Queue.Administrator
                 {
                     couponMenuItem.Enabled = false;
 
-                    CouponData data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
+                    ClientRequestCoupon data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
                     CouponConfig config = await taskPool.AddTask(channel.Service.GetCouponConfig());
                     string xpsFile = XPSGenerator.FromXaml(config.Template, data);
 

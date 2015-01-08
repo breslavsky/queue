@@ -180,7 +180,7 @@ namespace Queue.Administrator
                             subjectsUpDown.Value = Math.Min(1, subjectsUpDown.Maximum);
                             priorityCheckBox.Checked = false;
 
-                            CouponData data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
+                            ClientRequestCoupon data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
                             CouponConfig config = await taskPool.AddTask(channel.Service.GetCouponConfig());
 
                             xpsCouponFile = XPSGenerator.FromXaml(config.Template, data);

@@ -1,5 +1,4 @@
-﻿using Junte.Data.Common;
-using Queue.Common;
+﻿using Queue.Common;
 using System;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,7 +12,7 @@ namespace Queue.UI.WinForms.Controls
             InitializeComponent();
         }
 
-        public void Initialize<T>() where T : struct
+        public void Initialize<T>() where T : struct, IConvertible
         {
             listBox.Items.Clear();
             var items = EnumItem<T>.GetItems();
@@ -22,7 +21,7 @@ namespace Queue.UI.WinForms.Controls
             listBox.Enabled = items.Length > 0;
         }
 
-        public void Select<T>(T value) where T : struct
+        public void Select<T>(T value) where T : struct, IConvertible
         {
             long flags = (long)Enum.ToObject(typeof(T), value);
 
@@ -38,7 +37,7 @@ namespace Queue.UI.WinForms.Controls
             }
         }
 
-        public T Selected<T>() where T : struct
+        public T Selected<T>() where T : struct, IConvertible
         {
             long value = 0;
 

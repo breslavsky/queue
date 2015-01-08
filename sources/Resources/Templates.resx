@@ -118,8 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Coupon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>coupon.xaml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="ClientRequestCoupon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>clientrequestcoupon.xaml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="PortalFooter" xml:space="preserve">
     <value>&lt;p id='copyright'&gt;Система электронной очереди Junte 2007-2013&lt;a href='http://www.junte.ru/queue' target='_blank' class='btn btn-mini' type='button'&gt;junte.ru&lt;/a&gt;&lt;/p&gt;</value>

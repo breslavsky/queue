@@ -198,7 +198,7 @@ namespace Queue.Database
                 {
                     couponConfig = new CouponConfig()
                     {
-                        Template = Templates.Coupon
+                        Template = Templates.ClientRequestCoupon
                     };
                     session.Save(couponConfig);
                 }

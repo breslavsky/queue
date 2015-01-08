@@ -73,9 +73,9 @@ namespace Queue.Resources {
         ///            &lt;Setter Property=&quot;BorderThickness&quot; Value=&quot;2&quot; /&gt;
         ///   [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string Coupon {
+        public static string ClientRequestCoupon {
             get {
-                return ResourceManager.GetString("Coupon", resourceCulture);
+                return ResourceManager.GetString("ClientRequestCoupon", resourceCulture);
             }
         }
         

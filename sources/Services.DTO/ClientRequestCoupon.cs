@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Queue.Services.DTO
 {
     [DataContract]
-    public class CouponData
+    public class ClientRequestCoupon
     {
         [DataMember]
         public string QueueName { get; set; }
@@ -28,7 +28,7 @@ namespace Queue.Services.DTO
         public string Client { get; set; }
 
         [DataMember]
-        public CouponDataParam[] Parameters { get; set; }
+        public ClientRequestParameter[] Parameters { get; set; }
 
         [DataMember]
         public string Service { get; set; }

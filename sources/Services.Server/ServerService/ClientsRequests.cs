@@ -451,7 +451,7 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.CouponData> GetClientRequestCoupon(Guid clientRequestId)
+        public async Task<DTO.ClientRequestCoupon> GetClientRequestCoupon(Guid clientRequestId)
         {
             return await Task.Run(() =>
             {
@@ -468,7 +468,9 @@ namespace Queue.Services.Server
 
                     DefaultConfig defaultConfig = session.Get<DefaultConfig>(ConfigType.Default);
 
-                    DTO.CouponData result = new DTO.CouponData()
+                    // TODO Свои конвертеры для XAML
+                    // TODO Своя модель для купона
+                    DTO.ClientRequestCoupon result = new DTO.ClientRequestCoupon()
                     {
                         QueueName = defaultConfig.QueueName,
                         IsToday = clientRequest.RequestDate == DateTime.Today,
@@ -478,11 +480,7 @@ namespace Queue.Services.Server
                         RequestTime = clientRequest.RequestTime,
                         Subjects = clientRequest.Subjects,
                         Client = clientRequest.Client == null ? string.Empty : clientRequest.Client.ToString(),
-                        Parameters = clientRequest.Parameters.Select(p => new DTO.CouponDataParam()
-                                                                        {
-                                                                            Name = p.Name,
-                                                                            Value = p.Value
-                                                                        }).ToArray(),
+                        Parameters = Mapper.Map<IEnumerable<ClientRequestParameter>, DTO.ClientRequestParameter[]>(clientRequest.Parameters),
                         Service = clientRequest.Service.ToString(),
                         Workplaces = string.Join(", ", GetCouponWorkplaces(clientRequest))
                     };
