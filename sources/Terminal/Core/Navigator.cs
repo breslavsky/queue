@@ -67,7 +67,11 @@ namespace Queue.Terminal.Core
                         switch (userRequest.QueueType)
                         {
                             case ClientRequestType.Live:
-                                SetCurrentPage(PageType.SetUsername);
+
+                                SetCurrentPage(userRequest.SelectedService.ClientRequire ?
+                                    PageType.SetUsername :
+                                    PageType.SelectSubjectsCount);
+
                                 break;
 
                             case ClientRequestType.Early:
@@ -77,7 +81,9 @@ namespace Queue.Terminal.Core
                         break;
 
                     case PageType.SelectDateTime:
-                        SetCurrentPage(PageType.SetUsername);
+                        SetCurrentPage(userRequest.SelectedService.ClientRequire ?
+                                  PageType.SetUsername :
+                                  PageType.SelectSubjectsCount);
                         break;
 
                     case PageType.SetUsername:
@@ -122,11 +128,15 @@ namespace Queue.Terminal.Core
                         break;
 
                     case PageType.SetUsername:
-                        SetCurrentPage(userRequest.QueueType == ClientRequestType.Live ? PageType.SelectRequestType : PageType.SelectDateTime);
+                        SetCurrentPage(userRequest.QueueType == ClientRequestType.Live ?
+                                                PageType.SelectRequestType :
+                                                PageType.SelectDateTime);
                         break;
 
                     case PageType.SelectSubjectsCount:
-                        SetCurrentPage(PageType.SetUsername);
+                        SetCurrentPage(userRequest.SelectedService.ClientRequire ?
+                                   PageType.SetUsername :
+                                   PageType.SelectRequestType);
                         break;
 
                     default:

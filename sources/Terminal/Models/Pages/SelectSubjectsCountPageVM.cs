@@ -88,15 +88,16 @@ namespace Queue.Terminal.Models.Pages
                 {
                     await channel.Service.OpenUserSession(Model.CurrentAdministrator.SessionId);
 
-                    var parameters = new Dictionary<Guid, object>();
+                    Dictionary<Guid, object> parameters = new Dictionary<Guid, object>();
 
+                    Guid clientId = Model.CurrentClient == null ? Guid.Empty : Model.CurrentClient.Id;
                     ClientRequest clientRequest;
 
                     switch (Model.QueueType)
                     {
                         case ClientRequestType.Live:
 
-                            clientRequest = await taskPool.AddTask(channel.Service.AddLiveClientRequest(Model.CurrentClient.Id,
+                            clientRequest = await taskPool.AddTask(channel.Service.AddLiveClientRequest(clientId,
                                                 Model.SelectedService.Id,
                                                 false,
                                                 parameters,
@@ -105,7 +106,7 @@ namespace Queue.Terminal.Models.Pages
 
                         case ClientRequestType.Early:
 
-                            clientRequest = await taskPool.AddTask(channel.Service.AddEarlyClientRequest(Model.CurrentClient.Id,
+                            clientRequest = await taskPool.AddTask(channel.Service.AddEarlyClientRequest(clientId,
                                                 Model.SelectedService.Id,
                                                 Model.SelectedDate.Value,
                                                 Model.SelectedTime.Value,
