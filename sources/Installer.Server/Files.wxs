@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Fragment>
+    <Property Id="SERVICE_NAME" Value="JunteQueueServer" />
+
     <ComponentGroup Id="CoreFiles" Directory="INSTALLFOLDER">
       <Component Id="cmpFBA998017BFAB2D3E6250E76D7D19052" Guid="45C2D3AE-2C90-410B-B71C-266CFC3929F1">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetPath)" />
@@ -10,6 +12,12 @@
       </Component>
       <Component Id="cmp5090F92A55F2CEB484FEC77556060C98" Guid="C23DBBC8-CE01-4638-97E2-AF3E72C4AFF1">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinService.TargetPath)" />
+        <ServiceControl
+           Id="removeQueueService"
+           Name="[SERVICE_NAME]"
+           Stop="both"
+           Remove="both"
+           Wait="yes" />
       </Component>
       <Component Id="cmp1736F4C6BFCEBB7D4352CE8B3C240A6B" Guid="D77EDBF2-C7BB-48CC-920C-0BAB6ADCB612">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinService.TargetPath).config" />
