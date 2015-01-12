@@ -4,6 +4,7 @@ using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.DTO;
+using Queue.UI.Common;
 using Queue.UI.WPF;
 using System;
 using System.Collections.Generic;

@@ -5,6 +5,7 @@ using Queue.Common;
 using Queue.Resources;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.Common;
 using System;
 using System.Diagnostics;
 using System.ServiceModel;

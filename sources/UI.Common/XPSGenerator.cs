@@ -7,7 +7,7 @@ using System.Windows.Xps;
 using System.Windows.Xps.Packaging;
 using System.Xml;
 
-namespace Queue.Common
+namespace Queue.UI.Common
 {
     public class XPSGenerator
     {

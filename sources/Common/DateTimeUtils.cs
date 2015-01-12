@@ -2,6 +2,7 @@
 
 namespace Queue.Common
 {
+    //TODO: переделать как расширение
     public class DateTimeUtils
     {
         public static DateTime BeginOfYear(int year)

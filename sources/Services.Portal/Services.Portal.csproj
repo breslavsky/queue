@@ -92,6 +92,10 @@
       <Project>{d8c34e2b-87c1-4f82-aaf6-6b408e35228e}</Project>
       <Name>Services.DTO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UI.Common\UI.Common.csproj">
+      <Project>{dfb572df-6412-460f-ba17-9c3fedf6fd12}</Project>
+      <Name>UI.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
