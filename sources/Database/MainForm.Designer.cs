@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.topMenu = new System.Windows.Forms.MenuStrip();
+            this.connectButton = new System.Windows.Forms.ToolStripMenuItem();
             this.schemaMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.schemaValidateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.schemaUpdateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,9 +40,8 @@
             this.initDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.demoDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.logTextBox = new System.Windows.Forms.TextBox();
             this.damaskImportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.connectButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.logTextBox = new System.Windows.Forms.TextBox();
             this.topMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +56,13 @@
             this.topMenu.Size = new System.Drawing.Size(628, 24);
             this.topMenu.TabIndex = 0;
             this.topMenu.Text = "menuStrip1";
+            // 
+            // connectButton
+            // 
+            this.connectButton.Name = "connectButton";
+            this.connectButton.Size = new System.Drawing.Size(89, 20);
+            this.connectButton.Text = "Подключить";
+            this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
             // 
             // schemaMenu
             // 
@@ -87,6 +94,7 @@
             this.constraintUpdateMenuItem.Name = "constraintUpdateMenuItem";
             this.constraintUpdateMenuItem.Size = new System.Drawing.Size(191, 22);
             this.constraintUpdateMenuItem.Text = "Обновить связи";
+            this.constraintUpdateMenuItem.Click += new System.EventHandler(this.constraintUpdateMenuItem_Click);
             // 
             // dataMenu
             // 
@@ -137,6 +145,13 @@
             this.importDataMenuItem.Size = new System.Drawing.Size(229, 22);
             this.importDataMenuItem.Text = "Импорт данных";
             // 
+            // damaskImportMenuItem
+            // 
+            this.damaskImportMenuItem.Name = "damaskImportMenuItem";
+            this.damaskImportMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.damaskImportMenuItem.Text = "Импорт из \"Дамаск\"";
+            this.damaskImportMenuItem.Click += new System.EventHandler(this.damaskImportMenuItem_Click);
+            // 
             // logTextBox
             // 
             this.logTextBox.Location = new System.Drawing.Point(5, 30);
@@ -145,20 +160,6 @@
             this.logTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.logTextBox.Size = new System.Drawing.Size(620, 290);
             this.logTextBox.TabIndex = 1;
-            // 
-            // damaskImportMenuItem
-            // 
-            this.damaskImportMenuItem.Name = "damaskImportMenuItem";
-            this.damaskImportMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.damaskImportMenuItem.Text = "Импорт из \"Дамаск\"";
-            this.damaskImportMenuItem.Click += new System.EventHandler(this.damaskImportMenuItem_Click);
-            // 
-            // connectButton
-            // 
-            this.connectButton.Name = "connectButton";
-            this.connectButton.Size = new System.Drawing.Size(89, 20);
-            this.connectButton.Text = "Подключить";
-            this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
             // 
             // MainForm
             // 

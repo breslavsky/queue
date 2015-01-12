@@ -482,5 +482,9 @@ namespace Queue.Database
                 Log(exception.Message);
             }
         }
+
+        private void constraintUpdateMenuItem_Click(object sender, EventArgs e)
+        {
+        }
     }
 }
