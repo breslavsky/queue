@@ -18,7 +18,7 @@ namespace Queue.Notification.UserControls
         {
             InitializeComponent();
 
-            this.Workplace = request.Operator.Workplace.ToString();
+            this.Workplace = request.Operator == null ? string.Empty : request.Operator.Workplace.ToString();
             this.State = request.State.Translate();
 
             Drawing.Color c = Drawing.ColorTranslator.FromHtml(request.Color);
