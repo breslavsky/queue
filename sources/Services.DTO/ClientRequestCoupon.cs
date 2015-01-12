@@ -25,19 +25,19 @@ namespace Queue.Services.DTO
         public int Subjects { get; set; }
 
         [DataMember]
-        public string Client { get; set; }
+        public Client Client { get; set; }
 
         [DataMember]
         public ClientRequestParameter[] Parameters { get; set; }
 
         [DataMember]
-        public string Service { get; set; }
+        public Service Service { get; set; }
 
         [DataMember]
-        public string Workplaces { get; set; }
+        public Workplace[] Workplaces { get; set; }
 
         [DataMember]
-        public bool HasState { get; set; }
+        public bool HasPlanned { get; set; }
 
         [DataMember]
         public int Position { get; set; }

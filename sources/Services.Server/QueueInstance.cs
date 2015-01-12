@@ -350,7 +350,7 @@ namespace Queue.Services.Server
             }
             finally
             {
-                todayQueuePlanBuildTimer.Start();
+                todayQueuePlanLoadTimer.Start();
             }
         }
     }

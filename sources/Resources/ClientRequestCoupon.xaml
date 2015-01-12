@@ -103,7 +103,7 @@
             <StackPanel.Style>
                 <Style TargetType="StackPanel">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding HasState}" Value="False">
+                        <DataTrigger Binding="{Binding HasPlanned}" Value="False">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -163,10 +163,21 @@
             <GroupBox.Header>
                 <Label Content="Места" FontWeight="Bold" />
             </GroupBox.Header>
-            <TextBlock Margin="0,5,0,0"
-                       Text="{Binding Workplaces,
-                                      FallbackValue=-}"
-                       TextWrapping="Wrap" />
+            <ItemsControl ItemsSource="{Binding Workplaces}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Margin="5,0,0,0"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Text="{Binding}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </GroupBox>
         <GroupBox BorderBrush="Black">
             <GroupBox.Header>

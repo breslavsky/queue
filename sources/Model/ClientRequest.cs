@@ -279,6 +279,7 @@ namespace Queue.Model
                 case ClientRequestState.Absence:
                 case ClientRequestState.Canceled:
                     Open();
+                    Operator = null;
                     break;
 
                 default:

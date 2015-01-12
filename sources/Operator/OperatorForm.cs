@@ -114,7 +114,6 @@ namespace Queue.Operator
                             serviceTextBlock.Text = service.ToString();
 
                             serviceTypeControl.Select<ServiceType>(clientRequest.ServiceType);
-                            serviceTypeControl.Enabled = service.IsUseType;
 
                             using (var channel = channelManager.CreateChannel())
                             {
@@ -241,6 +240,7 @@ namespace Queue.Operator
                     case 3:
                         step3Panel.Visible = true;
                         subjectsPanel.Enabled =
+                            serviceTypeControl.Enabled =
                             serviceChangeLink.Enabled = true;
 
                         break;

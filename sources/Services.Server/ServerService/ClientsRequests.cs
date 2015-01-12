@@ -468,46 +468,50 @@ namespace Queue.Services.Server
 
                     DefaultConfig defaultConfig = session.Get<DefaultConfig>(ConfigType.Default);
 
-                    // TODO Свои конвертеры для XAML
-                    // TODO Своя модель для купона
-                    DTO.ClientRequestCoupon result = new DTO.ClientRequestCoupon()
+                    bool isToday = clientRequest.RequestDate == DateTime.Today;
+
+                    DTO.ClientRequestCoupon clientRequestCoupon = new DTO.ClientRequestCoupon()
                     {
                         QueueName = defaultConfig.QueueName,
-                        IsToday = clientRequest.RequestDate == DateTime.Today,
+                        IsToday = isToday,
                         Number = clientRequest.Number,
                         CreateDate = clientRequest.CreateDate,
                         RequestDate = clientRequest.RequestDate,
                         RequestTime = clientRequest.RequestTime,
                         Subjects = clientRequest.Subjects,
-                        Client = clientRequest.Client == null ? string.Empty : clientRequest.Client.ToString(),
                         Parameters = Mapper.Map<IEnumerable<ClientRequestParameter>, DTO.ClientRequestParameter[]>(clientRequest.Parameters),
-                        Service = clientRequest.Service.ToString(),
-                        Workplaces = string.Join(", ", GetCouponWorkplaces(clientRequest))
+                        Service = Mapper.Map<Service, DTO.Service>(clientRequest.Service),
+                        Workplaces = Mapper.Map<Workplace[], DTO.Workplace[]>(GetCouponWorkplaces(clientRequest))
                     };
 
-                    if (clientRequest.Type == ClientRequestType.Live && result.IsToday)
+                    if (clientRequest.Client != null)
+                    {
+                        clientRequestCoupon.Client = Mapper.Map<Client, DTO.Client>(clientRequest.Client);
+                    }
+
+                    if (clientRequest.Type == ClientRequestType.Live && isToday)
                     {
                         QueuePlan todayQueuePlan = queueInstance.TodayQueuePlan;
-                        using (Synchronized.ReadLocker locker = todayQueuePlan.ReadLock())
+                        using (var locker = todayQueuePlan.ReadLock())
                         {
-                            ClientRequestPlan plan = todayQueuePlan.OperatorsPlans
+                            ClientRequestPlan clientRequestPlan = todayQueuePlan.OperatorsPlans
                                              .SelectMany(p => p.ClientRequestPlans)
-                                             .SingleOrDefault(p => p.Equals(clientRequest));
-                            if (plan != null)
+                                             .SingleOrDefault(p => p.ClientRequest.Equals(clientRequest));
+                            if (clientRequestPlan != null)
                             {
-                                result.HasState = true;
-                                result.Position = plan.Position;
-                                result.WaitingTime = plan.StartTime - DateTime.Now.TimeOfDay;
+                                clientRequestCoupon.HasPlanned = true;
+                                clientRequestCoupon.Position = clientRequestPlan.Position;
+                                clientRequestCoupon.WaitingTime = clientRequestPlan.StartTime - DateTime.Now.TimeOfDay;
                             }
                         }
                     }
 
-                    return result;
+                    return clientRequestCoupon;
                 }
             });
         }
 
-        private string[] GetCouponWorkplaces(ClientRequest clientRequest)
+        private Workplace[] GetCouponWorkplaces(ClientRequest clientRequest)
         {
             QueuePlan queuePlan;
 
@@ -522,16 +526,17 @@ namespace Queue.Services.Server
                 queuePlan.Build();
             }
 
-            using (Synchronized.ReadLocker locker = queuePlan.ReadLock())
+            using (var locker = queuePlan.ReadLock())
             {
                 ServiceRenderingMode serviceRenderingMode = clientRequest.Type == ClientRequestType.Early
-                                                    ? ServiceRenderingMode.EarlyRequests
-                                                    : ServiceRenderingMode.LiveRequests;
+                                                            ? ServiceRenderingMode.EarlyRequests
+                                                            : ServiceRenderingMode.LiveRequests;
 
-                Schedule schedule = queuePlan.GetServiceSchedule(clientRequest.Service);
-                return queuePlan.GetServiceRenderings(schedule, clientRequest.ServiceStep, serviceRenderingMode)
+                Schedule serviceSchedule = queuePlan.GetServiceSchedule(clientRequest.Service);
+
+                return queuePlan.GetServiceRenderings(serviceSchedule, clientRequest.ServiceStep, serviceRenderingMode)
                       .Where(r => r.Operator.Workplace != null)
-                      .Select(r => r.Operator.Workplace.ToString())
+                      .Select(r => r.Operator.Workplace)
                       .ToArray();
             }
         }
