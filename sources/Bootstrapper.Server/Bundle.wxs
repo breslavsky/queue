@@ -3,12 +3,16 @@
   <Bundle Name="Bootstrapper.Server"
           Version="1.0.0.0"
           Manufacturer="Junte"
+          DisableModify="yes"
+          DisableRemove="yes"
+          DisableRepair="yes"
+          SplashScreenSourceFile="mainBanner.bmp"
           UpgradeCode="618d72c4-394e-4287-84d0-560951964d87">
     <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense" />
 
     <Chain>
       <PackageGroupRef Id="NetFx45Web" />
-      <MsiPackage Id="ServerInstaller" SourceFile="$(var.Installer.Server.TargetPath)" DisplayInternalUI="yes" />
+      <MsiPackage Id="ServerInstaller" SourceFile="$(var.Installer.Server.TargetPath)" DisplayInternalUI="yes" Visible="yes" Permanent="yes" />
     </Chain>
   </Bundle>
 </Wix>

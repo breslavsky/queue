@@ -3,7 +3,7 @@
   <?define Manufacturer="Junte Ltd"?>
   <?define ProductName="Сервер очереди" ?>
   <?define ProductVersion="1.4.0.1" ?>
-  <?define ProductCode="D2EAEE82-C9AF-4223-916F-7CBB5786D763"?>
+  <?define ProductCode="95BA3132-512E-4DA5-81C4-47F8E5AE817E"?>
   <?define UpgradeCode="58088B57-52CE-4D31-8882-CB4A69FCAFDF"?>
 
   <Product Id="$(var.ProductCode)"
@@ -15,7 +15,7 @@
 
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
-    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MajorUpgrade DowngradeErrorMessage="Более новая версия [ProductName] уже установлена." />
     <MediaTemplate EmbedCab="yes" />
 
     <Icon Id="appIcon" SourceFile="server.ico" />
@@ -65,9 +65,8 @@
     <WixVariable Id="WixUIBannerBmp" Value="topBAnner.bmp" />
     <UI>
       <UIRef Id="WixUI_InstallDir" />
-      <!-- skip licence dialog -->
-      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg" Order="2">1</Publish>
-      <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">1</Publish>
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="2">1</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">1</Publish>
     </UI>
   </Product>
 </Wix>
