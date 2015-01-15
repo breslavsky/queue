@@ -9,7 +9,6 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.ServiceModel;
 using System.Threading;
@@ -217,9 +216,8 @@ namespace Queue.Operator
             {
                 step1Panel.Visible =
                     step2Panel.Visible =
-                    step3Panel.Visible = false;
-
-                subjectsPanel.Enabled =
+                    step3Panel.Visible =
+                    subjectsPanel.Enabled =
                     serviceChangeLink.Enabled =
                     serviceTypeControl.Enabled =
                     serviceStepControl.Enabled = false;
@@ -238,7 +236,7 @@ namespace Queue.Operator
                         break;
 
                     case 3:
-                        step3Panel.Visible = true;
+                        step3Panel.Visible =
                         subjectsPanel.Enabled =
                             serviceTypeControl.Enabled =
                             serviceChangeLink.Enabled = true;
