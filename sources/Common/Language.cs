@@ -1,7 +1,5 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Threading;
-using Translation = Queue.Common.Translation;
 
 namespace Queue.Common
 {

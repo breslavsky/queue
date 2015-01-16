@@ -9,7 +9,6 @@ using Queue.Services.DTO;
 using System;
 using System.Globalization;
 using System.ServiceModel;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
@@ -64,7 +63,7 @@ namespace Queue.UI.WinForms
 
         public Guid UserId { get; set; }
 
-        private async void connect()
+        private async void Connect()
         {
             if (ChannelBuilder != null)
             {
@@ -136,7 +135,7 @@ namespace Queue.UI.WinForms
         {
             try
             {
-                connect();
+                Connect();
             }
             catch (Exception exception)
             {
@@ -209,7 +208,7 @@ namespace Queue.UI.WinForms
 
             if (IsRemember)
             {
-                connect();
+                Connect();
             }
         }
 
@@ -232,7 +231,7 @@ namespace Queue.UI.WinForms
             {
                 try
                 {
-                    connect();
+                    Connect();
                 }
                 catch (Exception exception)
                 {
