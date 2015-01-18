@@ -121,6 +121,9 @@
       <Component Id="cmp0190C0FD8E77455A3A7B6B89B5E19886" Guid="B3CDFFA6-C7A7-4594-8E03-51B86534DEDF">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Queue.Services.Server.dll" />
       </Component>
+      <Component Id="cmp2D83E85939F24F429AE3E686F5831E1C" Guid="2D83E859-39F2-4F42-9AE3-E686F5831E1C">
+        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Queue.Common.dll" />
+      </Component>
     </ComponentGroup>
   </Fragment>
 </Wix>

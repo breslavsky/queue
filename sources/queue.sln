@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{3F1EECC0-3B45-4A62-8101-0FDCC7293D29}"
 EndProject
@@ -101,6 +101,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hosts.Portal.WinForms", "Hosts.Portal.WinForms\Hosts.Portal.WinForms.csproj", "{E7FB7092-EF47-4CB6-BAB1-1F36326FE06A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hosts.Portal.WinService", "Hosts.Portal.WinService\Hosts.Portal.WinService.csproj", "{C6A4DF4F-9F73-4BF3-98B7-07BB385DAA1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hosts.Common", "Hosts.Common\Hosts.Common.csproj", "{923639FF-DBB2-411F-9611-A295B2C71B54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -507,6 +509,16 @@ Global
 		{C6A4DF4F-9F73-4BF3-98B7-07BB385DAA1A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C6A4DF4F-9F73-4BF3-98B7-07BB385DAA1A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C6A4DF4F-9F73-4BF3-98B7-07BB385DAA1A}.Release|x86.ActiveCfg = Release|Any CPU
+		{923639FF-DBB2-411F-9611-A295B2C71B54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{923639FF-DBB2-411F-9611-A295B2C71B54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{923639FF-DBB2-411F-9611-A295B2C71B54}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{923639FF-DBB2-411F-9611-A295B2C71B54}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{923639FF-DBB2-411F-9611-A295B2C71B54}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{923639FF-DBB2-411F-9611-A295B2C71B54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{923639FF-DBB2-411F-9611-A295B2C71B54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{923639FF-DBB2-411F-9611-A295B2C71B54}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{923639FF-DBB2-411F-9611-A295B2C71B54}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{923639FF-DBB2-411F-9611-A295B2C71B54}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -532,5 +544,6 @@ Global
 		{618D72C4-394E-4287-84D0-560951964D87} = {0DADF4F9-BC60-44C0-9DBE-01695940B394}
 		{E7FB7092-EF47-4CB6-BAB1-1F36326FE06A} = {FDE55A47-7E08-41A2-A05E-86048F913703}
 		{C6A4DF4F-9F73-4BF3-98B7-07BB385DAA1A} = {FDE55A47-7E08-41A2-A05E-86048F913703}
+		{923639FF-DBB2-411F-9611-A295B2C71B54} = {FDE55A47-7E08-41A2-A05E-86048F913703}
 	EndGlobalSection
 EndGlobal

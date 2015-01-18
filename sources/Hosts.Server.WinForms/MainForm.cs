@@ -1,35 +1,42 @@
 ﻿using Junte.Data.NHibernate;
 using Junte.UI.WinForms;
 using log4net;
+using Queue.Common;
+using Queue.Hosts.Common;
 using Queue.Hosts.Server.WinForms.Properties;
 using Queue.Server;
 using System;
-using System.Configuration;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Queue.Hosts.Server.WinForms
 {
     public partial class MainForm : Form
     {
+        private const string AppName = "Queue.Server";
         private readonly ILog logger = LogManager.GetLogger(typeof(MainForm));
+
+        private const string ServiceName = "JunteQueueServer";
+        private const string ServiceExe = "Queue.Hosts.Server.WinService.exe";
 
         private const string InstallServiceButtonTitle = "Установить сервис";
         private const string UnistallServiceButtonTitle = "Удалить сервис";
         private const string StartServiceButtonTitle = "Запустить сервис";
         private const string StopServiceButtonTitle = "Остановить сервис";
 
-        private Configuration configuration;
+        private ApplicationConfigurationManager configuration;
         private ServerSettings settings;
         private ServerInstance server;
-        private ServerServiceManager serviceManager;
+        private ServiceManager serviceManager;
         private bool started;
 
         public MainForm()
         {
             InitializeComponent();
 
-            serviceManager = new ServerServiceManager();
+            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ServiceExe);
+            serviceManager = new ServiceManager(ServiceName, exePath);
             LoadConfiguration();
 
             editDatabaseSettingsControl.Settings = settings.Database;
@@ -38,30 +45,13 @@ namespace Queue.Hosts.Server.WinForms
 
         private void LoadConfiguration()
         {
-            configuration = GetConfiguration();
-            settings = configuration.GetSection("server") as ServerSettings;
-
-            if (settings == null)
-            {
-                settings = new ServerSettings()
-                {
-                    Database = GetDefaultDatabaseSettings(),
-                    Services = GetDefaultServicesConfig(),
-                    Debug = true
-                };
-                configuration.Sections.Add("server", settings);
-            }
-        }
-
-        private Configuration GetConfiguration()
-        {
-            ExeConfigurationFileMap configMap = new ExeConfigurationFileMap();
-            configMap.ExeConfigFilename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                                                                    "Junte",
-                                                                    "Queue.Server",
-                                                                    "app.config");
-
-            return ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
+            configuration = new ApplicationConfigurationManager(AppName);
+            settings = configuration.GetSection<ServerSettings>("server", (s) =>
+                                                                            {
+                                                                                s.Database = GetDefaultDatabaseSettings();
+                                                                                s.Services = GetDefaultServicesConfig();
+                                                                                s.Debug = true;
+                                                                            });
         }
 
         private DatabaseSettings GetDefaultDatabaseSettings()

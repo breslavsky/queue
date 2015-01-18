@@ -1,8 +1,8 @@
-﻿using System.Configuration;
+﻿using Queue.Common;
 
 namespace Queue.Portal
 {
-    public class PortalSettings : ConfigurationSection
+    public class PortalSettings : ApplicationSettings
     {
     }
 }

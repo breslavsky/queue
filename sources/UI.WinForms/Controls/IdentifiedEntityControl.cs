@@ -8,17 +8,11 @@ namespace Queue.UI.WinForms
     {
         public bool UseResetButton
         {
-            get
-            {
-                return resetButton.Visible;
-            }
-            set
-            {
-                resetButton.Visible = value;
-            }
+            get { return resetButton.Visible; }
+            set { resetButton.Visible = value; }
         }
 
-        public event EventHandler<EventArgs> SelectedChanged;
+        public event EventHandler<EventArgs> SelectedChanged = delegate { };
 
         private bool frozen = true;
 
@@ -71,10 +65,12 @@ namespace Queue.UI.WinForms
 
         private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (SelectedChanged != null && !frozen)
+            if (frozen)
             {
-                SelectedChanged(this, new EventArgs());
+                return;
             }
+
+            SelectedChanged(this, null);
         }
     }
 }

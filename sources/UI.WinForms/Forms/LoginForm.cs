@@ -1,9 +1,9 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
+using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
 using Queue.Model.Common;
-using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
@@ -13,18 +13,21 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class LoginForm : Queue.UI.WinForms.RichForm
+    public partial class LoginForm : RichForm
     {
+        private const string SectionKey = "login";
+
         private readonly TaskPool taskPool;
         private readonly UserRole userRole;
-        private ChannelManager<IServerTcpService> channelManager;
+        private LoginFormSettings settings;
+        private IApplicationConfigurationManager configuration;
 
         public LoginForm(UserRole userRole)
             : base()
         {
-            this.userRole = userRole;
-
             InitializeComponent();
+
+            this.userRole = userRole;
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
@@ -33,79 +36,62 @@ namespace Queue.UI.WinForms
             languageControl.Initialize<Language>();
         }
 
-        public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
-
-        public string Endpoint
+        private void LoginForm_Load(object sender, EventArgs e)
         {
-            get { return endpointTextBox.Text; }
-            set { endpointTextBox.Text = value; }
-        }
+            configuration = ServiceLocator.Current.GetInstance<IApplicationConfigurationManager>();
+            settings = configuration.GetSection<LoginFormSettings>(SectionKey);
 
-        public bool IsRemember
-        {
-            get { return rememberCheckBox.Checked; }
-            set { rememberCheckBox.Checked = value; }
-        }
+            loginFormSettingsBindingSource.DataSource = settings;
 
-        public string Password
-        {
-            get { return passwordTextBox.Text; }
-            set
+            languageControl.Select<Language>(CultureInfo.CurrentCulture.GetLanguage());
+            serverConnectionSettingsControl.Initialize(userRole, taskPool);
+            serverConnectionSettingsControl.OnConnected += OnConnected;
+            serverConnectionSettingsControl.OnSubmit += OnSubmit;
+
+            if (settings.IsRemember)
             {
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    passwordTextBox.Text = value;
-                }
+                serverConnectionSettingsControl.Connect();
             }
+        }
+
+        public DuplexChannelBuilder<IServerTcpService> ChannelBuilder
+        {
+            get { return serverConnectionSettingsControl.ChannelBuilder; }
+        }
+
+        public ServerConnectionSettings ConnectionSettings
+        {
+            get { return serverConnectionSettingsControl.ConnectionSettings; }
         }
 
         public User User { get; private set; }
 
-        public Guid UserId { get; set; }
-
-        private async void Connect()
+        private void languageControl_SelectedChanged(object sender, EventArgs e)
         {
-            if (ChannelBuilder != null)
-            {
-                ChannelBuilder.Dispose();
-            }
+            Language language = languageControl.Selected<Language>();
+            language.SetCurrent();
 
-            try
+            Translate();
+        }
+
+        private async void Login()
+        {
+            User selectedUser = serverConnectionSettingsControl.SelectedUSer;
+            if (selectedUser == null)
             {
-                ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
-            }
-            catch (Exception exception)
-            {
-                UIHelper.Warning(exception.Message);
                 return;
             }
 
-            if (channelManager != null)
-            {
-                channelManager.Dispose();
-            }
-            channelManager = new ChannelManager<IServerTcpService>(ChannelBuilder);
-
-            bool connected = false;
-
-            using (var channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = serverConnectionSettingsControl.ChannelManager.CreateChannel())
             {
                 try
                 {
-                    connectButton.Enabled = false;
+                    loginButton.Enabled = false;
 
-                    usersControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(userRole)));
-                    if (UserId != Guid.Empty)
-                    {
-                        usersControl.Select<User>(new User() { Id = UserId });
-                    }
+                    User = await taskPool.AddTask(channel.Service.UserLogin(selectedUser.Id, ConnectionSettings.Password));
 
-                    passwordTextBox.Focus();
-
-                    connected = true;
-
-                    connectionGroupBox.Enabled = false;
-                    loginGroupBox.Enabled = true;
+                    configuration.Save();
+                    DialogResult = DialogResult.OK;
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -121,122 +107,32 @@ namespace Queue.UI.WinForms
                 }
                 finally
                 {
-                    connectButton.Enabled = true;
-                }
-            }
-
-            if (connected && IsRemember)
-            {
-                login();
-            }
-        }
-
-        private void connectButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Connect();
-            }
-            catch (Exception exception)
-            {
-                UIHelper.Warning(exception.Message);
-            }
-        }
-
-        private void languageControl_SelectedChanged(object sender, EventArgs e)
-        {
-            Language language = languageControl.Selected<Language>();
-            language.SetCurrent();
-
-            Translate();
-        }
-
-        private async void login()
-        {
-            User selectedUser = usersControl.Selected<User>();
-            if (selectedUser != null)
-            {
-                UserId = selectedUser.Id;
-
-                using (var channel = channelManager.CreateChannel())
-                {
-                    try
-                    {
-                        loginButton.Enabled = false;
-
-                        User = await taskPool.AddTask(channel.Service.UserLogin(UserId, passwordTextBox.Text));
-                        DialogResult = DialogResult.OK;
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
-                    finally
-                    {
-                        loginButton.Enabled = true;
-                        passwordTextBox.Focus();
-                    }
+                    loginButton.Enabled = true;
                 }
             }
         }
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            login();
+            Login();
         }
 
         private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Dispose();
-            if (channelManager != null)
-            {
-                channelManager.Dispose();
-            }
+            serverConnectionSettingsControl.Close();
         }
 
-        private void LoginForm_Load(object sender, EventArgs e)
+        private void OnSubmit(object sender, EventArgs e)
         {
-            languageControl.Select<Language>(CultureInfo.CurrentCulture.GetLanguage());
-
-            if (IsRemember)
-            {
-                Connect();
-            }
+            Login();
         }
 
-        private void passwordTextBox_Enter(object sender, EventArgs e)
+        private void OnConnected(object sender, EventArgs e)
         {
-            passwordTextBox.SelectAll();
-        }
-
-        private void passwordTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
+            if (settings.IsRemember)
             {
-                login();
-            }
-        }
-
-        private void serverTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                try
-                {
-                    Connect();
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
+                Login();
             }
         }
 
@@ -248,6 +144,15 @@ namespace Queue.UI.WinForms
         private void taskPool_OnRemoveTask(object sender, EventArgs e)
         {
             Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
+        public static void ResetSettings()
+        {
+            IApplicationConfigurationManager configuration = ServiceLocator.Current.GetInstance<IApplicationConfigurationManager>();
+            LoginFormSettings settings = configuration.GetSection<LoginFormSettings>(SectionKey);
+            settings.IsRemember = false;
+
+            configuration.Save();
         }
     }
 }

@@ -117,20 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="loginFormSettingsBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="connectButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
-        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAAsMAAALDAE/QCLIAAAAGHRFWHRTb2Z0d2FyZQBBZG9i
-        ZSBGaXJld29ya3NPsx9OAAABSUlEQVQ4T4XTvUoDQRSG4ZSbnyKpkltImxUMQiA3YqWC9oIIYmUT0msv
-        BCtLLQRB0FJvQTsbQeNPP77fcg4cJwsWT8jMOd9kZrLbSCn9qyzLJmZYIuEcPdVqAxGNbVxZMLrHoDbk
-        aOji1gKfOMAeXm1uURsUin08WOMPpqG2ZfOrQUdxiE3sY5TVjqEFln9CViygrT7iGRcYh/oEfpnzPNzC
-        jRVzA6zh28bXKGK4gzsrvmMHGzjDJXScN6iui+0oF8N+22pSs0KnWIcuTYuqrh+pwtUCDHRmbUdFbU/b
-        1HY1zul4LQ/7AnMrfmDiBb6PoQt8wRN0sUUMixr1gGiBw1hgPIL+Qh1nGGuRGn172z7J9yn08GheD1M/
-        hiI1L6xRj+cujuC70sV264JOC+jC9GL4TpxeoHZdKKo+aOxBr6iCXzhBM29elRq/Ewz3eT0Ik8wAAAAA
-        SUVORK5CYII=
-</value>
-  </data>
   <data name="loginButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O

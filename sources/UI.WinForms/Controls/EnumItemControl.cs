@@ -1,5 +1,4 @@
-﻿using Junte.Data.Common;
-using Queue.Common;
+﻿using Queue.Common;
 using System;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,14 +7,14 @@ namespace Queue.UI.WinForms
 {
     public partial class EnumItemControl : UserControl
     {
+        public event EventHandler<EventArgs> SelectedChanged;
+
+        private bool frozen = true;
+
         public EnumItemControl()
         {
             InitializeComponent();
         }
-
-        public event EventHandler<EventArgs> SelectedChanged;
-
-        private bool frozen = true;
 
         public void Initialize<T>() where T : struct
         {

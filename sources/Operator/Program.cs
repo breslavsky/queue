@@ -1,4 +1,5 @@
-﻿using Queue.Model.Common;
+﻿using Queue.Common;
+using Queue.Model.Common;
 using Queue.UI.WinForms;
 using System;
 using System.Windows.Forms;
@@ -8,6 +9,8 @@ namespace Queue.Operator
 {
     internal static class Program
     {
+        private string private const string AppName = "Queue.Operator";
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -16,6 +19,15 @@ namespace Queue.Operator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            ApplicationConfigurationManager configuration = new ApplicationConfigurationManager(AppName);
+            settings = configuration.GetSection<ServerConnectionSettings>("connection", () =>
+                                                                new ServerConnectionSettings()
+                                                                {
+                                                                    Database = GetDefaultDatabaseSettings(),
+                                                                    Services = GetDefaultServicesConfig(),
+                                                                    Debug = true
+                                                                });
 
             Properties.Settings settings = Properties.Settings.Default;
 

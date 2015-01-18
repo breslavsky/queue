@@ -152,7 +152,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ServerServiceManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -166,6 +165,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{6bc9beb5-51ab-49b8-a46c-ca9ca59b2976}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hosts.Common\Hosts.Common.csproj">
+      <Project>{923639ff-dbb2-411f-9611-a295b2c71b54}</Project>
+      <Name>Hosts.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Server\Server.csproj">
       <Project>{8ef18975-59b4-4084-9127-7adfd12129a3}</Project>
       <Name>Server</Name>

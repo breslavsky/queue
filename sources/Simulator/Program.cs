@@ -1,4 +1,5 @@
-﻿using Queue.Model.Common;
+﻿using Queue.Common;
+using Queue.Model.Common;
 using Queue.UI.WinForms;
 using System;
 using System.Windows.Forms;
@@ -18,19 +19,21 @@ namespace Queue.Simulator
 
             while (true)
             {
-                using (LoginForm loginForm = new LoginForm(UserRole.Administrator)
+                using (LoginForm loginForm = new LoginForm(UserRole.Administrator, new ServerConnectionSettings()
+                    {
+                        Endpoint = settings.Endpoint,
+                        User = settings.UserId,
+                        Password = settings.Password,
+                    })
                 {
-                    Endpoint = settings.Endpoint,
-                    UserId = settings.UserId,
-                    Password = settings.Password,
                     IsRemember = settings.IsRemember
                 })
                 {
                     if (loginForm.ShowDialog() == DialogResult.OK)
                     {
-                        settings.Endpoint = loginForm.Endpoint;
-                        settings.UserId = loginForm.UserId;
-                        settings.Password = loginForm.Password;
+                        settings.Endpoint = loginForm.ConnectionSettings.Endpoint;
+                        settings.UserId = loginForm.ConnectionSettings.User;
+                        settings.Password = loginForm.ConnectionSettings.Password;
                         settings.IsRemember = loginForm.IsRemember;
                         settings.Save();
 

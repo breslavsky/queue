@@ -35,14 +35,8 @@ namespace Queue.Portal
 
         private int port
         {
-            get
-            {
-                return (int)portUpDown.Value;
-            }
-            set
-            {
-                portUpDown.Value = value;
-            }
+            get { return (int)portUpDown.Value; }
+            set { portUpDown.Value = value; }
         }
 
         [DllImport("shell32.dll")]

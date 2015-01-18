@@ -15,7 +15,7 @@ namespace Queue.UI.WinForms.Controls
         public void Initialize<T>() where T : struct, IConvertible
         {
             listBox.Items.Clear();
-            var items = EnumItem<T>.GetItems();
+            EnumItem<T>[] items = EnumItem<T>.GetItems();
             items.Where(i => (long)Enum.ToObject(typeof(T), i.Value) != 0);
             listBox.Items.AddRange(items);
             listBox.Enabled = items.Length > 0;
