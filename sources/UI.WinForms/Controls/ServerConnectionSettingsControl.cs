@@ -19,7 +19,7 @@ namespace Queue.UI.WinForms.Controls
 
         private UserRole userRole;
         private TaskPool taskPool;
-        private IApplicationConfigurationManager configuration;
+        private IConfigurationManager configuration;
 
         public ChannelManager<IServerTcpService> ChannelManager { get; private set; }
 
@@ -46,7 +46,7 @@ namespace Queue.UI.WinForms.Controls
             this.userRole = userRole;
             this.taskPool = taskPool;
 
-            configuration = ServiceLocator.Current.GetInstance<IApplicationConfigurationManager>();
+            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
             ConnectionSettings = configuration.GetSection<ServerConnectionSettings>(SectionKey, (s) => s.Endpoint = "net.tcp://queue:4505");
 
             serverConnectionSettingsBindingSource.DataSource = ConnectionSettings;
@@ -170,7 +170,7 @@ namespace Queue.UI.WinForms.Controls
 
         public static void ResetSettings()
         {
-            IApplicationConfigurationManager configuration = ServiceLocator.Current.GetInstance<IApplicationConfigurationManager>();
+            IConfigurationManager configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
             ServerConnectionSettings connection = configuration.GetSection<ServerConnectionSettings>(SectionKey);
             connection.Password = string.Empty;
 

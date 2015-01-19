@@ -3,7 +3,7 @@ using System.Configuration;
 
 namespace Queue.Common
 {
-    public interface IApplicationConfigurationManager
+    public interface IConfigurationManager
     {
         T GetSection<T>(string key, Action<T> initialize = null) where T : ConfigurationSection, new();
 

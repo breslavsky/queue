@@ -20,7 +20,7 @@ namespace Queue.UI.WinForms
         private readonly TaskPool taskPool;
         private readonly UserRole userRole;
         private LoginFormSettings settings;
-        private IApplicationConfigurationManager configuration;
+        private IConfigurationManager configuration;
 
         public LoginForm(UserRole userRole)
             : base()
@@ -38,7 +38,7 @@ namespace Queue.UI.WinForms
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            configuration = ServiceLocator.Current.GetInstance<IApplicationConfigurationManager>();
+            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
             settings = configuration.GetSection<LoginFormSettings>(SectionKey);
 
             loginFormSettingsBindingSource.DataSource = settings;
@@ -148,7 +148,7 @@ namespace Queue.UI.WinForms
 
         public static void ResetSettings()
         {
-            IApplicationConfigurationManager configuration = ServiceLocator.Current.GetInstance<IApplicationConfigurationManager>();
+            IConfigurationManager configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
             LoginFormSettings settings = configuration.GetSection<LoginFormSettings>(SectionKey);
             settings.IsRemember = false;
 

@@ -20,7 +20,7 @@ namespace Queue.Operator
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            ApplicationConfigurationManager configuration = new ApplicationConfigurationManager(AppName);
+            ConfigurationManager configuration = new ConfigurationManager(AppName);
             settings = configuration.GetSection<ServerConnectionSettings>("connection", () =>
                                                                 new ServerConnectionSettings()
                                                                 {

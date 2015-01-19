@@ -25,7 +25,7 @@ namespace Queue.Hosts.Server.WinForms
         private const string StartServiceButtonTitle = "Запустить сервис";
         private const string StopServiceButtonTitle = "Остановить сервис";
 
-        private ApplicationConfigurationManager configuration;
+        private ConfigurationManager configuration;
         private ServerSettings settings;
         private ServerInstance server;
         private ServiceManager serviceManager;
@@ -45,7 +45,7 @@ namespace Queue.Hosts.Server.WinForms
 
         private void LoadConfiguration()
         {
-            configuration = new ApplicationConfigurationManager(AppName);
+            configuration = new ConfigurationManager(AppName);
             settings = configuration.GetSection<ServerSettings>("server", (s) =>
                                                                             {
                                                                                 s.Database = GetDefaultDatabaseSettings();

@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Configuration;
 using System.IO;
+using System.Reflection;
+using NetConfigurationManager = System.Configuration.ConfigurationManager;
 
 namespace Queue.Common
 {
-    public class ApplicationConfigurationManager : IApplicationConfigurationManager
+    public class ConfigurationManager : IConfigurationManager
     {
         private string app;
         private Configuration configuration;
 
-        public ApplicationConfigurationManager(string app)
+        public ConfigurationManager(string app)
         {
             this.app = app;
 
@@ -21,10 +23,10 @@ namespace Queue.Common
             ExeConfigurationFileMap configMap = new ExeConfigurationFileMap();
             configMap.ExeConfigFilename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                                                                     "Junte",
-                                                                    app,
+                                                                    Assembly.GetEntryAssembly().GetName().Name,
                                                                     "app.config");
 
-            configuration = ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
+            configuration = NetConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
         }
 
         public T GetSection<T>(string key, Action<T> initialize = null) where T : ConfigurationSection, new()

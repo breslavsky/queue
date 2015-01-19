@@ -46,7 +46,7 @@ namespace Queue.Portal
         private static void RegisterContainer()
         {
             IUnityContainer container = new UnityContainer();
-            container.RegisterInstance<IApplicationConfigurationManager>(new ApplicationConfigurationManager(AppName));
+            container.RegisterInstance<IConfigurationManager>(new ConfigurationManager(AppName));
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 
