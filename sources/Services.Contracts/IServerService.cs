@@ -258,7 +258,7 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<Service[]> FindServices(string filter, int startIndex, int maxResults);
+        Task<Service[]> FindServices(string query, int startIndex, int maxResults);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]

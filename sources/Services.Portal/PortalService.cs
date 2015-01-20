@@ -15,7 +15,7 @@ namespace Queue.Services.Portal
         IncludeExceptionDetailInFaults = true, UseSynchronizationContext = false)]
     public partial class PortalService : IPortalService
     {
-        private const string WebClientPath = "\\projects\\queue\\trunk\\Portal";
+        private const string WebClientPath = "\\git\\queue\\sources\\Portal";
         private static readonly ILog logger = LogManager.GetLogger(typeof(PortalService));
 
         private readonly DuplexChannelBuilder<IServerTcpService> channelBuilder;
@@ -62,6 +62,7 @@ namespace Queue.Services.Portal
 
         public Stream GetContent(string path)
         {
+            //TODO: переделать на debug
             string file = Directory.Exists(WebClientPath)
                 ? string.Format("{0}\\www\\{1}", WebClientPath, path)
                 : file = string.Format("www\\{0}", path);

@@ -6,7 +6,8 @@ $("#loading img").each(function () { APNG.animateImage(this); });
 //#endregion
 
 //#region ulogin
-$("#uLogin").attr("data-ulogin", "display=window;fields=first_name,last_name;redirect_uri=http%3A%2F%2F" + document.location.host + "%2Fclient%2Fulogin");
+$("#uLogin").attr("data-ulogin", $("#uLogin").attr("data-ulogin")
+    .replace("{HTTP_HOST}", document.location.host));
 //#endregion
 
 //#region bind global ajax events
@@ -153,7 +154,7 @@ $("#client-menu .profile").click(function () {
 
 $("#client-menu .logout").click(function () {
     $.removeCookie("SessionId");
-    document.location = SERVICE_URI;
+    document.location.reload();
 });
 //#endregion
 

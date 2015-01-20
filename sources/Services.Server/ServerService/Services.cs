@@ -90,7 +90,7 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task<DTO.Service[]> FindServices(string filter, int startIndex, int maxResults)
+        public async Task<DTO.Service[]> FindServices(string query, int startIndex, int maxResults)
         {
             return await Task.Run(() =>
             {
@@ -102,11 +102,11 @@ namespace Queue.Services.Server
                         .SetFirstResult(startIndex)
                         .SetMaxResults(maxResults);
 
-                    if (filter.Length > 0)
+                    if (query.Length > 0)
                     {
                         criteria.Add(new Disjunction()
-                            .Add(Expression.InsensitiveLike("Name", filter, MatchMode.Anywhere))
-                            .Add(Expression.InsensitiveLike("Tags", filter, MatchMode.Anywhere)));
+                            .Add(Expression.InsensitiveLike("Name", query, MatchMode.Anywhere))
+                            .Add(Expression.InsensitiveLike("Tags", query, MatchMode.Anywhere)));
                     }
 
                     return Mapper.Map<IList<Service>, DTO.Service[]>(criteria.List<Service>());

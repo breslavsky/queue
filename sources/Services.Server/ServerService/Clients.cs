@@ -151,6 +151,11 @@ namespace Queue.Services.Server
                         throw new FaultException("Неверный пароль");
                     }
 
+                    client.SessionId = Guid.NewGuid();
+                    session.Save(client);
+
+                    transaction.Commit();
+
                     return Mapper.Map<Client, DTO.Client>(client);
                 }
             });

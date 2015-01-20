@@ -176,7 +176,7 @@ namespace Queue.Services.Portal
             {
                 try
                 {
-                    return await channel.Service.FindClientRequests(0, int.MaxValue, new ClientRequestFilter()
+                    return await channel.Service.FindClientRequests(0, 20, new ClientRequestFilter()
                     {
                         IsClient = true,
                         ClientId = currentClient.Id
