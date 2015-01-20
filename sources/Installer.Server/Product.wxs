@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <?define Manufacturer="Junte Ltd"?>
-  <?define ProductName="Сервер очереди" ?>
-  <?define ProductVersion="1.4.0.1" ?>
-  <?define ProductCode="95BA3132-512E-4DA5-81C4-47F8E5AE817E"?>
+  <?define Manufacturer="Junte"?>
+  <?define ProjectName="Junte Queue"?>
+  <?define ProductName="Queue Server" ?>
+  <?define ProductVersion="1.4.2.0" ?>
+  <?define ProductCode="1270A301-06B2-45A8-86D7-7E47DF81AF96"?>
   <?define UpgradeCode="58088B57-52CE-4D31-8882-CB4A69FCAFDF"?>
 
   <Product Id="$(var.ProductCode)"
@@ -23,13 +24,13 @@
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="JunteFolder" Name="$(var.Manufacturer)">
+        <Directory Id="ProjectFolder" Name="$(var.ProjectName)">
           <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)">
           </Directory>
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
-        <Directory Id="ApplicationProgramsFolder" Name="$(var.Manufacturer)">
+        <Directory Id="ApplicationProgramsFolder" Name="$(var.ProjectName)">
         </Directory>
       </Directory>
     </Directory>
