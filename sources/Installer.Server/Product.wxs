@@ -48,7 +48,7 @@
              Target="[INSTALLFOLDER]$(var.Hosts.Server.WinForms.TargetFileName)"
              WorkingDirectory="INSTALLFOLDER" />
         <Shortcut Id="UninstallShortcut"
-            Name="Uninstall"
+            Name="Удалить [ProductName]"
             Target="[System64Folder]msiexec.exe"
             Arguments="/x [ProductCode]" />
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
