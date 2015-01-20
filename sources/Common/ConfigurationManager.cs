@@ -11,9 +11,9 @@ namespace Queue.Common
         private string app;
         private Configuration configuration;
 
-        public ConfigurationManager(string app)
+        public ConfigurationManager(string app = null)
         {
-            this.app = app;
+            this.app = app ?? Assembly.GetEntryAssembly().GetName().Name;
 
             Load();
         }

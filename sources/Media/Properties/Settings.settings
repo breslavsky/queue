@@ -2,18 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Queue.Media.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Endpoint" Type="System.String" Scope="User">
-      <Value Profile="(Default)">net.tcp://queue:4505/</Value>
-    </Setting>
-    <Setting Name="UserId" Type="System.Guid" Scope="User">
-      <Value Profile="(Default)">00000000-0000-0000-0000-000000000000</Value>
-    </Setting>
-    <Setting Name="Password" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="IsRemember" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="Port" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4506</Value>
     </Setting>

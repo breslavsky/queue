@@ -16,7 +16,7 @@
            Id="removeQueueService"
            Name="[SERVICE_NAME]"
            Stop="both"
-           Remove="both"
+           Remove="uninstall"
            Wait="yes" />
       </Component>
       <Component Id="cmp1736F4C6BFCEBB7D4352CE8B3C240A6B" Guid="D77EDBF2-C7BB-48CC-920C-0BAB6ADCB612">
@@ -122,7 +122,7 @@
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Queue.Services.Server.dll" />
       </Component>
       <Component Id="cmp2D83E85939F24F429AE3E686F5831E1C" Guid="2D83E859-39F2-4F42-9AE3-E686F5831E1C">
-        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Queue.Common.dll" />
+        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Queue.Hosts.Common.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>

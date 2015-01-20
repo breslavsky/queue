@@ -1,7 +1,10 @@
-﻿using Queue.Model.Common;
+﻿using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
+using Queue.Common;
+using Queue.Model.Common;
 using Queue.UI.WinForms;
+using Queue.UI.WinForms.Controls;
 using System;
-using System.Globalization;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
 
@@ -23,35 +26,20 @@ namespace Queue.Administrator
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Properties.Settings settings = Properties.Settings.Default;
+            RegisterContainer();
 
             while (true)
             {
-                using (var loginForm = new LoginForm(UserRole.Administrator)
-                {
-                    Endpoint = settings.Endpoint,
-                    UserId = settings.UserId,
-                    Password = settings.Password,
-                    IsRemember = settings.IsRemember
-                })
+                using (LoginForm loginForm = new LoginForm(UserRole.Administrator))
                 {
                     if (loginForm.ShowDialog() == DialogResult.OK)
                     {
-                        settings.Endpoint = loginForm.Endpoint;
-                        settings.UserId = loginForm.UserId;
-                        settings.Password = loginForm.Password;
-                        settings.IsRemember = loginForm.IsRemember;
-                        settings.Save();
-
-                        var mainForm = new AdministratorForm(loginForm.ChannelBuilder, (QueueAdministrator)loginForm.User);
+                        AdministratorForm mainForm = new AdministratorForm(loginForm.ChannelBuilder, (QueueAdministrator)loginForm.User);
                         Application.Run(mainForm);
 
                         if (mainForm.IsLogout)
                         {
-                            settings.Password = string.Empty;
-                            settings.IsRemember = false;
-                            settings.Save();
-
+                            ResetSettings();
                             continue;
                         }
                     }
@@ -59,6 +47,19 @@ namespace Queue.Administrator
                     break;
                 }
             }
+        }
+
+        private static void RegisterContainer()
+        {
+            IUnityContainer container = new UnityContainer();
+            container.RegisterInstance<IConfigurationManager>(new ConfigurationManager());
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
+        }
+
+        private static void ResetSettings()
+        {
+            LoginForm.ResetSettings();
+            ServerConnectionSettingsControl.ResetSettings();
         }
     }
 }

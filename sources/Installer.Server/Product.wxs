@@ -13,7 +13,7 @@
           Manufacturer="$(var.Manufacturer)"
           UpgradeCode="$(var.UpgradeCode)">
 
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Package InstallerVersion="300" Compressed="yes" InstallScope="perMachine" />
 
     <MajorUpgrade DowngradeErrorMessage="Более новая версия [ProductName] уже установлена." />
     <MediaTemplate EmbedCab="yes" />

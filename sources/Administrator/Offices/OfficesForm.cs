@@ -7,9 +7,7 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
-using System.Net;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
 using System.Windows.Forms;
 
 namespace Queue.Administrator
@@ -106,13 +104,13 @@ namespace Queue.Administrator
 
                         using (var loginForm = new LoginForm(UserRole.Administrator))
                         {
-                            loginForm.Endpoint = office.Endpoint;
+                            loginForm.ConnectionSettings.Endpoint = office.Endpoint;
 
                             if (loginForm.ShowDialog() == DialogResult.OK)
                             {
                                 var user = loginForm.User;
 
-                                office.Endpoint = loginForm.Endpoint;
+                                office.Endpoint = loginForm.ConnectionSettings.Endpoint;
                                 office.SessionId = user.SessionId;
 
                                 using (var channel = channelManager.CreateChannel())
