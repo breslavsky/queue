@@ -304,7 +304,10 @@ namespace Queue.Services.Server
 
                         if (client == null)
                         {
-                            client = new Client();
+                            client = new Client()
+                            {
+                                SessionId = Guid.NewGuid()
+                            };
                         }
                     }
 
