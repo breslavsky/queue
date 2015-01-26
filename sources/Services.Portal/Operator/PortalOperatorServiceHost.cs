@@ -8,10 +8,13 @@ namespace Queue.Services.Portal
 {
     public class PortalOperatorServiceHost : ServiceHost
     {
-        public PortalOperatorServiceHost(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser, Type serviceType, params Uri[] baseAddresses)
+        public PortalOperatorServiceHost(DuplexChannelBuilder<IServerTcpService> channelBuilder,
+                                        Administrator currentUser,
+                                        Type serviceType,
+                                        params Uri[] baseAddresses)
             : base(serviceType, baseAddresses)
         {
-            foreach (var d in this.ImplementedContracts.Values)
+            foreach (var d in ImplementedContracts.Values)
             {
                 d.Behaviors.Add(new PortalOperatorServiceProvider(channelBuilder, currentUser));
             }

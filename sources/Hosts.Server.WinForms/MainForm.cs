@@ -14,7 +14,6 @@ namespace Queue.Hosts.Server.WinForms
 {
     public partial class MainForm : Form
     {
-        private const string AppName = "Queue.Server";
         private readonly ILog logger = LogManager.GetLogger(typeof(MainForm));
 
         private const string ServiceName = "JunteQueueServer";
@@ -45,7 +44,7 @@ namespace Queue.Hosts.Server.WinForms
 
         private void LoadConfiguration()
         {
-            configuration = new ConfigurationManager(AppName);
+            configuration = new ConfigurationManager(AppNames.ServerApp);
             settings = configuration.GetSection<ServerSettings>("server", (s) =>
                                                                             {
                                                                                 s.Database = GetDefaultDatabaseSettings();
@@ -189,6 +188,8 @@ namespace Queue.Hosts.Server.WinForms
             {
                 startButton.Enabled = false;
 
+                StopServer();
+
                 editDatabaseSettingsControl.Save();
                 server = new ServerInstance(settings);
                 server.Start();
@@ -276,12 +277,12 @@ namespace Queue.Hosts.Server.WinForms
                 if (serviceManager.ServiceInstalled())
                 {
                     serviceManager.UnistallService();
-                    MessageBox.Show("Сервис удален");
+                    MessageBox.Show("Служба удалена");
                 }
                 else
                 {
                     serviceManager.InstallService();
-                    MessageBox.Show("Сервис установлен");
+                    MessageBox.Show("Служба установлена");
                 }
             }
             catch (Exception ex)
@@ -299,12 +300,12 @@ namespace Queue.Hosts.Server.WinForms
                 if (serviceManager.ServiceRunned())
                 {
                     serviceManager.StopService();
-                    MessageBox.Show("Сервис остановлен");
+                    MessageBox.Show("Служба остановлена");
                 }
                 else
                 {
                     serviceManager.StartService();
-                    MessageBox.Show("Сервис запущен");
+                    MessageBox.Show("Служба запущена");
                 }
             }
             catch (Exception ex)

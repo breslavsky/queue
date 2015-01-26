@@ -5,6 +5,7 @@ using Queue.Model.Common;
 using Queue.UI.WinForms;
 using Queue.UI.WinForms.Controls;
 using System;
+using System.Globalization;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
 

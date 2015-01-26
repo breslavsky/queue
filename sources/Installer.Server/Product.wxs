@@ -3,8 +3,8 @@
   <?define Manufacturer="Junte"?>
   <?define ProjectName="Junte Queue"?>
   <?define ProductName="Queue Server" ?>
-  <?define ProductVersion="1.4.2.0" ?>
-  <?define ProductCode="1270A301-06B2-45A8-86D7-7E47DF81AF96"?>
+  <?define ProductVersion="1.4.4.0" ?>
+  <?define ProductCode="44989214-1ED3-423A-9142-6BCD4AF1AA46"?>
   <?define UpgradeCode="58088B57-52CE-4D31-8882-CB4A69FCAFDF"?>
 
   <Product Id="$(var.ProductCode)"
@@ -48,7 +48,7 @@
              Target="[INSTALLFOLDER]$(var.Hosts.Server.WinForms.TargetFileName)"
              WorkingDirectory="INSTALLFOLDER" />
         <Shortcut Id="UninstallShortcut"
-            Name="Удалить [ProductName]"
+            Name="Удалить $(var.ProductName)"
             Target="[System64Folder]msiexec.exe"
             Arguments="/x [ProductCode]" />
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
@@ -69,5 +69,9 @@
       <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="2">1</Publish>
       <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">1</Publish>
     </UI>
+
+    <InstallExecuteSequence>
+      <DeleteServices>NOT UPGRADINGPRODUCTCODE</DeleteServices>
+    </InstallExecuteSequence>
   </Product>
 </Wix>

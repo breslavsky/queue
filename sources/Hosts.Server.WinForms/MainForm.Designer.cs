@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.startButton = new System.Windows.Forms.Button();
             this.panel = new System.Windows.Forms.Panel();
@@ -50,8 +49,8 @@
             this.httpGroupBox = new System.Windows.Forms.GroupBox();
             this.httpPortUpDown = new System.Windows.Forms.NumericUpDown();
             this.httpHostTextBox = new System.Windows.Forms.TextBox();
-            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon();
+            this.serviceStateTimer = new System.Windows.Forms.Timer();
             this.panel.SuspendLayout();
             this.serviceGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).BeginInit();
@@ -106,7 +105,7 @@
             this.serviceGroupBox.Size = new System.Drawing.Size(395, 62);
             this.serviceGroupBox.TabIndex = 2;
             this.serviceGroupBox.TabStop = false;
-            this.serviceGroupBox.Text = "Сервис";
+            this.serviceGroupBox.Text = "Служба";
             // 
             // serviceStatePicture
             // 
@@ -123,7 +122,7 @@
             this.runServiceButton.Name = "runServiceButton";
             this.runServiceButton.Size = new System.Drawing.Size(127, 23);
             this.runServiceButton.TabIndex = 1;
-            this.runServiceButton.Text = "Запустить сервис";
+            this.runServiceButton.Text = "Запустить службу";
             this.runServiceButton.UseVisualStyleBackColor = true;
             this.runServiceButton.Click += new System.EventHandler(this.runServiceButton_Click);
             // 
@@ -133,7 +132,7 @@
             this.installServiseButton.Name = "installServiseButton";
             this.installServiseButton.Size = new System.Drawing.Size(127, 23);
             this.installServiseButton.TabIndex = 0;
-            this.installServiseButton.Text = "Установить сервис";
+            this.installServiseButton.Text = "Установить службу";
             this.installServiseButton.UseVisualStyleBackColor = true;
             this.installServiseButton.Click += new System.EventHandler(this.installServiseButton_Click);
             // 

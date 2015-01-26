@@ -37,6 +37,9 @@
     <Reference Include="Crad.Windows.Forms.Actions">
       <HintPath>..\packages\ActionListWinForms.1.3.0.0\lib\net40\Crad.Windows.Forms.Actions.dll</HintPath>
     </Reference>
+    <Reference Include="Junte.Parallel.Common">
+      <HintPath>..\packages\Junte.Parallel.Common.1.0.0.50\lib\net40\Junte.Parallel.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Junte.UI.WinForms">
       <HintPath>..\packages\Junte.UI.WinForms.1.2.0.0\lib\net45\Junte.UI.WinForms.dll</HintPath>
     </Reference>
@@ -108,6 +111,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Queue.Portal.PortalSettings.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -123,8 +127,38 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\online.ico" />
+    <None Include="Resources\offline.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{6bc9beb5-51ab-49b8-a46c-ca9ca59b2976}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hosts.Common\Hosts.Common.csproj">
+      <Project>{923639ff-dbb2-411f-9611-a295b2c71b54}</Project>
+      <Name>Hosts.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model.Common\Model.Common.csproj">
+      <Project>{83540db2-b860-463d-bcec-656b99270818}</Project>
+      <Name>Model.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Portal\Portal.csproj">
+      <Project>{dda91225-dbcc-46b3-872e-3f57f34d3221}</Project>
+      <Name>Portal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services.Common\Services.Common.csproj">
+      <Project>{f08d6a7c-bf6e-4054-af42-ef98244ab596}</Project>
+      <Name>Services.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services.Contracts\Services.Contracts.csproj">
+      <Project>{77ef6d1d-f45b-48b4-8fdd-ca004c4a12f4}</Project>
+      <Name>Services.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services.DTO\Services.DTO.csproj">
+      <Project>{d8c34e2b-87c1-4f82-aaf6-6b408e35228e}</Project>
+      <Name>Services.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UI.WinForms\UI.WinForms.csproj">
       <Project>{23b4c880-5f87-4e9d-b310-6dc25ea170b5}</Project>
       <Name>UI.WinForms</Name>

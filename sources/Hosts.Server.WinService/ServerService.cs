@@ -1,8 +1,8 @@
 ﻿using log4net;
+using Queue.Common;
+using Queue.Hosts.Common;
 using Queue.Server;
 using System;
-using System.Configuration;
-using System.IO;
 using System.ServiceProcess;
 
 namespace Queue.Hosts.Server.WinService
@@ -24,8 +24,8 @@ namespace Queue.Hosts.Server.WinService
 
             try
             {
-                Configuration configuration = GetConfiguration();
-                ServerSettings settings = configuration.GetSection("server") as ServerSettings;
+                ConfigurationManager configuration = new ConfigurationManager(AppNames.ServerApp);
+                ServerSettings settings = configuration.GetSection<ServerSettings>("server");
 
                 server = new ServerInstance(settings);
                 server.Start();
@@ -37,17 +37,6 @@ namespace Queue.Hosts.Server.WinService
                 logger.Error(e);
                 throw;
             }
-        }
-
-        private Configuration GetConfiguration()
-        {
-            ExeConfigurationFileMap configMap = new ExeConfigurationFileMap();
-            configMap.ExeConfigFilename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                                                                    "Junte",
-                                                                    "Queue.Server",
-                                                                    "app.config");
-
-            return ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
         }
 
         protected override void OnStop()

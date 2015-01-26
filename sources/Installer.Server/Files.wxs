@@ -4,12 +4,6 @@
     <Property Id="SERVICE_NAME" Value="JunteQueueServer" />
 
     <ComponentGroup Id="CoreFiles" Directory="INSTALLFOLDER">
-      <Component Id="cmpFBA998017BFAB2D3E6250E76D7D19052" Guid="45C2D3AE-2C90-410B-B71C-266CFC3929F1">
-        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetPath)" />
-      </Component>
-      <Component Id="cmp7E002373D6832290B60346D53B523A18" Guid="AC996169-1AC1-42DB-8E41-9272A93FD252">
-        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetPath).config" />
-      </Component>
       <Component Id="cmp5090F92A55F2CEB484FEC77556060C98" Guid="C23DBBC8-CE01-4638-97E2-AF3E72C4AFF1">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinService.TargetPath)" />
         <ServiceControl
@@ -21,6 +15,12 @@
       </Component>
       <Component Id="cmp1736F4C6BFCEBB7D4352CE8B3C240A6B" Guid="D77EDBF2-C7BB-48CC-920C-0BAB6ADCB612">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinService.TargetPath).config" />
+      </Component>
+      <Component Id="cmpFBA998017BFAB2D3E6250E76D7D19052" Guid="45C2D3AE-2C90-410B-B71C-266CFC3929F1">
+        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetPath)" />
+      </Component>
+      <Component Id="cmp7E002373D6832290B60346D53B523A18" Guid="AC996169-1AC1-42DB-8E41-9272A93FD252">
+        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetPath).config" />
       </Component>
       <Component Id="cmpFD65F52CD5EC0B46A750F8EEFC3D4422" Guid="89D73591-1375-48D3-8A77-C571D337CF80">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\AutoMapper.dll" />
