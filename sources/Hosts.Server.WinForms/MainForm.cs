@@ -19,10 +19,10 @@ namespace Queue.Hosts.Server.WinForms
         private const string ServiceName = "JunteQueueServer";
         private const string ServiceExe = "Queue.Hosts.Server.WinService.exe";
 
-        private const string InstallServiceButtonTitle = "Установить сервис";
-        private const string UnistallServiceButtonTitle = "Удалить сервис";
-        private const string StartServiceButtonTitle = "Запустить сервис";
-        private const string StopServiceButtonTitle = "Остановить сервис";
+        private const string InstallServiceButtonTitle = "Установить службу";
+        private const string UnistallServiceButtonTitle = "Удалить службу";
+        private const string StartServiceButtonTitle = "Запустить службу";
+        private const string StopServiceButtonTitle = "Остановить службу";
 
         private ConfigurationManager configuration;
         private ServerSettings settings;

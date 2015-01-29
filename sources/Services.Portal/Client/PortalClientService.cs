@@ -19,8 +19,10 @@ using System.Web.Script.Serialization;
 
 namespace Queue.Services.Portal
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple,
-        IncludeExceptionDetailInFaults = true, UseSynchronizationContext = false)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall,
+                    ConcurrencyMode = ConcurrencyMode.Multiple,
+                    IncludeExceptionDetailInFaults = true,
+                    UseSynchronizationContext = false)]
     public sealed class PortalClientService : PortalService, IPortalClientService
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(PortalClientService));
@@ -390,6 +392,11 @@ namespace Queue.Services.Portal
                     }
                 }
             }
+        }
+
+        public Task<Client> EditProfile(string email, string surname, string name, string patronymic, string mobile)
+        {
+            throw new NotImplementedException();
         }
     }
 }
