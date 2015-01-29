@@ -3,9 +3,9 @@ using Junte.WCF.Common;
 using MahApps.Metro.Controls;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using NLog;
 using Queue.Services.Contracts;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Types;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -17,18 +17,24 @@ namespace Queue.Notification
 {
     public partial class MainWindow : MetroWindow
     {
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         private bool disposed = false;
 
         private ConnectPage connectPage;
         private TaskPool taskPool;
         private ChannelManager<IServerTcpService> channelManager;
 
+        public Version Version { get; set; }
+
         public MainWindow()
             : base()
         {
             InitializeComponent();
 
-            Title += string.Format(" ({0})", Assembly.GetExecutingAssembly().GetName().Version);
+            Version = Assembly.GetExecutingAssembly().GetName().Version;
+
+            DataContext = this;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -53,11 +59,13 @@ namespace Queue.Notification
             return result;
         }
 
-        private void OnConnected(object sender, System.EventArgs e)
+        private void OnConnected(object sender, EventArgs e)
         {
+            logger.Info("connected to {0}", connectPage.Model.Endpoint);
+
             SaveSettings();
 
-            InitializeContainer();
+            RegisterServices();
 
             content.NavigationService.Navigate(new HomePage());
 
@@ -71,6 +79,18 @@ namespace Queue.Notification
             }
 
             this.FullScreenWindow();
+        }
+
+        private void RegisterServices()
+        {
+            IUnityContainer container = ServiceLocator.Current.GetInstance<IUnityContainer>();
+
+            taskPool = new TaskPool();
+            container.RegisterInstance<DuplexChannelBuilder<IServerTcpService>>(connectPage.Model.ChannelBuilder);
+            container.RegisterInstance<TaskPool>(taskPool);
+
+            channelManager = new ChannelManager<IServerTcpService>(container.Resolve<DuplexChannelBuilder<IServerTcpService>>());
+            container.RegisterInstance<ChannelManager<IServerTcpService>>(channelManager);
         }
 
         private void SaveSettings()
@@ -87,24 +107,6 @@ namespace Queue.Notification
             }
 
             settings.Save();
-        }
-
-        private void InitializeContainer()
-        {
-            IUnityContainer container = new UnityContainer();
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
-            RegisterTypes(container);
-        }
-
-        private void RegisterTypes(IUnityContainer container)
-        {
-            taskPool = new TaskPool();
-            container.RegisterInstance<DuplexChannelBuilder<IServerTcpService>>(connectPage.Model.ChannelBuilder);
-            container.RegisterInstance<TaskPool>(taskPool);
-            container.RegisterInstance<IUnityContainer>(container);
-
-            channelManager = new ChannelManager<IServerTcpService>(container.Resolve<DuplexChannelBuilder<IServerTcpService>>());
-            container.RegisterInstance<ChannelManager<IServerTcpService>>(channelManager);
         }
 
         private void MainWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

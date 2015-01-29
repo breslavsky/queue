@@ -3,6 +3,7 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Notification.Models;
 using Queue.Services.DTO;
+using Queue.UI.WPF;
 using Queue.UI.WPF.Types;
 using System;
 using System.Windows;
@@ -15,7 +16,7 @@ using Vlc.DotNet.Wpf;
 
 namespace Queue.Notification
 {
-    public partial class HomePage : Queue.UI.WPF.RichPage
+    public partial class HomePage : RichPage
     {
         private HomePageVM model;
 

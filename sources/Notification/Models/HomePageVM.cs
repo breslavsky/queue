@@ -3,6 +3,7 @@ using Junte.UI.WPF;
 using Junte.UI.WPF.Types;
 using Junte.WCF.Common;
 using Microsoft.Practices.ServiceLocation;
+using NLog;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -16,7 +17,7 @@ using System;
 using System.Media;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using System.Windows.Threading;
+using System.Timers;
 using Vlc.DotNet.Core.Medias;
 using Vlc.DotNet.Wpf;
 
@@ -24,6 +25,8 @@ namespace Queue.Notification.Models
 {
     public class HomePageVM : ObservableObject, IDisposable
     {
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         private const int PingInterval = 10000;
         private const string MediaFileUriPattern = "{0}/media-config/files/{1}/load";
 
@@ -42,8 +45,9 @@ namespace Queue.Notification.Models
         private TaskPool taskPool;
         private VlcControl vlcControl;
 
-        private DispatcherTimer pingTimer;
-        private DispatcherTimer timeTimer;
+        private Timer pingTimer;
+        private Timer timeTimer;
+        private object voiceLock;
 
         public ServerState ServerState
         {
@@ -75,6 +79,8 @@ namespace Queue.Notification.Models
 
         public HomePageVM()
         {
+            voiceLock = new object();
+
             this.channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
             this.taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
             this.screen = ServiceLocator.Current.GetInstance<IMainWindow>();
@@ -140,21 +146,21 @@ namespace Queue.Notification.Models
 
         private void InitTimers()
         {
-            pingTimer = new DispatcherTimer(DispatcherPriority.Background);
-            pingTimer.Interval = TimeSpan.FromSeconds(1);
-            pingTimer.Tick += PingElapsed;
+            pingTimer = new Timer();
+            pingTimer.Interval = 1000;
+            pingTimer.Elapsed += PingElapsed;
 
-            timeTimer = new DispatcherTimer(DispatcherPriority.Background);
-            timeTimer.Interval = TimeSpan.FromSeconds(1);
-            timeTimer.Tick += TimerElapsed;
+            timeTimer = new Timer();
+            timeTimer.Interval = 1000;
+            timeTimer.Elapsed += TimerElapsed;
         }
 
         private async void PingElapsed(object sender, EventArgs e)
         {
             pingTimer.Stop();
-            if (pingTimer.Interval.TotalMilliseconds < PingInterval)
+            if (pingTimer.Interval < PingInterval)
             {
-                pingTimer.Interval = TimeSpan.FromMilliseconds(PingInterval);
+                pingTimer.Interval = PingInterval;
             }
 
             try
@@ -253,10 +259,16 @@ namespace Queue.Notification.Models
 
         private void CallClient(ClientRequest request)
         {
-            lock (typeof(SoundPlayer))
+            logger.Debug("call client [request num: {0}]", request.Number);
+
+            lock (voiceLock)
             {
                 CallClientModel.ShowMessage(request);
+
+                logger.Debug("play call client [request num: {0}]", request.Number);
                 PlayVoice(request);
+                logger.Debug("call client played [request num: {0}]", request.Number);
+
                 CallClientModel.CloseMessage();
             }
         }
