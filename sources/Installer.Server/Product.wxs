@@ -3,8 +3,8 @@
   <?define Manufacturer="Junte"?>
   <?define ProjectName="Junte Queue"?>
   <?define ProductName="Queue Server" ?>
-  <?define ProductVersion="1.4.4.0" ?>
-  <?define ProductCode="44989214-1ED3-423A-9142-6BCD4AF1AA46"?>
+  <?define ProductVersion="1.4.5.0" ?>
+  <?define ProductCode="AA34004B-596B-45C2-B20E-93415B80861C"?>
   <?define UpgradeCode="58088B57-52CE-4D31-8882-CB4A69FCAFDF"?>
 
   <Product Id="$(var.ProductCode)"
