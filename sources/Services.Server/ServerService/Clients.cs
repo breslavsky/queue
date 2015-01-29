@@ -340,7 +340,7 @@ namespace Queue.Services.Server
 
                     session.Save(client);
 
-                    if (!string.IsNullOrWhiteSpace(email))
+                    if (source.Empty() && !string.IsNullOrWhiteSpace(email))
                     {
                         var сonfig = session.Get<SMTPConfig>(ConfigType.SMTP);
                         if (сonfig == null)
