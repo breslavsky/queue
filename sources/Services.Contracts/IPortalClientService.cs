@@ -32,7 +32,7 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [WebGet(UriTemplate = PortalClientServiceMap.EditProfile, ResponseFormat = WebMessageFormat.Json)]
-        Task<Client> EditProfile(string email, string surname, string name, string patronymic, string mobile);
+        Task<Client> EditProfile(string surname, string name, string patronymic, string mobile);
 
         [OperationContract]
         [WebGet(UriTemplate = PortalClientServiceMap.GetRequests, ResponseFormat = WebMessageFormat.Json)]
