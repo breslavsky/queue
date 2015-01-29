@@ -21,7 +21,9 @@ namespace Queue.Common
         private void Load()
         {
             ExeConfigurationFileMap configMap = new ExeConfigurationFileMap();
-            configMap.ExeConfigFilename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+
+            configMap.ExeConfigFilename = string.Format("{0}.config", Assembly.GetEntryAssembly().Location);
+            configMap.MachineConfigFilename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                                                                     "Junte",
                                                                      app,
                                                                     "app.config");

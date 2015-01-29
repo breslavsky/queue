@@ -1,4 +1,5 @@
 ﻿using NHibernate;
+using NHibernate.Transform;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using Queue.Model;
@@ -64,14 +65,15 @@ namespace Queue.Reports.ClientRequestReport
 
                 ReportData result = new ReportData();
                 result.Title = clientRequest.ToString();
+
+                ClientRequestEventReportItem dto = null;
                 result.Items = session.QueryOver<ClientRequestEvent>()
                                         .Where(e => e.ClientRequest == clientRequest)
                                         .OrderBy(e => e.CreateDate).Asc
-                                        .Select(e => new ClientRequestEventReportItem()
-                                        {
-                                            CreateDate = e.CreateDate,
-                                            Message = e.Message
-                                        })
+                                        .SelectList(list => list
+                                           .Select(p => p.CreateDate).WithAlias(() => dto.CreateDate)
+                                           .Select(p => p.Message).WithAlias(() => dto.Message))
+                                        .TransformUsing(Transformers.AliasToBean<ClientRequestEventReportItem>())
                                         .List<ClientRequestEventReportItem>()
                                         .ToArray();
                 return result;
