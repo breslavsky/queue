@@ -23,7 +23,7 @@ namespace Queue.Common
             ExeConfigurationFileMap configMap = new ExeConfigurationFileMap();
             configMap.ExeConfigFilename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                                                                     "Junte",
-                                                                    Assembly.GetEntryAssembly().GetName().Name,
+                                                                     app,
                                                                     "app.config");
 
             configuration = NetConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);

@@ -22,7 +22,7 @@ namespace Queue.Server
 
         public ServerInstance(ServerSettings settings)
         {
-            logger.Info("Creating...");
+            logger.InfoFormat("Creating.... [server: {0}; database: {1}]", settings.Database.Server, settings.Database.Name);
 
             UnityContainer container = new UnityContainer();
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
