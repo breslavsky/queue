@@ -7,7 +7,7 @@
         public const string ClientULogin = "/ulogin";
         public const string RestorePassword = "/restore-password?email={email}";
         public const string GetProfile = "/get-profile";
-        public const string EditProfile = "/edit-profile?email={email}&surname={surname}&name={name}&patronymic={patronymic}&mobile={mobile}";
+        public const string EditProfile = "/edit-profile?surname={surname}&name={name}&patronymic={patronymic}&mobile={mobile}";
         public const string GetRequests = "/get-requests";
         public const string CancelRequest = "/cancel-request?requestId={requestId}";
         public const string SendPINToEmail = "/send-pin-to-email?email={email}";

@@ -1,4 +1,5 @@
 ﻿using Data.Model.Common;
+using NHibernate.Criterion;
 using Queue.Model;
 using Queue.Model.Common;
 using System;
@@ -27,6 +28,16 @@ namespace Queue.Services.Server
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
+                    int count = session.CreateCriteria<Client>()
+                        .Add(Expression.Eq("Email", email))
+                        .SetProjection(Projections.RowCount())
+                        .UniqueResult<int>();
+
+                    if (count > 0)
+                    {
+                        throw new FaultException("Клиент с таким электронным адресом уже существует");
+                    }
+
                     SMTPConfig сonfig = session.Get<SMTPConfig>(ConfigType.SMTP);
                     if (сonfig == null)
                     {

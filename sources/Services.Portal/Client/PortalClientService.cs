@@ -1,6 +1,5 @@
 ﻿using Junte.WCF.Common;
 using log4net;
-using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
@@ -117,7 +116,7 @@ namespace Queue.Services.Portal
             }
         }
 
-        public async Task<Client> EditProfile(string email, string surname, string name, string patronymic, string mobile)
+        public async Task<Client> EditProfile(string surname, string name, string patronymic, string mobile)
         {
             checkLogin();
 
@@ -125,7 +124,6 @@ namespace Queue.Services.Portal
             {
                 try
                 {
-                    currentClient.Email = email;
                     currentClient.Surname = surname;
                     currentClient.Name = name;
                     currentClient.Patronymic = patronymic;
