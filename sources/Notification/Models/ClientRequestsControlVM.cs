@@ -111,7 +111,7 @@ namespace Queue.Notification.Models
 
             int row = 1;
 
-            foreach (ClientRequestWrap req in requests)
+            foreach (ClientRequestWrap req in requests.Where(r => r.Request != null))
             {
                 controls.Add(CreateTextBox(req.Request.Number.ToString(), 0, row));
 
