@@ -1,6 +1,6 @@
 ﻿using Junte.UI.WPF.Types;
+using NLog;
 using Queue.Model.Common;
-
 using Queue.Notification.UserControls;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
@@ -15,6 +15,8 @@ namespace Queue.Notification.Models
 {
     public class ClientRequestsControlVM : ObservableObject, IDisposable
     {
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         private const int DefaultClientRequestsLength = 6;
 
         private bool disposed = false;
@@ -113,14 +115,21 @@ namespace Queue.Notification.Models
 
             foreach (ClientRequestWrap req in requests.Where(r => r.Request != null))
             {
-                controls.Add(CreateTextBox(req.Request.Number.ToString(), 0, row));
+                try
+                {
+                    controls.Add(CreateTextBox(req.Request.Number.ToString(), 0, row));
 
-                ClientRequestStateUserControl ctrl = new ClientRequestStateUserControl(req.Request);
-                ctrl.SetValue(Grid.ColumnProperty, 2);
-                ctrl.SetValue(Grid.RowProperty, row);
-                controls.Add(ctrl);
+                    ClientRequestStateUserControl ctrl = new ClientRequestStateUserControl(req.Request);
+                    ctrl.SetValue(Grid.ColumnProperty, 2);
+                    ctrl.SetValue(Grid.RowProperty, row);
+                    controls.Add(ctrl);
 
-                row++;
+                    row++;
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e);
+                }
             }
 
             for (int i = 0; i < row; i++)
