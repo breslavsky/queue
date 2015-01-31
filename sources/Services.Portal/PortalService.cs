@@ -8,6 +8,7 @@ using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Queue.Services.Portal
 {
@@ -15,7 +16,7 @@ namespace Queue.Services.Portal
         IncludeExceptionDetailInFaults = true, UseSynchronizationContext = false)]
     public partial class PortalService : IPortalService
     {
-        private const string WebClientPath = "\\git\\queue\\sources\\Portal";
+        private const string DebugWebClientPath = "\\git\\queue\\sources\\Portal\\www";
         private static readonly ILog logger = LogManager.GetLogger(typeof(PortalService));
 
         private readonly DuplexChannelBuilder<IServerTcpService> channelBuilder;
@@ -62,10 +63,12 @@ namespace Queue.Services.Portal
 
         public Stream GetContent(string path)
         {
-            //TODO: переделать на debug
-            string file = Directory.Exists(WebClientPath)
-                ? string.Format("{0}\\www\\{1}", WebClientPath, path)
-                : file = string.Format("www\\{0}", path);
+#if DEBUG
+            string webClientPath = DebugWebClientPath;
+#else
+            string webClientPath = Environment.CurrentDirectory;
+#endif
+            string file = Path.Combine(webClientPath, path);
 
             response.ContentType = ContentType.GetType(Path.GetExtension(file));
             return File.Open(file, FileMode.Open);

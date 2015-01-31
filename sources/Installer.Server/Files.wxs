@@ -64,21 +64,6 @@
       <Component Id="cmp5141EFC969B8F1A9A0F1A01FFAD874BA" Guid="1B4E91CF-8039-4358-82AF-0E542D8AB2AB">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Microsoft.Practices.Unity.dll" />
       </Component>
-      <Component Id="cmpBB1767D7C200C536ABB2D361F40F9D92" Guid="4D5A72B7-CB77-42AA-B0B7-B3E515F07F00">
-        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.dll" />
-      </Component>
-      <Component Id="cmp676659A682F8B2F9B96DCCEF64974212" Guid="A54ABB34-7A8B-4417-B1F7-B53AD6C9BDB7">
-        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll" />
-      </Component>
-      <Component Id="cmp7EB0B903F4227AB6B6118ABC9E5F8148" Guid="7BB48C39-B8D5-4F2F-839F-3FD8FB229E00">
-        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.Sensors.dll" />
-      </Component>
-      <Component Id="cmp702FCD8F941D530EED089ED86491F3AF" Guid="89AFE010-209B-4F6F-8601-F5B9D6149607">
-        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.Shell.dll" />
-      </Component>
-      <Component Id="cmp886200E0570F6ED803412CBE764B2AAA" Guid="31D0C564-463C-4694-9F9D-DB915732CFB1">
-        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.ShellExtensions.dll" />
-      </Component>
       <Component Id="cmp5C2F9BA6E76525469C18CC73086E5362" Guid="A6C6AB09-340C-4773-82A2-A80E6197A2B4">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\NHibernate.Caches.SysCache2.dll" />
       </Component>
