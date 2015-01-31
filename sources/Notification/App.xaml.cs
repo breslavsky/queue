@@ -1,5 +1,4 @@
-﻿using Junte.Parallel.Common;
-using Microsoft.Practices.ServiceLocation;
+﻿using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
 using System.Windows;
@@ -9,8 +8,6 @@ namespace Queue.Notification
     public partial class App : Application
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
-
-        private TaskPool taskPool;
 
         public App()
         {
