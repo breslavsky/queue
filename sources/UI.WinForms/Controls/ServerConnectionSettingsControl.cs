@@ -114,7 +114,7 @@ namespace Queue.UI.WinForms.Controls
 
                     connected = true;
 
-                    connectionGroupBox.Enabled = false;
+                    //connectionGroupBox.Enabled = false;
                     loginGroupBox.Enabled = true;
                 }
             }

@@ -13,7 +13,7 @@ using System.ServiceModel.Description;
 
 namespace Queue.Server
 {
-    public class ServerInstance
+    public sealed class ServerInstance
     {
         private static readonly ILog logger = LogManager.GetLogger(typeof(ServerInstance));
 

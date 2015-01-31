@@ -64,7 +64,7 @@
     </WixExtension>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="server.ico" />
+    <Content Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <PropertyGroup>

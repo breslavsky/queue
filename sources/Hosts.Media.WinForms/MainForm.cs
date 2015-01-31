@@ -5,55 +5,55 @@ using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common;
 using Queue.Hosts.Common;
-using Queue.Hosts.Portal.WinForms.Properties;
+using Queue.Hosts.Media.WinForms.Properties;
+using Queue.Media;
 using Queue.Model.Common;
-using Queue.Portal;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace Hosts.Portal.WinForms
+namespace Queue.Hosts.Media.WinForms
 {
     public partial class MainForm : Form
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private const string ServiceExe = "Queue.Hosts.Portal.WinService.exe";
+        private const string ServiceExe = "Queue.Hosts.Media.WinService.exe";
 
         private const string InstallServiceButtonTitle = "Установить службу";
         private const string UnistallServiceButtonTitle = "Удалить службу";
         private const string StartServiceButtonTitle = "Запустить службу";
         private const string StopServiceButtonTitle = "Остановить службу";
 
-        private ConfigurationManager configurationManager;
-        private PortalSettings settings;
-        private TaskPool taskPool;
-        private bool started;
-        private PortalInstance portal;
         private ServiceManager serviceManager;
+        private TaskPool taskPool;
+        private ConfigurationManager configurationManager;
+        private MediaSettings settings;
+        private bool started;
+        private MediaInstance media;
 
         public MainForm()
         {
             InitializeComponent();
 
             string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ServiceExe);
-            serviceManager = new ServiceManager(HostsConsts.PortalServiceName, exePath);
+            serviceManager = new ServiceManager(HostsConsts.MediaServiceName, exePath);
 
             taskPool = new TaskPool();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, System.EventArgs e)
         {
-            configurationManager = new ConfigurationManager(HostsConsts.PortalApp);
-            settings = configurationManager.GetSection<PortalSettings>("portal", s => s.Port = 9090);
-            portalSettingsBindingSource.DataSource = settings;
+            configurationManager = new ConfigurationManager(HostsConsts.MediaApp);
+            settings = configurationManager.GetSection<MediaSettings>("media", s => s.Port = 9090);
+            mediaSettingsBindingSource.DataSource = settings;
 
             RegisterContainer();
 
             serverConnectionSettingsControl.Initialize(UserRole.Administrator, taskPool);
 
-            Text += string.Format(" ({0})", typeof(PortalInstance).Assembly.GetName().Version);
+            Text += string.Format(" ({0})", typeof(MediaInstance).Assembly.GetName().Version);
 
             AdjustServiceState();
 
@@ -71,7 +71,7 @@ namespace Hosts.Portal.WinForms
         {
             bool serviceInstalled = serviceManager.ServiceInstalled();
 
-            installServiseButton.Text = serviceInstalled ?
+            installServiceButton.Text = serviceInstalled ?
                  UnistallServiceButtonTitle :
                  InstallServiceButtonTitle;
 
@@ -90,7 +90,7 @@ namespace Hosts.Portal.WinForms
             stopButton.Enabled = started && !runned;
         }
 
-        private void saveButton_Click(object sender, EventArgs e)
+        private void saveButton_Click(object sender, System.EventArgs e)
         {
             try
             {
@@ -105,60 +105,26 @@ namespace Hosts.Portal.WinForms
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            StartPortal();
+            StartMedia();
         }
 
-        private async void StartPortal()
+        private void serviceStateTimer_Tick(object sender, System.EventArgs e)
         {
-            try
-            {
-                StopPortal();
-
-                startButton.Enabled = false;
-
-                portal = new PortalInstance(settings, serverConnectionSettingsControl.ConnectionSettings);
-                await portal.Start();
-
-                startButton.Enabled = false;
-                stopButton.Enabled = true;
-                started = true;
-            }
-            catch (Exception e)
-            {
-                startButton.Enabled = true;
-                UIHelper.Error(e);
-            }
+            AdjustServiceState();
         }
 
-        private void stopButton_Click(object sender, EventArgs e)
+        private void selectFolderButton_Click(object sender, EventArgs e)
         {
-            try
-            {
-                StopPortal();
-            }
-            catch (Exception ex)
-            {
-                UIHelper.Error(ex);
-            }
-        }
-
-        private void StopPortal()
-        {
-            if (portal == null)
+            if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
 
-            portal.Stop();
-            portal = null;
-
-            startButton.Enabled = true;
-            stopButton.Enabled = false;
-
-            started = false;
+            settings.Folder = folderBrowserDialog.SelectedPath;
+            mediaSettingsBindingSource.ResetBindings(false);
         }
 
-        private void installServiseButton_Click(object sender, EventArgs e)
+        private void installServiceButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -178,11 +144,6 @@ namespace Hosts.Portal.WinForms
                 UIHelper.Error(ex);
             }
 
-            AdjustServiceState();
-        }
-
-        private void serviceStateTimer_Tick(object sender, EventArgs e)
-        {
             AdjustServiceState();
         }
 
@@ -209,9 +170,59 @@ namespace Hosts.Portal.WinForms
             AdjustServiceState();
         }
 
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                StopMedia();
+            }
+            catch (Exception ex)
+            {
+                UIHelper.Error(ex);
+            }
+        }
+
+        private async void StartMedia()
+        {
+            try
+            {
+                StopMedia();
+
+                startButton.Enabled = false;
+
+                media = new MediaInstance(settings, serverConnectionSettingsControl.ConnectionSettings);
+                await media.Start();
+
+                startButton.Enabled = false;
+                stopButton.Enabled = true;
+                started = true;
+            }
+            catch (Exception e)
+            {
+                startButton.Enabled = true;
+                UIHelper.Error(e);
+            }
+        }
+
+        private void StopMedia()
+        {
+            if (media == null)
+            {
+                return;
+            }
+
+            media.Stop();
+            media = null;
+
+            startButton.Enabled = true;
+            stopButton.Enabled = false;
+
+            started = false;
+        }
+
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if ((started) && (!UIHelper.Question("Портал запущен. В случае выхода из программы он будет остановлен. Продолжить?")))
+            if ((started) && (!UIHelper.Question("Медиа служба запущена. В случае выхода из программы она будет остановлена. Продолжить?")))
             {
                 e.Cancel = true;
                 return;
@@ -219,7 +230,7 @@ namespace Hosts.Portal.WinForms
 
             try
             {
-                StopPortal();
+                StopMedia();
             }
             catch { }
         }

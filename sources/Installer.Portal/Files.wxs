@@ -56,7 +56,7 @@
       <Component Id="cmp99CBDE2AFC8047ADA75F210CE325511E" Directory="INSTALLFOLDER" Guid="99CBDE2A-FC80-47AD-A75F-210CE325511E">
         <File Id="fil30EB42677F4344FE9F53C86859BC9E98"  KeyPath="yes" Source="$(var.Hosts.Portal.WinService.TargetPath)" />
         <ServiceControl
-          Id="removePortalService"
+          Id="removeQueueService"
           Name="[SERVICE_NAME]"
           Stop="both"
           Remove="uninstall"
@@ -147,7 +147,7 @@
         <File Id="filF7EA23D4DED6D5A4218DC0EA8DC146CD" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\Queue.UI.WinForms.dll" />
       </Component>
       <Component Id="cmpB0ABCEFE6B0D0545AE7E0C7A4F3787E9" Directory="INSTALLFOLDER" Guid="635268C4-5DB1-4B14-B2A8-9D7A06F409DE">
-        <File Id="fil7174FCAD5782AFCED6C2936FDA2FCC19" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\Services.Portal.dll" />
+        <File Id="fil7174FCAD5782AFCED6C2936FDA2FCC19" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\Queue.Services.Portal.dll" />
       </Component>
       <Component Id="cmp60B1FB55579F20C4E5992381931290B2" Directory="dir0C90AB180A09D13DFC6C2464F39ACEBE" Guid="B0532C5E-CE08-42FA-AFE0-3B4EFD0F22DD">
         <File Id="fil89EE66C5D7799C97E597520C8837930A" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\favicon.ico" />

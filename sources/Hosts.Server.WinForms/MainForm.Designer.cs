@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.startButton = new System.Windows.Forms.Button();
             this.panel = new System.Windows.Forms.Panel();
@@ -49,8 +50,8 @@
             this.httpGroupBox = new System.Windows.Forms.GroupBox();
             this.httpPortUpDown = new System.Windows.Forms.NumericUpDown();
             this.httpHostTextBox = new System.Windows.Forms.TextBox();
-            this.notifyIcon = new System.Windows.Forms.NotifyIcon();
-            this.serviceStateTimer = new System.Windows.Forms.Timer();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
             this.panel.SuspendLayout();
             this.serviceGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).BeginInit();
@@ -81,7 +82,7 @@
             this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel.Location = new System.Drawing.Point(0, 0);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(421, 460);
+            this.panel.Size = new System.Drawing.Size(414, 462);
             this.panel.TabIndex = 2;
             // 
             // stopButton
@@ -304,12 +305,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(421, 460);
+            this.ClientSize = new System.Drawing.Size(414, 462);
             this.Controls.Add(this.panel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(235, 255);
+            this.MaximumSize = new System.Drawing.Size(430, 500);
+            this.MinimumSize = new System.Drawing.Size(430, 500);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Сервер очереди";

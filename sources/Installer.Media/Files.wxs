@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <Fragment>
+    <DirectoryRef Id="INSTALLFOLDER" />
+  </Fragment>
+  <Fragment>
+    <Property Id="SERVICE_NAME" Value="JunteQueueMedia" />
+    <ComponentGroup Id="CoreFiles" Directory="INSTALLFOLDER">
+      <Component Id="cmp695E575E832E5D1C36ED3C9D4D846558" Guid="CC70E484-D2AA-4F9B-A2B5-9D258BB27059">
+        <File Id="fil8A6B4AC36ABE8C18428D07BA1C162AA7" KeyPath="yes" Source="$(var.Hosts.Media.WinService.TargetPath)" />
+        <ServiceControl
+           Id="removeQueueService"
+           Name="[SERVICE_NAME]"
+           Stop="both"
+           Remove="uninstall"
+           Wait="yes" />
+      </Component>
+      <Component Id="cmpC9C93B9F1393F3E2039446131E1786E3" Guid="FCC9C382-8FE8-4A2D-9670-3C911B2BF3C6">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinService.TargetPath).config" />
+      </Component>
+      <Component Id="cmpEE4A4CAFD1C5CD2AF1991C002F676C02" Guid="04A2BBF6-AD53-4EFA-86F8-D7307DBB0186">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetPath)" />
+      </Component>
+      <Component Id="cmp64FAAE03E47F6A9D0614A984C66CBF69" Guid="B8CBB28A-0EA8-4850-A68E-470702F69769">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetPath).config" />
+      </Component>
+      <Component Id="cmpDBEEEBDAEE67A307026A7C9AC97B9B2A" Guid="A4627E22-692B-4C09-912E-BE7175452DB7">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Crad.Windows.Forms.Actions.dll" />
+      </Component>
+      <Component Id="cmp695F3B89FCD90C669B1958F6D20D523D" Guid="CC5BDB0E-AA95-4280-BE6C-3E6F7940A21F">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Icons.resx" />
+      </Component>
+      <Component Id="cmp2D1101A09A3F5FA0CDF5E565334E6BDB" Guid="88C19F53-7F6E-41F8-BAD2-010868617A6B">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Junte.Parallel.Common.dll" />
+      </Component>
+      <Component Id="cmp96AB944A74A73C7899AC9EBB5BFD5292" Guid="955ECDD0-818B-4154-84D7-CC9C1044B81E">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Junte.UI.WinForms.dll" />
+      </Component>
+      <Component Id="cmpC255AEA61B1C33749B73878AE58A3200" Guid="119EC81B-B05D-4F13-BCFF-29B6703E393B">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Junte.WCF.Common.dll" />
+      </Component>
+      <Component Id="cmp13D58469BCB864EB53214ED46E622188" Guid="3ADF3043-B34C-46FE-8D9D-65188BFF5F27">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\log4net.dll" />
+      </Component>
+      <Component Id="cmpF2F1C15A47B64F045101B1AE5B4D6054" Guid="5D7199B7-168D-4F45-A193-3A94F767C004">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Microsoft.Practices.ServiceLocation.dll" />
+      </Component>
+      <Component Id="cmpAA856A11EEF773F32618D29332CADFD0" Guid="46BCAAE6-837B-4A12-976A-636450CF8ED0">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Microsoft.Practices.Unity.Configuration.dll" />
+      </Component>
+      <Component Id="cmp5141EFC969B8F1A9A0F1A01FFAD874BA" Guid="7FB914EF-E775-4625-AEB7-E9BE05896A4A">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Microsoft.Practices.Unity.dll" />
+      </Component>
+      <Component Id="cmpB48E67D919D1C42D78781F3B5D6E4336" Guid="9E0ABC93-418B-4F44-AA65-0822CC158257">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Microsoft.Practices.Unity.RegistrationByConvention.dll" />
+      </Component>
+      <Component Id="cmpBB1767D7C200C536ABB2D361F40F9D92" Guid="02BFFA49-4145-4562-B683-B85D87A98728">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.dll" />
+      </Component>
+      <Component Id="cmp676659A682F8B2F9B96DCCEF64974212" Guid="98996861-317F-4E37-B341-91260B06CC02">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll" />
+      </Component>
+      <Component Id="cmp7EB0B903F4227AB6B6118ABC9E5F8148" Guid="0A730192-4BF4-4572-BD94-5CF67383E028">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.Sensors.dll" />
+      </Component>
+      <Component Id="cmp702FCD8F941D530EED089ED86491F3AF" Guid="8775291E-7C24-45BC-ABF7-D257EB6D08D7">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.Shell.dll" />
+      </Component>
+      <Component Id="cmp886200E0570F6ED803412CBE764B2AAA" Guid="0D11FF90-9054-4CF4-8D33-6F17202350B9">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.ShellExtensions.dll" />
+      </Component>
+      <Component Id="cmpB7F1EBE42DCB1051B92D42C1EF84E2F9" Guid="F9C0EB1F-9D6D-47B1-BB9B-677AAE4FBAE9">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\NLog.dll" />
+      </Component>
+      <Component Id="cmp55C662695779CA92FAA1C1E8F030C8C5" Guid="57A554C5-82AA-4D57-94D5-760A3F28EC3C">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.Common.dll" />
+      </Component>
+      <Component Id="cmp70D5CE0BCF705C3CF206DC141D71CD57" Guid="67942E7D-A51D-4408-9D04-8D56D55E4E66">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.Hosts.Common.dll" />
+      </Component>
+      <Component Id="cmp9314975DBC7466BD38A9B02AAF02BFF8" Guid="D1CD0C92-8AA3-4DAE-92E5-AE9927DBE345">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.Media.exe" />
+      </Component>
+      <Component Id="cmp2CE2F83A5AB32BAFBA87C152C2C6F326" Guid="0DCD3099-4732-4D6A-82BE-67FDCEFB1117">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.Model.Common.dll" />
+      </Component>
+      <Component Id="cmp3111FB7FBF8E83855ABE23B857069FBD" Guid="8C7D1CAF-1160-4328-AFF0-355BC1F69776">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.Services.Common.dll" />
+      </Component>
+      <Component Id="cmpC4E247D01A6FC492047FFCAFBA4A2F7E" Guid="A0E2BD39-35F3-4C47-9032-A3661E263D1B">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.Services.Contracts.dll" />
+      </Component>
+      <Component Id="cmp43DB63E4B74D1504244115D8B4DEBC10" Guid="2EF53BFB-3979-4A31-BFFF-2FE98FC45188">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.Services.DTO.dll" />
+      </Component>
+      <Component Id="cmpDEBF93F703C4F623A75B793A9E8EAF13" Guid="E032E0CD-4E2D-4DBC-9951-4D213A6CF794">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.UI.WinForms.dll" />
+      </Component>
+      <Component Id="cmpC5508FA412CFAD60ABBF6F9A01E84BEE" Guid="ADC2CD17-8FC5-4CDC-8C7A-BA29279F5C50">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.Services.Media.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

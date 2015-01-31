@@ -7,8 +7,8 @@
     <ProjectGuid>{93DE3A0B-F34F-45DF-8A0D-EAA198C34662}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Services.Portal</RootNamespace>
-    <AssemblyName>Services.Portal</AssemblyName>
+    <RootNamespace>Queue.Services.Portal</RootNamespace>
+    <AssemblyName>Queue.Services.Portal</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

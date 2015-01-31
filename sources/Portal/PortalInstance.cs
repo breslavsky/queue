@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Queue.Portal
 {
-    public class PortalInstance
+    public sealed class PortalInstance
     {
         private Administrator user;
         private bool inited;
@@ -75,7 +75,11 @@ namespace Queue.Portal
         {
             if (host != null)
             {
-                host.Close();
+                try
+                {
+                    host.Close();
+                }
+                catch { }
             }
         }
 

@@ -15,5 +15,12 @@
         public const string PortalServiceName = "JunteQueuePortal";
 
         #endregion portal
+
+        #region media
+
+        public const string MediaApp = "Queue.Media";
+        public const string MediaServiceName = "JunteQueueMedia";
+
+        #endregion media
     }
 }

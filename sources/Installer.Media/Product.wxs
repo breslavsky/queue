@@ -2,10 +2,10 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?include $(var.Installer.Common.ProjectDir)Consts.wxi ?>
 
-  <?define ProductName="Queue Portal" ?>
-  <?define ProductVersion="1.4.1.0" ?>
-  <?define ProductCode="1A5F220B-DF53-4FC1-85A9-95C935763D66"?>
-  <?define UpgradeCode="D44E3BFF-77AF-4081-9F88-9928E3104555"?>
+  <?define ProductName="Queue Media" ?>
+  <?define ProductVersion="1.4.0.0" ?>
+  <?define ProductCode="816B815C-BF37-44D6-9AEF-7BE8539AAC00"?>
+  <?define UpgradeCode="1793500C-0A3C-4195-8A09-A015DCC551B0"?>
 
   <Product Id="$(var.ProductCode)"
           Name="$(var.ProductName)"
@@ -47,7 +47,7 @@
         <Shortcut Id="Shortcut"
              Name="$(var.ProductName)"
              Description="$(var.ProductName)"
-             Target="[INSTALLFOLDER]$(var.Hosts.Portal.WinForms.TargetFileName)"
+             Target="[INSTALLFOLDER]$(var.Hosts.Media.WinForms.TargetFileName)"
              WorkingDirectory="INSTALLFOLDER" />
         <Shortcut Id="UninstallShortcut"
             Name="Удалить $(var.ProductName)"

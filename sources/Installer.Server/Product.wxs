@@ -19,7 +19,7 @@
     <MajorUpgrade DowngradeErrorMessage="Более новая версия [ProductName] уже установлена." />
     <MediaTemplate EmbedCab="yes" />
 
-    <Icon Id="appIcon" SourceFile="server.ico" />
+    <Icon Id="appIcon" SourceFile="icon.ico" />
     <Property Id="ARPPRODUCTICON" Value="appIcon" />
     <Property Id="REINSTALLMODE" Value="amus" />
     <Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable" />
