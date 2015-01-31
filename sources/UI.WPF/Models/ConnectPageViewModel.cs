@@ -1,5 +1,5 @@
 ﻿using Junte.Parallel.Common;
-using Junte.UI.WPF.Types;
+using Junte.UI.WPF;
 using Junte.WCF.Common;
 using MahApps.Metro;
 using Queue.Services.Common;

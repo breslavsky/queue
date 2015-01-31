@@ -1,7 +1,6 @@
-﻿using Junte.UI.WPF.Types;
+﻿using Junte.UI.WPF;
 using Queue.Terminal.Pages;
 using Queue.Terminal.UserControls;
-using Queue.UI.WPF;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;

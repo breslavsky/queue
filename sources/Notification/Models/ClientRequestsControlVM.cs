@@ -1,4 +1,4 @@
-﻿using Junte.UI.WPF.Types;
+﻿using Junte.UI.WPF;
 using NLog;
 using Queue.Model.Common;
 using Queue.Notification.UserControls;

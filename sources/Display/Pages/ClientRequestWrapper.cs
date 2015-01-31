@@ -1,4 +1,4 @@
-﻿using Junte.UI.WPF.Types;
+﻿using Junte.UI.WPF;
 using Queue.Model.Common;
 using Queue.Services.DTO;
 using System.Windows.Media;

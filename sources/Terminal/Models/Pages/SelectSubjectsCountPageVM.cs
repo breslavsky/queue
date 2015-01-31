@@ -1,5 +1,5 @@
 ﻿using Junte.UI.WPF;
-using Junte.UI.WPF.Types;
+
 using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
 using Queue.Model.Common;

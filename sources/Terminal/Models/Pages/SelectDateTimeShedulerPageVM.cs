@@ -1,5 +1,4 @@
 ﻿using Junte.UI.WPF;
-using Junte.UI.WPF.Types;
 using Junte.WCF.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;

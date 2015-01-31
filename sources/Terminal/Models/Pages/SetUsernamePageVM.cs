@@ -1,5 +1,4 @@
 ﻿using Junte.UI.WPF;
-using Junte.UI.WPF.Types;
 using Queue.Services.DTO;
 using System;
 using System.ServiceModel;

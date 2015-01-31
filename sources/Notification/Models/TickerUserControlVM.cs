@@ -1,4 +1,4 @@
-﻿using Junte.UI.WPF.Types;
+﻿using Junte.UI.WPF;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using System;
