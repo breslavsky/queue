@@ -36,6 +36,9 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Crad.Windows.Forms.Actions">
       <HintPath>..\packages\ActionListWinForms.1.3.0.0\lib\net40\Crad.Windows.Forms.Actions.dll</HintPath>

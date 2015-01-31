@@ -2,10 +2,10 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?include $(var.Installer.Common.ProjectDir)Consts.wxi ?>
 
-  <?define ProductName="Queue Server" ?>
-  <?define ProductVersion="1.4.5.0" ?>
-  <?define ProductCode="AA34004B-596B-45C2-B20E-93415B80861C"?>
-  <?define UpgradeCode="58088B57-52CE-4D31-8882-CB4A69FCAFDF"?>
+  <?define ProductName="Queue Portal" ?>
+  <?define ProductVersion="1.4.1.0" ?>
+  <?define ProductCode="1A5F220B-DF53-4FC1-85A9-95C935763D66"?>
+  <?define UpgradeCode="D44E3BFF-77AF-4081-9F88-9928E3104555"?>
 
   <Product Id="$(var.ProductCode)"
           Name="$(var.ProductName)"
@@ -19,7 +19,7 @@
     <MajorUpgrade DowngradeErrorMessage="Более новая версия [ProductName] уже установлена." />
     <MediaTemplate EmbedCab="yes" />
 
-    <Icon Id="appIcon" SourceFile="server.ico" />
+    <Icon Id="appIcon" SourceFile="portal.ico" />
     <Property Id="ARPPRODUCTICON" Value="appIcon" />
     <Property Id="REINSTALLMODE" Value="amus" />
     <Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable" />
@@ -47,7 +47,7 @@
         <Shortcut Id="Shortcut"
              Name="$(var.ProductName)"
              Description="$(var.ProductName)"
-             Target="[INSTALLFOLDER]$(var.Hosts.Server.WinForms.TargetFileName)"
+             Target="[INSTALLFOLDER]$(var.Hosts.Portal.WinForms.TargetFileName)"
              WorkingDirectory="INSTALLFOLDER" />
         <Shortcut Id="UninstallShortcut"
             Name="Удалить $(var.ProductName)"

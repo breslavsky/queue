@@ -5,10 +5,10 @@ using Queue.Services.DTO;
 using System;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace Queue.Services.Portal
 {
@@ -66,7 +66,7 @@ namespace Queue.Services.Portal
 #if DEBUG
             string webClientPath = DebugWebClientPath;
 #else
-            string webClientPath = Path.Combine(Environment.CurrentDirectory, "www");
+            string webClientPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "www");
 #endif
             string file = Path.Combine(webClientPath, path);
 
