@@ -66,7 +66,7 @@ namespace Queue.Services.Portal
 #if DEBUG
             string webClientPath = DebugWebClientPath;
 #else
-            string webClientPath = Environment.CurrentDirectory;
+            string webClientPath = Path.Combine(Environment.CurrentDirectory, "www");
 #endif
             string file = Path.Combine(webClientPath, path);
 
