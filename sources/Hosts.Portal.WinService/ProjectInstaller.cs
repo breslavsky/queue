@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Configuration.Install;
 
-namespace Queue.Hosts.Server.WinService
+namespace Queue.Hosts.Portal.WinService
 {
     [RunInstaller(true)]
     public partial class ProjectInstaller : Installer
@@ -11,7 +11,7 @@ namespace Queue.Hosts.Server.WinService
         {
             InitializeComponent();
 
-            serviceInstaller.ServiceName = HostsConsts.ServerServiceName;
+            serviceInstaller.ServiceName = HostsConsts.PortalServiceName;
         }
     }
 }

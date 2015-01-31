@@ -1,34 +1,35 @@
 ﻿using NLog;
 using Queue.Common;
 using Queue.Hosts.Common;
-using Queue.Server;
+using Queue.Portal;
 using System;
 using System.ServiceProcess;
 
-namespace Queue.Hosts.Server.WinService
+namespace Hosts.Portal.WinService
 {
-    public partial class ServerService : ServiceBase
+    public partial class PortalService : ServiceBase
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private ServerInstance server;
+        private PortalInstance portal;
 
-        public ServerService()
+        public PortalService()
         {
             InitializeComponent();
         }
 
-        protected override void OnStart(string[] args)
+        protected override async void OnStart(string[] args)
         {
             logger.Info("Starting service...");
 
             try
             {
-                ConfigurationManager configuration = new ConfigurationManager(HostsConsts.ServerApp);
-                ServerSettings settings = configuration.GetSection<ServerSettings>("server");
+                ConfigurationManager configuration = new ConfigurationManager(HostsConsts.PortalApp);
+                PortalSettings portalSettings = configuration.GetSection<PortalSettings>("portal");
+                ServerConnectionSettings connectionSettings = configuration.GetSection<ServerConnectionSettings>("connection");
 
-                server = new ServerInstance(settings);
-                server.Start();
+                portal = new PortalInstance(portalSettings, connectionSettings);
+                await portal.Start();
 
                 logger.Info("Service started");
             }
@@ -45,7 +46,7 @@ namespace Queue.Hosts.Server.WinService
 
             try
             {
-                server.Stop();
+                portal.Stop();
             }
             catch (Exception e)
             {

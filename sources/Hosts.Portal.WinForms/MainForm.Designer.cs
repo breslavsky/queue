@@ -44,6 +44,8 @@
             this.portLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.serverConnectionSettingsControl = new Queue.UI.WinForms.Controls.ServerConnectionSettingsControl();
+            this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.serviceGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).BeginInit();
             this.settingsGroupBox.SuspendLayout();
@@ -93,6 +95,7 @@
             this.runServiceButton.TabIndex = 1;
             this.runServiceButton.Text = "Запустить службу";
             this.runServiceButton.UseVisualStyleBackColor = true;
+            this.runServiceButton.Click += new System.EventHandler(this.runServiceButton_Click);
             // 
             // installServiseButton
             // 
@@ -102,6 +105,7 @@
             this.installServiseButton.TabIndex = 0;
             this.installServiseButton.Text = "Установить службу";
             this.installServiseButton.UseVisualStyleBackColor = true;
+            this.installServiseButton.Click += new System.EventHandler(this.installServiseButton_Click);
             // 
             // startButton
             // 
@@ -198,6 +202,18 @@
             this.serverConnectionSettingsControl.Size = new System.Drawing.Size(337, 176);
             this.serverConnectionSettingsControl.TabIndex = 0;
             // 
+            // serviceStateTimer
+            // 
+            this.serviceStateTimer.Interval = 1000;
+            this.serviceStateTimer.Tick += new System.EventHandler(this.serviceStateTimer_Tick);
+            // 
+            // notifyIcon
+            // 
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "Junte Queue Server";
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -211,7 +227,9 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Портал";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.serviceGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).EndInit();
             this.settingsGroupBox.ResumeLayout(false);
@@ -239,6 +257,8 @@
         private System.Windows.Forms.NumericUpDown portUpDown;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.BindingSource portalSettingsBindingSource;
+        private System.Windows.Forms.Timer serviceStateTimer;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
     }
 }
 

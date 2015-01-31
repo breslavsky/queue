@@ -1,6 +1,6 @@
 ﻿namespace Hosts.Portal.WinService
 {
-    partial class Service1
+    partial class PortalService
     {
         /// <summary> 
         /// Required designer variable.

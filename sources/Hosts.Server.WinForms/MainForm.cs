@@ -16,7 +16,6 @@ namespace Queue.Hosts.Server.WinForms
     {
         private readonly ILog logger = LogManager.GetLogger(typeof(MainForm));
 
-        private const string ServiceName = "JunteQueueServer";
         private const string ServiceExe = "Queue.Hosts.Server.WinService.exe";
 
         private const string InstallServiceButtonTitle = "Установить службу";
@@ -35,7 +34,7 @@ namespace Queue.Hosts.Server.WinForms
             InitializeComponent();
 
             string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ServiceExe);
-            serviceManager = new ServiceManager(ServiceName, exePath);
+            serviceManager = new ServiceManager(HostsConsts.ServerServiceName, exePath);
             LoadConfiguration();
 
             editDatabaseSettingsControl.Settings = settings.Database;
@@ -44,7 +43,7 @@ namespace Queue.Hosts.Server.WinForms
 
         private void LoadConfiguration()
         {
-            configuration = new ConfigurationManager(AppNames.ServerApp);
+            configuration = new ConfigurationManager(HostsConsts.ServerApp);
             settings = configuration.GetSection<ServerSettings>("server", (s) =>
                                                                             {
                                                                                 s.Database = GetDefaultDatabaseSettings();

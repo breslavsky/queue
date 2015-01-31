@@ -50,9 +50,19 @@ namespace Queue.UI.WinForms.Controls
             ConnectionSettings = configuration.GetSection<ServerConnectionSettings>(SectionKey, (s) => s.Endpoint = "net.tcp://queue:4505");
 
             serverConnectionSettingsBindingSource.DataSource = ConnectionSettings;
+
+            if (ConnectionSettings.User != Guid.Empty)
+            {
+                ConnectToServer();
+            }
         }
 
         private void connectButton_Click(object sender, EventArgs e)
+        {
+            ConnectToServer();
+        }
+
+        private void ConnectToServer()
         {
             try
             {

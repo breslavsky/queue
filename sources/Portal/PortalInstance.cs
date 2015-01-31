@@ -7,45 +7,36 @@ using Queue.Services.Portal;
 using System;
 using System.ServiceModel;
 using System.ServiceModel.Description;
+using System.Threading.Tasks;
 
 namespace Queue.Portal
 {
     public class PortalInstance
     {
         private Administrator user;
-
+        private bool inited;
         private PortalSettings portalSettings;
-        private ServerConnectionSettings serverConnection;
 
         private ServiceHost portalServiceHost;
         private ServiceHost clientServiceHost;
         private ServiceHost operatorServiceHost;
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;
+        private ServerConnectionSettings serverConnection;
 
         public PortalInstance(PortalSettings portalSettings, ServerConnectionSettings serverConnection)
         {
             this.portalSettings = portalSettings;
-
-            ConnectToServer(serverConnection);
+            this.serverConnection = serverConnection;
         }
 
-        private async void ConnectToServer(ServerConnectionSettings serverConnection)
+        public async Task Start()
         {
-            channelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(),
-                                                                           Bindings.NetTcpBinding,
-                                                                           new EndpointAddress(serverConnection.Endpoint));
-
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
-
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            if (!inited)
             {
-                user = await channel.Service.GetUser(serverConnection.User) as Administrator;
+                await ConnectToServer();
             }
-        }
 
-        public void Start()
-        {
             Stop();
 
             portalServiceHost = CreatePortalServiceHost();
@@ -55,6 +46,20 @@ namespace Queue.Portal
             portalServiceHost.Open();
             clientServiceHost.Open();
             operatorServiceHost.Open();
+        }
+
+        private async Task ConnectToServer()
+        {
+            channelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(),
+                                                                           Bindings.NetTcpBinding,
+                                                                           new EndpointAddress(serverConnection.Endpoint));
+
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+
+            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            {
+                user = await channel.Service.UserLogin(serverConnection.User, serverConnection.Password) as Administrator;
+            }
         }
 
         public void Stop()
@@ -76,11 +81,11 @@ namespace Queue.Portal
         {
             Uri uri = new Uri(string.Format("{0}://0.0.0.0:{1}/", Schemes.HTTP, portalSettings.Port));
 
-            PortalServiceHost serviceHost1 = new PortalServiceHost(channelBuilder, user, typeof(PortalService));
-            ServiceEndpoint serviceEndpoint = serviceHost1.AddServiceEndpoint(typeof(IPortalService), Bindings.WebHttpBinding, uri.ToString());
+            PortalServiceHost host = new PortalServiceHost(channelBuilder, user, typeof(PortalService));
+            ServiceEndpoint serviceEndpoint = host.AddServiceEndpoint(typeof(IPortalService), Bindings.WebHttpBinding, uri.ToString());
             serviceEndpoint.Behaviors.Add(new WebHttpBehavior());
 
-            return serviceHost1;
+            return host;
         }
 
         private ServiceHost CreateOperatorServiceHost()

@@ -1,5 +1,4 @@
-﻿using log4net.Config;
-using System.ServiceProcess;
+﻿using System.ServiceProcess;
 
 namespace Queue.Hosts.Server.WinService
 {
@@ -7,8 +6,6 @@ namespace Queue.Hosts.Server.WinService
     {
         private static void Main()
         {
-            XmlConfigurator.Configure();
-
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
