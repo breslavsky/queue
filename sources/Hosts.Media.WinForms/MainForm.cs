@@ -2,7 +2,6 @@
 using Junte.UI.WinForms;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
-using NLog;
 using Queue.Common;
 using Queue.Hosts.Common;
 using Queue.Hosts.Media.WinForms.Properties;
@@ -17,8 +16,6 @@ namespace Queue.Hosts.Media.WinForms
 {
     public partial class MainForm : Form
     {
-        private readonly Logger logger = LogManager.GetCurrentClassLogger();
-
         private const string ServiceExe = "Queue.Hosts.Media.WinService.exe";
 
         private const string InstallServiceButtonTitle = "Установить службу";
@@ -43,7 +40,7 @@ namespace Queue.Hosts.Media.WinForms
             taskPool = new TaskPool();
         }
 
-        private void MainForm_Load(object sender, System.EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             configurationManager = new ConfigurationManager(HostsConsts.MediaApp);
             settings = configurationManager.GetSection<MediaSettings>("media", s => s.Port = 9090);

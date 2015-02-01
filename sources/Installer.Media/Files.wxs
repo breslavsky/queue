@@ -79,9 +79,6 @@
       <Component Id="cmp70D5CE0BCF705C3CF206DC141D71CD57" Guid="67942E7D-A51D-4408-9D04-8D56D55E4E66">
         <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.Hosts.Common.dll" />
       </Component>
-      <Component Id="cmp9314975DBC7466BD38A9B02AAF02BFF8" Guid="D1CD0C92-8AA3-4DAE-92E5-AE9927DBE345">
-        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.Media.exe" />
-      </Component>
       <Component Id="cmp2CE2F83A5AB32BAFBA87C152C2C6F326" Guid="0DCD3099-4732-4D6A-82BE-67FDCEFB1117">
         <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.Model.Common.dll" />
       </Component>
