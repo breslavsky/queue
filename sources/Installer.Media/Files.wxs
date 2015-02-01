@@ -88,6 +88,9 @@
       <Component Id="cmpC4E247D01A6FC492047FFCAFBA4A2F7E" Guid="A0E2BD39-35F3-4C47-9032-A3661E263D1B">
         <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.Services.Contracts.dll" />
       </Component>
+      <Component Id="cmpF385149A58434C6C89F1E37A2724F9BB" Guid="F385149A-5843-4C6C-89F1-E37A2724F9BB">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.Media.dll" />
+      </Component>
       <Component Id="cmp43DB63E4B74D1504244115D8B4DEBC10" Guid="2EF53BFB-3979-4A31-BFFF-2FE98FC45188">
         <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.Services.DTO.dll" />
       </Component>
