@@ -113,7 +113,7 @@ namespace Queue.Notification.Models
 
             int row = 1;
 
-            foreach (ClientRequestWrap req in requests.Where(r => r.Request != null))
+            foreach (ClientRequestWrap req in requests)
             {
                 try
                 {
