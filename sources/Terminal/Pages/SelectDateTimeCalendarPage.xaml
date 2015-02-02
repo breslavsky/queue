@@ -7,6 +7,7 @@
                     xmlns:pages="clr-namespace:Queue.Terminal.Pages"
                     Loaded="TerminalPage_Loaded"
                     PreviewMouseUp="TerminalPage_PreviewMouseUp"
+                    Unloaded="TerminalPage_Unloaded"
                     d:DesignHeight="300"
                     d:DesignWidth="300"
                     mc:Ignorable="d">
@@ -23,13 +24,7 @@
         <Viewbox HorizontalAlignment="Left">
             <Calendar x:Name="earlyRequestDateCalendar"
                       IsTodayHighlighted="False"
-                      SelectedDate="{Binding Model.SelectedDate}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectedDatesChanged">
-                        <i:InvokeCommandAction Command="{Binding SelectedDatesChangedCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Calendar>
+                      SelectedDate="{Binding Model.SelectedDate}" />
         </Viewbox>
         <GroupBox Grid.Column="1"
                   Width="90"

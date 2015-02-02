@@ -38,5 +38,10 @@ namespace Queue.Terminal.Pages
 
             (DataContext as SelectDateTimeCalendarPageVM).Initialize();
         }
+
+        private void TerminalPage_Unloaded(object sender, RoutedEventArgs e)
+        {
+            (DataContext as SelectDateTimeCalendarPageVM).Unloaded();
+        }
     }
 }

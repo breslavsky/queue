@@ -6,6 +6,7 @@ using Queue.Services.DTO;
 using Queue.Terminal.Types;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows.Input;
@@ -20,12 +21,11 @@ namespace Queue.Terminal.Models.Pages
 
         public SelectDateTimeCalendarPageVM()
         {
-            SelectedDatesChangedCommand = new RelayCommand(SelectedDatesChanged);
             PrevCommand = new RelayCommand(Prev);
             NextCommand = new RelayCommand(Next);
-        }
 
-        public ICommand SelectedDatesChangedCommand { get; set; }
+            model.PropertyChanged += model_PropertyChanged;
+        }
 
         public ICommand NextCommand { get; set; }
 
@@ -98,6 +98,14 @@ namespace Queue.Terminal.Models.Pages
             navigator.PrevPage();
         }
 
+        private void model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "SelectedDate")
+            {
+                SelectedDatesChanged();
+            }
+        }
+
         private void SelectedDatesChanged()
         {
             ReloadFreeTime();
@@ -161,6 +169,11 @@ namespace Queue.Terminal.Models.Pages
                     loading.Hide();
                 }
             }
+        }
+
+        internal void Unloaded()
+        {
+            model.PropertyChanged -= model_PropertyChanged;
         }
     }
 }
