@@ -101,8 +101,7 @@ namespace Queue.Notification.Models
 
                 try
                 {
-                    ReadMediaConfig(await taskPool.AddTask(channel.Service.GetMediaConfig()),
-                        await taskPool.AddTask(channel.Service.GetMediaConfigFiles()));
+                    ReadMediaConfig(await taskPool.AddTask(channel.Service.GetMediaConfig()), await taskPool.AddTask(channel.Service.GetMediaConfigFiles()));
                     ReadNotificationConfig(await taskPool.AddTask(channel.Service.GetNotificationConfig()));
                 }
                 catch (OperationCanceledException) { }

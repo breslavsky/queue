@@ -100,7 +100,7 @@ namespace Queue.Notification.Models
             lock (updateLock)
             {
                 DateTime now = DateTime.Now;
-                if (requests.RemoveAll(r => (now - r.Added) > ClientRequestTimeout) > 0)
+                if (requests.RemoveAll(r => r.Request.IsClosed && (now - r.Added) > ClientRequestTimeout) > 0)
                 {
                     UpdateCallingClientRequests();
                 }
