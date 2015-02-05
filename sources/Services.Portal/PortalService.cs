@@ -1,11 +1,10 @@
 ﻿using Junte.WCF.Common;
-using log4net;
+using NLog;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
 using System.IO;
 using System.Net;
-using System.Reflection;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace Queue.Services.Portal
     public partial class PortalService : IPortalService
     {
         private const string DebugWebClientPath = "\\git\\queue\\sources\\Portal\\www";
-        private static readonly ILog logger = LogManager.GetLogger(typeof(PortalService));
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly DuplexChannelBuilder<IServerTcpService> channelBuilder;
         protected readonly ChannelManager<IServerTcpService> channelManager;

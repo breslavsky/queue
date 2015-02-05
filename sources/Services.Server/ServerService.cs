@@ -1,7 +1,7 @@
 ﻿using Junte.Data.NHibernate;
-using log4net;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate.Criterion;
+using NLog;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -18,7 +18,7 @@ namespace Queue.Services.Server
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession, ConcurrencyMode = ConcurrencyMode.Multiple, IncludeExceptionDetailInFaults = true)]
     public partial class ServerService : IServerTcpService, IServerHttpService
     {
-        private static readonly ILog logger = LogManager.GetLogger(typeof(ServerService));
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private IContextChannel channel;
         private User currentUser;
@@ -46,7 +46,7 @@ namespace Queue.Services.Server
             }
             catch { }
 
-            logger.DebugFormat("Создан новый экземпляр службы [{0}]", sessionId);
+            logger.Debug("Создан новый экземпляр службы [{0}]", sessionId);
 
             try
             {
@@ -54,7 +54,7 @@ namespace Queue.Services.Server
             }
             catch
             {
-                logger.DebugFormat("Не удалось получить канал обратного вызова [{0}]", sessionId);
+                logger.Debug("Не удалось получить канал обратного вызова [{0}]", sessionId);
             }
 
             subscriptions = new Dictionary<ServerServiceEventType, Subscribtion>();
@@ -97,7 +97,7 @@ namespace Queue.Services.Server
             {
                 lock (subscriptions)
                 {
-                    logger.DebugFormat("Подписка на событие [{0}] для [{1}]", eventType, sessionId);
+                    logger.Debug("Подписка на событие [{0}] для [{1}]", eventType, sessionId);
 
                     switch (eventType)
                     {
@@ -165,7 +165,7 @@ namespace Queue.Services.Server
             {
                 lock (subscriptions)
                 {
-                    logger.DebugFormat("Отписка от события [{0}] для [{1}]", eventType, sessionId);
+                    logger.Debug("Отписка от события [{0}] для [{1}]", eventType, sessionId);
 
                     switch (eventType)
                     {
@@ -201,7 +201,7 @@ namespace Queue.Services.Server
 
         public void UnSubscribe()
         {
-            logger.InfoFormat("Экземпляр службы уничтожен [{0}]", sessionId);
+            logger.Info("Экземпляр службы уничтожен [{0}]", sessionId);
             try
             {
                 var eventTypes = subscriptions.Keys.ToArray();
@@ -218,14 +218,14 @@ namespace Queue.Services.Server
 
         private void channel_Closing(object sender, EventArgs e)
         {
-            logger.InfoFormat("Канал службы закрывается [{0}]", sessionId);
+            logger.Info("Канал службы закрывается [{0}]", sessionId);
 
             UnSubscribe();
         }
 
         private void channel_Faulted(object sender, EventArgs e)
         {
-            logger.InfoFormat("В канале службы произошла ошибка [{0}]", sessionId);
+            logger.Info("В канале службы произошла ошибка [{0}]", sessionId);
 
             UnSubscribe();
         }
@@ -376,7 +376,7 @@ namespace Queue.Services.Server
             var subscription = subscriptions[ServerServiceEventType.OperatorPlanMetricsUpdated];
             var args = subscription.Args;
 
-            logger.DebugFormat("OnOperatorPlanMetricsUpdated = {0}", args.Operators);
+            logger.Debug("OnOperatorPlanMetricsUpdated = {0}", args.Operators);
 
             if (args == null || args.Operators != null && args.Operators.Any(o => o.Equals(e.OperatorPlanMetrics.Operator)))
             {

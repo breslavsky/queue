@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Junte.Data.NHibernate;
-using log4net;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate.Criterion;
 using NHibernate.SqlCommand;
+using NLog;
 using Queue.Common;
 using Queue.Model;
 using Queue.Model.Common;
@@ -17,7 +17,7 @@ namespace Queue.Services.Server
 {
     public class QueueInstance : IQueueInstance
     {
-        private static readonly ILog logger = LogManager.GetLogger(typeof(QueueInstance));
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private const long OperatorHasGoneTimerInterval = TicksInterval._30Seconds;
         private const long TodayQueuePlanBuildInterval = TicksInterval._10Seconds;
@@ -73,7 +73,7 @@ namespace Queue.Services.Server
         {
             if (OnCallClient != null)
             {
-                logger.DebugFormat("Запуск обработчика для события [ClientCalling] с кол-вом слушателей [{0}]",
+                logger.Debug("Запуск обработчика для события [ClientCalling] с кол-вом слушателей [{0}]",
                     OnCallClient.GetInvocationList().Length);
                 OnCallClient(this, new QueueInstanceEventArgs()
                 {
@@ -86,7 +86,7 @@ namespace Queue.Services.Server
         {
             if (OnClientRequestUpdated != null)
             {
-                logger.DebugFormat("Запуск обработчика для события [OnClientRequestUpdated] с кол-вом слушателей [{0}]",
+                logger.Debug("Запуск обработчика для события [OnClientRequestUpdated] с кол-вом слушателей [{0}]",
                     OnClientRequestUpdated.GetInvocationList().Length);
                 OnClientRequestUpdated(this, new QueueInstanceEventArgs()
                 {
@@ -99,7 +99,7 @@ namespace Queue.Services.Server
         {
             if (OnConfigUpdated != null)
             {
-                logger.DebugFormat("Запуск обработчика для события [ConfigUpdated] с кол-вом слушателей [{0}]",
+                logger.Debug("Запуск обработчика для события [ConfigUpdated] с кол-вом слушателей [{0}]",
                     OnConfigUpdated.GetInvocationList().Length);
                 OnConfigUpdated(this, new QueueInstanceEventArgs()
                 {
@@ -123,7 +123,7 @@ namespace Queue.Services.Server
         {
             if (OnEvent != null)
             {
-                logger.DebugFormat("Запуск обработчика для события [OnQueueEvent] с кол-вом слушателей [{0}]",
+                logger.Debug("Запуск обработчика для события [OnQueueEvent] с кол-вом слушателей [{0}]",
                     OnEvent.GetInvocationList().Length);
                 OnEvent(this, new QueueInstanceEventArgs()
                 {
@@ -221,15 +221,15 @@ namespace Queue.Services.Server
 
                 if (e.ClientRequestPlan != null)
                 {
-                    logger.DebugFormat("Текущий план запроса клиента у оператора [{0}] [{1}]", e.Operator, e.ClientRequestPlan);
+                    logger.Debug("Текущий план запроса клиента у оператора [{0}] [{1}]", e.Operator, e.ClientRequestPlan);
                     eventArgs.ClientRequestPlan = Mapper.Map<ClientRequestPlan, DTO.ClientRequestPlan>(e.ClientRequestPlan);
                 }
                 else
                 {
-                    logger.DebugFormat("У оператора [{0}] отсутствуют текущие запросы", e.Operator);
+                    logger.Debug("У оператора [{0}] отсутствуют текущие запросы", e.Operator);
                 }
 
-                logger.DebugFormat("Запуск обработчика для события [CurrentClientRequestPlanUpdated] с кол-вом слушателей [{0}]",
+                logger.Debug("Запуск обработчика для события [CurrentClientRequestPlanUpdated] с кол-вом слушателей [{0}]",
                     OnCurrentClientRequestPlanUpdated.GetInvocationList().Length);
                 OnCurrentClientRequestPlanUpdated(this, eventArgs);
             }
@@ -257,7 +257,7 @@ namespace Queue.Services.Server
         {
             if (OnOperatorPlanMetricsUpdated != null)
             {
-                logger.DebugFormat("Запуск обработчика для события [OperatorPlanMetricsUpdated] с кол-вом слушателей [{0}]",
+                logger.Debug("Запуск обработчика для события [OperatorPlanMetricsUpdated] с кол-вом слушателей [{0}]",
                     OnOperatorPlanMetricsUpdated.GetInvocationList().Length);
                 OnOperatorPlanMetricsUpdated(this, new QueueInstanceEventArgs()
                 {

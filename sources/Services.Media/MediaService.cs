@@ -1,6 +1,6 @@
-﻿using Junte.Data.Common;
-using Junte.WCF.Common;
-using log4net;
+﻿using Junte.WCF.Common;
+
+using NLog;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System.IO;
@@ -17,7 +17,7 @@ namespace Queue.Services.Media
     {
         private const int BufferLength = 1024 * 1024;
 
-        private static readonly ILog logger = LogManager.GetLogger(typeof(MediaService));
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public MediaService(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser, string folder)
         {

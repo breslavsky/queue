@@ -1,5 +1,5 @@
 ﻿using Junte.UI.WinForms;
-using log4net;
+using NLog;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace Queue.Hub
 {
     public partial class LedsTISeriesControl : UserControl
     {
-        private static readonly ILog logger = LogManager.GetLogger(typeof(LedsTISeriesControl));
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private static Properties.Settings settings = Properties.Settings.Default;
 
@@ -116,7 +116,7 @@ namespace Queue.Hub
                     return;
                 }
 
-                logger.InfoFormat("Соединение с [{0}] установлено", PortName);
+                logger.Info("Соединение с [{0}] установлено", PortName);
 
                 refresh();
             }
@@ -130,12 +130,12 @@ namespace Queue.Hub
                 {
                     var clientRequest = controller.CallingClientRequests.FirstOrDefault(r => w.Equals(r.Operator.Workplace));
                     logger.Debug(w);
-                    display(w.Display, (short)(clientRequest != null ? clientRequest.Number : -1), w.Segments);
+                    Display(w.Display, (short)(clientRequest != null ? clientRequest.Number : -1), w.Segments);
                 }
             }
         }
 
-        private void display(byte address, short number, byte segments)
+        private void Display(byte address, short number, byte segments)
         {
             byte command = 0x00;
 
@@ -147,7 +147,7 @@ namespace Queue.Hub
             buffer.AddRange(body);
 
             byte[] data = buffer.ToArray();
-            logger.DebugFormat("Запись в [{0}]: [{1}]", PortName, string.Join(" ", data));
+            logger.Debug("Запись в [{0}]: [{1}]", PortName, string.Join(" ", data));
             Port.Write(data, 0, data.Length);
         }
 

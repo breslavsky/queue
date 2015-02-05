@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Junte.Data.NHibernate;
 using Junte.WCF.Common;
-using log4net;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NHibernate.Caches.SysCache2;
+using NLog;
 using Queue.Services.Contracts;
 using Queue.Services.Server;
 using System;
@@ -15,14 +15,14 @@ namespace Queue.Server
 {
     public sealed class ServerInstance
     {
-        private static readonly ILog logger = LogManager.GetLogger(typeof(ServerInstance));
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private ServiceHost tcpServiceHost;
         private ServiceHost httpServiceHost;
 
         public ServerInstance(ServerSettings settings)
         {
-            logger.InfoFormat("Creating.... [server: {0}; database: {1}]", settings.Database.Server, settings.Database.Name);
+            logger.Info("Creating.... [server: {0}; database: {1}]", settings.Database.Server, settings.Database.Name);
 
             UnityContainer container = new UnityContainer();
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
@@ -50,7 +50,7 @@ namespace Queue.Server
             if (tcpService.Enabled)
             {
                 uri = new Uri(string.Format("{0}://{1}:{2}/", Schemes.NET_TCP, tcpService.Host, tcpService.Port));
-                logger.InfoFormat("TCP service host uri = ", uri);
+                logger.Info("TCP service host uri = ", uri);
 
                 tcpServiceHost = new ServiceHost(typeof(ServerService), uri);
                 tcpServiceHost.AddServiceEndpoint(typeof(IServerTcpService), Bindings.NetTcpBinding, string.Empty);
@@ -63,7 +63,7 @@ namespace Queue.Server
             if (httpService.Enabled)
             {
                 uri = new Uri(string.Format("{0}://{1}:{2}/", Schemes.HTTP, httpService.Host, httpService.Port));
-                logger.InfoFormat("HTTP service host uri = ", uri);
+                logger.Info("HTTP service host uri = ", uri);
 
                 httpServiceHost = new ServiceHost(typeof(ServerService), uri);
                 httpServiceHost.AddServiceEndpoint(typeof(IServerHttpService), Bindings.BasicHttpBinding, string.Empty);

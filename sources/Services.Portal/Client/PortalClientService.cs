@@ -1,5 +1,5 @@
 ﻿using Junte.WCF.Common;
-using log4net;
+using NLog;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
@@ -25,7 +25,7 @@ namespace Queue.Services.Portal
                     UseSynchronizationContext = false)]
     public sealed class PortalClientService : PortalService, IPortalClientService
     {
-        private static readonly ILog logger = LogManager.GetLogger(typeof(PortalClientService));
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private Client currentClient;
         private Guid sessionId;

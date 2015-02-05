@@ -1,8 +1,8 @@
 ﻿using Junte.Data.NHibernate;
 using Junte.Parallel.Common;
-using log4net;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate.Criterion;
+using NLog;
 using Queue.Model;
 using Queue.Model.Common;
 using System;
@@ -24,7 +24,7 @@ namespace Queue.Services.Server
 
     public sealed class QueuePlan : Synchronized, IDisposable
     {
-        private static readonly ILog logger = LogManager.GetLogger(typeof(QueuePlan));
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private List<ClientRequest> clientRequests = new List<ClientRequest>();
 
@@ -285,7 +285,7 @@ namespace Queue.Services.Server
 
             if (OnCurrentClientRequestPlanUpdated != null)
             {
-                logger.InfoFormat("Запуск обработчика для события [OnCurrentClientRequestPlanUpdated] с кол-вом слушателей [{0}]",
+                logger.Info("Запуск обработчика для события [OnCurrentClientRequestPlanUpdated] с кол-вом слушателей [{0}]",
                     OnCurrentClientRequestPlanUpdated.GetInvocationList().Length);
 
                 foreach (var o in OperatorsPlans)
@@ -306,7 +306,7 @@ namespace Queue.Services.Server
 
             if (OnOperatorPlanMetricsUpdated != null)
             {
-                logger.InfoFormat("Запуск обработчика для события [OnOperatorPlanMetricsUpdated] с кол-вом слушателей [{0}]",
+                logger.Info("Запуск обработчика для события [OnOperatorPlanMetricsUpdated] с кол-вом слушателей [{0}]",
                     OnOperatorPlanMetricsUpdated.GetInvocationList().Length);
 
                 foreach (var o in OperatorsPlans)
@@ -320,7 +320,7 @@ namespace Queue.Services.Server
 
             Version++;
 
-            logger.InfoFormat("Построение плана очереди завершено с версией [{0}]", Version);
+            logger.Info("Построение плана очереди завершено с версией [{0}]", Version);
 
             if (OnBuilded != null)
             {
@@ -520,7 +520,7 @@ namespace Queue.Services.Server
 
             if (!serviceRenderings.ContainsKey(key))
             {
-                logger.InfoFormat("Загрузка параметров оказания услуги для раписания [{0}]", schedule);
+                logger.Info("Загрузка параметров оказания услуги для раписания [{0}]", schedule);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -547,7 +547,7 @@ namespace Queue.Services.Server
         {
             if (!serviceSchedule.ContainsKey(service))
             {
-                logger.InfoFormat("Загрузка расписания для услуги [{0}]", service);
+                logger.Info("Загрузка расписания для услуги [{0}]", service);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
@@ -598,7 +598,7 @@ namespace Queue.Services.Server
         /// </summary>
         public void Load(DateTime planDate)
         {
-            logger.DebugFormat("Загрузка плана очереди на дату [{0}]", planDate);
+            logger.Debug("Загрузка плана очереди на дату [{0}]", planDate);
 
             PlanDate = planDate.Date;
             PlanTime = TimeSpan.Zero;
@@ -614,7 +614,7 @@ namespace Queue.Services.Server
         /// <returns></returns>
         public void Put(Entity entity)
         {
-            logger.InfoFormat("Объект помещен в хранилище {0}", entity);
+            logger.Info("Объект помещен в хранилище {0}", entity);
             storage.Put(entity);
         }
 
@@ -639,7 +639,7 @@ namespace Queue.Services.Server
                 foreach (var o in operators)
                 {
                     OperatorsPlans.Add(new OperatorPlan(storage.Put(o)));
-                    logger.DebugFormat("Загружен оператор [{0}]", o);
+                    logger.Debug("Загружен оператор [{0}]", o);
                 }
 
                 logger.Info("Загрузка запросов");
@@ -654,7 +654,7 @@ namespace Queue.Services.Server
                 foreach (var r in openedClientRequests)
                 {
                     clientRequests.Add(storage.Put(r));
-                    logger.DebugFormat("Загружен [{0}] запрос", r.Number);
+                    logger.Debug("Загружен [{0}] запрос", r.Number);
                 }
 
                 LastNumber = session.CreateCriteria<ClientRequest>()

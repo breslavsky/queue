@@ -1,12 +1,11 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
-using log4net;
+using NLog;
 using Queue.Common;
 using Queue.Operator;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
-using Queue.UI.WPF;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
@@ -16,7 +15,7 @@ namespace Queue.Administrator
 {
     public partial class QueueMonitorForm : Queue.UI.WinForms.RichForm
     {
-        private static readonly ILog logger = LogManager.GetLogger(typeof(QueueMonitorForm));
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;

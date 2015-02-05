@@ -1,7 +1,7 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
-using log4net;
+using NLog;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -27,7 +27,7 @@ namespace Queue.Operator
     public partial class OperatorForm : Queue.UI.WinForms.RichForm
     {
         private const int PingInterval = 10000;
-        private static readonly ILog logger = LogManager.GetLogger(typeof(OperatorForm));
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly ServerCallback callbackObject;
         private readonly DuplexChannelBuilder<IServerTcpService> channelBuilder;

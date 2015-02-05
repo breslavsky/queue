@@ -1,6 +1,6 @@
 ﻿using Junte.Data.NHibernate;
 using Junte.UI.WinForms;
-using log4net;
+using NLog;
 using Queue.Common;
 using Queue.Hosts.Common;
 using Queue.Hosts.Server.WinForms.Properties;
@@ -14,7 +14,7 @@ namespace Queue.Hosts.Server.WinForms
 {
     public partial class MainForm : Form
     {
-        private readonly ILog logger = LogManager.GetLogger(typeof(MainForm));
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private const string ServiceExe = "Queue.Hosts.Server.WinService.exe";
 

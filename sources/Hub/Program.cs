@@ -2,20 +2,13 @@
 using System;
 using System.Windows.Forms;
 
-[assembly: log4net.Config.XmlConfigurator(Watch = true)]
-
 namespace Queue.Hub
 {
     internal static class Program
     {
-        /// <summary>
-        /// Главная точка входа для приложения.
-        /// </summary>
         [STAThread]
         private static void Main()
         {
-            log4net.Config.XmlConfigurator.Configure();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

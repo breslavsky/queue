@@ -40,8 +40,8 @@
       <Component Id="cmpC255AEA61B1C33749B73878AE58A3200" Guid="119EC81B-B05D-4F13-BCFF-29B6703E393B">
         <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Junte.WCF.Common.dll" />
       </Component>
-      <Component Id="cmp13D58469BCB864EB53214ED46E622188" Guid="3ADF3043-B34C-46FE-8D9D-65188BFF5F27">
-        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\log4net.dll" />
+      <Component Id="cmpAFF93159729A40859BDEBC9B84C1D522" Guid="AFF93159-729A-4085-9BDE-BC9B84C1D522">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\NLog.dll" />
       </Component>
       <Component Id="cmpF2F1C15A47B64F045101B1AE5B4D6054" Guid="5D7199B7-168D-4F45-A193-3A94F767C004">
         <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Microsoft.Practices.ServiceLocation.dll" />
@@ -69,9 +69,6 @@
       </Component>
       <Component Id="cmp886200E0570F6ED803412CBE764B2AAA" Guid="0D11FF90-9054-4CF4-8D33-6F17202350B9">
         <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.ShellExtensions.dll" />
-      </Component>
-      <Component Id="cmpB7F1EBE42DCB1051B92D42C1EF84E2F9" Guid="F9C0EB1F-9D6D-47B1-BB9B-677AAE4FBAE9">
-        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\NLog.dll" />
       </Component>
       <Component Id="cmp55C662695779CA92FAA1C1E8F030C8C5" Guid="57A554C5-82AA-4D57-94D5-760A3F28EC3C">
         <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Queue.Common.dll" />

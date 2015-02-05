@@ -1,4 +1,4 @@
-﻿using log4net;
+﻿using NLog;
 using Queue.Model;
 using Queue.Model.Common;
 using System;
@@ -12,7 +12,7 @@ namespace Queue.Services.Server
     public sealed class OperatorPlan
     {
         public ClientRequestPlan currentClientRequestPlan;
-        private static readonly ILog logger = LogManager.GetLogger(typeof(OperatorPlan));
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly List<TimeInterval> clientRequestIntervals = new List<TimeInterval>();
 

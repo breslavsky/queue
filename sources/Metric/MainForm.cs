@@ -1,11 +1,11 @@
 ﻿using Junte.Data.NHibernate;
 using Junte.UI.WinForms.NHibernate;
 using Junte.UI.WinForms.NHibernate.Configuration;
-using log4net;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Transform;
 using NHibernate.Type;
+using NLog;
 using Queue.Model;
 using Queue.Model.Common;
 using System;
@@ -18,7 +18,7 @@ namespace Queue.Metric
 {
     public partial class MainForm : Queue.UI.WinForms.RichForm
     {
-        private static readonly ILog logger = LogManager.GetLogger(typeof(MainForm));
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private static Properties.Settings settings = Properties.Settings.Default;
 

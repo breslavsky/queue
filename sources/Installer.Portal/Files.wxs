@@ -86,9 +86,6 @@
       <Component Id="cmpC255AEA61B1C33749B73878AE58A3200" Directory="INSTALLFOLDER" Guid="AF973768-C1F0-4329-9632-5789258D9D72">
         <File Id="fil285F0AEF7B68A083AE2D8E5A0E7D7C8B" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\Junte.WCF.Common.dll" />
       </Component>
-      <Component Id="cmp13D58469BCB864EB53214ED46E622188" Directory="INSTALLFOLDER" Guid="30F4261D-920A-4949-ACB3-2629E7BC3FA5">
-        <File Id="fil28F7A9478894C77C5F6C2A95DAA4B459" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\log4net.dll" />
-      </Component>
       <Component Id="cmpF2F1C15A47B64F045101B1AE5B4D6054" Directory="INSTALLFOLDER" Guid="A90E9353-C329-4CE1-84F9-5A5CBA89560E">
         <File Id="filC342596B66E98254BB6E1CFFE50AE4AA" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\Microsoft.Practices.ServiceLocation.dll" />
       </Component>
