@@ -3,7 +3,7 @@ using System.Configuration;
 
 namespace Queue.Metric
 {
-    internal class MetricSettings : ConfigurationSection
+    public class MetricSettings : ConfigurationSection
     {
         [ConfigurationProperty("database")]
         public DatabaseSettings Database

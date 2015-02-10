@@ -22,5 +22,12 @@
         public const string MediaServiceName = "JunteQueueMedia";
 
         #endregion media
+
+        #region metric
+
+        public const string MetricApp = "Queue.Metric";
+        public const string MetricServiceName = "JunteQueueMetric";
+
+        #endregion metric
     }
 }

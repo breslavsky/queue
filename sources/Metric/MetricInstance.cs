@@ -14,7 +14,7 @@ using System.Timers;
 
 namespace Queue.Metric
 {
-    public class MetricInstance
+    public class MetricInstance : IDisposable
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -22,9 +22,12 @@ namespace Queue.Metric
 
         private Timer updateTimer;
         private int UpdateInterval = 60000;
+        private bool disposed;
 
-        public MetricInstance()
+        public MetricInstance(MetricSettings settings)
         {
+            sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, settings.Database);
+
             updateTimer = new Timer();
             updateTimer.Elapsed += updateTimer_Elapsed;
         }
@@ -225,6 +228,36 @@ namespace Queue.Metric
             }
 
             session.Flush();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (sessionProvider != null)
+                {
+                    sessionProvider.Dispose();
+                }
+            }
+
+            disposed = true;
+        }
+
+        ~MetricInstance()
+        {
+            Dispose(false);
         }
     }
 }

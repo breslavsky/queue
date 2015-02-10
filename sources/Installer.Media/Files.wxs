@@ -8,7 +8,7 @@
     <Property Id="SERVICE_NAME" Value="JunteQueueMedia" />
     <ComponentGroup Id="CoreFiles" Directory="INSTALLFOLDER">
       <Component Id="cmp695E575E832E5D1C36ED3C9D4D846558" Guid="CC70E484-D2AA-4F9B-A2B5-9D258BB27059">
-        <File Id="fil8A6B4AC36ABE8C18428D07BA1C162AA7" KeyPath="yes" Source="$(var.Hosts.Media.WinService.TargetPath)" />
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinService.TargetPath)" />
         <ServiceControl
            Id="removeQueueService"
            Name="[SERVICE_NAME]"

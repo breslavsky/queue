@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include $(var.Installer.Common.ProjectDir)Consts.wxi ?>
+
+  <?define ProductName="Queue Metric" ?>
+  <?define ProductVersion="1.2.1.50" ?>
+  <?define ProductCode="14FA36D0-11CA-45A4-9983-0ECF1C9D3C63"?>
+  <?define UpgradeCode="62CE0951-2272-419D-9D63-9AAEF58DCD7A"?>
+
+  <Product Id="$(var.ProductCode)"
+          Name="$(var.ProductName)"
+          Language="1049"
+          Version="$(var.ProductVersion)"
+          Manufacturer="$(var.Manufacturer)"
+          UpgradeCode="$(var.UpgradeCode)">
+
+    <Package InstallerVersion="300" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="Более новая версия [ProductName] уже установлена." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="appIcon" SourceFile="icon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="appIcon" />
+    <Property Id="REINSTALLMODE" Value="amus" />
+    <Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="ProjectFolder" Name="$(var.ProjectName)">
+          <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)">
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="$(var.ProjectName)">
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="ProductFeature" Title="$(var.ProductName)" Level="1">
+      <ComponentGroupRef Id="CoreFiles" />
+      <ComponentRef Id="ApplicationShortcut" />
+    </Feature>
+
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="149F0678-5F58-434C-BC37-D0A50850F523">
+        <Shortcut Id="Shortcut"
+             Name="$(var.ProductName)"
+             Description="$(var.ProductName)"
+             Target="[INSTALLFOLDER]$(var.Hosts.Metric.WinForms.TargetFileName)"
+             WorkingDirectory="INSTALLFOLDER" />
+        <Shortcut Id="UninstallShortcut"
+            Name="Удалить $(var.ProductName)"
+            Target="[System64Folder]msiexec.exe"
+            Arguments="/x [ProductCode]" />
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+        <RegistryValue Root="HKCU"
+                       Key="Software\$(var.Manufacturer)\$(var.ProductName)"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" ></Property>
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.Installer.Common.ProjectDir)mainBanner.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.Installer.Common.ProjectDir)topBAnner.bmp" />
+    <UI>
+      <UIRef Id="WixUI_InstallDir" />
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="2">1</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">1</Publish>
+    </UI>
+
+    <InstallExecuteSequence>
+      <DeleteServices>NOT UPGRADINGPRODUCTCODE</DeleteServices>
+    </InstallExecuteSequence>
+  </Product>
+</Wix>

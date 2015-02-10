@@ -81,13 +81,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.Data.NHibernate.1.2.2.1\lib\net45\Junte.Data.NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.UI.WinForms, Version=1.2.0.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Junte.UI.WinForms, Version=1.2.0.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.UI.WinForms.1.2.0.1\lib\net45\Junte.UI.WinForms.dll</HintPath>
+      <HintPath>..\packages\Junte.UI.WinForms.1.2.0.2\lib\net45\Junte.UI.WinForms.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.UI.WinForms.NHibernate, Version=1.2.0.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Junte.UI.WinForms.NHibernate, Version=1.2.0.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.UI.WinForms.NHibernate.1.2.0.1\lib\net45\Junte.UI.WinForms.NHibernate.dll</HintPath>
+      <HintPath>..\packages\Junte.UI.WinForms.NHibernate.1.2.0.3\lib\net45\Junte.UI.WinForms.NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack">
       <HintPath>..\packages\winapicp.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
