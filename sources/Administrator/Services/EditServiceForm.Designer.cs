@@ -24,8 +24,8 @@
             this.commonTabPage = new System.Windows.Forms.TabPage();
             this.servicePropertiesTabControl = new System.Windows.Forms.TabControl();
             this.commonPropertiesTabPage = new System.Windows.Forms.TabPage();
-            this.earlyRegistratorFlagsControl = new Queue.UI.WinForms.Controls.EnumFlagsControl();
-            this.liveRegistratorFlagsControl = new Queue.UI.WinForms.Controls.EnumFlagsControl();
+            this.earlyRegistratorFlagsControl = new Queue.UI.WinForms.EnumFlagsControl();
+            this.liveRegistratorFlagsControl = new Queue.UI.WinForms.EnumFlagsControl();
             this.codeLabel = new System.Windows.Forms.Label();
             this.codeTextBox = new System.Windows.Forms.TextBox();
             this.nameLabel = new System.Windows.Forms.Label();
@@ -819,8 +819,8 @@
         private System.Windows.Forms.CheckBox isPlanSubjectsCheckBox;
         private System.Windows.Forms.TextBox linkTextBox;
         private System.Windows.Forms.Label linkLabel;
-        private UI.WinForms.Controls.EnumFlagsControl earlyRegistratorFlagsControl;
-        private UI.WinForms.Controls.EnumFlagsControl liveRegistratorFlagsControl;
+        private UI.WinForms.EnumFlagsControl earlyRegistratorFlagsControl;
+        private UI.WinForms.EnumFlagsControl liveRegistratorFlagsControl;
         private System.Windows.Forms.CheckBox isUseTypeCheckBox;
 
     }

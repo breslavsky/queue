@@ -106,6 +106,12 @@
     <Compile Include="Controls\EnumItemControl.Designer.cs">
       <DependentUpon>EnumItemControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RichUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RichUserControl.Designer.cs">
+      <DependentUpon>RichUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ServerConnectionSettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -226,6 +232,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Translate\LoginForm.en-US.resx" />
     <EmbeddedResource Include="Translate\LoginForm.zh-CN.resx" />
+    <EmbeddedResource Include="Translate\ServerConnectionSettingsControl.en-US.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

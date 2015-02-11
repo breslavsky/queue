@@ -3,7 +3,6 @@ using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.UI.WinForms;
-using Queue.UI.WinForms.Controls;
 using System;
 using System.Windows.Forms;
 using QueueOperator = Queue.Services.DTO.Operator;

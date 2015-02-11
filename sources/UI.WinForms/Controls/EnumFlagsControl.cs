@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Queue.UI.WinForms.Controls
+namespace Queue.UI.WinForms
 {
     public partial class EnumFlagsControl : UserControl
     {

@@ -41,7 +41,7 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.passwordButton = new System.Windows.Forms.Button();
             this.permissionsLabel = new System.Windows.Forms.Label();
-            this.permissionsFlagsControl = new Queue.UI.WinForms.Controls.EnumFlagsControl();
+            this.permissionsFlagsControl = new Queue.UI.WinForms.EnumFlagsControl();
             this.SuspendLayout();
             // 
             // surnameLabel
@@ -211,6 +211,6 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button passwordButton;
         private System.Windows.Forms.Label permissionsLabel;
-        private UI.WinForms.Controls.EnumFlagsControl permissionsFlagsControl;
+        private UI.WinForms.EnumFlagsControl permissionsFlagsControl;
     }
 }

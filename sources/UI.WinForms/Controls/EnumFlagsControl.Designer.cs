@@ -1,4 +1,4 @@
-﻿namespace Queue.UI.WinForms.Controls
+﻿namespace Queue.UI.WinForms
 {
     partial class EnumFlagsControl
     {

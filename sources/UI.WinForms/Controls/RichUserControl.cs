@@ -1,22 +1,27 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Collections;
 using System.Reflection;
 using System.Resources;
-using System.Windows.Forms;
+using System.Globalization;
 
 namespace Queue.UI.WinForms
 {
-    public class RichForm : Junte.UI.WinForms.RichForm
+    public partial class RichUserControl : UserControl
     {
         private const string ResourcePathTemplate = "{Namespace}.Translate.{Name}";
         private IList<DictionaryEntry> defaultTranslation = new List<DictionaryEntry>();
 
-        public RichForm()
+        public RichUserControl()
         {
-            Load += RichForm_Load;
+            Load += RichUserControl_Load;
         }
 
         public IEnumerable<Control> ControlList(Control control = null)
@@ -77,18 +82,9 @@ namespace Queue.UI.WinForms
                     propertyInfo.SetValue(component, value);
                 }
             }
-
-            foreach (var c in ControlList())
-            {
-                if (c is RichUserControl)
-                {
-                    ((RichUserControl)c).Translate();
-
-                }
-            }
         }
 
-        private void RichForm_Load(object sender, EventArgs e)
+        private void RichUserControl_Load(object sender, EventArgs e)
         {
             if (DesignMode)
             {

@@ -117,11 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="rememberCheckBox.Text" xml:space="preserve">
-    <value>remember</value>
+  <data name="connectionGroupBox.Text" xml:space="preserve">
+    <value>Connection parameters</value>
   </data>
-  <data name="Text" xml:space="preserve">
-    <value>Server login</value>
+  <data name="loginButton.Text" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="loginGroupBox.Text" xml:space="preserve">
+    <value>User data</value>
+  </data>
+  <data name="loginLabel.Text" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="passwordLabel.Text" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="serverLabel.Text" xml:space="preserve">
+    <value>Queue server</value>
   </data>
   <data name="productNameLabel.Text" xml:space="preserve">
     <value>electronic queue system</value>

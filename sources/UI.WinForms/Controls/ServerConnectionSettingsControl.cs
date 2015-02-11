@@ -11,9 +11,9 @@ using System;
 using System.ServiceModel;
 using System.Windows.Forms;
 
-namespace Queue.UI.WinForms.Controls
+namespace Queue.UI.WinForms
 {
-    public partial class ServerConnectionSettingsControl : UserControl
+    public partial class ServerConnectionSettingsControl : RichUserControl
     {
         private const string SectionKey = "connection";
 

@@ -35,7 +35,7 @@
             this.languageControl = new Queue.UI.WinForms.EnumItemControl();
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
             this.productNameLabel = new System.Windows.Forms.Label();
-            this.serverConnectionSettingsControl = new Queue.UI.WinForms.Controls.ServerConnectionSettingsControl();
+            this.serverConnectionSettingsControl = new Queue.UI.WinForms.ServerConnectionSettingsControl();
             this.loginFormSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.loginFormSettingsBindingSource)).BeginInit();
@@ -132,7 +132,7 @@
         private System.Windows.Forms.PictureBox logoPictureBox;
         private System.Windows.Forms.Label productNameLabel;
         private EnumItemControl languageControl;
-        private Controls.ServerConnectionSettingsControl serverConnectionSettingsControl;
+        private ServerConnectionSettingsControl serverConnectionSettingsControl;
         private System.Windows.Forms.BindingSource loginFormSettingsBindingSource;
     }
 }
