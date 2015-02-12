@@ -32,7 +32,15 @@ namespace Queue.Common
 
         public T GetSection<T>(string key, Action<T> initialize = null) where T : ConfigurationSection, new()
         {
-            T section = configuration.GetSection(key) as T;
+            T section = null;
+            try
+            {
+                section = configuration.Sections[key] as T;
+            }
+            catch
+            {
+                configuration.Sections.Remove(key);
+            }
 
             if (section == null)
             {
@@ -41,6 +49,7 @@ namespace Queue.Common
                 {
                     initialize(section);
                 }
+
                 configuration.Sections.Add(key, section);
             }
 

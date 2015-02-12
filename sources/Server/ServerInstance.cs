@@ -13,12 +13,13 @@ using System.ServiceModel.Description;
 
 namespace Queue.Server
 {
-    public sealed class ServerInstance
+    public sealed class ServerInstance : IDisposable
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private ServiceHost tcpServiceHost;
         private ServiceHost httpServiceHost;
+        private bool disposed;
 
         public ServerInstance(ServerSettings settings)
         {
@@ -42,8 +43,8 @@ namespace Queue.Server
 
             Mapper.AddProfile(new FullDTOProfile());
 
-            var services = settings.Services;
-            var tcpService = services.TcpService;
+            ServicesConfig services = settings.Services;
+            TcpServiceConfig tcpService = services.TcpService;
 
             Uri uri;
 
@@ -105,5 +106,45 @@ namespace Queue.Server
                 httpServiceHost.Close();
             }
         }
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                if (tcpServiceHost != null)
+                {
+                    tcpServiceHost.Close();
+                    tcpServiceHost = null;
+                }
+
+                if (httpServiceHost != null)
+                {
+                    httpServiceHost.Close();
+                    httpServiceHost = null;
+                }
+            }
+
+            disposed = true;
+        }
+
+        ~ServerInstance()
+        {
+            Dispose(false);
+        }
+
+        #endregion IDisposable
     }
 }

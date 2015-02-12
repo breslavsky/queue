@@ -59,7 +59,7 @@ namespace Queue.UI.WinForms
             get { return serverConnectionSettingsControl.ChannelBuilder; }
         }
 
-        public ServerConnectionSettings ConnectionSettings
+        public LoginSettings ConnectionSettings
         {
             get { return serverConnectionSettingsControl.ConnectionSettings; }
         }

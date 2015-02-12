@@ -3,6 +3,7 @@
   <?include $(var.Installer.Common.ProjectDir)Consts.wxi ?>
 
   <?define ProductName="Queue Portal" ?>
+  <?define ProductTitle="Портал очереди" ?>
   <?define ProductVersion="1.4.1.0" ?>
   <?define ProductCode="1A5F220B-DF53-4FC1-85A9-95C935763D66"?>
   <?define UpgradeCode="D44E3BFF-77AF-4081-9F88-9928E3104555"?>
@@ -39,18 +40,19 @@
 
     <Feature Id="ProductFeature" Title="$(var.ProductName)" Level="1">
       <ComponentGroupRef Id="CoreFiles" />
+      <ComponentGroupRef Id="SiteFiles" />
       <ComponentRef Id="ApplicationShortcut" />
     </Feature>
 
     <DirectoryRef Id="ApplicationProgramsFolder">
       <Component Id="ApplicationShortcut" Guid="149F0678-5F58-434C-BC37-D0A50850F523">
         <Shortcut Id="Shortcut"
-             Name="$(var.ProductName)"
-             Description="$(var.ProductName)"
+             Name="$(var.ProductTitle)"
+             Description="$(var.ProductTitle)"
              Target="[INSTALLFOLDER]$(var.Hosts.Portal.WinForms.TargetFileName)"
              WorkingDirectory="INSTALLFOLDER" />
         <Shortcut Id="UninstallShortcut"
-            Name="Удалить $(var.ProductName)"
+            Name="Удалить $(var.ProductTitle)"
             Target="[System64Folder]msiexec.exe"
             Arguments="/x [ProductCode]" />
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />

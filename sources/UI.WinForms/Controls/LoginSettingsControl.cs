@@ -13,10 +13,8 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class ServerConnectionSettingsControl : RichUserControl
+    public partial class LoginSettingsControl : RichUserControl
     {
-        private const string SectionKey = "connection";
-
         private UserRole userRole;
         private TaskPool taskPool;
         private IConfigurationManager configuration;
@@ -34,9 +32,9 @@ namespace Queue.UI.WinForms
 
         public EventHandler OnSubmit = delegate { };
 
-        public ServerConnectionSettings ConnectionSettings { get; private set; }
+        public LoginSettings ConnectionSettings { get; private set; }
 
-        public ServerConnectionSettingsControl()
+        public LoginSettingsControl()
         {
             InitializeComponent();
         }
@@ -47,7 +45,7 @@ namespace Queue.UI.WinForms
             this.taskPool = taskPool;
 
             configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-            ConnectionSettings = configuration.GetSection<ServerConnectionSettings>(SectionKey, (s) => s.Endpoint = "net.tcp://queue:4505");
+            ConnectionSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey, (s) => s.Endpoint = "net.tcp://queue:4505");
 
             serverConnectionSettingsBindingSource.DataSource = ConnectionSettings;
 
@@ -181,7 +179,7 @@ namespace Queue.UI.WinForms
         public static void ResetSettings()
         {
             IConfigurationManager configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-            ServerConnectionSettings connection = configuration.GetSection<ServerConnectionSettings>(SectionKey);
+            LoginSettings connection = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
             connection.Password = string.Empty;
 
             configuration.Save();
