@@ -3,7 +3,8 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:ui_common="clr-namespace:Queue.UI.WPF;assembly=Queue.UI.WPF"
-                      Title="Терминал записи"
+                      Title="{Binding Version,
+                                      StringFormat='Терминал записи ({0})'}"
                       Width="640"
                       Height="480"
                       IgnoreTaskbarOnMaximize="True"
@@ -19,5 +20,6 @@
     <controls:MetroWindow.GlowBrush>
         <SolidColorBrush Color="{DynamicResource AccentColor}" />
     </controls:MetroWindow.GlowBrush>
+
     <Frame x:Name="content" NavigationUIVisibility="Hidden" />
 </controls:MetroWindow>

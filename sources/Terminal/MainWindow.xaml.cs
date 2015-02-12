@@ -31,12 +31,16 @@ namespace Queue.Terminal
 
         private DispatcherTimer resetTimer;
 
+        public Version Version { get; set; }
+
         public MainWindow()
             : base()
         {
             InitializeComponent();
 
-            Title += string.Format(" ({0})", Assembly.GetExecutingAssembly().GetName().Version);
+            DataContext = this;
+
+            Version = Assembly.GetExecutingAssembly().GetName().Version;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -77,19 +81,12 @@ namespace Queue.Terminal
         private async void OnLogined(object sender, EventArgs e)
         {
             SaveSettings();
-            await InitializeContainer();
+            await RegisterTypes();
 
             content.NavigationService.Navigate(new TerminalWindow());
 
             CreateResetTimer();
             this.FullScreenWindow();
-        }
-
-        private async Task InitializeContainer()
-        {
-            IUnityContainer container = new UnityContainer();
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
-            await RegisterTypes(container);
         }
 
         private void CreateResetTimer()
@@ -125,12 +122,13 @@ namespace Queue.Terminal
             settings.Save();
         }
 
-        private async Task RegisterTypes(IUnityContainer container)
+        private async Task RegisterTypes()
         {
+            IUnityContainer container = ServiceLocator.Current.GetInstance<IUnityContainer>();
+
             taskPool = new TaskPool();
             container.RegisterInstance<DuplexChannelBuilder<IServerTcpService>>(loginPage.Model.ChannelBuilder);
             container.RegisterInstance<TaskPool>(taskPool);
-            container.RegisterInstance<IUnityContainer>(container);
 
             channelManager = new ChannelManager<IServerTcpService>(container.Resolve<DuplexChannelBuilder<IServerTcpService>>());
             container.RegisterInstance<ChannelManager<IServerTcpService>>(channelManager);
