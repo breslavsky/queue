@@ -16,8 +16,6 @@ namespace Queue.Hosts.Server.WinForms
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private const string ServiceExe = "Queue.Hosts.Server.WinService.exe";
-
         private const string InstallServiceButtonTitle = "Установить службу";
         private const string UnistallServiceButtonTitle = "Удалить службу";
         private const string StartServiceButtonTitle = "Запустить службу";
@@ -33,7 +31,7 @@ namespace Queue.Hosts.Server.WinForms
         {
             InitializeComponent();
 
-            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ServiceExe);
+            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.ServerServiceExe);
             serviceManager = new ServiceManager(HostsConsts.ServerServiceName, exePath);
             LoadConfiguration();
 
@@ -44,7 +42,7 @@ namespace Queue.Hosts.Server.WinForms
         private void LoadConfiguration()
         {
             configuration = new ConfigurationManager(HostsConsts.ServerApp);
-            settings = configuration.GetSection<ServerSettings>("server", (s) =>
+            settings = configuration.GetSection<ServerSettings>(HostsConsts.ServerSettingsSectionKey, (s) =>
                                                                             {
                                                                                 s.Database = GetDefaultDatabaseSettings();
                                                                                 s.Services = GetDefaultServicesConfig();

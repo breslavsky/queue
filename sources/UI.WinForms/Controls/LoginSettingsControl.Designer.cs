@@ -1,6 +1,6 @@
 ﻿namespace Queue.UI.WinForms
 {
-    partial class ServerConnectionSettingsControl
+    partial class LoginSettingsControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServerConnectionSettingsControl));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginSettingsControl));
             this.connectionGroupBox = new System.Windows.Forms.GroupBox();
             this.connectButton = new System.Windows.Forms.Button();
             this.serverLabel = new System.Windows.Forms.Label();
@@ -86,7 +86,7 @@
             // 
             // serverConnectionSettingsBindingSource
             // 
-            this.serverConnectionSettingsBindingSource.DataSource = typeof(Queue.Common.ServerConnectionSettings);
+            this.serverConnectionSettingsBindingSource.DataSource = typeof(Queue.Common.LoginSettings);
             // 
             // loginGroupBox
             // 

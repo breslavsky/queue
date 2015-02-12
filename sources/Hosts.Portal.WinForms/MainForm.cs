@@ -19,8 +19,6 @@ namespace Hosts.Portal.WinForms
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private const string ServiceExe = "Queue.Hosts.Portal.WinService.exe";
-
         private const string InstallServiceButtonTitle = "Установить службу";
         private const string UnistallServiceButtonTitle = "Удалить службу";
         private const string StartServiceButtonTitle = "Запустить службу";
@@ -37,7 +35,7 @@ namespace Hosts.Portal.WinForms
         {
             InitializeComponent();
 
-            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ServiceExe);
+            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.PortalServiceExe);
             serviceManager = new ServiceManager(HostsConsts.PortalServiceName, exePath);
 
             taskPool = new TaskPool();
@@ -46,7 +44,7 @@ namespace Hosts.Portal.WinForms
         private void MainForm_Load(object sender, EventArgs e)
         {
             configurationManager = new ConfigurationManager(HostsConsts.PortalApp);
-            settings = configurationManager.GetSection<PortalSettings>("portal", s => s.Port = 9090);
+            settings = configurationManager.GetSection<PortalSettings>(HostsConsts.PortalSettingsSectionKey, s => s.Port = 9090);
             portalSettingsBindingSource.DataSource = settings;
 
             RegisterContainer();

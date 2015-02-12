@@ -4,7 +4,6 @@ using Queue.Common;
 using Queue.Model.Common;
 using Queue.UI.WinForms;
 using System;
-using System.Globalization;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
 
@@ -59,7 +58,7 @@ namespace Queue.Administrator
         private static void ResetSettings()
         {
             LoginForm.ResetSettings();
-            ServerConnectionSettingsControl.ResetSettings();
+            LoginSettingsControl.ResetSettings();
         }
     }
 }

@@ -16,13 +16,13 @@ namespace Queue.Media
         private bool inited;
 
         private MediaSettings mediaSettings;
-        private ServerConnectionSettings serverConnection;
+        private LoginSettings serverConnection;
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;
         private Administrator user;
         private ServiceHost host;
 
-        public MediaInstance(MediaSettings mediaSettings, ServerConnectionSettings serverConnection)
+        public MediaInstance(MediaSettings mediaSettings, LoginSettings serverConnection)
         {
             this.mediaSettings = mediaSettings;
             this.serverConnection = serverConnection;

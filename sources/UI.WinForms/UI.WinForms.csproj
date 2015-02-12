@@ -112,11 +112,11 @@
     <Compile Include="Controls\RichUserControl.Designer.cs">
       <DependentUpon>RichUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ServerConnectionSettingsControl.cs">
+    <Compile Include="Controls\LoginSettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ServerConnectionSettingsControl.Designer.cs">
-      <DependentUpon>ServerConnectionSettingsControl.cs</DependentUpon>
+    <Compile Include="Controls\LoginSettingsControl.Designer.cs">
+      <DependentUpon>LoginSettingsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
@@ -196,8 +196,8 @@
     <EmbeddedResource Include="Controls\EnumItemControl.resx">
       <DependentUpon>EnumItemControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ServerConnectionSettingsControl.resx">
-      <DependentUpon>ServerConnectionSettingsControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\LoginSettingsControl.resx">
+      <DependentUpon>LoginSettingsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>

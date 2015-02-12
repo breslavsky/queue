@@ -22,9 +22,9 @@ namespace Queue.Portal
         private ServiceHost operatorServiceHost;
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;
-        private ServerConnectionSettings serverConnection;
+        private LoginSettings serverConnection;
 
-        public PortalInstance(PortalSettings portalSettings, ServerConnectionSettings serverConnection)
+        public PortalInstance(PortalSettings portalSettings, LoginSettings serverConnection)
         {
             this.portalSettings = portalSettings;
             this.serverConnection = serverConnection;
@@ -73,14 +73,16 @@ namespace Queue.Portal
 
         private void StopHost(ServiceHost host)
         {
-            if (host != null)
+            if (host == null)
             {
-                try
-                {
-                    host.Close();
-                }
-                catch { }
+                return;
             }
+
+            try
+            {
+                host.Close();
+            }
+            catch { }
         }
 
         private ServiceHost CreatePortalServiceHost()
