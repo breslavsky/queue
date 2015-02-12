@@ -51,7 +51,7 @@ namespace Queue.Simulator
         private static void ResetSettings()
         {
             LoginForm.ResetSettings();
-            ServerConnectionSettingsControl.ResetSettings();
+            LoginSettingsControl.ResetSettings();
         }
     }
 }
