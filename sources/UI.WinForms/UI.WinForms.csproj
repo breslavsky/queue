@@ -232,7 +232,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Translate\LoginForm.en-US.resx" />
     <EmbeddedResource Include="Translate\LoginForm.zh-CN.resx" />
-    <EmbeddedResource Include="Translate\ServerConnectionSettingsControl.en-US.resx" />
+    <EmbeddedResource Include="Translate\LoginSettingsControl.en-US.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

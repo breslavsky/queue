@@ -35,7 +35,7 @@
             this.languageControl = new Queue.UI.WinForms.EnumItemControl();
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
             this.productNameLabel = new System.Windows.Forms.Label();
-            this.serverConnectionSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
+            this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
             this.loginFormSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.loginFormSettingsBindingSource)).BeginInit();
@@ -89,12 +89,12 @@
             this.productNameLabel.Text = "система электронной очереди";
             this.productNameLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // serverConnectionSettingsControl
+            // loginSettingsControl
             // 
-            this.serverConnectionSettingsControl.Location = new System.Drawing.Point(10, 136);
-            this.serverConnectionSettingsControl.Name = "serverConnectionSettingsControl";
-            this.serverConnectionSettingsControl.Size = new System.Drawing.Size(330, 168);
-            this.serverConnectionSettingsControl.TabIndex = 3;
+            this.loginSettingsControl.Location = new System.Drawing.Point(10, 136);
+            this.loginSettingsControl.Name = "loginSettingsControl";
+            this.loginSettingsControl.Size = new System.Drawing.Size(330, 168);
+            this.loginSettingsControl.TabIndex = 3;
             // 
             // loginFormSettingsBindingSource
             // 
@@ -105,7 +105,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(349, 342);
-            this.Controls.Add(this.serverConnectionSettingsControl);
+            this.Controls.Add(this.loginSettingsControl);
             this.Controls.Add(this.languageControl);
             this.Controls.Add(this.rememberCheckBox);
             this.Controls.Add(this.loginButton);
@@ -132,7 +132,7 @@
         private System.Windows.Forms.PictureBox logoPictureBox;
         private System.Windows.Forms.Label productNameLabel;
         private EnumItemControl languageControl;
-        private LoginSettingsControl serverConnectionSettingsControl;
+        private LoginSettingsControl loginSettingsControl;
         private System.Windows.Forms.BindingSource loginFormSettingsBindingSource;
     }
 }

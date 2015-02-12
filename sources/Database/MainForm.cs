@@ -285,7 +285,8 @@ namespace Queue.Database
                         PIN = 1001,
                         CurrentDayRecording = true,
                         Columns = 2,
-                        Rows = 5
+                        Rows = 5,
+                        WindowTemplate = Templates.TerminalWindow
                     };
                     session.Save(terminalConfig);
                 }
