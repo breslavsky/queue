@@ -43,7 +43,7 @@
             this.portalSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.portLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.serverConnectionSettingsControl = new Queue.UI.WinForms.Controls.ServerConnectionSettingsControl();
+            this.serverConnectionSettingsControl = new Queue.UI.WinForms.ServerConnectionSettingsControl();
             this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.serviceGroupBox.SuspendLayout();
@@ -253,7 +253,7 @@
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.GroupBox settingsGroupBox;
         private System.Windows.Forms.GroupBox groupBox1;
-        private Queue.UI.WinForms.Controls.ServerConnectionSettingsControl serverConnectionSettingsControl;
+        private Queue.UI.WinForms.ServerConnectionSettingsControl serverConnectionSettingsControl;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label portLabel;
         private System.Windows.Forms.NumericUpDown portUpDown;

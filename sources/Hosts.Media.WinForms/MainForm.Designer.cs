@@ -49,7 +49,7 @@
             this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.mediaSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.serverConnectionSettingsControl = new Queue.UI.WinForms.Controls.ServerConnectionSettingsControl();
+            this.serverConnectionSettingsControl = new Queue.UI.WinForms.ServerConnectionSettingsControl();
             this.settingsGroupBox.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -297,7 +297,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox folderTextBox;
         private System.Windows.Forms.Button selectFolderButton;
-        private UI.WinForms.Controls.ServerConnectionSettingsControl serverConnectionSettingsControl;
+        private Queue.UI.WinForms.ServerConnectionSettingsControl serverConnectionSettingsControl;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.Timer serviceStateTimer;
         private System.Windows.Forms.BindingSource mediaSettingsBindingSource;

@@ -90,6 +90,10 @@
       <Project>{5d7910b5-0a9c-47a8-83a9-b26f91a0c759}</Project>
       <Name>Media</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UI.WinForms\UI.WinForms.csproj">
+      <Project>{23b4c880-5f87-4e9d-b310-6dc25ea170b5}</Project>
+      <Name>UI.WinForms</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
