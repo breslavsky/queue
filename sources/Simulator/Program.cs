@@ -3,9 +3,6 @@ using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.UI.WinForms;
-
-using Queue.UI.WinForms;
-
 using System;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
