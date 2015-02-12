@@ -8,12 +8,7 @@ namespace Queue.Model
     [Key(Column = "ConfigId", ForeignKey = "TerminalConfigToConfigReference")]
     public class TerminalConfig : Config
     {
-        public TerminalConfig()
-        {
-            Type = ConfigType.Terminal;
-            Columns = 2;
-            Rows = 5;
-        }
+        private const int WindowTemplateLength = 1024 * 1024;
 
         #region properties
 
@@ -22,6 +17,9 @@ namespace Queue.Model
 
         [Property]
         public virtual bool CurrentDayRecording { get; set; }
+
+        [Property(Length = WindowTemplateLength)]
+        public virtual string WindowTemplate { get; set; }
 
         [Range(Min = 1, Max = 10, Message = "Количество колонок должно быть от 1 до 10")]
         [Property]

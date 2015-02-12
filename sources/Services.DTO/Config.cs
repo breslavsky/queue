@@ -116,6 +116,9 @@ namespace Queue.Services.DTO
         public bool CurrentDayRecording { get; set; }
 
         [DataMember]
+        public string WindowTemplate { get; set; }
+
+        [DataMember]
         public int Columns { get; set; }
 
         [DataMember]

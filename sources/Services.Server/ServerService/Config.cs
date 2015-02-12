@@ -495,6 +495,7 @@ namespace Queue.Services.Server
 
                     сonfig.PIN = source.PIN;
                     сonfig.CurrentDayRecording = source.CurrentDayRecording;
+                    сonfig.WindowTemplate = source.WindowTemplate;
                     сonfig.Columns = source.Columns;
                     сonfig.Rows = source.Rows;
 
