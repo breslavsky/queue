@@ -44,24 +44,24 @@ namespace Queue.UI.WinForms
             loginFormSettingsBindingSource.DataSource = settings;
 
             languageControl.Select<Language>(CultureInfo.CurrentCulture.GetLanguage());
-            serverConnectionSettingsControl.Initialize(userRole, taskPool);
-            serverConnectionSettingsControl.OnConnected += OnConnected;
-            serverConnectionSettingsControl.OnSubmit += OnSubmit;
+            loginSettingsControl.Initialize(userRole, taskPool);
+            loginSettingsControl.OnConnected += OnConnected;
+            loginSettingsControl.OnSubmit += OnSubmit;
 
             if (settings.IsRemember)
             {
-                serverConnectionSettingsControl.Connect();
+                loginSettingsControl.Connect();
             }
         }
 
         public DuplexChannelBuilder<IServerTcpService> ChannelBuilder
         {
-            get { return serverConnectionSettingsControl.ChannelBuilder; }
+            get { return loginSettingsControl.ChannelBuilder; }
         }
 
         public LoginSettings ConnectionSettings
         {
-            get { return serverConnectionSettingsControl.ConnectionSettings; }
+            get { return loginSettingsControl.ConnectionSettings; }
         }
 
         public User User { get; private set; }
@@ -76,13 +76,13 @@ namespace Queue.UI.WinForms
 
         private async void Login()
         {
-            User selectedUser = serverConnectionSettingsControl.SelectedUSer;
+            User selectedUser = loginSettingsControl.SelectedUSer;
             if (selectedUser == null)
             {
                 return;
             }
 
-            using (Channel<IServerTcpService> channel = serverConnectionSettingsControl.ChannelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = loginSettingsControl.ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -120,7 +120,7 @@ namespace Queue.UI.WinForms
         private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Dispose();
-            serverConnectionSettingsControl.Close();
+            loginSettingsControl.Close();
         }
 
         private void OnSubmit(object sender, EventArgs e)

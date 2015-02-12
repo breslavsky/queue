@@ -46,7 +46,7 @@ namespace Queue.Hosts.Media.WinForms
 
             RegisterContainer();
 
-            serverConnectionSettingsControl.Initialize(UserRole.Administrator, taskPool);
+            loginSettingsControl.Initialize(UserRole.Administrator, taskPool);
 
             Text += string.Format(" ({0})", typeof(MediaInstance).Assembly.GetName().Version);
 
@@ -185,7 +185,7 @@ namespace Queue.Hosts.Media.WinForms
 
                 startButton.Enabled = false;
 
-                media = new MediaInstance(settings, serverConnectionSettingsControl.ConnectionSettings);
+                media = new MediaInstance(settings, loginSettingsControl.ConnectionSettings);
                 await media.Start();
 
                 startButton.Enabled = false;

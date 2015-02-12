@@ -49,7 +49,7 @@ namespace Hosts.Portal.WinForms
 
             RegisterContainer();
 
-            serverConnectionSettingsControl.Initialize(UserRole.Administrator, taskPool);
+            loginSettingsControl.Initialize(UserRole.Administrator, taskPool);
 
             Text += string.Format(" ({0})", typeof(PortalInstance).Assembly.GetName().Version);
 
@@ -114,7 +114,7 @@ namespace Hosts.Portal.WinForms
 
                 startButton.Enabled = false;
 
-                portal = new PortalInstance(settings, serverConnectionSettingsControl.ConnectionSettings);
+                portal = new PortalInstance(settings, loginSettingsControl.ConnectionSettings);
                 await portal.Start();
 
                 startButton.Enabled = false;
