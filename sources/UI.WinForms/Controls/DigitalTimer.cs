@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class DigitalTimer : UserControl
+    public partial class DigitalTimer : RichUserControl
     {
         private Timer timer;
         private TimeSpan initTime;

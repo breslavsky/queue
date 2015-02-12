@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class EnumFlagsControl : UserControl
+    public partial class EnumFlagsControl : RichUserControl
     {
         public EnumFlagsControl()
         {

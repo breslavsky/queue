@@ -1,20 +1,19 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
-using Queue.Common;
 using Queue.Resources;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.Common;
+using Queue.UI.WinForms;
 using System;
 using System.Diagnostics;
 using System.ServiceModel;
 using System.Windows.Forms;
-using UserControl = System.Windows.Forms.UserControl;
 
 namespace Queue.Administrator
 {
-    public partial class CouponConfigControl : UserControl
+    public partial class CouponConfigControl : RichUserControl
     {
         private const string HighligtingStyle = "XML";
 

@@ -106,7 +106,7 @@ namespace Queue.Database {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на update _user set [Permissions] = 511 where Role  = &apos;Administrator&apos;;.
+        ///   Ищет локализованную строку, похожую на alter table _service drop column Type;.
         /// </summary>
         internal static string _006 {
             get {
@@ -115,21 +115,25 @@ namespace Queue.Database {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на ALTER TABLE _client_request DROP CONSTRAINT ClientRequestToClientReference;
-        ///ALTER TABLE _client_request ADD CONSTRAINT ClientRequestToClientReference FOREIGN KEY(ClientId)
-        ///REFERENCES _client (Id)
-        ///ON DELETE CASCADE;
+        ///   Ищет локализованную строку, похожую на DROP TRIGGER ServiceDelete;
         ///-- SEPARATOR
-        ///ALTER TABLE _client_request DROP CONSTRAINT ClientRequestToOperatorReference;
-        ///ALTER TABLE _client_request ADD CONSTRAINT ClientRequestToOperatorReference FOREIGN KEY(OperatorId)
-        ///REFERENCES _user (Id)
-        ///ON DELETE SET NULL;
+        ///CREATE TRIGGER ServiceDelete
+        ///   ON _service AFTER DELETE
+        ///AS 
+        ///BEGIN
+        ///	DELETE FROM _service_step WHERE ServiceId IN (SELECT Id FROM DELETED)
+        ///	DELETE FROM _service_weekday_schedule WHERE ServiceId IN (SELECT Id FROM DELETED)
+        ///	DELETE FROM _service_exception_schedule WHERE ServiceId IN (SELECT Id FROM DELETED)
+        ///	DELETE FROM _service_parameter WHERE ServiceId IN (SELECT Id FROM DELETED)
+        ///END;
         ///-- SEPARATOR
-        ///ALTER TABLE _client_request DROP CONSTRAI [остаток строки не уместился]&quot;;.
+        ///DROP TRIGGER ClientRequestDelete;
+        ///-- SEPARATOR
+        ///CREATE TRI [остаток строки не уместился]&quot;;.
         /// </summary>
-        internal static string constraint {
+        internal static string triggers {
             get {
-                return ResourceManager.GetString("constraint", resourceCulture);
+                return ResourceManager.GetString("triggers", resourceCulture);
             }
         }
     }

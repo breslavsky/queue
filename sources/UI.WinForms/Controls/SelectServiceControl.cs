@@ -16,7 +16,7 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class SelectServiceControl : UserControl
+    public partial class SelectServiceControl : RichUserControl
     {
         #region events
 

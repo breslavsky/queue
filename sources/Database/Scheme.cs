@@ -9,7 +9,7 @@ namespace Queue.Database
         {
             get
             {
-                return SchemePatches.constraint.Split(new string[] { "-- SEPARATOR" },
+                return SchemePatches.triggers.Split(new string[] { "-- SEPARATOR" },
                     StringSplitOptions.RemoveEmptyEntries);
             }
         }

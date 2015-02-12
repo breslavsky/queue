@@ -4,13 +4,14 @@ using Junte.WCF.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class ScheduleControl : UserControl
+    public partial class ScheduleControl : RichUserControl
     {
         #region fields
 

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class IdentifiedEntityControl : UserControl
+    public partial class IdentifiedEntityControl : RichUserControl
     {
         public bool UseResetButton
         {

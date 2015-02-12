@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class TimePicker : UserControl
+    public partial class TimePicker : RichUserControl
     {
         private TimeSpan value;
 

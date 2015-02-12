@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class EnumItemControl : UserControl
+    public partial class EnumItemControl : RichUserControl
     {
         public event EventHandler<EventArgs> SelectedChanged;
 

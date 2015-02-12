@@ -20,6 +20,8 @@ namespace Queue.Database
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
+        private const string SQL_SEPARATOR = "-- SEPARATOR";
+
         private static Properties.Settings settings = Properties.Settings.Default;
 
         private UnityContainer container;
@@ -67,6 +69,35 @@ namespace Queue.Database
         private void damaskImportMenuItem_Click(object sender, EventArgs e)
         {
             new DamaskForm().ShowDialog();
+        }
+
+        private void triggersUpdateMenuItem_Click(object sender, EventArgs e)
+        {
+            Log("Начало обновления триггеров");
+
+            var triggers = SchemePatches.triggers.Split(new string[] { SQL_SEPARATOR }, 
+                StringSplitOptions.RemoveEmptyEntries);
+
+            using (var session = sessionProvider.OpenSession())
+            {
+                foreach (var t in triggers)
+                {
+                    var sql = t.Trim();
+
+                    try
+                    {
+                        Log(sql);
+                        session.CreateSQLQuery(sql).ExecuteUpdate();
+                    }
+                    catch (Exception exception)
+                    {
+                        Log(exception.Message);
+                        return;
+                    }
+                }
+            }
+
+            Log("Обновление триггеров завершено");
         }
 
         private bool DatabaseConnect(DatabaseSettings s)
@@ -481,10 +512,6 @@ namespace Queue.Database
             {
                 Log(exception.Message);
             }
-        }
-
-        private void constraintUpdateMenuItem_Click(object sender, EventArgs e)
-        {
         }
     }
 }

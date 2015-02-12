@@ -93,8 +93,8 @@
             // 
             this.constraintUpdateMenuItem.Name = "constraintUpdateMenuItem";
             this.constraintUpdateMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.constraintUpdateMenuItem.Text = "Обновить связи";
-            this.constraintUpdateMenuItem.Click += new System.EventHandler(this.constraintUpdateMenuItem_Click);
+            this.constraintUpdateMenuItem.Text = "Обновить триггеры";
+            this.constraintUpdateMenuItem.Click += new System.EventHandler(this.triggersUpdateMenuItem_Click);
             // 
             // dataMenu
             // 

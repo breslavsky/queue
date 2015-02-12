@@ -3,20 +3,14 @@ using Junte.UI.WinForms;
 using Junte.WCF.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class DefaultConfigControl : UserControl
+    public partial class DefaultConfigControl : RichUserControl
     {
         #region fields
 
