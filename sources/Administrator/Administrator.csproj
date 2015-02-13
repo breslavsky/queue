@@ -443,6 +443,16 @@
     <EmbeddedResource Include="Schedule\DefaultScheduleForm.resx">
       <DependentUpon>DefaultScheduleForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Translate\CouponConfigControl.en-US.resx" />
+    <EmbeddedResource Include="Translate\DefaultConfigControl.en-US.resx" />
+    <EmbeddedResource Include="Translate\MediaConfigControl.en-US.resx" />
+    <EmbeddedResource Include="Translate\NotificationConfigControl.en-US.resx" />
+    <EmbeddedResource Include="Translate\PortalConfigControl.en-US.resx" />
+    <EmbeddedResource Include="Translate\ScheduleControl.en-US.resx" />
+    <EmbeddedResource Include="Translate\ServiceParametersControl.en-US.resx" />
+    <EmbeddedResource Include="Translate\ServiceStepsControl.en-US.resx" />
+    <EmbeddedResource Include="Translate\SMTPConfigControl.en-US.resx" />
+    <EmbeddedResource Include="Translate\TerminalConfigControl.en-US.resx" />
     <EmbeddedResource Include="Users\EditAdministratorForm.resx">
       <DependentUpon>EditAdministratorForm.cs</DependentUpon>
     </EmbeddedResource>

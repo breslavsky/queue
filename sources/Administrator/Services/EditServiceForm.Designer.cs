@@ -18,24 +18,24 @@
             this.parametersTabPage = new System.Windows.Forms.TabPage();
             this.serviceParametersControl = new Queue.Administrator.ServiceParametersControl();
             this.exceptionScheduleTabPage = new System.Windows.Forms.TabPage();
-            this.exceptionScheduleControl = new Queue.Administrator.ScheduleControl();
             this.exceptionScheduleDatePicker = new System.Windows.Forms.DateTimePicker();
             this.exceptionScheduleCheckBox = new System.Windows.Forms.CheckBox();
+            this.exceptionScheduleControl = new Queue.Administrator.ScheduleControl();
             this.commonTabPage = new System.Windows.Forms.TabPage();
             this.servicePropertiesTabControl = new System.Windows.Forms.TabControl();
             this.commonPropertiesTabPage = new System.Windows.Forms.TabPage();
-            this.earlyRegistratorFlagsControl = new Queue.UI.WinForms.EnumFlagsControl();
-            this.liveRegistratorFlagsControl = new Queue.UI.WinForms.EnumFlagsControl();
             this.codeLabel = new System.Windows.Forms.Label();
             this.codeTextBox = new System.Windows.Forms.TextBox();
             this.nameLabel = new System.Windows.Forms.Label();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.tagsLabel = new System.Windows.Forms.Label();
             this.tagsTextBox = new System.Windows.Forms.TextBox();
+            this.liveRegistratorLabel = new System.Windows.Forms.Label();
+            this.liveRegistratorFlagsControl = new Queue.UI.WinForms.EnumFlagsControl();
+            this.earlyRegistratorLabel = new System.Windows.Forms.Label();
+            this.earlyRegistratorFlagsControl = new Queue.UI.WinForms.EnumFlagsControl();
             this.commentLabel = new System.Windows.Forms.Label();
             this.commentTextBox = new System.Windows.Forms.TextBox();
-            this.earlyRegistratorLabel = new System.Windows.Forms.Label();
-            this.liveRegistratorLabel = new System.Windows.Forms.Label();
             this.additionalPropertiesTabPage = new System.Windows.Forms.TabPage();
             this.clientCallDelayLabel = new System.Windows.Forms.Label();
             this.clientCallDelayUpDown = new System.Windows.Forms.NumericUpDown();
@@ -65,8 +65,8 @@
             this.weekdayTabControl = new System.Windows.Forms.TabControl();
             this.mondayTabPage = new System.Windows.Forms.TabPage();
             this.weekdaySchedulePanel = new System.Windows.Forms.Panel();
-            this.weekdayScheduleControl = new Queue.Administrator.ScheduleControl();
             this.weekdayScheduleCheckBox = new System.Windows.Forms.CheckBox();
+            this.weekdayScheduleControl = new Queue.Administrator.ScheduleControl();
             this.tuesdayTabPage = new System.Windows.Forms.TabPage();
             this.wednesdayTabPage = new System.Windows.Forms.TabPage();
             this.thursdayTabPage = new System.Windows.Forms.TabPage();
@@ -125,14 +125,6 @@
             this.exceptionScheduleTabPage.Text = "Исключения в расписании";
             this.exceptionScheduleTabPage.UseVisualStyleBackColor = true;
             // 
-            // exceptionScheduleControl
-            // 
-            this.exceptionScheduleControl.Location = new System.Drawing.Point(10, 65);
-            this.exceptionScheduleControl.Name = "exceptionScheduleControl";
-            this.exceptionScheduleControl.Schedule = null;
-            this.exceptionScheduleControl.Size = new System.Drawing.Size(790, 310);
-            this.exceptionScheduleControl.TabIndex = 2;
-            // 
             // exceptionScheduleDatePicker
             // 
             this.exceptionScheduleDatePicker.Location = new System.Drawing.Point(10, 10);
@@ -154,6 +146,14 @@
             this.exceptionScheduleCheckBox.UseVisualStyleBackColor = true;
             this.exceptionScheduleCheckBox.CheckedChanged += new System.EventHandler(this.exceptionScheduleCheckBox_CheckedChanged);
             this.exceptionScheduleCheckBox.Click += new System.EventHandler(this.exceptionScheduleCheckBox_Click);
+            // 
+            // exceptionScheduleControl
+            // 
+            this.exceptionScheduleControl.Location = new System.Drawing.Point(10, 65);
+            this.exceptionScheduleControl.Name = "exceptionScheduleControl";
+            this.exceptionScheduleControl.Schedule = null;
+            this.exceptionScheduleControl.Size = new System.Drawing.Size(790, 310);
+            this.exceptionScheduleControl.TabIndex = 2;
             // 
             // commonTabPage
             // 
@@ -200,22 +200,6 @@
             this.commonPropertiesTabPage.TabIndex = 0;
             this.commonPropertiesTabPage.Text = "Основные параметры";
             this.commonPropertiesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // earlyRegistratorFlagsControl
-            // 
-            this.earlyRegistratorFlagsControl.Location = new System.Drawing.Point(600, 145);
-            this.earlyRegistratorFlagsControl.Name = "earlyRegistratorFlagsControl";
-            this.earlyRegistratorFlagsControl.Size = new System.Drawing.Size(180, 65);
-            this.earlyRegistratorFlagsControl.TabIndex = 4;
-            this.earlyRegistratorFlagsControl.Leave += new System.EventHandler(this.earlyRegistratorFlagsControl_Leave);
-            // 
-            // liveRegistratorFlagsControl
-            // 
-            this.liveRegistratorFlagsControl.Location = new System.Drawing.Point(380, 145);
-            this.liveRegistratorFlagsControl.Name = "liveRegistratorFlagsControl";
-            this.liveRegistratorFlagsControl.Size = new System.Drawing.Size(180, 65);
-            this.liveRegistratorFlagsControl.TabIndex = 3;
-            this.liveRegistratorFlagsControl.Leave += new System.EventHandler(this.liveRegistratorFlagsControl_Leave);
             // 
             // codeLabel
             // 
@@ -270,6 +254,40 @@
             this.tagsTextBox.TabIndex = 2;
             this.tagsTextBox.LocationChanged += new System.EventHandler(this.tagsTextBox_Leave);
             // 
+            // liveRegistratorLabel
+            // 
+            this.liveRegistratorLabel.Location = new System.Drawing.Point(365, 120);
+            this.liveRegistratorLabel.Name = "liveRegistratorLabel";
+            this.liveRegistratorLabel.Size = new System.Drawing.Size(195, 18);
+            this.liveRegistratorLabel.TabIndex = 0;
+            this.liveRegistratorLabel.Text = "Регистраторы живой очереди";
+            this.liveRegistratorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // liveRegistratorFlagsControl
+            // 
+            this.liveRegistratorFlagsControl.Location = new System.Drawing.Point(380, 145);
+            this.liveRegistratorFlagsControl.Name = "liveRegistratorFlagsControl";
+            this.liveRegistratorFlagsControl.Size = new System.Drawing.Size(180, 65);
+            this.liveRegistratorFlagsControl.TabIndex = 3;
+            this.liveRegistratorFlagsControl.Leave += new System.EventHandler(this.liveRegistratorFlagsControl_Leave);
+            // 
+            // earlyRegistratorLabel
+            // 
+            this.earlyRegistratorLabel.Location = new System.Drawing.Point(590, 120);
+            this.earlyRegistratorLabel.Name = "earlyRegistratorLabel";
+            this.earlyRegistratorLabel.Size = new System.Drawing.Size(190, 18);
+            this.earlyRegistratorLabel.TabIndex = 0;
+            this.earlyRegistratorLabel.Text = "Регистраторы по записи";
+            this.earlyRegistratorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // earlyRegistratorFlagsControl
+            // 
+            this.earlyRegistratorFlagsControl.Location = new System.Drawing.Point(600, 145);
+            this.earlyRegistratorFlagsControl.Name = "earlyRegistratorFlagsControl";
+            this.earlyRegistratorFlagsControl.Size = new System.Drawing.Size(180, 65);
+            this.earlyRegistratorFlagsControl.TabIndex = 4;
+            this.earlyRegistratorFlagsControl.Leave += new System.EventHandler(this.earlyRegistratorFlagsControl_Leave);
+            // 
             // commentLabel
             // 
             this.commentLabel.Location = new System.Drawing.Point(10, 205);
@@ -287,24 +305,6 @@
             this.commentTextBox.Size = new System.Drawing.Size(785, 135);
             this.commentTextBox.TabIndex = 5;
             this.commentTextBox.Leave += new System.EventHandler(this.commentTextBox_Leave);
-            // 
-            // earlyRegistratorLabel
-            // 
-            this.earlyRegistratorLabel.Location = new System.Drawing.Point(590, 120);
-            this.earlyRegistratorLabel.Name = "earlyRegistratorLabel";
-            this.earlyRegistratorLabel.Size = new System.Drawing.Size(190, 18);
-            this.earlyRegistratorLabel.TabIndex = 0;
-            this.earlyRegistratorLabel.Text = "Регистраторы по записи";
-            this.earlyRegistratorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // liveRegistratorLabel
-            // 
-            this.liveRegistratorLabel.Location = new System.Drawing.Point(365, 120);
-            this.liveRegistratorLabel.Name = "liveRegistratorLabel";
-            this.liveRegistratorLabel.Size = new System.Drawing.Size(195, 18);
-            this.liveRegistratorLabel.TabIndex = 0;
-            this.liveRegistratorLabel.Text = "Регистраторы живой очереди";
-            this.liveRegistratorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // additionalPropertiesTabPage
             // 
@@ -641,14 +641,6 @@
             this.weekdaySchedulePanel.Size = new System.Drawing.Size(818, 416);
             this.weekdaySchedulePanel.TabIndex = 1;
             // 
-            // weekdayScheduleControl
-            // 
-            this.weekdayScheduleControl.Location = new System.Drawing.Point(5, 45);
-            this.weekdayScheduleControl.Name = "weekdayScheduleControl";
-            this.weekdayScheduleControl.Schedule = null;
-            this.weekdayScheduleControl.Size = new System.Drawing.Size(790, 310);
-            this.weekdayScheduleControl.TabIndex = 0;
-            // 
             // weekdayScheduleCheckBox
             // 
             this.weekdayScheduleCheckBox.AutoSize = true;
@@ -662,11 +654,19 @@
             this.weekdayScheduleCheckBox.CheckedChanged += new System.EventHandler(this.weekdayScheduleCheckBox_CheckedChanged);
             this.weekdayScheduleCheckBox.Click += new System.EventHandler(this.weekdayScheduleCheckBox_Click);
             // 
+            // weekdayScheduleControl
+            // 
+            this.weekdayScheduleControl.Location = new System.Drawing.Point(5, 45);
+            this.weekdayScheduleControl.Name = "weekdayScheduleControl";
+            this.weekdayScheduleControl.Schedule = null;
+            this.weekdayScheduleControl.Size = new System.Drawing.Size(790, 310);
+            this.weekdayScheduleControl.TabIndex = 0;
+            // 
             // tuesdayTabPage
             // 
-            this.tuesdayTabPage.Location = new System.Drawing.Point(4, 26);
+            this.tuesdayTabPage.Location = new System.Drawing.Point(4, 70);
             this.tuesdayTabPage.Name = "tuesdayTabPage";
-            this.tuesdayTabPage.Size = new System.Drawing.Size(818, 416);
+            this.tuesdayTabPage.Size = new System.Drawing.Size(174, 0);
             this.tuesdayTabPage.TabIndex = 0;
             this.tuesdayTabPage.Tag = "2";
             this.tuesdayTabPage.Text = "Вторник";
@@ -674,9 +674,9 @@
             // 
             // wednesdayTabPage
             // 
-            this.wednesdayTabPage.Location = new System.Drawing.Point(4, 26);
+            this.wednesdayTabPage.Location = new System.Drawing.Point(4, 70);
             this.wednesdayTabPage.Name = "wednesdayTabPage";
-            this.wednesdayTabPage.Size = new System.Drawing.Size(818, 416);
+            this.wednesdayTabPage.Size = new System.Drawing.Size(174, 0);
             this.wednesdayTabPage.TabIndex = 0;
             this.wednesdayTabPage.Tag = "3";
             this.wednesdayTabPage.Text = "Среда";
@@ -684,9 +684,9 @@
             // 
             // thursdayTabPage
             // 
-            this.thursdayTabPage.Location = new System.Drawing.Point(4, 26);
+            this.thursdayTabPage.Location = new System.Drawing.Point(4, 70);
             this.thursdayTabPage.Name = "thursdayTabPage";
-            this.thursdayTabPage.Size = new System.Drawing.Size(818, 416);
+            this.thursdayTabPage.Size = new System.Drawing.Size(174, 0);
             this.thursdayTabPage.TabIndex = 0;
             this.thursdayTabPage.Tag = "4";
             this.thursdayTabPage.Text = "Четверг";
@@ -694,9 +694,9 @@
             // 
             // fridayTabPage
             // 
-            this.fridayTabPage.Location = new System.Drawing.Point(4, 26);
+            this.fridayTabPage.Location = new System.Drawing.Point(4, 70);
             this.fridayTabPage.Name = "fridayTabPage";
-            this.fridayTabPage.Size = new System.Drawing.Size(818, 416);
+            this.fridayTabPage.Size = new System.Drawing.Size(174, 0);
             this.fridayTabPage.TabIndex = 0;
             this.fridayTabPage.Tag = "5";
             this.fridayTabPage.Text = "Пятница";
@@ -704,9 +704,9 @@
             // 
             // saturdayTabPage
             // 
-            this.saturdayTabPage.Location = new System.Drawing.Point(4, 26);
+            this.saturdayTabPage.Location = new System.Drawing.Point(4, 70);
             this.saturdayTabPage.Name = "saturdayTabPage";
-            this.saturdayTabPage.Size = new System.Drawing.Size(818, 416);
+            this.saturdayTabPage.Size = new System.Drawing.Size(174, 0);
             this.saturdayTabPage.TabIndex = 0;
             this.saturdayTabPage.Tag = "6";
             this.saturdayTabPage.Text = "Суббота";
@@ -714,9 +714,9 @@
             // 
             // sundayTabPage
             // 
-            this.sundayTabPage.Location = new System.Drawing.Point(4, 26);
+            this.sundayTabPage.Location = new System.Drawing.Point(4, 70);
             this.sundayTabPage.Name = "sundayTabPage";
-            this.sundayTabPage.Size = new System.Drawing.Size(818, 416);
+            this.sundayTabPage.Size = new System.Drawing.Size(174, 0);
             this.sundayTabPage.TabIndex = 0;
             this.sundayTabPage.Tag = "0";
             this.sundayTabPage.Text = "Воскресенье";

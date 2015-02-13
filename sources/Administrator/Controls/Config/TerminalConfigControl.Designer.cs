@@ -56,49 +56,49 @@
             this.terminallayoutGroupBox.TabStop = false;
             this.terminallayoutGroupBox.Text = "Расположение услуг";
             // 
-            // ColumnsUpDown
+            // columnsUpDown
             // 
-            this.columnsUpDown.Location = new System.Drawing.Point(65, 20);
+            this.columnsUpDown.Location = new System.Drawing.Point(65, 25);
             this.columnsUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             0});
-            this.columnsUpDown.Name = "ColumnsUpDown";
+            this.columnsUpDown.Name = "columnsUpDown";
             this.columnsUpDown.Size = new System.Drawing.Size(50, 20);
             this.columnsUpDown.TabIndex = 1;
             this.columnsUpDown.Leave += new System.EventHandler(this.columnsUpDown_Leave);
             // 
-            // RowsUpDown
+            // rowsUpDown
             // 
-            this.rowsUpDown.Location = new System.Drawing.Point(165, 20);
+            this.rowsUpDown.Location = new System.Drawing.Point(175, 25);
             this.rowsUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             0});
-            this.rowsUpDown.Name = "RowsUpDown";
+            this.rowsUpDown.Name = "rowsUpDown";
             this.rowsUpDown.Size = new System.Drawing.Size(50, 20);
             this.rowsUpDown.TabIndex = 3;
             this.rowsUpDown.Leave += new System.EventHandler(this.rowsUpDown_Leave);
             // 
             // terminalRowsLabel
             // 
-            this.terminalRowsLabel.AutoSize = true;
-            this.terminalRowsLabel.Location = new System.Drawing.Point(125, 25);
+            this.terminalRowsLabel.Location = new System.Drawing.Point(125, 15);
             this.terminalRowsLabel.Name = "terminalRowsLabel";
-            this.terminalRowsLabel.Size = new System.Drawing.Size(37, 13);
+            this.terminalRowsLabel.Size = new System.Drawing.Size(45, 30);
             this.terminalRowsLabel.TabIndex = 4;
             this.terminalRowsLabel.Text = "Строк";
+            this.terminalRowsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // terminalColumnsLabel
             // 
-            this.terminalColumnsLabel.AutoSize = true;
-            this.terminalColumnsLabel.Location = new System.Drawing.Point(12, 25);
+            this.terminalColumnsLabel.Location = new System.Drawing.Point(10, 15);
             this.terminalColumnsLabel.Name = "terminalColumnsLabel";
-            this.terminalColumnsLabel.Size = new System.Drawing.Size(50, 13);
+            this.terminalColumnsLabel.Size = new System.Drawing.Size(50, 30);
             this.terminalColumnsLabel.TabIndex = 2;
             this.terminalColumnsLabel.Text = "Колонок";
+            this.terminalColumnsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // PINUpDown
             // 
@@ -131,12 +131,11 @@
             this.terminalPINLabel.TabIndex = 8;
             this.terminalPINLabel.Text = "PIN-код";
             // 
-            // CurrentDayRecordingCheckBox
+            // currentDayRecordingCheckBox
             // 
-            this.currentDayRecordingCheckBox.AutoSize = true;
-            this.currentDayRecordingCheckBox.Location = new System.Drawing.Point(10, 105);
-            this.currentDayRecordingCheckBox.Name = "CurrentDayRecordingCheckBox";
-            this.currentDayRecordingCheckBox.Size = new System.Drawing.Size(151, 17);
+            this.currentDayRecordingCheckBox.Location = new System.Drawing.Point(10, 95);
+            this.currentDayRecordingCheckBox.Name = "currentDayRecordingCheckBox";
+            this.currentDayRecordingCheckBox.Size = new System.Drawing.Size(151, 35);
             this.currentDayRecordingCheckBox.TabIndex = 9;
             this.currentDayRecordingCheckBox.Text = "Запись на текущий день";
             this.currentDayRecordingCheckBox.UseVisualStyleBackColor = true;
@@ -154,7 +153,6 @@
             this.Name = "TerminalConfigControl";
             this.Size = new System.Drawing.Size(250, 140);
             this.terminallayoutGroupBox.ResumeLayout(false);
-            this.terminallayoutGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.columnsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rowsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PINUpDown)).EndInit();

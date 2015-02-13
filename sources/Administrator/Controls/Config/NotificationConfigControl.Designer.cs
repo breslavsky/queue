@@ -36,7 +36,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(135, 35);
+            this.saveButton.Location = new System.Drawing.Point(135, 40);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 6;
@@ -45,7 +45,7 @@
             // 
             // clientRequestsLengthUpDown
             // 
-            this.clientRequestsLengthUpDown.Location = new System.Drawing.Point(140, 5);
+            this.clientRequestsLengthUpDown.Location = new System.Drawing.Point(140, 15);
             this.clientRequestsLengthUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -58,12 +58,12 @@
             // 
             // clientRequestsLengthLabel
             // 
-            this.clientRequestsLengthLabel.AutoSize = true;
-            this.clientRequestsLengthLabel.Location = new System.Drawing.Point(7, 10);
+            this.clientRequestsLengthLabel.Location = new System.Drawing.Point(5, 5);
             this.clientRequestsLengthLabel.Name = "clientRequestsLengthLabel";
-            this.clientRequestsLengthLabel.Size = new System.Drawing.Size(130, 13);
+            this.clientRequestsLengthLabel.Size = new System.Drawing.Size(135, 30);
             this.clientRequestsLengthLabel.TabIndex = 5;
             this.clientRequestsLengthLabel.Text = "Длина списка запросов";
+            this.clientRequestsLengthLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // NotificationConfigControl
             // 
@@ -73,10 +73,9 @@
             this.Controls.Add(this.clientRequestsLengthUpDown);
             this.Controls.Add(this.clientRequestsLengthLabel);
             this.Name = "NotificationConfigControl";
-            this.Size = new System.Drawing.Size(220, 65);
+            this.Size = new System.Drawing.Size(220, 70);
             ((System.ComponentModel.ISupportInitialize)(this.clientRequestsLengthUpDown)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
