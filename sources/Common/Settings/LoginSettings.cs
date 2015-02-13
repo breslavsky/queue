@@ -3,8 +3,10 @@ using System.Configuration;
 
 namespace Queue.Common
 {
-    public class ServerConnectionSettings : ConfigurationSection
+    public class LoginSettings : ConfigurationSection
     {
+        public const string SectionKey = "connection";
+
         [ConfigurationProperty("endpoint")]
         public string Endpoint
         {

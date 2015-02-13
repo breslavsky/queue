@@ -52,7 +52,7 @@
     <Compile Include="EnumItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\QueueException.cs" />
-    <Compile Include="Settings\ServerConnectionSettings.cs" />
+    <Compile Include="Settings\LoginSettings.cs" />
     <Compile Include="ServerTime.cs" />
     <Compile Include="TicksInterval.cs" />
     <Compile Include="Language.cs" />

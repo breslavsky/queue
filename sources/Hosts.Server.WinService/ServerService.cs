@@ -25,7 +25,7 @@ namespace Queue.Hosts.Server.WinService
             try
             {
                 ConfigurationManager configuration = new ConfigurationManager(HostsConsts.ServerApp);
-                ServerSettings settings = configuration.GetSection<ServerSettings>("server");
+                ServerSettings settings = configuration.GetSection<ServerSettings>(HostsConsts.ServerSettingsSectionKey);
 
                 server = new ServerInstance(settings);
                 server.Start();
@@ -46,6 +46,7 @@ namespace Queue.Hosts.Server.WinService
             try
             {
                 server.Stop();
+                server.Dispose();
             }
             catch (Exception e)
             {

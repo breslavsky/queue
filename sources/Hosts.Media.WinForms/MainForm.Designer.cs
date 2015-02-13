@@ -49,7 +49,7 @@
             this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.mediaSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.serverConnectionSettingsControl = new Queue.UI.WinForms.ServerConnectionSettingsControl();
+            this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
             this.settingsGroupBox.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -156,7 +156,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.serverConnectionSettingsControl);
+            this.groupBox1.Controls.Add(this.loginSettingsControl);
             this.groupBox1.Location = new System.Drawing.Point(8, 17);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(370, 209);
@@ -242,12 +242,12 @@
             // 
             this.mediaSettingsBindingSource.DataSource = typeof(Queue.Media.MediaSettings);
             // 
-            // serverConnectionSettingsControl
+            // loginSettingsControl
             // 
-            this.serverConnectionSettingsControl.Location = new System.Drawing.Point(14, 19);
-            this.serverConnectionSettingsControl.Name = "serverConnectionSettingsControl";
-            this.serverConnectionSettingsControl.Size = new System.Drawing.Size(340, 176);
-            this.serverConnectionSettingsControl.TabIndex = 0;
+            this.loginSettingsControl.Location = new System.Drawing.Point(14, 19);
+            this.loginSettingsControl.Name = "loginSettingsControl";
+            this.loginSettingsControl.Size = new System.Drawing.Size(340, 176);
+            this.loginSettingsControl.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -297,7 +297,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox folderTextBox;
         private System.Windows.Forms.Button selectFolderButton;
-        private Queue.UI.WinForms.ServerConnectionSettingsControl serverConnectionSettingsControl;
+        private Queue.UI.WinForms.LoginSettingsControl loginSettingsControl;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.Timer serviceStateTimer;
         private System.Windows.Forms.BindingSource mediaSettingsBindingSource;

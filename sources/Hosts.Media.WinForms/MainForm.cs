@@ -16,8 +16,6 @@ namespace Queue.Hosts.Media.WinForms
 {
     public partial class MainForm : Form
     {
-        private const string ServiceExe = "Queue.Hosts.Media.WinService.exe";
-
         private const string InstallServiceButtonTitle = "Установить службу";
         private const string UnistallServiceButtonTitle = "Удалить службу";
         private const string StartServiceButtonTitle = "Запустить службу";
@@ -34,7 +32,7 @@ namespace Queue.Hosts.Media.WinForms
         {
             InitializeComponent();
 
-            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ServiceExe);
+            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.MediaServiceExe);
             serviceManager = new ServiceManager(HostsConsts.MediaServiceName, exePath);
 
             taskPool = new TaskPool();
@@ -43,12 +41,12 @@ namespace Queue.Hosts.Media.WinForms
         private void MainForm_Load(object sender, EventArgs e)
         {
             configurationManager = new ConfigurationManager(HostsConsts.MediaApp);
-            settings = configurationManager.GetSection<MediaSettings>("media", s => s.Port = 9090);
+            settings = configurationManager.GetSection<MediaSettings>(HostsConsts.MediaSettingsSectionKey, s => s.Port = 9090);
             mediaSettingsBindingSource.DataSource = settings;
 
             RegisterContainer();
 
-            serverConnectionSettingsControl.Initialize(UserRole.Administrator, taskPool);
+            loginSettingsControl.Initialize(UserRole.Administrator, taskPool);
 
             Text += string.Format(" ({0})", typeof(MediaInstance).Assembly.GetName().Version);
 
@@ -187,7 +185,7 @@ namespace Queue.Hosts.Media.WinForms
 
                 startButton.Enabled = false;
 
-                media = new MediaInstance(settings, serverConnectionSettingsControl.ConnectionSettings);
+                media = new MediaInstance(settings, loginSettingsControl.ConnectionSettings);
                 await media.Start();
 
                 startButton.Enabled = false;

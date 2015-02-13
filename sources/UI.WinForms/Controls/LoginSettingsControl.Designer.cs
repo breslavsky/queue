@@ -1,6 +1,6 @@
 ﻿namespace Queue.UI.WinForms
 {
-    partial class ServerConnectionSettingsControl
+    partial class LoginSettingsControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServerConnectionSettingsControl));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginSettingsControl));
             this.connectionGroupBox = new System.Windows.Forms.GroupBox();
             this.connectButton = new System.Windows.Forms.Button();
             this.serverLabel = new System.Windows.Forms.Label();
@@ -86,7 +86,7 @@
             // 
             // serverConnectionSettingsBindingSource
             // 
-            this.serverConnectionSettingsBindingSource.DataSource = typeof(Queue.Common.ServerConnectionSettings);
+            this.serverConnectionSettingsBindingSource.DataSource = typeof(Queue.Common.LoginSettings);
             // 
             // loginGroupBox
             // 
@@ -140,13 +140,13 @@
             this.loginLabel.TabIndex = 0;
             this.loginLabel.Text = "Пользователь";
             // 
-            // ServerConnectionSettingsControl
+            // LoginSettingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.loginGroupBox);
             this.Controls.Add(this.connectionGroupBox);
-            this.Name = "ServerConnectionSettingsControl";
+            this.Name = "LoginSettingsControl";
             this.Size = new System.Drawing.Size(340, 176);
             this.connectionGroupBox.ResumeLayout(false);
             this.connectionGroupBox.PerformLayout();

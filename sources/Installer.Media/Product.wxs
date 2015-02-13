@@ -3,6 +3,7 @@
   <?include $(var.Installer.Common.ProjectDir)Consts.wxi ?>
 
   <?define ProductName="Queue Media" ?>
+  <?define ProductTitle="Медиа служба очереди" ?>
   <?define ProductVersion="1.4.0.0" ?>
   <?define ProductCode="816B815C-BF37-44D6-9AEF-7BE8539AAC00"?>
   <?define UpgradeCode="1793500C-0A3C-4195-8A09-A015DCC551B0"?>
@@ -45,12 +46,12 @@
     <DirectoryRef Id="ApplicationProgramsFolder">
       <Component Id="ApplicationShortcut" Guid="149F0678-5F58-434C-BC37-D0A50850F523">
         <Shortcut Id="Shortcut"
-             Name="$(var.ProductName)"
-             Description="$(var.ProductName)"
+             Name="$(var.ProductTitle)"
+             Description="$(var.ProductTitle)"
              Target="[INSTALLFOLDER]$(var.Hosts.Media.WinForms.TargetFileName)"
              WorkingDirectory="INSTALLFOLDER" />
         <Shortcut Id="UninstallShortcut"
-            Name="Удалить $(var.ProductName)"
+            Name="Удалить $(var.ProductTitle)"
             Target="[System64Folder]msiexec.exe"
             Arguments="/x [ProductCode]" />
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />

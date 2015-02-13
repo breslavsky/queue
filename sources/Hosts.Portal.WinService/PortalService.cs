@@ -25,8 +25,8 @@ namespace Hosts.Portal.WinService
             try
             {
                 ConfigurationManager configuration = new ConfigurationManager(HostsConsts.PortalApp);
-                PortalSettings portalSettings = configuration.GetSection<PortalSettings>("portal");
-                ServerConnectionSettings connectionSettings = configuration.GetSection<ServerConnectionSettings>("connection");
+                PortalSettings portalSettings = configuration.GetSection<PortalSettings>(HostsConsts.PortalSettingsSectionKey);
+                LoginSettings connectionSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
 
                 portal = new PortalInstance(portalSettings, connectionSettings);
                 await portal.Start();

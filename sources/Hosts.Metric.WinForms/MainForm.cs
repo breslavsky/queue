@@ -16,8 +16,6 @@ namespace Queue.Hosts.Metric.WinForms
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private const string ServiceExe = "Queue.Hosts.Metric.WinService.exe";
-
         private const string InstallServiceButtonTitle = "Установить службу";
         private const string UnistallServiceButtonTitle = "Удалить службу";
         private const string StartServiceButtonTitle = "Запустить службу";
@@ -34,7 +32,7 @@ namespace Queue.Hosts.Metric.WinForms
         {
             InitializeComponent();
 
-            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ServiceExe);
+            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.MetricServiceExe);
             serviceManager = new ServiceManager(HostsConsts.MetricServiceName, exePath);
             LoadConfiguration();
 
@@ -44,7 +42,7 @@ namespace Queue.Hosts.Metric.WinForms
         private void LoadConfiguration()
         {
             configuration = new ConfigurationManager(HostsConsts.MetricApp);
-            settings = configuration.GetSection<MetricSettings>("metric", s => s.Database = GetDefaultDatabaseSettings());
+            settings = configuration.GetSection<MetricSettings>(HostsConsts.MetricSettingsSectionKey, s => s.Database = GetDefaultDatabaseSettings());
         }
 
         private DatabaseSettings GetDefaultDatabaseSettings()

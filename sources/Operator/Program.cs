@@ -53,7 +53,7 @@ namespace Queue.Operator
         private static void ResetSettings()
         {
             LoginForm.ResetSettings();
-            ServerConnectionSettingsControl.ResetSettings();
+            LoginSettingsControl.ResetSettings();
         }
     }
 }

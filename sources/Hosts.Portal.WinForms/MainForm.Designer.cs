@@ -43,7 +43,7 @@
             this.portalSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.portLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.serverConnectionSettingsControl = new Queue.UI.WinForms.ServerConnectionSettingsControl();
+            this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
             this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.serviceGroupBox.SuspendLayout();
@@ -187,7 +187,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.serverConnectionSettingsControl);
+            this.groupBox1.Controls.Add(this.loginSettingsControl);
             this.groupBox1.Location = new System.Drawing.Point(8, 17);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(370, 209);
@@ -195,12 +195,12 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Соединение с сервером";
             // 
-            // serverConnectionSettingsControl
+            // loginSettingsControl
             // 
-            this.serverConnectionSettingsControl.Location = new System.Drawing.Point(18, 19);
-            this.serverConnectionSettingsControl.Name = "serverConnectionSettingsControl";
-            this.serverConnectionSettingsControl.Size = new System.Drawing.Size(337, 176);
-            this.serverConnectionSettingsControl.TabIndex = 0;
+            this.loginSettingsControl.Location = new System.Drawing.Point(18, 19);
+            this.loginSettingsControl.Name = "loginSettingsControl";
+            this.loginSettingsControl.Size = new System.Drawing.Size(337, 176);
+            this.loginSettingsControl.TabIndex = 0;
             // 
             // serviceStateTimer
             // 
@@ -253,7 +253,7 @@
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.GroupBox settingsGroupBox;
         private System.Windows.Forms.GroupBox groupBox1;
-        private Queue.UI.WinForms.ServerConnectionSettingsControl serverConnectionSettingsControl;
+        private Queue.UI.WinForms.LoginSettingsControl loginSettingsControl;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label portLabel;
         private System.Windows.Forms.NumericUpDown portUpDown;

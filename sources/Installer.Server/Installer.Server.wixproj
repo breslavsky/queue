@@ -23,6 +23,8 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <Cultures>ru-RU</Cultures>
+    <SuppressIces>ICE40</SuppressIces>
+    <SuppressValidation>False</SuppressValidation>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Files.wxs" />
