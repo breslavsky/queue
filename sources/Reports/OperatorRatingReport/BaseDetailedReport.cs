@@ -67,7 +67,6 @@ namespace Queue.Reports.OperatorRatingReport
 
             conjunction.Add(Expression.Ge("RequestDate", startDate));
             conjunction.Add(Expression.Le("RequestDate", finishDate));
-            conjunction.Add(Expression.Gt("Subjects", 0));
 
             ProjectionList projections = GetProjections();
 
@@ -143,7 +142,9 @@ namespace Queue.Reports.OperatorRatingReport
                     Projections.Constant(1, NHibernateUtil.Int32), Projections.Constant(0, NHibernateUtil.Int32))), "Canceled")
 
                 .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("State", ClientRequestState.Rendered),
-                    Projections.SqlProjection("({alias}.RenderFinishTime - {alias}.RenderStartTime) / Subjects as RenderTime", new string[] { "RenderTime" }, new IType[] { NHibernateUtil.TimeSpan }),
+                    Projections.Conditional(Restrictions.Le("Subjects", 0),
+                        Projections.SqlProjection("({alias}.RenderFinishTime - {alias}.RenderStartTime) as RenderTime", new string[] { "RenderTime" }, new IType[] { NHibernateUtil.TimeSpan }),
+                        Projections.SqlProjection("({alias}.RenderFinishTime - {alias}.RenderStartTime) / Subjects as RenderTime", new string[] { "RenderTime" }, new IType[] { NHibernateUtil.TimeSpan })),
                     Projections.Constant(TimeSpan.Zero, NHibernateUtil.TimeSpan))), "RenderTime")
 
                 .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("State", ClientRequestState.Rendered),
