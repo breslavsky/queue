@@ -90,6 +90,11 @@ namespace Queue.UI.WinForms
 
                     User = await taskPool.AddTask(channel.Service.UserLogin(selectedUser.Id, ConnectionSettings.Password));
 
+                    if (!settings.IsRemember)
+                    {
+                        ConnectionSettings.Password = string.Empty;
+                    }
+
                     configuration.Save();
                     DialogResult = DialogResult.OK;
                 }

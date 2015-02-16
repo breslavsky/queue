@@ -67,6 +67,7 @@ namespace Queue.Reports.OperatorRatingReport
 
             conjunction.Add(Expression.Ge("RequestDate", startDate));
             conjunction.Add(Expression.Le("RequestDate", finishDate));
+            conjunction.Add(Expression.Gt("Subjects", 0));
 
             ProjectionList projections = GetProjections();
 

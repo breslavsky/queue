@@ -11,7 +11,6 @@ using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
-using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator.Reports
 {
@@ -195,7 +194,7 @@ namespace Queue.Administrator.Reports
         private Guid[] GetSelectedOperators()
         {
             return operatorsListBox.CheckedItems
-                                        .Cast<QueueOperator>()
+                                        .Cast<IdentifiedEntityLink>()
                                         .Select(o => o.Id)
                                         .ToArray();
         }
