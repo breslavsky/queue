@@ -37,6 +37,9 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.terminalPINLabel = new System.Windows.Forms.Label();
             this.currentDayRecordingCheckBox = new System.Windows.Forms.CheckBox();
+            this.windowTemplateEditor = new ICSharpCode.TextEditor.TextEditorControl();
+            this.previewLabel = new System.Windows.Forms.LinkLabel();
+            this.templateLabel = new System.Windows.Forms.LinkLabel();
             this.terminallayoutGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.columnsUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rowsUpDown)).BeginInit();
@@ -49,7 +52,7 @@
             this.terminallayoutGroupBox.Controls.Add(this.rowsUpDown);
             this.terminallayoutGroupBox.Controls.Add(this.terminalRowsLabel);
             this.terminallayoutGroupBox.Controls.Add(this.terminalColumnsLabel);
-            this.terminallayoutGroupBox.Location = new System.Drawing.Point(10, 35);
+            this.terminallayoutGroupBox.Location = new System.Drawing.Point(5, 35);
             this.terminallayoutGroupBox.Name = "terminallayoutGroupBox";
             this.terminallayoutGroupBox.Size = new System.Drawing.Size(230, 55);
             this.terminallayoutGroupBox.TabIndex = 10;
@@ -58,7 +61,7 @@
             // 
             // columnsUpDown
             // 
-            this.columnsUpDown.Location = new System.Drawing.Point(65, 25);
+            this.columnsUpDown.Location = new System.Drawing.Point(65, 20);
             this.columnsUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -71,7 +74,7 @@
             // 
             // rowsUpDown
             // 
-            this.rowsUpDown.Location = new System.Drawing.Point(175, 25);
+            this.rowsUpDown.Location = new System.Drawing.Point(165, 20);
             this.rowsUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -84,21 +87,21 @@
             // 
             // terminalRowsLabel
             // 
-            this.terminalRowsLabel.Location = new System.Drawing.Point(125, 15);
+            this.terminalRowsLabel.AutoSize = true;
+            this.terminalRowsLabel.Location = new System.Drawing.Point(125, 25);
             this.terminalRowsLabel.Name = "terminalRowsLabel";
-            this.terminalRowsLabel.Size = new System.Drawing.Size(45, 30);
+            this.terminalRowsLabel.Size = new System.Drawing.Size(37, 13);
             this.terminalRowsLabel.TabIndex = 4;
             this.terminalRowsLabel.Text = "Строк";
-            this.terminalRowsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // terminalColumnsLabel
             // 
-            this.terminalColumnsLabel.Location = new System.Drawing.Point(10, 15);
+            this.terminalColumnsLabel.AutoSize = true;
+            this.terminalColumnsLabel.Location = new System.Drawing.Point(12, 25);
             this.terminalColumnsLabel.Name = "terminalColumnsLabel";
-            this.terminalColumnsLabel.Size = new System.Drawing.Size(50, 30);
+            this.terminalColumnsLabel.Size = new System.Drawing.Size(50, 13);
             this.terminalColumnsLabel.TabIndex = 2;
             this.terminalColumnsLabel.Text = "Колонок";
-            this.terminalColumnsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // PINUpDown
             // 
@@ -115,7 +118,8 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(165, 100);
+            this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveButton.Location = new System.Drawing.Point(570, 389);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 7;
@@ -133,26 +137,69 @@
             // 
             // currentDayRecordingCheckBox
             // 
+            this.currentDayRecordingCheckBox.AutoSize = true;
             this.currentDayRecordingCheckBox.Location = new System.Drawing.Point(10, 95);
             this.currentDayRecordingCheckBox.Name = "currentDayRecordingCheckBox";
-            this.currentDayRecordingCheckBox.Size = new System.Drawing.Size(151, 35);
+            this.currentDayRecordingCheckBox.Size = new System.Drawing.Size(151, 17);
             this.currentDayRecordingCheckBox.TabIndex = 9;
             this.currentDayRecordingCheckBox.Text = "Запись на текущий день";
             this.currentDayRecordingCheckBox.UseVisualStyleBackColor = true;
             this.currentDayRecordingCheckBox.Leave += new System.EventHandler(this.currentDayRecordingCheckBox_Leave);
             // 
+            // windowTemplateEditor
+            // 
+            this.windowTemplateEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.windowTemplateEditor.IsReadOnly = false;
+            this.windowTemplateEditor.LineViewerStyle = ICSharpCode.TextEditor.Document.LineViewerStyle.FullRow;
+            this.windowTemplateEditor.Location = new System.Drawing.Point(5, 120);
+            this.windowTemplateEditor.Margin = new System.Windows.Forms.Padding(0);
+            this.windowTemplateEditor.Name = "windowTemplateEditor";
+            this.windowTemplateEditor.Size = new System.Drawing.Size(640, 264);
+            this.windowTemplateEditor.TabIndex = 11;
+            this.windowTemplateEditor.Leave += new System.EventHandler(this.windowTemplateEditor_Leave);
+            // 
+            // previewLabel
+            // 
+            this.previewLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.previewLabel.AutoSize = true;
+            this.previewLabel.Location = new System.Drawing.Point(5, 390);
+            this.previewLabel.Name = "previewLabel";
+            this.previewLabel.Size = new System.Drawing.Size(86, 13);
+            this.previewLabel.TabIndex = 12;
+            this.previewLabel.TabStop = true;
+            this.previewLabel.Text = "[предпросмотр]";
+            this.previewLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.previewLabel_LinkClicked);
+            // 
+            // templateLabel
+            // 
+            this.templateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.templateLabel.AutoSize = true;
+            this.templateLabel.Location = new System.Drawing.Point(90, 390);
+            this.templateLabel.Name = "templateLabel";
+            this.templateLabel.Size = new System.Drawing.Size(84, 13);
+            this.templateLabel.TabIndex = 13;
+            this.templateLabel.TabStop = true;
+            this.templateLabel.Text = "[по умолчанию]";
+            this.templateLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.templateLabel_LinkClicked);
+            // 
             // TerminalConfigControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.previewLabel);
+            this.Controls.Add(this.templateLabel);
+            this.Controls.Add(this.windowTemplateEditor);
             this.Controls.Add(this.terminallayoutGroupBox);
             this.Controls.Add(this.PINUpDown);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.terminalPINLabel);
             this.Controls.Add(this.currentDayRecordingCheckBox);
             this.Name = "TerminalConfigControl";
-            this.Size = new System.Drawing.Size(250, 140);
+            this.Size = new System.Drawing.Size(654, 425);
             this.terminallayoutGroupBox.ResumeLayout(false);
+            this.terminallayoutGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.columnsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rowsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PINUpDown)).EndInit();
@@ -172,5 +219,8 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Label terminalPINLabel;
         private System.Windows.Forms.CheckBox currentDayRecordingCheckBox;
+        private ICSharpCode.TextEditor.TextEditorControl windowTemplateEditor;
+        private System.Windows.Forms.LinkLabel previewLabel;
+        private System.Windows.Forms.LinkLabel templateLabel;
     }
 }
