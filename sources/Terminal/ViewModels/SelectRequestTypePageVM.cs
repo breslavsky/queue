@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Queue.Terminal.Models.Pages
+namespace Queue.Terminal.ViewModels
 {
     public class SelectRequestTypePageVM : PageVM
     {

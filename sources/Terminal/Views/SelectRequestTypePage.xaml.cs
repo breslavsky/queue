@@ -1,7 +1,7 @@
-﻿using Queue.Terminal.Models.Pages;
+﻿using Queue.Terminal.ViewModels;
 using System;
 
-namespace Queue.Terminal.Pages
+namespace Queue.Terminal.Views
 {
     public partial class SelectRequestTypePage : TerminalPage
     {

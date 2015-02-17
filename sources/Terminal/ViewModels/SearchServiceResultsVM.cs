@@ -13,7 +13,7 @@ using System.ServiceModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Queue.Terminal.Models
+namespace Queue.Terminal.ViewModels
 {
     public class SearchServiceResultsVM : ObservableObject, IServiceSearch
     {

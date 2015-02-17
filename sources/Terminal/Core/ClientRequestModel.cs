@@ -24,7 +24,18 @@ namespace Queue.Terminal.Core
         public Service SelectedService
         {
             get { return selectedService; }
-            set { SetProperty(ref selectedService, value); }
+            set
+            {
+                SetProperty(ref selectedService, value);
+                if ((value != null) && (value.EarlyRegistrator == ClientRequestRegistrator.None))
+                {
+                    QueueType = ClientRequestType.Live;
+                }
+                else
+                {
+                    QueueType = null;
+                }
+            }
         }
 
         public DateTime? SelectedDate
@@ -66,8 +77,41 @@ namespace Queue.Terminal.Core
             SelectedDate = null;
             SelectedTime = null;
             CurrentClient = null;
-            MaxSubjects = 1;
-            SubjectsCount = 1;
+            MaxSubjects = null;
+            SubjectsCount = null;
+        }
+
+        public ClientRequestModelState GetState()
+        {
+            if (SelectedService == null)
+            {
+                return ClientRequestModelState.SetService;
+            }
+
+            if (QueueType == null)
+            {
+                return ClientRequestModelState.SetRequestType;
+            }
+
+            if ((SelectedDate == null) &&
+                (SelectedTime == null) &&
+                (QueueType == ClientRequestType.Early))
+            {
+                return ClientRequestModelState.SetRequestDate;
+            }
+
+            if ((CurrentClient == null) &&
+                (SelectedService.ClientRequire))
+            {
+                return ClientRequestModelState.SetClient;
+            }
+
+            if ((MaxSubjects > 1) && (SubjectsCount == null))
+            {
+                return ClientRequestModelState.SetSubjectsCount;
+            }
+
+            return ClientRequestModelState.Completed;
         }
     }
 }

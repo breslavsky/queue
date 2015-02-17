@@ -111,7 +111,7 @@ namespace Queue.Terminal
 
             settings.Endpoint = loginPage.Model.Endpoint;
             settings.UserId = loginPage.Model.SelectedUser.Id;
-            settings.Password = loginPage.Model.Password;
+            settings.Password = loginPage.Model.IsRemember ? loginPage.Model.Password : string.Empty;
             settings.IsRemember = loginPage.Model.IsRemember;
 
             if (loginPage.Model.SelectedAccent != null)
@@ -134,8 +134,7 @@ namespace Queue.Terminal
             container.RegisterInstance<ChannelManager<IServerTcpService>>(channelManager);
             container.RegisterInstance<ClientRequestModel>(new ClientRequestModel()
             {
-                CurrentAdministrator = (Administrator)loginPage.Model.User,
-                QueueType = ClientRequestType.Live
+                CurrentAdministrator = (Administrator)loginPage.Model.User
             });
 
             navigator = container.Resolve<Navigator>();

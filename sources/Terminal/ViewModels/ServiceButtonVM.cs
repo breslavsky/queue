@@ -3,7 +3,7 @@ using System;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Queue.Terminal.Models
+namespace Queue.Terminal.ViewModels
 {
     public class ServiceButtonVM : ObservableObject
     {

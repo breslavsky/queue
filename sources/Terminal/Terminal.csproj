@@ -137,30 +137,31 @@
     </ApplicationDefinition>
     <Compile Include="Converters\ClientRequestTypeConverter.cs" />
     <Compile Include="Converters\RequestDateTimeConverter.cs" />
-    <Compile Include="Models\Pages\SelectDateTimeCalendarPageVM.cs" />
-    <Compile Include="Models\Pages\SelectDateTimeShedulerPageVM.cs" />
-    <Compile Include="Models\Pages\SearchServicePageVM.cs" />
-    <Compile Include="Models\Pages\SelectSubjectsCountPageVM.cs" />
-    <Compile Include="Models\Pages\SetUsernamePageVM.cs" />
-    <Compile Include="Models\SearchServiceResultsVM.cs" />
-    <Compile Include="Models\TerminalWindowVM.cs" />
-    <Compile Include="Models\Pages\PageVM.cs" />
-    <Compile Include="Models\Pages\SelectRequestTypePageVM.cs" />
-    <Compile Include="Models\ServiceButtonVM.cs" />
-    <Compile Include="Models\Pages\SelectServicePageVM.cs" />
-    <Compile Include="Pages\SelectDateTimeCalendarPage.xaml.cs">
-      <DependentUpon>SelectDateTimeCalendarPage.xaml</DependentUpon>
+    <Compile Include="Core\ClientRequestModelState.cs" />
+    <Compile Include="ViewModels\PrintCouponPageVM.cs" />
+    <Compile Include="ViewModels\SelectRequestDatePageVM.cs" />
+    <Compile Include="ViewModels\SearchServicePageVM.cs" />
+    <Compile Include="ViewModels\SelectSubjectsCountPageVM.cs" />
+    <Compile Include="ViewModels\SetUsernamePageVM.cs" />
+    <Compile Include="ViewModels\SearchServiceResultsVM.cs" />
+    <Compile Include="ViewModels\TerminalWindowVM.cs" />
+    <Compile Include="ViewModels\PageVM.cs" />
+    <Compile Include="ViewModels\SelectRequestTypePageVM.cs" />
+    <Compile Include="ViewModels\ServiceButtonVM.cs" />
+    <Compile Include="ViewModels\SelectServicePageVM.cs" />
+    <Compile Include="Views\PrintCouponPage.xaml.cs">
+      <DependentUpon>PrintCouponPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SelectDateTimeShedulerPage.xaml.cs">
-      <DependentUpon>SelectDateTimeShedulerPage.xaml</DependentUpon>
+    <Compile Include="Views\SelectRequestDatePage.xaml.cs">
+      <DependentUpon>SelectRequestDatePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SearchServicePage.xaml.cs">
+    <Compile Include="Views\SearchServicePage.xaml.cs">
       <DependentUpon>SearchServicePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Types\EarlyRequestHour.cs" />
     <Compile Include="Core\Navigator.cs" />
     <Compile Include="Enums\PageType.cs" />
-    <Compile Include="Pages\TerminalPage.cs" />
+    <Compile Include="Views\TerminalPage.cs" />
     <Compile Include="Core\ClientRequestModel.cs" />
     <Compile Include="Types\IServiceSearch.cs" />
     <Compile Include="Types\RenderServicesEventArgs.cs" />
@@ -171,15 +172,15 @@
     <Compile Include="UserControls\SelectServiceButton.xaml.cs">
       <DependentUpon>SelectServiceButton.xaml</DependentUpon>
     </Compile>
-    <Page Include="Pages\SelectDateTimeCalendarPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\SelectDateTimeShedulerPage.xaml">
+    <Page Include="Views\PrintCouponPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SearchServicePage.xaml">
+    <Page Include="Views\SelectRequestDatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SearchServicePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -206,19 +207,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\SelectSubjectsCountPage.xaml">
+    <Page Include="Views\SelectSubjectsCountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SetUsernamePage.xaml">
+    <Page Include="Views\SetUsernamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SelectRequestTypePage.xaml">
+    <Page Include="Views\SelectRequestTypePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SelectServicePage.xaml">
+    <Page Include="Views\SelectServicePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -232,16 +233,16 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pages\SelectSubjectsCountPage.xaml.cs">
+    <Compile Include="Views\SelectSubjectsCountPage.xaml.cs">
       <DependentUpon>SelectSubjectsCountPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SetUsernamePage.xaml.cs">
+    <Compile Include="Views\SetUsernamePage.xaml.cs">
       <DependentUpon>SetUsernamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SelectRequestTypePage.xaml.cs">
+    <Compile Include="Views\SelectRequestTypePage.xaml.cs">
       <DependentUpon>SelectRequestTypePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SelectServicePage.xaml.cs">
+    <Compile Include="Views\SelectServicePage.xaml.cs">
       <DependentUpon>SelectServicePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">

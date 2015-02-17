@@ -1,10 +1,10 @@
-﻿using Queue.Terminal.Models.Pages;
+﻿using Queue.Terminal.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Queue.Terminal.Pages
+namespace Queue.Terminal.Views
 {
     public partial class SetUsernamePage : TerminalPage
     {

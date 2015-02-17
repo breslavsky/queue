@@ -4,7 +4,7 @@ using Microsoft.Practices.Unity;
 using Queue.Resources;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
-using Queue.Terminal.Models;
+using Queue.Terminal.ViewModels;
 using Queue.UI.WPF;
 using Queue.UI.WPF.Types;
 using System;

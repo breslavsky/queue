@@ -5,7 +5,7 @@ using System.ServiceModel;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Queue.Terminal.Models.Pages
+namespace Queue.Terminal.ViewModels
 {
     public class SetUsernamePageVM : PageVM
     {
@@ -90,6 +90,7 @@ namespace Queue.Terminal.Models.Pages
 
         private void Prev()
         {
+            Model.CurrentClient = null;
             navigator.PrevPage();
         }
     }

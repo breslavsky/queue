@@ -4,9 +4,10 @@
     {
         SelectService,
         SelectRequestType,
-        SelectDateTime,
+        SelectRequestDate,
         SetUsername,
         SelectSubjectsCount,
-        SearchService
+        SearchService,
+        PrintCoupon
     }
 }

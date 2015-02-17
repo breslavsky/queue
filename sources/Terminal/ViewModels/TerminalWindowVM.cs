@@ -15,7 +15,7 @@ using System.Timers;
 using System.Windows.Input;
 using Timer = System.Timers.Timer;
 
-namespace Queue.Terminal.Models
+namespace Queue.Terminal.ViewModels
 {
     public class TerminalWindowVM : ObservableObject, IDisposable
     {

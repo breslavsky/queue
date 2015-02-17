@@ -1,18 +1,18 @@
 ﻿using Queue.Common;
-using Queue.Terminal.Models.Pages;
+using Queue.Terminal.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
-namespace Queue.Terminal.Pages
+namespace Queue.Terminal.Views
 {
-    public partial class SelectDateTimeCalendarPage : TerminalPage
+    public partial class SelectRequestDatePage : TerminalPage
     {
-        protected override Type ModelType { get { return typeof(SelectDateTimeCalendarPageVM); } }
+        protected override Type ModelType { get { return typeof(SelectRequestDatePageVM); } }
 
-        public SelectDateTimeCalendarPage()
+        public SelectRequestDatePage()
             : base()
         {
             InitializeComponent();
@@ -36,12 +36,12 @@ namespace Queue.Terminal.Pages
             }
             earlyRequestDateCalendar.BlackoutDates.Add(new CalendarDateRange(DateTime.MinValue, end));
 
-            (DataContext as SelectDateTimeCalendarPageVM).Initialize();
+            (DataContext as SelectRequestDatePageVM).Initialize();
         }
 
         private void TerminalPage_Unloaded(object sender, RoutedEventArgs e)
         {
-            (DataContext as SelectDateTimeCalendarPageVM).Unloaded();
+            (DataContext as SelectRequestDatePageVM).Unloaded();
         }
     }
 }

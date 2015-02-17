@@ -1,12 +1,12 @@
-﻿<pages:TerminalPage x:Class="Queue.Terminal.Pages.SearchServicePage"
+﻿<views:TerminalPage x:Class="Queue.Terminal.Views.SearchServicePage"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:pages="clr-namespace:Queue.Terminal.Pages"
                     xmlns:ui_common="clr-namespace:Queue.UI.WPF;assembly=Queue.UI.WPF"
                     xmlns:userControls="clr-namespace:Queue.Terminal.UserControls"
+                    xmlns:views="clr-namespace:Queue.Terminal.Views"
                     Title="SearchServicePage"
                     Loaded="PageLoaded"
                     d:DesignHeight="300"
@@ -52,4 +52,4 @@
 
         <userControls:SearchServiceResults x:Name="searchResults" Grid.Row="1" />
     </Grid>
-</pages:TerminalPage>
+</views:TerminalPage>

@@ -3,7 +3,7 @@ using Queue.Terminal.Types;
 using System;
 using System.Windows.Input;
 
-namespace Queue.Terminal.Models.Pages
+namespace Queue.Terminal.ViewModels
 {
     public class SearchServicePageVM : PageVM
     {

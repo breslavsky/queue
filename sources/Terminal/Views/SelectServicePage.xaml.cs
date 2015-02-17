@@ -1,10 +1,10 @@
 ﻿using Queue.Terminal.Core;
-using Queue.Terminal.Models.Pages;
+using Queue.Terminal.ViewModels;
 using Queue.Terminal.Types;
 using System;
 using System.Windows;
 
-namespace Queue.Terminal.Pages
+namespace Queue.Terminal.Views
 {
     public partial class SelectServicePage : TerminalPage
     {

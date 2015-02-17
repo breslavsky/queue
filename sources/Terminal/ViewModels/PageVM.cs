@@ -1,36 +1,37 @@
 ﻿using Junte.Parallel.Common;
+using Junte.UI.WPF;
 using Junte.WCF.Common;
 using Microsoft.Practices.ServiceLocation;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.UI.WPF.Types;
-using System;
-using System.Windows.Controls;
 
-namespace Queue.Terminal.Pages
+namespace Queue.Terminal.ViewModels
 {
-    public abstract class TerminalPage : Page
+    public abstract class PageVM : ObservableObject
     {
-        protected ClientRequestModel terminalModel;
+        protected ClientRequestModel model;
         protected TaskPool taskPool;
         protected ChannelManager<IServerTcpService> channelManager;
         protected IMainWindow screen;
         protected TerminalConfig terminalConfig;
         protected Navigator navigator;
 
-        public TerminalPage()
+        public PageVM()
         {
-            this.terminalModel = ServiceLocator.Current.GetInstance<ClientRequestModel>();
+            this.Model = ServiceLocator.Current.GetInstance<ClientRequestModel>();
             this.taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
             this.screen = ServiceLocator.Current.GetInstance<IMainWindow>();
             this.navigator = ServiceLocator.Current.GetInstance<Navigator>();
             this.channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
             this.terminalConfig = ServiceLocator.Current.GetInstance<TerminalConfig>();
-
-            DataContext = Activator.CreateInstance(ModelType);
         }
 
-        protected abstract Type ModelType { get; }
+        public ClientRequestModel Model
+        {
+            get { return model; }
+            set { SetProperty(ref model, value); }
+        }
     }
 }

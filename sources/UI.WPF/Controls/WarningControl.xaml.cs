@@ -1,23 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Media.Effects;
 
 namespace Queue.UI.WPF
 {
     public partial class WarningControl : UserControl
     {
-        Action closed;
+        private Action closed;
 
         public WarningControl()
         {
@@ -43,7 +32,7 @@ namespace Queue.UI.WPF
             return this;
         }
 
-        public void Hide()
+        public void Hide(bool noAction = false)
         {
             Visibility = Visibility.Hidden;
 
@@ -55,7 +44,7 @@ namespace Queue.UI.WPF
                 }
             }
 
-            if (closed != null)
+            if (!noAction && (closed != null))
             {
                 closed();
             }

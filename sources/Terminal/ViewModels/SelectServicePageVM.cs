@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 
-namespace Queue.Terminal.Models.Pages
+namespace Queue.Terminal.ViewModels
 {
     public class SelectServicePageVM : PageVM
     {

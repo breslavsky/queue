@@ -1,20 +1,20 @@
-﻿<pages:TerminalPage x:Class="Queue.Terminal.Pages.SelectSubjectsCountPage"
+﻿<views:TerminalPage x:Class="Queue.Terminal.Views.SelectSubjectsCountPage"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                     xmlns:converters="clr-namespace:Queue.Terminal.Converters"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:pages="clr-namespace:Queue.Terminal.Pages"
+                    xmlns:views="clr-namespace:Queue.Terminal.Views"
                     Loaded="TerminalPage_Loaded"
                     d:DesignHeight="300"
                     d:DesignWidth="400"
                     mc:Ignorable="d">
 
-    <pages:TerminalPage.Resources>
+    <views:TerminalPage.Resources>
         <converters:ClientRequestTypeConverter x:Key="clientRequestTypeConverter" />
         <converters:RequestDateTimeConverter x:Key="requestDateTimeConverter" />
-    </pages:TerminalPage.Resources>
+    </views:TerminalPage.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -129,4 +129,4 @@
             </Button>
         </Grid>
     </Grid>
-</pages:TerminalPage>
+</views:TerminalPage>

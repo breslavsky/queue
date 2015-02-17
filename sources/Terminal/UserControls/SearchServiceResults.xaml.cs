@@ -1,4 +1,4 @@
-﻿using Queue.Terminal.Models;
+﻿using Queue.Terminal.ViewModels;
 using System.ComponentModel;
 using System.Windows.Controls;
 

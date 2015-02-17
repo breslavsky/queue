@@ -11,15 +11,15 @@ using System.Linq;
 using System.ServiceModel;
 using System.Windows.Input;
 
-namespace Queue.Terminal.Models.Pages
+namespace Queue.Terminal.ViewModels
 {
-    public class SelectDateTimeCalendarPageVM : PageVM
+    public class SelectRequestDatePageVM : PageVM
     {
         private ObservableCollection<EarlyRequestHour> availableHours = new ObservableCollection<EarlyRequestHour>();
         private EarlyRequestHour selectedHour;
         private int? selectedMinute;
 
-        public SelectDateTimeCalendarPageVM()
+        public SelectRequestDatePageVM()
         {
             PrevCommand = new RelayCommand(Prev);
             NextCommand = new RelayCommand(Next);
@@ -95,6 +95,8 @@ namespace Queue.Terminal.Models.Pages
 
         private void Prev()
         {
+            Model.SelectedDate = null;
+            Model.SelectedTime = null;
             navigator.PrevPage();
         }
 
