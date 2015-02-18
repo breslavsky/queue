@@ -1,11 +1,11 @@
 ﻿using Junte.UI.WPF;
 using Junte.WCF.Common;
+using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Types;
 using Queue.Terminal.UserControls;
 using Queue.UI.WPF;
-
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
@@ -110,11 +110,62 @@ namespace Queue.Terminal.ViewModels
                     continue;
                 }
 
-                buttons.Add(CreateSelectServiceButton(service.Code, service.Name, service.ServiceGroup == null ? DefaultServiceColor : service.ServiceGroup.Color, (s, a) =>
+                buttons.Add(CreateSelectServiceButton(service.Code,
+                                                    service.Name,
+                                                    service.ServiceGroup == null ?
+                                                            DefaultServiceColor :
+                                                            service.ServiceGroup.Color, (s, a) => SetSelectedService(service)
+                ));
+            }
+        }
+
+        private async void SetSelectedService(Service service)
+        {
+            Model.QueueType = null;
+            Model.SelectedService = service;
+
+            bool liveTerminal = service.LiveRegistrator.HasFlag(ClientRequestRegistrator.Terminal);
+            bool earlyTerminal = service.EarlyRegistrator.HasFlag(ClientRequestRegistrator.Terminal);
+            if ((!liveTerminal) && (!earlyTerminal))
+            {
+                screen.ShowWarning("На данную услугу невозможно записаться через терминал. Обратитесь к администратору");
+                return;
+            }
+
+            if (liveTerminal && !earlyTerminal)
+            {
+                Model.QueueType = ClientRequestType.Live;
+            }
+            else if (!liveTerminal && earlyTerminal)
+            {
+                Model.QueueType = ClientRequestType.Early;
+            }
+
+            if (Model.QueueType != null)
+            {
+                LoadingControl loading = screen.ShowLoading();
+
+                try
                 {
-                    Model.SelectedService = service;
+                    await Model.AdjustMaxSubjects();
                     navigator.NextPage();
-                }));
+                }
+                catch (FaultException exception)
+                {
+                    screen.ShowWarning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    screen.ShowWarning(exception.Message);
+                }
+                finally
+                {
+                    loading.Hide();
+                }
+            }
+            else
+            {
+                navigator.NextPage();
             }
         }
 

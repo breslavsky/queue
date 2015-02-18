@@ -14,14 +14,6 @@ namespace Queue.Administrator
         [STAThread]
         private static void Main()
         {
-#if DEBUG
-            //var culture = CultureInfo.CreateSpecificCulture("ru-RU");
-            var culture = CultureInfo.CreateSpecificCulture("en-EN");
-            //var culture = CultureInfo.CreateSpecificCulture("zh-CN");
-            CultureInfo.DefaultThreadCurrentCulture = culture;
-            CultureInfo.DefaultThreadCurrentUICulture = culture;
-#endif
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

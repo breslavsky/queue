@@ -95,7 +95,7 @@ namespace Queue.Terminal.ViewModels
                                          Model.SelectedService.Id,
                                          false,
                                          new Dictionary<Guid, object>(),
-                                         (int)Model.SubjectsCount));
+                                         (int)(Model.SubjectsCount ?? 1)));
 
                 case ClientRequestType.Early:
 
@@ -104,7 +104,7 @@ namespace Queue.Terminal.ViewModels
                                         Model.SelectedDate.Value,
                                         Model.SelectedTime.Value,
                                         new Dictionary<Guid, object>(),
-                                        (int)Model.SubjectsCount));
+                                        (int)(Model.SubjectsCount ?? 1)));
             }
 
             return null;

@@ -3,6 +3,7 @@ using Junte.WCF.Common;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
+using Queue.UI.WPF;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -24,10 +25,28 @@ namespace Queue.Terminal.ViewModels
 
         public SelectRequestTypePageVM()
         {
-            selectTypeCommand = new Lazy<ICommand>(() => new RelayCommand<ClientRequestType>((type) =>
+            selectTypeCommand = new Lazy<ICommand>(() => new RelayCommand<ClientRequestType>(async (type) =>
             {
                 model.QueueType = type;
-                navigator.NextPage();
+                LoadingControl loading = screen.ShowLoading();
+
+                try
+                {
+                    await Model.AdjustMaxSubjects();
+                    navigator.NextPage();
+                }
+                catch (FaultException exception)
+                {
+                    screen.ShowWarning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    screen.ShowWarning(exception.Message);
+                }
+                finally
+                {
+                    loading.Hide();
+                }
             }));
         }
 
@@ -81,13 +100,19 @@ namespace Queue.Terminal.ViewModels
             Comment = model.SelectedService.Comment;
             CommentRowHeight = new GridLength(string.IsNullOrEmpty(Comment) ? 10 : 50);
 
+            await AdjustLive();
+            AdjustEarly();
+        }
+
+        private async Task AdjustLive()
+        {
             AllowLive = false;
 
             if (model.SelectedService.LiveRegistrator.HasFlag(ClientRequestRegistrator.Terminal))
             {
                 using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
                 {
-                    var loading = screen.ShowLoading();
+                    LoadingControl loading = screen.ShowLoading();
 
                     try
                     {
@@ -124,13 +149,14 @@ namespace Queue.Terminal.ViewModels
             {
                 LiveComment = "Отключено администратором";
             }
+        }
 
+        private void AdjustEarly()
+        {
             AllowEarly = false;
 
             if (model.SelectedService.EarlyRegistrator.HasFlag(ClientRequestRegistrator.Terminal))
             {
-                model.MaxSubjects = model.SelectedService.MaxSubjects;
-
                 EarlyComment = string.Empty;
                 AllowEarly = true;
             }

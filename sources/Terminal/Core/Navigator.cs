@@ -10,7 +10,6 @@ namespace Queue.Terminal.Core
     {
         private ClientRequestModel userRequest;
         private PageType? currentPage;
-        private PageType? prevPage;
         private NavigationService navigationService;
 
         public Navigator()
@@ -26,7 +25,6 @@ namespace Queue.Terminal.Core
 
         public void Reset()
         {
-            userRequest.Reset();
             Start();
         }
 
@@ -37,12 +35,16 @@ namespace Queue.Terminal.Core
 
         public void SetCurrentPage(PageType? page)
         {
+            if (page == PageType.SelectService)
+            {
+                userRequest.Reset();
+            }
+
             if (navigationService != null)
             {
                 navigationService.Navigate(Activator.CreateInstance(GetPageType(page.Value)));
             }
 
-            prevPage = currentPage;
             currentPage = page;
         }
 
@@ -61,23 +63,23 @@ namespace Queue.Terminal.Core
                         break;
 
                     case PageType.SelectService:
-                        SetCurrentPage(GetPageForModelState(userRequest.GetState()));
+                        SetCurrentPage(GetPageForModelState(userRequest.GetCurrentState()));
                         break;
 
                     case PageType.SelectRequestType:
-                        SetCurrentPage(GetPageForModelState(userRequest.GetState()));
+                        SetCurrentPage(GetPageForModelState(userRequest.GetCurrentState()));
                         break;
 
                     case PageType.SelectRequestDate:
-                        SetCurrentPage(GetPageForModelState(userRequest.GetState()));
+                        SetCurrentPage(GetPageForModelState(userRequest.GetCurrentState()));
                         break;
 
                     case PageType.SetUsername:
-                        SetCurrentPage(GetPageForModelState(userRequest.GetState()));
+                        SetCurrentPage(GetPageForModelState(userRequest.GetCurrentState()));
                         break;
 
                     case PageType.SelectSubjectsCount:
-                        SetCurrentPage(GetPageForModelState(userRequest.GetState()));
+                        SetCurrentPage(GetPageForModelState(userRequest.GetCurrentState()));
                         break;
 
                     case PageType.PrintCoupon:
@@ -110,19 +112,19 @@ namespace Queue.Terminal.Core
                         break;
 
                     case PageType.SelectRequestType:
-                        SetCurrentPage(prevPage ?? PageType.SelectService);
+                        //SetCurrentPage(prevPage ?? PageType.SelectService);
                         break;
 
                     case PageType.SelectRequestDate:
-                        SetCurrentPage(prevPage ?? PageType.SelectService);
+                        //SetCurrentPage(prevPage ?? PageType.SelectService);
                         break;
 
                     case PageType.SetUsername:
-                        SetCurrentPage(prevPage ?? PageType.SelectService);
+                        //SetCurrentPage(prevPage ?? PageType.SelectService);
                         break;
 
                     case PageType.SelectSubjectsCount:
-                        SetCurrentPage(prevPage ?? PageType.SelectService);
+                        //SetCurrentPage(prevPage ?? PageType.SelectService);
                         break;
 
                     default:

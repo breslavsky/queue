@@ -284,6 +284,7 @@
             this.ClientSize = new System.Drawing.Size(884, 412);
             this.Controls.Add(this.topMenu);
             this.Controls.Add(this.statusBar);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MinimumSize = new System.Drawing.Size(900, 450);
             this.Name = "AdministratorForm";

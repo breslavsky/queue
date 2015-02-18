@@ -5,7 +5,6 @@ namespace Queue.Model.Common
     [Flags]
     public enum ClientRequestRegistrator : long
     {
-        None = 0,
         Terminal = 1,
         Manager = 2,
         Portal = 4

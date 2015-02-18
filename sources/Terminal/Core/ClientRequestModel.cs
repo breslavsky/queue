@@ -1,7 +1,13 @@
-﻿using Junte.UI.WPF;
+﻿using Junte.Parallel.Common;
+using Junte.UI.WPF;
+using Junte.WCF.Common;
+using Microsoft.Practices.ServiceLocation;
+using Queue.Common;
 using Queue.Model.Common;
+using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
+using System.Threading.Tasks;
 
 namespace Queue.Terminal.Core
 {
@@ -14,6 +20,16 @@ namespace Queue.Terminal.Core
         private double? maxSubjects;
         private double? subjectsCount;
 
+        public static ClientRequestModelState[] Stages = new ClientRequestModelState[]
+                                                                {
+                                                                    ClientRequestModelState.SetService,
+                                                                     ClientRequestModelState.SetRequestType,
+                                                                     ClientRequestModelState.SetRequestDate,
+                                                                     ClientRequestModelState.SetClient,
+                                                                     ClientRequestModelState.SetSubjectsCount,
+                                                                     ClientRequestModelState.Completed
+                                                                };
+
         public ClientRequestModel()
         {
             Reset();
@@ -24,18 +40,7 @@ namespace Queue.Terminal.Core
         public Service SelectedService
         {
             get { return selectedService; }
-            set
-            {
-                SetProperty(ref selectedService, value);
-                if ((value != null) && (value.EarlyRegistrator == ClientRequestRegistrator.None))
-                {
-                    QueueType = ClientRequestType.Live;
-                }
-                else
-                {
-                    QueueType = null;
-                }
-            }
+            set { SetProperty(ref selectedService, value); }
         }
 
         public DateTime? SelectedDate
@@ -81,7 +86,7 @@ namespace Queue.Terminal.Core
             SubjectsCount = null;
         }
 
-        public ClientRequestModelState GetState()
+        public ClientRequestModelState GetCurrentState()
         {
             if (SelectedService == null)
             {
@@ -112,6 +117,34 @@ namespace Queue.Terminal.Core
             }
 
             return ClientRequestModelState.Completed;
+        }
+
+        public async Task AdjustMaxSubjects()
+        {
+            MaxSubjects = null;
+
+            if (QueueType == ClientRequestType.Live)
+            {
+                ChannelManager<IServerTcpService> channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
+                TaskPool taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
+                using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+                {
+                    TimeSpan[] timeIntervals = (await taskPool.AddTask(channel.Service.GetServiceFreeTime(SelectedService.Id, ServerDateTime.Today, ClientRequestType.Live))).TimeIntervals;
+                    if (timeIntervals.Length > 0)
+                    {
+                        MaxSubjects = Math.Min(SelectedService.MaxSubjects, timeIntervals.Length);
+                    }
+                }
+            }
+            else
+            {
+                MaxSubjects = SelectedService.MaxSubjects;
+            }
+
+            if (MaxSubjects == null)
+            {
+                throw new ApplicationException("Нет свободных объектов для записи");
+            }
         }
     }
 }
