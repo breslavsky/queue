@@ -140,6 +140,10 @@
       <Project>{ad492499-461f-4117-a495-302089ad7b87}</Project>
       <Name>Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Resources\Resources.csproj">
+      <Project>{90c422a9-c537-42a7-b4a8-2490e4d20d3a}</Project>
+      <Name>Resources</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Services.DTO\Services.DTO.csproj">
       <Project>{d8c34e2b-87c1-4f82-aaf6-6b408e35228e}</Project>
       <Name>Services.DTO</Name>
@@ -147,6 +151,10 @@
     <ProjectReference Include="..\Services.Server\Services.Server.csproj">
       <Project>{7092d42d-17d1-432c-950c-ff848fa149a7}</Project>
       <Name>Services.Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI.Common\UI.Common.csproj">
+      <Project>{dfb572df-6412-460f-ba17-9c3fedf6fd12}</Project>
+      <Name>UI.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
