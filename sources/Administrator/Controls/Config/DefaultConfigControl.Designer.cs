@@ -96,30 +96,30 @@
             // 
             // maxClientRequestsLabel
             // 
-            this.maxClientRequestsLabel.AutoSize = true;
-            this.maxClientRequestsLabel.Location = new System.Drawing.Point(10, 25);
+            this.maxClientRequestsLabel.Location = new System.Drawing.Point(10, 15);
             this.maxClientRequestsLabel.Name = "maxClientRequestsLabel";
-            this.maxClientRequestsLabel.Size = new System.Drawing.Size(117, 13);
+            this.maxClientRequestsLabel.Size = new System.Drawing.Size(117, 25);
             this.maxClientRequestsLabel.TabIndex = 2;
             this.maxClientRequestsLabel.Text = "Количество запросов";
+            this.maxClientRequestsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // maxRenderingTimeLabel
             // 
-            this.maxRenderingTimeLabel.AutoSize = true;
-            this.maxRenderingTimeLabel.Location = new System.Drawing.Point(10, 50);
+            this.maxRenderingTimeLabel.Location = new System.Drawing.Point(10, 45);
             this.maxRenderingTimeLabel.Name = "maxRenderingTimeLabel";
-            this.maxRenderingTimeLabel.Size = new System.Drawing.Size(116, 13);
+            this.maxRenderingTimeLabel.Size = new System.Drawing.Size(116, 20);
             this.maxRenderingTimeLabel.TabIndex = 4;
             this.maxRenderingTimeLabel.Text = "Время обслуживания";
+            this.maxRenderingTimeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // queueNameLabel
             // 
-            this.queueNameLabel.AutoSize = true;
-            this.queueNameLabel.Location = new System.Drawing.Point(7, 7);
+            this.queueNameLabel.Location = new System.Drawing.Point(15, -10);
             this.queueNameLabel.Name = "queueNameLabel";
-            this.queueNameLabel.Size = new System.Drawing.Size(101, 13);
+            this.queueNameLabel.Size = new System.Drawing.Size(105, 30);
             this.queueNameLabel.TabIndex = 6;
             this.queueNameLabel.Text = "Название очереди";
+            this.queueNameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // queueNameTextBox
             // 
@@ -132,12 +132,12 @@
             // 
             // workTimeLabel
             // 
-            this.workTimeLabel.AutoSize = true;
-            this.workTimeLabel.Location = new System.Drawing.Point(10, 105);
+            this.workTimeLabel.Location = new System.Drawing.Point(35, 85);
             this.workTimeLabel.Name = "workTimeLabel";
-            this.workTimeLabel.Size = new System.Drawing.Size(80, 13);
+            this.workTimeLabel.Size = new System.Drawing.Size(80, 30);
             this.workTimeLabel.TabIndex = 8;
             this.workTimeLabel.Text = "Время работы";
+            this.workTimeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // workStartTimeTextBox
             // 

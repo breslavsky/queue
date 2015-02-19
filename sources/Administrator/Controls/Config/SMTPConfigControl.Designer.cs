@@ -45,12 +45,12 @@
             // 
             // serverLabel
             // 
-            this.serverLabel.AutoSize = true;
-            this.serverLabel.Location = new System.Drawing.Point(7, 10);
+            this.serverLabel.Location = new System.Drawing.Point(5, -10);
             this.serverLabel.Name = "serverLabel";
-            this.serverLabel.Size = new System.Drawing.Size(44, 13);
+            this.serverLabel.Size = new System.Drawing.Size(85, 30);
             this.serverLabel.TabIndex = 1;
             this.serverLabel.Text = "Сервер";
+            this.serverLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // serverTextBox
             // 
@@ -62,12 +62,12 @@
             // 
             // userLabel
             // 
-            this.userLabel.AutoSize = true;
-            this.userLabel.Location = new System.Drawing.Point(7, 80);
+            this.userLabel.Location = new System.Drawing.Point(5, 65);
             this.userLabel.Name = "userLabel";
-            this.userLabel.Size = new System.Drawing.Size(80, 13);
+            this.userLabel.Size = new System.Drawing.Size(82, 30);
             this.userLabel.TabIndex = 3;
             this.userLabel.Text = "Пользователь";
+            this.userLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // userTextBox
             // 
@@ -79,12 +79,12 @@
             // 
             // passwordLabel
             // 
-            this.passwordLabel.AutoSize = true;
-            this.passwordLabel.Location = new System.Drawing.Point(7, 105);
+            this.passwordLabel.Location = new System.Drawing.Point(5, 100);
             this.passwordLabel.Name = "passwordLabel";
-            this.passwordLabel.Size = new System.Drawing.Size(45, 13);
+            this.passwordLabel.Size = new System.Drawing.Size(85, 20);
             this.passwordLabel.TabIndex = 5;
             this.passwordLabel.Text = "Пароль";
+            this.passwordLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // passwordTextBox
             // 
@@ -97,12 +97,12 @@
             // 
             // fromLabel
             // 
-            this.fromLabel.AutoSize = true;
-            this.fromLabel.Location = new System.Drawing.Point(7, 130);
+            this.fromLabel.Location = new System.Drawing.Point(5, 120);
             this.fromLabel.Name = "fromLabel";
-            this.fromLabel.Size = new System.Drawing.Size(73, 13);
+            this.fromLabel.Size = new System.Drawing.Size(85, 25);
             this.fromLabel.TabIndex = 7;
             this.fromLabel.Text = "Отправитель";
+            this.fromLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // fromTextBox
             // 
@@ -123,10 +123,9 @@
             // 
             // enableSslCheckBox
             // 
-            this.enableSslCheckBox.AutoSize = true;
             this.enableSslCheckBox.Location = new System.Drawing.Point(95, 55);
             this.enableSslCheckBox.Name = "enableSslCheckBox";
-            this.enableSslCheckBox.Size = new System.Drawing.Size(122, 17);
+            this.enableSslCheckBox.Size = new System.Drawing.Size(130, 17);
             this.enableSslCheckBox.TabIndex = 10;
             this.enableSslCheckBox.Text = "Использовать SSL";
             this.enableSslCheckBox.UseVisualStyleBackColor = true;
@@ -147,12 +146,12 @@
             // 
             // portLabel
             // 
-            this.portLabel.AutoSize = true;
-            this.portLabel.Location = new System.Drawing.Point(10, 35);
+            this.portLabel.Location = new System.Drawing.Point(5, 20);
             this.portLabel.Name = "portLabel";
-            this.portLabel.Size = new System.Drawing.Size(32, 13);
+            this.portLabel.Size = new System.Drawing.Size(85, 30);
             this.portLabel.TabIndex = 12;
             this.portLabel.Text = "Порт";
+            this.portLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // SMTPConfigControl
             // 

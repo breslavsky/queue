@@ -38,23 +38,23 @@
             // 
             // currentDayRecordingCheckBox
             // 
-            this.currentDayRecordingCheckBox.AutoSize = true;
             this.currentDayRecordingCheckBox.Location = new System.Drawing.Point(110, 285);
             this.currentDayRecordingCheckBox.Name = "currentDayRecordingCheckBox";
-            this.currentDayRecordingCheckBox.Size = new System.Drawing.Size(151, 17);
+            this.currentDayRecordingCheckBox.Size = new System.Drawing.Size(275, 20);
             this.currentDayRecordingCheckBox.TabIndex = 1;
             this.currentDayRecordingCheckBox.Text = "Запись на текущий день";
+            this.currentDayRecordingCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.currentDayRecordingCheckBox.UseVisualStyleBackColor = true;
             this.currentDayRecordingCheckBox.Leave += new System.EventHandler(this.portalCurrentDayRecordingCheckBox_Leave);
             // 
             // headerLabel
             // 
-            this.headerLabel.AutoSize = true;
-            this.headerLabel.Location = new System.Drawing.Point(5, 5);
+            this.headerLabel.Location = new System.Drawing.Point(40, -10);
             this.headerLabel.Name = "headerLabel";
-            this.headerLabel.Size = new System.Drawing.Size(61, 13);
+            this.headerLabel.Size = new System.Drawing.Size(65, 30);
             this.headerLabel.TabIndex = 2;
             this.headerLabel.Text = "Заголовок";
+            this.headerLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // headerTextBox
             // 
@@ -71,12 +71,12 @@
             // 
             // footerLabel
             // 
-            this.footerLabel.AutoSize = true;
-            this.footerLabel.Location = new System.Drawing.Point(5, 145);
+            this.footerLabel.Location = new System.Drawing.Point(25, 130);
             this.footerLabel.Name = "footerLabel";
-            this.footerLabel.Size = new System.Drawing.Size(78, 13);
+            this.footerLabel.Size = new System.Drawing.Size(80, 30);
             this.footerLabel.TabIndex = 4;
             this.footerLabel.Text = "Нижняя часть";
+            this.footerLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // footerTextBox
             // 

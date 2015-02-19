@@ -129,6 +129,9 @@
   <data name="portLabel.Text" xml:space="preserve">
     <value>Port</value>
   </data>
+  <data name="saveButton.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <data name="serverLabel.Text" xml:space="preserve">
     <value>Server</value>
   </data>

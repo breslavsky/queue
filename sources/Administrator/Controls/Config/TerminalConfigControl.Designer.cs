@@ -87,21 +87,21 @@
             // 
             // terminalRowsLabel
             // 
-            this.terminalRowsLabel.AutoSize = true;
-            this.terminalRowsLabel.Location = new System.Drawing.Point(125, 25);
+            this.terminalRowsLabel.Location = new System.Drawing.Point(120, 10);
             this.terminalRowsLabel.Name = "terminalRowsLabel";
-            this.terminalRowsLabel.Size = new System.Drawing.Size(37, 13);
+            this.terminalRowsLabel.Size = new System.Drawing.Size(40, 30);
             this.terminalRowsLabel.TabIndex = 4;
             this.terminalRowsLabel.Text = "Строк";
+            this.terminalRowsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // terminalColumnsLabel
             // 
-            this.terminalColumnsLabel.AutoSize = true;
-            this.terminalColumnsLabel.Location = new System.Drawing.Point(12, 25);
+            this.terminalColumnsLabel.Location = new System.Drawing.Point(5, 20);
             this.terminalColumnsLabel.Name = "terminalColumnsLabel";
-            this.terminalColumnsLabel.Size = new System.Drawing.Size(50, 13);
+            this.terminalColumnsLabel.Size = new System.Drawing.Size(55, 20);
             this.terminalColumnsLabel.TabIndex = 2;
             this.terminalColumnsLabel.Text = "Колонок";
+            this.terminalColumnsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // PINUpDown
             // 
@@ -128,19 +128,18 @@
             // 
             // terminalPINLabel
             // 
-            this.terminalPINLabel.AutoSize = true;
-            this.terminalPINLabel.Location = new System.Drawing.Point(7, 10);
+            this.terminalPINLabel.Location = new System.Drawing.Point(5, -5);
             this.terminalPINLabel.Name = "terminalPINLabel";
-            this.terminalPINLabel.Size = new System.Drawing.Size(46, 13);
+            this.terminalPINLabel.Size = new System.Drawing.Size(60, 30);
             this.terminalPINLabel.TabIndex = 8;
             this.terminalPINLabel.Text = "PIN-код";
+            this.terminalPINLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // currentDayRecordingCheckBox
             // 
-            this.currentDayRecordingCheckBox.AutoSize = true;
             this.currentDayRecordingCheckBox.Location = new System.Drawing.Point(10, 95);
             this.currentDayRecordingCheckBox.Name = "currentDayRecordingCheckBox";
-            this.currentDayRecordingCheckBox.Size = new System.Drawing.Size(151, 17);
+            this.currentDayRecordingCheckBox.Size = new System.Drawing.Size(225, 17);
             this.currentDayRecordingCheckBox.TabIndex = 9;
             this.currentDayRecordingCheckBox.Text = "Запись на текущий день";
             this.currentDayRecordingCheckBox.UseVisualStyleBackColor = true;
@@ -148,8 +147,8 @@
             // 
             // windowTemplateEditor
             // 
-            this.windowTemplateEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.windowTemplateEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.windowTemplateEditor.IsReadOnly = false;
             this.windowTemplateEditor.LineViewerStyle = ICSharpCode.TextEditor.Document.LineViewerStyle.FullRow;
@@ -163,7 +162,6 @@
             // previewLabel
             // 
             this.previewLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.previewLabel.AutoSize = true;
             this.previewLabel.Location = new System.Drawing.Point(5, 390);
             this.previewLabel.Name = "previewLabel";
             this.previewLabel.Size = new System.Drawing.Size(86, 13);
@@ -175,7 +173,6 @@
             // templateLabel
             // 
             this.templateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.templateLabel.AutoSize = true;
             this.templateLabel.Location = new System.Drawing.Point(90, 390);
             this.templateLabel.Name = "templateLabel";
             this.templateLabel.Size = new System.Drawing.Size(84, 13);
@@ -199,12 +196,10 @@
             this.Name = "TerminalConfigControl";
             this.Size = new System.Drawing.Size(654, 425);
             this.terminallayoutGroupBox.ResumeLayout(false);
-            this.terminallayoutGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.columnsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rowsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PINUpDown)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

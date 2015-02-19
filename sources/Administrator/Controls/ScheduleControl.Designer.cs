@@ -185,12 +185,12 @@
             // 
             // earlyTimeLabel
             // 
-            this.earlyTimeLabel.AutoSize = true;
-            this.earlyTimeLabel.Location = new System.Drawing.Point(5, 25);
+            this.earlyTimeLabel.Location = new System.Drawing.Point(5, 15);
             this.earlyTimeLabel.Name = "earlyTimeLabel";
-            this.earlyTimeLabel.Size = new System.Drawing.Size(79, 13);
+            this.earlyTimeLabel.Size = new System.Drawing.Size(105, 23);
             this.earlyTimeLabel.TabIndex = 0;
             this.earlyTimeLabel.Text = "Время записи";
+            this.earlyTimeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // earlyStartTimeTextBox
             // 
@@ -216,12 +216,12 @@
             // 
             // earlyReservationLabel
             // 
-            this.earlyReservationLabel.AutoSize = true;
-            this.earlyReservationLabel.Location = new System.Drawing.Point(5, 50);
+            this.earlyReservationLabel.Location = new System.Drawing.Point(5, 40);
             this.earlyReservationLabel.Name = "earlyReservationLabel";
-            this.earlyReservationLabel.Size = new System.Drawing.Size(92, 13);
+            this.earlyReservationLabel.Size = new System.Drawing.Size(105, 23);
             this.earlyReservationLabel.TabIndex = 0;
             this.earlyReservationLabel.Text = "Кол-во запросов";
+            this.earlyReservationLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // earlyReservationUpDown
             // 
@@ -252,12 +252,12 @@
             // 
             // timeLabel
             // 
-            this.timeLabel.AutoSize = true;
-            this.timeLabel.Location = new System.Drawing.Point(10, 10);
+            this.timeLabel.Location = new System.Drawing.Point(10, 0);
             this.timeLabel.Name = "timeLabel";
-            this.timeLabel.Size = new System.Drawing.Size(91, 13);
+            this.timeLabel.Size = new System.Drawing.Size(115, 23);
             this.timeLabel.TabIndex = 0;
             this.timeLabel.Text = "Время оказания";
+            this.timeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // maxClientRequestsUpDown
             // 
@@ -274,7 +274,6 @@
             // 
             // maxClientRequestsLabel
             // 
-            this.maxClientRequestsLabel.AutoSize = true;
             this.maxClientRequestsLabel.Location = new System.Drawing.Point(10, 110);
             this.maxClientRequestsLabel.Name = "maxClientRequestsLabel";
             this.maxClientRequestsLabel.Size = new System.Drawing.Size(115, 13);
@@ -305,13 +304,13 @@
             // 
             // isInterruptionCheckBox
             // 
-            this.isInterruptionCheckBox.AutoSize = true;
             this.isInterruptionCheckBox.Location = new System.Drawing.Point(15, 35);
             this.isInterruptionCheckBox.Name = "isInterruptionCheckBox";
-            this.isInterruptionCheckBox.Size = new System.Drawing.Size(72, 17);
+            this.isInterruptionCheckBox.Size = new System.Drawing.Size(110, 17);
             this.isInterruptionCheckBox.TabIndex = 0;
             this.isInterruptionCheckBox.Tag = "1";
             this.isInterruptionCheckBox.Text = "Перерыв";
+            this.isInterruptionCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.isInterruptionCheckBox.UseVisualStyleBackColor = true;
             this.isInterruptionCheckBox.CheckedChanged += new System.EventHandler(this.isInterruptionCheckBox_CheckedChanged);
             this.isInterruptionCheckBox.Leave += new System.EventHandler(this.isInterruptionCheckBox_Leave);
@@ -350,12 +349,12 @@
             // 
             // clientIntervalLabel
             // 
-            this.clientIntervalLabel.AutoSize = true;
             this.clientIntervalLabel.Location = new System.Drawing.Point(10, 60);
             this.clientIntervalLabel.Name = "clientIntervalLabel";
-            this.clientIntervalLabel.Size = new System.Drawing.Size(91, 13);
+            this.clientIntervalLabel.Size = new System.Drawing.Size(115, 13);
             this.clientIntervalLabel.TabIndex = 0;
             this.clientIntervalLabel.Text = "Время оказания";
+            this.clientIntervalLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // clientIntervalUpDown
             // 
@@ -381,12 +380,12 @@
             // 
             // intersectionLabel
             // 
-            this.intersectionLabel.AutoSize = true;
-            this.intersectionLabel.Location = new System.Drawing.Point(10, 85);
+            this.intersectionLabel.Location = new System.Drawing.Point(10, 80);
             this.intersectionLabel.Name = "intersectionLabel";
-            this.intersectionLabel.Size = new System.Drawing.Size(99, 13);
+            this.intersectionLabel.Size = new System.Drawing.Size(115, 18);
             this.intersectionLabel.TabIndex = 0;
             this.intersectionLabel.Text = "Время наложения";
+            this.intersectionLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // intersectionUpDown
             // 
@@ -412,12 +411,12 @@
             // 
             // isWorkedCheckBox
             // 
-            this.isWorkedCheckBox.AutoSize = true;
             this.isWorkedCheckBox.Location = new System.Drawing.Point(10, 5);
             this.isWorkedCheckBox.Name = "isWorkedCheckBox";
-            this.isWorkedCheckBox.Size = new System.Drawing.Size(134, 17);
+            this.isWorkedCheckBox.Size = new System.Drawing.Size(320, 17);
             this.isWorkedCheckBox.TabIndex = 0;
             this.isWorkedCheckBox.Text = "Услуги оказываются";
+            this.isWorkedCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.isWorkedCheckBox.CheckedChanged += new System.EventHandler(this.isWorkedCheckBox_CheckedChanged);
             this.isWorkedCheckBox.Leave += new System.EventHandler(this.isWorkedCheckBox_Leave);
             // 
@@ -486,7 +485,6 @@
             this.schedulePanel.ResumeLayout(false);
             this.schedulePanel.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

@@ -61,12 +61,12 @@
             // 
             // TickerLabel
             // 
-            this.TickerLabel.AutoSize = true;
-            this.TickerLabel.Location = new System.Drawing.Point(10, 25);
+            this.TickerLabel.Location = new System.Drawing.Point(25, 15);
             this.TickerLabel.Name = "TickerLabel";
-            this.TickerLabel.Size = new System.Drawing.Size(37, 13);
+            this.TickerLabel.Size = new System.Drawing.Size(45, 20);
             this.TickerLabel.TabIndex = 1;
             this.TickerLabel.Text = "Текст";
+            this.TickerLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // tickerTextBox
             // 
@@ -80,12 +80,12 @@
             // 
             // tickerSpeedLabel
             // 
-            this.tickerSpeedLabel.AutoSize = true;
-            this.tickerSpeedLabel.Location = new System.Drawing.Point(10, 105);
+            this.tickerSpeedLabel.Location = new System.Drawing.Point(15, 85);
             this.tickerSpeedLabel.Name = "tickerSpeedLabel";
-            this.tickerSpeedLabel.Size = new System.Drawing.Size(55, 13);
+            this.tickerSpeedLabel.Size = new System.Drawing.Size(55, 30);
             this.tickerSpeedLabel.TabIndex = 4;
             this.tickerSpeedLabel.Text = "Скорость";
+            this.tickerSpeedLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // tickerSpeedTrackBar
             // 
@@ -100,12 +100,12 @@
             // 
             // serviceUrlLabel
             // 
-            this.serviceUrlLabel.AutoSize = true;
-            this.serviceUrlLabel.Location = new System.Drawing.Point(5, 10);
+            this.serviceUrlLabel.Location = new System.Drawing.Point(5, -5);
             this.serviceUrlLabel.Name = "serviceUrlLabel";
-            this.serviceUrlLabel.Size = new System.Drawing.Size(115, 13);
+            this.serviceUrlLabel.Size = new System.Drawing.Size(115, 30);
             this.serviceUrlLabel.TabIndex = 6;
             this.serviceUrlLabel.Text = "Адрес медиа службы";
+            this.serviceUrlLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // serviceUrlTextBox
             // 

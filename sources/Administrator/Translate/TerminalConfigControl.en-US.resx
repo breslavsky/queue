@@ -135,4 +135,10 @@
   <data name="terminalRowsLabel.Text" xml:space="preserve">
     <value>Rows</value>
   </data>
+  <data name="previewLabel.Text" xml:space="preserve">
+    <value>[preview]</value>
+  </data>
+  <data name="templateLabel.Text" xml:space="preserve">
+    <value>[default]</value>
+  </data>
 </root>
