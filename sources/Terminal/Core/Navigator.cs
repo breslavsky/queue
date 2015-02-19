@@ -2,6 +2,7 @@
 using Queue.Terminal.Enums;
 using Queue.Terminal.Views;
 using System;
+using System.Collections.Generic;
 using System.Windows.Navigation;
 
 namespace Queue.Terminal.Core
@@ -12,8 +13,21 @@ namespace Queue.Terminal.Core
         private PageType? currentPage;
         private NavigationService navigationService;
 
+        private static ClientRequestModelState[] Stages = new ClientRequestModelState[]
+                                                                {
+                                                                    ClientRequestModelState.SetService,
+                                                                     ClientRequestModelState.SetRequestType,
+                                                                     ClientRequestModelState.SetRequestDate,
+                                                                     ClientRequestModelState.SetClient,
+                                                                     ClientRequestModelState.SetSubjectsCount,
+                                                                     ClientRequestModelState.Completed
+                                                                };
+
+        private List<ClientRequestModelState> history;
+
         public Navigator()
         {
+            history = new List<ClientRequestModelState>();
             userRequest = ServiceLocator.Current.GetInstance<ClientRequestModel>();
         }
 
@@ -25,7 +39,14 @@ namespace Queue.Terminal.Core
 
         public void Reset()
         {
+            ResetState();
             Start();
+        }
+
+        public void ResetState()
+        {
+            history.Clear();
+            userRequest.Reset();
         }
 
         public void SetNavigationService(NavigationService service)
@@ -40,16 +61,15 @@ namespace Queue.Terminal.Core
                 userRequest.Reset();
             }
 
-            if (navigationService != null)
-            {
-                navigationService.Navigate(Activator.CreateInstance(GetPageType(page.Value)));
-            }
-
+            navigationService.Navigate(Activator.CreateInstance(GetPageType(page.Value)));
             currentPage = page;
         }
 
         public void NextPage()
         {
+            ClientRequestModelState state = userRequest.GetCurrentState();
+            CaptureState(state);
+
             if (!currentPage.HasValue)
             {
                 SetCurrentPage(PageType.SelectService);
@@ -59,27 +79,27 @@ namespace Queue.Terminal.Core
                 switch (currentPage.Value)
                 {
                     case PageType.SearchService:
-                        SetCurrentPage(PageType.SelectRequestType);
+                        SetCurrentPage(GetPageForModelState(state));
                         break;
 
                     case PageType.SelectService:
-                        SetCurrentPage(GetPageForModelState(userRequest.GetCurrentState()));
+                        SetCurrentPage(GetPageForModelState(state));
                         break;
 
                     case PageType.SelectRequestType:
-                        SetCurrentPage(GetPageForModelState(userRequest.GetCurrentState()));
+                        SetCurrentPage(GetPageForModelState(state));
                         break;
 
                     case PageType.SelectRequestDate:
-                        SetCurrentPage(GetPageForModelState(userRequest.GetCurrentState()));
+                        SetCurrentPage(GetPageForModelState(state));
                         break;
 
                     case PageType.SetUsername:
-                        SetCurrentPage(GetPageForModelState(userRequest.GetCurrentState()));
+                        SetCurrentPage(GetPageForModelState(state));
                         break;
 
                     case PageType.SelectSubjectsCount:
-                        SetCurrentPage(GetPageForModelState(userRequest.GetCurrentState()));
+                        SetCurrentPage(GetPageForModelState(state));
                         break;
 
                     case PageType.PrintCoupon:
@@ -93,6 +113,15 @@ namespace Queue.Terminal.Core
             }
         }
 
+        private void CaptureState(ClientRequestModelState state)
+        {
+            history.Add(state);
+            if (!history.Contains(ClientRequestModelState.SetService))
+            {
+                history.Insert(0, ClientRequestModelState.SetService);
+            }
+        }
+
         public void PrevPage()
         {
             if (!currentPage.HasValue)
@@ -101,6 +130,13 @@ namespace Queue.Terminal.Core
             }
             else
             {
+                ClientRequestModelState state = userRequest.GetCurrentState();
+                history.Remove(state);
+
+                ClientRequestModelState prevState = history.Count > 0 ?
+                                                        history[history.Count - 1] :
+                                                        ClientRequestModelState.SetService;
+
                 switch (currentPage)
                 {
                     case PageType.SearchService:
@@ -112,19 +148,19 @@ namespace Queue.Terminal.Core
                         break;
 
                     case PageType.SelectRequestType:
-                        //SetCurrentPage(prevPage ?? PageType.SelectService);
+                        SetCurrentPage(GetPageForModelState(prevState));
                         break;
 
                     case PageType.SelectRequestDate:
-                        //SetCurrentPage(prevPage ?? PageType.SelectService);
+                        SetCurrentPage(GetPageForModelState(prevState));
                         break;
 
                     case PageType.SetUsername:
-                        //SetCurrentPage(prevPage ?? PageType.SelectService);
+                        SetCurrentPage(GetPageForModelState(prevState));
                         break;
 
                     case PageType.SelectSubjectsCount:
-                        //SetCurrentPage(prevPage ?? PageType.SelectService);
+                        SetCurrentPage(GetPageForModelState(prevState));
                         break;
 
                     default:

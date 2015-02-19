@@ -113,7 +113,7 @@ namespace Queue.Terminal.ViewModels
 
         private void SearchService()
         {
-            request.Reset();
+            navigator.ResetState();
             navigator.SetCurrentPage(PageType.SearchService);
         }
 

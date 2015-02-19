@@ -20,16 +20,6 @@ namespace Queue.Terminal.Core
         private double? maxSubjects;
         private double? subjectsCount;
 
-        public static ClientRequestModelState[] Stages = new ClientRequestModelState[]
-                                                                {
-                                                                    ClientRequestModelState.SetService,
-                                                                     ClientRequestModelState.SetRequestType,
-                                                                     ClientRequestModelState.SetRequestDate,
-                                                                     ClientRequestModelState.SetClient,
-                                                                     ClientRequestModelState.SetSubjectsCount,
-                                                                     ClientRequestModelState.Completed
-                                                                };
-
         public ClientRequestModel()
         {
             Reset();

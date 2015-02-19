@@ -78,7 +78,7 @@ namespace Queue.Terminal.ViewModels
                 warn.Hide(true);
             }
 
-            navigator.NextPage();
+            navigator.Reset();
         }
 
         private async Task<ClientRequest> AddClientRequest(Channel<IServerTcpService> channel)
