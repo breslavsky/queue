@@ -19,7 +19,7 @@ namespace Queue.Terminal.Core
                                                                      ClientRequestModelState.SetRequestType,
                                                                      ClientRequestModelState.SetRequestDate,
                                                                      ClientRequestModelState.SetClient,
-                                                                     ClientRequestModelState.SetSubjectsCount,
+                                                                     ClientRequestModelState.SetSubjects,
                                                                      ClientRequestModelState.Completed
                                                                 };
 
@@ -98,7 +98,7 @@ namespace Queue.Terminal.Core
                         SetCurrentPage(GetPageForModelState(state));
                         break;
 
-                    case PageType.SelectSubjectsCount:
+                    case PageType.SelectSubjects:
                         SetCurrentPage(GetPageForModelState(state));
                         break;
 
@@ -159,7 +159,7 @@ namespace Queue.Terminal.Core
                         SetCurrentPage(GetPageForModelState(prevState));
                         break;
 
-                    case PageType.SelectSubjectsCount:
+                    case PageType.SelectSubjects:
                         SetCurrentPage(GetPageForModelState(prevState));
                         break;
 
@@ -186,8 +186,8 @@ namespace Queue.Terminal.Core
                 case ClientRequestModelState.SetClient:
                     return PageType.SetUsername;
 
-                case ClientRequestModelState.SetSubjectsCount:
-                    return PageType.SelectSubjectsCount;
+                case ClientRequestModelState.SetSubjects:
+                    return PageType.SelectSubjects;
 
                 case ClientRequestModelState.Completed:
                     return PageType.PrintCoupon;
@@ -211,10 +211,10 @@ namespace Queue.Terminal.Core
                     return typeof(SelectRequestDatePage);
 
                 case PageType.SetUsername:
-                    return typeof(SetUsernamePage);
+                    return typeof(SetClientPage);
 
-                case PageType.SelectSubjectsCount:
-                    return typeof(SelectSubjectsCountPage);
+                case PageType.SelectSubjects:
+                    return typeof(SelectSubjectsPage);
 
                 case PageType.SearchService:
                     return typeof(SearchServicePage);

@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Queue.Terminal.ViewModels
 {
-    public class SetUsernamePageVM : PageVM
+    public class SetClientPageVM : PageVM
     {
         private string username;
 
@@ -21,7 +21,7 @@ namespace Queue.Terminal.ViewModels
             set { SetProperty(ref username, value); }
         }
 
-        public SetUsernamePageVM()
+        public SetClientPageVM()
         {
             PrevCommand = new RelayCommand(Prev);
             NextCommand = new RelayCommand(Next);

@@ -6,6 +6,7 @@ using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.Terminal.Enums;
 using System;
 using System.Threading.Tasks;
 
@@ -17,15 +18,15 @@ namespace Queue.Terminal.Core
         private DateTime? selectedDate;
         private TimeSpan? selectedTime;
         private Client currentClient;
-        private double? maxSubjects;
-        private double? subjectsCount;
+        private int? maxSubjects;
+        private int? subjects;
 
         public ClientRequestModel()
         {
             Reset();
         }
 
-        public ClientRequestType? QueueType { get; set; }
+        public ClientRequestType? RequestType { get; set; }
 
         public Service SelectedService
         {
@@ -51,16 +52,16 @@ namespace Queue.Terminal.Core
             set { SetProperty(ref currentClient, value); }
         }
 
-        public double? MaxSubjects
+        public int? MaxSubjects
         {
             get { return maxSubjects; }
             set { SetProperty(ref maxSubjects, value); }
         }
 
-        public double? SubjectsCount
+        public int? Subjects
         {
-            get { return subjectsCount; }
-            set { SetProperty(ref subjectsCount, value); }
+            get { return subjects; }
+            set { SetProperty(ref subjects, value); }
         }
 
         public Administrator CurrentAdministrator { get; set; }
@@ -68,12 +69,12 @@ namespace Queue.Terminal.Core
         public void Reset()
         {
             SelectedService = null;
-            QueueType = null;
+            RequestType = null;
             SelectedDate = null;
             SelectedTime = null;
             CurrentClient = null;
             MaxSubjects = null;
-            SubjectsCount = null;
+            Subjects = null;
         }
 
         public ClientRequestModelState GetCurrentState()
@@ -83,14 +84,14 @@ namespace Queue.Terminal.Core
                 return ClientRequestModelState.SetService;
             }
 
-            if (QueueType == null)
+            if (RequestType == null)
             {
                 return ClientRequestModelState.SetRequestType;
             }
 
             if ((SelectedDate == null) &&
                 (SelectedTime == null) &&
-                (QueueType == ClientRequestType.Early))
+                (RequestType == ClientRequestType.Early))
             {
                 return ClientRequestModelState.SetRequestDate;
             }
@@ -101,9 +102,9 @@ namespace Queue.Terminal.Core
                 return ClientRequestModelState.SetClient;
             }
 
-            if ((MaxSubjects > 1) && (SubjectsCount == null))
+            if ((MaxSubjects > 1) && (Subjects == null))
             {
-                return ClientRequestModelState.SetSubjectsCount;
+                return ClientRequestModelState.SetSubjects;
             }
 
             return ClientRequestModelState.Completed;
@@ -113,7 +114,7 @@ namespace Queue.Terminal.Core
         {
             MaxSubjects = null;
 
-            if (QueueType == ClientRequestType.Live)
+            if (RequestType == ClientRequestType.Live)
             {
                 ChannelManager<IServerTcpService> channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
                 TaskPool taskPool = ServiceLocator.Current.GetInstance<TaskPool>();

@@ -137,12 +137,12 @@
     </ApplicationDefinition>
     <Compile Include="Converters\ClientRequestTypeConverter.cs" />
     <Compile Include="Converters\RequestDateTimeConverter.cs" />
-    <Compile Include="Core\ClientRequestModelState.cs" />
+    <Compile Include="Enums\ClientRequestModelState.cs" />
     <Compile Include="ViewModels\PrintCouponPageVM.cs" />
     <Compile Include="ViewModels\SelectRequestDatePageVM.cs" />
     <Compile Include="ViewModels\SearchServicePageVM.cs" />
-    <Compile Include="ViewModels\SelectSubjectsCountPageVM.cs" />
-    <Compile Include="ViewModels\SetUsernamePageVM.cs" />
+    <Compile Include="ViewModels\SelectSubjectsPageVM.cs" />
+    <Compile Include="ViewModels\SetClientPageVM.cs" />
     <Compile Include="ViewModels\SearchServiceResultsVM.cs" />
     <Compile Include="ViewModels\TerminalWindowVM.cs" />
     <Compile Include="ViewModels\PageVM.cs" />
@@ -207,11 +207,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\SelectSubjectsCountPage.xaml">
+    <Page Include="Views\SelectSubjectsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SetUsernamePage.xaml">
+    <Page Include="Views\SetClientPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -233,11 +233,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\SelectSubjectsCountPage.xaml.cs">
-      <DependentUpon>SelectSubjectsCountPage.xaml</DependentUpon>
+    <Compile Include="Views\SelectSubjectsPage.xaml.cs">
+      <DependentUpon>SelectSubjectsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SetUsernamePage.xaml.cs">
-      <DependentUpon>SetUsernamePage.xaml</DependentUpon>
+    <Compile Include="Views\SetClientPage.xaml.cs">
+      <DependentUpon>SetClientPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SelectRequestTypePage.xaml.cs">
       <DependentUpon>SelectRequestTypePage.xaml</DependentUpon>

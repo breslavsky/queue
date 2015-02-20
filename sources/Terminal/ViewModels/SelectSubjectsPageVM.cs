@@ -3,12 +3,12 @@ using System.Windows.Input;
 
 namespace Queue.Terminal.ViewModels
 {
-    public class SelectSubjectsCountPageVM : PageVM
+    public class SelectSubjectsPageVM : PageVM
     {
         private bool canInc;
         private bool canDec;
 
-        public SelectSubjectsCountPageVM()
+        public SelectSubjectsPageVM()
         {
             PrevCommand = new RelayCommand(Prev);
             NextCommand = new RelayCommand(Next);
@@ -38,9 +38,9 @@ namespace Queue.Terminal.ViewModels
 
         public void Initialize()
         {
-            if (Model.SubjectsCount == null)
+            if (Model.Subjects == null)
             {
-                Model.SubjectsCount = 1;
+                Model.Subjects = 1;
             }
 
             UpdateIncDecEnable();
@@ -48,26 +48,26 @@ namespace Queue.Terminal.ViewModels
 
         private void IncSubjectsCount()
         {
-            if (Model.SubjectsCount < Model.MaxSubjects)
+            if (Model.Subjects < Model.MaxSubjects)
             {
-                Model.SubjectsCount++;
+                Model.Subjects++;
             }
             UpdateIncDecEnable();
         }
 
         private void DecSubjectsCount()
         {
-            if (Model.SubjectsCount > 1)
+            if (Model.Subjects > 1)
             {
-                Model.SubjectsCount--;
+                Model.Subjects--;
             }
             UpdateIncDecEnable();
         }
 
         private void UpdateIncDecEnable()
         {
-            CanInc = Model.SubjectsCount < Model.MaxSubjects;
-            CanDec = Model.SubjectsCount > 1;
+            CanInc = Model.Subjects < Model.MaxSubjects;
+            CanDec = Model.Subjects > 1;
         }
 
         private void Next()
@@ -77,7 +77,7 @@ namespace Queue.Terminal.ViewModels
 
         private void Prev()
         {
-            Model.SubjectsCount = null;
+            Model.Subjects = null;
             navigator.PrevPage();
         }
     }

@@ -121,7 +121,7 @@ namespace Queue.Terminal.ViewModels
 
         private async void SetSelectedService(Service service)
         {
-            Model.QueueType = null;
+            Model.RequestType = null;
             Model.SelectedService = service;
 
             bool liveTerminal = service.LiveRegistrator.HasFlag(ClientRequestRegistrator.Terminal);
@@ -134,14 +134,14 @@ namespace Queue.Terminal.ViewModels
 
             if (liveTerminal && !earlyTerminal)
             {
-                Model.QueueType = ClientRequestType.Live;
+                Model.RequestType = ClientRequestType.Live;
             }
             else if (!liveTerminal && earlyTerminal)
             {
-                Model.QueueType = ClientRequestType.Early;
+                Model.RequestType = ClientRequestType.Early;
             }
 
-            if (Model.QueueType != null)
+            if (Model.RequestType != null)
             {
                 LoadingControl loading = screen.ShowLoading();
 

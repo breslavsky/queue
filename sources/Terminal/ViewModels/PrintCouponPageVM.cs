@@ -87,7 +87,7 @@ namespace Queue.Terminal.ViewModels
                                         Guid.Empty :
                                         Model.CurrentClient.Id;
 
-            switch (Model.QueueType)
+            switch (Model.RequestType)
             {
                 case ClientRequestType.Live:
 
@@ -95,7 +95,7 @@ namespace Queue.Terminal.ViewModels
                                          Model.SelectedService.Id,
                                          false,
                                          new Dictionary<Guid, object>(),
-                                         (int)(Model.SubjectsCount ?? 1)));
+                                         (int)(Model.Subjects ?? 1)));
 
                 case ClientRequestType.Early:
 
@@ -104,7 +104,7 @@ namespace Queue.Terminal.ViewModels
                                         Model.SelectedDate.Value,
                                         Model.SelectedTime.Value,
                                         new Dictionary<Guid, object>(),
-                                        (int)(Model.SubjectsCount ?? 1)));
+                                        (int)(Model.Subjects ?? 1)));
             }
 
             return null;

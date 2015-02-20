@@ -18,6 +18,7 @@
     <DefineConstants>Debug</DefineConstants>
     <CompilerAdditionalOptions>
     </CompilerAdditionalOptions>
+    <SuppressIces>ICE40</SuppressIces>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>

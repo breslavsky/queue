@@ -6,7 +6,7 @@
         SelectRequestType,
         SelectRequestDate,
         SetUsername,
-        SelectSubjectsCount,
+        SelectSubjects,
         SearchService,
         PrintCoupon
     }

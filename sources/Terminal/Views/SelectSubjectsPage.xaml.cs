@@ -3,11 +3,11 @@ using System;
 
 namespace Queue.Terminal.Views
 {
-    public partial class SelectSubjectsCountPage : TerminalPage
+    public partial class SelectSubjectsPage : TerminalPage
     {
-        protected override Type ModelType { get { return typeof(SelectSubjectsCountPageVM); } }
+        protected override Type ModelType { get { return typeof(SelectSubjectsPageVM); } }
 
-        public SelectSubjectsCountPage()
+        public SelectSubjectsPage()
             : base()
         {
             InitializeComponent();
@@ -15,7 +15,7 @@ namespace Queue.Terminal.Views
 
         private void TerminalPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            (DataContext as SelectSubjectsCountPageVM).Initialize();
+            (DataContext as SelectSubjectsPageVM).Initialize();
         }
     }
 }

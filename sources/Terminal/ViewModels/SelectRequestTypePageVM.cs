@@ -27,7 +27,7 @@ namespace Queue.Terminal.ViewModels
         {
             selectTypeCommand = new Lazy<ICommand>(() => new RelayCommand<ClientRequestType>(async (type) =>
             {
-                model.QueueType = type;
+                model.RequestType = type;
                 LoadingControl loading = screen.ShowLoading();
 
                 try

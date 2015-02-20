@@ -6,18 +6,18 @@ using System.Windows.Input;
 
 namespace Queue.Terminal.Views
 {
-    public partial class SetUsernamePage : TerminalPage
+    public partial class SetClientPage : TerminalPage
     {
-        protected override Type ModelType { get { return typeof(SetUsernamePageVM); } }
+        protected override Type ModelType { get { return typeof(SetClientPageVM); } }
 
-        private SetUsernamePageVM viewModel;
+        private SetClientPageVM viewModel;
 
-        public SetUsernamePage() :
+        public SetClientPage() :
             base()
         {
             InitializeComponent();
 
-            viewModel = DataContext as SetUsernamePageVM;
+            viewModel = DataContext as SetClientPageVM;
 
             usernameTextBox.TextChanged += usernameTextBox_TextChanged;
         }

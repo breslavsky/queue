@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Queue.Common
 {
     public class EnumItem<T>
     {
+        private const string TranslationPattern = "{0}.Translation.{1}";
+
         public T Value { get; set; }
 
         public EnumItem(T value)
         {
             this.Value = value;
         }
-
-        private const string TranslationPattern = "{0}.Translation.{1}";
 
         public static EnumItem<T>[] GetItems()
         {

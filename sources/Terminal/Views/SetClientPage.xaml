@@ -1,4 +1,4 @@
-﻿<views:TerminalPage x:Class="Queue.Terminal.Views.SetUsernamePage"
+﻿<views:TerminalPage x:Class="Queue.Terminal.Views.SetClientPage"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"

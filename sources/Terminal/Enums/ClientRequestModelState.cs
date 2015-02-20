@@ -1,4 +1,4 @@
-﻿namespace Queue.Terminal.Core
+﻿namespace Queue.Terminal.Enums
 {
     public enum ClientRequestModelState
     {
@@ -6,7 +6,7 @@
         SetRequestType,
         SetRequestDate,
         SetClient,
-        SetSubjectsCount,
+        SetSubjects,
         Completed
     }
 }
