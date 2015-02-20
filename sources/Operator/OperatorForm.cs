@@ -196,8 +196,8 @@ namespace Queue.Operator
                         subjectsUpDown.Value = 0;
                         clientTextBlock.Text = string.Empty;
                         serviceTextBlock.Text = string.Empty;
-                        serviceTypeControl.Clear();
-                        serviceStepControl.Clear();
+                        serviceTypeControl.Empty();
+                        serviceStepControl.Empty();
                         stateTextBlock.Text = string.Empty;
                         stateTextBlock.BackColor = Color.White;
                         parametersGridView.Rows.Clear();

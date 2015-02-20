@@ -47,6 +47,11 @@ namespace Queue.UI.WinForms
             frozen = false;
         }
 
+        public void Empty()
+        {
+            comboBox.SelectedItem = null;
+        }
+
         public void Clear()
         {
             comboBox.Items.Clear();
@@ -60,7 +65,7 @@ namespace Queue.UI.WinForms
 
         private void resetButton_Click(object sender, System.EventArgs e)
         {
-            comboBox.SelectedItem = null;
+            Empty();
         }
 
         private void comboBox_SelectedIndexChanged(object sender, EventArgs e)

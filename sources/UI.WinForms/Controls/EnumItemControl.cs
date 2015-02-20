@@ -49,6 +49,11 @@ namespace Queue.UI.WinForms
             comboBox.Enabled = false;
         }
 
+        public void Empty()
+        {
+            comboBox.SelectedItem = null;
+        }
+
         private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (SelectedChanged != null && !frozen)
