@@ -101,9 +101,10 @@ namespace Queue.Administrator
             {
                 f.Saved += (s, eventArgs) =>
                 {
-                    additionalService.Name = f.Service.Name;
-                    additionalService.Price = f.Service.Price;
-                    additionalService.Measure = f.Service.Measure;
+                    int index = services.IndexOf(additionalService);
+                    services.RemoveAt(index);
+                    services.Insert(index, f.Service);
+
                     f.Close();
                 };
 

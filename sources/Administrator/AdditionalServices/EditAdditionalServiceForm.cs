@@ -145,10 +145,5 @@ namespace Queue.Administrator
                 }
             }
         }
-
-        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = !Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar);
-        }
     }
 }
