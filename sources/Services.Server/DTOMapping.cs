@@ -87,6 +87,7 @@ namespace Queue.Services.Server
 
             Mapper.CreateMap<ServiceGroup, DTO.ServiceGroup>();
             Mapper.CreateMap<Service, DTO.Service>();
+            Mapper.CreateMap<AdditionalService, DTO.AdditionalService>();
 
             Mapper.CreateMap<ServiceStep, DTO.ServiceStep>();
             Mapper.CreateMap<ServiceRendering, DTO.ServiceRendering>();

@@ -284,17 +284,13 @@
       <Project>{90c422a9-c537-42a7-b4a8-2490e4d20d3a}</Project>
       <Name>Resources</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Services.Common\Services.Common.csproj">
-      <Project>{f08d6a7c-bf6e-4054-af42-ef98244ab596}</Project>
-      <Name>Services.Common</Name>
+    <ProjectReference Include="..\Services.DTO\Services.DTO.csproj">
+      <Project>{2c2d256d-2353-409a-a0bd-bcc147e18694}</Project>
+      <Name>Services.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services.Contracts\Services.Contracts.csproj">
       <Project>{77ef6d1d-f45b-48b4-8fdd-ca004c4a12f4}</Project>
       <Name>Services.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Services.DTO\Services.DTO.csproj">
-      <Project>{d8c34e2b-87c1-4f82-aaf6-6b408e35228e}</Project>
-      <Name>Services.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\UI.Common\UI.Common.csproj">
       <Project>{dfb572df-6412-460f-ba17-9c3fedf6fd12}</Project>

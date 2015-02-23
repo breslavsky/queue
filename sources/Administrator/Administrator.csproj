@@ -176,6 +176,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdditionalServices\EditAdditionalServiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdditionalServices\EditAdditionalServiceForm.Designer.cs">
+      <DependentUpon>EditAdditionalServiceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ClientsRequests\AddClentRequestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -422,6 +428,9 @@
     <Compile Include="Services\EditServiceParameterOptionsForm.Designer.cs">
       <DependentUpon>EditServiceParameterOptionsForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AdditionalServices\EditAdditionalServiceForm.resx">
+      <DependentUpon>EditAdditionalServiceForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ClientsRequests\AddClentRequestForm.resx">
       <DependentUpon>AddClentRequestForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -592,6 +601,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\Queue.Services.DTO.AdditionalService.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -620,7 +630,7 @@
       <Name>Resources</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services.Common\Services.Common.csproj">
-      <Project>{f08d6a7c-bf6e-4054-af42-ef98244ab596}</Project>
+      <Project>{03915831-23b5-462a-a144-49662864ae34}</Project>
       <Name>Services.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services.Contracts\Services.Contracts.csproj">
@@ -628,7 +638,7 @@
       <Name>Services.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services.DTO\Services.DTO.csproj">
-      <Project>{d8c34e2b-87c1-4f82-aaf6-6b408e35228e}</Project>
+      <Project>{2c2d256d-2353-409a-a0bd-bcc147e18694}</Project>
       <Name>Services.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\UI.Common\UI.Common.csproj">

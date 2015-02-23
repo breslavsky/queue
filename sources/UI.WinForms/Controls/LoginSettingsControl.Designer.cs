@@ -122,7 +122,7 @@
             // 
             // passwordTextBox
             // 
-            this.passwordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.serverConnectionSettingsBindingSource, "Password", true));
+            this.passwordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.serverConnectionSettingsBindingSource, "Password", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.passwordTextBox.Location = new System.Drawing.Point(100, 60);
             this.passwordTextBox.Name = "passwordTextBox";
             this.passwordTextBox.Size = new System.Drawing.Size(220, 20);

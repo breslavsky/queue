@@ -1,12 +1,11 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
-using Queue.Model.Common;
-using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
-using Queue.UI.WinForms;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.ServiceModel;
 using System.Windows.Forms;
 
@@ -18,6 +17,8 @@ namespace Queue.Administrator
         private ChannelManager<IServerTcpService> channelManager;
         private User currentUser;
         private TaskPool taskPool;
+
+        private BindingList<AdditionalService> services;
 
         public AdditionalServicesForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
@@ -33,73 +34,15 @@ namespace Queue.Administrator
             InitializeComponent();
         }
 
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
-                if (taskPool != null)
-                {
-                    taskPool.Dispose();
-                }
-                if (channelManager != null)
-                {
-                    channelManager.Dispose();
-                }
-            }
-            base.Dispose(disposing);
-        }
-
-        private void addAdditionalServiceButton_Click(object sender, EventArgs e)
-        {
-            /*using (var f = new EditOfficeForm(channelBuilder, currentUser))
-            {
-                DataGridViewRow row = null;
-
-                f.Saved += (s, eventArgs) =>
-                {
-                    if (row == null)
-                    {
-                        row = additionalServicesGridView.Rows[additionalServicesGridView.Rows.Add()];
-                    }
-
-                    AdditionalServicesGridViewRenderRow(row, f.Office);
-                    f.Close();
-                };
-
-                f.ShowDialog();
-            }*/
-        }
-
-        private void AdditionalServicesForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            taskPool.Cancel();
-        }
-
         private async void AdditionalServicesForm_Load(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
                 try
                 {
-                    foreach (var a in await taskPool.AddTask(channel.Service.GetAdditionalServices()))
-                    {
-                        var row = additionalServicesGridView.Rows[additionalServicesGridView.Rows.Add()];
-                        AdditionalServicesGridViewRenderRow(row, a);
-                    }
+                    AdditionalService[] result = await taskPool.AddTask(channel.Service.GetAdditionalServices());
+                    services = new BindingList<AdditionalService>(new List<AdditionalService>(result));
+                    additionalServiceBindingSource.DataSource = services;
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -116,37 +59,71 @@ namespace Queue.Administrator
             }
         }
 
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
+        private void addAdditionalServiceButton_Click(object sender, EventArgs e)
+        {
+            using (EditAdditionalServiceForm f = new EditAdditionalServiceForm(channelBuilder, currentUser))
+            {
+                f.Saved += (s, eventArgs) =>
+                {
+                    services.Add(f.Service);
+                    f.Close();
+                };
+
+                f.ShowDialog();
+            }
+        }
+
+        private void AdditionalServicesForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            taskPool.Cancel();
+        }
+
         private void additionalServicesGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            int rowIndex = e.RowIndex,
-                columnIndex = e.ColumnIndex;
-
-            if (rowIndex >= 0 && columnIndex >= 0)
+            if (additionalServicesGridView.CurrentRow == null)
             {
-                var row = additionalServicesGridView.Rows[rowIndex];
-                AdditionalService additionalService = row.Tag as AdditionalService;
+                return;
+            }
 
-                /*using (var f = new EditOfficeForm(channelBuilder, currentUser, office.Id))
+            AdditionalService additionalService = services[additionalServicesGridView.CurrentRow.Index];
+
+            using (EditAdditionalServiceForm f = new EditAdditionalServiceForm(channelBuilder, currentUser, additionalService.Id))
+            {
+                f.Saved += (s, eventArgs) =>
                 {
-                    f.Saved += (s, eventArgs) =>
-                    {
-                        AdditionalServicesGridViewRenderRow(row, f.Office);
-                        f.Close();
-                    };
+                    additionalService.Name = f.Service.Name;
+                    additionalService.Price = f.Service.Price;
+                    additionalService.Measure = f.Service.Measure;
+                    f.Close();
+                };
 
-                    f.ShowDialog();
-                }*/
+                f.ShowDialog();
             }
         }
 
         private async void additionalServicesGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
+            if (additionalServicesGridView.CurrentRow == null)
+            {
+                return;
+            }
+
             if (MessageBox.Show("Вы действительно хотите удалить дополнительную услугу?",
                 "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                AdditionalService additionalService = e.Row.Tag as AdditionalService;
+                AdditionalService additionalService = services[additionalServicesGridView.CurrentRow.Index];
 
-                using (var channel = channelManager.CreateChannel())
+                using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
                 {
                     try
                     {
@@ -172,12 +149,24 @@ namespace Queue.Administrator
             }
         }
 
-        private void AdditionalServicesGridViewRenderRow(DataGridViewRow row, AdditionalService additionalService)
+        protected override void Dispose(bool disposing)
         {
-            row.Cells["nameColumn"].Value = additionalService.Name;
-            row.Cells["priceColumn"].Value = additionalService.Price;
-            row.Cells["measureColumn"].Value = additionalService.Measure;
-            row.Tag = additionalService;
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+                if (taskPool != null)
+                {
+                    taskPool.Dispose();
+                }
+                if (channelManager != null)
+                {
+                    channelManager.Dispose();
+                }
+            }
+            base.Dispose(disposing);
         }
     }
 }

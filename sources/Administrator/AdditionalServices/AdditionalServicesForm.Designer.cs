@@ -15,16 +15,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.additionalServicesGridView = new System.Windows.Forms.DataGridView();
+            this.additionalServiceBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.addAdditionalServiceButton = new System.Windows.Forms.Button();
             this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MeasureColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.additionalServicesGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.additionalServiceBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // mainTableLayoutPanel
@@ -47,6 +50,7 @@
             this.additionalServicesGridView.AllowUserToAddRows = false;
             this.additionalServicesGridView.AllowUserToResizeColumns = false;
             this.additionalServicesGridView.AllowUserToResizeRows = false;
+            this.additionalServicesGridView.AutoGenerateColumns = false;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -60,6 +64,7 @@
             this.nameColumn,
             this.PriceColumn,
             this.MeasureColumn});
+            this.additionalServicesGridView.DataSource = this.additionalServiceBindingSource;
             this.additionalServicesGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.additionalServicesGridView.Location = new System.Drawing.Point(0, 0);
             this.additionalServicesGridView.Margin = new System.Windows.Forms.Padding(0);
@@ -72,6 +77,10 @@
             this.additionalServicesGridView.TabIndex = 0;
             this.additionalServicesGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.additionalServicesGridView_CellMouseDoubleClick);
             this.additionalServicesGridView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.additionalServicesGridView_UserDeletingRow);
+            // 
+            // additionalServiceBindingSource
+            // 
+            this.additionalServiceBindingSource.DataSource = typeof(Queue.Services.DTO.AdditionalService);
             // 
             // addAdditionalServiceButton
             // 
@@ -86,6 +95,7 @@
             // nameColumn
             // 
             this.nameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nameColumn.DataPropertyName = "Name";
             this.nameColumn.FillWeight = 80F;
             this.nameColumn.HeaderText = "Название";
             this.nameColumn.Name = "nameColumn";
@@ -94,7 +104,10 @@
             // 
             // PriceColumn
             // 
+            this.PriceColumn.DataPropertyName = "Price";
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
             this.PriceColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.PriceColumn.HeaderText = "Цена";
             this.PriceColumn.Name = "PriceColumn";
@@ -102,6 +115,7 @@
             // 
             // MeasureColumn
             // 
+            this.MeasureColumn.DataPropertyName = "Measure";
             this.MeasureColumn.HeaderText = "Ед. изм.";
             this.MeasureColumn.Name = "MeasureColumn";
             this.MeasureColumn.ReadOnly = true;
@@ -121,6 +135,7 @@
             this.Load += new System.EventHandler(this.AdditionalServicesForm_Load);
             this.mainTableLayoutPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.additionalServicesGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.additionalServiceBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -130,6 +145,7 @@
         private System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
         private System.Windows.Forms.Button addAdditionalServiceButton;
         private System.Windows.Forms.DataGridView additionalServicesGridView;
+        private System.Windows.Forms.BindingSource additionalServiceBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn PriceColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn MeasureColumn;

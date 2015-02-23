@@ -1,19 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F08D6A7C-BF6E-4054-AF42-EF98244AB596}</ProjectGuid>
+    <ProjectGuid>{03915831-23B5-462A-A144-49662864AE34}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Queue.Services.Common</RootNamespace>
     <AssemblyName>Queue.Services.Common</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile24</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,16 +30,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="IServerCallback.cs" />
-    <Compile Include="Maps\PortalClientServiceMap.cs" />
-    <Compile Include="ServerCallback.cs" />
-    <Compile Include="Maps\PortalServiceMap.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerEventArgs.cs" />
-    <Compile Include="ObjectNotFoundFault.cs" />
-    <Compile Include="ServerServiceEventType.cs" />
-    <Compile Include="Maps\PortalOperatorServiceMap.cs" />
     <Compile Include="Maps\MediaServiceMap.cs" />
+    <Compile Include="Maps\PortalClientServiceMap.cs" />
+    <Compile Include="Maps\PortalOperatorServiceMap.cs" />
+    <Compile Include="Maps\PortalServiceMap.cs" />
+    <Compile Include="ObjectNotFoundFault.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerCallback.cs" />
+    <Compile Include="ServerEventArgs.cs" />
+    <Compile Include="ServerServiceEventType.cs" />
     <Compile Include="ServerSubscribtionArgs.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -51,11 +59,11 @@
       <Name>Model.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services.DTO\Services.DTO.csproj">
-      <Project>{d8c34e2b-87c1-4f82-aaf6-6b408e35228e}</Project>
+      <Project>{2c2d256d-2353-409a-a0bd-bcc147e18694}</Project>
       <Name>Services.DTO</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

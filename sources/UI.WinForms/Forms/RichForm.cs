@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -19,7 +18,7 @@ namespace Queue.UI.WinForms
         {
             Load += RichForm_Load;
 
-            if (LicenseManager.UsageMode == LicenseUsageMode.Runtime)
+            if (!DesignMode)
             {
                 UpdateIcon();
             }

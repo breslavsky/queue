@@ -145,7 +145,7 @@
       <Name>Resources</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services.DTO\Services.DTO.csproj">
-      <Project>{d8c34e2b-87c1-4f82-aaf6-6b408e35228e}</Project>
+      <Project>{2c2d256d-2353-409a-a0bd-bcc147e18694}</Project>
       <Name>Services.DTO</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services.Server\Services.Server.csproj">

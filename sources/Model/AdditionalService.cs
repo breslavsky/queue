@@ -1,7 +1,6 @@
 ﻿using Junte.Data.NHibernate;
 using NHibernate.Mapping.Attributes;
 using NHibernate.Validator.Constraints;
-using System;
 
 namespace Queue.Model
 {

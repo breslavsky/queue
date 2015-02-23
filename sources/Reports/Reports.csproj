@@ -151,7 +151,7 @@
       <Name>Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services.Common\Services.Common.csproj">
-      <Project>{f08d6a7c-bf6e-4054-af42-ef98244ab596}</Project>
+      <Project>{03915831-23b5-462a-a144-49662864ae34}</Project>
       <Name>Services.Common</Name>
     </ProjectReference>
   </ItemGroup>
