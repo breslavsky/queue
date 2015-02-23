@@ -21,13 +21,13 @@
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.additionalServicesGridView = new System.Windows.Forms.DataGridView();
             this.addAdditionalServiceButton = new System.Windows.Forms.Button();
-            this.additionalServiceBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.additionalServicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.measureDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.additionalServicesGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.additionalServiceBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.additionalServicesBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // mainTableLayoutPanel
@@ -64,7 +64,7 @@
             this.nameDataGridViewTextBoxColumn,
             this.priceDataGridViewTextBoxColumn,
             this.measureDataGridViewTextBoxColumn});
-            this.additionalServicesGridView.DataSource = this.additionalServiceBindingSource;
+            this.additionalServicesGridView.DataSource = this.additionalServicesBindingSource;
             this.additionalServicesGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.additionalServicesGridView.Location = new System.Drawing.Point(0, 0);
             this.additionalServicesGridView.Margin = new System.Windows.Forms.Padding(0);
@@ -90,7 +90,7 @@
             // 
             // additionalServiceBindingSource
             // 
-            this.additionalServiceBindingSource.DataSource = typeof(Queue.Services.DTO.AdditionalService);
+            this.additionalServicesBindingSource.DataSource = typeof(Queue.Services.DTO.AdditionalService);
             // 
             // nameDataGridViewTextBoxColumn
             // 
@@ -132,7 +132,7 @@
             this.Load += new System.EventHandler(this.AdditionalServicesForm_Load);
             this.mainTableLayoutPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.additionalServicesGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.additionalServiceBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.additionalServicesBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -142,7 +142,7 @@
         private System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
         private System.Windows.Forms.Button addAdditionalServiceButton;
         private System.Windows.Forms.DataGridView additionalServicesGridView;
-        private System.Windows.Forms.BindingSource additionalServiceBindingSource;
+        private System.Windows.Forms.BindingSource additionalServicesBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn measureDataGridViewTextBoxColumn;

@@ -1,4 +1,5 @@
-﻿using Junte.Parallel.Common;
+﻿using AutoMapper;
+using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
 using Queue.Services.Contracts;
@@ -18,7 +19,7 @@ namespace Queue.Administrator
         private User currentUser;
         private TaskPool taskPool;
 
-        private BindingList<AdditionalService> services;
+        private BindingList<AdditionalService> additionalServices;
 
         public AdditionalServicesForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
@@ -31,18 +32,21 @@ namespace Queue.Administrator
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
+            //TODO: think!
+            Mapper.CreateMap<AdditionalService, AdditionalService>();
+
             InitializeComponent();
         }
 
         private async void AdditionalServicesForm_Load(object sender, EventArgs e)
         {
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
-                    AdditionalService[] result = await taskPool.AddTask(channel.Service.GetAdditionalServices());
-                    services = new BindingList<AdditionalService>(new List<AdditionalService>(result));
-                    additionalServiceBindingSource.DataSource = services;
+                    additionalServices = new BindingList<AdditionalService>(new List<AdditionalService>
+                        (await taskPool.AddTask(channel.Service.GetAdditionalServices())));
+                    additionalServicesBindingSource.DataSource = additionalServices;
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -71,11 +75,11 @@ namespace Queue.Administrator
 
         private void addAdditionalServiceButton_Click(object sender, EventArgs e)
         {
-            using (EditAdditionalServiceForm f = new EditAdditionalServiceForm(channelBuilder, currentUser))
+            using (var f = new EditAdditionalServiceForm(channelBuilder, currentUser))
             {
                 f.Saved += (s, eventArgs) =>
                 {
-                    services.Add(f.Service);
+                    additionalServices.Add(f.AdditionalService);
                     f.Close();
                 };
 
@@ -90,20 +94,19 @@ namespace Queue.Administrator
 
         private void additionalServicesGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (additionalServicesGridView.CurrentRow == null)
+            var currentRow = additionalServicesGridView.CurrentRow;
+            if (currentRow == null)
             {
                 return;
             }
 
-            AdditionalService additionalService = services[additionalServicesGridView.CurrentRow.Index];
+            AdditionalService additionalService = additionalServices[currentRow.Index];
 
-            using (EditAdditionalServiceForm f = new EditAdditionalServiceForm(channelBuilder, currentUser, additionalService.Id))
+            using (var f = new EditAdditionalServiceForm(channelBuilder, currentUser, additionalService.Id))
             {
                 f.Saved += (s, eventArgs) =>
                 {
-                    additionalService.Name = f.Service.Name;
-                    additionalService.Price = f.Service.Price;
-                    additionalService.Measure = f.Service.Measure;
+                    Mapper.Map(f.AdditionalService, additionalService);
                     f.Close();
                 };
 
@@ -113,7 +116,8 @@ namespace Queue.Administrator
 
         private async void additionalServicesGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            if (additionalServicesGridView.CurrentRow == null)
+            var currentRow = additionalServicesGridView.CurrentRow;
+            if (currentRow == null)
             {
                 return;
             }
@@ -121,7 +125,7 @@ namespace Queue.Administrator
             if (MessageBox.Show("Вы действительно хотите удалить дополнительную услугу?",
                 "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                AdditionalService additionalService = services[additionalServicesGridView.CurrentRow.Index];
+                AdditionalService additionalService = additionalServices[currentRow.Index];
 
                 using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
                 {
