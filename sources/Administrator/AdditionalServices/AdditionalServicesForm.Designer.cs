@@ -20,11 +20,11 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.additionalServicesGridView = new System.Windows.Forms.DataGridView();
-            this.additionalServiceBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.addAdditionalServiceButton = new System.Windows.Forms.Button();
-            this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MeasureColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.additionalServiceBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.measureDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.additionalServicesGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.additionalServiceBindingSource)).BeginInit();
@@ -61,9 +61,9 @@
             this.additionalServicesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.additionalServicesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.additionalServicesGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nameColumn,
-            this.PriceColumn,
-            this.MeasureColumn});
+            this.nameDataGridViewTextBoxColumn,
+            this.priceDataGridViewTextBoxColumn,
+            this.measureDataGridViewTextBoxColumn});
             this.additionalServicesGridView.DataSource = this.additionalServiceBindingSource;
             this.additionalServicesGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.additionalServicesGridView.Location = new System.Drawing.Point(0, 0);
@@ -78,10 +78,6 @@
             this.additionalServicesGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.additionalServicesGridView_CellMouseDoubleClick);
             this.additionalServicesGridView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.additionalServicesGridView_UserDeletingRow);
             // 
-            // additionalServiceBindingSource
-            // 
-            this.additionalServiceBindingSource.DataSource = typeof(Queue.Services.DTO.AdditionalService);
-            // 
             // addAdditionalServiceButton
             // 
             this.addAdditionalServiceButton.Location = new System.Drawing.Point(0, 262);
@@ -92,33 +88,34 @@
             this.addAdditionalServiceButton.Text = "Добавить";
             this.addAdditionalServiceButton.Click += new System.EventHandler(this.addAdditionalServiceButton_Click);
             // 
-            // nameColumn
+            // additionalServiceBindingSource
             // 
-            this.nameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nameColumn.DataPropertyName = "Name";
-            this.nameColumn.FillWeight = 80F;
-            this.nameColumn.HeaderText = "Название";
-            this.nameColumn.Name = "nameColumn";
-            this.nameColumn.ReadOnly = true;
-            this.nameColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.additionalServiceBindingSource.DataSource = typeof(Queue.Services.DTO.AdditionalService);
             // 
-            // PriceColumn
+            // nameDataGridViewTextBoxColumn
             // 
-            this.PriceColumn.DataPropertyName = "Price";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Название";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // priceDataGridViewTextBoxColumn
+            // 
+            this.priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
             dataGridViewCellStyle2.Format = "N2";
             dataGridViewCellStyle2.NullValue = null;
-            this.PriceColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.PriceColumn.HeaderText = "Цена";
-            this.PriceColumn.Name = "PriceColumn";
-            this.PriceColumn.ReadOnly = true;
+            this.priceDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.priceDataGridViewTextBoxColumn.HeaderText = "Цена";
+            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
+            this.priceDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // MeasureColumn
+            // measureDataGridViewTextBoxColumn
             // 
-            this.MeasureColumn.DataPropertyName = "Measure";
-            this.MeasureColumn.HeaderText = "Ед. изм.";
-            this.MeasureColumn.Name = "MeasureColumn";
-            this.MeasureColumn.ReadOnly = true;
+            this.measureDataGridViewTextBoxColumn.DataPropertyName = "Measure";
+            this.measureDataGridViewTextBoxColumn.HeaderText = "Ед. изм.";
+            this.measureDataGridViewTextBoxColumn.Name = "measureDataGridViewTextBoxColumn";
+            this.measureDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // AdditionalServicesForm
             // 
@@ -146,9 +143,9 @@
         private System.Windows.Forms.Button addAdditionalServiceButton;
         private System.Windows.Forms.DataGridView additionalServicesGridView;
         private System.Windows.Forms.BindingSource additionalServiceBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PriceColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MeasureColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn measureDataGridViewTextBoxColumn;
 
     }
 }
