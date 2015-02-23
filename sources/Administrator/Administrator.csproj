@@ -74,7 +74,7 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>administrator.ico</ApplicationIcon>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Crad.Windows.Forms.Actions, Version=1.3.0.0, Culture=neutral, PublicKeyToken=81de48f2c6979a5b, processorArchitecture=MSIL">
@@ -653,7 +653,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="administrator.ico" />
+    <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\QueueMonitorControl.xaml">

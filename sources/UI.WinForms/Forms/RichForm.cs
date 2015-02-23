@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -17,6 +18,20 @@ namespace Queue.UI.WinForms
         public RichForm()
         {
             Load += RichForm_Load;
+
+            if (LicenseManager.UsageMode == LicenseUsageMode.Runtime)
+            {
+                UpdateIcon();
+            }
+        }
+
+        private void UpdateIcon()
+        {
+            try
+            {
+                Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetEntryAssembly().Location);
+            }
+            catch { }
         }
 
         public IEnumerable<Control> ControlList(Control control = null)
@@ -24,7 +39,7 @@ namespace Queue.UI.WinForms
             var controls = (control != null ? control.Controls : Controls).Cast<Control>();
 
             return controls.SelectMany(c => ControlList(c))
-                .Concat(controls);
+                            .Concat(controls);
         }
 
         internal void Translate()
@@ -83,7 +98,6 @@ namespace Queue.UI.WinForms
                 if (c is RichUserControl)
                 {
                     ((RichUserControl)c).Translate();
-
                 }
             }
         }
