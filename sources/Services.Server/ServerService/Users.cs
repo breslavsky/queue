@@ -301,7 +301,7 @@ namespace Queue.Services.Server
                     administrator.Patronymic = source.Patronymic;
                     administrator.Email = source.Email;
                     administrator.Mobile = source.Mobile;
-                    queueOperator.IsActive = source.IsActive;
+                    administrator.IsActive = source.IsActive;
                     administrator.Permissions = source.Permissions;
 
                     var errors = administrator.Validate();

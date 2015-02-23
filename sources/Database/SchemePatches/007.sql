@@ -1,0 +1,1 @@
+﻿update _user set IsActive = 1;

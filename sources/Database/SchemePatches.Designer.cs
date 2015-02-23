@@ -115,7 +115,17 @@ namespace Queue.Database {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на DROP TRIGGER ServiceDelete;
+        ///   Ищет локализованную строку, похожую на update _user set IsActive = 1;.
+        /// </summary>
+        internal static string _007 {
+            get {
+                return ResourceManager.GetString("_007", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на IF EXISTS (SELECT name FROM sysobjects WHERE name = &apos;ServiceDelete&apos; AND type = &apos;TR&apos;)
+        ///DROP TRIGGER ServiceDelete;
         ///-- SEPARATOR
         ///CREATE TRIGGER ServiceDelete
         ///   ON _service AFTER DELETE
@@ -124,12 +134,7 @@ namespace Queue.Database {
         ///	DELETE FROM _service_step WHERE ServiceId IN (SELECT Id FROM DELETED)
         ///	DELETE FROM _service_weekday_schedule WHERE ServiceId IN (SELECT Id FROM DELETED)
         ///	DELETE FROM _service_exception_schedule WHERE ServiceId IN (SELECT Id FROM DELETED)
-        ///	DELETE FROM _service_parameter WHERE ServiceId IN (SELECT Id FROM DELETED)
-        ///END;
-        ///-- SEPARATOR
-        ///DROP TRIGGER ClientRequestDelete;
-        ///-- SEPARATOR
-        ///CREATE TRI [остаток строки не уместился]&quot;;.
+        ///	DELETE FROM _service_parameter WHERE ServiceId IN (SELECT Id FROM DEL [остаток строки не уместился]&quot;;.
         /// </summary>
         internal static string triggers {
             get {

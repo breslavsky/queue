@@ -288,6 +288,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SchemePatches\007.sql" />
     <Content Include="triggers.sql" />
     <Content Include="SchemePatches\001.sql" />
     <Content Include="SchemePatches\002.sql" />
