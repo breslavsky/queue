@@ -30,21 +30,20 @@
         {
             this.components = new System.ComponentModel.Container();
             this.saveButton = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.nameTextBox = new System.Windows.Forms.TextBox();
             this.additionalServiceBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.nameLabel = new System.Windows.Forms.Label();
+            this.measureLabel = new System.Windows.Forms.Label();
+            this.measureTextBox = new System.Windows.Forms.TextBox();
+            this.priceLabel = new System.Windows.Forms.Label();
+            this.priceUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.additionalServiceBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.priceUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // saveButton
             // 
-            this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveButton.Location = new System.Drawing.Point(397, 159);
+            this.saveButton.Location = new System.Drawing.Point(305, 130);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 2;
@@ -52,95 +51,88 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
-            // textBox1
+            // nameTextBox
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.additionalServiceBindingSource, "Name", true));
-            this.textBox1.Location = new System.Drawing.Point(177, 22);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(295, 59);
-            this.textBox1.TabIndex = 3;
+            this.nameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.additionalServiceBindingSource, "Name", true));
+            this.nameTextBox.Location = new System.Drawing.Point(140, 5);
+            this.nameTextBox.Multiline = true;
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(240, 60);
+            this.nameTextBox.TabIndex = 3;
             // 
             // additionalServiceBindingSource
             // 
             this.additionalServiceBindingSource.DataSource = typeof(Queue.Services.DTO.AdditionalService);
             // 
-            // label1
+            // nameLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(28, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Наименование";
+            this.nameLabel.Location = new System.Drawing.Point(5, 5);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(135, 60);
+            this.nameLabel.TabIndex = 4;
+            this.nameLabel.Text = "Наименование";
+            this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // label2
+            // measureLabel
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(28, 128);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(109, 13);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Единица измерения";
+            this.measureLabel.Location = new System.Drawing.Point(5, 95);
+            this.measureLabel.Name = "measureLabel";
+            this.measureLabel.Size = new System.Drawing.Size(135, 30);
+            this.measureLabel.TabIndex = 6;
+            this.measureLabel.Text = "Единица измерения";
+            this.measureLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // textBox2
+            // measureTextBox
             // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.additionalServiceBindingSource, "Measure", true));
-            this.textBox2.Location = new System.Drawing.Point(177, 125);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(295, 20);
-            this.textBox2.TabIndex = 5;
+            this.measureTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.additionalServiceBindingSource, "Measure", true));
+            this.measureTextBox.Location = new System.Drawing.Point(140, 105);
+            this.measureTextBox.Name = "measureTextBox";
+            this.measureTextBox.Size = new System.Drawing.Size(77, 20);
+            this.measureTextBox.TabIndex = 5;
             // 
-            // label3
+            // priceLabel
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(28, 97);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(62, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Стоимость";
+            this.priceLabel.Location = new System.Drawing.Point(5, 65);
+            this.priceLabel.Name = "priceLabel";
+            this.priceLabel.Size = new System.Drawing.Size(135, 30);
+            this.priceLabel.TabIndex = 8;
+            this.priceLabel.Text = "Стоимость";
+            this.priceLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // numericUpDown1
+            // priceUpDown
             // 
-            this.numericUpDown1.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.additionalServiceBindingSource, "Price", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N2"));
-            this.numericUpDown1.DecimalPlaces = 2;
-            this.numericUpDown1.Location = new System.Drawing.Point(177, 95);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.priceUpDown.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.additionalServiceBindingSource, "Price", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N2"));
+            this.priceUpDown.DecimalPlaces = 2;
+            this.priceUpDown.Location = new System.Drawing.Point(140, 75);
+            this.priceUpDown.Maximum = new decimal(new int[] {
             100000000,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 9;
+            this.priceUpDown.Name = "priceUpDown";
+            this.priceUpDown.Size = new System.Drawing.Size(60, 20);
+            this.priceUpDown.TabIndex = 9;
             // 
             // EditAdditionalServiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 196);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(384, 161);
+            this.Controls.Add(this.nameLabel);
+            this.Controls.Add(this.nameTextBox);
+            this.Controls.Add(this.priceLabel);
+            this.Controls.Add(this.priceUpDown);
+            this.Controls.Add(this.measureLabel);
+            this.Controls.Add(this.measureTextBox);
             this.Controls.Add(this.saveButton);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.MinimumSize = new System.Drawing.Size(500, 230);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MinimumSize = new System.Drawing.Size(100, 130);
             this.Name = "EditAdditionalServiceForm";
-            this.Text = "Редактировать дополнительную услугу";
+            this.Text = "Редактирование дополнительной услуги";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EditAdditionalServiceForm_FormClosed);
             this.Load += new System.EventHandler(this.EditAdditionalServiceForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.additionalServiceBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.priceUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -149,12 +141,12 @@
         #endregion
 
         private System.Windows.Forms.Button saveButton;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox nameTextBox;
+        private System.Windows.Forms.Label nameLabel;
+        private System.Windows.Forms.Label measureLabel;
+        private System.Windows.Forms.TextBox measureTextBox;
+        private System.Windows.Forms.Label priceLabel;
         private System.Windows.Forms.BindingSource additionalServiceBindingSource;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown priceUpDown;
     }
 }

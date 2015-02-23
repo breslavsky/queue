@@ -16,30 +16,29 @@ namespace Queue.Administrator
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;
         private User currentUser;
-        private AdditionalService service;
-        private Guid serviceId;
+        private AdditionalService additionalService;
+        private Guid additionalServiceId;
         private TaskPool taskPool;
 
-        public AdditionalService Service
+        public AdditionalService AdditionalService
         {
-            get { return service; }
+            get { return additionalService; }
             private set
             {
-                service = value;
-                additionalServiceBindingSource.DataSource = service;
+                additionalService = value;
+                additionalServiceBindingSource.DataSource = additionalService;
             }
         }
 
-        public EditAdditionalServiceForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? serviceId = null)
+        public EditAdditionalServiceForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? additionalServiceId = null)
             : base()
         {
             InitializeComponent();
 
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
-            this.serviceId = serviceId.HasValue ?
-                                    serviceId.Value :
-                                    Guid.Empty;
+            this.additionalServiceId = additionalServiceId.HasValue ?
+                additionalServiceId.Value : Guid.Empty;
 
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
@@ -77,7 +76,7 @@ namespace Queue.Administrator
 
         private async void EditAdditionalServiceForm_Load(object sender, EventArgs e)
         {
-            if (serviceId != Guid.Empty)
+            if (additionalServiceId != Guid.Empty)
             {
                 Enabled = false;
 
@@ -85,7 +84,7 @@ namespace Queue.Administrator
                 {
                     try
                     {
-                        Service = await taskPool.AddTask(channel.Service.GetAdditionalService(serviceId));
+                        AdditionalService = await taskPool.AddTask(channel.Service.GetAdditionalService(additionalServiceId));
 
                         Enabled = true;
                     }
@@ -105,7 +104,7 @@ namespace Queue.Administrator
             }
             else
             {
-                Service = new AdditionalService()
+                AdditionalService = new AdditionalService()
                 {
                     Name = "Новая дополнительная услуга"
                 };
@@ -120,7 +119,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    Service = await taskPool.AddTask(channel.Service.EditAdditionalService(Service));
+                    AdditionalService = await taskPool.AddTask(channel.Service.EditAdditionalService(AdditionalService));
 
                     if (Saved != null)
                     {
@@ -144,11 +143,6 @@ namespace Queue.Administrator
                     saveButton.Enabled = true;
                 }
             }
-        }
-
-        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = !Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar);
         }
     }
 }
