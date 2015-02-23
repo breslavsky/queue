@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdditionalServices" xml:space="preserve">
+    <value>Additional Services</value>
+  </data>
   <data name="All" xml:space="preserve">
     <value>Все</value>
   </data>
@@ -124,16 +127,16 @@
     <value>Terminal</value>
   </data>
   <data name="ClientsRequests" xml:space="preserve">
-    <value>ClientsRequests</value>
+    <value>Clients Requests</value>
   </data>
   <data name="Config" xml:space="preserve">
     <value>Config</value>
   </data>
   <data name="CurrentSchedule" xml:space="preserve">
-    <value>CurrentSchedule</value>
+    <value>Current Schedule</value>
   </data>
   <data name="DefaultSchedule" xml:space="preserve">
-    <value>DefaultSchedule</value>
+    <value>Default Schedule</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>None</value>
@@ -142,7 +145,7 @@
     <value>Offices</value>
   </data>
   <data name="QueuePlan" xml:space="preserve">
-    <value>QueuePlan</value>
+    <value>Queue Plan</value>
   </data>
   <data name="Reports" xml:space="preserve">
     <value>Reports</value>

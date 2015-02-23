@@ -46,6 +46,7 @@
             this.interruptionLabel = new System.Windows.Forms.Label();
             this.interruptionFinishTimeTextBox = new System.Windows.Forms.MaskedTextBox();
             this.isInterruptionCheckBox = new System.Windows.Forms.CheckBox();
+            this.isActiveCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // surnameLabel
@@ -146,7 +147,7 @@
             // 
             // passwordButton
             // 
-            this.passwordButton.Location = new System.Drawing.Point(105, 210);
+            this.passwordButton.Location = new System.Drawing.Point(5, 210);
             this.passwordButton.Name = "passwordButton";
             this.passwordButton.Size = new System.Drawing.Size(75, 25);
             this.passwordButton.TabIndex = 9;
@@ -216,11 +217,23 @@
             this.isInterruptionCheckBox.UseVisualStyleBackColor = true;
             this.isInterruptionCheckBox.Leave += new System.EventHandler(this.isInterruptionCheckBox_Leave);
             // 
+            // isActiveCheckBox
+            // 
+            this.isActiveCheckBox.AutoSize = true;
+            this.isActiveCheckBox.Location = new System.Drawing.Point(115, 215);
+            this.isActiveCheckBox.Name = "isActiveCheckBox";
+            this.isActiveCheckBox.Size = new System.Drawing.Size(68, 17);
+            this.isActiveCheckBox.TabIndex = 11;
+            this.isActiveCheckBox.Text = "Активен";
+            this.isActiveCheckBox.UseVisualStyleBackColor = true;
+            this.isActiveCheckBox.Leave += new System.EventHandler(this.isActiveCheckBox_Leave);
+            // 
             // EditOperatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(269, 246);
+            this.ClientSize = new System.Drawing.Size(269, 241);
+            this.Controls.Add(this.isActiveCheckBox);
             this.Controls.Add(this.surnameLabel);
             this.Controls.Add(this.surnameTextBox);
             this.Controls.Add(this.nameLabel);
@@ -269,5 +282,6 @@
         private System.Windows.Forms.Label interruptionLabel;
         private System.Windows.Forms.MaskedTextBox interruptionFinishTimeTextBox;
         private System.Windows.Forms.CheckBox isInterruptionCheckBox;
+        private System.Windows.Forms.CheckBox isActiveCheckBox;
     }
 }

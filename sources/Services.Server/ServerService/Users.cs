@@ -301,6 +301,7 @@ namespace Queue.Services.Server
                     administrator.Patronymic = source.Patronymic;
                     administrator.Email = source.Email;
                     administrator.Mobile = source.Mobile;
+                    queueOperator.IsActive = source.IsActive;
                     administrator.Permissions = source.Permissions;
 
                     var errors = administrator.Validate();
@@ -355,6 +356,7 @@ namespace Queue.Services.Server
                     queueOperator.Patronymic = source.Patronymic;
                     queueOperator.Email = source.Email;
                     queueOperator.Mobile = source.Mobile;
+                    queueOperator.IsActive = source.IsActive;
                     queueOperator.IsInterruption = source.IsInterruption;
                     queueOperator.InterruptionStartTime = source.InterruptionStartTime;
                     queueOperator.InterruptionFinishTime = source.InterruptionFinishTime;

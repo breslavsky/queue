@@ -59,6 +59,7 @@ namespace Queue.Administrator
                 patronymicTextBox.Text = queueOperator.Patronymic;
                 emailTextBox.Text = queueOperator.Email;
                 mobileTextBox.Text = queueOperator.Mobile;
+                isActiveCheckBox.Checked = queueOperator.IsActive;
                 workplaceControl.Select<Workplace>(queueOperator.Workplace);
                 isInterruptionCheckBox.Checked = queueOperator.IsInterruption;
                 interruptionStartTimeTextBox.Text = queueOperator.InterruptionStartTime.ToString("hh\\:mm");
@@ -106,21 +107,17 @@ namespace Queue.Administrator
             {
                 Operator = new QueueOperator()
                 {
-                    Surname = "Новый пользователь"
+                    Surname = "Новый пользователь",
+                    IsActive = true
                 };
             }
         }
 
         #region bindings
 
-        private void emailTextBox_Leave(object sender, EventArgs e)
+        private void surnameTextBox_Leave(object sender, EventArgs e)
         {
-            queueOperator.Email = emailTextBox.Text;
-        }
-
-        private void mobileTextBox_Leave(object sender, EventArgs e)
-        {
-            queueOperator.Mobile = mobileTextBox.Text;
+            queueOperator.Surname = surnameTextBox.Text;
         }
 
         private void nameTextBox_Leave(object sender, EventArgs e)
@@ -133,9 +130,19 @@ namespace Queue.Administrator
             queueOperator.Patronymic = patronymicTextBox.Text;
         }
 
-        private void surnameTextBox_Leave(object sender, EventArgs e)
+        private void emailTextBox_Leave(object sender, EventArgs e)
         {
-            queueOperator.Surname = surnameTextBox.Text;
+            queueOperator.Email = emailTextBox.Text;
+        }
+
+        private void mobileTextBox_Leave(object sender, EventArgs e)
+        {
+            queueOperator.Mobile = mobileTextBox.Text;
+        }
+
+        private void isActiveCheckBox_Leave(object sender, EventArgs e)
+        {
+            queueOperator.IsActive = isActiveCheckBox.Checked;
         }
 
         private void isInterruptionCheckBox_Leave(object sender, EventArgs e)

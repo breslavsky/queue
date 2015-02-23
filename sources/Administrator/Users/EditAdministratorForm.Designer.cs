@@ -42,6 +42,7 @@
             this.passwordButton = new System.Windows.Forms.Button();
             this.permissionsLabel = new System.Windows.Forms.Label();
             this.permissionsFlagsControl = new Queue.UI.WinForms.EnumFlagsControl();
+            this.isActiveCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // surnameLabel
@@ -142,7 +143,7 @@
             // 
             // passwordButton
             // 
-            this.passwordButton.Location = new System.Drawing.Point(105, 365);
+            this.passwordButton.Location = new System.Drawing.Point(10, 365);
             this.passwordButton.Name = "passwordButton";
             this.passwordButton.Size = new System.Drawing.Size(75, 25);
             this.passwordButton.TabIndex = 6;
@@ -167,11 +168,23 @@
             this.permissionsFlagsControl.TabIndex = 5;
             this.permissionsFlagsControl.Leave += new System.EventHandler(this.permissionsFlagsControl_Leave);
             // 
+            // isActiveCheckBox
+            // 
+            this.isActiveCheckBox.AutoSize = true;
+            this.isActiveCheckBox.Location = new System.Drawing.Point(115, 370);
+            this.isActiveCheckBox.Name = "isActiveCheckBox";
+            this.isActiveCheckBox.Size = new System.Drawing.Size(68, 17);
+            this.isActiveCheckBox.TabIndex = 8;
+            this.isActiveCheckBox.Text = "Активен";
+            this.isActiveCheckBox.UseVisualStyleBackColor = true;
+            this.isActiveCheckBox.Leave += new System.EventHandler(this.isActiveCheckBox_Leave);
+            // 
             // EditAdministratorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(269, 396);
+            this.Controls.Add(this.isActiveCheckBox);
             this.Controls.Add(this.surnameLabel);
             this.Controls.Add(this.surnameTextBox);
             this.Controls.Add(this.nameLabel);
@@ -212,5 +225,6 @@
         private System.Windows.Forms.Button passwordButton;
         private System.Windows.Forms.Label permissionsLabel;
         private UI.WinForms.EnumFlagsControl permissionsFlagsControl;
+        private System.Windows.Forms.CheckBox isActiveCheckBox;
     }
 }

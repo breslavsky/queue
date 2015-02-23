@@ -70,6 +70,7 @@ namespace Queue.Administrator
                 patronymicTextBox.Text = administrator.Patronymic;
                 emailTextBox.Text = administrator.Email;
                 mobileTextBox.Text = administrator.Mobile;
+                isActiveCheckBox.Checked = administrator.IsActive;
                 permissionsFlagsControl.Select<AdministratorPermissions>(administrator.Permissions);
             }
         }
@@ -112,21 +113,16 @@ namespace Queue.Administrator
             {
                 Administrator = new QueueAdministrator()
                 {
-                    Surname = "Новый пользователь"
+                    Surname = "Новый пользователь",
+                    IsActive = true
                 };
             }
         }
 
         #region bindings
-
-        private void emailTextBox_Leave(object sender, EventArgs e)
+        private void surnameTextBox_Leave(object sender, EventArgs e)
         {
-            administrator.Email = emailTextBox.Text;
-        }
-
-        private void mobileTextBox_Leave(object sender, EventArgs e)
-        {
-            administrator.Mobile = mobileTextBox.Text;
+            administrator.Surname = surnameTextBox.Text;
         }
 
         private void nameTextBox_Leave(object sender, EventArgs e)
@@ -139,9 +135,19 @@ namespace Queue.Administrator
             administrator.Patronymic = patronymicTextBox.Text;
         }
 
-        private void surnameTextBox_Leave(object sender, EventArgs e)
+        private void emailTextBox_Leave(object sender, EventArgs e)
         {
-            administrator.Surname = surnameTextBox.Text;
+            administrator.Email = emailTextBox.Text;
+        }
+
+        private void mobileTextBox_Leave(object sender, EventArgs e)
+        {
+            administrator.Mobile = mobileTextBox.Text;
+        }
+
+        private void isActiveCheckBox_Leave(object sender, EventArgs e)
+        {
+            administrator.IsActive = isActiveCheckBox.Checked;
         }
 
         private void permissionsFlagsControl_Leave(object sender, EventArgs e)

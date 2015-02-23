@@ -114,6 +114,7 @@ namespace Queue.Administrator
             row.Cells["patronymicColumn"].Value = user.Patronymic;
             row.Cells["emailColumn"].Value = user.Email;
             row.Cells["mobileColumn"].Value = user.Mobile;
+            row.Cells["isActiveColumn"].Value = user.IsActive;
 
             var queueOperator = user as QueueOperator;
 
