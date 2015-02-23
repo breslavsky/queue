@@ -114,9 +114,9 @@
             // 
             // queueNameLabel
             // 
-            this.queueNameLabel.Location = new System.Drawing.Point(15, -10);
+            this.queueNameLabel.Location = new System.Drawing.Point(5, 5);
             this.queueNameLabel.Name = "queueNameLabel";
-            this.queueNameLabel.Size = new System.Drawing.Size(105, 30);
+            this.queueNameLabel.Size = new System.Drawing.Size(110, 80);
             this.queueNameLabel.TabIndex = 6;
             this.queueNameLabel.Text = "Название очереди";
             this.queueNameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -132,9 +132,9 @@
             // 
             // workTimeLabel
             // 
-            this.workTimeLabel.Location = new System.Drawing.Point(35, 85);
+            this.workTimeLabel.Location = new System.Drawing.Point(5, 90);
             this.workTimeLabel.Name = "workTimeLabel";
-            this.workTimeLabel.Size = new System.Drawing.Size(80, 30);
+            this.workTimeLabel.Size = new System.Drawing.Size(110, 25);
             this.workTimeLabel.TabIndex = 8;
             this.workTimeLabel.Text = "Время работы";
             this.workTimeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;

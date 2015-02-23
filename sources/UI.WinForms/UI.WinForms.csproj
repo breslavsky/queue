@@ -181,7 +181,7 @@
     <Compile Include="Controls\TimePicker.Designer.cs">
       <DependentUpon>TimePicker.cs</DependentUpon>
     </Compile>
-    <Compile Include="Types\LoginFormSettings.cs" />
+    <Compile Include="Settings\LoginFormSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\DigitalTimer.resx">

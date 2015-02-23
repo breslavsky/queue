@@ -49,9 +49,9 @@
             // 
             // headerLabel
             // 
-            this.headerLabel.Location = new System.Drawing.Point(40, -10);
+            this.headerLabel.Location = new System.Drawing.Point(5, 5);
             this.headerLabel.Name = "headerLabel";
-            this.headerLabel.Size = new System.Drawing.Size(65, 30);
+            this.headerLabel.Size = new System.Drawing.Size(100, 130);
             this.headerLabel.TabIndex = 2;
             this.headerLabel.Text = "Заголовок";
             this.headerLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -71,9 +71,9 @@
             // 
             // footerLabel
             // 
-            this.footerLabel.Location = new System.Drawing.Point(25, 130);
+            this.footerLabel.Location = new System.Drawing.Point(5, 145);
             this.footerLabel.Name = "footerLabel";
-            this.footerLabel.Size = new System.Drawing.Size(80, 30);
+            this.footerLabel.Size = new System.Drawing.Size(100, 130);
             this.footerLabel.TabIndex = 4;
             this.footerLabel.Text = "Нижняя часть";
             this.footerLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;

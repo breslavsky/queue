@@ -189,6 +189,7 @@ namespace Queue.Services.Server
                             Report.Add("Поиск потенциальных операторов");
 
                             var potentialOperatorsPlans = renderings
+                                .Where(r => r.Operator.IsActive)
                                 .Select(r => new
                                 {
                                     OperatorPlan = OperatorsPlans.FirstOrDefault(o => o.Operator.Equals(r.Operator)),
@@ -405,7 +406,7 @@ namespace Queue.Services.Server
             var renderings = GetServiceRenderings(schedule, serviceStep, serviceRenderingMode);
 
             var potentialOperatorsPlans = OperatorsPlans
-                .Where(p => renderings.Any(r => r.Operator.Equals(p.Operator)))
+                .Where(p => renderings.Any(r => r.Operator.IsActive && r.Operator.Equals(p.Operator)))
                 .ToList();
 
             if (potentialOperatorsPlans.Count == 0)
