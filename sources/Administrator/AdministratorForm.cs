@@ -241,6 +241,11 @@ namespace Queue.Administrator
             ShowForm<ServicesForm>(() => new ServicesForm(channelBuilder, currentUser));
         }
 
+        private void additionalServicesMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowForm<AdditionalServicesForm>(() => new AdditionalServicesForm(channelBuilder, currentUser));
+        }
+
         private void ShowForm<T>(Func<Form> create)
         {
             Form form = MdiChildren.FirstOrDefault(f => f.GetType() == typeof(T));

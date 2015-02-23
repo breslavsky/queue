@@ -15,6 +15,7 @@ namespace Queue.Model.Common
         CurrentSchedule = 128,
         QueuePlan = 256,
         Reports = 512,
-        Offices = 1024
+        Offices = 1024,
+        AdditionalServices = 2048
     }
 }

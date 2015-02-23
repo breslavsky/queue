@@ -79,6 +79,7 @@
     <Compile Include="ClientRequestFilter.cs" />
     <Compile Include="OperatorInterruption.cs" />
     <Compile Include="ServiceStep.cs" />
+    <Compile Include="AdditionalService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model.Common\Model.Common.csproj">

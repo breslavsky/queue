@@ -213,11 +213,26 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<Office> EditOffice(Office office);
+        Task<Office> EditOffice(Office source);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task DeleteOffice(Guid officeId);
+
+        [OperationContract]
+        Task<AdditionalService[]> GetAdditionalServices();
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<AdditionalService> GetAdditionalService(Guid additionalServiceId);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<AdditionalService> EditAdditionalService(AdditionalService source);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task DeleteAdditionalService(Guid additionalServiceId);
 
         [OperationContract]
         Task<IdentifiedEntityLink[]> GetWorkplacesLinks();

@@ -222,6 +222,12 @@
     <Compile Include="Controls\ScheduleControl.Designer.cs">
       <DependentUpon>ScheduleControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdditionalServices\AdditionalServicesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdditionalServices\AdditionalServicesForm.Designer.cs">
+      <DependentUpon>AdditionalServicesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Schedule\CurrentScheduleForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -300,10 +306,10 @@
     <Compile Include="Offices\OfficesForm.Designer.cs">
       <DependentUpon>OfficesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Users\AdministratorForm.cs">
+    <Compile Include="AdministratorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Users\AdministratorForm.Designer.cs">
+    <Compile Include="AdministratorForm.Designer.cs">
       <DependentUpon>AdministratorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Config\PortalConfigControl.cs">
@@ -437,6 +443,9 @@
     <EmbeddedResource Include="Controls\ScheduleControl.resx">
       <DependentUpon>ScheduleControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AdditionalServices\AdditionalServicesForm.resx">
+      <DependentUpon>AdditionalServicesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Schedule\CurrentScheduleForm.resx">
       <DependentUpon>CurrentScheduleForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -486,7 +495,7 @@
     <EmbeddedResource Include="Offices\OfficesForm.resx">
       <DependentUpon>OfficesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Users\AdministratorForm.resx">
+    <EmbeddedResource Include="AdministratorForm.resx">
       <DependentUpon>AdministratorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Config\PortalConfigControl.resx">

@@ -25,6 +25,7 @@
             this.workplacesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultScheduleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.servicesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.additionalServicesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientRequestsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.clientRequestsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,7 +97,8 @@
             this.usersMenuItem,
             this.workplacesMenuItem,
             this.defaultScheduleMenuItem,
-            this.servicesMenuItem});
+            this.servicesMenuItem,
+            this.additionalServicesMenuItem});
             this.dictionariesMenu.Image = ((System.Drawing.Image)(resources.GetObject("dictionariesMenu.Image")));
             this.dictionariesMenu.Name = "dictionariesMenu";
             this.dictionariesMenu.Size = new System.Drawing.Size(110, 20);
@@ -105,7 +107,7 @@
             // usersMenuItem
             // 
             this.usersMenuItem.Name = "usersMenuItem";
-            this.usersMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.usersMenuItem.Size = new System.Drawing.Size(210, 22);
             this.usersMenuItem.Tag = "Users";
             this.usersMenuItem.Text = "Пользователи";
             this.usersMenuItem.Click += new System.EventHandler(this.usersMenuItem_Click);
@@ -113,7 +115,7 @@
             // workplacesMenuItem
             // 
             this.workplacesMenuItem.Name = "workplacesMenuItem";
-            this.workplacesMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.workplacesMenuItem.Size = new System.Drawing.Size(210, 22);
             this.workplacesMenuItem.Tag = "Workplaces";
             this.workplacesMenuItem.Text = "Рабочие места";
             this.workplacesMenuItem.Click += new System.EventHandler(this.workplacesMenuItem_Click);
@@ -121,7 +123,7 @@
             // defaultScheduleMenuItem
             // 
             this.defaultScheduleMenuItem.Name = "defaultScheduleMenuItem";
-            this.defaultScheduleMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.defaultScheduleMenuItem.Size = new System.Drawing.Size(210, 22);
             this.defaultScheduleMenuItem.Tag = "DefaultSchedule";
             this.defaultScheduleMenuItem.Text = "Общее расписание";
             this.defaultScheduleMenuItem.Click += new System.EventHandler(this.defaultScheduleMenuItem_Click);
@@ -129,10 +131,18 @@
             // servicesMenuItem
             // 
             this.servicesMenuItem.Name = "servicesMenuItem";
-            this.servicesMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.servicesMenuItem.Size = new System.Drawing.Size(210, 22);
             this.servicesMenuItem.Tag = "Services";
             this.servicesMenuItem.Text = "Настройка услуг";
             this.servicesMenuItem.Click += new System.EventHandler(this.servicesMenuItem_Click);
+            // 
+            // additionalServicesMenuItem
+            // 
+            this.additionalServicesMenuItem.Name = "additionalServicesMenuItem";
+            this.additionalServicesMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.additionalServicesMenuItem.Tag = "AdditionalServices";
+            this.additionalServicesMenuItem.Text = "Дополнительные услуги";
+            this.additionalServicesMenuItem.Click += new System.EventHandler(this.additionalServicesMenuItem_Click);
             // 
             // clientsMenuItem
             // 
@@ -327,6 +337,7 @@
         private System.Windows.Forms.ToolStripMenuItem formsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutMenuItem;
         private System.Windows.Forms.ToolStripMenuItem operatorsRatingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem additionalServicesMenuItem;
 
     }
 }

@@ -40,7 +40,7 @@ namespace Queue.Services.Server
                     var office = session.Get<Office>(officeId);
                     if (office == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(officeId), string.Format("Филиал [{0}] не найдена", officeId));
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(officeId), string.Format("Филиал [{0}] не найден", officeId));
                     }
 
                     return Mapper.Map<Office, DTO.Office>(office);
@@ -103,7 +103,7 @@ namespace Queue.Services.Server
                     var office = session.Get<Office>(officeId);
                     if (office == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(officeId), string.Format("Филиал [{0}] не найдена", officeId));
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(officeId), string.Format("Филиал [{0}] не найден", officeId));
                     }
 
                     session.Delete(office);
