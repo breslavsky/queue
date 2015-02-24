@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
@@ -21,6 +23,24 @@ namespace Queue.Services.DTO
                     pc(this, new PropertyChangedEventArgs(propName));
                 }
             }
+        }
+
+        public void Update(Entity source)
+        {
+            Type type = GetType();
+
+            if (source.GetType() != type)
+            {
+                throw new ArgumentException("Аргумент должен быть того же типа");
+            }
+
+            TypeMap map = Mapper.FindTypeMapFor(type, type);
+            if (map == null)
+            {
+                Mapper.CreateMap(type, type);
+            }
+
+            Mapper.Map(source, this, type, type);
         }
     }
 }

@@ -25,6 +25,12 @@
       <Component Id="cmp64FAAE03E47F6A9D0614A984C66CBF69" Guid="B8CBB28A-0EA8-4850-A68E-470702F69769">
         <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetPath).config" />
       </Component>
+      <Component Id="cmpB4DD15FDF9A8430AB6E22F158FD2E6DD" Guid="B4DD15FD-F9A8-430A-B6E2-2F158FD2E6DD">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\AutoMapper.dll" />
+      </Component>
+      <Component Id="cmp1955E8AFA18A4EF586F89F19D5F94DCD" Guid="1955E8AF-A18A-4EF5-86F8-9F19D5F94DCD">
+        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\AutoMapper.Net4.dll" />
+      </Component>
       <Component Id="cmpDBEEEBDAEE67A307026A7C9AC97B9B2A" Guid="A4627E22-692B-4C09-912E-BE7175452DB7">
         <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Crad.Windows.Forms.Actions.dll" />
       </Component>

@@ -21,6 +21,12 @@
       <Component Id="cmpD95071C1F1509DF37CD310EE0D37E9EE" Directory="INSTALLFOLDER" Guid="33258B7B-8E0E-4B4A-90E9-44596A31F0D7">
         <File Id="fil2E593D94663BADBA4C269AF869193AF7" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetPath).config" />
       </Component>
+      <Component Id="cmp1E6769C84E454DA9A0DCCF67171DDC59" Directory="INSTALLFOLDER" Guid="1E6769C8-4E45-4DA9-A0DC-CF67171DDC59">
+        <File Id="fil5A3C7D8CCFA3490580DFBA38CAF16612" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\AutoMapper.dll" />
+      </Component>
+      <Component Id="cmpB926D95F6C8244AC9AC11F81732AB322" Directory="INSTALLFOLDER" Guid="B926D95F-6C82-44AC-9AC1-1F81732AB322">
+        <File Id="fil44A2AFE6387B4F8FB0253DECC3B4C4C4" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\AutoMapper.Net4.dll" />
+      </Component>
       <Component Id="cmpDBEEEBDAEE67A307026A7C9AC97B9B2A" Directory="INSTALLFOLDER" Guid="667AFC32-66F4-4158-9660-7C8224F9E727">
         <File Id="filFD169E0363615C9BE8CAFE60196DAD45" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\Crad.Windows.Forms.Actions.dll" />
       </Component>

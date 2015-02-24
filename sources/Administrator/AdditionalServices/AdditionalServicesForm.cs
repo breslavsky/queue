@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Junte.Parallel.Common;
+﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
 using Queue.Services.Contracts;
@@ -31,9 +30,6 @@ namespace Queue.Administrator
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-
-            //TODO: think!
-            Mapper.CreateMap<AdditionalService, AdditionalService>();
 
             InitializeComponent();
         }
@@ -106,7 +102,7 @@ namespace Queue.Administrator
             {
                 f.Saved += (s, eventArgs) =>
                 {
-                    Mapper.Map(f.AdditionalService, additionalService);
+                    additionalService.Update(f.AdditionalService);
                     f.Close();
                 };
 
