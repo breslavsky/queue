@@ -136,10 +136,6 @@
       <Project>{6bc9beb5-51ab-49b8-a46c-ca9ca59b2976}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Model.Common\Model.Common.csproj">
-      <Project>{83540db2-b860-463d-bcec-656b99270818}</Project>
-      <Name>Model.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Services.Common\Services.Common.csproj">
       <Project>{03915831-23b5-462a-a144-49662864ae34}</Project>
       <Name>Services.Common</Name>

@@ -1,19 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{83540DB2-B860-463D-BCEC-656B99270818}</ProjectGuid>
+    <ProjectGuid>{57DDD930-5377-4427-92F1-D46B7463C5B6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Queue.Model.Common</RootNamespace>
     <AssemblyName>Queue.Model.Common</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile24</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,7 +30,90 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdministratorPermissions.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="ClientRequestRegistrator.cs" />
+    <Compile Include="ClientRequestState.cs" />
+    <Compile Include="ClientRequestType.cs" />
+    <Compile Include="ConfigType.cs" />
+    <Compile Include="EventType.cs" />
+    <Compile Include="PINUtils.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\OperatorRatingReportSettings.cs" />
+    <Compile Include="Reports\ReportDetailLevel.cs" />
+    <Compile Include="Reports\ServiceRatingReportSettings.cs" />
+    <Compile Include="ServiceParameterType.cs" />
+    <Compile Include="ServiceRenderingMode.cs" />
+    <Compile Include="ServiceType.cs" />
+    <Compile Include="Translation\AdministratorPermissions.Designer.cs">
+      <DependentUpon>AdministratorPermissions.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Translation\ClientRequestRegistrator.Designer.cs">
+      <DependentUpon>ClientRequestRegistrator.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Translation\ClientRequestState.Designer.cs">
+      <DependentUpon>ClientRequestState.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Translation\ClientRequestType.Designer.cs">
+      <DependentUpon>ClientRequestType.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Translation\ServiceParameterType.Designer.cs">
+      <DependentUpon>ServiceParameterType.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Translation\ServiceRatingDetailLavel.Designer.cs">
+      <DependentUpon>ServiceRatingDetailLavel.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Translation\ServiceRenderingMode.Designer.cs">
+      <DependentUpon>ServiceRenderingMode.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Translation\ServiceType.Designer.cs">
+      <DependentUpon>ServiceType.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Translation\WorkplaceModificator.Designer.cs">
+      <DependentUpon>WorkplaceModificator.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Translation\WorkplaceType.Designer.cs">
+      <DependentUpon>WorkplaceType.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="UserRole.cs" />
+    <Compile Include="WorkplaceModificator.cs" />
+    <Compile Include="WorkplaceType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Translation\AdministratorPermissions.en-US.resx" />
+    <EmbeddedResource Include="Translation\AdministratorPermissions.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AdministratorPermissions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Translation\ClientRequestRegistrator.en-US.resx" />
     <EmbeddedResource Include="Translation\ClientRequestRegistrator.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -76,87 +156,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>WorkplaceModificator.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Translation\WorkplaceType.en-US.resx" />
     <EmbeddedResource Include="Translation\WorkplaceType.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>WorkplaceType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Translation\WorkplaceType.en-US.resx" />
-    <EmbeddedResource Include="Translation\AdministratorPermissions.en-US.resx" />
-    <EmbeddedResource Include="Translation\AdministratorPermissions.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>AdministratorPermissions.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ClientRequestRegistrator.cs" />
-    <Compile Include="ClientRequestState.cs" />
-    <Compile Include="ClientRequestType.cs" />
-    <Compile Include="ConfigType.cs" />
-    <Compile Include="EventType.cs" />
-    <Compile Include="Reports\OperatorRatingReportSettings.cs" />
-    <Compile Include="PINUtils.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceParameterType.cs" />
-    <Compile Include="Reports\ReportDetailLevel.cs" />
-    <Compile Include="Reports\ServiceRatingReportSettings.cs" />
-    <Compile Include="ServiceRenderingMode.cs" />
-    <Compile Include="ServiceType.cs" />
-    <Compile Include="Translation\AdministratorPermissions.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AdministratorPermissions.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Translation\ClientRequestRegistrator.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ClientRequestRegistrator.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Translation\ClientRequestState.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ClientRequestState.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Translation\ClientRequestType.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ClientRequestType.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Translation\ServiceParameterType.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ServiceParameterType.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Translation\ServiceRatingDetailLavel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ServiceRatingDetailLavel.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Translation\ServiceRenderingMode.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ServiceRenderingMode.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Translation\ServiceType.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ServiceType.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Translation\WorkplaceModificator.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WorkplaceModificator.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Translation\WorkplaceType.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WorkplaceType.resx</DependentUpon>
-    </Compile>
-    <Compile Include="UserRole.cs" />
-    <Compile Include="WorkplaceModificator.cs" />
-    <Compile Include="WorkplaceType.cs" />
-    <Compile Include="AdministratorPermissions.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

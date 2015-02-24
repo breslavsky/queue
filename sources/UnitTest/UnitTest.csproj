@@ -132,10 +132,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Model.Common\Model.Common.csproj">
-      <Project>{83540db2-b860-463d-bcec-656b99270818}</Project>
-      <Name>Model.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{ad492499-461f-4117-a495-302089ad7b87}</Project>
       <Name>Model</Name>

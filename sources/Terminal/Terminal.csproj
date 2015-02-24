@@ -277,7 +277,7 @@
       <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Model.Common\Model.Common.csproj">
-      <Project>{83540db2-b860-463d-bcec-656b99270818}</Project>
+      <Project>{57ddd930-5377-4427-92f1-d46b7463c5b6}</Project>
       <Name>Model.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Resources\Resources.csproj">
