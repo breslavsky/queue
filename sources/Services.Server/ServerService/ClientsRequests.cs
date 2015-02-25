@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Junte.Parallel.Common;
 using NHibernate;
 using NHibernate.Criterion;
 using Queue.Model;
@@ -719,6 +718,12 @@ namespace Queue.Services.Server
                             ClientRequest = clientRequest,
                             Message = string.Format("[{0}] сбросил оператора для запроса клиента [{1}]", currentUser, clientRequest)
                         });
+                    }
+
+                    var error = clientRequest.Validate().FirstOrDefault();
+                    if (error != null)
+                    {
+                        throw new FaultException(error.Message);
                     }
 
                     clientRequest.Version++;

@@ -40,7 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdministratorPermissions.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="ClientRequestRegistrator.cs" />
     <Compile Include="ClientRequestState.cs" />
     <Compile Include="ClientRequestType.cs" />

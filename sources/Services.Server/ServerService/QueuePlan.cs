@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using NHibernate.Criterion;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -508,6 +507,12 @@ namespace Queue.Services.Server
                                 Message = string.Format("[{0}] изменил тип услуги на [{1}] для запроса клиента [{2}]", queueOperator,
                                     clientRequest.ServiceType.Translate(), clientRequest)
                             });
+                        }
+
+                        var error = clientRequest.Validate().FirstOrDefault();
+                        if (error != null)
+                        {
+                            throw new FaultException(error.Message);
                         }
 
                         clientRequest.Version++;
