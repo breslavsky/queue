@@ -14,6 +14,7 @@
                VerticalAlignment="Center"
                FontSize="20"
                FontWeight="Bold"
+               Text="Спасибо, Вы записаны, возьмите талон"
                TextAlignment="Center"
                TextWrapping="WrapWithOverflow">
         <TextBlock.Style>
@@ -28,6 +29,5 @@
                 </Style.Triggers>
             </Style>
         </TextBlock.Style>
-        Спасибо, Вы записаны, возьмите талон
     </TextBlock>
 </views:TerminalPage>

@@ -2,6 +2,7 @@
 using Junte.UI.WPF;
 using Junte.WCF.Common;
 using MahApps.Metro;
+using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
@@ -13,6 +14,7 @@ using System.ServiceModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using WPFLocalizeExtension.Engine;
 
 namespace Queue.UI.WPF.Pages.Models
 {
@@ -28,36 +30,14 @@ namespace Queue.UI.WPF.Pages.Models
         private List<UserComboBoxItem> users;
         private UserRole userRole;
 
-        private Lazy<ICommand> connectCommand;
-        private Lazy<ICommand> loginCommand;
-
         private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
         private UserLoginSettings settings;
 
-        public LoginPageViewModel(UserRole userRole, LoginPage owner)
-        {
-            this.userRole = userRole;
-            this.owner = owner;
-
-            Endpoint = "net.tcp://queue:4505";
-            AccentColors = ThemeManager.Accents
-                                          .Select(a => new AccentColorComboBoxItem()
-                                          {
-                                              Name = a.Name,
-                                              ColorBrush = a.Resources["AccentColorBrush"] as Brush
-                                          })
-                                          .ToList();
-            taskPool = new TaskPool();
-
-            connectCommand = new Lazy<ICommand>(() => new RelayCommand(Connect));
-            loginCommand = new Lazy<ICommand>(() => new RelayCommand(Login));
-            LoadedCommand = new RelayCommand(Loaded);
-            UnloadedCommand = new RelayCommand(Unloaded);
-        }
-
         public event EventHandler OnLogined;
+
+        private EnumItem<Language> selectedLanguage;
 
         public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
 
@@ -104,6 +84,20 @@ namespace Queue.UI.WPF.Pages.Models
             }
         }
 
+        public EnumItem<Language>[] Languages { get; set; }
+
+        public EnumItem<Language> SelectedLanguage
+        {
+            get { return selectedLanguage; }
+            set
+            {
+                SetProperty(ref selectedLanguage, value);
+
+                LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+                LocalizeDictionary.Instance.Culture = SelectedLanguage.Value.GetCulture();
+            }
+        }
+
         public List<UserComboBoxItem> Users
         {
             get { return users; }
@@ -116,15 +110,40 @@ namespace Queue.UI.WPF.Pages.Models
             set { SetProperty(ref selectedUser, value); }
         }
 
-        public ICommand ConnectCommand { get { return connectCommand.Value; } }
+        public ICommand ConnectCommand { get; set; }
 
-        public ICommand LoginCommand { get { return loginCommand.Value; } }
+        public ICommand LoginCommand { get; set; }
 
         public ICommand LoadedCommand { get; set; }
 
         public ICommand UnloadedCommand { get; set; }
 
         #endregion UIProperties
+
+        public LoginPageViewModel(UserRole userRole, LoginPage owner)
+        {
+            this.userRole = userRole;
+            this.owner = owner;
+
+            Endpoint = "net.tcp://queue:4505";
+            AccentColors = ThemeManager.Accents
+                                          .Select(a => new AccentColorComboBoxItem()
+                                          {
+                                              Name = a.Name,
+                                              ColorBrush = a.Resources["AccentColorBrush"] as Brush
+                                          })
+                                          .ToList();
+
+            Languages = EnumItem<Language>.GetItems();
+            SelectedLanguage = Languages[0];
+
+            taskPool = new TaskPool();
+
+            ConnectCommand = new RelayCommand(Connect);
+            LoginCommand = new RelayCommand(Login);
+            LoadedCommand = new RelayCommand(Loaded);
+            UnloadedCommand = new RelayCommand(Unloaded);
+        }
 
         public void ApplyUserSettings(UserLoginSettings settings)
         {
