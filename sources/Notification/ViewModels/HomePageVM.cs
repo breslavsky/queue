@@ -20,7 +20,7 @@ using System.Timers;
 using Vlc.DotNet.Core.Medias;
 using Vlc.DotNet.Wpf;
 
-namespace Queue.Notification.Models
+namespace Queue.Notification.ViewModels
 {
     public class HomePageVM : ObservableObject, IDisposable
     {

@@ -1,4 +1,4 @@
-﻿using Queue.Notification.Models;
+﻿using Queue.Notification.ViewModels;
 using System.Windows.Controls;
 
 namespace Queue.Notification.UserControls

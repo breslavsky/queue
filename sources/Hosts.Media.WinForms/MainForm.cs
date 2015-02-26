@@ -185,7 +185,7 @@ namespace Queue.Hosts.Media.WinForms
 
                 startButton.Enabled = false;
 
-                media = new MediaInstance(settings, loginSettingsControl.ConnectionSettings);
+                media = new MediaInstance(settings, loginSettingsControl.LoginSettings);
                 await media.Start();
 
                 startButton.Enabled = false;

@@ -2,21 +2,23 @@
 using Junte.UI.WPF;
 using Junte.WCF.Common;
 using MahApps.Metro;
+using Microsoft.Practices.ServiceLocation;
+
+using Queue.Display.Models;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Queue.Display.Models
+namespace Queue.Display.ViewModels
 {
-    public class LoginPageVM : ObservableObject, IDisposable
+    public class LoginPageViewModel : ObservableObject, IDisposable
     {
         private bool disposed;
         private readonly TaskPool taskPool;
@@ -27,12 +29,15 @@ namespace Queue.Display.Models
         private string endpoint;
         private bool isRemember;
         private RichPage owner;
-        private LoginSettings settings;
         private IdentifiedEntityLink[] workplaces;
         private Guid selectedWorkplace;
 
-        private Lazy<ICommand> connectCommand;
-        private Lazy<ICommand> loginCommand;
+        public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
+
+        public event EventHandler OnLogined;
+
+        private Common.IConfigurationManager configuration;
+        private LoginSettings loginSettings;
 
         public string Endpoint
         {
@@ -64,7 +69,7 @@ namespace Queue.Display.Models
             set { SetProperty(ref selectedWorkplace, value); }
         }
 
-        public List<AccentColorComboBoxItem> AccentColors { get; set; }
+        public AccentColorComboBoxItem[] AccentColors { get; set; }
 
         public AccentColorComboBoxItem SelectedAccent
         {
@@ -79,52 +84,50 @@ namespace Queue.Display.Models
             }
         }
 
-        public ICommand ConnectCommand { get { return connectCommand.Value; } }
-
-        public ICommand LoginCommand { get { return loginCommand.Value; } }
-
         public Workplace Workplace { get; private set; }
 
-        public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
+        public ICommand ConnectCommand { get; set; }
 
-        public event EventHandler OnLogined;
+        public ICommand LoginCommand { get; set; }
 
-        public LoginPageVM(RichPage owner)
+        public ICommand LoadedCommand { get; set; }
+
+        public ICommand UnloadedCommand { get; set; }
+
+        public LoginPageViewModel(RichPage owner)
         {
             this.owner = owner;
 
-            AccentColors = ThemeManager.Accents
-                                        .Select(a => new AccentColorComboBoxItem()
-                                        {
-                                            Name = a.Name,
-                                            ColorBrush = a.Resources["AccentColorBrush"] as Brush
-                                        })
-                                        .ToList();
+            AccentColors = ThemeManager.Accents.Select(a => new AccentColorComboBoxItem(a.Name, a.Resources["AccentColorBrush"] as Brush)).ToArray();
 
             taskPool = new TaskPool();
 
-            connectCommand = new Lazy<ICommand>(() => new RelayCommand(Connect));
-            loginCommand = new Lazy<ICommand>(() => new RelayCommand(Login));
+            LoadedCommand = new RelayCommand(Loaded);
+            UnloadedCommand = new RelayCommand(Unloaded);
+            ConnectCommand = new RelayCommand(Connect);
+            LoginCommand = new RelayCommand(Login);
         }
 
-        public void ApplySettings(LoginSettings settings)
+        private void Loaded()
         {
-            this.settings = settings;
+            LoadSettings();
 
-            Endpoint = settings.Endpoint;
-            IsRemember = settings.IsRemember;
-
-            if (!string.IsNullOrWhiteSpace(settings.Accent))
+            if (IsRemember || (SelectedWorkplace != Guid.Empty))
             {
-                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == settings.Accent);
+                Connect();
             }
         }
 
-        public void Initialize()
+        private void LoadSettings()
         {
-            if (IsRemember)
+            configuration = ServiceLocator.Current.GetInstance<Common.IConfigurationManager>();
+            loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey, s => s.Endpoint = "net.tcp://queue:4505");
+
+            Endpoint = loginSettings.Endpoint;
+            SelectedWorkplace = loginSettings.WorkplaceId;
+            if (!string.IsNullOrWhiteSpace(loginSettings.Accent))
             {
-                Connect();
+                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == loginSettings.Accent);
             }
         }
 
@@ -154,8 +157,7 @@ namespace Queue.Display.Models
                 {
                     Workplaces = await taskPool.AddTask(channel.Service.GetWorkplacesLinks());
 
-                    SelectedWorkplace = settings != null && settings.WorkplaceId != Guid.Empty
-                        ? settings.WorkplaceId : Workplaces.First().Id;
+                    SelectedWorkplace = loginSettings.WorkplaceId != Guid.Empty ? loginSettings.WorkplaceId : Workplaces.First().Id;
 
                     IsConnected = true;
                 }
@@ -192,11 +194,13 @@ namespace Queue.Display.Models
 
             LoadingControl loading = owner.ShowLoading();
 
-            using (var channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
                 try
                 {
                     Workplace = await taskPool.AddTask(channel.Service.GetWorkplace(SelectedWorkplace));
+
+                    SaveSettings();
 
                     if (OnLogined != null)
                     {
@@ -222,7 +226,24 @@ namespace Queue.Display.Models
             }
         }
 
-        ~LoginPageVM()
+        private void SaveSettings()
+        {
+            loginSettings.Endpoint = Endpoint;
+            loginSettings.WorkplaceId = SelectedWorkplace;
+            loginSettings.IsRemember = IsRemember;
+            loginSettings.Accent = SelectedAccent == null ? string.Empty : SelectedAccent.Name;
+
+            configuration.Save();
+        }
+
+        private void Unloaded()
+        {
+            Dispose();
+        }
+
+        #region IDisposable
+
+        ~LoginPageViewModel()
         {
             Dispose(false);
         }
@@ -251,5 +272,7 @@ namespace Queue.Display.Models
                 disposed = true;
             }
         }
+
+        #endregion IDisposable
     }
 }

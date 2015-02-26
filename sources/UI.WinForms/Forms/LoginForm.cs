@@ -61,7 +61,7 @@ namespace Queue.UI.WinForms
 
         public LoginSettings ConnectionSettings
         {
-            get { return loginSettingsControl.ConnectionSettings; }
+            get { return loginSettingsControl.LoginSettings; }
         }
 
         public User User { get; private set; }

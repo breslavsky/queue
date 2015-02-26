@@ -114,7 +114,7 @@ namespace Hosts.Portal.WinForms
 
                 startButton.Enabled = false;
 
-                portal = new PortalInstance(settings, loginSettingsControl.ConnectionSettings);
+                portal = new PortalInstance(settings, loginSettingsControl.LoginSettings);
                 await portal.Start();
 
                 startButton.Enabled = false;

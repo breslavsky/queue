@@ -1,6 +1,5 @@
 ﻿using Queue.Terminal.Core;
 using Queue.Terminal.ViewModels;
-using Queue.Terminal.Types;
 using System;
 using System.Windows;
 

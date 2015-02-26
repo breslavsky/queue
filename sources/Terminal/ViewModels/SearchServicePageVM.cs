@@ -1,5 +1,4 @@
 ﻿using Junte.UI.WPF;
-using Queue.Terminal.Types;
 using System;
 using System.Windows.Input;
 

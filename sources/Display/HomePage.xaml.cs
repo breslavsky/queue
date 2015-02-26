@@ -1,4 +1,4 @@
-﻿using Queue.Display.Models;
+﻿using Queue.Display.ViewModels;
 using Queue.UI.WPF;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,12 +20,12 @@ namespace Queue.Display
         {
             Mouse.OverrideCursor = Cursors.None;
 
-            (DataContext as HomePageVM).Initialize();
+            (DataContext as HomePageViewModel).Initialize();
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            (DataContext as HomePageVM).Dispose();
+            (DataContext as HomePageViewModel).Dispose();
         }
 
         private void OnCommentTextBlockLoaded(object sender, RoutedEventArgs e)

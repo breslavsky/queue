@@ -32,7 +32,7 @@ namespace Queue.UI.WinForms
 
         public EventHandler OnSubmit = delegate { };
 
-        public LoginSettings ConnectionSettings { get; private set; }
+        public LoginSettings LoginSettings { get; private set; }
 
         public LoginSettingsControl()
         {
@@ -45,11 +45,11 @@ namespace Queue.UI.WinForms
             this.taskPool = taskPool;
 
             configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-            ConnectionSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey, (s) => s.Endpoint = "net.tcp://queue:4505");
+            LoginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey, (s) => s.Endpoint = "net.tcp://queue:4505");
 
-            serverConnectionSettingsBindingSource.DataSource = ConnectionSettings;
+            serverConnectionSettingsBindingSource.DataSource = LoginSettings;
 
-            if (ConnectionSettings.User != Guid.Empty)
+            if (LoginSettings.User != Guid.Empty)
             {
                 ConnectToServer();
             }
@@ -78,7 +78,7 @@ namespace Queue.UI.WinForms
 
             try
             {
-                if (string.IsNullOrWhiteSpace(ConnectionSettings.Endpoint))
+                if (string.IsNullOrWhiteSpace(LoginSettings.Endpoint))
                 {
                     throw new QueueException("Не указан адрес сервера");
                 }
@@ -90,7 +90,7 @@ namespace Queue.UI.WinForms
 
                 ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(),
                                                                             Bindings.NetTcpBinding,
-                                                                            new EndpointAddress(ConnectionSettings.Endpoint));
+                                                                            new EndpointAddress(LoginSettings.Endpoint));
                 if (ChannelManager != null)
                 {
                     ChannelManager.Dispose();
@@ -103,16 +103,15 @@ namespace Queue.UI.WinForms
                     connectButton.Enabled = false;
 
                     selectUserControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(userRole)));
-                    if (ConnectionSettings.User != Guid.Empty)
+                    if (LoginSettings.User != Guid.Empty)
                     {
-                        selectUserControl.Select<User>(new User() { Id = ConnectionSettings.User });
+                        selectUserControl.Select<User>(new User() { Id = LoginSettings.User });
                     }
 
                     passwordTextBox.Focus();
 
                     connected = true;
 
-                    //connectionGroupBox.Enabled = false;
                     loginGroupBox.Enabled = true;
                 }
             }
@@ -162,9 +161,9 @@ namespace Queue.UI.WinForms
 
         private void selectUserControl_SelectedChanged(object sender, EventArgs e)
         {
-            if (ConnectionSettings != null)
+            if (LoginSettings != null)
             {
-                ConnectionSettings.User = selectUserControl.Selected<User>().Id;
+                LoginSettings.User = selectUserControl.Selected<User>().Id;
             }
         }
 

@@ -6,6 +6,7 @@ using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Services.Contracts;
 using Queue.UI.WPF;
+using Queue.UI.WPF.Models;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -45,15 +46,7 @@ namespace Queue.Notification
 
         private ConnectPage CreateConnectPage()
         {
-            Properties.Settings settings = Properties.Settings.Default;
-
             ConnectPage result = new ConnectPage();
-            result.Model.ApplyUserSettings(new UserLoginSettings()
-            {
-                Endpoint = settings.Endpoint,
-                IsRemember = settings.IsRemember,
-                Accent = settings.Accent
-            });
 
             result.Model.OnConnected += OnConnected;
             return result;
@@ -62,8 +55,6 @@ namespace Queue.Notification
         private void OnConnected(object sender, EventArgs e)
         {
             logger.Info("connected to {0}", connectPage.Model.Endpoint);
-
-            SaveSettings();
 
             RegisterServices();
 
@@ -93,29 +84,14 @@ namespace Queue.Notification
             container.RegisterInstance<ChannelManager<IServerTcpService>>(channelManager);
         }
 
-        private void SaveSettings()
-        {
-            Properties.Settings settings = Properties.Settings.Default;
-
-            settings.Endpoint = connectPage.Model.Endpoint;
-            settings.IsRemember = connectPage.Model.IsRemember;
-            settings.IsDebug = Keyboard.IsKeyDown(Key.LeftShift);
-
-            if (connectPage.Model.SelectedAccent != null)
-            {
-                settings.Accent = connectPage.Model.SelectedAccent.Name;
-            }
-
-            settings.Save();
-        }
-
         private void MainWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            Properties.Settings settings = Properties.Settings.Default;
             if (Keyboard.IsKeyDown(Key.LeftShift) && e.Key == Key.Escape)
             {
-                settings.IsRemember = false;
-                settings.Save();
+                Common.IConfigurationManager configuration = ServiceLocator.Current.GetInstance<Common.IConfigurationManager>();
+                LoginFormSettings loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
+                loginFormSettings.IsRemember = false;
+                configuration.Save();
 
                 Application.Current.Shutdown();
             }

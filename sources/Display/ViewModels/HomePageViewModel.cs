@@ -15,9 +15,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
-namespace Queue.Display.Models
+namespace Queue.Display.ViewModels
 {
-    public class HomePageVM : ObservableObject, IDisposable
+    public class HomePageViewModel : ObservableObject, IDisposable
     {
         private const int PingInterval = 10000;
 
@@ -65,7 +65,7 @@ namespace Queue.Display.Models
             set { SetProperty(ref currentRequests, value); }
         }
 
-        public HomePageVM()
+        public HomePageViewModel()
         {
             workplace = ServiceLocator.Current.GetInstance<Workplace>();
 
@@ -189,7 +189,7 @@ namespace Queue.Display.Models
             UpdateOperatorCurrentRequest(e.Operator, e.ClientRequestPlan);
         }
 
-        ~HomePageVM()
+        ~HomePageViewModel()
         {
             Dispose(false);
         }

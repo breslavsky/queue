@@ -1,4 +1,4 @@
-﻿namespace Queue.Terminal.Types
+﻿namespace Queue.Terminal
 {
     public interface IServiceSearch
     {

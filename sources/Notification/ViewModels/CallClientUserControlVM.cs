@@ -2,7 +2,7 @@
 using Queue.Model.Common;
 using Queue.Services.DTO;
 
-namespace Queue.Notification.Models
+namespace Queue.Notification.ViewModels
 {
     public class CallClientUserControlVM : ObservableObject
     {

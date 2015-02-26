@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
+using Queue.Common;
 using System.Windows;
 
 namespace Queue.Notification
@@ -39,6 +40,7 @@ namespace Queue.Notification
         private void RegisterTypes(IUnityContainer container)
         {
             container.RegisterInstance<IUnityContainer>(container);
+            container.RegisterInstance<IConfigurationManager>(new ConfigurationManager());
         }
     }
 }

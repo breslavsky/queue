@@ -3,7 +3,6 @@ using Junte.WCF.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
-using Queue.Terminal.Types;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;

@@ -76,7 +76,7 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>notification.ico</ApplicationIcon>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Junte.Parallel.Common">
@@ -109,6 +109,7 @@
       <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceModel" />
@@ -146,8 +147,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\CallClientUserControlVM.cs" />
-    <Compile Include="Models\TickerUserControlVM.cs" />
+    <Compile Include="ViewModels\CallClientUserControlVM.cs" />
+    <Compile Include="ViewModels\TickerUserControlVM.cs" />
     <Compile Include="Types\ClientRequestWrap.cs" />
     <Compile Include="Types\CustomAnimationTimer.cs" />
     <Compile Include="Types\ITicker.cs" />
@@ -177,7 +178,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\ClientRequestsControlVM.cs" />
+    <Compile Include="ViewModels\ClientRequestsControlVM.cs" />
     <Compile Include="Types\SoundPlayerExtensions.cs" />
     <Compile Include="UserControls\ClientRequestsControl.xaml.cs">
       <DependentUpon>ClientRequestsControl.xaml</DependentUpon>
@@ -203,7 +204,7 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\HomePageVM.cs" />
+    <Compile Include="ViewModels\HomePageVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -288,7 +289,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="notification.ico" />
+    <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

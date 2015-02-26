@@ -2,11 +2,11 @@
 using MahApps.Metro.Controls;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
-using Queue.Display.Models;
-
+using Queue.Display.ViewModels;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
+using Queue.UI.WPF.Models;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -35,12 +35,12 @@ namespace Queue.Display
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            Properties.Settings settings = Properties.Settings.Default;
-
             if (Keyboard.IsKeyDown(Key.LeftShift) && (e.Key == Key.Escape))
             {
-                settings.IsRemember = false;
-                settings.Save();
+                Common.IConfigurationManager configuration = ServiceLocator.Current.GetInstance<Common.IConfigurationManager>();
+                LoginFormSettings loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
+                loginFormSettings.IsRemember = false;
+                configuration.Save();
 
                 Application.Current.Shutdown();
             }
@@ -54,17 +54,7 @@ namespace Queue.Display
 
         private DisplayLoginPage CreateLoginPage()
         {
-            Properties.Settings settings = Properties.Settings.Default;
-
             DisplayLoginPage result = new DisplayLoginPage();
-            result.Model.ApplySettings(new LoginSettings()
-            {
-                Endpoint = settings.Endpoint,
-                WorkplaceId = settings.WorkplaceId,
-                IsRemember = settings.IsRemember,
-                Accent = settings.Accent
-            });
-
             result.Model.OnLogined += OnLogined;
 
             return result;
@@ -72,13 +62,11 @@ namespace Queue.Display
 
         private void OnLogined(object sender, EventArgs e)
         {
-            SaveSettings();
-
             InitializeContainer();
 
             content.NavigationService.Navigate(new HomePage()
                 {
-                    DataContext = new HomePageVM()
+                    DataContext = new HomePageViewModel()
                 });
 
             Application.Current.MainWindow.KeyDown += OnKeyDown;
@@ -93,22 +81,6 @@ namespace Queue.Display
             this.FullScreenWindow();
         }
 
-        private void SaveSettings()
-        {
-            Properties.Settings settings = Properties.Settings.Default;
-
-            settings.Endpoint = loginPage.Model.Endpoint;
-            settings.IsRemember = loginPage.Model.IsRemember;
-            settings.WorkplaceId = loginPage.Model.Workplace.Id;
-
-            if (loginPage.Model.SelectedAccent != null)
-            {
-                settings.Accent = loginPage.Model.SelectedAccent.Name;
-            }
-
-            settings.Save();
-        }
-
         private void InitializeContainer()
         {
             IUnityContainer container = new UnityContainer();
@@ -119,7 +91,6 @@ namespace Queue.Display
         private void RegisterTypes(IUnityContainer container)
         {
             container.RegisterInstance<DuplexChannelBuilder<IServerTcpService>>(loginPage.Model.ChannelBuilder);
-            container.RegisterInstance<IUnityContainer>(container);
             container.RegisterInstance<Workplace>(loginPage.Model.Workplace);
         }
     }

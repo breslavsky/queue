@@ -1,5 +1,5 @@
 ﻿using Queue.Model.Common;
-using Queue.UI.WPF.Pages.Models;
+using Queue.UI.WPF.Pages.ViewModels;
 using System.Windows;
 
 namespace Queue.UI.WPF
@@ -23,7 +23,7 @@ namespace Queue.UI.WPF
             Model.Password = passwordBox.Password;
         }
 
-        internal void AdjustModel()
+        internal void Adjust()
         {
             passwordBox.Password = Model.Password;
         }

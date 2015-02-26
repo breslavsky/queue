@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace Queue.Notification.Models
+namespace Queue.Notification.ViewModels
 {
     public class TickerUserControlVM : ObservableObject, ITicker
     {

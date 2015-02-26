@@ -2,11 +2,13 @@
 using Junte.UI.WPF;
 using Junte.WCF.Common;
 using MahApps.Metro;
+using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WPF.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WPFLocalizeExtension.Engine;
 
-namespace Queue.UI.WPF.Pages.Models
+namespace Queue.UI.WPF.Pages.ViewModels
 {
     public class LoginPageViewModel : ObservableObject, IDisposable
     {
@@ -32,12 +34,12 @@ namespace Queue.UI.WPF.Pages.Models
 
         private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
-
-        private UserLoginSettings settings;
+        private EnumItem<Language> selectedLanguage;
+        private IConfigurationManager configuration;
+        private LoginSettings loginSettings;
+        private LoginFormSettings loginFormSettings;
 
         public event EventHandler OnLogined;
-
-        private EnumItem<Language> selectedLanguage;
 
         public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
 
@@ -69,7 +71,7 @@ namespace Queue.UI.WPF.Pages.Models
 
         public User User { get; set; }
 
-        public List<AccentColorComboBoxItem> AccentColors { get; set; }
+        public AccentColorComboBoxItem[] AccentColors { get; set; }
 
         public AccentColorComboBoxItem SelectedAccent
         {
@@ -125,17 +127,8 @@ namespace Queue.UI.WPF.Pages.Models
             this.userRole = userRole;
             this.owner = owner;
 
-            Endpoint = "net.tcp://queue:4505";
-            AccentColors = ThemeManager.Accents
-                                          .Select(a => new AccentColorComboBoxItem()
-                                          {
-                                              Name = a.Name,
-                                              ColorBrush = a.Resources["AccentColorBrush"] as Brush
-                                          })
-                                          .ToList();
-
+            AccentColors = ThemeManager.Accents.Select(a => new AccentColorComboBoxItem(a.Name, a.Resources["AccentColorBrush"] as Brush)).ToArray();
             Languages = EnumItem<Language>.GetItems();
-            SelectedLanguage = Languages[0];
 
             taskPool = new TaskPool();
 
@@ -145,20 +138,33 @@ namespace Queue.UI.WPF.Pages.Models
             UnloadedCommand = new RelayCommand(Unloaded);
         }
 
-        public void ApplyUserSettings(UserLoginSettings settings)
+        private void Loaded()
         {
-            this.settings = settings;
+            LoadSettings();
 
-            Endpoint = settings.Endpoint;
-            Password = settings.Password;
-            IsRemember = settings.IsRemember;
-
-            if (!string.IsNullOrWhiteSpace(settings.Accent))
+            if (IsRemember || (loginSettings.User != Guid.Empty))
             {
-                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == settings.Accent);
+                Connect();
+            }
+        }
+
+        private void LoadSettings()
+        {
+            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+            loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey, s => s.Endpoint = "net.tcp://queue:4505");
+            Endpoint = loginSettings.Endpoint;
+            Password = loginSettings.Password;
+
+            loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
+            IsRemember = loginFormSettings.IsRemember;
+            SelectedLanguage = Languages.SingleOrDefault(l => l.Value == loginFormSettings.Language) ?? Languages[0];
+
+            if (!string.IsNullOrWhiteSpace(loginFormSettings.Accent))
+            {
+                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == loginFormSettings.Accent);
             }
 
-            owner.AdjustModel();
+            owner.Adjust();
         }
 
         public async void Connect()
@@ -177,9 +183,9 @@ namespace Queue.UI.WPF.Pages.Models
                         Name = u.ToString()
                     }).ToList();
 
-                    if (settings != null && settings.UserId != Guid.Empty)
+                    if (loginSettings.User != Guid.Empty)
                     {
-                        SelectedUser = Users.SingleOrDefault(u => u.Id == settings.UserId);
+                        SelectedUser = Users.SingleOrDefault(u => u.Id == loginSettings.User);
                     }
 
                     if (SelectedUser == null)
@@ -213,32 +219,6 @@ namespace Queue.UI.WPF.Pages.Models
             }
         }
 
-        public void Dispose()
-        {
-            if (taskPool != null)
-            {
-                taskPool.Dispose();
-            }
-
-            if (channelManager != null)
-            {
-                channelManager.Dispose();
-            }
-        }
-
-        private void Unloaded()
-        {
-            Dispose();
-        }
-
-        private void Loaded()
-        {
-            if (IsRemember)
-            {
-                Connect();
-            }
-        }
-
         private async void Login()
         {
             if (SelectedUser == null)
@@ -253,6 +233,8 @@ namespace Queue.UI.WPF.Pages.Models
                 try
                 {
                     User = await taskPool.AddTask(channel.Service.UserLogin(SelectedUser.Id, Password));
+
+                    SaveSettings();
 
                     if (OnLogined != null)
                     {
@@ -275,6 +257,37 @@ namespace Queue.UI.WPF.Pages.Models
                 {
                     loading.Hide();
                 }
+            }
+        }
+
+        private void SaveSettings()
+        {
+            loginSettings.Endpoint = Endpoint;
+            loginSettings.Password = IsRemember ? Password : string.Empty;
+            loginSettings.User = SelectedUser.Id;
+
+            loginFormSettings.IsRemember = IsRemember;
+            loginFormSettings.Accent = SelectedAccent == null ? string.Empty : SelectedAccent.Name;
+            loginFormSettings.Language = SelectedLanguage.Value;
+
+            configuration.Save();
+        }
+
+        private void Unloaded()
+        {
+            Dispose();
+        }
+
+        public void Dispose()
+        {
+            if (taskPool != null)
+            {
+                taskPool.Dispose();
+            }
+
+            if (channelManager != null)
+            {
+                channelManager.Dispose();
             }
         }
     }

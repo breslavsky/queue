@@ -11,7 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-namespace Queue.Notification.Models
+namespace Queue.Notification.ViewModels
 {
     public class ClientRequestsControlVM : ObservableObject, IDisposable
     {

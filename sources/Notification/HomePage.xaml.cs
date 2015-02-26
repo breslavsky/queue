@@ -1,7 +1,7 @@
 ﻿using Junte.UI.WPF;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
-using Queue.Notification.Models;
+using Queue.Notification.ViewModels;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
 using Queue.UI.WPF.Types;
@@ -85,13 +85,10 @@ namespace Queue.Notification
 
         private void InitVlcContext()
         {
-            bool isDebug = Properties.Settings.Default.IsDebug;
-
             VlcContext.LibVlcPluginsPath = CommonStrings.PLUGINS_PATH_DEFAULT_VALUE_AMD64;
             VlcContext.StartupOptions.IgnoreConfig = true;
-            VlcContext.StartupOptions.LogOptions.ShowLoggerConsole = isDebug;
             VlcContext.StartupOptions.AddOption("--no-video-title-show");
-            VlcContext.StartupOptions.LogOptions.Verbosity = isDebug ? VlcLogVerbosities.Debug : VlcLogVerbosities.Standard;
+            VlcContext.StartupOptions.LogOptions.Verbosity = VlcLogVerbosities.Standard;
             VlcContext.Initialize();
         }
 

@@ -1,31 +1,21 @@
-﻿using Queue.Display.Models;
+﻿using Queue.Display.ViewModels;
 using Queue.UI.WPF;
-using System.Windows;
 
 namespace Queue.Display.Pages
 {
     public partial class LoginPage : RichPage
     {
-        public LoginPageVM Model { get; private set; }
+        public LoginPageViewModel Model
+        {
+            get { return DataContext as LoginPageViewModel; }
+        }
 
         public LoginPage()
             : base()
         {
             InitializeComponent();
 
-            Model = new LoginPageVM(this);
-
-            DataContext = Model;
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            Model.Initialize();
-        }
-
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            Model.Dispose();
+            DataContext = new LoginPageViewModel(this);
         }
     }
 }

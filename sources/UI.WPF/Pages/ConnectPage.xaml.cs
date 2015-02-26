@@ -1,4 +1,4 @@
-﻿using Queue.UI.WPF.Models;
+﻿using Queue.UI.WPF.ViewModels;
 
 namespace Queue.UI.WPF
 {

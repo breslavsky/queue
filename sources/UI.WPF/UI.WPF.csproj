@@ -55,12 +55,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MahApps.Metro.1.0.0.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework">
       <Private>False</Private>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceModel" />
@@ -135,8 +139,7 @@
       <DependentUpon>WeekScheduler.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\ServerState.cs" />
-    <Compile Include="Models\ConnectPageViewModel.cs" />
-    <Compile Include="Models\LanguageItem.cs" />
+    <Compile Include="ViewModels\ConnectPageViewModel.cs" />
     <Compile Include="Pages\ConnectPage.xaml.cs">
       <DependentUpon>ConnectPage.xaml</DependentUpon>
     </Compile>
@@ -151,10 +154,10 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Types\AccentColorComboBoxItem.cs" />
-    <Compile Include="Models\LoginPageViewModel.cs" />
+    <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="IMainWindow.cs" />
     <Compile Include="Types\UserComboBoxItem.cs" />
-    <Compile Include="Types\UserLoginSettings.cs" />
+    <Compile Include="Models\LoginFormSettings.cs" />
     <Compile Include="Extensions\WPFExtensions.cs" />
     <Compile Include="Controls\VirtualKeyboard.xaml.cs">
       <DependentUpon>VirtualKeyboard.xaml</DependentUpon>

@@ -4,11 +4,13 @@ using Junte.WCF.Common;
 using MahApps.Metro.Controls;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.UI.WPF;
+using Queue.UI.WPF.Models;
 using System;
 using System.Reflection;
 using System.ServiceModel;
@@ -61,18 +63,7 @@ namespace Queue.Terminal
 
         private LoginPage CreateLoginPage()
         {
-            Properties.Settings settings = Properties.Settings.Default;
-
             LoginPage result = new LoginPage(UserRole.Administrator);
-            result.Model.ApplyUserSettings(new UserLoginSettings()
-            {
-                Endpoint = settings.Endpoint,
-                UserId = settings.UserId,
-                Password = settings.Password,
-                IsRemember = settings.IsRemember,
-                Accent = settings.Accent
-            });
-
             result.Model.OnLogined += OnLogined;
 
             return result;
@@ -80,7 +71,6 @@ namespace Queue.Terminal
 
         private async void OnLogined(object sender, EventArgs e)
         {
-            SaveSettings();
             await RegisterTypes();
 
             content.NavigationService.Navigate(new TerminalWindow());
@@ -103,23 +93,6 @@ namespace Queue.Terminal
         {
             resetTimer.Stop();
             resetTimer.Start();
-        }
-
-        private void SaveSettings()
-        {
-            Properties.Settings settings = Properties.Settings.Default;
-
-            settings.Endpoint = loginPage.Model.Endpoint;
-            settings.UserId = loginPage.Model.SelectedUser.Id;
-            settings.Password = loginPage.Model.IsRemember ? loginPage.Model.Password : string.Empty;
-            settings.IsRemember = loginPage.Model.IsRemember;
-
-            if (loginPage.Model.SelectedAccent != null)
-            {
-                settings.Accent = loginPage.Model.SelectedAccent.Name;
-            }
-
-            settings.Save();
         }
 
         private async Task RegisterTypes()
@@ -168,8 +141,10 @@ namespace Queue.Terminal
         {
             if (Keyboard.IsKeyDown(Key.LeftShift) && e.Key == Key.Escape)
             {
-                Properties.Settings.Default.IsRemember = false;
-                Properties.Settings.Default.Save();
+                IConfigurationManager configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+                LoginFormSettings loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
+                loginFormSettings.IsRemember = false;
+                configuration.Save();
 
                 Application.Current.Shutdown();
             }

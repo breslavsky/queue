@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Queue.Terminal.Types
+namespace Queue.Terminal
 {
     public class RenderServicesEventArgs : EventArgs
     {
