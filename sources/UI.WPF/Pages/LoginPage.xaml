@@ -34,7 +34,7 @@
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Label Grid.Column="0" Content="{lex:Loc ServerLabel}" />
+                    <Label Grid.Column="0" Content="{lex:Loc Server}" />
                     <Grid Grid.Column="2" Margin="5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -47,7 +47,7 @@
                                 Content="+"
                                 Style="{DynamicResource AccentedSquareButtonStyle}" />
                     </Grid>
-                    <Label Grid.Row="1" Content="{lex:Loc UserLabel}" />
+                    <Label Grid.Row="1" Content="{lex:Loc User}" />
                     <ComboBox Grid.Row="1"
                               Grid.Column="1"
                               Margin="5"
@@ -62,14 +62,14 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Label Grid.Row="2" Content="{lex:Loc PasswordLabel}" />
+                    <Label Grid.Row="2" Content="{lex:Loc Password}" />
                     <PasswordBox x:Name="passwordBox"
                                  Grid.Row="2"
                                  Grid.Column="1"
                                  Margin="5"
                                  IsEnabled="{Binding IsConnected}" />
 
-                    <Label Grid.Row="3" Content="{lex:Loc AccentLabel}" />
+                    <Label Grid.Row="3" Content="{lex:Loc Accent}" />
                     <ComboBox Grid.Row="3"
                               Grid.Column="1"
                               Margin="5"
@@ -86,7 +86,7 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Label Grid.Row="4" Content="{lex:Loc LanguageLabel}" />
+                    <Label Grid.Row="4" Content="{lex:Loc Language}" />
                     <ComboBox Grid.Row="4"
                               Grid.Column="1"
                               Margin="5"
@@ -102,12 +102,12 @@
                             <ColumnDefinition Width="90" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <CheckBox Content="{lex:Loc RememberLabel}"
+                        <CheckBox Content="{lex:Loc Remember}"
                                   IsChecked="{Binding IsRemember}"
                                   IsEnabled="{Binding IsConnected}" />
                         <Button Grid.Column="1"
                                 Command="{Binding LoginCommand}"
-                                Content="{lex:Loc LoginLabel}"
+                                Content="{lex:Loc Login}"
                                 IsEnabled="{Binding IsConnected}"
                                 Style="{DynamicResource AccentedSquareButtonStyle}" />
                     </Grid>

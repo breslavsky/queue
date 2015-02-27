@@ -172,7 +172,7 @@ namespace Queue.UI.WPF.Pages.ViewModels
             ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
             channelManager = new ChannelManager<IServerTcpService>(ChannelBuilder);
 
-            using (var channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
                 LoadingControl loading = owner.ShowLoading();
                 try
