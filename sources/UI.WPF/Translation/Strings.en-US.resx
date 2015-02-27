@@ -117,7 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccentLabel" xml:space="preserve">
+    <value>Accent</value>
+  </data>
+  <data name="LanguageLabel" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LoginLabel" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="PasswordLabel" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="RememberLabel" xml:space="preserve">
+    <value>Remember</value>
+  </data>
   <data name="ServerLabel" xml:space="preserve">
     <value>Server</value>
+  </data>
+  <data name="UserLabel" xml:space="preserve">
+    <value>User</value>
   </data>
 </root>
