@@ -1,7 +1,6 @@
 ﻿using Queue.Common;
 using System;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
@@ -19,14 +18,18 @@ namespace Queue.UI.WinForms
         public void Initialize<T>() where T : struct
         {
             frozen = true;
-
-            comboBox.Items.Clear();
-            var items = EnumItem<T>.GetItems();
-            comboBox.Items.AddRange(items);
-            comboBox.Enabled = items.Length > 0;
-            comboBox.SelectedItem = items.FirstOrDefault();
-
-            frozen = false;
+            try
+            {
+                comboBox.Items.Clear();
+                var items = EnumItem<T>.GetItems();
+                comboBox.Items.AddRange(items);
+                comboBox.Enabled = items.Length > 0;
+                comboBox.SelectedItem = items.FirstOrDefault();
+            }
+            finally
+            {
+                frozen = false;
+            }
         }
 
         public void Select<T>(T value) where T : struct
@@ -52,6 +55,26 @@ namespace Queue.UI.WinForms
         public void Empty()
         {
             comboBox.SelectedItem = null;
+        }
+
+        public override void Translate()
+        {
+            frozen = true;
+            try
+            {
+                object selected = comboBox.SelectedItem;
+                object[] items = new object[comboBox.Items.Count];
+                comboBox.Items.CopyTo(items, 0);
+
+                comboBox.Items.Clear();
+
+                comboBox.Items.AddRange(items);
+                comboBox.SelectedItem = selected;
+            }
+            finally
+            {
+                frozen = false;
+            }
         }
 
         private void comboBox_SelectedIndexChanged(object sender, EventArgs e)

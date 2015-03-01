@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Globalization;
+using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
@@ -32,7 +27,7 @@ namespace Queue.UI.WinForms
                 .Concat(controls);
         }
 
-        internal void Translate()
+        public virtual void Translate()
         {
             var type = this.GetType();
             var resourcePath = ResourcePathTemplate
