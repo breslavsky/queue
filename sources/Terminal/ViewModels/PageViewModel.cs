@@ -9,7 +9,7 @@ using Queue.UI.WPF.Types;
 
 namespace Queue.Terminal.ViewModels
 {
-    public abstract class PageVM : ObservableObject
+    public abstract class PageViewModel : ObservableObject
     {
         protected ClientRequestModel model;
         protected TaskPool taskPool;
@@ -18,7 +18,7 @@ namespace Queue.Terminal.ViewModels
         protected TerminalConfig terminalConfig;
         protected Navigator navigator;
 
-        public PageVM()
+        public PageViewModel()
         {
             this.Model = ServiceLocator.Current.GetInstance<ClientRequestModel>();
             this.taskPool = ServiceLocator.Current.GetInstance<TaskPool>();

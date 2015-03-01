@@ -139,6 +139,7 @@
       <DependentUpon>WeekScheduler.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\ServerState.cs" />
+    <Compile Include="Types\MultiBindingConverter.cs" />
     <Compile Include="ViewModels\ConnectPageViewModel.cs" />
     <Compile Include="Pages\ConnectPage.xaml.cs">
       <DependentUpon>ConnectPage.xaml</DependentUpon>
@@ -263,9 +264,6 @@
     <None Include="packages.config" />
     <None Include="Resources\Entypo.ttf" />
     <None Include="Resources\SegoeWP-Light.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\background.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Entypo-license.txt" />

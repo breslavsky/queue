@@ -6,7 +6,7 @@ namespace Queue.Terminal.UserControls
 {
     public partial class SearchServiceResults : UserControl
     {
-        private readonly SearchServiceResultsVM model;
+        private readonly SearchServiceResultsViewModel model;
 
         public SearchServiceResults()
         {
@@ -14,13 +14,13 @@ namespace Queue.Terminal.UserControls
 
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                model = new SearchServiceResultsVM();
+                model = new SearchServiceResultsViewModel();
                 model.Initialize(servicesGrid);
                 DataContext = model;
             }
         }
 
-        public SearchServiceResultsVM GetModel()
+        public SearchServiceResultsViewModel GetModel()
         {
             return model;
         }

@@ -11,7 +11,7 @@ using System.ServiceModel;
 
 namespace Queue.Terminal.ViewModels
 {
-    public class SelectServicePageVM : PageVM
+    public class SelectServicePageViewModel : PageViewModel
     {
         private const string DefaultServiceColor = "Blue";
 
@@ -172,7 +172,7 @@ namespace Queue.Terminal.ViewModels
         {
             SelectServiceButton result = new SelectServiceButton();
 
-            ServiceButtonVM model = new ServiceButtonVM()
+            ServiceButtonViewModel model = new ServiceButtonViewModel()
             {
                 Code = code,
                 Name = name,

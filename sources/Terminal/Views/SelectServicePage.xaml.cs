@@ -7,9 +7,9 @@ namespace Queue.Terminal.Views
 {
     public partial class SelectServicePage : TerminalPage
     {
-        protected override Type ModelType { get { return typeof(SelectServicePageVM); } }
+        protected override Type ModelType { get { return typeof(SelectServicePageViewModel); } }
 
-        private SelectServicePageVM viewModel;
+        private SelectServicePageViewModel viewModel;
         private ServicesPager pager;
 
         public SelectServicePage() :
@@ -17,7 +17,7 @@ namespace Queue.Terminal.Views
         {
             InitializeComponent();
 
-            viewModel = DataContext as SelectServicePageVM;
+            viewModel = DataContext as SelectServicePageViewModel;
             viewModel.OnRenderServices += RenderServices;
 
             pager = new ServicesPager(this);

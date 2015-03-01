@@ -9,10 +9,10 @@ using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
+using Queue.Terminal.ViewModels;
 using Queue.UI.WPF;
 using Queue.UI.WPF.Models;
 using System;
-using System.Reflection;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -40,9 +40,7 @@ namespace Queue.Terminal
         {
             InitializeComponent();
 
-            DataContext = this;
-
-            Version = Assembly.GetExecutingAssembly().GetName().Version;
+            DataContext = new MainWindowViewModel();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

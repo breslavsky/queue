@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace Queue.Terminal.ViewModels
 {
-    public class SelectRequestTypePageVM : PageVM
+    public class SelectRequestTypePageViewModel : PageViewModel
     {
         private string comment;
         private string liveComment;
@@ -23,7 +23,7 @@ namespace Queue.Terminal.ViewModels
 
         private Lazy<ICommand> selectTypeCommand;
 
-        public SelectRequestTypePageVM()
+        public SelectRequestTypePageViewModel()
         {
             selectTypeCommand = new Lazy<ICommand>(() => new RelayCommand<ClientRequestType>(async (type) =>
             {

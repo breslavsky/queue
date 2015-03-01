@@ -8,16 +8,16 @@ namespace Queue.Terminal.Views
 {
     public partial class SetClientPage : TerminalPage
     {
-        protected override Type ModelType { get { return typeof(SetClientPageVM); } }
+        protected override Type ModelType { get { return typeof(SetClientPageViewModel); } }
 
-        private SetClientPageVM viewModel;
+        private SetClientPageViewModel viewModel;
 
         public SetClientPage() :
             base()
         {
             InitializeComponent();
 
-            viewModel = DataContext as SetClientPageVM;
+            viewModel = DataContext as SetClientPageViewModel;
 
             usernameTextBox.TextChanged += usernameTextBox_TextChanged;
         }

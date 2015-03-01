@@ -17,7 +17,7 @@ using Timer = System.Timers.Timer;
 
 namespace Queue.Terminal.ViewModels
 {
-    public class TerminalWindowVM : ObservableObject, IDisposable
+    public class TerminalWindowViewModel : ObservableObject, IDisposable
     {
         private const int PingInterval = 10000;
 
@@ -68,10 +68,8 @@ namespace Queue.Terminal.ViewModels
 
         public ICommand SearchServiceCommand { get { return searchServiceCommand.Value; } }
 
-        public TerminalWindowVM()
+        public TerminalWindowViewModel()
         {
-            Title = "Терминал";
-
             Model = ServiceLocator.Current.GetInstance<ClientRequestModel>();
             request.PropertyChanged += model_PropertyChanged;
 
@@ -194,7 +192,7 @@ namespace Queue.Terminal.ViewModels
             disposed = true;
         }
 
-        ~TerminalWindowVM()
+        ~TerminalWindowViewModel()
         {
             Dispose(false);
         }

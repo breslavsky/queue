@@ -145,17 +145,23 @@
     <Compile Include="Converters\ClientRequestTypeConverter.cs" />
     <Compile Include="Converters\RequestDateTimeConverter.cs" />
     <Compile Include="Enums\ClientRequestModelState.cs" />
-    <Compile Include="ViewModels\PrintCouponPageVM.cs" />
-    <Compile Include="ViewModels\SelectRequestDatePageVM.cs" />
-    <Compile Include="ViewModels\SearchServicePageVM.cs" />
-    <Compile Include="ViewModels\SelectSubjectsPageVM.cs" />
-    <Compile Include="ViewModels\SetClientPageVM.cs" />
-    <Compile Include="ViewModels\SearchServiceResultsVM.cs" />
-    <Compile Include="ViewModels\TerminalWindowVM.cs" />
-    <Compile Include="ViewModels\PageVM.cs" />
-    <Compile Include="ViewModels\SelectRequestTypePageVM.cs" />
-    <Compile Include="ViewModels\ServiceButtonVM.cs" />
-    <Compile Include="ViewModels\SelectServicePageVM.cs" />
+    <Compile Include="Translation\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\PrintCouponPageViewModel.cs" />
+    <Compile Include="ViewModels\SelectRequestDatePageViewModel.cs" />
+    <Compile Include="ViewModels\SearchServicePageViewModel.cs" />
+    <Compile Include="ViewModels\SelectSubjectsPageViewModel.cs" />
+    <Compile Include="ViewModels\SetClientPageViewModel.cs" />
+    <Compile Include="ViewModels\SearchServiceResultsViewModel.cs" />
+    <Compile Include="ViewModels\TerminalWindowViewModel.cs" />
+    <Compile Include="ViewModels\PageViewModel.cs" />
+    <Compile Include="ViewModels\SelectRequestTypePageViewModel.cs" />
+    <Compile Include="ViewModels\ServiceButtonViewModel.cs" />
+    <Compile Include="ViewModels\SelectServicePageViewModel.cs" />
     <Compile Include="Views\PrintCouponPage.xaml.cs">
       <DependentUpon>PrintCouponPage.xaml</DependentUpon>
     </Compile>
@@ -269,6 +275,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Translation\Strings.en-US.resx" />
+    <EmbeddedResource Include="Translation\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -334,9 +345,7 @@
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Translation\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

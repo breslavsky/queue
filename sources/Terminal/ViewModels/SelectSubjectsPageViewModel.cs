@@ -3,12 +3,12 @@ using System.Windows.Input;
 
 namespace Queue.Terminal.ViewModels
 {
-    public class SelectSubjectsPageVM : PageVM
+    public class SelectSubjectsPageViewModel : PageViewModel
     {
         private bool canInc;
         private bool canDec;
 
-        public SelectSubjectsPageVM()
+        public SelectSubjectsPageViewModel()
         {
             PrevCommand = new RelayCommand(Prev);
             NextCommand = new RelayCommand(Next);

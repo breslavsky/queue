@@ -56,18 +56,21 @@
     <Compile Include="ServerTime.cs" />
     <Compile Include="TicksInterval.cs" />
     <Compile Include="Language.cs" />
-    <Compile Include="Translation\Language.en-EN.Designer.cs">
+    <Compile Include="Translation\Language.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Language.en-EN.resx</DependentUpon>
+      <DependentUpon>Language.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Translation\Language.en-EN.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Language.en-EN.Designer.cs</LastGenOutput>
+    <EmbeddedResource Include="Translation\Language.en-US.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Language.resx</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Translation\Language.resx" />
+    <EmbeddedResource Include="Translation\Language.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Language.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

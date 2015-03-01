@@ -6,7 +6,7 @@ namespace Queue.Terminal.Views
 {
     public partial class PrintCouponPage : TerminalPage
     {
-        protected override Type ModelType { get { return typeof(PrintCouponPageVM); } }
+        protected override Type ModelType { get { return typeof(PrintCouponPageViewModel); } }
 
         public PrintCouponPage()
             : base()
@@ -16,12 +16,12 @@ namespace Queue.Terminal.Views
 
         private void TerminalPage_Loaded(object sender, RoutedEventArgs e)
         {
-            (DataContext as PrintCouponPageVM).Initialize();
+            (DataContext as PrintCouponPageViewModel).Initialize();
         }
 
         private void TerminalPage_Unloaded(object sender, RoutedEventArgs e)
         {
-            (DataContext as PrintCouponPageVM).Dispose();
+            (DataContext as PrintCouponPageViewModel).Dispose();
         }
     }
 }

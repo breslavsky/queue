@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace Queue.Terminal.ViewModels
 {
-    public class SearchServiceResultsVM : ObservableObject, IServiceSearch
+    public class SearchServiceResultsViewModel : ObservableObject, IServiceSearch
     {
         private const int ResultsColCount = 2;
         private const int ResultsRowCount = 3;
@@ -56,7 +56,7 @@ namespace Queue.Terminal.ViewModels
 
         public ICommand PrevCommand { get; set; }
 
-        public SearchServiceResultsVM()
+        public SearchServiceResultsViewModel()
         {
             NextCommand = new RelayCommand(Next);
             PrevCommand = new RelayCommand(Prev);
@@ -165,7 +165,7 @@ namespace Queue.Terminal.ViewModels
 
         private SelectServiceButton CreateServiceButton(string code, string name, string color, EventHandler onSelected)
         {
-            ServiceButtonVM model = new ServiceButtonVM()
+            ServiceButtonViewModel model = new ServiceButtonViewModel()
             {
                 Code = code,
                 Name = name,

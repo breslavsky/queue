@@ -15,7 +15,7 @@ using System.Windows.Threading;
 
 namespace Queue.Terminal.ViewModels
 {
-    public class PrintCouponPageVM : PageVM, IDisposable
+    public class PrintCouponPageViewModel : PageViewModel, IDisposable
     {
         private bool disposed;
         private DispatcherTimer timer;
@@ -29,7 +29,7 @@ namespace Queue.Terminal.ViewModels
             set { SetProperty(ref success, value); }
         }
 
-        public PrintCouponPageVM()
+        public PrintCouponPageViewModel()
             : base()
         {
             timer = new DispatcherTimer();
@@ -127,7 +127,7 @@ namespace Queue.Terminal.ViewModels
 
         #region IDisposable
 
-        ~PrintCouponPageVM()
+        ~PrintCouponPageViewModel()
         {
             Dispose(false);
         }

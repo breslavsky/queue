@@ -9,15 +9,15 @@ namespace Queue.Terminal.Views
 {
     public partial class SearchServicePage : TerminalPage
     {
-        protected override Type ModelType { get { return typeof(SearchServicePageVM); } }
+        protected override Type ModelType { get { return typeof(SearchServicePageViewModel); } }
 
-        private SearchServicePageVM viewModel;
+        private SearchServicePageViewModel viewModel;
 
         public SearchServicePage()
         {
             InitializeComponent();
 
-            viewModel = DataContext as SearchServicePageVM;
+            viewModel = DataContext as SearchServicePageViewModel;
             viewModel.OnSearch += viewModel_OnSearch;
             viewModel.Initialize(searchResults.GetModel());
 

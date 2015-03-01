@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Threading;
 
 namespace Queue.Common
@@ -12,19 +14,16 @@ namespace Queue.Common
 
     public static partial class TranslationExtensions
     {
+        private static Dictionary<Language, string> CulturesNames = new Dictionary<Language, string>()
+        {
+            {Language.ru_RU, "ru-RU"},
+            {Language.en_EN, "en-EN"},
+            {Language.zh_CN, "zh-CN"}
+        };
+
         public static Language GetLanguage(this CultureInfo culture)
         {
-            if (culture.Equals(CultureInfo.CreateSpecificCulture("en-EN")))
-            {
-                return Language.en_EN;
-            }
-
-            if (culture.Equals(CultureInfo.CreateSpecificCulture("zh-CN")))
-            {
-                return Language.zh_CN;
-            }
-
-            return Language.ru_RU;
+            return CulturesNames.Single(n => n.Value == culture.Name).Key;
         }
 
         public static void SetCurrent(this Language language)
@@ -35,17 +34,7 @@ namespace Queue.Common
 
         public static CultureInfo GetCulture(this Language value)
         {
-            switch (value)
-            {
-                case Language.en_EN:
-                    return CultureInfo.CreateSpecificCulture("en-EN");
-
-                case Language.zh_CN:
-                    return CultureInfo.CreateSpecificCulture("zh-CN");
-
-                default:
-                    return CultureInfo.CreateSpecificCulture("ru-RU");
-            }
+            return CultureInfo.CreateSpecificCulture(CulturesNames[value]);
         }
     }
 }

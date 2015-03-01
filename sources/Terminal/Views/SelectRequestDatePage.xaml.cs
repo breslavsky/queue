@@ -10,7 +10,7 @@ namespace Queue.Terminal.Views
 {
     public partial class SelectRequestDatePage : TerminalPage
     {
-        protected override Type ModelType { get { return typeof(SelectRequestDatePageVM); } }
+        protected override Type ModelType { get { return typeof(SelectRequestDatePageViewModel); } }
 
         public SelectRequestDatePage()
             : base()
@@ -36,12 +36,12 @@ namespace Queue.Terminal.Views
             }
             earlyRequestDateCalendar.BlackoutDates.Add(new CalendarDateRange(DateTime.MinValue, end));
 
-            (DataContext as SelectRequestDatePageVM).Initialize();
+            (DataContext as SelectRequestDatePageViewModel).Initialize();
         }
 
         private void TerminalPage_Unloaded(object sender, RoutedEventArgs e)
         {
-            (DataContext as SelectRequestDatePageVM).Unloaded();
+            (DataContext as SelectRequestDatePageViewModel).Unloaded();
         }
     }
 }

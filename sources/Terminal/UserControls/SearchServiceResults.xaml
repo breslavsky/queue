@@ -2,9 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="300"
              d:DesignWidth="300"
+             lex:ResxLocalizationProvider.DefaultAssembly="Queue.Terminal"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d">
 
     <Grid>
@@ -63,7 +66,9 @@
                             <RotateTransform Angle="-90" />
                         </Rectangle.LayoutTransform>
                     </Rectangle>
-                    <TextBlock FontSize="15" FontWeight="Bold">Назад</TextBlock>
+                    <TextBlock FontSize="15"
+                               FontWeight="Bold"
+                               Text="{lex:Loc Back}" />
                 </StackPanel>
 
                 <Button.Style>
@@ -94,9 +99,8 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="0,0,10,0"
                                FontSize="15"
-                               FontWeight="Bold">
-                        Вперед
-                    </TextBlock>
+                               FontWeight="Bold"
+                               Text="{lex:Loc Next}" />
                     <Rectangle Width="20"
                                Height="20"
                                Fill="{Binding Path=Foreground,

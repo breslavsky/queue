@@ -12,13 +12,13 @@ using System.Windows.Input;
 
 namespace Queue.Terminal.ViewModels
 {
-    public class SelectRequestDatePageVM : PageVM
+    public class SelectRequestDatePageViewModel : PageViewModel
     {
         private ObservableCollection<EarlyRequestHour> availableHours = new ObservableCollection<EarlyRequestHour>();
         private EarlyRequestHour selectedHour;
         private int? selectedMinute;
 
-        public SelectRequestDatePageVM()
+        public SelectRequestDatePageViewModel()
         {
             PrevCommand = new RelayCommand(Prev);
             NextCommand = new RelayCommand(Next);

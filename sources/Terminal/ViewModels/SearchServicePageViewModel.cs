@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace Queue.Terminal.ViewModels
 {
-    public class SearchServicePageVM : PageVM
+    public class SearchServicePageViewModel : PageViewModel
     {
         private string filter;
 
@@ -21,7 +21,7 @@ namespace Queue.Terminal.ViewModels
 
         public event EventHandler OnSearch = delegate { };
 
-        public SearchServicePageVM()
+        public SearchServicePageViewModel()
         {
             searchCommand = new Lazy<ICommand>(() => new RelayCommand(Search));
         }

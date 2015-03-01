@@ -39,11 +39,11 @@ namespace Queue.Terminal
                 Content = rootObject;
 
                 ServiceLocator.Current.GetInstance<IUnityContainer>().RegisterInstance<IMainWindow>(this);
-                DataContext = new TerminalWindowVM();
+                DataContext = new TerminalWindowViewModel();
 
                 ServiceLocator.Current.GetInstance<Navigator>().SetNavigationService(pageFrame.NavigationService);
 
-                (DataContext as TerminalWindowVM).Initialize();
+                (DataContext as TerminalWindowViewModel).Initialize();
             }
             catch (Exception ex)
             {
@@ -67,7 +67,7 @@ namespace Queue.Terminal
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            (DataContext as TerminalWindowVM).Dispose();
+            (DataContext as TerminalWindowViewModel).Dispose();
         }
     }
 }

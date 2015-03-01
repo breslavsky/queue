@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace Queue.Terminal.ViewModels
 {
-    public class ServiceButtonVM : ObservableObject
+    public class ServiceButtonViewModel : ObservableObject
     {
         private string name;
         private string code;
@@ -35,7 +35,7 @@ namespace Queue.Terminal.ViewModels
             set { SetProperty(ref serviceBrush, value); }
         }
 
-        public ServiceButtonVM()
+        public ServiceButtonViewModel()
         {
             selectServiceCommand = new Lazy<ICommand>(() => new RelayCommand(() =>
             {

@@ -34,7 +34,7 @@ namespace Queue.UI.WPF.Pages.ViewModels
 
         private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
-        private EnumItem<Language> selectedLanguage;
+        private Language selectedLanguage;
         private IConfigurationManager configuration;
         private LoginSettings loginSettings;
         private LoginFormSettings loginFormSettings;
@@ -86,9 +86,7 @@ namespace Queue.UI.WPF.Pages.ViewModels
             }
         }
 
-        public EnumItem<Language>[] Languages { get; set; }
-
-        public EnumItem<Language> SelectedLanguage
+        public Language SelectedLanguage
         {
             get { return selectedLanguage; }
             set
@@ -96,7 +94,8 @@ namespace Queue.UI.WPF.Pages.ViewModels
                 SetProperty(ref selectedLanguage, value);
 
                 LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
-                LocalizeDictionary.Instance.Culture = SelectedLanguage.Value.GetCulture();
+
+                LocalizeDictionary.Instance.Culture = selectedLanguage.GetCulture();
             }
         }
 
@@ -128,7 +127,6 @@ namespace Queue.UI.WPF.Pages.ViewModels
             this.owner = owner;
 
             AccentColors = ThemeManager.Accents.Select(a => new AccentColorComboBoxItem(a.Name, a.Resources["AccentColorBrush"] as Brush)).ToArray();
-            Languages = EnumItem<Language>.GetItems();
 
             taskPool = new TaskPool();
 
@@ -157,7 +155,8 @@ namespace Queue.UI.WPF.Pages.ViewModels
 
             loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
             IsRemember = loginFormSettings.IsRemember;
-            SelectedLanguage = Languages.SingleOrDefault(l => l.Value == loginFormSettings.Language) ?? Languages[0];
+
+            SelectedLanguage = loginFormSettings.Language;
 
             if (!string.IsNullOrWhiteSpace(loginFormSettings.Accent))
             {
@@ -268,7 +267,7 @@ namespace Queue.UI.WPF.Pages.ViewModels
 
             loginFormSettings.IsRemember = IsRemember;
             loginFormSettings.Accent = SelectedAccent == null ? string.Empty : SelectedAccent.Name;
-            loginFormSettings.Language = SelectedLanguage.Value;
+            loginFormSettings.Language = SelectedLanguage;
 
             configuration.Save();
         }

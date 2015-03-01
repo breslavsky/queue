@@ -5,7 +5,7 @@ namespace Queue.Terminal.Views
 {
     public partial class SelectRequestTypePage : TerminalPage
     {
-        protected override Type ModelType { get { return typeof(SelectRequestTypePageVM); } }
+        protected override Type ModelType { get { return typeof(SelectRequestTypePageViewModel); } }
 
         public SelectRequestTypePage()
             : base()
@@ -15,7 +15,7 @@ namespace Queue.Terminal.Views
 
         private void TerminalPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            (DataContext as SelectRequestTypePageVM).Initialize();
+            (DataContext as SelectRequestTypePageViewModel).Initialize();
         }
     }
 }
