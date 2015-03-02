@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Queue.Administrator.Reports
@@ -54,29 +55,9 @@ namespace Queue.Administrator.Reports
             Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
-                if (taskPool != null)
-                {
-                    taskPool.Dispose();
-                }
-                if (channelManager != null)
-                {
-                    channelManager.Dispose();
-                }
-            }
-            base.Dispose(disposing);
-        }
-
         private void ServiceRatingReportForm_Load(object sender, EventArgs e)
         {
-            loadServiceGroup(servicesTreeView.Nodes);
+            LoadServiceGroup(servicesTreeView.Nodes);
 
             DateTime currentDate = ServerDateTime.Today;
             finishMonthPicker.Value = currentDate;
@@ -96,46 +77,24 @@ namespace Queue.Administrator.Reports
             finishYearComboBox.Enabled = finishYearComboBox.Items.Count > 1;
         }
 
-        private async void loadServiceGroup(TreeNodeCollection nodes, ServiceGroup serviceGroup = null)
+        private async void LoadServiceGroup(TreeNodeCollection nodes)
         {
             using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
-                    var serviceGroups = serviceGroup != null
-                        ? await taskPool.AddTask(channel.Service.GetServiceGroups(serviceGroup.Id))
-                        : await taskPool.AddTask(channel.Service.GetRootServiceGroups());
+                    var serviceGroups = await taskPool.AddTask(channel.Service.GetRootServiceGroups());
 
                     foreach (var g in serviceGroups)
                     {
-                        var node = new TreeNode()
-                        {
-                            Text = g.ToString(),
-                            Checked = g.IsActive,
-                            Tag = g
-                        };
-
-                        node.Nodes.Add(new TreeNode("загрузка...") { Tag = g });
-                        nodes.Add(node);
+                        nodes.Add(new ServiceGroupTreeNode(this, g));
                     }
 
-                    var services = serviceGroup != null
-                        ? await taskPool.AddTask(channel.Service.GetServices(serviceGroup.Id))
-                        : await taskPool.AddTask(channel.Service.GetRootServices());
+                    var services = await taskPool.AddTask(channel.Service.GetRootServices());
 
                     foreach (var s in services)
                     {
-                        var node = new TreeNode()
-                        {
-                            Text = s.ToString(),
-                            Tag = s
-                        };
-                        nodes.Add(node);
-                    }
-
-                    if (serviceGroup != null)
-                    {
-                        nodes.RemoveAt(0);
+                        nodes.Add(new ServiceTreeNode(s));
                     }
                 }
                 catch (OperationCanceledException) { }
@@ -153,54 +112,67 @@ namespace Queue.Administrator.Reports
             }
         }
 
-        private void servicesTreeView_AfterExpand(object sender, TreeViewEventArgs e)
+        private async void servicesTreeView_AfterExpand(object sender, TreeViewEventArgs e)
         {
-            var expandedNode = e.Node;
-            if (expandedNode != null && expandedNode.Tag is ServiceGroup)
-            {
-                var serviceGroup = (ServiceGroup)expandedNode.Tag;
+            var expandedNode = e.Node as ServiceGroupTreeNode;
 
-                if (expandedNode.Nodes.Cast<TreeNode>()
-                    .Any(x => x.Tag.Equals(serviceGroup)))
-                {
-                    loadServiceGroup(expandedNode.Nodes, serviceGroup);
-                }
+            if (expandedNode == null)
+            {
+                return;
+            }
+
+            var serviceGroup = expandedNode.Group;
+            if (!expandedNode.IsLoaded)
+            {
+                await expandedNode.Load();
             }
         }
 
         private void servicesTreeView_AfterCheck(object sender, TreeViewEventArgs e)
         {
-            TreeNode checkedNode = e.Node;
-            if (checkedNode != null)
+            servicesTreeView.AfterCheck -= servicesTreeView_AfterCheck;
+
+            if (e.Node is ServiceGroupTreeNode)
             {
-                if (typeof(ServiceGroup).IsInstanceOfType(checkedNode.Tag))
-                {
-                    foreach (TreeNode node in checkedNode.Nodes)
-                    {
-                        node.Checked = checkedNode.Checked;
-                    }
-                }
+                (e.Node as ServiceGroupTreeNode).SetChecked(e.Node.Checked);
             }
+            else
+            {
+                (e.Node as ServiceTreeNode).SetChecked(e.Node.Checked);
+            }
+
+            servicesTreeView.AfterCheck += servicesTreeView_AfterCheck;
         }
 
-        private List<Guid> getSelectedServices()
+        private async Task<Guid[]> GetSelectedServices()
         {
-            return getSelectedServices(servicesTreeView.Nodes);
+            return await GetSelectedServices(servicesTreeView.Nodes);
         }
 
-        private List<Guid> getSelectedServices(TreeNodeCollection nodes)
+        private async Task<Guid[]> GetSelectedServices(TreeNodeCollection nodes)
         {
             List<Guid> servicesIds = new List<Guid>();
             foreach (TreeNode node in nodes)
             {
-                if (node.Checked && typeof(Service).IsInstanceOfType(node.Tag))
+                if (!node.Checked)
                 {
-                    servicesIds.Add(((Service)node.Tag).Id);
+                    continue;
                 }
 
-                servicesIds.AddRange(getSelectedServices(node.Nodes));
+                if (node is ServiceTreeNode)
+                {
+                    servicesIds.Add((node as ServiceTreeNode).Service.Id);
+                }
+                else
+                {
+                    ServiceGroupTreeNode groupNode = node as ServiceGroupTreeNode;
+
+                    servicesIds.AddRange(groupNode.IsLoaded ?
+                        await GetSelectedServices(node.Nodes) :
+                        await groupNode.GetAllServices());
+                }
             }
-            return servicesIds;
+            return servicesIds.ToArray();
         }
 
         private void isFullCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -271,11 +243,9 @@ namespace Queue.Administrator.Reports
                             throw new Exception("Неверный тип детализации");
                     }
 
-                    List<Guid> servicesIds = isFullCheckBox.Checked
-                        ? new List<Guid>()
-                        : getSelectedServices();
+                    Guid[] servicesIds = isFullCheckBox.Checked ? new Guid[0] : await GetSelectedServices();
 
-                    byte[] report = await taskPool.AddTask(channel.Service.GetServiceRatingReport(servicesIds.ToArray(), detailLevel, settings));
+                    byte[] report = await taskPool.AddTask(channel.Service.GetServiceRatingReport(servicesIds, detailLevel, settings));
                     string path = Path.GetTempPath() + Path.GetRandomFileName() + ".xls";
 
                     FileStream file = File.OpenWrite(path);
@@ -306,6 +276,174 @@ namespace Queue.Administrator.Reports
         private void ServiceRatingReportForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Cancel();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+                if (taskPool != null)
+                {
+                    taskPool.Dispose();
+                }
+                if (channelManager != null)
+                {
+                    channelManager.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        private class ServiceGroupTreeNode : TreeNode
+        {
+            private ServiceRatingReportForm form;
+
+            public ServiceGroup Group { get; private set; }
+
+            public bool IsLoaded { get; set; }
+
+            public ServiceGroupTreeNode(ServiceRatingReportForm form, ServiceGroup group)
+            {
+                this.form = form;
+
+                Group = group;
+                Text = group.ToString();
+                Checked = group.IsActive;
+
+                Nodes.Add(new TreeNode("загрузка..."));
+                IsLoaded = false;
+            }
+
+            internal async Task Load()
+            {
+                if (IsLoaded)
+                {
+                    return;
+                }
+
+                using (var channel = form.channelManager.CreateChannel())
+                {
+                    try
+                    {
+                        var serviceGroups = await form.taskPool.AddTask(channel.Service.GetServiceGroups(Group.Id));
+
+                        foreach (var g in serviceGroups)
+                        {
+                            Nodes.Add(new ServiceGroupTreeNode(form, g));
+                        }
+
+                        var services = await form.taskPool.AddTask(channel.Service.GetServices(Group.Id));
+
+                        foreach (var s in services)
+                        {
+                            Nodes.Add(new ServiceTreeNode(s));
+                        }
+
+                        Nodes.RemoveAt(0);
+                        IsLoaded = true;
+
+                        SetChecked(Checked);
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                }
+            }
+
+            internal async Task<Guid[]> GetAllServices()
+            {
+                List<Guid> result = new List<Guid>();
+
+                using (Channel<IServerTcpService> channel = form.channelManager.CreateChannel())
+                {
+                    try
+                    {
+                        result.AddRange(await GetGroupServices(channel, Group));
+                    }
+                    catch (Exception) { }
+                }
+
+                return result.ToArray();
+            }
+
+            private async Task<Guid[]> GetGroupServices(Channel<IServerTcpService> channel, ServiceGroup group)
+            {
+                List<Guid> result = new List<Guid>();
+
+                result.AddRange((await form.taskPool.AddTask(channel.Service.GetServices(Group.Id))).Select(s => s.Id));
+
+                foreach (ServiceGroup child in await form.taskPool.AddTask(channel.Service.GetServiceGroups(Group.Id)))
+                {
+                    result.AddRange(await GetGroupServices(channel, child));
+                }
+
+                return result.ToArray();
+            }
+
+            internal void SetChecked(bool value)
+            {
+                foreach (TreeNode node in Nodes)
+                {
+                    node.Checked = value;
+                }
+            }
+
+            internal void AdjustCheckState()
+            {
+                bool isChecked = true;
+
+                foreach (TreeNode node in Nodes)
+                {
+                    if (!node.Checked)
+                    {
+                        isChecked = false;
+                        break;
+                    }
+                }
+
+                if (isChecked != Checked)
+                {
+                    Checked = isChecked;
+                    if (Parent is ServiceGroupTreeNode)
+                    {
+                        (Parent as ServiceGroupTreeNode).AdjustCheckState();
+                    }
+                }
+            }
+        }
+
+        private class ServiceTreeNode : TreeNode
+        {
+            public Service Service { get; private set; }
+
+            public ServiceTreeNode(Service service)
+                : base()
+            {
+                Service = service;
+
+                Text = service.ToString();
+            }
+
+            internal void SetChecked(bool p)
+            {
+                if (Parent is ServiceGroupTreeNode)
+                {
+                    (Parent as ServiceGroupTreeNode).AdjustCheckState();
+                }
+            }
         }
     }
 }
