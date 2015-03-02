@@ -86,5 +86,23 @@ namespace Queue.Terminal.Translation {
                 return ResourceManager.GetString("Next", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Поиск.
+        /// </summary>
+        internal static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Выбор услуг.
+        /// </summary>
+        internal static string SelectService {
+            get {
+                return ResourceManager.GetString("SelectService", resourceCulture);
+            }
+        }
     }
 }

@@ -126,4 +126,10 @@
   <data name="Next" xml:space="preserve">
     <value>Вперед</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
+  <data name="SelectService" xml:space="preserve">
+    <value>Выбор услуг</value>
+  </data>
 </root>

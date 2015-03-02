@@ -1,6 +1,9 @@
 ﻿<Border xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        lex:ResxLocalizationProvider.DefaultAssembly="Queue.Terminal"
+        lex:ResxLocalizationProvider.DefaultDictionary="Strings"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
   <Grid>
     <Grid>
@@ -31,7 +34,7 @@
                          VerticalAlignment="Center"
                          FontSize="25"
                          FontWeight="Bold"
-                         Text="Выбор услуг" />
+                         Text="{lex:Loc SelectService}" />
             </StackPanel>
           </Button>
           <Button Height="80"
@@ -49,7 +52,7 @@
                          VerticalAlignment="Center"
                          FontSize="25"
                          FontWeight="Bold"
-                         Text="Поиск" />
+                         Text="{lex:Loc Search}" />
             </StackPanel>
           </Button>
         </StackPanel>

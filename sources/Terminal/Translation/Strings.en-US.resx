@@ -126,4 +126,10 @@
   <data name="Next" xml:space="preserve">
     <value>Next</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SelectService" xml:space="preserve">
+    <value>Select service</value>
+  </data>
 </root>
