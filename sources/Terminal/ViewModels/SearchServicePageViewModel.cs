@@ -8,7 +8,6 @@ namespace Queue.Terminal.ViewModels
     {
         private string filter;
 
-        private Lazy<ICommand> searchCommand;
         private IServiceSearch searcher;
 
         public string Filter
@@ -17,13 +16,13 @@ namespace Queue.Terminal.ViewModels
             set { SetProperty(ref filter, value); }
         }
 
-        public ICommand SearchCommand { get { return searchCommand.Value; } }
+        public ICommand SearchCommand { get; set; }
 
         public event EventHandler OnSearch = delegate { };
 
         public SearchServicePageViewModel()
         {
-            searchCommand = new Lazy<ICommand>(() => new RelayCommand(Search));
+            SearchCommand = new RelayCommand(Search);
         }
 
         public void Initialize(IServiceSearch searcher)

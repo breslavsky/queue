@@ -7,7 +7,6 @@ using Queue.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
-using Queue.Terminal.Enums;
 using Queue.UI.WPF.Enums;
 using Queue.UI.WPF.Types;
 using System;
@@ -30,8 +29,6 @@ namespace Queue.Terminal.ViewModels
         private DateTime currentDateTime;
         private ServerState serverState;
         private string title;
-        private Lazy<ICommand> homeCommand;
-        private Lazy<ICommand> searchServiceCommand;
 
         private IUnityContainer container;
         private TaskPool taskPool;
@@ -64,9 +61,9 @@ namespace Queue.Terminal.ViewModels
             set { SetProperty(ref title, value); }
         }
 
-        public ICommand HomeCommand { get { return homeCommand.Value; } }
+        public ICommand HomeCommand { get; set; }
 
-        public ICommand SearchServiceCommand { get { return searchServiceCommand.Value; } }
+        public ICommand SearchServiceCommand { get; set; }
 
         public TerminalWindowViewModel()
         {
@@ -80,8 +77,8 @@ namespace Queue.Terminal.ViewModels
             navigator = ServiceLocator.Current.GetInstance<Navigator>();
             defaultConfig = ServiceLocator.Current.GetInstance<DefaultConfig>();
 
-            homeCommand = new Lazy<ICommand>(() => new RelayCommand(Home));
-            searchServiceCommand = new Lazy<ICommand>(() => new RelayCommand(SearchService));
+            HomeCommand = new RelayCommand(Home);
+            SearchServiceCommand = new RelayCommand(SearchService);
         }
 
         public void Initialize()
@@ -111,8 +108,10 @@ namespace Queue.Terminal.ViewModels
 
         private void SearchService()
         {
-            navigator.ResetState();
-            navigator.SetCurrentPage(PageType.SearchService);
+            screen.ShowNotice(Translater.Message("test", "world"));
+
+            //navigator.ResetState();
+            //navigator.SetCurrentPage(PageType.SearchService);
         }
 
         private void model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

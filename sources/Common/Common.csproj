@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="IConfigurationManager.cs" />
+    <Compile Include="ITranslater.cs" />
     <Compile Include="Settings\ApplicationSettings.cs" />
     <Compile Include="DateTimeUtils.cs" />
     <Compile Include="EnumItem.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="ServerTime.cs" />
     <Compile Include="TicksInterval.cs" />
     <Compile Include="Language.cs" />
+    <Compile Include="Translater.cs" />
     <Compile Include="Translation\Language.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
