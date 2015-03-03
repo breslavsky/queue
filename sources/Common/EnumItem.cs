@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Resources;
 
 namespace Queue.Common
 {
-    public class EnumItem<T>
+    public class EnumItem<T> where T : struct, IConvertible
     {
         private const string TranslationPattern = "{0}.Translation.{1}";
 
@@ -28,16 +27,7 @@ namespace Queue.Common
 
         public override string ToString()
         {
-            Type type = typeof(T);
-            try
-            {
-                return new ResourceManager(string.Format(TranslationPattern, type.Namespace, type.Name), type.Assembly)
-                    .GetString(Value.ToString());
-            }
-            catch
-            {
-                return Value.ToString();
-            }
+            return Translater.Enum(Value);
         }
 
         public override bool Equals(object obj)

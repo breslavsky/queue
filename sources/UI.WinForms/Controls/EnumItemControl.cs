@@ -15,7 +15,7 @@ namespace Queue.UI.WinForms
             InitializeComponent();
         }
 
-        public void Initialize<T>() where T : struct
+        public void Initialize<T>() where T : struct, IConvertible
         {
             frozen = true;
             try
@@ -32,7 +32,7 @@ namespace Queue.UI.WinForms
             }
         }
 
-        public void Select<T>(T value) where T : struct
+        public void Select<T>(T value) where T : struct, IConvertible
         {
             frozen = true;
 
@@ -41,7 +41,7 @@ namespace Queue.UI.WinForms
             frozen = false;
         }
 
-        public T Selected<T>() where T : struct
+        public T Selected<T>() where T : struct, IConvertible
         {
             return (comboBox.SelectedItem as EnumItem<T>).Value;
         }
