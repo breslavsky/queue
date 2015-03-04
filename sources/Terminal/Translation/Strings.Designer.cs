@@ -79,11 +79,101 @@ namespace Queue.Terminal.Translation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Клиент.
+        /// </summary>
+        internal static string Client {
+            get {
+                return ResourceManager.GetString("Client", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Спасибо, Вы записаны, возьмите талон.
+        /// </summary>
+        internal static string CompletedMessage {
+            get {
+                return ResourceManager.GetString("CompletedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Дата.
+        /// </summary>
+        internal static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to По записи.
+        /// </summary>
+        internal static string EarlyRequestType {
+            get {
+                return ResourceManager.GetString("EarlyRequestType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ничего не найдено.
+        /// </summary>
+        internal static string EmptySearchResults {
+            get {
+                return ResourceManager.GetString("EmptySearchResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Часы.
+        /// </summary>
+        internal static string Hours {
+            get {
+                return ResourceManager.GetString("Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Живая очередь.
+        /// </summary>
+        internal static string LiveRequestType {
+            get {
+                return ResourceManager.GetString("LiveRequestType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Минуты.
+        /// </summary>
+        internal static string Minutes {
+            get {
+                return ResourceManager.GetString("Minutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введите ваше имя.
+        /// </summary>
+        internal static string NameWatermark {
+            get {
+                return ResourceManager.GetString("NameWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Вперед.
         /// </summary>
         internal static string Next {
             get {
                 return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тип записи.
+        /// </summary>
+        internal static string RequestType {
+            get {
+                return ResourceManager.GetString("RequestType", resourceCulture);
             }
         }
         
@@ -102,6 +192,15 @@ namespace Queue.Terminal.Translation {
         internal static string SelectService {
             get {
                 return ResourceManager.GetString("SelectService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Количество объектов.
+        /// </summary>
+        internal static string Subjects {
+            get {
+                return ResourceManager.GetString("Subjects", resourceCulture);
             }
         }
     }

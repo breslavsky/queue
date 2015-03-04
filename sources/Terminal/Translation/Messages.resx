@@ -117,7 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="test" xml:space="preserve">
-    <value>Привет, {0}</value>
+  <data name="AvailableCount" xml:space="preserve">
+    <value>Доступно {0}</value>
+  </data>
+  <data name="DisabledByAdmin" xml:space="preserve">
+    <value>Отключено администратором</value>
+  </data>
+  <data name="EarlyDateNotSelected" xml:space="preserve">
+    <value>Дата предварительной записи не выбрана</value>
+  </data>
+  <data name="EarlyTimeNotSelected" xml:space="preserve">
+    <value>Время предварительной записи не выбрано</value>
+  </data>
+  <data name="NoFreeTime" xml:space="preserve">
+    <value>Нет свободного времени</value>
+  </data>
+  <data name="NoNameWarn" xml:space="preserve">
+    <value>Введите пожалуйста ФИО</value>
+  </data>
+  <data name="ServiceNotAvailableOnTerminal" xml:space="preserve">
+    <value>На данную услугу невозможно записаться через терминал. Обратитесь к администратору</value>
   </data>
 </root>

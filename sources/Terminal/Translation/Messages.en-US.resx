@@ -117,7 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="test" xml:space="preserve">
-    <value>Hello, {0}</value>
+  <data name="AvailableCount" xml:space="preserve">
+    <value>Available {0}</value>
+  </data>
+  <data name="DisabledByAdmin" xml:space="preserve">
+    <value>Disabled by the administrator</value>
+  </data>
+  <data name="EarlyDateNotSelected" xml:space="preserve">
+    <value>Early date is not selected</value>
+  </data>
+  <data name="EarlyTimeNotSelected" xml:space="preserve">
+    <value>Early time is not selected</value>
+  </data>
+  <data name="NoFreeTime" xml:space="preserve">
+    <value>No free time</value>
+  </data>
+  <data name="NoNameWarn" xml:space="preserve">
+    <value>Please, enter your name</value>
+  </data>
+  <data name="ServiceNotAvailableOnTerminal" xml:space="preserve">
+    <value>Service is not available on the terminal. Contact the administrator</value>
   </data>
 </root>

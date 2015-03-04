@@ -11,7 +11,7 @@
              mc:Ignorable="d">
 
     <Grid>
-        <Label FontSize="30">
+        <Label Content="{lex:Loc EmptySearchResults}" FontSize="30">
             <Label.Style>
                 <Style TargetType="{x:Type Label}">
                     <Style.Triggers>
@@ -24,7 +24,6 @@
                     </Style.Triggers>
                 </Style>
             </Label.Style>
-            Ничего не найдено
         </Label>
         <Grid>
             <Grid.ColumnDefinitions>

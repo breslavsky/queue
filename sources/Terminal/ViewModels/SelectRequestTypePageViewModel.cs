@@ -21,36 +21,7 @@ namespace Queue.Terminal.ViewModels
         private bool allowEarly;
         private GridLength commentRowHeight;
 
-        private Lazy<ICommand> selectTypeCommand;
-
-        public SelectRequestTypePageViewModel()
-        {
-            selectTypeCommand = new Lazy<ICommand>(() => new RelayCommand<ClientRequestType>(async (type) =>
-            {
-                model.RequestType = type;
-                LoadingControl loading = screen.ShowLoading();
-
-                try
-                {
-                    await Model.AdjustMaxSubjects();
-                    navigator.NextPage();
-                }
-                catch (FaultException exception)
-                {
-                    screen.ShowWarning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    screen.ShowWarning(exception.Message);
-                }
-                finally
-                {
-                    loading.Hide();
-                }
-            }));
-        }
-
-        public ICommand SelectTypeCommand { get { return this.selectTypeCommand.Value; } }
+        public ICommand SelectTypeCommand { get; set; }
 
         public string Comment
         {
@@ -86,6 +57,35 @@ namespace Queue.Terminal.ViewModels
         {
             get { return allowEarly; }
             set { SetProperty(ref allowEarly, value); }
+        }
+
+        public SelectRequestTypePageViewModel()
+        {
+            SelectTypeCommand = new RelayCommand<ClientRequestType>(SelectType);
+        }
+
+        private async void SelectType(ClientRequestType type)
+        {
+            model.RequestType = type;
+            LoadingControl loading = screen.ShowLoading();
+
+            try
+            {
+                await Model.AdjustMaxSubjects();
+                navigator.NextPage();
+            }
+            catch (FaultException exception)
+            {
+                screen.ShowWarning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                screen.ShowWarning(exception.Message);
+            }
+            finally
+            {
+                loading.Hide();
+            }
         }
 
         public async void Initialize()
@@ -124,11 +124,11 @@ namespace Queue.Terminal.ViewModels
                             model.MaxSubjects = Math.Min(model.SelectedService.MaxSubjects, timeIntervals.Length);
                             AllowLive = true;
 
-                            LiveComment = string.Format("Доступно {0}", timeIntervals.Length);
+                            LiveComment = Translater.Message("AvailableCount", timeIntervals.Length);
                         }
                         else
                         {
-                            LiveComment = "Нет свободного времени";
+                            LiveComment = Translater.Message("NoFreeTime");
                         }
                     }
                     catch (FaultException exception)
@@ -147,7 +147,7 @@ namespace Queue.Terminal.ViewModels
             }
             else
             {
-                LiveComment = "Отключено администратором";
+                LiveComment = EarlyComment = Translater.Message("DisabledByAdmin");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Queue.Terminal.ViewModels
             }
             else
             {
-                EarlyComment = "Отключено администратором";
+                EarlyComment = Translater.Message("DisabledByAdmin");
             }
         }
     }

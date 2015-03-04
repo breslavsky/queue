@@ -61,11 +61,65 @@ namespace Queue.Terminal.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Привет, {0}.
+        ///   Looks up a localized string similar to Доступно {0}.
         /// </summary>
-        internal static string test {
+        internal static string AvailableCount {
             get {
-                return ResourceManager.GetString("test", resourceCulture);
+                return ResourceManager.GetString("AvailableCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Отключено администратором.
+        /// </summary>
+        internal static string DisabledByAdmin {
+            get {
+                return ResourceManager.GetString("DisabledByAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Дата предварительной записи не выбрана.
+        /// </summary>
+        internal static string EarlyDateNotSelected {
+            get {
+                return ResourceManager.GetString("EarlyDateNotSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Время предварительной записи не выбрано.
+        /// </summary>
+        internal static string EarlyTimeNotSelected {
+            get {
+                return ResourceManager.GetString("EarlyTimeNotSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Нет свободного времени.
+        /// </summary>
+        internal static string NoFreeTime {
+            get {
+                return ResourceManager.GetString("NoFreeTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Введите пожалуйста ФИО.
+        /// </summary>
+        internal static string NoNameWarn {
+            get {
+                return ResourceManager.GetString("NoNameWarn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to На данную услугу невозможно записаться через терминал. Обратитесь к администратору.
+        /// </summary>
+        internal static string ServiceNotAvailableOnTerminal {
+            get {
+                return ResourceManager.GetString("ServiceNotAvailableOnTerminal", resourceCulture);
             }
         }
     }

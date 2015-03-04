@@ -123,13 +123,46 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="Client" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="CompletedMessage" xml:space="preserve">
+    <value>Thank you, take a ticket</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="EarlyRequestType" xml:space="preserve">
+    <value>Early</value>
+  </data>
+  <data name="EmptySearchResults" xml:space="preserve">
+    <value>Nothing found</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="LiveRequestType" xml:space="preserve">
+    <value>Live</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="NameWatermark" xml:space="preserve">
+    <value>Enter your name</value>
+  </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>
+  </data>
+  <data name="RequestType" xml:space="preserve">
+    <value>Request type</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
   <data name="SelectService" xml:space="preserve">
     <value>Select service</value>
+  </data>
+  <data name="Subjects" xml:space="preserve">
+    <value>Subjects</value>
   </data>
 </root>

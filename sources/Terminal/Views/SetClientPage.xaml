@@ -3,12 +3,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:lex="http://wpflocalizeextension.codeplex.com"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:ui_common="clr-namespace:Queue.UI.WPF;assembly=Queue.UI.WPF"
                     xmlns:views="clr-namespace:Queue.Terminal.Views"
                     Loaded="TerminalPage_Loaded"
                     d:DesignHeight="300"
                     d:DesignWidth="300"
+                    lex:ResxLocalizationProvider.DefaultAssembly="Queue.Terminal"
+                    lex:ResxLocalizationProvider.DefaultDictionary="Strings"
                     mc:Ignorable="d">
 
     <Grid>
@@ -20,7 +23,7 @@
         <TextBox x:Name="usernameTextBox"
                  Grid.Column="0"
                  VerticalAlignment="Top"
-                 Controls:TextBoxHelper.Watermark="Фамилия Имя Отчество"
+                 Controls:TextBoxHelper.Watermark="{lex:Loc NameWatermark}"
                  FontSize="30"
                  Text="{Binding Username}" />
         <Viewbox Grid.Row="1">
@@ -45,14 +48,14 @@
                     </Rectangle>
                     <TextBlock VerticalAlignment="Center"
                                FontSize="15"
-                               Text="Вернуться" />
+                               Text="{lex:Loc Back}" />
                 </StackPanel>
             </Button>
             <Button Grid.Column="2" Command="{Binding NextCommand}">
                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center"
                                FontSize="15"
-                               Text="Продолжить" />
+                               Text="{lex:Loc Next}" />
                     <Rectangle Width="25"
                                Height="25"
                                Margin="10,0,0,0">

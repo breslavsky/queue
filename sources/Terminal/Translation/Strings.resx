@@ -123,13 +123,46 @@
   <data name="Back" xml:space="preserve">
     <value>Назад</value>
   </data>
+  <data name="Client" xml:space="preserve">
+    <value>Клиент</value>
+  </data>
+  <data name="CompletedMessage" xml:space="preserve">
+    <value>Спасибо, Вы записаны, возьмите талон</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="EarlyRequestType" xml:space="preserve">
+    <value>По записи</value>
+  </data>
+  <data name="EmptySearchResults" xml:space="preserve">
+    <value>Ничего не найдено</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Часы</value>
+  </data>
+  <data name="LiveRequestType" xml:space="preserve">
+    <value>Живая очередь</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Минуты</value>
+  </data>
+  <data name="NameWatermark" xml:space="preserve">
+    <value>Введите ваше имя</value>
+  </data>
   <data name="Next" xml:space="preserve">
     <value>Вперед</value>
+  </data>
+  <data name="RequestType" xml:space="preserve">
+    <value>Тип записи</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Поиск</value>
   </data>
   <data name="SelectService" xml:space="preserve">
     <value>Выбор услуг</value>
+  </data>
+  <data name="Subjects" xml:space="preserve">
+    <value>Количество объектов</value>
   </data>
 </root>

@@ -1,4 +1,5 @@
 ﻿using Junte.UI.WPF;
+using Queue.Common;
 using Queue.Services.DTO;
 using System;
 using System.ServiceModel;
@@ -31,7 +32,7 @@ namespace Queue.Terminal.ViewModels
         {
             if (string.IsNullOrWhiteSpace(Username))
             {
-                screen.ShowWarning("Введите пожалуйста ФИО");
+                screen.ShowWarning(Translater.Message("NoNameWarn"));
                 return;
             }
 

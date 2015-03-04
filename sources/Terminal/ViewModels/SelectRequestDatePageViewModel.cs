@@ -1,5 +1,6 @@
 ﻿using Junte.UI.WPF;
 using Junte.WCF.Common;
+using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -61,14 +62,14 @@ namespace Queue.Terminal.ViewModels
         {
             if (!model.SelectedDate.HasValue)
             {
-                screen.ShowWarning("Дата предварительной записи не выбрана");
+                screen.ShowWarning(Translater.Message("EarlyDateNotSelected"));
                 return;
             }
 
             model.SelectedTime = GetSelectedTime();
             if (model.SelectedTime == TimeSpan.Zero)
             {
-                screen.ShowWarning("Время предварительной записи не выбрано");
+                screen.ShowWarning(Translater.Message("EarlyTimeNotSelected"));
                 return;
             }
 

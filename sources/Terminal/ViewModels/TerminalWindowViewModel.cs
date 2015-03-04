@@ -7,6 +7,7 @@ using Queue.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
+using Queue.Terminal.Enums;
 using Queue.UI.WPF.Enums;
 using Queue.UI.WPF.Types;
 using System;
@@ -108,10 +109,8 @@ namespace Queue.Terminal.ViewModels
 
         private void SearchService()
         {
-            screen.ShowNotice(Translater.Message("test", "world"));
-
-            //navigator.ResetState();
-            //navigator.SetCurrentPage(PageType.SearchService);
+            navigator.ResetState();
+            navigator.SetCurrentPage(PageType.SearchService);
         }
 
         private void model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

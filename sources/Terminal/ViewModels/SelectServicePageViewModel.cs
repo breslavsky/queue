@@ -1,5 +1,6 @@
 ﻿using Junte.UI.WPF;
 using Junte.WCF.Common;
+using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -127,7 +128,7 @@ namespace Queue.Terminal.ViewModels
             bool earlyTerminal = service.EarlyRegistrator.HasFlag(ClientRequestRegistrator.Terminal);
             if ((!liveTerminal) && (!earlyTerminal))
             {
-                screen.ShowWarning("На данную услугу невозможно записаться через терминал. Обратитесь к администратору");
+                screen.ShowWarning(Translater.Message("ServiceNotAvailableOnTerminal"));
                 return;
             }
 

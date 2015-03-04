@@ -4,11 +4,14 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                     xmlns:converters="clr-namespace:Queue.Terminal.Converters"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:lex="http://wpflocalizeextension.codeplex.com"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:views="clr-namespace:Queue.Terminal.Views"
                     Loaded="TerminalPage_Loaded"
                     d:DesignHeight="300"
                     d:DesignWidth="400"
+                    lex:ResxLocalizationProvider.DefaultAssembly="Queue.Terminal"
+                    lex:ResxLocalizationProvider.DefaultDictionary="Strings"
                     mc:Ignorable="d">
 
     <views:TerminalPage.Resources>
@@ -34,13 +37,15 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Label FontSize="15">Клиент:</Label>
+            <Label Content="{lex:Loc Client}" FontSize="15" />
             <Label Grid.Column="1"
                    Content="{Binding Model.CurrentClient}"
                    FontSize="15"
                    FontWeight="Bold" />
 
-            <Label Grid.Row="1" FontSize="15">Тип записи:</Label>
+            <Label Grid.Row="1"
+                   Content="{lex:Loc RequestType}"
+                   FontSize="15" />
             <Label Grid.Row="1"
                    Grid.Column="1"
                    Content="{Binding Model.RequestType,
@@ -48,7 +53,9 @@
                    FontSize="15"
                    FontWeight="Bold" />
 
-            <Label Grid.Row="2" FontSize="15">Время:</Label>
+            <Label Grid.Row="2"
+                   Content="{lex:Loc Date}"
+                   FontSize="15" />
             <Label Grid.Row="2"
                    Grid.Column="1"
                    FontSize="15"
@@ -61,7 +68,9 @@
                 </Label.Content>
             </Label>
 
-            <Label Grid.Row="3" FontSize="15">Количество объектов:</Label>
+            <Label Grid.Row="3"
+                   Content="{lex:Loc Subjects}"
+                   FontSize="15" />
             <StackPanel Grid.Row="3"
                         Grid.Column="1"
                         HorizontalAlignment="Center"
@@ -110,14 +119,14 @@
                     </Rectangle>
                     <TextBlock VerticalAlignment="Center"
                                FontSize="15"
-                               Text="Вернуться" />
+                               Text="{lex:Loc Back}" />
                 </StackPanel>
             </Button>
             <Button Grid.Column="2" Command="{Binding NextCommand}">
                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center"
                                FontSize="15"
-                               Text="Записаться в очередь" />
+                               Text="{lex:Loc Next}" />
                     <Rectangle Width="25"
                                Height="25"
                                Margin="10,0,0,0">
