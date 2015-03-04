@@ -60,7 +60,7 @@
             // connectButton
             // 
             this.connectButton.Image = ((System.Drawing.Image)(resources.GetObject("connectButton.Image")));
-            this.connectButton.Location = new System.Drawing.Point(290, 30);
+            this.connectButton.Location = new System.Drawing.Point(290, 27);
             this.connectButton.Name = "connectButton";
             this.connectButton.Size = new System.Drawing.Size(30, 25);
             this.connectButton.TabIndex = 0;

@@ -1,13 +1,9 @@
-﻿using Queue.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Reflection;
-using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public class RichForm : Junte.UI.WinForms.RichForm
+    public class RichForm : Junte.UI.WinForms.RichForm, ITranslatable
     {
         private FormTranslater translater;
 
@@ -29,25 +25,9 @@ namespace Queue.UI.WinForms
             catch { }
         }
 
-        internal void Translate()
+        public void Translate()
         {
             translater.Translate();
-
-            foreach (Control c in ControlList())
-            {
-                if (c is RichUserControl)
-                {
-                    (c as RichUserControl).Translate();
-                }
-            }
-        }
-
-        private IEnumerable<Control> ControlList(Control control = null)
-        {
-            var controls = (control != null ? control.Controls : Controls).Cast<Control>();
-
-            return controls.SelectMany(c => ControlList(c))
-                            .Concat(controls);
         }
 
         protected override void OnLoad(EventArgs e)

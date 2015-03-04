@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationManager.cs" />
-    <Compile Include="FormTranslater.cs" />
     <Compile Include="IConfigurationManager.cs" />
     <Compile Include="Settings\ApplicationSettings.cs" />
     <Compile Include="DateTimeUtils.cs" />

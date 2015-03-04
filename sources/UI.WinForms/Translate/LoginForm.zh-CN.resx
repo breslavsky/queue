@@ -117,31 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="connectionGroupBox.Text" xml:space="preserve">
-    <value>连接参数</value>
-  </data>
-  <data name="loginButton.Text" xml:space="preserve">
-    <value>注册</value>
-  </data>
-  <data name="loginGroupBox.Text" xml:space="preserve">
-    <value>用户数据</value>
-  </data>
-  <data name="loginLabel.Text" xml:space="preserve">
-    <value>注册</value>
-  </data>
-  <data name="passwordLabel.Text" xml:space="preserve">
-    <value>密码</value>
-  </data>
   <data name="rememberCheckBox.Text" xml:space="preserve">
     <value>记得</value>
-  </data>
-  <data name="serverLabel.Text" xml:space="preserve">
-    <value>队列服务器</value>
   </data>
   <data name="Text" xml:space="preserve">
     <value>服务器登录</value>
   </data>
   <data name="productNameLabel.Text" xml:space="preserve">
     <value>电子排队系统</value>
+  </data>
+  <data name="loginButton.Text" xml:space="preserve">
+    <value>登录</value>
   </data>
 </root>

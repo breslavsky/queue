@@ -1,10 +1,10 @@
-﻿using Queue.Common;
+﻿using Queue.UI.Common;
 using System;
 using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class RichUserControl : UserControl
+    public partial class RichUserControl : UserControl, ITranslatable
     {
         private FormTranslater translater;
 

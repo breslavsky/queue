@@ -154,6 +154,8 @@
     <Compile Include="Controls\IdentifiedEntityControl.Designer.cs">
       <DependentUpon>IdentifiedEntityControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormTranslater.cs" />
+    <Compile Include="ITranslatable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

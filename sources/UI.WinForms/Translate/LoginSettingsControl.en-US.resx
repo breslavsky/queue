@@ -120,14 +120,11 @@
   <data name="connectionGroupBox.Text" xml:space="preserve">
     <value>Connection parameters</value>
   </data>
-  <data name="loginButton.Text" xml:space="preserve">
-    <value>Login</value>
-  </data>
   <data name="loginGroupBox.Text" xml:space="preserve">
     <value>User data</value>
   </data>
   <data name="loginLabel.Text" xml:space="preserve">
-    <value>Login</value>
+    <value>Username</value>
   </data>
   <data name="passwordLabel.Text" xml:space="preserve">
     <value>Password</value>
