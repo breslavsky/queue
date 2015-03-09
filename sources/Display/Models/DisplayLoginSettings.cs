@@ -4,7 +4,7 @@ using System.Configuration;
 
 namespace Queue.Display.Models
 {
-    public class LoginSettings : ConfigurationSection
+    public class DisplayLoginSettings : ConfigurationSection
     {
         public const string SectionKey = "loginForm";
 

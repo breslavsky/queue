@@ -117,34 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Accent" xml:space="preserve">
-    <value>Accent</value>
+  <data name="AppName" xml:space="preserve">
+    <value>Информационное табло</value>
   </data>
-  <data name="Language" xml:space="preserve">
-    <value>Language</value>
-  </data>
-  <data name="Loading" xml:space="preserve">
-    <value>Loading</value>
-  </data>
-  <data name="Login" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="Notice" xml:space="preserve">
-    <value>Notice</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="Remember" xml:space="preserve">
-    <value>Remember</value>
-  </data>
-  <data name="Server" xml:space="preserve">
-    <value>Server</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>User</value>
-  </data>
-  <data name="Warning" xml:space="preserve">
-    <value>Warning</value>
+  <data name="Workplace" xml:space="preserve">
+    <value>Рабочее место</value>
   </data>
 </root>

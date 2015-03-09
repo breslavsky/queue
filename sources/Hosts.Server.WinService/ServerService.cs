@@ -3,7 +3,9 @@ using Queue.Common;
 using Queue.Hosts.Common;
 using Queue.Server;
 using System;
+using System.Globalization;
 using System.ServiceProcess;
+using System.Threading;
 
 namespace Queue.Hosts.Server.WinService
 {
@@ -26,6 +28,10 @@ namespace Queue.Hosts.Server.WinService
             {
                 ConfigurationManager configuration = new ConfigurationManager(HostsConsts.ServerApp);
                 ServerSettings settings = configuration.GetSection<ServerSettings>(HostsConsts.ServerSettingsSectionKey);
+
+                CultureInfo culture = settings.Language.GetCulture();
+                Thread.CurrentThread.CurrentCulture = culture;
+                CultureInfo.DefaultThreadCurrentCulture = culture;
 
                 server = new ServerInstance(settings);
                 server.Start();

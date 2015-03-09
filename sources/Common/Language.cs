@@ -28,8 +28,11 @@ namespace Queue.Common
 
         public static void SetCurrent(this Language language)
         {
-            CultureInfo.DefaultThreadCurrentUICulture =
-                Thread.CurrentThread.CurrentCulture = language.GetCulture();
+            CultureInfo culture = language.GetCulture();
+
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            Thread.CurrentThread.CurrentCulture = culture;
         }
 
         public static CultureInfo GetCulture(this Language value)

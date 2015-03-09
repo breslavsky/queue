@@ -8,7 +8,7 @@ using System.Windows.Media.Animation;
 
 namespace Queue.Notification.ViewModels
 {
-    public class TickerUserControlVM : ObservableObject, ITicker
+    public class TickerUserControlViewModel : ObservableObject, ITicker
     {
         private const double MillisecondsPerUnit = 15;
         private int DefaultSpeed = 5;
@@ -31,7 +31,7 @@ namespace Queue.Notification.ViewModels
             set { SetProperty(ref ticker, value); }
         }
 
-        public TickerUserControlVM()
+        public TickerUserControlViewModel()
         {
             ServiceLocator.Current.GetInstance<IUnityContainer>().RegisterInstance<ITicker>(this);
 

@@ -18,7 +18,7 @@ namespace Queue.Notification
 {
     public partial class HomePage : RichPage
     {
-        private HomePageVM model;
+        private HomePageViewModel model;
 
         public HomePage()
             : base()
@@ -27,7 +27,7 @@ namespace Queue.Notification
 
             ServiceLocator.Current.GetInstance<IUnityContainer>().RegisterInstance<IMainWindow>(this);
 
-            model = new HomePageVM();
+            model = new HomePageViewModel();
             model.RequestUpdated += model_CurrentClientRequestPlanUpdated;
             model.RequestsLengthChanged += model_ClientRequestsLengthChanged;
 

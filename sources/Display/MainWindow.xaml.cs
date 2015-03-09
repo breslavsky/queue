@@ -9,7 +9,6 @@ using Queue.UI.WPF;
 using Queue.UI.WPF.Models;
 using System;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using DisplayLoginPage = Queue.Display.Pages.LoginPage;
@@ -21,16 +20,12 @@ namespace Queue.Display
     {
         private DisplayLoginPage loginPage;
 
-        public Version Version { get; set; }
-
         public MainWindow()
             : base()
         {
             InitializeComponent();
 
-            Version = Assembly.GetExecutingAssembly().GetName().Version;
-
-            DataContext = this;
+            DataContext = new MainWindowViewModel();
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)

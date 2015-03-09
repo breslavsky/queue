@@ -23,7 +23,7 @@ namespace Queue.UI.WinForms
 
         public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
 
-        public User SelectedUSer
+        public User SelectedUser
         {
             get { return selectUserControl.Selected<User>(); }
         }

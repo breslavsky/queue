@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Queue.UI.WPF.Translation {
+namespace Queue.Notification.Translation {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Queue.UI.WPF.Translation {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.UI.WPF.Translation.Strings", typeof(Strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Notification.Translation.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,92 +61,29 @@ namespace Queue.UI.WPF.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Тема.
+        ///   Looks up a localized string similar to Информационное табло.
         /// </summary>
-        internal static string Accent {
+        internal static string AppName {
             get {
-                return ResourceManager.GetString("Accent", resourceCulture);
+                return ResourceManager.GetString("AppName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Язык.
+        ///   Looks up a localized string similar to Посетитель.
         /// </summary>
-        internal static string Language {
+        internal static string Client {
             get {
-                return ResourceManager.GetString("Language", resourceCulture);
+                return ResourceManager.GetString("Client", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Загрузка.
+        ///   Looks up a localized string similar to Окно.
         /// </summary>
-        internal static string Loading {
+        internal static string Workplace {
             get {
-                return ResourceManager.GetString("Loading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Войти.
-        /// </summary>
-        internal static string Login {
-            get {
-                return ResourceManager.GetString("Login", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Уведомление.
-        /// </summary>
-        internal static string Notice {
-            get {
-                return ResourceManager.GetString("Notice", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Пароль.
-        /// </summary>
-        internal static string Password {
-            get {
-                return ResourceManager.GetString("Password", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Запомнить.
-        /// </summary>
-        internal static string Remember {
-            get {
-                return ResourceManager.GetString("Remember", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Сервер.
-        /// </summary>
-        internal static string Server {
-            get {
-                return ResourceManager.GetString("Server", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Пользователь.
-        /// </summary>
-        internal static string User {
-            get {
-                return ResourceManager.GetString("User", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Внимание.
-        /// </summary>
-        internal static string Warning {
-            get {
-                return ResourceManager.GetString("Warning", resourceCulture);
+                return ResourceManager.GetString("Workplace", resourceCulture);
             }
         }
     }

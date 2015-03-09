@@ -1,9 +1,12 @@
 ﻿<ui_common:RichPage x:Class="Queue.Display.Pages.LoginPage"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:common="clr-namespace:Queue.Common;assembly=Queue.Common"
                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:lex="http://wpflocalizeextension.codeplex.com"
                     xmlns:ui_common="clr-namespace:Queue.UI.WPF;assembly=Queue.UI.WPF"
-                    Title="Вход в систему">
+                    lex:ResxLocalizationProvider.DefaultAssembly="Queue.UI.WPF"
+                    lex:ResxLocalizationProvider.DefaultDictionary="Strings">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -15,7 +18,7 @@
     </i:Interaction.Triggers>
 
     <Border>
-        <Grid Width="400" Height="180">
+        <Grid Width="400" Height="220">
             <Border BorderBrush="{DynamicResource AccentColorBrush}"
                     BorderThickness="2"
                     CornerRadius="5"
@@ -29,10 +32,10 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
-
+                        <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Label Grid.Column="0" Content="Сервер очереди" />
+                    <Label Grid.Column="0" Content="{lex:Loc Server}" />
                     <Grid Grid.Column="2" Margin="5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -45,7 +48,7 @@
                                 Content="+"
                                 Style="{DynamicResource AccentedSquareButtonStyle}" />
                     </Grid>
-                    <Label Grid.Row="1" Content="Рабочее место" />
+                    <Label Grid.Row="1" Content="{lex:Loc Queue.Display:Strings:Workplace}" />
                     <ComboBox Grid.Row="1"
                               Grid.Column="1"
                               Margin="5"
@@ -62,7 +65,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <Label Grid.Row="2" Content="Тема" />
+                    <Label Grid.Row="2" Content="{lex:Loc Accent}" />
                     <ComboBox Grid.Row="2"
                               Grid.Column="1"
                               Margin="5"
@@ -79,7 +82,38 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
+                    <Label Grid.Row="3" Content="{lex:Loc Language}" />
 
+                    <lex:EnumComboBox Grid.Row="3"
+                                      Grid.Column="1"
+                                      Margin="5"
+                                      SelectedItem="{Binding SelectedLanguage,
+                                                             Mode=TwoWay}"
+                                      Type="{x:Type common:Language}"
+                                      lex:ResxLocalizationProvider.DefaultAssembly="Queue.Common"
+                                      lex:ResxLocalizationProvider.DefaultDictionary="Language">
+
+                        <lex:EnumComboBox.Style>
+                            <Style BasedOn="{StaticResource {x:Type ComboBox}}" TargetType="{x:Type lex:EnumComboBox}">
+                                <Setter Property="ItemTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <lex:LocProxy x:Name="Proxy"
+                                                              PrependType="False"
+                                                              Separator=":"
+                                                              Source="{Binding}" />
+                                                <TextBlock Margin="2"
+                                                           FontWeight="Normal"
+                                                           Text="{Binding Result,
+                                                                          ElementName=Proxy}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </lex:EnumComboBox.Style>
+                    </lex:EnumComboBox>
                     <Grid Grid.Row="4"
                           Grid.Column="2"
                           Margin="5">
@@ -87,12 +121,12 @@
                             <ColumnDefinition Width="90" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <CheckBox Content="Запомнить"
+                        <CheckBox Content="{lex:Loc Remember}"
                                   IsChecked="{Binding IsRemember}"
                                   IsEnabled="{Binding IsConnected}" />
                         <Button Grid.Column="1"
                                 Command="{Binding LoginCommand}"
-                                Content="Войти"
+                                Content="{lex:Loc Login}"
                                 IsEnabled="{Binding IsConnected}"
                                 Style="{DynamicResource AccentedSquareButtonStyle}" />
                     </Grid>

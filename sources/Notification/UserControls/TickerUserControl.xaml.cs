@@ -1,4 +1,5 @@
 ﻿using Queue.Notification.ViewModels;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -6,15 +7,17 @@ namespace Queue.Notification.UserControls
 {
     public partial class TickerUserControl : UserControl
     {
-        private TickerUserControlVM model;
+        private TickerUserControlViewModel model;
 
         public TickerUserControl()
         {
-            model = new TickerUserControlVM();
-
-            DataContext = model;
-
             InitializeComponent();
+
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                model = new TickerUserControlViewModel();
+                DataContext = model;
+            }
         }
 
         private void UserControl_Unloaded(object sender, System.Windows.RoutedEventArgs e)

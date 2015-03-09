@@ -2,10 +2,13 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Unloaded="UserControl_Unloaded"
              d:DesignHeight="200"
              d:DesignWidth="200"
+             lex:ResxLocalizationProvider.DefaultAssembly="Queue.Notification"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d">
 
     <Grid x:Name="clientRequestsGrid" Margin="5">
@@ -16,10 +19,10 @@
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Column="0"
                    Margin="0,0,5,0"
-                   Text="Посетитель"
+                   Text="{lex:Loc Client}"
                    TextDecorations="Underline" />
         <TextBlock Grid.Column="2"
-                   Text="Окно"
+                   Text="{lex:Loc Workplace}"
                    TextDecorations="Underline" />
     </Grid>
 </UserControl>

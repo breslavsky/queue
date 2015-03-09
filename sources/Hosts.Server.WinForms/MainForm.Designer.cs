@@ -38,6 +38,8 @@
             this.runServiceButton = new System.Windows.Forms.Button();
             this.installServiseButton = new System.Windows.Forms.Button();
             this.settingsGroupBox = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.languageControl = new Queue.UI.WinForms.EnumItemControl();
             this.httpCheckBox = new System.Windows.Forms.CheckBox();
             this.tcpCheckBox = new System.Windows.Forms.CheckBox();
             this.saveButton = new System.Windows.Forms.Button();
@@ -65,7 +67,7 @@
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(12, 416);
+            this.startButton.Location = new System.Drawing.Point(11, 458);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(195, 30);
             this.startButton.TabIndex = 0;
@@ -82,13 +84,13 @@
             this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel.Location = new System.Drawing.Point(0, 0);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(414, 462);
+            this.panel.Size = new System.Drawing.Size(414, 502);
             this.panel.TabIndex = 2;
             // 
             // stopButton
             // 
             this.stopButton.Enabled = false;
-            this.stopButton.Location = new System.Drawing.Point(212, 416);
+            this.stopButton.Location = new System.Drawing.Point(212, 458);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(195, 30);
             this.stopButton.TabIndex = 12;
@@ -101,7 +103,7 @@
             this.serviceGroupBox.Controls.Add(this.serviceStatePicture);
             this.serviceGroupBox.Controls.Add(this.runServiceButton);
             this.serviceGroupBox.Controls.Add(this.installServiseButton);
-            this.serviceGroupBox.Location = new System.Drawing.Point(12, 348);
+            this.serviceGroupBox.Location = new System.Drawing.Point(12, 390);
             this.serviceGroupBox.Name = "serviceGroupBox";
             this.serviceGroupBox.Size = new System.Drawing.Size(395, 62);
             this.serviceGroupBox.TabIndex = 2;
@@ -139,6 +141,8 @@
             // 
             // settingsGroupBox
             // 
+            this.settingsGroupBox.Controls.Add(this.label1);
+            this.settingsGroupBox.Controls.Add(this.languageControl);
             this.settingsGroupBox.Controls.Add(this.httpCheckBox);
             this.settingsGroupBox.Controls.Add(this.tcpCheckBox);
             this.settingsGroupBox.Controls.Add(this.saveButton);
@@ -148,10 +152,27 @@
             this.settingsGroupBox.Controls.Add(this.httpGroupBox);
             this.settingsGroupBox.Location = new System.Drawing.Point(12, 12);
             this.settingsGroupBox.Name = "settingsGroupBox";
-            this.settingsGroupBox.Size = new System.Drawing.Size(395, 330);
+            this.settingsGroupBox.Size = new System.Drawing.Size(395, 372);
             this.settingsGroupBox.TabIndex = 11;
             this.settingsGroupBox.TabStop = false;
             this.settingsGroupBox.Text = "Настройки";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(189, 297);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Язык";
+            // 
+            // languageControl
+            // 
+            this.languageControl.Location = new System.Drawing.Point(230, 296);
+            this.languageControl.Name = "languageControl";
+            this.languageControl.Size = new System.Drawing.Size(150, 21);
+            this.languageControl.TabIndex = 10;
+            this.languageControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.languageControl_SelectedChanged);
             // 
             // httpCheckBox
             // 
@@ -179,7 +200,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(306, 296);
+            this.saveButton.Location = new System.Drawing.Point(306, 335);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 9;
@@ -305,15 +326,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(414, 462);
+            this.ClientSize = new System.Drawing.Size(414, 502);
             this.Controls.Add(this.panel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(430, 500);
-            this.MinimumSize = new System.Drawing.Size(430, 500);
             this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Сервер очереди";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -360,6 +378,8 @@
         private System.Windows.Forms.Timer serviceStateTimer;
         private System.Windows.Forms.PictureBox serviceStatePicture;
         private System.Windows.Forms.Button stopButton;
+        private System.Windows.Forms.Label label1;
+        private UI.WinForms.EnumItemControl languageControl;
     }
 }
 

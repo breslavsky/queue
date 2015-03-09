@@ -11,6 +11,7 @@ using Queue.Services.DTO;
 using Queue.UI.WPF.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows;
@@ -93,9 +94,12 @@ namespace Queue.UI.WPF.Pages.ViewModels
             {
                 SetProperty(ref selectedLanguage, value);
 
-                LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+                CultureInfo culture = selectedLanguage.GetCulture();
 
-                LocalizeDictionary.Instance.Culture = selectedLanguage.GetCulture();
+                LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+                LocalizeDictionary.Instance.Culture = culture;
+                CultureInfo.DefaultThreadCurrentUICulture = culture;
+                CultureInfo.DefaultThreadCurrentCulture = culture;
             }
         }
 
@@ -155,7 +159,6 @@ namespace Queue.UI.WPF.Pages.ViewModels
 
             loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
             IsRemember = loginFormSettings.IsRemember;
-
             SelectedLanguage = loginFormSettings.Language;
 
             if (!string.IsNullOrWhiteSpace(loginFormSettings.Accent))

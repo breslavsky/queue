@@ -3,18 +3,20 @@ using Junte.UI.WPF;
 using Junte.WCF.Common;
 using MahApps.Metro;
 using Microsoft.Practices.ServiceLocation;
-
+using Queue.Common;
 using Queue.Display.Models;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using WPFLocalizeExtension.Engine;
 
 namespace Queue.Display.ViewModels
 {
@@ -37,7 +39,8 @@ namespace Queue.Display.ViewModels
         public event EventHandler OnLogined;
 
         private Common.IConfigurationManager configuration;
-        private LoginSettings loginSettings;
+        private DisplayLoginSettings loginSettings;
+        private Language selectedLanguage;
 
         public string Endpoint
         {
@@ -84,6 +87,22 @@ namespace Queue.Display.ViewModels
             }
         }
 
+        public Language SelectedLanguage
+        {
+            get { return selectedLanguage; }
+            set
+            {
+                SetProperty(ref selectedLanguage, value);
+
+                CultureInfo culture = selectedLanguage.GetCulture();
+
+                LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+                LocalizeDictionary.Instance.Culture = culture;
+                CultureInfo.DefaultThreadCurrentUICulture = culture;
+                CultureInfo.DefaultThreadCurrentCulture = culture;
+            }
+        }
+
         public Workplace Workplace { get; private set; }
 
         public ICommand ConnectCommand { get; set; }
@@ -121,10 +140,11 @@ namespace Queue.Display.ViewModels
         private void LoadSettings()
         {
             configuration = ServiceLocator.Current.GetInstance<Common.IConfigurationManager>();
-            loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey, s => s.Endpoint = "net.tcp://queue:4505");
+            loginSettings = configuration.GetSection<DisplayLoginSettings>(DisplayLoginSettings.SectionKey, s => s.Endpoint = "net.tcp://queue:4505");
 
             Endpoint = loginSettings.Endpoint;
             SelectedWorkplace = loginSettings.WorkplaceId;
+            SelectedLanguage = loginSettings.Language;
             if (!string.IsNullOrWhiteSpace(loginSettings.Accent))
             {
                 SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == loginSettings.Accent);
@@ -232,6 +252,7 @@ namespace Queue.Display.ViewModels
             loginSettings.WorkplaceId = SelectedWorkplace;
             loginSettings.IsRemember = IsRemember;
             loginSettings.Accent = SelectedAccent == null ? string.Empty : SelectedAccent.Name;
+            loginSettings.Language = SelectedLanguage;
 
             configuration.Save();
         }

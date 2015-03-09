@@ -76,7 +76,7 @@ namespace Queue.UI.WinForms
 
         private async void Login()
         {
-            User selectedUser = loginSettingsControl.SelectedUSer;
+            User selectedUser = loginSettingsControl.SelectedUser;
             if (selectedUser == null)
             {
                 return;

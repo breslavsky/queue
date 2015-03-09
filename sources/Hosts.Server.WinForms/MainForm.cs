@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Queue.Hosts.Server.WinForms
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Queue.UI.WinForms.RichForm
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -37,6 +37,7 @@ namespace Queue.Hosts.Server.WinForms
 
             editDatabaseSettingsControl.Settings = settings.Database;
             debugCheckBox.Checked = settings.Debug;
+            languageControl.Initialize<Language>();
         }
 
         private void LoadConfiguration()
@@ -83,6 +84,8 @@ namespace Queue.Hosts.Server.WinForms
         private void MainForm_Load(object sender, EventArgs e)
         {
             Text += string.Format(" ({0})", typeof(ServerInstance).Assembly.GetName().Version);
+
+            languageControl.Select<Language>(settings.Language);
 
             AdjustServiceSettings();
             AdjustServiceState();
@@ -216,6 +219,16 @@ namespace Queue.Hosts.Server.WinForms
             stopButton.Enabled = false;
 
             started = false;
+        }
+
+        private void languageControl_SelectedChanged(object sender, EventArgs e)
+        {
+            Language language = languageControl.Selected<Language>();
+            language.SetCurrent();
+
+            Translate();
+
+            settings.Language = language;
         }
 
         #region bindings

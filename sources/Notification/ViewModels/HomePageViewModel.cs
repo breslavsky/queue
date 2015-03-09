@@ -15,6 +15,7 @@ using Queue.UI.WPF.Types;
 using System;
 using System.Media;
 using System.ServiceModel;
+
 using System.Threading.Tasks;
 using System.Timers;
 using Vlc.DotNet.Core.Medias;
@@ -22,7 +23,7 @@ using Vlc.DotNet.Wpf;
 
 namespace Queue.Notification.ViewModels
 {
-    public class HomePageVM : ObservableObject, IDisposable
+    public class HomePageViewModel : ObservableObject, IDisposable
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -70,13 +71,13 @@ namespace Queue.Notification.ViewModels
             set { SetProperty(ref currentDateTimeText, value); }
         }
 
-        public CallClientUserControlVM CallClientModel { get; set; }
+        public CallClientUserControlViewModel CallClientModel { get; set; }
 
         public event EventHandler<ClientRequest> RequestUpdated;
 
         public event EventHandler<int> RequestsLengthChanged;
 
-        public HomePageVM()
+        public HomePageViewModel()
         {
             voiceLock = new object();
 
@@ -85,7 +86,7 @@ namespace Queue.Notification.ViewModels
             this.screen = ServiceLocator.Current.GetInstance<IMainWindow>();
             this.ticker = ServiceLocator.Current.GetInstance<ITicker>();
 
-            CallClientModel = new CallClientUserControlVM();
+            CallClientModel = new CallClientUserControlViewModel();
 
             InitCallbackChannel();
             InitTimers();
@@ -325,7 +326,7 @@ namespace Queue.Notification.ViewModels
             disposed = true;
         }
 
-        ~HomePageVM()
+        ~HomePageViewModel()
         {
             Dispose(false);
         }

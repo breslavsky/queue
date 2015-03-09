@@ -129,6 +129,9 @@
   <data name="Login" xml:space="preserve">
     <value>Войти</value>
   </data>
+  <data name="Notice" xml:space="preserve">
+    <value>Уведомление</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Пароль</value>
   </data>
@@ -140,5 +143,8 @@
   </data>
   <data name="User" xml:space="preserve">
     <value>Пользователь</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Внимание</value>
   </data>
 </root>

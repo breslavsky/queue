@@ -81,6 +81,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.Data.NHibernate.1.2.2.1\lib\net45\Junte.Data.NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="Junte.Parallel.Common, Version=1.0.0.50, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Junte.UI.WinForms, Version=1.2.0.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.UI.WinForms.1.2.0.2\lib\net45\Junte.UI.WinForms.dll</HintPath>
@@ -88,6 +89,10 @@
     <Reference Include="Junte.UI.WinForms.NHibernate, Version=1.2.0.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.UI.WinForms.NHibernate.1.2.0.3\lib\net45\Junte.UI.WinForms.NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Junte.WCF.Common, Version=1.0.0.35, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.WCF.Common.1.0.0.35\lib\net45\Junte.WCF.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack">
       <HintPath>..\packages\winapicp.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
@@ -119,6 +124,15 @@
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Queue.Model.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="Queue.Services.Contracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Services.Contracts\bin\Debug\Queue.Services.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Queue.Services.DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="Queue.UI.WinForms">
+      <HintPath>..\UI.WinForms\obj\Debug\Queue.UI.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

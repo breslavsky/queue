@@ -8,11 +8,13 @@ using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.UI.WPF.Models;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using WPFLocalizeExtension.Engine;
 
 namespace Queue.UI.WPF.ViewModels
 {
@@ -31,6 +33,7 @@ namespace Queue.UI.WPF.ViewModels
         private IConfigurationManager configuration;
         private LoginSettings loginSettings;
         private LoginFormSettings loginFormSettings;
+        private Language selectedLanguage;
 
         public bool IsRemember
         {
@@ -67,6 +70,22 @@ namespace Queue.UI.WPF.ViewModels
 
         public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
 
+        public Language SelectedLanguage
+        {
+            get { return selectedLanguage; }
+            set
+            {
+                SetProperty(ref selectedLanguage, value);
+
+                CultureInfo culture = selectedLanguage.GetCulture();
+
+                LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+                LocalizeDictionary.Instance.Culture = culture;
+                CultureInfo.DefaultThreadCurrentUICulture = culture;
+                CultureInfo.DefaultThreadCurrentCulture = culture;
+            }
+        }
+
         public ConnectPageViewModel(RichPage owner)
         {
             this.owner = owner;
@@ -97,6 +116,7 @@ namespace Queue.UI.WPF.ViewModels
 
             loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
             IsRemember = loginFormSettings.IsRemember;
+            SelectedLanguage = loginFormSettings.Language;
 
             if (!string.IsNullOrWhiteSpace(loginFormSettings.Accent))
             {
@@ -122,6 +142,7 @@ namespace Queue.UI.WPF.ViewModels
             loginSettings.Endpoint = Endpoint;
             loginFormSettings.IsRemember = IsRemember;
             loginFormSettings.Accent = SelectedAccent == null ? string.Empty : SelectedAccent.Name;
+            loginFormSettings.Language = SelectedLanguage;
 
             configuration.Save();
         }

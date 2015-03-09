@@ -5,13 +5,13 @@ namespace Queue.Notification.UserControls
 {
     public partial class ClientRequestsControl : UserControl
     {
-        public ClientRequestsControlVM Model { get; private set; }
+        public ClientRequestsControlViewModel Model { get; private set; }
 
         public ClientRequestsControl()
         {
             InitializeComponent();
 
-            Model = new ClientRequestsControlVM();
+            Model = new ClientRequestsControlViewModel();
             Model.SetClientRequestsGrid(clientRequestsGrid);
 
             DataContext = Model;

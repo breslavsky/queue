@@ -4,7 +4,7 @@ using Queue.Services.DTO;
 
 namespace Queue.Notification.ViewModels
 {
-    public class CallClientUserControlVM : ObservableObject
+    public class CallClientUserControlViewModel : ObservableObject
     {
         private bool active;
         private int number;

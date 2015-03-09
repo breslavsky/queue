@@ -13,7 +13,7 @@ using System.Windows.Threading;
 
 namespace Queue.Notification.ViewModels
 {
-    public class ClientRequestsControlVM : ObservableObject, IDisposable
+    public class ClientRequestsControlViewModel : ObservableObject, IDisposable
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -32,7 +32,7 @@ namespace Queue.Notification.ViewModels
 
         public int ClientRequestsLength { get; set; }
 
-        public ClientRequestsControlVM()
+        public ClientRequestsControlViewModel()
         {
             ClientRequestTimeout = TimeSpan.FromMinutes(20);
             ClientRequestsLength = DefaultClientRequestsLength;
@@ -194,7 +194,7 @@ namespace Queue.Notification.ViewModels
             disposed = true;
         }
 
-        ~ClientRequestsControlVM()
+        ~ClientRequestsControlViewModel()
         {
             Dispose(false);
         }

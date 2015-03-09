@@ -4,12 +4,12 @@ using MahApps.Metro.Controls;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
+using Queue.Notification.ViewModels;
 using Queue.Services.Contracts;
 using Queue.UI.WPF;
 using Queue.UI.WPF.Models;
 using System;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using WinForms = System.Windows.Forms;
@@ -26,16 +26,12 @@ namespace Queue.Notification
         private TaskPool taskPool;
         private ChannelManager<IServerTcpService> channelManager;
 
-        public Version Version { get; set; }
-
         public MainWindow()
             : base()
         {
             InitializeComponent();
 
-            Version = Assembly.GetExecutingAssembly().GetName().Version;
-
-            DataContext = this;
+            DataContext = new MainWindowViewModel();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

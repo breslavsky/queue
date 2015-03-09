@@ -33,8 +33,6 @@ namespace Queue.Terminal
 
         private DispatcherTimer resetTimer;
 
-        public Version Version { get; set; }
-
         public MainWindow()
             : base()
         {
