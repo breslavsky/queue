@@ -3,7 +3,7 @@ using System.Configuration;
 
 namespace Queue.UI.WPF.Models
 {
-    public class LoginFormSettings : ConfigurationSection
+    public class LoginFormSettings : AbstractSettings
     {
         public const string SectionKey = "loginForm";
 

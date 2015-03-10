@@ -1,8 +1,9 @@
-﻿using System.Configuration;
+﻿using Queue.Common;
+using System.Configuration;
 
 namespace Queue.UI.WinForms
 {
-    public class LoginFormSettings : ConfigurationSection
+    public class LoginFormSettings : AbstractSettings
     {
         [ConfigurationProperty("isRemember")]
         public bool IsRemember

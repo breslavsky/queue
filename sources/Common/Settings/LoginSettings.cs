@@ -3,9 +3,14 @@ using System.Configuration;
 
 namespace Queue.Common
 {
-    public class LoginSettings : ConfigurationSection
+    public class LoginSettings : AbstractSettings
     {
         public const string SectionKey = "connection";
+
+        public LoginSettings()
+        {
+            Endpoint = "net.tcp://queue:4505";
+        }
 
         [ConfigurationProperty("endpoint")]
         public string Endpoint

@@ -140,7 +140,7 @@ namespace Queue.Display.ViewModels
         private void LoadSettings()
         {
             configuration = ServiceLocator.Current.GetInstance<Common.IConfigurationManager>();
-            loginSettings = configuration.GetSection<DisplayLoginSettings>(DisplayLoginSettings.SectionKey, s => s.Endpoint = "net.tcp://queue:4505");
+            loginSettings = configuration.GetSection<DisplayLoginSettings>(DisplayLoginSettings.SectionKey);
 
             Endpoint = loginSettings.Endpoint;
             SelectedWorkplace = loginSettings.WorkplaceId;

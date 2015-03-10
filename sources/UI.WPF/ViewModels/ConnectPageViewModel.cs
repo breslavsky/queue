@@ -111,7 +111,7 @@ namespace Queue.UI.WPF.ViewModels
         private void LoadSettings()
         {
             configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-            loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey, s => s.Endpoint = "net.tcp://queue:4505");
+            loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
             Endpoint = loginSettings.Endpoint;
 
             loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);

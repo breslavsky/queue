@@ -1,5 +1,4 @@
-﻿using Junte.Data.NHibernate;
-using Junte.UI.WinForms;
+﻿using Junte.UI.WinForms;
 using NLog;
 using Queue.Common;
 using Queue.Hosts.Common;
@@ -43,42 +42,7 @@ namespace Queue.Hosts.Server.WinForms
         private void LoadConfiguration()
         {
             configuration = new ConfigurationManager(HostsConsts.ServerApp);
-            settings = configuration.GetSection<ServerSettings>(HostsConsts.ServerSettingsSectionKey, (s) =>
-                                                                            {
-                                                                                s.Database = GetDefaultDatabaseSettings();
-                                                                                s.Services = GetDefaultServicesConfig();
-                                                                                s.Debug = true;
-                                                                            });
-        }
-
-        private DatabaseSettings GetDefaultDatabaseSettings()
-        {
-            return new DatabaseSettings()
-                        {
-                            Server = "localhost",
-                            Name = "queue",
-                            Type = DatabaseType.MsSql,
-                            Integrated = true
-                        };
-        }
-
-        private ServicesConfig GetDefaultServicesConfig()
-        {
-            return new ServicesConfig()
-                        {
-                            HttpService = new HttpServiceConfig()
-                            {
-                                Enabled = false,
-                                Host = "localhost",
-                                Port = 4506
-                            },
-                            TcpService = new TcpServiceConfig()
-                            {
-                                Enabled = true,
-                                Host = "localhost",
-                                Port = 4505
-                            }
-                        };
+            settings = configuration.GetSection<ServerSettings>(HostsConsts.ServerSettingsSectionKey);
         }
 
         private void MainForm_Load(object sender, EventArgs e)

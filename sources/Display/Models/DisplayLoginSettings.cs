@@ -4,9 +4,14 @@ using System.Configuration;
 
 namespace Queue.Display.Models
 {
-    public class DisplayLoginSettings : ConfigurationSection
+    public class DisplayLoginSettings : AbstractSettings
     {
         public const string SectionKey = "loginForm";
+
+        public DisplayLoginSettings()
+        {
+            Endpoint = "net.tcp://queue:4505";
+        }
 
         [ConfigurationProperty("isRemember")]
         public bool IsRemember

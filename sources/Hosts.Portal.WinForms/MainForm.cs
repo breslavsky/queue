@@ -44,7 +44,7 @@ namespace Hosts.Portal.WinForms
         private void MainForm_Load(object sender, EventArgs e)
         {
             configurationManager = new ConfigurationManager(HostsConsts.PortalApp);
-            settings = configurationManager.GetSection<PortalSettings>(HostsConsts.PortalSettingsSectionKey, s => s.Port = 9090);
+            settings = configurationManager.GetSection<PortalSettings>(HostsConsts.PortalSettingsSectionKey);
             portalSettingsBindingSource.DataSource = settings;
 
             RegisterContainer();

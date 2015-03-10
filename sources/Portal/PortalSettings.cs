@@ -1,9 +1,15 @@
-﻿using System.Configuration;
+﻿using Queue.Common;
+using System.Configuration;
 
 namespace Queue.Portal
 {
-    public class PortalSettings : ConfigurationSection
+    public class PortalSettings : AbstractSettings
     {
+        public PortalSettings()
+        {
+            Port = 9090;
+        }
+
         [ConfigurationProperty("port", IsRequired = true)]
         public int Port
         {

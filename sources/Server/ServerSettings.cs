@@ -4,7 +4,7 @@ using System.Configuration;
 
 namespace Queue.Server
 {
-    public class ServerSettings : ConfigurationSection
+    public class ServerSettings : AbstractSettings
     {
         [ConfigurationProperty("debug")]
         public bool Debug
@@ -34,9 +34,46 @@ namespace Queue.Server
             set { this["language"] = value; }
         }
 
+        public ServerSettings()
+        {
+            Database = GetDefaultDatabaseSettings();
+            Services = GetDefaultServicesConfig();
+            Debug = true;
+        }
+
         public override bool IsReadOnly()
         {
             return false;
+        }
+
+        private DatabaseSettings GetDefaultDatabaseSettings()
+        {
+            return new DatabaseSettings()
+            {
+                Server = "localhost",
+                Name = "queue",
+                Type = DatabaseType.MsSql,
+                Integrated = true
+            };
+        }
+
+        private ServicesConfig GetDefaultServicesConfig()
+        {
+            return new ServicesConfig()
+            {
+                HttpService = new HttpServiceConfig()
+                {
+                    Enabled = false,
+                    Host = "localhost",
+                    Port = 4506
+                },
+                TcpService = new TcpServiceConfig()
+                {
+                    Enabled = true,
+                    Host = "localhost",
+                    Port = 4505
+                }
+            };
         }
     }
 

@@ -45,7 +45,7 @@ namespace Queue.UI.WinForms
             this.taskPool = taskPool;
 
             configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-            LoginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey, (s) => s.Endpoint = "net.tcp://queue:4505");
+            LoginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
 
             serverConnectionSettingsBindingSource.DataSource = LoginSettings;
 

@@ -1,5 +1,4 @@
-﻿using Junte.Data.NHibernate;
-using Junte.UI.WinForms;
+﻿using Junte.UI.WinForms;
 using NLog;
 using Queue.Common;
 using Queue.Hosts.Common;
@@ -42,18 +41,7 @@ namespace Queue.Hosts.Metric.WinForms
         private void LoadConfiguration()
         {
             configuration = new ConfigurationManager(HostsConsts.MetricApp);
-            settings = configuration.GetSection<MetricSettings>(HostsConsts.MetricSettingsSectionKey, s => s.Database = GetDefaultDatabaseSettings());
-        }
-
-        private DatabaseSettings GetDefaultDatabaseSettings()
-        {
-            return new DatabaseSettings()
-            {
-                Server = "localhost",
-                Name = "queue",
-                Type = DatabaseType.MsSql,
-                Integrated = true
-            };
+            settings = configuration.GetSection<MetricSettings>(HostsConsts.MetricSettingsSectionKey);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
