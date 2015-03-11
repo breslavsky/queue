@@ -118,6 +118,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Common", "Services
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model.Common", "Model.Common\Model.Common.csproj", "{57DDD930-5377-4427-92F1-D46B7463C5B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.WPF.Tests", "UI.WPF.Tests\UI.WPF.Tests.csproj", "{B6148420-3A2B-4113-8568-60E4D50A0DB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -600,6 +602,16 @@ Global
 		{57DDD930-5377-4427-92F1-D46B7463C5B6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{57DDD930-5377-4427-92F1-D46B7463C5B6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{57DDD930-5377-4427-92F1-D46B7463C5B6}.Release|x86.ActiveCfg = Release|Any CPU
+		{B6148420-3A2B-4113-8568-60E4D50A0DB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6148420-3A2B-4113-8568-60E4D50A0DB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6148420-3A2B-4113-8568-60E4D50A0DB7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B6148420-3A2B-4113-8568-60E4D50A0DB7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B6148420-3A2B-4113-8568-60E4D50A0DB7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B6148420-3A2B-4113-8568-60E4D50A0DB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6148420-3A2B-4113-8568-60E4D50A0DB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6148420-3A2B-4113-8568-60E4D50A0DB7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B6148420-3A2B-4113-8568-60E4D50A0DB7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B6148420-3A2B-4113-8568-60E4D50A0DB7}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -633,5 +645,6 @@ Global
 		{2C2D256D-2353-409A-A0BD-BCC147E18694} = {5D398377-B7DE-42F5-B377-9AE418580E56}
 		{03915831-23B5-462A-A144-49662864AE34} = {5D398377-B7DE-42F5-B377-9AE418580E56}
 		{57DDD930-5377-4427-92F1-D46B7463C5B6} = {B5169681-0A1A-47CE-8103-32A5702B5BF4}
+		{B6148420-3A2B-4113-8568-60E4D50A0DB7} = {1D370001-385F-4908-AF13-A98082764118}
 	EndGlobalSection
 EndGlobal

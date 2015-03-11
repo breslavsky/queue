@@ -8,7 +8,6 @@ namespace Queue.UI.WPF
     public partial class VirtualKeyboard : UserControl
     {
         public static DependencyProperty OnTypingProperty = DependencyProperty.Register("OnTyping", typeof(string), typeof(VirtualKeyboard));
-
         public static DependencyProperty OnBackspaceProperty = DependencyProperty.Register("OnBackspace", typeof(string), typeof(VirtualKeyboard));
 
         public event VirtualKeyboardHandler OnTyping;

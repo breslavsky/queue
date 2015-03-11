@@ -114,29 +114,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\KeyboardControl.xaml.cs">
+      <DependentUpon>KeyboardControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NoticeControl.xaml.cs">
       <DependentUpon>NoticeControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\LoadingControl.xaml.cs">
       <DependentUpon>LoadingControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Sheduler\BaseSchedulerControl.cs" />
-    <Compile Include="Controls\Sheduler\DayScheduler.xaml.cs">
-      <DependentUpon>DayScheduler.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Sheduler\Event.cs" />
-    <Compile Include="Controls\Sheduler\EventUserControl.xaml.cs">
-      <DependentUpon>EventUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Sheduler\MonthDay.xaml.cs">
-      <DependentUpon>MonthDay.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Sheduler\MonthScheduler.xaml.cs">
-      <DependentUpon>MonthScheduler.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Sheduler\SchedulerGrid.cs" />
-    <Compile Include="Controls\Sheduler\WeekScheduler.xaml.cs">
-      <DependentUpon>WeekScheduler.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\ServerState.cs" />
     <Compile Include="Types\MultiBindingConverter.cs" />
@@ -169,25 +154,9 @@
     <Compile Include="RichPage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\Sheduler\DayScheduler.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Controls\KeyboardControl.xaml">
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Sheduler\EventUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Sheduler\MonthDay.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Sheduler\MonthScheduler.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Sheduler\WeekScheduler.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\ConnectPage.xaml">
       <Generator>MSBuild:Compile</Generator>
