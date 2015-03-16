@@ -135,7 +135,7 @@
           <TextBlock Grid.Row="1"
                      Grid.Column="1"
                      Text="{Binding WaitingTime.TotalMinutes,
-                                              StringFormat={}{0:0)} мин.,
+                                              StringFormat={}{0:0} мин.,
                                               FallbackValue=0 мин.}" />
         </Grid>
       </GroupBox>
