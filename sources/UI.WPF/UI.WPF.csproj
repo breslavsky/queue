@@ -124,7 +124,6 @@
       <DependentUpon>LoadingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\ServerState.cs" />
-    <Compile Include="Types\MultiBindingConverter.cs" />
     <Compile Include="ViewModels\ConnectPageViewModel.cs" />
     <Compile Include="Pages\ConnectPage.xaml.cs">
       <DependentUpon>ConnectPage.xaml</DependentUpon>
@@ -140,6 +139,7 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Types\AccentColorComboBoxItem.cs" />
+    <Compile Include="ViewModels\KeyboardControlViewModel.cs" />
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="IMainWindow.cs" />
     <Compile Include="Types\UserComboBoxItem.cs" />
@@ -165,6 +165,10 @@
     <Page Include="Pages\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -236,7 +240,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Entypo-license.txt" />
-    <Content Include="Resources\WindowsIcons-license.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Translation\Strings.en-US.resx" />

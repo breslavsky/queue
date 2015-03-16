@@ -22,12 +22,12 @@ namespace Queue.Common
             }
         }
 
-        public static string Enum<T>(T value) where T : struct, IConvertible
+        public static string Enum<T>(T value, string resName = null) where T : struct, IConvertible
         {
             Assembly assembly = typeof(T).Assembly;
             try
             {
-                return new ResourceManager(GetResourceBaseName(assembly, typeof(T).Name), assembly)
+                return new ResourceManager(GetResourceBaseName(assembly, resName ?? typeof(T).Name), assembly)
                                     .GetString(value.ToString());
             }
             catch

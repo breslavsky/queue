@@ -1,28 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Queue.UI.WPF.ViewModels;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Queue.UI.WPF.Controls
 {
-    /// <summary>
-    /// Interaction logic for KeyboardControl.xaml
-    /// </summary>
     public partial class KeyboardControl : UserControl
     {
+        public static DependencyProperty OnLetterProperty = DependencyProperty.Register("OnLetter", typeof(string), typeof(KeyboardControl));
+        public static DependencyProperty OnBackspaceProperty = DependencyProperty.Register("OnBackspace", typeof(string), typeof(KeyboardControl));
+
+        public event EventHandler<string> OnLetter
+        {
+            add { (DataContext as KeyboardControlViewModel).OnLetter += value; }
+            remove { (DataContext as KeyboardControlViewModel).OnLetter -= value; }
+        }
+
+        public event EventHandler OnBackspace
+        {
+            add { (DataContext as KeyboardControlViewModel).OnBackspace += value; }
+            remove { (DataContext as KeyboardControlViewModel).OnBackspace -= value; }
+        }
+
         public KeyboardControl()
         {
             InitializeComponent();
+
+            DataContext = new KeyboardControlViewModel();
         }
     }
 }

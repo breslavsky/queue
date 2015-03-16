@@ -1,27 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace UI.WPF.Tests
 {
-    /// <summary>
-    /// Interaction logic for KeyboardWindow.xaml
-    /// </summary>
     public partial class KeyboardWindow : Window
     {
         public KeyboardWindow()
         {
             InitializeComponent();
+        }
+
+        private void KeyboardControl_OnLetter(object sender, string e)
+        {
+        }
+
+        private void OnLetter(object sender, string e)
+        {
+            int y = 9;
+        }
+
+        private void OnBackspace(object sender, System.EventArgs e)
+        {
+            int y = 9;
         }
     }
 }

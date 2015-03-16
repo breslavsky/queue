@@ -1,8 +1,9 @@
 ﻿<Window x:Class="UI.WPF.Tests.KeyboardWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui_controls="clr-namespace:Queue.UI.WPF.Controls;assembly=Queue.UI.WPF"
         Title="KeyboardWindow"
-        Width="300"
+        Width="642"
         Height="300">
-    <Grid />
+    <ui_controls:KeyboardControl Focusable="False" OnLetter="OnLetter" OnBackspace="OnBackspace" />
 </Window>
