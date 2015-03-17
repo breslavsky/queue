@@ -3,7 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Queue.UI.WPF.Controls
+namespace Queue.UI.WPF
 {
     public partial class KeyboardControl : UserControl
     {

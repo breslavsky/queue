@@ -15,12 +15,12 @@ namespace UI.WPF.Tests
 
         private void OnLetter(object sender, string e)
         {
-            int y = 9;
+
         }
 
         private void OnBackspace(object sender, System.EventArgs e)
         {
-            int y = 9;
+
         }
     }
 }

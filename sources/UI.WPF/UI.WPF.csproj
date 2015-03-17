@@ -145,9 +145,6 @@
     <Compile Include="Types\UserComboBoxItem.cs" />
     <Compile Include="Models\LoginFormSettings.cs" />
     <Compile Include="Extensions\WPFExtensions.cs" />
-    <Compile Include="Controls\VirtualKeyboard.xaml.cs">
-      <DependentUpon>VirtualKeyboard.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\WarningControl.xaml.cs">
       <DependentUpon>WarningControl.xaml</DependentUpon>
     </Compile>
@@ -167,12 +164,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Styles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Controls\VirtualKeyboard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

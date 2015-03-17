@@ -1,5 +1,4 @@
 ﻿using Queue.Terminal.ViewModels;
-using Queue.UI.WPF;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,7 +35,7 @@ namespace Queue.Terminal.Views
             filterTextBox.CaretIndex = viewModel.Filter.Length;
         }
 
-        private void virtualKeyboard_OnBackspace(object sender, VirtualKeyboardEvent e)
+        private void keyboard_OnBackspace(object sender, EventArgs e)
         {
             if (filterTextBox.Text.Length > 0)
             {
@@ -44,9 +43,9 @@ namespace Queue.Terminal.Views
             }
         }
 
-        private void virtualKeyboard_OnTyping(object sender, VirtualKeyboardEvent e)
+        private void keyboard_OnLetter(object sender, string letter)
         {
-            filterTextBox.Text += e.Letter;
+            filterTextBox.Text += letter;
         }
 
         private void viewModel_OnSearch(object sender, EventArgs e)

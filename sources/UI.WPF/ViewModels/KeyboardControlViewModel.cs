@@ -2,6 +2,7 @@
 using Queue.Common;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Input;
 
 namespace Queue.UI.WPF.ViewModels
@@ -14,14 +15,14 @@ namespace Queue.UI.WPF.ViewModels
         {
             "йцукенгшщзхъ",
             "фывапролджэ",
-            "ячсмитьбю"
+            "ячсмитьбю.,"
         };
 
         private string[] EngLetters =
         {
             "qwertyuiop",
             "asdfghjkl",
-            "zxcvbnm"
+            "zxcvbnm.,"
         };
 
         private Language language;
@@ -66,8 +67,6 @@ namespace Queue.UI.WPF.ViewModels
             ToogleLanguageCommand = new RelayCommand(ToogleLanguage);
             KeyboardButtonClick = new RelayCommand<string>(KeyboardButtonClicked);
 
-            AddKeyboardRow(Numbers);
-
             AddLetterKeyboardRow(RusLetters[0], Language.ru_RU);
             AddLetterKeyboardRow(RusLetters[1], Language.ru_RU);
             AddLetterKeyboardRow(RusLetters[2], Language.ru_RU);
@@ -76,7 +75,9 @@ namespace Queue.UI.WPF.ViewModels
             AddLetterKeyboardRow(EngLetters[1], Language.en_EN);
             AddLetterKeyboardRow(EngLetters[2], Language.en_EN);
 
-            SetLanguage(Language.ru_RU);
+            AddKeyboardRow(Numbers);
+
+            SetLanguage(CultureInfo.DefaultThreadCurrentUICulture.GetLanguage());
         }
 
         private void Backspace()
@@ -132,6 +133,11 @@ namespace Queue.UI.WPF.ViewModels
 
         private void SetLanguage(Language lang)
         {
+            if (lang == Language.zh_CN)
+            {
+                lang = Language.ru_RU;
+            }
+
             language = lang;
             foreach (LetterKeyboardButton btn in letters)
             {

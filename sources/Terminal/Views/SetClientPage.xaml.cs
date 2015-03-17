@@ -32,7 +32,7 @@ namespace Queue.Terminal.Views
             }
         }
 
-        private void virtualKeyboard_OnBackspace(object sender, UI.WPF.VirtualKeyboardEvent e)
+        private void keyboard_OnBackspace(object sender, EventArgs e)
         {
             if (usernameTextBox.Text.Length > 0)
             {
@@ -40,9 +40,9 @@ namespace Queue.Terminal.Views
             }
         }
 
-        private void virtualKeyboard_OnTyping(object sender, UI.WPF.VirtualKeyboardEvent e)
+        private void keyboard_OnLetter(object sender, string letter)
         {
-            usernameTextBox.Text += e.Letter;
+            usernameTextBox.Text += letter;
         }
 
         private void usernameTextBox_TextChanged(object sender, TextChangedEventArgs e)

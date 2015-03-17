@@ -27,9 +27,9 @@
                  FontSize="30"
                  Text="{Binding Username}" />
         <Viewbox Grid.Row="1">
-            <ui_common:VirtualKeyboard Focusable="False"
-                                       OnBackspace="virtualKeyboard_OnBackspace"
-                                       OnTyping="virtualKeyboard_OnTyping" />
+            <ui_common:KeyboardControl Focusable="False"
+                                       OnBackspace="keyboard_OnBackspace"
+                                       OnLetter="keyboard_OnLetter" />
         </Viewbox>
         <Grid Grid.Row="2" Grid.Column="2">
             <Grid.ColumnDefinitions>

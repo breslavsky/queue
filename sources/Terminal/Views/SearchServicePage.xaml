@@ -45,9 +45,9 @@
         </Grid>
 
         <Viewbox x:Name="keyboard" Grid.Row="1">
-            <ui_common:VirtualKeyboard Focusable="False"
-                                       OnBackspace="virtualKeyboard_OnBackspace"
-                                       OnTyping="virtualKeyboard_OnTyping" />
+            <ui_common:KeyboardControl Focusable="False"
+                                       OnBackspace="keyboard_OnBackspace"
+                                       OnLetter="keyboard_OnLetter" />
         </Viewbox>
 
         <userControls:SearchServiceResults x:Name="searchResults" Grid.Row="1" />
