@@ -32,3 +32,13 @@ BEGIN
 	DELETE FROM _service_group WHERE ParentGroupId IN (SELECT Id FROM DELETED)
 	DELETE FROM _service WHERE ServiceGroupId IN (SELECT Id FROM DELETED)
 END;
+-- SEPARATOR
+IF EXISTS (SELECT name FROM sysobjects WHERE name = 'ScheduleDelete' AND type = 'TR')
+DROP TRIGGER ScheduleDelete;
+-- SEPARATOR
+CREATE TRIGGER ScheduleDelete
+   ON _schedule AFTER DELETE
+AS 
+BEGIN
+	DELETE FROM _service_rendering WHERE ScheduleId IS NULL
+END;

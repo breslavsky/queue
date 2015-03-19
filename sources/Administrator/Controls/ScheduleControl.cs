@@ -278,7 +278,7 @@ namespace Queue.Administrator
 
         private void maxClientRequestsUpDown_Leave(object sender, EventArgs e)
         {
-            schedule.ClientInterval = TimeSpan.FromMinutes((double)clientIntervalUpDown.Value);
+            schedule.MaxClientRequests = (int)maxClientRequestsUpDown.Value;
         }
 
         private void renderingModeControl_SelectedChanged(object sender, EventArgs e)
