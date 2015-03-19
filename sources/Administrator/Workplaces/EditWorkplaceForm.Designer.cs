@@ -150,7 +150,6 @@
             // 
             // modificatorControl
             // 
-            this.modificatorControl.Enabled = false;
             this.modificatorControl.Location = new System.Drawing.Point(105, 65);
             this.modificatorControl.Name = "modificatorControl";
             this.modificatorControl.Size = new System.Drawing.Size(150, 21);
