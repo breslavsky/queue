@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="IConfigurationManager.cs" />
-    <Compile Include="Settings\AbstractSettings.cs" />
     <Compile Include="Settings\ApplicationSettings.cs" />
     <Compile Include="DateTimeUtils.cs" />
     <Compile Include="EnumItem.cs" />

@@ -1,8 +1,10 @@
-﻿namespace Queue.Common
+﻿using System.Configuration;
+
+namespace Queue.Common
 {
     public interface IConfigurationManager
     {
-        T GetSection<T>(string key) where T : AbstractSettings, new();
+        T GetSection<T>(string key) where T : ConfigurationSection, new();
 
         void Save();
     }

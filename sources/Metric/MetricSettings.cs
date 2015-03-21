@@ -1,10 +1,9 @@
 ﻿using Junte.Data.NHibernate;
-using Queue.Common;
 using System.Configuration;
 
 namespace Queue.Metric
 {
-    public class MetricSettings : AbstractSettings
+    public class MetricSettings : ConfigurationSection
     {
         public MetricSettings()
         {

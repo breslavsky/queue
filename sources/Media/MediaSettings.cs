@@ -1,9 +1,8 @@
-﻿using Queue.Common;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Queue.Media
 {
-    public class MediaSettings : AbstractSettings
+    public class MediaSettings : ConfigurationSection
     {
         public MediaSettings()
         {

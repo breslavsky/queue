@@ -4,7 +4,7 @@ using System.Configuration;
 
 namespace Queue.Server
 {
-    public class ServerSettings : AbstractSettings
+    public class ServerSettings : ConfigurationSection
     {
         [ConfigurationProperty("debug")]
         public bool Debug

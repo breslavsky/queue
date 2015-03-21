@@ -2,7 +2,7 @@
 
 namespace Queue.Common
 {
-    public class ApplicationSettings : AbstractSettings
+    public class ApplicationSettings : ConfigurationSection
     {
         [ConfigurationProperty("language")]
         public Language Language

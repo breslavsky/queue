@@ -30,7 +30,7 @@ namespace Queue.Common
             configuration = NetConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
         }
 
-        public T GetSection<T>(string key) where T : AbstractSettings, new()
+        public T GetSection<T>(string key) where T : ConfigurationSection, new()
         {
             T section = null;
             try

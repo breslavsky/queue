@@ -3,7 +3,7 @@ using System.Configuration;
 
 namespace Queue.Common
 {
-    public class LoginSettings : AbstractSettings
+    public class LoginSettings : ConfigurationSection
     {
         public const string SectionKey = "connection";
 
