@@ -7,7 +7,6 @@ using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
-using System.Globalization;
 using System.ServiceModel;
 using System.Windows.Forms;
 
@@ -43,7 +42,9 @@ namespace Queue.UI.WinForms
 
             loginFormSettingsBindingSource.DataSource = settings;
 
-            languageControl.Select<Language>(CultureInfo.CurrentCulture.GetLanguage());
+            languageControl.Select<Language>(settings.Language);
+            AdjustSelectedLanguage();
+
             loginSettingsControl.Initialize(userRole, taskPool);
             loginSettingsControl.OnConnected += OnConnected;
             loginSettingsControl.OnSubmit += OnSubmit;
@@ -67,6 +68,11 @@ namespace Queue.UI.WinForms
         public User User { get; private set; }
 
         private void languageControl_SelectedChanged(object sender, EventArgs e)
+        {
+            AdjustSelectedLanguage();
+        }
+
+        private void AdjustSelectedLanguage()
         {
             Language language = languageControl.Selected<Language>();
             language.SetCurrent();
@@ -94,6 +100,8 @@ namespace Queue.UI.WinForms
                     {
                         ConnectionSettings.Password = string.Empty;
                     }
+
+                    settings.Language = languageControl.Selected<Language>();
 
                     configuration.Save();
                     DialogResult = DialogResult.OK;

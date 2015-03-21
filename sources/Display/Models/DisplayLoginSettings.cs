@@ -1,6 +1,7 @@
 ﻿using Queue.Common;
 using System;
 using System.Configuration;
+using System.Globalization;
 
 namespace Queue.Display.Models
 {
@@ -46,6 +47,11 @@ namespace Queue.Display.Models
         {
             get { return (Guid)this["workplaceId"]; }
             set { this["workplaceId"] = value; }
+        }
+
+        public DisplayLoginSettings()
+        {
+            Language = CultureInfo.CurrentCulture.GetLanguage();
         }
 
         public override bool IsReadOnly()

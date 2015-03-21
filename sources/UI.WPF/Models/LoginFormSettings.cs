@@ -1,6 +1,6 @@
 ﻿using Queue.Common;
 using System.Configuration;
-using System.Threading;
+using System.Globalization;
 
 namespace Queue.UI.WPF.Models
 {
@@ -10,7 +10,7 @@ namespace Queue.UI.WPF.Models
 
         public LoginFormSettings()
         {
-            Language = Thread.CurrentThread.CurrentCulture.GetLanguage();
+            Language = CultureInfo.CurrentCulture.GetLanguage();
         }
 
         [ConfigurationProperty("isRemember")]

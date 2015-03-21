@@ -1,7 +1,7 @@
 ﻿using Junte.Data.NHibernate;
 using Queue.Common;
 using System.Configuration;
-using System.Threading;
+using System.Globalization;
 
 namespace Queue.Server
 {
@@ -40,7 +40,7 @@ namespace Queue.Server
             Database = GetDefaultDatabaseSettings();
             Services = GetDefaultServicesConfig();
             Debug = true;
-            Language = Thread.CurrentThread.CurrentCulture.GetLanguage();
+            Language = CultureInfo.CurrentCulture.GetLanguage();
         }
 
         public override bool IsReadOnly()

@@ -1,5 +1,5 @@
 ﻿using System.Configuration;
-using System.Threading;
+using System.Globalization;
 
 namespace Queue.Common
 {
@@ -7,7 +7,7 @@ namespace Queue.Common
     {
         public ApplicationSettings()
         {
-            Language = Thread.CurrentThread.CurrentCulture.GetLanguage();
+            Language = CultureInfo.CurrentCulture.GetLanguage();
         }
 
         [ConfigurationProperty("language")]
