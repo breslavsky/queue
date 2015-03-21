@@ -24,20 +24,19 @@ namespace Queue.Common
 
         public static string Enum<T>(T value, string resName = null) where T : struct, IConvertible
         {
-            string t = null;
+            string result = null;
 
             Assembly assembly = typeof(T).Assembly;
             try
             {
-                t = new ResourceManager(GetResourceBaseName(assembly, resName ?? typeof(T).Name), assembly)
+                result = new ResourceManager(GetResourceBaseName(assembly, resName ?? typeof(T).Name), assembly)
                                     .GetString(value.ToString());
             }
             catch
             {
-                
             }
 
-            return t ?? value.ToString();
+            return result ?? value.ToString();
         }
 
         private static string GetResourceBaseName(Assembly assembly, string resource)

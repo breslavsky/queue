@@ -8,7 +8,7 @@ namespace Queue.Common
     public enum Language
     {
         ru_RU,
-        en_EN,
+        en_US,
         zh_CN
     }
 
@@ -17,7 +17,7 @@ namespace Queue.Common
         private static Dictionary<Language, string> CulturesNames = new Dictionary<Language, string>()
         {
             {Language.ru_RU, "ru-RU"},
-            {Language.en_EN, "en-US"},
+            {Language.en_US, "en-US"},
             {Language.zh_CN, "zh-CN"}
         };
 

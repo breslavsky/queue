@@ -1,9 +1,15 @@
 ﻿using System.Configuration;
+using System.Threading;
 
 namespace Queue.Common
 {
     public class ApplicationSettings : ConfigurationSection
     {
+        public ApplicationSettings()
+        {
+            Language = Thread.CurrentThread.CurrentCulture.GetLanguage();
+        }
+
         [ConfigurationProperty("language")]
         public Language Language
         {

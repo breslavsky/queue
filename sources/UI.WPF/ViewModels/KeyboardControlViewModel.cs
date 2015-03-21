@@ -71,9 +71,9 @@ namespace Queue.UI.WPF.ViewModels
             AddLetterKeyboardRow(RusLetters[1], Language.ru_RU);
             AddLetterKeyboardRow(RusLetters[2], Language.ru_RU);
 
-            AddLetterKeyboardRow(EngLetters[0], Language.en_EN);
-            AddLetterKeyboardRow(EngLetters[1], Language.en_EN);
-            AddLetterKeyboardRow(EngLetters[2], Language.en_EN);
+            AddLetterKeyboardRow(EngLetters[0], Language.en_US);
+            AddLetterKeyboardRow(EngLetters[1], Language.en_US);
+            AddLetterKeyboardRow(EngLetters[2], Language.en_US);
 
             AddKeyboardRow(Numbers);
 
@@ -97,7 +97,7 @@ namespace Queue.UI.WPF.ViewModels
 
         private void ToogleLanguage()
         {
-            SetLanguage(language == Language.ru_RU ? Language.en_EN : Language.ru_RU);
+            SetLanguage(language == Language.ru_RU ? Language.en_US : Language.ru_RU);
         }
 
         private void AddKeyboardRow(string line)

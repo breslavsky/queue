@@ -31,14 +31,14 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             this.rememberCheckBox = new System.Windows.Forms.CheckBox();
+            this.loginFormSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.loginButton = new System.Windows.Forms.Button();
             this.languageControl = new Queue.UI.WinForms.EnumItemControl();
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
             this.productNameLabel = new System.Windows.Forms.Label();
             this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
-            this.loginFormSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.loginFormSettingsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // rememberCheckBox
@@ -52,10 +52,14 @@
             this.rememberCheckBox.Text = "Запомнить";
             this.rememberCheckBox.UseVisualStyleBackColor = true;
             // 
+            // loginFormSettingsBindingSource
+            // 
+            this.loginFormSettingsBindingSource.DataSource = typeof(Queue.UI.WinForms.LoginFormSettings);
+            // 
             // loginButton
             // 
             this.loginButton.Image = ((System.Drawing.Image)(resources.GetObject("loginButton.Image")));
-            this.loginButton.Location = new System.Drawing.Point(260, 310);
+            this.loginButton.Location = new System.Drawing.Point(257, 307);
             this.loginButton.Name = "loginButton";
             this.loginButton.Size = new System.Drawing.Size(80, 25);
             this.loginButton.TabIndex = 0;
@@ -96,10 +100,6 @@
             this.loginSettingsControl.Size = new System.Drawing.Size(330, 168);
             this.loginSettingsControl.TabIndex = 3;
             // 
-            // loginFormSettingsBindingSource
-            // 
-            this.loginFormSettingsBindingSource.DataSource = typeof(Queue.UI.WinForms.LoginFormSettings);
-            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -118,8 +118,8 @@
             this.Text = "Вход в систему";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoginForm_FormClosing);
             this.Load += new System.EventHandler(this.LoginForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.loginFormSettingsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

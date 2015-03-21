@@ -1,11 +1,17 @@
 ﻿using Queue.Common;
 using System.Configuration;
+using System.Threading;
 
 namespace Queue.UI.WPF.Models
 {
     public class LoginFormSettings : ConfigurationSection
     {
         public const string SectionKey = "loginForm";
+
+        public LoginFormSettings()
+        {
+            Language = Thread.CurrentThread.CurrentCulture.GetLanguage();
+        }
 
         [ConfigurationProperty("isRemember")]
         public bool IsRemember

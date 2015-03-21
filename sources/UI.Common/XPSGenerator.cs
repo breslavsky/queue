@@ -15,8 +15,6 @@ namespace Queue.UI.Common
         {
             string xpsFile = destFile ?? Path.GetTempFileName() + ".xps";
 
-            PageMediaSize size;
-
             using (XmlReader stream = new XmlTextReader(new StringReader(template)))
             using (Package container = Package.Open(xpsFile, FileMode.Create))
             using (XpsDocument document = new XpsDocument(container, CompressionOption.SuperFast))

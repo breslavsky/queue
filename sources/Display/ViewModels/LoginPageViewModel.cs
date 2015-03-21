@@ -98,8 +98,7 @@ namespace Queue.Display.ViewModels
 
                 LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
                 LocalizeDictionary.Instance.Culture = culture;
-                CultureInfo.DefaultThreadCurrentUICulture = culture;
-                CultureInfo.DefaultThreadCurrentCulture = culture;
+                selectedLanguage.SetCurrent();
             }
         }
 

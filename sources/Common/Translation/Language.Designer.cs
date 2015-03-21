@@ -63,9 +63,9 @@ namespace Queue.Common.Translation {
         /// <summary>
         ///   Looks up a localized string similar to Английский.
         /// </summary>
-        public static string en_EN {
+        public static string en_US {
             get {
-                return ResourceManager.GetString("en_EN", resourceCulture);
+                return ResourceManager.GetString("en_US", resourceCulture);
             }
         }
         
