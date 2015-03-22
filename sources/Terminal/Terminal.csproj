@@ -155,6 +155,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\PrintCouponPageViewModel.cs" />
     <Compile Include="ViewModels\SelectRequestDatePageViewModel.cs" />
@@ -167,6 +168,9 @@
     <Compile Include="ViewModels\SelectRequestTypePageViewModel.cs" />
     <Compile Include="ViewModels\ServiceButtonViewModel.cs" />
     <Compile Include="ViewModels\SelectServicePageViewModel.cs" />
+    <Compile Include="Views\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PrintCouponPage.xaml.cs">
       <DependentUpon>PrintCouponPage.xaml</DependentUpon>
     </Compile>
@@ -190,6 +194,10 @@
     <Compile Include="UserControls\SelectServiceButton.xaml.cs">
       <DependentUpon>SelectServiceButton.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\PrintCouponPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -311,6 +319,10 @@
     <ProjectReference Include="..\Resources\Resources.csproj">
       <Project>{90c422a9-c537-42a7-b4a8-2490e4d20d3a}</Project>
       <Name>Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services.Common\Services.Common.csproj">
+      <Project>{03915831-23b5-462a-a144-49662864ae34}</Project>
+      <Name>Services.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services.DTO\Services.DTO.csproj">
       <Project>{2c2d256d-2353-409a-a0bd-bcc147e18694}</Project>

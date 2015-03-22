@@ -252,7 +252,7 @@
             this.tagsTextBox.Name = "tagsTextBox";
             this.tagsTextBox.Size = new System.Drawing.Size(175, 80);
             this.tagsTextBox.TabIndex = 2;
-            this.tagsTextBox.LocationChanged += new System.EventHandler(this.tagsTextBox_Leave);
+            this.tagsTextBox.Leave += new System.EventHandler(this.tagsTextBox_Leave);
             // 
             // liveRegistratorLabel
             // 
@@ -664,9 +664,9 @@
             // 
             // tuesdayTabPage
             // 
-            this.tuesdayTabPage.Location = new System.Drawing.Point(4, 70);
+            this.tuesdayTabPage.Location = new System.Drawing.Point(4, 26);
             this.tuesdayTabPage.Name = "tuesdayTabPage";
-            this.tuesdayTabPage.Size = new System.Drawing.Size(174, 0);
+            this.tuesdayTabPage.Size = new System.Drawing.Size(818, 416);
             this.tuesdayTabPage.TabIndex = 0;
             this.tuesdayTabPage.Tag = "2";
             this.tuesdayTabPage.Text = "Вторник";
@@ -674,9 +674,9 @@
             // 
             // wednesdayTabPage
             // 
-            this.wednesdayTabPage.Location = new System.Drawing.Point(4, 70);
+            this.wednesdayTabPage.Location = new System.Drawing.Point(4, 26);
             this.wednesdayTabPage.Name = "wednesdayTabPage";
-            this.wednesdayTabPage.Size = new System.Drawing.Size(174, 0);
+            this.wednesdayTabPage.Size = new System.Drawing.Size(818, 416);
             this.wednesdayTabPage.TabIndex = 0;
             this.wednesdayTabPage.Tag = "3";
             this.wednesdayTabPage.Text = "Среда";
@@ -684,9 +684,9 @@
             // 
             // thursdayTabPage
             // 
-            this.thursdayTabPage.Location = new System.Drawing.Point(4, 70);
+            this.thursdayTabPage.Location = new System.Drawing.Point(4, 26);
             this.thursdayTabPage.Name = "thursdayTabPage";
-            this.thursdayTabPage.Size = new System.Drawing.Size(174, 0);
+            this.thursdayTabPage.Size = new System.Drawing.Size(818, 416);
             this.thursdayTabPage.TabIndex = 0;
             this.thursdayTabPage.Tag = "4";
             this.thursdayTabPage.Text = "Четверг";
@@ -694,9 +694,9 @@
             // 
             // fridayTabPage
             // 
-            this.fridayTabPage.Location = new System.Drawing.Point(4, 70);
+            this.fridayTabPage.Location = new System.Drawing.Point(4, 26);
             this.fridayTabPage.Name = "fridayTabPage";
-            this.fridayTabPage.Size = new System.Drawing.Size(174, 0);
+            this.fridayTabPage.Size = new System.Drawing.Size(818, 416);
             this.fridayTabPage.TabIndex = 0;
             this.fridayTabPage.Tag = "5";
             this.fridayTabPage.Text = "Пятница";
@@ -704,9 +704,9 @@
             // 
             // saturdayTabPage
             // 
-            this.saturdayTabPage.Location = new System.Drawing.Point(4, 70);
+            this.saturdayTabPage.Location = new System.Drawing.Point(4, 26);
             this.saturdayTabPage.Name = "saturdayTabPage";
-            this.saturdayTabPage.Size = new System.Drawing.Size(174, 0);
+            this.saturdayTabPage.Size = new System.Drawing.Size(818, 416);
             this.saturdayTabPage.TabIndex = 0;
             this.saturdayTabPage.Tag = "6";
             this.saturdayTabPage.Text = "Суббота";
@@ -714,9 +714,9 @@
             // 
             // sundayTabPage
             // 
-            this.sundayTabPage.Location = new System.Drawing.Point(4, 70);
+            this.sundayTabPage.Location = new System.Drawing.Point(4, 26);
             this.sundayTabPage.Name = "sundayTabPage";
-            this.sundayTabPage.Size = new System.Drawing.Size(174, 0);
+            this.sundayTabPage.Size = new System.Drawing.Size(818, 416);
             this.sundayTabPage.TabIndex = 0;
             this.sundayTabPage.Tag = "0";
             this.sundayTabPage.Text = "Воскресенье";

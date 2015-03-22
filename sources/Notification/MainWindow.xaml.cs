@@ -22,7 +22,7 @@ namespace Queue.Notification
 
         private bool disposed = false;
 
-        private ConnectPage connectPage;
+        private LoginPage connectPage;
         private TaskPool taskPool;
         private ChannelManager<IServerTcpService> channelManager;
 
@@ -40,9 +40,9 @@ namespace Queue.Notification
             content.NavigationService.Navigate(connectPage);
         }
 
-        private ConnectPage CreateConnectPage()
+        private LoginPage CreateConnectPage()
         {
-            ConnectPage result = new ConnectPage();
+            LoginPage result = new LoginPage();
 
             result.Model.OnConnected += OnConnected;
             return result;

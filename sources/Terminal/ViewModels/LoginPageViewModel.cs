@@ -8,6 +8,8 @@ using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.Terminal.Views;
+using Queue.UI.WPF;
 using Queue.UI.WPF.Models;
 using System;
 using System.Collections.Generic;
@@ -19,7 +21,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WPFLocalizeExtension.Engine;
 
-namespace Queue.UI.WPF.Pages.ViewModels
+namespace Queue.Terminal.ViewModels
 {
     public class LoginPageViewModel : ObservableObject, IDisposable
     {

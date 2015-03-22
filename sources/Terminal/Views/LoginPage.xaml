@@ -1,10 +1,10 @@
-﻿<uiCommon:RichPage x:Class="Queue.UI.WPF.LoginPage"
+﻿<uiCommon:RichPage x:Class="Queue.Terminal.Views.LoginPage"
                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                    xmlns:common="clr-namespace:Queue.Common;assembly=Queue.Common"
                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                    xmlns:lex="http://wpflocalizeextension.codeplex.com"
-                   xmlns:uiCommon="clr-namespace:Queue.UI.WPF"
+                   xmlns:uiCommon="clr-namespace:Queue.UI.WPF;assembly=Queue.UI.WPF"
                    lex:ResxLocalizationProvider.DefaultAssembly="Queue.UI.WPF"
                    lex:ResxLocalizationProvider.DefaultDictionary="Strings">
     <i:Interaction.Triggers>

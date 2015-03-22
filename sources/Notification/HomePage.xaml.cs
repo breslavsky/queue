@@ -65,6 +65,7 @@ namespace Queue.Notification
                 {
                     PlaybackMode = PlaybackModes.Loop
                 };
+
                 vlcControl.AudioProperties.IsMute = true;
                 videoGrid.Children.Add(vlcControl);
 
@@ -88,6 +89,7 @@ namespace Queue.Notification
             VlcContext.LibVlcPluginsPath = CommonStrings.PLUGINS_PATH_DEFAULT_VALUE_AMD64;
             VlcContext.StartupOptions.IgnoreConfig = true;
             VlcContext.StartupOptions.AddOption("--no-video-title-show");
+
             VlcContext.StartupOptions.LogOptions.Verbosity = VlcLogVerbosities.Standard;
             VlcContext.Initialize();
         }

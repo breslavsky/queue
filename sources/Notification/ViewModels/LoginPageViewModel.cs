@@ -6,6 +6,7 @@ using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
+using Queue.UI.WPF;
 using Queue.UI.WPF.Models;
 using System;
 using System.Globalization;
@@ -16,9 +17,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WPFLocalizeExtension.Engine;
 
-namespace Queue.UI.WPF.ViewModels
+namespace Queue.Notification.ViewModels
 {
-    public class ConnectPageViewModel : ObservableObject, IDisposable
+    public class LoginPageViewModel : ObservableObject, IDisposable
     {
         private RichPage owner;
         private bool isRemember;
@@ -85,7 +86,7 @@ namespace Queue.UI.WPF.ViewModels
             }
         }
 
-        public ConnectPageViewModel(RichPage owner)
+        public LoginPageViewModel(RichPage owner)
         {
             this.owner = owner;
 

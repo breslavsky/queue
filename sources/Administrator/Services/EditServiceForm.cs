@@ -1,5 +1,4 @@
-﻿using Junte.Data.Common;
-using Junte.Parallel.Common;
+﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
 using Queue.Common;
@@ -9,7 +8,6 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
-using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
 
@@ -502,7 +500,6 @@ namespace Queue.Administrator
 
         private void serviceParametersControl_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

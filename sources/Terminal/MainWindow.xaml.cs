@@ -10,6 +10,7 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.Terminal.ViewModels;
+using Queue.Terminal.Views;
 using Queue.UI.WPF;
 using Queue.UI.WPF.Models;
 using System;

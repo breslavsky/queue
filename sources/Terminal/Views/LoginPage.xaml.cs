@@ -1,8 +1,9 @@
 ﻿using Queue.Model.Common;
-using Queue.UI.WPF.Pages.ViewModels;
+using Queue.Terminal.ViewModels;
+using Queue.UI.WPF;
 using System.Windows;
 
-namespace Queue.UI.WPF
+namespace Queue.Terminal.Views
 {
     public partial class LoginPage : RichPage
     {
