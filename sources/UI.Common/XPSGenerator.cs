@@ -3,7 +3,6 @@ using System.IO.Packaging;
 using System.Printing;
 using System.Windows;
 using System.Windows.Markup;
-using System.Windows.Xps;
 using System.Windows.Xps.Packaging;
 using System.Xml;
 
@@ -19,29 +18,18 @@ namespace Queue.UI.Common
             using (Package container = Package.Open(xpsFile, FileMode.Create))
             using (XpsDocument document = new XpsDocument(container, CompressionOption.SuperFast))
             {
-                FrameworkElement root = (FrameworkElement)XamlReader.Load(stream);
+                FrameworkElement root = XamlReader.Load(stream) as FrameworkElement;
 
                 root.DataContext = dataContext;
-
                 root.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-                root.Arrange(new Rect(0, 0, root.DesiredSize.Width, root.DesiredSize.Height));
+                root.UpdateLayout();
 
-                //FixedPage fixedPage = new FixedPage();
-                //fixedPage.Children.Add(root);
+                PrintTicket ticket = new PrintTicket()
+                {
+                    PageMediaSize = new PageMediaSize(root.DesiredSize.Width, root.DesiredSize.Height)
+                };
 
-                //PageContent pageConent = new PageContent();
-                //((IAddChild)pageConent).AddChild(fixedPage);
-
-                //FixedDocument fixedDocument = new FixedDocument();
-                //fixedDocument.Pages.Add(pageConent);
-
-                XpsDocumentWriter xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(document);
-                xpsDocumentWriter.Write(root, new PrintTicket()
-                    {
-                        //PageMediaType = PageMediaType.Plain
-                        //PageMediaSize = new PageMediaSize(PageMediaSizeName.ISOA6)
-                        PageMediaSize = new PageMediaSize(root.ActualWidth, root.ActualHeight)
-                    });
+                XpsDocument.CreateXpsDocumentWriter(document).Write(root, ticket);
             }
 
             return xpsFile;

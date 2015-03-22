@@ -12,6 +12,7 @@ namespace Queue.Display.Models
         public DisplayLoginSettings()
         {
             Endpoint = "net.tcp://queue:4505";
+            Language = CultureInfo.CurrentCulture.GetLanguage();
         }
 
         [ConfigurationProperty("isRemember")]
@@ -47,11 +48,6 @@ namespace Queue.Display.Models
         {
             get { return (Guid)this["workplaceId"]; }
             set { this["workplaceId"] = value; }
-        }
-
-        public DisplayLoginSettings()
-        {
-            Language = CultureInfo.CurrentCulture.GetLanguage();
         }
 
         public override bool IsReadOnly()
