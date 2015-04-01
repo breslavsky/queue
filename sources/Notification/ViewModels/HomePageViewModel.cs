@@ -198,6 +198,10 @@ namespace Queue.Notification.ViewModels
                 case ConfigType.Notification:
                     ReadNotificationConfig(e.Config as NotificationConfig);
                     break;
+
+                case ConfigType.Media:
+                    UpdateTicker(e.Config as MediaConfig);
+                    break;
             }
         }
 
@@ -233,19 +237,24 @@ namespace Queue.Notification.ViewModels
             }
         }
 
-        private void ReadMediaConfig(MediaConfig mediaConfig, MediaConfigFile[] mediaFiles)
+        private void ReadMediaConfig(MediaConfig config, MediaConfigFile[] mediaFiles)
         {
-            ticker.SetTicker(mediaConfig.Ticker);
-            ticker.SetSpeed(mediaConfig.TickerSpeed);
-            ticker.Start();
+            UpdateTicker(config);
 
             foreach (MediaConfigFile f in mediaFiles)
             {
-                vlcControl.Medias.Add(new LocationMedia(string.Format(MediaFileUriPattern, mediaConfig.ServiceUrl, f.Id)));
+                vlcControl.Medias.Add(new LocationMedia(string.Format(MediaFileUriPattern, config.ServiceUrl, f.Id)));
             }
 
             vlcControl.Stop();
             vlcControl.Play();
+        }
+
+        private void UpdateTicker(MediaConfig config)
+        {
+            ticker.SetTicker(config.Ticker);
+            ticker.SetSpeed(config.TickerSpeed);
+            ticker.Start();
         }
 
         private void NotifyClientRequestUpdated(ClientRequest request)
