@@ -4,6 +4,7 @@ using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WPF;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -55,7 +56,12 @@ namespace Queue.Terminal.ViewModels
 
         public void Initialize()
         {
-            SelectedDatesChanged();
+            if (model.SelectedDate == null)
+            {
+                model.SelectedDate = DateTime.Now;
+            }
+
+            ReloadFreeTime();
         }
 
         private void Next()
@@ -104,13 +110,8 @@ namespace Queue.Terminal.ViewModels
         {
             if (e.PropertyName == "SelectedDate")
             {
-                SelectedDatesChanged();
+                ReloadFreeTime();
             }
-        }
-
-        private void SelectedDatesChanged()
-        {
-            ReloadFreeTime();
         }
 
         private async void ReloadFreeTime()
@@ -126,7 +127,7 @@ namespace Queue.Terminal.ViewModels
 
             using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
-                var loading = screen.ShowLoading();
+                LoadingControl loading = screen.ShowLoading();
 
                 try
                 {
@@ -138,7 +139,7 @@ namespace Queue.Terminal.ViewModels
                         return;
                     }
 
-                    foreach (var timeInterval in timeIntervals)
+                    foreach (TimeSpan timeInterval in timeIntervals)
                     {
                         EarlyRequestHour hour = AvailableHours.SingleOrDefault(h => h.Hour == timeInterval.Hours);
                         if (hour == null)
