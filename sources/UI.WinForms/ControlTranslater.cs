@@ -38,9 +38,9 @@ namespace Queue.UI.WinForms
 
             foreach (Control ctrl in control.Controls)
             {
-                if (ctrl is ITranslatable)
+                if (ctrl is ITranslatableControl)
                 {
-                    (ctrl as ITranslatable).Translate();
+                    (ctrl as ITranslatableControl).Translate();
                 }
             }
         }

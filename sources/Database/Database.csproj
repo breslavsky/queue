@@ -34,7 +34,7 @@
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.4.0.%2a</ApplicationVersion>
+    <ApplicationVersion>1.4.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -80,8 +80,7 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>database.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>Queue.Database.Program</StartupObject>
@@ -210,10 +209,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Scheme.cs" />
-    <Compile Include="SchemePatches.Designer.cs">
+    <Compile Include="Scheme.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SchemePatches.resx</DependentUpon>
+      <DependentUpon>Scheme.resx</DependentUpon>
     </Compile>
     <EmbeddedResource Include="DamaskForm.resx">
       <DependentUpon>DamaskForm.cs</DependentUpon>
@@ -231,9 +230,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SchemePatches.resx">
+    <EmbeddedResource Include="Scheme.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SchemePatches.Designer.cs</LastGenOutput>
+      <LastGenOutput>Scheme.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>
@@ -288,14 +287,15 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SchemePatches\007.sql" />
-    <Content Include="triggers.sql" />
-    <Content Include="SchemePatches\001.sql" />
-    <Content Include="SchemePatches\002.sql" />
-    <Content Include="SchemePatches\003.sql" />
-    <Content Include="SchemePatches\004.sql" />
-    <Content Include="SchemePatches\005.sql" />
-    <Content Include="SchemePatches\006.sql" />
+    <Content Include="constraints.sql" />
+    <Content Include="database.ico" />
+    <Content Include="Patches\007.sql" />
+    <Content Include="Patches\001.sql" />
+    <Content Include="Patches\002.sql" />
+    <Content Include="Patches\003.sql" />
+    <Content Include="Patches\004.sql" />
+    <Content Include="Patches\005.sql" />
+    <Content Include="Patches\006.sql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

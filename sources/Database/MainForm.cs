@@ -20,8 +20,6 @@ namespace Queue.Database
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private const string SQL_SEPARATOR = "-- SEPARATOR";
-
         private static Properties.Settings settings = Properties.Settings.Default;
 
         private UnityContainer container;
@@ -48,7 +46,7 @@ namespace Queue.Database
                 {
                     Log(string.Format("Текущий патч базы данных = {0}", schemeConfig.Version));
 
-                    int maxPatch = Scheme.Patches.Max(x => x.Key);
+                    int maxPatch = SchemeState.Patches.Max(x => x.Key);
                     Log(string.Format("Доступный патч обновления = {0}", maxPatch));
                 }
                 else
@@ -71,18 +69,15 @@ namespace Queue.Database
             new DamaskForm().ShowDialog();
         }
 
-        private void triggersUpdateMenuItem_Click(object sender, EventArgs e)
+        private void сonstraintsUpdateMenuItem_Click(object sender, EventArgs e)
         {
-            Log("Начало обновления триггеров");
-
-            var triggers = SchemePatches.triggers.Split(new string[] { SQL_SEPARATOR }, 
-                StringSplitOptions.RemoveEmptyEntries);
+            Log("Начало обновления ограничений");
 
             using (var session = sessionProvider.OpenSession())
             {
-                foreach (var t in triggers)
+                foreach (var c in SchemeState.Constraints)
                 {
-                    var sql = t.Trim();
+                    var sql = c.Trim();
 
                     try
                     {
@@ -97,7 +92,7 @@ namespace Queue.Database
                 }
             }
 
-            Log("Обновление триггеров завершено");
+            Log("Обновление ограничений завершено");
         }
 
         private bool DatabaseConnect(DatabaseSettings s)
@@ -190,7 +185,7 @@ namespace Queue.Database
             {
                 Log("Инициализация конфигурации");
 
-                int maxPatch = Scheme.Patches.Max(x => x.Key);
+                int maxPatch = SchemeState.Patches.Max(x => x.Key);
 
                 var schemeConfig = session.Get<SchemeConfig>(ConfigType.Scheme);
                 if (schemeConfig == null)
@@ -327,8 +322,6 @@ namespace Queue.Database
                     schedule1 = new DefaultWeekdaySchedule();
                     schedule1.DayOfWeek = DayOfWeek.Monday;
                     session.Save(schedule1);
-
-                    Log("Создано расписание на понедельник");
                 }
 
                 #endregion monday
@@ -433,15 +426,15 @@ namespace Queue.Database
                 {
                     Log(string.Format("Текущий патч базы данных = {0}", schemeConfig.Version));
 
-                    int maxPatch = Scheme.Patches.Max(x => x.Key);
+                    int maxPatch = SchemeState.Patches.Max(x => x.Key);
                     Log(string.Format("Доступный патч обновления = {0}", maxPatch));
 
                     for (int currentPatch = schemeConfig.Version + 1;
                         currentPatch <= maxPatch; currentPatch++)
                     {
-                        if (Scheme.Patches.ContainsKey(currentPatch))
+                        if (SchemeState.Patches.ContainsKey(currentPatch))
                         {
-                            string sql = Scheme.Patches[currentPatch];
+                            string sql = SchemeState.Patches[currentPatch];
 
                             Log(string.Format("Приминение патча [{0}]", sql));
 
@@ -466,7 +459,7 @@ namespace Queue.Database
                 }
                 else
                 {
-                    Log("Конфигурация модели данных не найдена в базе данных");
+                    Log("Конфигурация модели не найдена в базе данных");
                 }
             }
         }

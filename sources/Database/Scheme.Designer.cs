@@ -22,14 +22,14 @@ namespace Queue.Database {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class SchemePatches {
+    internal class Scheme {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SchemePatches() {
+        internal Scheme() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Queue.Database {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Database.SchemePatches", typeof(SchemePatches).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Database.Scheme", typeof(Scheme).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -124,21 +124,21 @@ namespace Queue.Database {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на IF EXISTS (SELECT name FROM sysobjects WHERE name = &apos;ServiceDelete&apos; AND type = &apos;TR&apos;)
-        ///DROP TRIGGER ServiceDelete;
+        ///   Ищет локализованную строку, похожую на ALTER TABLE _client_request DROP CONSTRAINT ClientRequestToClientReference;
+        ///ALTER TABLE _client_request ADD CONSTRAINT ClientRequestToClientReference FOREIGN KEY(ClientId)
+        ///REFERENCES _client (Id)
+        ///ON DELETE CASCADE;
         ///-- SEPARATOR
-        ///CREATE TRIGGER ServiceDelete
-        ///   ON _service AFTER DELETE
-        ///AS 
-        ///BEGIN
-        ///	DELETE FROM _service_step WHERE ServiceId IN (SELECT Id FROM DELETED)
-        ///	DELETE FROM _service_weekday_schedule WHERE ServiceId IN (SELECT Id FROM DELETED)
-        ///	DELETE FROM _service_exception_schedule WHERE ServiceId IN (SELECT Id FROM DELETED)
-        ///	DELETE FROM _service_parameter WHERE ServiceId IN (SELECT Id FROM DEL [остаток строки не уместился]&quot;;.
+        ///ALTER TABLE _client_request DROP CONSTRAINT ClientRequestToOperatorReference;
+        ///ALTER TABLE _client_request ADD CONSTRAINT ClientRequestToOperatorReference FOREIGN KEY(OperatorId)
+        ///REFERENCES _user (Id)
+        ///ON DELETE SET NULL;
+        ///-- SEPARATOR
+        ///ALTER TABLE _client_request DROP CONSTRAI [остаток строки не уместился]&quot;;.
         /// </summary>
-        internal static string triggers {
+        internal static string constraints {
             get {
-                return ResourceManager.GetString("triggers", resourceCulture);
+                return ResourceManager.GetString("constraints", resourceCulture);
             }
         }
     }

@@ -33,7 +33,7 @@
             this.schemaMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.schemaValidateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.schemaUpdateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.constraintUpdateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.constraintsUpdateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.checkPatchesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.installPatchesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,7 +69,7 @@
             this.schemaMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.schemaValidateMenuItem,
             this.schemaUpdateMenuItem,
-            this.constraintUpdateMenuItem});
+            this.constraintsUpdateMenuItem});
             this.schemaMenu.Enabled = false;
             this.schemaMenu.Name = "schemaMenu";
             this.schemaMenu.Size = new System.Drawing.Size(75, 20);
@@ -78,23 +78,23 @@
             // schemaValidateMenuItem
             // 
             this.schemaValidateMenuItem.Name = "schemaValidateMenuItem";
-            this.schemaValidateMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.schemaValidateMenuItem.Size = new System.Drawing.Size(203, 22);
             this.schemaValidateMenuItem.Text = "Проверить структуру";
             this.schemaValidateMenuItem.Click += new System.EventHandler(this.schemaValidateMenu_Click);
             // 
             // schemaUpdateMenuItem
             // 
             this.schemaUpdateMenuItem.Name = "schemaUpdateMenuItem";
-            this.schemaUpdateMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.schemaUpdateMenuItem.Size = new System.Drawing.Size(203, 22);
             this.schemaUpdateMenuItem.Text = "Обновить структуру";
             this.schemaUpdateMenuItem.Click += new System.EventHandler(this.schemaUpdateMenuItem_Click);
             // 
-            // constraintUpdateMenuItem
+            // constraintsUpdateMenuItem
             // 
-            this.constraintUpdateMenuItem.Name = "constraintUpdateMenuItem";
-            this.constraintUpdateMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.constraintUpdateMenuItem.Text = "Обновить триггеры";
-            this.constraintUpdateMenuItem.Click += new System.EventHandler(this.triggersUpdateMenuItem_Click);
+            this.constraintsUpdateMenuItem.Name = "constraintsUpdateMenuItem";
+            this.constraintsUpdateMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.constraintsUpdateMenuItem.Text = "Обновить ограничения";
+            this.constraintsUpdateMenuItem.Click += new System.EventHandler(this.сonstraintsUpdateMenuItem_Click);
             // 
             // dataMenu
             // 
@@ -112,29 +112,29 @@
             // checkPatchesMenuItem
             // 
             this.checkPatchesMenuItem.Name = "checkPatchesMenuItem";
-            this.checkPatchesMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.checkPatchesMenuItem.Size = new System.Drawing.Size(284, 22);
             this.checkPatchesMenuItem.Text = "Проверка обновлений";
             this.checkPatchesMenuItem.Click += new System.EventHandler(this.checkPatchesMenuItem_Click);
             // 
             // installPatchesMenuItem
             // 
             this.installPatchesMenuItem.Name = "installPatchesMenuItem";
-            this.installPatchesMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.installPatchesMenuItem.Size = new System.Drawing.Size(284, 22);
             this.installPatchesMenuItem.Text = "Установка обновлений";
             this.installPatchesMenuItem.Click += new System.EventHandler(this.installPatchesMenuItem_Click);
             // 
             // initDataMenuItem
             // 
             this.initDataMenuItem.Name = "initDataMenuItem";
-            this.initDataMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.initDataMenuItem.Size = new System.Drawing.Size(284, 22);
             this.initDataMenuItem.Text = "Инициализировать данные";
             this.initDataMenuItem.Click += new System.EventHandler(this.initDataMenuItem_Click);
             // 
             // demoDataMenuItem
             // 
             this.demoDataMenuItem.Name = "demoDataMenuItem";
-            this.demoDataMenuItem.Size = new System.Drawing.Size(229, 22);
-            this.demoDataMenuItem.Text = "Демонстрационные данные";
+            this.demoDataMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.demoDataMenuItem.Text = "Загрузить демонстрационные данные";
             this.demoDataMenuItem.Click += new System.EventHandler(this.demoDataMenuItem_Click);
             // 
             // importDataMenuItem
@@ -142,14 +142,14 @@
             this.importDataMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.damaskImportMenuItem});
             this.importDataMenuItem.Name = "importDataMenuItem";
-            this.importDataMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.importDataMenuItem.Size = new System.Drawing.Size(284, 22);
             this.importDataMenuItem.Text = "Импорт данных";
             // 
             // damaskImportMenuItem
             // 
             this.damaskImportMenuItem.Name = "damaskImportMenuItem";
-            this.damaskImportMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.damaskImportMenuItem.Text = "Импорт из \"Дамаск\"";
+            this.damaskImportMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.damaskImportMenuItem.Text = "Импорт из СУО \"Дамаск\"";
             this.damaskImportMenuItem.Click += new System.EventHandler(this.damaskImportMenuItem_Click);
             // 
             // logTextBox
@@ -194,7 +194,7 @@
         private System.Windows.Forms.ToolStripMenuItem dataMenu;
         private System.Windows.Forms.ToolStripMenuItem initDataMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importDataMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem constraintUpdateMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem constraintsUpdateMenuItem;
         private System.Windows.Forms.ToolStripMenuItem demoDataMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkPatchesMenuItem;
         private System.Windows.Forms.ToolStripMenuItem installPatchesMenuItem;

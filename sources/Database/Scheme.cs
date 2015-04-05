@@ -3,26 +3,28 @@ using System.Collections.Generic;
 
 namespace Queue.Database
 {
-    public class Scheme
+    public static class SchemeState
     {
-        public string[] Constraints
+        private const string SqlSeparator = "-- SEPARATOR";
+
+        public static string[] Constraints
         {
             get
             {
-                return SchemePatches.triggers.Split(new string[] { "-- SEPARATOR" },
+                return Scheme.constraints.Split(new string[] { SqlSeparator },
                     StringSplitOptions.RemoveEmptyEntries);
             }
         }
 
         public static Dictionary<int, string> Patches = new Dictionary<int, string>()
         {
-            {1, SchemePatches._001},
-            {2, SchemePatches._002},
-            {3, SchemePatches._003},
-            {4, SchemePatches._004},
-            {5, SchemePatches._005},
-            {6, SchemePatches._006},
-            {7, SchemePatches._007}
+            {1, Scheme._001},
+            {2, Scheme._002},
+            {3, Scheme._003},
+            {4, Scheme._004},
+            {5, Scheme._005},
+            {6, Scheme._006},
+            {7, Scheme._007}
         };
     }
 }

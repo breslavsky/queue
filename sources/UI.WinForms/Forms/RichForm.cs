@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Queue.UI.WinForms
 {
-    public class RichForm : Junte.UI.WinForms.RichForm, ITranslatable
+    public class RichForm : Junte.UI.WinForms.RichForm, ITranslatableControl
     {
         private ControlTranslater translater;
 

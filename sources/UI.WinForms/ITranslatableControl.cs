@@ -1,6 +1,6 @@
 ﻿namespace Queue.UI.WinForms
 {
-    public interface ITranslatable
+    public interface ITranslatableControl
     {
         void Translate();
     }

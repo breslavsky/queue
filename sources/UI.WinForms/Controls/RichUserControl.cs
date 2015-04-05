@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class RichUserControl : UserControl, ITranslatable
+    public partial class RichUserControl : UserControl, ITranslatableControl
     {
         private ControlTranslater translater;
 
