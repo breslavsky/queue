@@ -6,13 +6,13 @@ namespace Queue.UI.WinForms
 {
     public partial class RichUserControl : UserControl, ITranslatable
     {
-        private FormTranslater translater;
+        private ControlTranslater translater;
 
         public RichUserControl()
         {
             if (!DesignMode)
             {
-                translater = new FormTranslater(this);
+                translater = new ControlTranslater(this);
             }
         }
 

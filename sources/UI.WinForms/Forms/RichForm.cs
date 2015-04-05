@@ -5,14 +5,14 @@ namespace Queue.UI.WinForms
 {
     public class RichForm : Junte.UI.WinForms.RichForm, ITranslatable
     {
-        private FormTranslater translater;
+        private ControlTranslater translater;
 
         public RichForm()
         {
             if (!DesignMode)
             {
                 UpdateIcon();
-                translater = new FormTranslater(this);
+                translater = new ControlTranslater(this);
             }
         }
 

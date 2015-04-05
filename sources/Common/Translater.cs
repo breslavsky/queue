@@ -1,52 +1,85 @@
 ﻿using System;
+using System.Collections;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
 
 namespace Queue.Common
 {
-    public static class Translater
+    public class Translater
     {
-        public static string Message(string key, params object[] parameters)
-        {
-            Assembly assembly = Assembly.GetCallingAssembly();
+        private const string ResourcePathTemplate = "{Assembly}.Translate.{Name}";
 
-            try
-            {
-                string message = new ResourceManager(GetResourceBaseName(assembly, "Messages"), assembly).GetString(key);
-                return string.Format(message, parameters);
-            }
-            catch
-            {
-                return key;
-            }
+        private readonly ResourceManager manager;
+
+        private Translater(string resource, string modification = null)
+        {
+            this.manager = CreateResouceManager(Assembly.GetCallingAssembly(), resource, modification);
         }
 
-        public static string Enum<T>(T value, string resName = null) where T : struct, IConvertible
+        public Translater(Type type, string modification = null)
+        {
+            this.manager = CreateResouceManager(type.Assembly, type.Name, modification);
+        }
+
+        private ResourceManager CreateResouceManager(Assembly assembly, string name, string modification = null)
+        {
+            try
+            {
+                string path = string.Format("{0}.Translate.{1}{2}",
+                                        assembly.GetName().Name,
+                                        name,
+                                        modification == null ? string.Empty : "_" + modification);
+
+                return new ResourceManager(path, assembly);
+            }
+            catch { }
+
+            return null;
+        }
+
+        public DictionaryEntry[] GetStrings()
+        {
+            DictionaryEntry[] result = new DictionaryEntry[] { };
+            if (manager != null)
+            {
+                try
+                {
+                    result = manager.GetResourceSet(CultureInfo.CurrentCulture, true, true)
+                                         .Cast<DictionaryEntry>()
+                                         .ToArray();
+                }
+                catch { }
+            }
+            return result;
+        }
+
+        public string GetString(string key, params object[] parameters)
         {
             string result = null;
 
-            Assembly assembly = typeof(T).Assembly;
-            try
+            if (manager != null)
             {
-                result = new ResourceManager(GetResourceBaseName(assembly, resName ?? typeof(T).Name), assembly)
-                                    .GetString(value.ToString());
-            }
-            catch
-            {
+                try
+                {
+                    string str = manager.GetString(key);
+                    result = parameters.Length > 0 ? string.Format(str, parameters) : str;
+                }
+                catch { }
             }
 
-            return result ?? value.ToString();
+            return result ?? key;
         }
 
-        private static string GetResourceBaseName(Assembly assembly, string resource)
+        public static string Message(string key, params object[] parameters)
         {
-            string ends = string.Format("Translation.{0}.resources", resource);
+            return new Translater("Messages").GetString(key, parameters);
+        }
 
-            string result = assembly.GetManifestResourceNames()
-                                          .FirstOrDefault(n => n.EndsWith(ends));
-
-            return result.Substring(0, result.LastIndexOf('.'));
+        public static string Enum<T>(T value, string mod = null) where T : struct, IConvertible
+        {
+            return new Translater(typeof(T)).GetString(value.ToString());
         }
     }
 }

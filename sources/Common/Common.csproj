@@ -57,30 +57,30 @@
     <Compile Include="TicksInterval.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="Translater.cs" />
-    <Compile Include="Translation\Language.Designer.cs">
+    <Compile Include="Translate\Language.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Language.resx</DependentUpon>
     </Compile>
-    <Compile Include="Translation\LanguageShort.Designer.cs">
+    <Compile Include="Translate\Language_short.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LanguageShort.resx</DependentUpon>
+      <DependentUpon>Language_short.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Translation\Language.en-US.resx">
+    <EmbeddedResource Include="Translate\Language.en-US.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Language.resx</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Translation\Language.resx">
+    <EmbeddedResource Include="Translate\Language.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Language.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Translation\LanguageShort.en-US.resx" />
-    <EmbeddedResource Include="Translation\LanguageShort.resx">
+    <EmbeddedResource Include="Translate\Language_short.en-US.resx" />
+    <EmbeddedResource Include="Translate\Language_short.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LanguageShort.Designer.cs</LastGenOutput>
+      <LastGenOutput>Language_short.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -145,12 +145,12 @@
     <Compile Include="Converters\ClientRequestTypeConverter.cs" />
     <Compile Include="Converters\RequestDateTimeConverter.cs" />
     <Compile Include="Enums\ClientRequestModelState.cs" />
-    <Compile Include="Translation\Messages.Designer.cs">
+    <Compile Include="Translate\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
-    <Compile Include="Translation\Strings.Designer.cs">
+    <Compile Include="Resources\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
@@ -288,13 +288,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Translation\Messages.en-US.resx" />
-    <EmbeddedResource Include="Translation\Messages.resx">
+    <EmbeddedResource Include="Translate\Messages.en-US.resx" />
+    <EmbeddedResource Include="Translate\Messages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Translation\Strings.en-US.resx" />
-    <EmbeddedResource Include="Translation\Strings.resx">
+    <EmbeddedResource Include="Resources\Strings.en-US.resx" />
+    <EmbeddedResource Include="Resources\Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>

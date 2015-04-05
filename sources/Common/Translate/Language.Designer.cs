@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Queue.Common.Translation {
+namespace Queue.Common.Translate {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Queue.Common.Translation {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Common.Translation.Language", typeof(Language).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Common.Translate.Language", typeof(Language).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
