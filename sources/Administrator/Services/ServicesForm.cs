@@ -142,6 +142,7 @@ namespace Queue.Administrator
                     {
                         treeNode = new TreeNode();
                         treeNode.Tag = f.ServiceGroup;
+                        treeNode.Checked = f.ServiceGroup.IsActive;
 
                         if (selectedNode != null)
                         {
@@ -186,6 +187,7 @@ namespace Queue.Administrator
                     {
                         treeNode = new TreeNode();
                         treeNode.Tag = f.Service;
+                        treeNode.Checked = f.Service.IsActive;
 
                         if (selectedNode != null)
                         {

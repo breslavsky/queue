@@ -15,10 +15,12 @@ namespace Queue.UI.WinForms
         public void Initialize<T>() where T : struct, IConvertible
         {
             listBox.Items.Clear();
-            EnumItem<T>[] items = EnumItem<T>.GetItems();
-            items.Where(i => (long)Enum.ToObject(typeof(T), i.Value) != 0);
-            listBox.Items.AddRange(items);
-            listBox.Enabled = items.Length > 0;
+
+            var items = EnumItem<T>.GetItems().ToList();
+            items.RemoveAll(i => (long)Enum.ToObject(typeof(T), i.Value) == 0);
+
+            listBox.Items.AddRange(items.ToArray());
+            listBox.Enabled = items.Count > 0;
         }
 
         public void Select<T>(T value) where T : struct, IConvertible

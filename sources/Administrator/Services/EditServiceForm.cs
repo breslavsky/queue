@@ -182,11 +182,18 @@ namespace Queue.Administrator
                     }
                     else
                     {
+                        var all = ClientRequestRegistrator.Terminal
+                            | ClientRequestRegistrator.Manager
+                            | ClientRequestRegistrator.Portal;
+
                         Service = new Service()
                         {
+                            IsActive = true,
                             ServiceGroup = serviceGroup,
                             Code = "0.0",
-                            Name = "Новая услуга"
+                            Name = "Новая услуга",
+                            LiveRegistrator = all,
+                            EarlyRegistrator = all
                         };
                     }
 

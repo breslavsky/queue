@@ -399,10 +399,10 @@
     <Compile Include="Services\EditServiceForm.Designer.cs">
       <DependentUpon>EditServiceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ServiceGroups\EditServiceGroupForm.cs">
+    <Compile Include="Services\EditServiceGroupForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServiceGroups\EditServiceGroupForm.Designer.cs">
+    <Compile Include="Services\EditServiceGroupForm.Designer.cs">
       <DependentUpon>EditServiceGroupForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\ServicesForm.cs">
@@ -586,7 +586,7 @@
     <EmbeddedResource Include="Users\UsersForm.resx">
       <DependentUpon>UsersForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ServiceGroups\EditServiceGroupForm.resx">
+    <EmbeddedResource Include="Services\EditServiceGroupForm.resx">
       <DependentUpon>EditServiceGroupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Services\ServicesForm.resx">

@@ -99,11 +99,11 @@
             // dataMenu
             // 
             this.dataMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.checkPatchesMenuItem,
-            this.installPatchesMenuItem,
             this.initDataMenuItem,
             this.demoDataMenuItem,
-            this.importDataMenuItem});
+            this.importDataMenuItem,
+            this.checkPatchesMenuItem,
+            this.installPatchesMenuItem});
             this.dataMenu.Enabled = false;
             this.dataMenu.Name = "dataMenu";
             this.dataMenu.Size = new System.Drawing.Size(62, 20);
@@ -177,6 +177,7 @@
             this.Name = "MainForm";
             this.Text = "База данных";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.topMenu.ResumeLayout(false);
             this.topMenu.PerformLayout();
             this.ResumeLayout(false);

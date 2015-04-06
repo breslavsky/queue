@@ -6,6 +6,7 @@ using Microsoft.Practices.Unity;
 using NHibernate;
 using NHibernate.Criterion;
 using NLog;
+using Queue.Common;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Resources;
@@ -18,22 +19,28 @@ namespace Queue.Database
 {
     public partial class MainForm : Queue.UI.WinForms.RichForm
     {
+        private const string SectionKey = "profiles";
+
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private static Properties.Settings settings = Properties.Settings.Default;
+        private IConfigurationManager configuration;
+        private DatabaseSettingsProfiles profiles;
 
-        private UnityContainer container;
+        private IUnityContainer container;
         private ISessionProvider sessionProvider;
 
         public MainForm()
             : base()
         {
             InitializeComponent();
+        }
 
-            container = new UnityContainer();
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+            profiles = configuration.GetSection<DatabaseSettingsProfiles>(SectionKey);
 
-            settings.Profiles = settings.Profiles ?? new DatabaseSettingsProfiles();
+            container = ServiceLocator.Current.GetInstance<IUnityContainer>();
         }
 
         private void checkPatchesMenuItem_Click(object sender, EventArgs e)
@@ -58,9 +65,10 @@ namespace Queue.Database
 
         private void connectButton_Click(object sender, EventArgs eventArgs)
         {
-            using (LoginForm form = new LoginForm(settings.Profiles, DatabaseConnect))
+            using (LoginForm form = new LoginForm(profiles, DatabaseConnect))
             {
                 form.ShowDialog();
+                configuration.Save();
             }
         }
 
@@ -99,8 +107,6 @@ namespace Queue.Database
         {
             sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, s);
             container.RegisterInstance<ISessionProvider>(sessionProvider);
-
-            settings.Save();
 
             schemaMenu.Enabled = dataMenu.Enabled = true;
             connectButton.Enabled = false;
@@ -148,29 +154,69 @@ namespace Queue.Database
                     .UniqueResult<int>();
                 if (count == 0)
                 {
-                    var queueOperator1 = new Operator()
+                    var o1 = new Operator()
                     {
+                        IsActive = true,
                         Name = "Денис",
                         Surname = "Сидоров"
                     };
-                    session.Save(queueOperator1);
+                    session.Save(o1);
 
-                    var queueOperator2 = new Operator()
+                    var o2 = new Operator()
                     {
+                        IsActive = true,
                         Name = "Андрей",
                         Surname = "Шитиков"
                     };
-                    session.Save(queueOperator2);
+                    session.Save(o2);
 
-                    var queueOperator3 = new Operator()
+                    var o3 = new Operator()
                     {
+                        IsActive = true,
                         Name = "Ирина",
                         Surname = "Меньшова"
                     };
-                    session.Save(queueOperator3);
+                    session.Save(o3);
+
+                    foreach (var o in new[] { o1, o2, o3 })
+                    {
+                        foreach (var d in new[] { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday,
+                            DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday })
+                        {
+                            var s = session.CreateCriteria<DefaultWeekdaySchedule>()
+                                .Add(Expression.Eq("DayOfWeek", d))
+                                .UniqueResult<DefaultWeekdaySchedule>();
+                            if (s != null)
+                            {
+                                session.Save(new ServiceRendering()
+                                {
+                                    Mode = ServiceRenderingMode.AllRequests,
+                                    Operator = o,
+                                    Schedule = s
+                                });
+                            }
+                        }
+                    }
                 }
 
-                //TODO: создание услуг
+                Log("Загрузка услуг");
+
+                var all = ClientRequestRegistrator.Terminal
+                    | ClientRequestRegistrator.Manager
+                    | ClientRequestRegistrator.Portal;
+
+                for (int i = 1; i < 10; i++)
+                {
+                    session.Save(new Service()
+                    {
+                        IsActive = true,
+                        Code = string.Format("{0}.0", i),
+                        Name = string.Format("Новая услуга {0}", i),
+                        LiveRegistrator = all,
+                        EarlyRegistrator = all,
+                        SortId = i
+                    });
+                }
 
                 transaction.Commit();
             }
@@ -307,111 +353,49 @@ namespace Queue.Database
                 {
                     var administrator = new Administrator()
                     {
+                        IsActive = true,
                         Surname = "Администратор",
-                        Permissions = AdministratorPermissions.All
+                        Permissions = AdministratorPermissions.Config
+                            | AdministratorPermissions.Clients
+                            | AdministratorPermissions.ClientsRequests
+                            | AdministratorPermissions.Users
+                            | AdministratorPermissions.DefaultSchedule
+                            | AdministratorPermissions.Workplaces
+                            | AdministratorPermissions.Services
+                            | AdministratorPermissions.CurrentSchedule
+                            | AdministratorPermissions.QueuePlan
+                            | AdministratorPermissions.Reports
+                            | AdministratorPermissions.Offices
+                            | AdministratorPermissions.AdditionalServices
                     };
                     session.Save(administrator);
                 }
 
                 Log("Инициализация расписания по уполчанию");
 
-                #region monday
-
-                var schedule1 = session.CreateCriteria<DefaultWeekdaySchedule>()
-                    .Add(Expression.Eq("DayOfWeek", DayOfWeek.Monday))
-                    .UniqueResult<DefaultWeekdaySchedule>();
-                if (schedule1 == null)
+                foreach (var d in new[] { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday,
+                        DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday })
                 {
-                    schedule1 = new DefaultWeekdaySchedule();
-                    schedule1.DayOfWeek = DayOfWeek.Monday;
-                    session.Save(schedule1);
+                    var s = session.CreateCriteria<DefaultWeekdaySchedule>()
+                        .Add(Expression.Eq("DayOfWeek", d))
+                        .UniqueResult<DefaultWeekdaySchedule>();
+                    if (s == null)
+                    {
+                        session.Save(new DefaultWeekdaySchedule()
+                        {
+                            DayOfWeek = d,
+                            IsWorked = true,
+                            ClientInterval = TimeSpan.FromMinutes(10),
+                            StartTime = new TimeSpan(9, 0, 0),
+                            FinishTime = new TimeSpan(18, 0, 0),
+                            MaxClientRequests = 10,
+                            RenderingMode = ServiceRenderingMode.AllRequests,
+                            EarlyStartTime = new TimeSpan(9, 0, 0),
+                            EarlyFinishTime = new TimeSpan(18, 0, 0),
+                            EarlyReservation = 50
+                        });
+                    }
                 }
-
-                #endregion monday
-
-                #region tuesday
-
-                var schedule2 = session.CreateCriteria<DefaultWeekdaySchedule>()
-                    .Add(Expression.Eq("DayOfWeek", DayOfWeek.Tuesday))
-                    .UniqueResult<DefaultWeekdaySchedule>();
-                if (schedule2 == null)
-                {
-                    schedule2 = new DefaultWeekdaySchedule();
-                    schedule2.DayOfWeek = DayOfWeek.Tuesday;
-                    session.Save(schedule2);
-                }
-
-                #endregion tuesday
-
-                #region wednesday
-
-                var schedule3 = session.CreateCriteria<DefaultWeekdaySchedule>()
-                    .Add(Expression.Eq("DayOfWeek", DayOfWeek.Wednesday))
-                    .UniqueResult<DefaultWeekdaySchedule>();
-                if (schedule3 == null)
-                {
-                    schedule3 = new DefaultWeekdaySchedule();
-                    schedule3.DayOfWeek = DayOfWeek.Wednesday;
-                    session.Save(schedule3);
-                }
-
-                #endregion wednesday
-
-                #region thursday
-
-                var schedule4 = session.CreateCriteria<DefaultWeekdaySchedule>()
-                    .Add(Expression.Eq("DayOfWeek", DayOfWeek.Thursday))
-                    .UniqueResult<DefaultWeekdaySchedule>();
-                if (schedule4 == null)
-                {
-                    schedule4 = new DefaultWeekdaySchedule();
-                    schedule4.DayOfWeek = DayOfWeek.Thursday;
-                    session.Save(schedule4);
-                }
-
-                #endregion thursday
-
-                #region friday
-
-                var schedule5 = session.CreateCriteria<DefaultWeekdaySchedule>()
-                    .Add(Expression.Eq("DayOfWeek", DayOfWeek.Friday))
-                    .UniqueResult<DefaultWeekdaySchedule>();
-                if (schedule5 == null)
-                {
-                    schedule5 = new DefaultWeekdaySchedule();
-                    schedule5.DayOfWeek = DayOfWeek.Friday;
-                    session.Save(schedule5);
-                }
-
-                #endregion friday
-
-                #region saturday
-
-                var schedule6 = session.CreateCriteria<DefaultWeekdaySchedule>()
-                    .Add(Expression.Eq("DayOfWeek", DayOfWeek.Saturday))
-                    .UniqueResult<DefaultWeekdaySchedule>();
-                if (schedule6 == null)
-                {
-                    schedule6 = new DefaultWeekdaySchedule();
-                    schedule6.DayOfWeek = DayOfWeek.Saturday;
-                    session.Save(schedule6);
-                }
-
-                #endregion saturday
-
-                #region sunday
-
-                var schedule7 = session.CreateCriteria<DefaultWeekdaySchedule>()
-                    .Add(Expression.Eq("DayOfWeek", DayOfWeek.Sunday))
-                    .UniqueResult<DefaultWeekdaySchedule>();
-                if (schedule7 == null)
-                {
-                    schedule7 = new DefaultWeekdaySchedule();
-                    schedule7.DayOfWeek = DayOfWeek.Sunday;
-                    session.Save(schedule7);
-                }
-
-                #endregion sunday
 
                 transaction.Commit();
             }

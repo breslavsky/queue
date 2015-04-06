@@ -172,6 +172,7 @@ namespace Queue.Administrator
                     {
                         ServiceGroup = new ServiceGroup()
                         {
+                            IsActive = true,
                             ParentGroup = parentGroup,
                             Code = "0.0",
                             Name = "Новая группа услуг",
