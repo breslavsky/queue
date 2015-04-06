@@ -8,6 +8,11 @@ namespace Queue.Model
     [Key(Column = "ConfigId", ForeignKey = "TerminalConfigToConfigReference")]
     public class TerminalConfig : Config
     {
+        public TerminalConfig()
+        {
+            Type = ConfigType.Terminal;
+        }
+
         private const int WindowTemplateLength = 1024 * 1024;
 
         #region properties

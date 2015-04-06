@@ -12,6 +12,9 @@ namespace Queue.Model
         [Property(Index = "ScheduleDate")]
         public virtual DateTime ScheduleDate { get; set; }
 
+        [ManyToOne(ClassType = typeof(Service), Column = "ServiceId", ForeignKey = "ServiceExceptionScheduleToServiceReference")]
+        public override Service Service { get; set; }
+
         #endregion properties
 
         #region methods

@@ -81,11 +81,11 @@ namespace Queue.Database
 
                     try
                     {
-                        Log(sql);
                         session.CreateSQLQuery(sql).ExecuteUpdate();
                     }
                     catch (Exception exception)
                     {
+                        Log(sql);
                         Log(exception.Message);
                         return;
                     }
@@ -169,6 +169,8 @@ namespace Queue.Database
                     };
                     session.Save(queueOperator3);
                 }
+
+                //TODO: создание услуг
 
                 transaction.Commit();
             }
@@ -305,7 +307,8 @@ namespace Queue.Database
                 {
                     var administrator = new Administrator()
                     {
-                        Surname = "Администратор"
+                        Surname = "Администратор",
+                        Permissions = AdministratorPermissions.All
                     };
                     session.Save(administrator);
                 }
@@ -413,7 +416,7 @@ namespace Queue.Database
                 transaction.Commit();
             }
 
-            Log("Данные инициализорованы");
+            Log("Данные инициализированы");
         }
 
         private void installPatchesMenuItem_Click(object sender, EventArgs e)

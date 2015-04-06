@@ -18,6 +18,9 @@ namespace Queue.Model
         [Property]
         public virtual DayOfWeek DayOfWeek { get; set; }
 
+        [ManyToOne(ClassType = typeof(Service), Column = "ServiceId", ForeignKey = "ServiceWeekdayScheduleToServiceReference")]
+        public override Service Service { get; set; }
+
         #endregion properties
 
         public override string ToString()
