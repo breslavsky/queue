@@ -1,7 +1,7 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
-using Queue.Model.Common;
+using Queue.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
@@ -170,9 +170,9 @@ namespace Queue.Administrator
 
         private void WorkplacesGridViewRenderRow(DataGridViewRow row, Workplace workplace)
         {
-            row.Cells["typeColumn"].Value = workplace.Type.Translate();
+            row.Cells["typeColumn"].Value = Translater.Enum(workplace.Type);
             row.Cells["numberColumn"].Value = workplace.Number;
-            row.Cells["modificatorColumn"].Value = workplace.Modificator.Translate();
+            row.Cells["modificatorColumn"].Value = Translater.Enum(workplace.Modificator);
             row.Cells["commentColumn"].Value = workplace.Comment;
             row.Cells["displayColumn"].Value = workplace.Display;
             row.Cells["segmentsColumn"].Value = workplace.Segments;

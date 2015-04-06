@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Queue.Display.Translation {
+namespace Queue.Model.Common.Translate {
     using System;
     
     
@@ -22,24 +22,24 @@ namespace Queue.Display.Translation {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    public class WorkplaceType {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Strings() {
+        internal WorkplaceType() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Display.Translation.Strings", typeof(Strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Model.Common.Translate.WorkplaceType", typeof(WorkplaceType).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace Queue.Display.Translation {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,20 +61,56 @@ namespace Queue.Display.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Информационное табло.
+        ///   Looks up a localized string similar to Область.
         /// </summary>
-        internal static string AppName {
+        public static string Area {
             get {
-                return ResourceManager.GetString("AppName", resourceCulture);
+                return ResourceManager.GetString("Area", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Рабочее место.
+        ///   Looks up a localized string similar to Бокс.
         /// </summary>
-        internal static string Workplace {
+        public static string Box {
             get {
-                return ResourceManager.GetString("Workplace", resourceCulture);
+                return ResourceManager.GetString("Box", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Кабинет.
+        /// </summary>
+        public static string Cabinet {
+            get {
+                return ResourceManager.GetString("Cabinet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Отдел.
+        /// </summary>
+        public static string Department {
+            get {
+                return ResourceManager.GetString("Department", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Комната.
+        /// </summary>
+        public static string Room {
+            get {
+                return ResourceManager.GetString("Room", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Окно.
+        /// </summary>
+        public static string Window {
+            get {
+                return ResourceManager.GetString("Window", resourceCulture);
             }
         }
     }

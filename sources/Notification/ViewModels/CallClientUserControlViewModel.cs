@@ -1,5 +1,5 @@
 ﻿using Junte.UI.WPF;
-using Queue.Model.Common;
+using Queue.Common;
 using Queue.Services.DTO;
 
 namespace Queue.Notification.ViewModels
@@ -39,7 +39,7 @@ namespace Queue.Notification.ViewModels
         {
             Number = request.Number;
             Workplace workplace = request.Operator.Workplace;
-            WorkplaceType = workplace.Type.Translate();
+            WorkplaceType = Translater.Enum(workplace.Type);
             WorkplaceNumber = workplace.Number;
 
             Active = true;

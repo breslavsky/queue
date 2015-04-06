@@ -134,7 +134,7 @@ namespace Queue.Terminal.Core
 
             if (MaxSubjects == null)
             {
-                throw new ApplicationException("Нет свободных объектов для записи");
+                throw new ApplicationException(Translater.Message("NoFreeSubjects"));
             }
         }
     }

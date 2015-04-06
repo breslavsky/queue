@@ -97,6 +97,15 @@ namespace Queue.Terminal.Translate {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Нет свободных объектов для записи.
+        /// </summary>
+        internal static string NoFreeSubjects {
+            get {
+                return ResourceManager.GetString("NoFreeSubjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Нет свободного времени.
         /// </summary>
         internal static string NoFreeTime {

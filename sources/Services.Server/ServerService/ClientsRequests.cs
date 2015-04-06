@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using NHibernate;
 using NHibernate.Criterion;
+using Queue.Common;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -571,7 +572,7 @@ namespace Queue.Services.Server
                         {
                             ClientRequest = clientRequest,
                             Message = string.Format("[{0}] изменил тип на [{1}] для запроса клиента [{2}]", currentUser,
-                                clientRequest.Type.Translate(), clientRequest)
+                                Translater.Enum(clientRequest.Type), clientRequest)
                         });
                     }
 

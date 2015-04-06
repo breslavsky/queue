@@ -15,7 +15,6 @@ using Queue.UI.WPF.Types;
 using System;
 using System.Media;
 using System.ServiceModel;
-
 using System.Threading.Tasks;
 using System.Timers;
 using Vlc.DotNet.Core.Medias;
@@ -225,7 +224,11 @@ namespace Queue.Notification.ViewModels
             callbackChannel.Service.Subscribe(ServerServiceEventType.CallClient);
             callbackChannel.Service.Subscribe(ServerServiceEventType.ConfigUpdated, new ServerSubscribtionArgs()
             {
-                ConfigTypes = new ConfigType[] { ConfigType.Media, ConfigType.Notification }
+                ConfigTypes = new ConfigType[]
+                {
+                    ConfigType.Media,
+                    ConfigType.Notification
+                }
             });
         }
 
@@ -241,9 +244,9 @@ namespace Queue.Notification.ViewModels
         {
             UpdateTicker(config);
 
-            foreach (MediaConfigFile f in mediaFiles)
+            foreach (MediaConfigFile file in mediaFiles)
             {
-                vlcControl.Medias.Add(new LocationMedia(string.Format(MediaFileUriPattern, config.ServiceUrl, f.Id)));
+                vlcControl.Medias.Add(new LocationMedia(string.Format(MediaFileUriPattern, config.ServiceUrl, file.Id)));
             }
 
             vlcControl.Stop();
@@ -267,16 +270,11 @@ namespace Queue.Notification.ViewModels
 
         private void CallClient(ClientRequest request)
         {
-            logger.Debug("call client [request num: {0}]", request.Number);
-
             lock (voiceLock)
             {
                 CallClientModel.ShowMessage(request);
 
-                logger.Debug("play call client [request num: {0}]", request.Number);
                 PlayVoice(request);
-                logger.Debug("call client played [request num: {0}]", request.Number);
-
                 CallClientModel.CloseMessage();
             }
         }

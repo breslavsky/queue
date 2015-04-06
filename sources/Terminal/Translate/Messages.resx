@@ -129,6 +129,9 @@
   <data name="EarlyTimeNotSelected" xml:space="preserve">
     <value>Время предварительной записи не выбрано</value>
   </data>
+  <data name="NoFreeSubjects" xml:space="preserve">
+    <value>Нет свободных объектов для записи</value>
+  </data>
   <data name="NoFreeTime" xml:space="preserve">
     <value>Нет свободного времени</value>
   </data>

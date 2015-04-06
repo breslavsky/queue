@@ -1,4 +1,4 @@
-﻿using Queue.Model.Common;
+﻿using Queue.Common;
 using Queue.Services.DTO;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -21,7 +21,7 @@ namespace Queue.Notification.UserControls
             this.Workplace = request.Operator == null || request.Operator.Workplace == null ?
                                                         string.Empty :
                                                         request.Operator.Workplace.ToString();
-            this.State = request.State.Translate();
+            this.State = Translater.Enum(request.State);
 
             Drawing.Color c = Drawing.ColorTranslator.FromHtml(request.Color);
             StateBrush = new SolidColorBrush(Color.FromRgb(c.R, c.G, c.B));

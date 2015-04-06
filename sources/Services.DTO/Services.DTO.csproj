@@ -96,6 +96,10 @@
     <Compile Include="Workplace.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{6bc9beb5-51ab-49b8-a46c-ca9ca59b2976}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model.Common\Model.Common.csproj">
       <Project>{57ddd930-5377-4427-92f1-d46b7463c5b6}</Project>
       <Name>Model.Common</Name>

@@ -13,9 +13,9 @@ namespace Queue.Common
 
         private readonly ResourceManager manager;
 
-        private Translater(string resource, string modification = null)
+        private Translater(Assembly assembly, string resource, string modification = null)
         {
-            this.manager = CreateResouceManager(Assembly.GetCallingAssembly(), resource, modification);
+            this.manager = CreateResouceManager(assembly, resource, modification);
         }
 
         public Translater(Type type, string modification = null)
@@ -74,7 +74,7 @@ namespace Queue.Common
 
         public static string Message(string key, params object[] parameters)
         {
-            return new Translater("Messages").GetString(key, parameters);
+            return new Translater(Assembly.GetCallingAssembly(), "Messages").GetString(key, parameters);
         }
 
         public static string Enum<T>(T value, string mod = null) where T : struct, IConvertible

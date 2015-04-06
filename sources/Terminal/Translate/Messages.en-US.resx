@@ -129,6 +129,9 @@
   <data name="EarlyTimeNotSelected" xml:space="preserve">
     <value>Early time is not selected</value>
   </data>
+  <data name="NoFreeSubjects" xml:space="preserve">
+    <value>No free subjects</value>
+  </data>
   <data name="NoFreeTime" xml:space="preserve">
     <value>No free time</value>
   </data>

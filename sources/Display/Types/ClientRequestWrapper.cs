@@ -1,5 +1,5 @@
 ﻿using Junte.UI.WPF;
-using Queue.Model.Common;
+using Queue.Common;
 using Queue.Services.DTO;
 using System.Windows.Media;
 using Drawing = System.Drawing;
@@ -42,7 +42,7 @@ namespace Queue.Display
         private void Update()
         {
             Number = request.Number;
-            State = request.State.Translate();
+            State = Translater.Enum(request.State);
 
             Drawing.Color c = Drawing.ColorTranslator.FromHtml(request.Color);
             StateBrush = new SolidColorBrush(Color.FromRgb(c.R, c.G, c.B));

@@ -58,7 +58,13 @@ namespace Queue.Terminal.ViewModels
         {
             if (model.SelectedDate == null)
             {
-                model.SelectedDate = DateTime.Now;
+                DateTime date = DateTime.Now.Date;
+                if (!terminalConfig.CurrentDayRecording)
+                {
+                    date = date.AddDays(1);
+                }
+
+                model.SelectedDate = date;
             }
 
             ReloadFreeTime();

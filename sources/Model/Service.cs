@@ -1,5 +1,4 @@
-﻿using Junte.Data.Common;
-using Junte.Data.NHibernate;
+﻿using Junte.Data.NHibernate;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Mapping.Attributes;

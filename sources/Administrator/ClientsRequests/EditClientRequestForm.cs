@@ -82,8 +82,8 @@ namespace Queue.Administrator
                     var service = clientRequest.Service;
                     serviceTextBlock.Text = service.ToString();
 
-                    serviceTypeTextBlock.Text = clientRequest.ServiceType.Translate();
-                    stateTextBlock.Text = clientRequest.State.Translate();
+                    serviceTypeTextBlock.Text = Translater.Enum(clientRequest.ServiceType);
+                    stateTextBlock.Text = Translater.Enum(clientRequest.State);
                     stateTextBlock.BackColor = ColorTranslator.FromHtml(clientRequest.Color);
 
                     operatorControl.Select<QueueOperator>(clientRequest.Operator);

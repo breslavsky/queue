@@ -6,6 +6,7 @@ using NHibernate.Transform;
 using NHibernate.Type;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
+using Queue.Common;
 using Queue.Model;
 using Queue.Model.Common;
 using System;
@@ -252,7 +253,7 @@ namespace Queue.Reports.ServiceRatingReport
                 {
                     row = worksheet.CreateRow(rowIndex++);
                     cell = row.CreateCell(4);
-                    cell.SetCellValue(serviceType.Translate());
+                    cell.SetCellValue(Translater.Enum(serviceType));
 
                     RenderRating(row, ratings.FirstOrDefault(r => r.Service.Id == service.Id && r.ServiceType.Equals(serviceType)) ??
                                         new ServiceRating());

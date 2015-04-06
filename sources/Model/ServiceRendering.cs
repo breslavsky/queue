@@ -1,6 +1,7 @@
 ﻿using Junte.Data.NHibernate;
 using NHibernate.Mapping.Attributes;
 using NHibernate.Validator.Constraints;
+using Queue.Common;
 using Queue.Model.Common;
 
 namespace Queue.Model
@@ -32,7 +33,7 @@ namespace Queue.Model
 
         public override string ToString()
         {
-            return string.Format("[{0}] {1}", Operator, Mode.Translate());
+            return string.Format("[{0}] {1}", Operator, Translater.Enum(Mode));
         }
     }
 }

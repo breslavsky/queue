@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Queue.Common;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -505,7 +506,7 @@ namespace Queue.Services.Server
                             {
                                 ClientRequest = clientRequest,
                                 Message = string.Format("[{0}] изменил тип услуги на [{1}] для запроса клиента [{2}]", queueOperator,
-                                    clientRequest.ServiceType.Translate(), clientRequest)
+                                    Translater.Enum(clientRequest.ServiceType), clientRequest)
                             });
                         }
 

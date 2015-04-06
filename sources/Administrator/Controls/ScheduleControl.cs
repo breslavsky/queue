@@ -1,6 +1,7 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
+using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -125,7 +126,7 @@ namespace Queue.Administrator
         {
             row.Cells["operatorColumn"].Value = serviceRendering.Operator;
             row.Cells["serviceStepColumn"].Value = serviceRendering.ServiceStep;
-            row.Cells["modeColumn"].Value = serviceRendering.Mode.Translate();
+            row.Cells["modeColumn"].Value = Translater.Enum(serviceRendering.Mode);
             row.Cells["priorityColumn"].Value = serviceRendering.Priority;
 
             row.Tag = serviceRendering;

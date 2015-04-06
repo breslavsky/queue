@@ -103,7 +103,7 @@ namespace Queue.Operator
                             isPriorityCheckBox.Checked = clientRequest.IsPriority;
                             requestTimeTextBlock.Text = clientRequest.RequestTime.ToString("hh\\:mm\\:ss");
 
-                            typeTextBlock.Text = clientRequest.Type.Translate();
+                            typeTextBlock.Text = Translater.Enum(clientRequest.Type);
                             subjectsUpDown.Value = clientRequest.Subjects;
 
                             var client = clientRequest.Client;
@@ -129,7 +129,7 @@ namespace Queue.Operator
 
                             serviceStepControl.Enabled = true;
 
-                            stateTextBlock.Text = clientRequest.State.Translate();
+                            stateTextBlock.Text = Translater.Enum(clientRequest.State);
                             stateTextBlock.BackColor = ColorTranslator.FromHtml(clientRequest.Color);
 
                             parametersGridView.Rows.Clear();
@@ -337,7 +337,7 @@ namespace Queue.Operator
                                 row.Cells["timeIntervalColumn"].Value = (clientRequestPlan.FinishTime - clientRequestPlan.StartTime).Minutes;
                                 row.Cells["clientColumn"].Value = clientRequest.Client;
                                 row.Cells["serviceColumn"].Value = clientRequest.Service;
-                                row.Cells["stateColumn"].Value = clientRequest.State.Translate();
+                                row.Cells["stateColumn"].Value = Translater.Enum(clientRequest.State);
                                 row.Tag = clientRequest;
                             }
                         }

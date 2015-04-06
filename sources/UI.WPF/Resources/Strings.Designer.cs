@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Queue.UI.WPF.Translation {
+namespace Queue.UI.WPF.Resources {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace Queue.UI.WPF.Translation {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace Queue.UI.WPF.Translation {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.UI.WPF.Translation.Strings", typeof(Strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.UI.WPF.Resources.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace Queue.UI.WPF.Translation {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Queue.UI.WPF.Translation {
         /// <summary>
         ///   Looks up a localized string similar to Тема.
         /// </summary>
-        internal static string Accent {
+        public static string Accent {
             get {
                 return ResourceManager.GetString("Accent", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Queue.UI.WPF.Translation {
         /// <summary>
         ///   Looks up a localized string similar to Язык.
         /// </summary>
-        internal static string Language {
+        public static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Queue.UI.WPF.Translation {
         /// <summary>
         ///   Looks up a localized string similar to Загрузка.
         /// </summary>
-        internal static string Loading {
+        public static string Loading {
             get {
                 return ResourceManager.GetString("Loading", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Queue.UI.WPF.Translation {
         /// <summary>
         ///   Looks up a localized string similar to Войти.
         /// </summary>
-        internal static string Login {
+        public static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Queue.UI.WPF.Translation {
         /// <summary>
         ///   Looks up a localized string similar to Уведомление.
         /// </summary>
-        internal static string Notice {
+        public static string Notice {
             get {
                 return ResourceManager.GetString("Notice", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Queue.UI.WPF.Translation {
         /// <summary>
         ///   Looks up a localized string similar to Пароль.
         /// </summary>
-        internal static string Password {
+        public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Queue.UI.WPF.Translation {
         /// <summary>
         ///   Looks up a localized string similar to Запомнить.
         /// </summary>
-        internal static string Remember {
+        public static string Remember {
             get {
                 return ResourceManager.GetString("Remember", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Queue.UI.WPF.Translation {
         /// <summary>
         ///   Looks up a localized string similar to Сервер.
         /// </summary>
-        internal static string Server {
+        public static string Server {
             get {
                 return ResourceManager.GetString("Server", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Queue.UI.WPF.Translation {
         /// <summary>
         ///   Looks up a localized string similar to Пользователь.
         /// </summary>
-        internal static string User {
+        public static string User {
             get {
                 return ResourceManager.GetString("User", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Queue.UI.WPF.Translation {
         /// <summary>
         ///   Looks up a localized string similar to Внимание.
         /// </summary>
-        internal static string Warning {
+        public static string Warning {
             get {
                 return ResourceManager.GetString("Warning", resourceCulture);
             }

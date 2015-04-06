@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Queue.Model.Common.Translation {
+namespace Queue.Model.Common.Translate {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Queue.Model.Common.Translation {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ClientRequestState {
+    public class ServiceRatingDetailLavel {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ClientRequestState() {
+        internal ServiceRatingDetailLavel() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Queue.Model.Common.Translation {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Model.Common.Translation.ClientRequestState", typeof(ClientRequestState).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Model.Common.Translate.ServiceRatingDetailLavel", typeof(ServiceRatingDetailLavel).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,65 +61,38 @@ namespace Queue.Model.Common.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Отсутствует.
+        ///   Looks up a localized string similar to День.
         /// </summary>
-        public static string Absence {
+        public static string Day {
             get {
-                return ResourceManager.GetString("Absence", resourceCulture);
+                return ResourceManager.GetString("Day", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Вызывается.
+        ///   Looks up a localized string similar to Час.
         /// </summary>
-        public static string Calling {
+        public static string Hour {
             get {
-                return ResourceManager.GetString("Calling", resourceCulture);
+                return ResourceManager.GetString("Hour", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Отменен.
+        ///   Looks up a localized string similar to Месяц.
         /// </summary>
-        public static string Canceled {
+        public static string Month {
             get {
-                return ResourceManager.GetString("Canceled", resourceCulture);
+                return ResourceManager.GetString("Month", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Отложен.
+        ///   Looks up a localized string similar to Год.
         /// </summary>
-        public static string Postponed {
+        public static string Year {
             get {
-                return ResourceManager.GetString("Postponed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Обслужен.
-        /// </summary>
-        public static string Rendered {
-            get {
-                return ResourceManager.GetString("Rendered", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Обслуживается.
-        /// </summary>
-        public static string Rendering {
-            get {
-                return ResourceManager.GetString("Rendering", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ожидание.
-        /// </summary>
-        public static string Waiting {
-            get {
-                return ResourceManager.GetString("Waiting", resourceCulture);
+                return ResourceManager.GetString("Year", resourceCulture);
             }
         }
     }

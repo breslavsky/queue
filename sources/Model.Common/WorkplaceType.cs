@@ -9,12 +9,4 @@
         Department,
         Area
     }
-
-    public static partial class TranslationExtensions
-    {
-        public static string Translate(this WorkplaceType value)
-        {
-            return Translation.WorkplaceType.ResourceManager.GetString(value.ToString());
-        }
-    }
 }

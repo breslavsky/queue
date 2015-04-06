@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Queue.Notification.Translation {
+namespace Queue.Model.Common.Translate {
     using System;
     
     
@@ -22,24 +22,24 @@ namespace Queue.Notification.Translation {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    public class ClientRequestType {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Strings() {
+        internal ClientRequestType() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Notification.Translation.Strings", typeof(Strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Model.Common.Translate.ClientRequestType", typeof(ClientRequestType).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace Queue.Notification.Translation {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,29 +61,20 @@ namespace Queue.Notification.Translation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Информационное табло.
+        ///   Looks up a localized string similar to По записи.
         /// </summary>
-        internal static string AppName {
+        public static string Early {
             get {
-                return ResourceManager.GetString("AppName", resourceCulture);
+                return ResourceManager.GetString("Early", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Посетитель.
+        ///   Looks up a localized string similar to Живая очередь.
         /// </summary>
-        internal static string Client {
+        public static string Live {
             get {
-                return ResourceManager.GetString("Client", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Окно.
-        /// </summary>
-        internal static string Workplace {
-            get {
-                return ResourceManager.GetString("Workplace", resourceCulture);
+                return ResourceManager.GetString("Live", resourceCulture);
             }
         }
     }

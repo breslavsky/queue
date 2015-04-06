@@ -1,6 +1,5 @@
-﻿using Queue.Model.Common;
-using System;
-using System.Resources;
+﻿using Queue.Common;
+using Queue.Model.Common;
 using System.Runtime.Serialization;
 
 namespace Queue.Services.DTO
@@ -30,7 +29,7 @@ namespace Queue.Services.DTO
 
         public override string ToString()
         {
-            return string.Format("[{0}] {1}", Operator, Mode.Translate());
+            return string.Format("[{0}] {1}", Operator, Translater.Enum(Mode));
         }
     }
 }

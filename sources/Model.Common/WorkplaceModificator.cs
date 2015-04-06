@@ -22,12 +22,4 @@
         CHAR7 = 107,
         CHAR8 = 108
     }
-
-    public static partial class TranslationExtensions
-    {
-        public static string Translate(this WorkplaceModificator value)
-        {
-            return Translation.WorkplaceModificator.ResourceManager.GetString(value.ToString());
-        }
-    }
 }

@@ -1,6 +1,7 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
+using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -9,7 +10,6 @@ using System.Drawing;
 using System.ServiceModel;
 using System.Windows.Forms;
 using QueueOperator = Queue.Services.DTO.Operator;
-using Translation = Queue.Model.Common.Translation;
 
 namespace Queue.Administrator
 {
@@ -222,7 +222,7 @@ namespace Queue.Administrator
             row.Cells["clientColumn"].Value = clientRequest.Client;
             row.Cells["operatorColumn"].Value = clientRequest.Operator;
             row.Cells["serviceColumn"].Value = clientRequest.Service;
-            row.Cells["stateColumn"].Value = clientRequest.State.Translate();
+            row.Cells["stateColumn"].Value = Translater.Enum(clientRequest.State);
 
             row.Tag = clientRequest;
             row.DefaultCellStyle.BackColor = ColorTranslator.FromHtml(clientRequest.Color);

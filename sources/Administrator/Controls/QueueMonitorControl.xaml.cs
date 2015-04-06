@@ -1,4 +1,4 @@
-﻿using Queue.Model.Common;
+﻿using Queue.Common;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
 using System;
@@ -304,7 +304,7 @@ namespace Queue.Administrator
                     textBlock = new TextBlock();
                     textBlock.Padding = new Thickness(5, 5, 5, 5);
 
-                    textBlock.Inlines.Add(new Run(string.Format("[{0}] {1}", clientRequest.Number, clientRequest.Type.Translate()))
+                    textBlock.Inlines.Add(new Run(string.Format("[{0}] {1}", clientRequest.Number, Translater.Enum(clientRequest.Type)))
                     {
                         FontWeight = FontWeights.Bold
                     });
@@ -319,7 +319,7 @@ namespace Queue.Administrator
                     textBlock.Inlines.Add(string.Format("{0:hh\\:mm\\:ss} - {1:hh\\:mm\\:ss}", clientRequestPlan.StartTime, clientRequestPlan.FinishTime));
                     textBlock.Inlines.Add(new LineBreak());
 
-                    textBlock.Inlines.Add(clientRequest.State.Translate());
+                    textBlock.Inlines.Add(Translater.Enum(clientRequest.State));
 
                     if (queuePlanTime > TimeSpan.Zero)
                     {
@@ -402,7 +402,7 @@ namespace Queue.Administrator
                 textBlock = new TextBlock();
                 textBlock.Padding = new Thickness(5, 5, 5, 5);
 
-                textBlock.Inlines.Add(new Run(string.Format("[{0}] {1}", clientRequest.Number, clientRequest.Type.Translate()))
+                textBlock.Inlines.Add(new Run(string.Format("[{0}] {1}", clientRequest.Number, Translater.Enum(clientRequest.Type)))
                 {
                     FontWeight = FontWeights.Bold
                 });

@@ -1,4 +1,5 @@
-﻿using Queue.Model.Common;
+﻿using Queue.Common;
+using Queue.Model.Common;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -9,7 +10,7 @@ namespace Queue.Terminal.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((ClientRequestType)value).Translate();
+            return Translater.Enum((ClientRequestType)value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
