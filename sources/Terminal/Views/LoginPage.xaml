@@ -44,8 +44,17 @@
                         <Button Grid.Column="1"
                                 Margin="10,0,0,0"
                                 Command="{Binding ConnectCommand}"
-                                Content="+"
-                                Style="{DynamicResource AccentedSquareButtonStyle}" />
+                                Style="{DynamicResource AccentedSquareButtonStyle}">
+                            <Rectangle Width="15"
+                                       Height="15"
+                                       Fill="{Binding Path=Foreground,
+                                                      RelativeSource={RelativeSource FindAncestor,
+                                                                                     AncestorType={x:Type Button}}}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_connect}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </Button>
                     </Grid>
                     <Label Grid.Row="1" Content="{lex:Loc User}" />
                     <ComboBox Grid.Row="1"

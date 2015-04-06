@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Queue.Display
+namespace Queue.Display.Views
 {
     public partial class HomePage : RichPage
     {

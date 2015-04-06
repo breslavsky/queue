@@ -123,13 +123,13 @@
       </Component>
       <Component Id="cmp886200E0570F6ED803412CBE764B2AAA" Guid="31D0C564-463C-4694-9F9D-DB915732CFB1">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.ShellExtensions.dll" />
-      </Component>      
+      </Component>
       <Component Id="cmpD7CA4B29E6F34B5D8D70A216F16C773A" Guid="D7CA4B29-E6F3-4B5D-8D70-A216F16C773A">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Crad.Windows.Forms.Actions.dll" />
       </Component>
       <Component Id="cmp727E0303489E495083BCF3502597F72A" Guid="727E0303-489E-4950-83BC-F3502597F72A">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Queue.UI.WinForms.dll" />
-      </Component>      
+      </Component>
     </ComponentGroup>
   </Fragment>
 </Wix>

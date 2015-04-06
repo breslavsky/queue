@@ -5,8 +5,6 @@ namespace Queue.Common
 {
     public class EnumItem<T> where T : struct, IConvertible
     {
-        private const string TranslationPattern = "{0}.Translate.{1}";
-
         public T Value { get; set; }
 
         public EnumItem(T value)

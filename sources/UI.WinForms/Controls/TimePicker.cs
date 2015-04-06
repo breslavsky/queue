@@ -1,6 +1,5 @@
 ﻿using Junte.UI.WinForms;
 using System;
-using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
@@ -10,14 +9,8 @@ namespace Queue.UI.WinForms
 
         public TimeSpan Value
         {
-            get
-            {
-                return value;
-            }
-            set
-            {
-                valueTextBox.Text = value.ToString("hh\\:mm");
-            }
+            get { return value; }
+            set { valueTextBox.Text = value.ToString("hh\\:mm"); }
         }
 
         public TimePicker()

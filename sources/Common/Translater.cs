@@ -9,8 +9,6 @@ namespace Queue.Common
 {
     public class Translater
     {
-        private const string ResourcePathTemplate = "{Assembly}.Translate.{Name}";
-
         private readonly ResourceManager manager;
 
         private Translater(Assembly assembly, string resource, string modification = null)
@@ -79,7 +77,7 @@ namespace Queue.Common
 
         public static string Enum<T>(T value, string mod = null) where T : struct, IConvertible
         {
-            return new Translater(typeof(T)).GetString(value.ToString());
+            return new Translater(typeof(T), mod).GetString(value.ToString());
         }
     }
 }

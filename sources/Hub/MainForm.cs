@@ -124,19 +124,5 @@ namespace Queue.Hub
             IsLogout = true;
             Close();
         }
-
-        private void MainForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F2)
-            {
-                try
-                {
-                    Process.Start("log4view.l4v");
-                }
-                catch
-                {
-                }
-            }
-        }
     }
 }

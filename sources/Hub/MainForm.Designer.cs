@@ -119,7 +119,6 @@
             this.Name = "MainForm";
             this.Text = "Шина";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.statusBar.ResumeLayout(false);
             this.statusBar.PerformLayout();
             this.panel1.ResumeLayout(false);

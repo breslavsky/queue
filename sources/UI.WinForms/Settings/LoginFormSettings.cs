@@ -6,6 +6,8 @@ namespace Queue.UI.WinForms
 {
     public class LoginFormSettings : ConfigurationSection
     {
+        public const string SectionKey = "login";
+
         [ConfigurationProperty("language")]
         public Language Language
         {

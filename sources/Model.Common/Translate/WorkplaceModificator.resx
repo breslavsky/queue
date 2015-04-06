@@ -141,4 +141,7 @@
   <data name="CHAR8" xml:space="preserve">
     <value>з</value>
   </data>
+  <data name="None" xml:space="preserve">
+    <value> </value>
+  </data>
 </root>

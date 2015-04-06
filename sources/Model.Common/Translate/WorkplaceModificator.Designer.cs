@@ -131,5 +131,14 @@ namespace Queue.Model.Common.Translate {
                 return ResourceManager.GetString("CHAR8", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  .
+        /// </summary>
+        public static string None {
+            get {
+                return ResourceManager.GetString("None", resourceCulture);
+            }
+        }
     }
 }

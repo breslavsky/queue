@@ -14,7 +14,7 @@ using Vlc.DotNet.Core;
 using Vlc.DotNet.Core.Interops.Signatures.LibVlc.MediaListPlayer;
 using Vlc.DotNet.Wpf;
 
-namespace Queue.Notification
+namespace Queue.Notification.Views
 {
     public partial class HomePage : RichPage
     {

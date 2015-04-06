@@ -90,13 +90,13 @@
                     Style="{StaticResource keyboardButton}" />
 
             <Button Command="{Binding BackspaceCommand}" Style="{StaticResource keyboardButton}">
-                <Rectangle Width="10"
+                <Rectangle Width="15"
                            Height="10"
                            Fill="{Binding Path=Foreground,
                                           RelativeSource={RelativeSource FindAncestor,
                                                                          AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_arrow_left}" />
+                        <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_clear_reflect_horizontal}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>

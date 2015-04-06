@@ -14,8 +14,6 @@ namespace Queue.UI.WinForms
 {
     public partial class LoginForm : RichForm
     {
-        private const string SectionKey = "login";
-
         private readonly TaskPool taskPool;
         private readonly UserRole userRole;
         private LoginFormSettings settings;
@@ -38,7 +36,7 @@ namespace Queue.UI.WinForms
         private void LoginForm_Load(object sender, EventArgs e)
         {
             configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-            settings = configuration.GetSection<LoginFormSettings>(SectionKey);
+            settings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
 
             loginFormSettingsBindingSource.DataSource = settings;
 
@@ -162,7 +160,7 @@ namespace Queue.UI.WinForms
         public static void ResetSettings()
         {
             IConfigurationManager configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-            LoginFormSettings settings = configuration.GetSection<LoginFormSettings>(SectionKey);
+            LoginFormSettings settings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
             settings.IsRemember = false;
 
             configuration.Save();

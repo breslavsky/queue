@@ -5,6 +5,7 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Notification.ViewModels;
+using Queue.Notification.Views;
 using Queue.Services.Contracts;
 using Queue.UI.WPF;
 using Queue.UI.WPF.Models;
@@ -50,8 +51,6 @@ namespace Queue.Notification
 
         private void OnConnected(object sender, EventArgs e)
         {
-            logger.Info("connected to {0}", connectPage.Model.Endpoint);
-
             RegisterServices();
 
             content.NavigationService.Navigate(new HomePage());

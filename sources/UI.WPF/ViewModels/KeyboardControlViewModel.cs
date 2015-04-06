@@ -166,7 +166,7 @@ namespace Queue.UI.WPF.ViewModels
 
         private void AdjustCurrentLanguage()
         {
-            string str = Translater.Enum(language, "LanguageShort");
+            string str = Translater.Enum(language, "short");
             if (IsUpper)
             {
                 str = str.ToUpperInvariant();

@@ -64,27 +64,6 @@ namespace Queue.Portal
             inited = true;
         }
 
-        public void Stop()
-        {
-            StopHost(portalServiceHost);
-            StopHost(clientServiceHost);
-            StopHost(operatorServiceHost);
-        }
-
-        private void StopHost(ServiceHost host)
-        {
-            if (host == null)
-            {
-                return;
-            }
-
-            try
-            {
-                host.Close();
-            }
-            catch { }
-        }
-
         private ServiceHost CreatePortalServiceHost()
         {
             PortalServiceHost host = new PortalServiceHost(channelBuilder, user, typeof(PortalService));
@@ -115,6 +94,27 @@ namespace Queue.Portal
             serviceEndpoint.Behaviors.Add(new WebHttpBehavior());
 
             return host;
+        }
+
+        public void Stop()
+        {
+            StopHost(portalServiceHost);
+            StopHost(clientServiceHost);
+            StopHost(operatorServiceHost);
+        }
+
+        private void StopHost(ServiceHost host)
+        {
+            if (host == null)
+            {
+                return;
+            }
+
+            try
+            {
+                host.Close();
+            }
+            catch { }
         }
     }
 }
