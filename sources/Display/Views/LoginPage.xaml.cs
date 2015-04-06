@@ -1,7 +1,7 @@
 ﻿using Queue.Display.ViewModels;
 using Queue.UI.WPF;
 
-namespace Queue.Display.Pages
+namespace Queue.Display.Views
 {
     public partial class LoginPage : RichPage
     {

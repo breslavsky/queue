@@ -21,7 +21,7 @@ namespace Queue.UI.WinForms
             try
             {
                 comboBox.Items.Clear();
-                var items = EnumItem<T>.GetItems();
+                EnumItem<T>[] items = EnumItem<T>.GetItems();
                 comboBox.Items.AddRange(items);
                 comboBox.Enabled = items.Length > 0;
                 comboBox.SelectedItem = items.FirstOrDefault();

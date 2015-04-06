@@ -1,7 +1,7 @@
 ﻿using Queue.Notification.ViewModels;
 using Queue.UI.WPF;
 
-namespace Queue.Notification
+namespace Queue.Notification.Views
 {
     public partial class LoginPage : RichPage
     {

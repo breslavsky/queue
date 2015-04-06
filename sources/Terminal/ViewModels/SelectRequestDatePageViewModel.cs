@@ -6,6 +6,7 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -183,6 +184,19 @@ namespace Queue.Terminal.ViewModels
         internal void Unloaded()
         {
             model.PropertyChanged -= model_PropertyChanged;
+        }
+
+        public class EarlyRequestHour
+        {
+            private List<int> minutes = new List<int>();
+
+            public int Hour { get; set; }
+
+            public List<int> Minutes
+            {
+                get { return minutes; }
+                set { minutes = value; }
+            }
         }
     }
 }

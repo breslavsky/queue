@@ -180,7 +180,6 @@
     <Compile Include="Views\SearchServicePage.xaml.cs">
       <DependentUpon>SearchServicePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Types\EarlyRequestHour.cs" />
     <Compile Include="Core\Navigator.cs" />
     <Compile Include="Enums\PageType.cs" />
     <Compile Include="Views\TerminalPage.cs" />
