@@ -144,6 +144,8 @@ namespace Queue.Display.ViewModels
             Endpoint = loginSettings.Endpoint;
             SelectedWorkplace = loginSettings.WorkplaceId;
             SelectedLanguage = loginSettings.Language;
+            IsRemember = loginSettings.IsRemember;
+
             if (!string.IsNullOrWhiteSpace(loginSettings.Accent))
             {
                 SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == loginSettings.Accent);
