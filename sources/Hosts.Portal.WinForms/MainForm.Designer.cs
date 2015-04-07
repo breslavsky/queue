@@ -46,6 +46,9 @@
             this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
             this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.layoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.serviceGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).BeginInit();
             this.settingsGroupBox.SuspendLayout();
@@ -53,14 +56,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.portalSettingsBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.layoutPanel.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // stopButton
             // 
             this.stopButton.Enabled = false;
-            this.stopButton.Location = new System.Drawing.Point(212, 374);
+            this.stopButton.Location = new System.Drawing.Point(200, 5);
             this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(184, 30);
+            this.stopButton.Size = new System.Drawing.Size(190, 30);
             this.stopButton.TabIndex = 15;
             this.stopButton.Text = "Остановить";
             this.stopButton.UseVisualStyleBackColor = true;
@@ -71,16 +77,17 @@
             this.serviceGroupBox.Controls.Add(this.serviceStatePicture);
             this.serviceGroupBox.Controls.Add(this.runServiceButton);
             this.serviceGroupBox.Controls.Add(this.installServiseButton);
-            this.serviceGroupBox.Location = new System.Drawing.Point(12, 306);
+            this.serviceGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serviceGroupBox.Location = new System.Drawing.Point(3, 429);
             this.serviceGroupBox.Name = "serviceGroupBox";
-            this.serviceGroupBox.Size = new System.Drawing.Size(384, 62);
+            this.serviceGroupBox.Size = new System.Drawing.Size(398, 59);
             this.serviceGroupBox.TabIndex = 14;
             this.serviceGroupBox.TabStop = false;
             this.serviceGroupBox.Text = "Служба";
             // 
             // serviceStatePicture
             // 
-            this.serviceStatePicture.Location = new System.Drawing.Point(349, 19);
+            this.serviceStatePicture.Location = new System.Drawing.Point(185, 25);
             this.serviceStatePicture.Name = "serviceStatePicture";
             this.serviceStatePicture.Size = new System.Drawing.Size(24, 24);
             this.serviceStatePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -89,9 +96,10 @@
             // 
             // runServiceButton
             // 
-            this.runServiceButton.Location = new System.Drawing.Point(154, 19);
+            this.runServiceButton.Location = new System.Drawing.Point(225, 20);
+            this.runServiceButton.Margin = new System.Windows.Forms.Padding(5);
             this.runServiceButton.Name = "runServiceButton";
-            this.runServiceButton.Size = new System.Drawing.Size(127, 23);
+            this.runServiceButton.Size = new System.Drawing.Size(165, 35);
             this.runServiceButton.TabIndex = 1;
             this.runServiceButton.Text = "Запустить службу";
             this.runServiceButton.UseVisualStyleBackColor = true;
@@ -99,9 +107,10 @@
             // 
             // installServiseButton
             // 
-            this.installServiseButton.Location = new System.Drawing.Point(21, 19);
+            this.installServiseButton.Location = new System.Drawing.Point(5, 20);
+            this.installServiseButton.Margin = new System.Windows.Forms.Padding(5);
             this.installServiseButton.Name = "installServiseButton";
-            this.installServiseButton.Size = new System.Drawing.Size(127, 23);
+            this.installServiseButton.Size = new System.Drawing.Size(165, 35);
             this.installServiseButton.TabIndex = 0;
             this.installServiseButton.Text = "Установить службу";
             this.installServiseButton.UseVisualStyleBackColor = true;
@@ -109,9 +118,9 @@
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(12, 374);
+            this.startButton.Location = new System.Drawing.Point(5, 5);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(180, 30);
+            this.startButton.Size = new System.Drawing.Size(190, 30);
             this.startButton.TabIndex = 13;
             this.startButton.Text = "Запустить";
             this.startButton.UseVisualStyleBackColor = true;
@@ -122,18 +131,19 @@
             this.settingsGroupBox.Controls.Add(this.saveButton);
             this.settingsGroupBox.Controls.Add(this.groupBox2);
             this.settingsGroupBox.Controls.Add(this.groupBox1);
-            this.settingsGroupBox.Location = new System.Drawing.Point(12, 12);
+            this.settingsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.settingsGroupBox.Location = new System.Drawing.Point(3, 103);
             this.settingsGroupBox.Name = "settingsGroupBox";
-            this.settingsGroupBox.Size = new System.Drawing.Size(384, 288);
+            this.settingsGroupBox.Size = new System.Drawing.Size(398, 320);
             this.settingsGroupBox.TabIndex = 16;
             this.settingsGroupBox.TabStop = false;
             this.settingsGroupBox.Text = "Настройки";
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(303, 248);
+            this.saveButton.Location = new System.Drawing.Point(6, 284);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(75, 23);
+            this.saveButton.Size = new System.Drawing.Size(383, 28);
             this.saveButton.TabIndex = 10;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
@@ -190,16 +200,17 @@
             this.groupBox1.Controls.Add(this.loginSettingsControl);
             this.groupBox1.Location = new System.Drawing.Point(8, 17);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(370, 209);
+            this.groupBox1.Size = new System.Drawing.Size(382, 209);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Соединение с сервером";
             // 
             // loginSettingsControl
             // 
-            this.loginSettingsControl.Location = new System.Drawing.Point(18, 19);
+            this.loginSettingsControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.loginSettingsControl.Location = new System.Drawing.Point(3, 16);
             this.loginSettingsControl.Name = "loginSettingsControl";
-            this.loginSettingsControl.Size = new System.Drawing.Size(337, 176);
+            this.loginSettingsControl.Size = new System.Drawing.Size(376, 190);
             this.loginSettingsControl.TabIndex = 0;
             // 
             // serviceStateTimer
@@ -214,18 +225,55 @@
             this.notifyIcon.Visible = true;
             this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
             // 
+            // layoutPanel
+            // 
+            this.layoutPanel.ColumnCount = 1;
+            this.layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutPanel.Controls.Add(this.pictureBox1, 0, 0);
+            this.layoutPanel.Controls.Add(this.settingsGroupBox, 0, 1);
+            this.layoutPanel.Controls.Add(this.panel1, 0, 3);
+            this.layoutPanel.Controls.Add(this.serviceGroupBox, 0, 2);
+            this.layoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.layoutPanel.Name = "layoutPanel";
+            this.layoutPanel.RowCount = 4;
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.layoutPanel.Size = new System.Drawing.Size(404, 541);
+            this.layoutPanel.TabIndex = 17;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.startButton);
+            this.panel1.Controls.Add(this.stopButton);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 494);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(398, 44);
+            this.panel1.TabIndex = 17;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(398, 94);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 18;
+            this.pictureBox1.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(404, 417);
-            this.Controls.Add(this.settingsGroupBox);
-            this.Controls.Add(this.stopButton);
-            this.Controls.Add(this.serviceGroupBox);
-            this.Controls.Add(this.startButton);
+            this.ClientSize = new System.Drawing.Size(404, 541);
+            this.Controls.Add(this.layoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(420, 455);
-            this.MinimumSize = new System.Drawing.Size(420, 455);
+            this.MinimumSize = new System.Drawing.Size(420, 580);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Портал";
@@ -239,6 +287,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.portalSettingsBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            this.layoutPanel.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -261,6 +312,9 @@
         private System.Windows.Forms.BindingSource portalSettingsBindingSource;
         private System.Windows.Forms.Timer serviceStateTimer;
         private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.TableLayoutPanel layoutPanel;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

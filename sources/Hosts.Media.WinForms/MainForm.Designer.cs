@@ -33,12 +33,14 @@
             this.settingsGroupBox = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.folderTextBox = new System.Windows.Forms.TextBox();
+            this.mediaSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.selectFolderButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.portUpDown = new System.Windows.Forms.NumericUpDown();
             this.portLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
             this.stopButton = new System.Windows.Forms.Button();
             this.serviceGroupBox = new System.Windows.Forms.GroupBox();
             this.serviceStatePicture = new System.Windows.Forms.PictureBox();
@@ -48,16 +50,20 @@
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.mediaSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
+            this.layoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.settingsGroupBox.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mediaSettingsBindingSource)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.serviceGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mediaSettingsBindingSource)).BeginInit();
+            this.layoutPanel.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // settingsGroupBox
@@ -66,9 +72,10 @@
             this.settingsGroupBox.Controls.Add(this.saveButton);
             this.settingsGroupBox.Controls.Add(this.groupBox2);
             this.settingsGroupBox.Controls.Add(this.groupBox1);
-            this.settingsGroupBox.Location = new System.Drawing.Point(10, 12);
+            this.settingsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.settingsGroupBox.Location = new System.Drawing.Point(3, 103);
             this.settingsGroupBox.Name = "settingsGroupBox";
-            this.settingsGroupBox.Size = new System.Drawing.Size(384, 325);
+            this.settingsGroupBox.Size = new System.Drawing.Size(398, 320);
             this.settingsGroupBox.TabIndex = 20;
             this.settingsGroupBox.TabStop = false;
             this.settingsGroupBox.Text = "Настройки";
@@ -77,7 +84,7 @@
             // 
             this.groupBox3.Controls.Add(this.folderTextBox);
             this.groupBox3.Controls.Add(this.selectFolderButton);
-            this.groupBox3.Location = new System.Drawing.Point(189, 232);
+            this.groupBox3.Location = new System.Drawing.Point(210, 230);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(179, 48);
             this.groupBox3.TabIndex = 14;
@@ -93,6 +100,10 @@
             this.folderTextBox.Size = new System.Drawing.Size(126, 20);
             this.folderTextBox.TabIndex = 12;
             // 
+            // mediaSettingsBindingSource
+            // 
+            this.mediaSettingsBindingSource.DataSource = typeof(Queue.Media.MediaSettings);
+            // 
             // selectFolderButton
             // 
             this.selectFolderButton.Location = new System.Drawing.Point(138, 15);
@@ -104,9 +115,9 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(293, 286);
+            this.saveButton.Location = new System.Drawing.Point(10, 285);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(75, 23);
+            this.saveButton.Size = new System.Drawing.Size(380, 30);
             this.saveButton.TabIndex = 10;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
@@ -116,7 +127,7 @@
             // 
             this.groupBox2.Controls.Add(this.portUpDown);
             this.groupBox2.Controls.Add(this.portLabel);
-            this.groupBox2.Location = new System.Drawing.Point(7, 232);
+            this.groupBox2.Location = new System.Drawing.Point(10, 230);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(176, 46);
             this.groupBox2.TabIndex = 3;
@@ -157,19 +168,27 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.loginSettingsControl);
-            this.groupBox1.Location = new System.Drawing.Point(8, 17);
+            this.groupBox1.Location = new System.Drawing.Point(10, 15);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(370, 209);
+            this.groupBox1.Size = new System.Drawing.Size(380, 209);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Соединение с сервером";
             // 
+            // loginSettingsControl
+            // 
+            this.loginSettingsControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.loginSettingsControl.Location = new System.Drawing.Point(3, 16);
+            this.loginSettingsControl.Name = "loginSettingsControl";
+            this.loginSettingsControl.Size = new System.Drawing.Size(374, 190);
+            this.loginSettingsControl.TabIndex = 0;
+            // 
             // stopButton
             // 
             this.stopButton.Enabled = false;
-            this.stopButton.Location = new System.Drawing.Point(210, 411);
+            this.stopButton.Location = new System.Drawing.Point(200, 10);
             this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(184, 30);
+            this.stopButton.Size = new System.Drawing.Size(190, 30);
             this.stopButton.TabIndex = 19;
             this.stopButton.Text = "Остановить";
             this.stopButton.UseVisualStyleBackColor = true;
@@ -180,16 +199,17 @@
             this.serviceGroupBox.Controls.Add(this.serviceStatePicture);
             this.serviceGroupBox.Controls.Add(this.runServiceButton);
             this.serviceGroupBox.Controls.Add(this.installServiceButton);
-            this.serviceGroupBox.Location = new System.Drawing.Point(10, 343);
+            this.serviceGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serviceGroupBox.Location = new System.Drawing.Point(3, 429);
             this.serviceGroupBox.Name = "serviceGroupBox";
-            this.serviceGroupBox.Size = new System.Drawing.Size(384, 62);
+            this.serviceGroupBox.Size = new System.Drawing.Size(398, 59);
             this.serviceGroupBox.TabIndex = 18;
             this.serviceGroupBox.TabStop = false;
             this.serviceGroupBox.Text = "Служба";
             // 
             // serviceStatePicture
             // 
-            this.serviceStatePicture.Location = new System.Drawing.Point(349, 19);
+            this.serviceStatePicture.Location = new System.Drawing.Point(185, 25);
             this.serviceStatePicture.Name = "serviceStatePicture";
             this.serviceStatePicture.Size = new System.Drawing.Size(24, 24);
             this.serviceStatePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -198,9 +218,9 @@
             // 
             // runServiceButton
             // 
-            this.runServiceButton.Location = new System.Drawing.Point(154, 19);
+            this.runServiceButton.Location = new System.Drawing.Point(225, 20);
             this.runServiceButton.Name = "runServiceButton";
-            this.runServiceButton.Size = new System.Drawing.Size(127, 23);
+            this.runServiceButton.Size = new System.Drawing.Size(165, 35);
             this.runServiceButton.TabIndex = 1;
             this.runServiceButton.Text = "Запустить службу";
             this.runServiceButton.UseVisualStyleBackColor = true;
@@ -208,9 +228,9 @@
             // 
             // installServiceButton
             // 
-            this.installServiceButton.Location = new System.Drawing.Point(21, 19);
+            this.installServiceButton.Location = new System.Drawing.Point(5, 20);
             this.installServiceButton.Name = "installServiceButton";
-            this.installServiceButton.Size = new System.Drawing.Size(127, 23);
+            this.installServiceButton.Size = new System.Drawing.Size(165, 35);
             this.installServiceButton.TabIndex = 0;
             this.installServiceButton.Text = "Установить службу";
             this.installServiceButton.UseVisualStyleBackColor = true;
@@ -218,9 +238,9 @@
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(10, 411);
+            this.startButton.Location = new System.Drawing.Point(5, 10);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(180, 30);
+            this.startButton.Size = new System.Drawing.Size(190, 30);
             this.startButton.TabIndex = 17;
             this.startButton.Text = "Запустить";
             this.startButton.UseVisualStyleBackColor = true;
@@ -238,28 +258,53 @@
             this.serviceStateTimer.Interval = 1000;
             this.serviceStateTimer.Tick += new System.EventHandler(this.serviceStateTimer_Tick);
             // 
-            // mediaSettingsBindingSource
+            // layoutPanel
             // 
-            this.mediaSettingsBindingSource.DataSource = typeof(Queue.Media.MediaSettings);
+            this.layoutPanel.ColumnCount = 1;
+            this.layoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutPanel.Controls.Add(this.pictureBox1, 0, 0);
+            this.layoutPanel.Controls.Add(this.settingsGroupBox, 0, 1);
+            this.layoutPanel.Controls.Add(this.serviceGroupBox, 0, 2);
+            this.layoutPanel.Controls.Add(this.panel1, 0, 3);
+            this.layoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.layoutPanel.Name = "layoutPanel";
+            this.layoutPanel.RowCount = 4;
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.layoutPanel.Size = new System.Drawing.Size(404, 541);
+            this.layoutPanel.TabIndex = 21;
             // 
-            // loginSettingsControl
+            // panel1
             // 
-            this.loginSettingsControl.Location = new System.Drawing.Point(14, 19);
-            this.loginSettingsControl.Name = "loginSettingsControl";
-            this.loginSettingsControl.Size = new System.Drawing.Size(340, 176);
-            this.loginSettingsControl.TabIndex = 0;
+            this.panel1.Controls.Add(this.startButton);
+            this.panel1.Controls.Add(this.stopButton);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 494);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(398, 44);
+            this.panel1.TabIndex = 21;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(398, 94);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 16;
+            this.pictureBox1.TabStop = false;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(404, 452);
-            this.Controls.Add(this.settingsGroupBox);
-            this.Controls.Add(this.stopButton);
-            this.Controls.Add(this.serviceGroupBox);
-            this.Controls.Add(this.startButton);
+            this.ClientSize = new System.Drawing.Size(404, 541);
+            this.Controls.Add(this.layoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(420, 490);
             this.MinimumSize = new System.Drawing.Size(420, 490);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -270,12 +315,15 @@
             this.settingsGroupBox.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mediaSettingsBindingSource)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.serviceGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mediaSettingsBindingSource)).EndInit();
+            this.layoutPanel.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -302,6 +350,9 @@
         private System.Windows.Forms.Timer serviceStateTimer;
         private System.Windows.Forms.BindingSource mediaSettingsBindingSource;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private System.Windows.Forms.TableLayoutPanel layoutPanel;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
