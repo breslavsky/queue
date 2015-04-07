@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Queue.Services.Contracts
 {
-    [ServiceContract]
+    [ServiceContract(Namespace = "http://queue.name/server-service")]
     public interface IServerService
     {
         [OperationContract]
@@ -97,9 +97,28 @@ namespace Queue.Services.Contracts
         Task<ClientRequest> PostponeClientRequest(Guid clientRequestId, TimeSpan postponeTime);
 
         [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<DTO.ClientRequestParameter[]> GetClientRequestParameters(Guid clientRequestId);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<DTO.ClientRequestAdditionalService[]> GetClientRequestAdditionalServices(Guid clientRequestId);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<DTO.ClientRequestAdditionalService> GetClientRequestAdditionalService(Guid clientRequestAdditionalServiceId);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<ClientRequestAdditionalService> EditClientRequestAdditionalService(ClientRequestAdditionalService source);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task DeleteClientRequestAdditionalService(Guid clientRequestAdditionalServiceId);
+
+        [OperationContract]
         Task<ClientRequestPlan[]> GetOperatorClientRequestPlans();
 
-        //TODO: shit!
         [OperationContract]
         Task<Dictionary<Operator, ClientRequestPlan>> GetCurrentClientRequestPlans();
 
@@ -201,7 +220,7 @@ namespace Queue.Services.Contracts
         Task DeleteUser(Guid userId);
 
         [OperationContract]
-        Task<DTO.OperatorInterruption[]> GetOperatorInterruptions(Guid operatorId);
+        Task<DTO.OperatorInterruption[]> GetOperatorInterruptions();
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]

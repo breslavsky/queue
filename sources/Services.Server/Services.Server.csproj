@@ -138,6 +138,8 @@
     <Compile Include="ServerService\Workplaces.cs" />
     <Compile Include="ServerService.cs" />
     <Compile Include="ServerService\AdditionalService.cs" />
+    <Compile Include="ServerService\ClientRequestAdditionalService.cs" />
+    <Compile Include="ServerService\ClientRequestParameter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

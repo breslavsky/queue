@@ -20,7 +20,8 @@ namespace Queue.UI.WinForms
         {
             try
             {
-                Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetEntryAssembly().Location);
+                //TODO: адаптировать под размер
+                //Icon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetEntryAssembly().Location);
             }
             catch { }
         }

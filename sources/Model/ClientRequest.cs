@@ -135,19 +135,6 @@ namespace Queue.Model
 
         #endregion properties
 
-        #region collections
-
-        [Bag(0, Cascade = "delete,merge", Inverse = true, Lazy = CollectionLazy.False)]
-        [Key(1, Column = "ClientRequestId", OnDelete = OnDelete.Cascade)]
-        [OneToMany(2, ClassType = typeof(ClientRequestParameter))]
-        public virtual IList<ClientRequestParameter> Parameters
-        {
-            get { return parameters; }
-            set { parameters = value; }
-        }
-
-        #endregion collections
-
         public virtual void Open()
         {
             if (!IsClosed)

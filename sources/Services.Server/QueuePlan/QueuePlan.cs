@@ -639,7 +639,14 @@ namespace Queue.Services.Server
                 OperatorsPlans.Clear();
                 foreach (var o in operators)
                 {
-                    OperatorsPlans.Add(new OperatorPlan(storage.Put(o)));
+                    var interruptionIntervals = session.CreateCriteria<OperatorInterruption>()
+                        .Add(Restrictions.Eq("Operator", o))
+                        .Add(Restrictions.Eq("DayOfWeek", PlanDate.DayOfWeek))
+                        .List<OperatorInterruption>()
+                        .Select(i => new TimeInterval(i.StartTime, i.FinishTime))
+                        .ToArray();
+
+                    OperatorsPlans.Add(new OperatorPlan(storage.Put(o), interruptionIntervals));
                     logger.Debug("Загружен оператор [{0}]", o);
                 }
 

@@ -145,6 +145,12 @@
         A8B3Pn4Z02c59AcAbOxxIINWPmE/Qw927IUPcHXHFBJAlxYg6g1IZDALc1HGTgAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="additionalServiceColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="quantityColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <metadata name="parameterNameColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

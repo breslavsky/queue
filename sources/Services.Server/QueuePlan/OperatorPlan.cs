@@ -15,10 +15,12 @@ namespace Queue.Services.Server
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly List<TimeInterval> clientRequestIntervals = new List<TimeInterval>();
+        private readonly TimeInterval[] interruptionIntervals;
 
-        public OperatorPlan(Operator queueOperator)
+        public OperatorPlan(Operator queueOperator, TimeInterval[] interruptionIntervals)
         {
             Operator = queueOperator;
+            this.interruptionIntervals = interruptionIntervals;
 
             Metrics = new OperatorPlanMetrics(queueOperator);
 
@@ -102,14 +104,11 @@ namespace Queue.Services.Server
         public TimeSpan GetNearTimeInterval(TimeSpan startTime, Schedule schedule, int subjects = 1)
         {
             // Недоступные интервалы
-            var reservedIntervals = new List<TimeInterval>(clientRequestIntervals);
-
-            // Если установлен перерыв у оператора
-            //if (Operator.IsInterruption)
-            //{
-            //    reservedIntervals.Add(new TimeInterval(Operator.InterruptionStartTime, Operator.InterruptionFinishTime));
-            //}
-
+            var reservedIntervals = new List<TimeInterval>();
+            // Перерывы оператора
+            reservedIntervals.AddRange(interruptionIntervals);
+            // Запланированные запросы клиентов
+            reservedIntervals.AddRange(clientRequestIntervals);
             // Если установлен перерыв у расписания
             if (schedule.IsInterruption)
             {

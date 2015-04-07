@@ -115,8 +115,6 @@ namespace Queue.Administrator
                         {
                             Schedule = schedule
                         };
-
-                    Enabled = true;
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -129,6 +127,10 @@ namespace Queue.Administrator
                 catch (Exception exception)
                 {
                     UIHelper.Warning(exception.Message);
+                }
+                finally
+                {
+                    Enabled = true;
                 }
             }
         }

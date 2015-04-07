@@ -33,12 +33,14 @@
             this.settingsGroupBox = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.folderTextBox = new System.Windows.Forms.TextBox();
+            this.mediaSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.selectFolderButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.portUpDown = new System.Windows.Forms.NumericUpDown();
             this.portLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
             this.stopButton = new System.Windows.Forms.Button();
             this.serviceGroupBox = new System.Windows.Forms.GroupBox();
             this.serviceStatePicture = new System.Windows.Forms.PictureBox();
@@ -48,16 +50,14 @@
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.mediaSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
             this.settingsGroupBox.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mediaSettingsBindingSource)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.serviceGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mediaSettingsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // settingsGroupBox
@@ -92,6 +92,10 @@
             this.folderTextBox.ReadOnly = true;
             this.folderTextBox.Size = new System.Drawing.Size(126, 20);
             this.folderTextBox.TabIndex = 12;
+            // 
+            // mediaSettingsBindingSource
+            // 
+            this.mediaSettingsBindingSource.DataSource = typeof(Queue.Media.MediaSettings);
             // 
             // selectFolderButton
             // 
@@ -157,12 +161,19 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.loginSettingsControl);
-            this.groupBox1.Location = new System.Drawing.Point(8, 17);
+            this.groupBox1.Location = new System.Drawing.Point(8, 20);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(370, 209);
+            this.groupBox1.Size = new System.Drawing.Size(370, 200);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Соединение с сервером";
+            // 
+            // loginSettingsControl
+            // 
+            this.loginSettingsControl.Location = new System.Drawing.Point(14, 19);
+            this.loginSettingsControl.Name = "loginSettingsControl";
+            this.loginSettingsControl.Size = new System.Drawing.Size(340, 176);
+            this.loginSettingsControl.TabIndex = 0;
             // 
             // stopButton
             // 
@@ -238,17 +249,6 @@
             this.serviceStateTimer.Interval = 1000;
             this.serviceStateTimer.Tick += new System.EventHandler(this.serviceStateTimer_Tick);
             // 
-            // mediaSettingsBindingSource
-            // 
-            this.mediaSettingsBindingSource.DataSource = typeof(Queue.Media.MediaSettings);
-            // 
-            // loginSettingsControl
-            // 
-            this.loginSettingsControl.Location = new System.Drawing.Point(14, 19);
-            this.loginSettingsControl.Name = "loginSettingsControl";
-            this.loginSettingsControl.Size = new System.Drawing.Size(340, 176);
-            this.loginSettingsControl.TabIndex = 0;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -270,12 +270,12 @@
             this.settingsGroupBox.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mediaSettingsBindingSource)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.serviceGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mediaSettingsBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -1,5 +1,6 @@
 ﻿using Junte.Data.NHibernate;
 using NHibernate.Mapping.Attributes;
+using NHibernate.Validator.Constraints;
 using System;
 
 namespace Queue.Model
@@ -10,6 +11,7 @@ namespace Queue.Model
     {
         #region properties
 
+        [NotNull(Message = "Оператор не указан")]
         [ManyToOne(ClassType = typeof(Operator), Column = "OperatorId", ForeignKey = "OperatorInterruptionToOperatorReference")]
         public virtual Operator Operator { get; set; }
 

@@ -119,7 +119,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    AdditionalService = await taskPool.AddTask(channel.Service.EditAdditionalService(AdditionalService));
+                    AdditionalService = await taskPool.AddTask(channel.Service.EditAdditionalService(additionalService));
 
                     if (Saved != null)
                     {

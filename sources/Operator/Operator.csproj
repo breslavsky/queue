@@ -141,6 +141,12 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EditClientRequestAdditionalServiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditClientRequestAdditionalServiceForm.Designer.cs">
+      <DependentUpon>EditClientRequestAdditionalServiceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="OperatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,6 +158,9 @@
       </SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="EditClientRequestAdditionalServiceForm.resx">
+      <DependentUpon>EditClientRequestAdditionalServiceForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OperatorForm.resx">
       <DependentUpon>OperatorForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -16,6 +16,7 @@ namespace Queue.Model.Common
         QueuePlan = 256,
         Reports = 512,
         Offices = 1024,
-        AdditionalServices = 2048
+        AdditionalServices = 2048,
+        OperatorInterruptions = 4096
     }
 }

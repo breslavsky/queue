@@ -17,11 +17,12 @@ namespace Queue.Operator
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OperatorForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.serverStateLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.currentDateTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -34,7 +35,7 @@ namespace Queue.Operator
             this.isAutocallCheckBox = new System.Windows.Forms.CheckBox();
             this.logoutButton = new System.Windows.Forms.Button();
             this.mainTabControl = new System.Windows.Forms.TabControl();
-            this.currentClientTab = new System.Windows.Forms.TabPage();
+            this.currentClientRequestTab = new System.Windows.Forms.TabPage();
             this.numberLabel = new System.Windows.Forms.Label();
             this.numberTextBlock = new System.Windows.Forms.Label();
             this.isPriorityCheckBox = new System.Windows.Forms.CheckBox();
@@ -57,10 +58,16 @@ namespace Queue.Operator
             this.stateLabel = new System.Windows.Forms.Label();
             this.stateTextBlock = new System.Windows.Forms.Label();
             this.digitalTimer = new Queue.UI.WinForms.DigitalTimer();
-            this.parametersLabel = new System.Windows.Forms.Label();
+            this.clientRequestTabControl = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.parametersGridView = new System.Windows.Forms.DataGridView();
             this.parameterNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.parameterValueColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.addAdditionalServiceButton = new System.Windows.Forms.Button();
+            this.additionalServicesGridView = new System.Windows.Forms.DataGridView();
+            this.additionalServiceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stepPanel = new System.Windows.Forms.Panel();
             this.step1Panel = new System.Windows.Forms.Panel();
             this.callClientButton = new System.Windows.Forms.Button();
@@ -87,10 +94,14 @@ namespace Queue.Operator
             this.statusBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.mainTabControl.SuspendLayout();
-            this.currentClientTab.SuspendLayout();
+            this.currentClientRequestTab.SuspendLayout();
             this.subjectsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).BeginInit();
+            this.clientRequestTabControl.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.parametersGridView)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.additionalServicesGridView)).BeginInit();
             this.stepPanel.SuspendLayout();
             this.step1Panel.SuspendLayout();
             this.step2Panel.SuspendLayout();
@@ -110,7 +121,7 @@ namespace Queue.Operator
             this.standingLabel,
             this.separator2,
             this.versionLabel});
-            this.statusBar.Location = new System.Drawing.Point(0, 485);
+            this.statusBar.Location = new System.Drawing.Point(0, 590);
             this.statusBar.Name = "statusBar";
             this.statusBar.Size = new System.Drawing.Size(524, 22);
             this.statusBar.SizingGrip = false;
@@ -167,7 +178,7 @@ namespace Queue.Operator
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(10, 30, 10, 10);
-            this.panel1.Size = new System.Drawing.Size(524, 485);
+            this.panel1.Size = new System.Drawing.Size(524, 590);
             this.panel1.TabIndex = 0;
             // 
             // isAutocallCheckBox
@@ -197,7 +208,7 @@ namespace Queue.Operator
             // 
             // mainTabControl
             // 
-            this.mainTabControl.Controls.Add(this.currentClientTab);
+            this.mainTabControl.Controls.Add(this.currentClientRequestTab);
             this.mainTabControl.Controls.Add(this.clientRequestsTab);
             this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainTabControl.Location = new System.Drawing.Point(10, 30);
@@ -205,41 +216,40 @@ namespace Queue.Operator
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.Padding = new System.Drawing.Point(5, 5);
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(504, 445);
+            this.mainTabControl.Size = new System.Drawing.Size(504, 550);
             this.mainTabControl.TabIndex = 1;
             this.mainTabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.mainTabControl_Selecting);
             // 
-            // currentClientTab
+            // currentClientRequestTab
             // 
-            this.currentClientTab.Controls.Add(this.numberLabel);
-            this.currentClientTab.Controls.Add(this.numberTextBlock);
-            this.currentClientTab.Controls.Add(this.isPriorityCheckBox);
-            this.currentClientTab.Controls.Add(this.requestTimeLabel);
-            this.currentClientTab.Controls.Add(this.requestTimeTextBlock);
-            this.currentClientTab.Controls.Add(this.typeTextBlock);
-            this.currentClientTab.Controls.Add(this.subjectsLabel);
-            this.currentClientTab.Controls.Add(this.subjectsPanel);
-            this.currentClientTab.Controls.Add(this.clientLabel);
-            this.currentClientTab.Controls.Add(this.clientTextBlock);
-            this.currentClientTab.Controls.Add(this.serviceLabel);
-            this.currentClientTab.Controls.Add(this.serviceTextBlock);
-            this.currentClientTab.Controls.Add(this.serviceChangeLink);
-            this.currentClientTab.Controls.Add(this.servceTypeLabel);
-            this.currentClientTab.Controls.Add(this.serviceTypeControl);
-            this.currentClientTab.Controls.Add(this.serviceStepLabel);
-            this.currentClientTab.Controls.Add(this.serviceStepControl);
-            this.currentClientTab.Controls.Add(this.stateLabel);
-            this.currentClientTab.Controls.Add(this.stateTextBlock);
-            this.currentClientTab.Controls.Add(this.digitalTimer);
-            this.currentClientTab.Controls.Add(this.parametersLabel);
-            this.currentClientTab.Controls.Add(this.parametersGridView);
-            this.currentClientTab.Controls.Add(this.stepPanel);
-            this.currentClientTab.Location = new System.Drawing.Point(4, 26);
-            this.currentClientTab.Name = "currentClientTab";
-            this.currentClientTab.Size = new System.Drawing.Size(496, 415);
-            this.currentClientTab.TabIndex = 0;
-            this.currentClientTab.Text = "Текущий клиент";
-            this.currentClientTab.UseVisualStyleBackColor = true;
+            this.currentClientRequestTab.Controls.Add(this.numberLabel);
+            this.currentClientRequestTab.Controls.Add(this.numberTextBlock);
+            this.currentClientRequestTab.Controls.Add(this.isPriorityCheckBox);
+            this.currentClientRequestTab.Controls.Add(this.requestTimeLabel);
+            this.currentClientRequestTab.Controls.Add(this.requestTimeTextBlock);
+            this.currentClientRequestTab.Controls.Add(this.typeTextBlock);
+            this.currentClientRequestTab.Controls.Add(this.subjectsLabel);
+            this.currentClientRequestTab.Controls.Add(this.subjectsPanel);
+            this.currentClientRequestTab.Controls.Add(this.clientLabel);
+            this.currentClientRequestTab.Controls.Add(this.clientTextBlock);
+            this.currentClientRequestTab.Controls.Add(this.serviceLabel);
+            this.currentClientRequestTab.Controls.Add(this.serviceTextBlock);
+            this.currentClientRequestTab.Controls.Add(this.serviceChangeLink);
+            this.currentClientRequestTab.Controls.Add(this.servceTypeLabel);
+            this.currentClientRequestTab.Controls.Add(this.serviceTypeControl);
+            this.currentClientRequestTab.Controls.Add(this.serviceStepLabel);
+            this.currentClientRequestTab.Controls.Add(this.serviceStepControl);
+            this.currentClientRequestTab.Controls.Add(this.stateLabel);
+            this.currentClientRequestTab.Controls.Add(this.stateTextBlock);
+            this.currentClientRequestTab.Controls.Add(this.digitalTimer);
+            this.currentClientRequestTab.Controls.Add(this.clientRequestTabControl);
+            this.currentClientRequestTab.Controls.Add(this.stepPanel);
+            this.currentClientRequestTab.Location = new System.Drawing.Point(4, 26);
+            this.currentClientRequestTab.Name = "currentClientRequestTab";
+            this.currentClientRequestTab.Size = new System.Drawing.Size(496, 520);
+            this.currentClientRequestTab.TabIndex = 0;
+            this.currentClientRequestTab.Text = "Текущий запрос клиента";
+            this.currentClientRequestTab.UseVisualStyleBackColor = true;
             // 
             // numberLabel
             // 
@@ -451,38 +461,51 @@ namespace Queue.Operator
             this.digitalTimer.Size = new System.Drawing.Size(60, 20);
             this.digitalTimer.TabIndex = 3;
             // 
-            // parametersLabel
+            // clientRequestTabControl
             // 
-            this.parametersLabel.AutoSize = true;
-            this.parametersLabel.Location = new System.Drawing.Point(5, 300);
-            this.parametersLabel.Name = "parametersLabel";
-            this.parametersLabel.Size = new System.Drawing.Size(102, 13);
-            this.parametersLabel.TabIndex = 0;
-            this.parametersLabel.Text = "Параметры услуги";
+            this.clientRequestTabControl.Controls.Add(this.tabPage1);
+            this.clientRequestTabControl.Controls.Add(this.tabPage2);
+            this.clientRequestTabControl.Location = new System.Drawing.Point(5, 350);
+            this.clientRequestTabControl.Name = "clientRequestTabControl";
+            this.clientRequestTabControl.Padding = new System.Drawing.Point(5, 5);
+            this.clientRequestTabControl.SelectedIndex = 0;
+            this.clientRequestTabControl.Size = new System.Drawing.Size(485, 160);
+            this.clientRequestTabControl.TabIndex = 11;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.parametersGridView);
+            this.tabPage1.Location = new System.Drawing.Point(4, 26);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(477, 130);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Параметры услуги";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // parametersGridView
             // 
             this.parametersGridView.AllowUserToAddRows = false;
             this.parametersGridView.AllowUserToDeleteRows = false;
             this.parametersGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.parametersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.parametersGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.parameterNameColumn,
             this.parameterValueColumn});
-            this.parametersGridView.Location = new System.Drawing.Point(10, 315);
+            this.parametersGridView.Location = new System.Drawing.Point(5, 5);
             this.parametersGridView.MultiSelect = false;
             this.parametersGridView.Name = "parametersGridView";
             this.parametersGridView.ReadOnly = true;
             this.parametersGridView.RowHeadersVisible = false;
-            this.parametersGridView.Size = new System.Drawing.Size(475, 90);
+            this.parametersGridView.Size = new System.Drawing.Size(465, 120);
             this.parametersGridView.TabIndex = 0;
             // 
             // parameterNameColumn
@@ -501,6 +524,71 @@ namespace Queue.Operator
             this.parameterValueColumn.Name = "parameterValueColumn";
             this.parameterValueColumn.ReadOnly = true;
             this.parameterValueColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.addAdditionalServiceButton);
+            this.tabPage2.Controls.Add(this.additionalServicesGridView);
+            this.tabPage2.Location = new System.Drawing.Point(4, 26);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(477, 130);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Дополнительные услуги";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // addAdditionalServiceButton
+            // 
+            this.addAdditionalServiceButton.Location = new System.Drawing.Point(5, 100);
+            this.addAdditionalServiceButton.Name = "addAdditionalServiceButton";
+            this.addAdditionalServiceButton.Size = new System.Drawing.Size(75, 25);
+            this.addAdditionalServiceButton.TabIndex = 13;
+            this.addAdditionalServiceButton.Text = "Добавить";
+            this.addAdditionalServiceButton.UseVisualStyleBackColor = true;
+            this.addAdditionalServiceButton.Click += new System.EventHandler(this.addAdditionalServiceButton_Click);
+            // 
+            // additionalServicesGridView
+            // 
+            this.additionalServicesGridView.AllowUserToAddRows = false;
+            this.additionalServicesGridView.AllowUserToDeleteRows = false;
+            this.additionalServicesGridView.AllowUserToResizeRows = false;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.additionalServicesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.additionalServicesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.additionalServicesGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.additionalServiceColumn,
+            this.quantityColumn});
+            this.additionalServicesGridView.Location = new System.Drawing.Point(5, 5);
+            this.additionalServicesGridView.MultiSelect = false;
+            this.additionalServicesGridView.Name = "additionalServicesGridView";
+            this.additionalServicesGridView.ReadOnly = true;
+            this.additionalServicesGridView.RowHeadersVisible = false;
+            this.additionalServicesGridView.Size = new System.Drawing.Size(465, 90);
+            this.additionalServicesGridView.TabIndex = 12;
+            this.additionalServicesGridView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.additionalServicesGridView_UserDeletingRow);
+            // 
+            // additionalServiceColumn
+            // 
+            this.additionalServiceColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.additionalServiceColumn.HeaderText = "Дополнительная услуга";
+            this.additionalServiceColumn.Name = "additionalServiceColumn";
+            this.additionalServiceColumn.ReadOnly = true;
+            this.additionalServiceColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // quantityColumn
+            // 
+            this.quantityColumn.FillWeight = 70F;
+            this.quantityColumn.HeaderText = "Кол-во";
+            this.quantityColumn.Name = "quantityColumn";
+            this.quantityColumn.ReadOnly = true;
+            this.quantityColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.quantityColumn.Width = 70;
             // 
             // stepPanel
             // 
@@ -655,7 +743,7 @@ namespace Queue.Operator
             this.clientRequestsTab.Controls.Add(this.clientRequestsGridView);
             this.clientRequestsTab.Location = new System.Drawing.Point(4, 26);
             this.clientRequestsTab.Name = "clientRequestsTab";
-            this.clientRequestsTab.Size = new System.Drawing.Size(496, 415);
+            this.clientRequestsTab.Size = new System.Drawing.Size(496, 520);
             this.clientRequestsTab.TabIndex = 0;
             this.clientRequestsTab.Text = "Список клиентов";
             this.clientRequestsTab.UseVisualStyleBackColor = true;
@@ -666,15 +754,15 @@ namespace Queue.Operator
             this.clientRequestsGridView.AllowUserToDeleteRows = false;
             this.clientRequestsGridView.AllowUserToResizeColumns = false;
             this.clientRequestsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.clientRequestsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.clientRequestsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.clientRequestsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.clientRequestsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.numberColumn,
@@ -692,13 +780,13 @@ namespace Queue.Operator
             this.clientRequestsGridView.ReadOnly = true;
             this.clientRequestsGridView.RowHeadersVisible = false;
             this.clientRequestsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.clientRequestsGridView.Size = new System.Drawing.Size(496, 415);
+            this.clientRequestsGridView.Size = new System.Drawing.Size(496, 520);
             this.clientRequestsGridView.TabIndex = 0;
             // 
             // numberColumn
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.numberColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.numberColumn.DefaultCellStyle = dataGridViewCellStyle10;
             this.numberColumn.HeaderText = "Номер";
             this.numberColumn.Name = "numberColumn";
             this.numberColumn.ReadOnly = true;
@@ -707,8 +795,8 @@ namespace Queue.Operator
             // 
             // subjectsColumn
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.subjectsColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.subjectsColumn.DefaultCellStyle = dataGridViewCellStyle11;
             this.subjectsColumn.HeaderText = "Объектов";
             this.subjectsColumn.Name = "subjectsColumn";
             this.subjectsColumn.ReadOnly = true;
@@ -724,8 +812,8 @@ namespace Queue.Operator
             // 
             // timeIntervalColumn
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.timeIntervalColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.timeIntervalColumn.DefaultCellStyle = dataGridViewCellStyle12;
             this.timeIntervalColumn.HeaderText = "Интервал (мин)";
             this.timeIntervalColumn.Name = "timeIntervalColumn";
             this.timeIntervalColumn.ReadOnly = true;
@@ -760,13 +848,13 @@ namespace Queue.Operator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(524, 507);
+            this.ClientSize = new System.Drawing.Size(524, 612);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.statusBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(840, 545);
-            this.MinimumSize = new System.Drawing.Size(540, 545);
+            this.MaximumSize = new System.Drawing.Size(840, 650);
+            this.MinimumSize = new System.Drawing.Size(540, 650);
             this.Name = "OperatorForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -775,11 +863,15 @@ namespace Queue.Operator
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.mainTabControl.ResumeLayout(false);
-            this.currentClientTab.ResumeLayout(false);
-            this.currentClientTab.PerformLayout();
+            this.currentClientRequestTab.ResumeLayout(false);
+            this.currentClientRequestTab.PerformLayout();
             this.subjectsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).EndInit();
+            this.clientRequestTabControl.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.parametersGridView)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.additionalServicesGridView)).EndInit();
             this.stepPanel.ResumeLayout(false);
             this.step1Panel.ResumeLayout(false);
             this.step2Panel.ResumeLayout(false);
@@ -801,7 +893,7 @@ namespace Queue.Operator
         private System.Windows.Forms.ToolStripStatusLabel versionLabel;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TabControl mainTabControl;
-        private System.Windows.Forms.TabPage currentClientTab;
+        private System.Windows.Forms.TabPage currentClientRequestTab;
         private System.Windows.Forms.LinkLabel serviceChangeLink;
         private System.Windows.Forms.Label servceTypeLabel;
         private System.Windows.Forms.CheckBox isPriorityCheckBox;
@@ -810,7 +902,6 @@ namespace Queue.Operator
         private System.Windows.Forms.Label clientLabel;
         private System.Windows.Forms.Label serviceLabel;
         private System.Windows.Forms.Label stateLabel;
-        private System.Windows.Forms.Label parametersLabel;
         private System.Windows.Forms.DataGridView parametersGridView;
         private System.Windows.Forms.Panel stepPanel;
         private System.Windows.Forms.Panel step1Panel;
@@ -857,6 +948,13 @@ namespace Queue.Operator
         private System.Windows.Forms.DataGridViewTextBoxColumn clientColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn serviceColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn stateColumn;
+        private System.Windows.Forms.TabControl clientRequestTabControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.DataGridView additionalServicesGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn additionalServiceColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn quantityColumn;
+        private System.Windows.Forms.Button addAdditionalServiceButton;
 
     }
 }

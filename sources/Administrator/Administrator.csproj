@@ -241,6 +241,18 @@
     <Compile Include="AdditionalServices\AdditionalServicesForm.Designer.cs">
       <DependentUpon>AdditionalServicesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="OperatorInterruptions\EditOperatorInterruptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OperatorInterruptions\EditOperatorInterruptionForm.Designer.cs">
+      <DependentUpon>EditOperatorInterruptionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OperatorInterruptions\OperatorInterruptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OperatorInterruptions\OperatorInterruptionsForm.Designer.cs">
+      <DependentUpon>OperatorInterruptionsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Schedule\CurrentScheduleForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -462,6 +474,12 @@
     <EmbeddedResource Include="AdditionalServices\AdditionalServicesForm.resx">
       <DependentUpon>AdditionalServicesForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OperatorInterruptions\EditOperatorInterruptionForm.resx">
+      <DependentUpon>EditOperatorInterruptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OperatorInterruptions\OperatorInterruptionsForm.resx">
+      <DependentUpon>OperatorInterruptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Schedule\CurrentScheduleForm.resx">
       <DependentUpon>CurrentScheduleForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -609,6 +627,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\DataSources\Queue.Services.DTO.AdditionalService.datasource" />
+    <None Include="Properties\DataSources\Queue.Services.DTO.OperatorInterruption.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

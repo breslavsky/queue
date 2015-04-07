@@ -134,12 +134,46 @@ namespace Queue.Operator
 
                             parametersGridView.Rows.Clear();
 
-                            foreach (var parameter in clientRequest.Parameters)
+                            using (var channel = channelManager.CreateChannel())
                             {
-                                int index = parametersGridView.Rows.Add();
-                                var row = parametersGridView.Rows[index];
-                                row.Cells["parameterNameColumn"].Value = parameter.Name;
-                                row.Cells["parameterValueColumn"].Value = parameter.Value;
+                                try
+                                {
+                                    var parameters = await taskPool.AddTask(channel.Service.GetClientRequestParameters(service.Id));
+                                    foreach (var p in parameters)
+                                    {
+                                        int index = parametersGridView.Rows.Add();
+                                        var row = parametersGridView.Rows[index];
+                                        row.Cells["parameterNameColumn"].Value = p.Name;
+                                        row.Cells["parameterValueColumn"].Value = p.Value;
+                                        row.Tag = p;
+                                    }
+                                }
+                                catch (Exception exception)
+                                {
+                                    logger.Warn(exception);
+                                }
+                            }
+
+                            additionalServicesGridView.Rows.Clear();
+
+                            using (var channel = channelManager.CreateChannel())
+                            {
+                                try
+                                {
+                                    var additionalServices = await taskPool.AddTask(channel.Service.GetClientRequestAdditionalServices(service.Id));
+                                    foreach (var a in additionalServices)
+                                    {
+                                        int index = additionalServicesGridView.Rows.Add();
+                                        var row = additionalServicesGridView.Rows[index];
+                                        row.Cells["additionalServiceColumn"].Value = a.AdditionalService;
+                                        row.Cells["quantity"].Value = a.Quantity;
+                                        row.Tag = a;
+                                    }
+                                }
+                                catch (Exception exception)
+                                {
+                                    logger.Warn(exception);
+                                }
                             }
 
                             versionLabel.Text = string.Format("[{0}]", clientRequest.Version);
@@ -220,7 +254,8 @@ namespace Queue.Operator
                     subjectsPanel.Enabled =
                     serviceChangeLink.Enabled =
                     serviceTypeControl.Enabled =
-                    serviceStepControl.Enabled = false;
+                    serviceStepControl.Enabled =
+                    clientRequestTabControl.Enabled = false;
 
                 switch (value)
                 {
@@ -239,7 +274,8 @@ namespace Queue.Operator
                         step3Panel.Visible =
                         subjectsPanel.Enabled =
                             serviceTypeControl.Enabled =
-                            serviceChangeLink.Enabled = true;
+                            serviceChangeLink.Enabled =
+                            clientRequestTabControl.Enabled = true;
 
                         break;
                 }
@@ -819,5 +855,22 @@ namespace Queue.Operator
         }
 
         #endregion buttons
+
+        private void addAdditionalServiceButton_Click(object sender, EventArgs e)
+        {
+            using (var f = new EditClientRequestAdditionalServiceForm(channelBuilder, currentUser))
+            {
+                f.Saved += (s, eventArgs) =>
+                {
+                    f.Close();
+                };
+
+                f.ShowDialog();
+            }
+        }
+
+        private void additionalServicesGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+        }
     }
 }

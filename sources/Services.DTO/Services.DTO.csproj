@@ -94,6 +94,7 @@
     <Compile Include="Users\Operator.cs" />
     <Compile Include="Users\User.cs" />
     <Compile Include="Workplace.cs" />
+    <Compile Include="ClientRequestAdditionalService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

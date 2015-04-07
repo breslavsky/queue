@@ -135,3 +135,9 @@ ALTER TABLE _operator_interruption DROP CONSTRAINT OperatorInterruptionToOperato
 ALTER TABLE _operator_interruption ADD CONSTRAINT OperatorInterruptionToOperatorReference FOREIGN KEY(OperatorId)
 REFERENCES _user (Id)
 ON DELETE CASCADE;
+-- SEPARATOR
+ALTER TABLE client_request_additional_service DROP CONSTRAINT ClientRequestAdditionalServiceToAdditionalServiceReference;
+-- SEPARATOR
+ALTER TABLE client_request_additional_service ADD CONSTRAINT ClientRequestAdditionalServiceToAdditionalServiceReference FOREIGN KEY(AdditionalServiceId)
+REFERENCES _additional_service (Id)
+ON DELETE CASCADE;

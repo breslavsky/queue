@@ -76,9 +76,6 @@ namespace Queue.Services.DTO
         [DataMember]
         public bool IsRestorable { get; set; }
 
-        [DataMember]
-        public ClientRequestParameter[] Parameters { get; set; }
-
         //TODO: дублирование, придумать по лучше
         public virtual string Color
         {

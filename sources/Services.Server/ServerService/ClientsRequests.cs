@@ -461,14 +461,17 @@ namespace Queue.Services.Server
                     ClientRequest clientRequest = session.Get<ClientRequest>(clientRequestId);
                     if (clientRequest == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(
-                            new ObjectNotFoundFault(clientRequestId),
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientRequestId),
                             string.Format("Запрос клиента [{0}] не найден", clientRequestId));
                     }
 
                     DefaultConfig defaultConfig = session.Get<DefaultConfig>(ConfigType.Default);
 
                     bool isToday = clientRequest.RequestDate == DateTime.Today;
+
+                    var parameters = session.CreateCriteria<ClientRequestParameter>()
+                        .Add(Restrictions.Eq("ClientRequest", clientRequest))
+                        .List<ClientRequestParameter>();
 
                     DTO.ClientRequestCoupon clientRequestCoupon = new DTO.ClientRequestCoupon()
                     {
@@ -479,7 +482,7 @@ namespace Queue.Services.Server
                         RequestDate = clientRequest.RequestDate,
                         RequestTime = clientRequest.RequestTime,
                         Subjects = clientRequest.Subjects,
-                        Parameters = Mapper.Map<IEnumerable<ClientRequestParameter>, DTO.ClientRequestParameter[]>(clientRequest.Parameters),
+                        Parameters = Mapper.Map<IEnumerable<ClientRequestParameter>, DTO.ClientRequestParameter[]>(parameters),
                         Service = Mapper.Map<Service, DTO.Service>(clientRequest.Service),
                         Workplaces = Mapper.Map<Workplace[], DTO.Workplace[]>(GetCouponWorkplaces(clientRequest))
                     };

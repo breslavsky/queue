@@ -43,6 +43,7 @@
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.serverStateLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.currentDateTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.operatorInterruptionsFormMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.topMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             this.SuspendLayout();
@@ -98,7 +99,8 @@
             this.workplacesMenuItem,
             this.defaultScheduleMenuItem,
             this.servicesMenuItem,
-            this.additionalServicesMenuItem});
+            this.additionalServicesMenuItem,
+            this.operatorInterruptionsFormMenuItem});
             this.dictionariesMenu.Image = ((System.Drawing.Image)(resources.GetObject("dictionariesMenu.Image")));
             this.dictionariesMenu.Name = "dictionariesMenu";
             this.dictionariesMenu.Size = new System.Drawing.Size(110, 20);
@@ -287,6 +289,14 @@
             this.currentDateTimeLabel.Size = new System.Drawing.Size(12, 17);
             this.currentDateTimeLabel.Text = "-";
             // 
+            // operatorInterruptionsFormMenuItem
+            // 
+            this.operatorInterruptionsFormMenuItem.Name = "operatorInterruptionsFormMenuItem";
+            this.operatorInterruptionsFormMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.operatorInterruptionsFormMenuItem.Tag = "OperatorInterruptions";
+            this.operatorInterruptionsFormMenuItem.Text = "Перерывы операторов";
+            this.operatorInterruptionsFormMenuItem.Click += new System.EventHandler(this.operatorInterruptionsFormMenuItem_Click);
+            // 
             // AdministratorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -338,6 +348,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutMenuItem;
         private System.Windows.Forms.ToolStripMenuItem operatorsRatingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem additionalServicesMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem operatorInterruptionsFormMenuItem;
 
     }
 }

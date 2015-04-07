@@ -13,7 +13,7 @@ namespace Queue.Services.Server
 {
     public partial class ServerService
     {
-        public async Task<DTO.OperatorInterruption[]> GetOperatorInterruptions(Guid operatorId)
+        public async Task<DTO.OperatorInterruption[]> GetOperatorInterruptions()
         {
             return await Task.Run(() =>
             {
@@ -22,16 +22,9 @@ namespace Queue.Services.Server
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    var queueOperator = session.Get<Operator>(operatorId);
-                    if (queueOperator == null)
-                    {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(operatorId),
-                            string.Format("Оператор [{0}] не найден", operatorId));
-                    }
-
                     var interruptions = session.CreateCriteria<OperatorInterruption>()
-                        .Add(Restrictions.Eq("Operator", queueOperator))
                         .List<OperatorInterruption>();
+
                     return Mapper.Map<IList<OperatorInterruption>, DTO.OperatorInterruption[]>(interruptions);
                 }
             });
@@ -84,8 +77,27 @@ namespace Queue.Services.Server
                         interruption = new OperatorInterruption();
                     }
 
+                    interruption.DayOfWeek = source.DayOfWeek;
                     interruption.StartTime = source.StartTime;
                     interruption.FinishTime = source.FinishTime;
+
+                    if (source.Operator != null)
+                    {
+                        Guid operatorId = source.Operator.Id;
+
+                        Operator queueOperator = session.Get<Operator>(operatorId);
+                        if (queueOperator == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(operatorId),
+                                string.Format("Оператор [{0}] не найден", operatorId));
+                        }
+
+                        interruption.Operator = queueOperator;
+                    }
+                    else
+                    {
+                        interruption.Operator = null;
+                    }
 
                     var errors = interruption.Validate();
                     if (errors.Length > 0)

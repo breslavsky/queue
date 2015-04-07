@@ -144,6 +144,9 @@
   <data name="Offices" xml:space="preserve">
     <value>Филаилы</value>
   </data>
+  <data name="OperatorInterruptions" xml:space="preserve">
+    <value>Перерывы операторов</value>
+  </data>
   <data name="QueuePlan" xml:space="preserve">
     <value>План очереди</value>
   </data>

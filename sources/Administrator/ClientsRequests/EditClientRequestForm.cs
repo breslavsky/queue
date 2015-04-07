@@ -105,6 +105,16 @@ namespace Queue.Administrator
                                 row.Cells["createDateColumn"].Value = e.CreateDate.ToString();
                                 row.Cells["messageColumn"].Value = e.Message;
                             }
+
+                            var parameters = await taskPool.AddTask(channel.Service.GetClientRequestParameters(service.Id));
+                            foreach (var p in parameters)
+                            {
+                                int index = parametersGridView.Rows.Add();
+                                var row = parametersGridView.Rows[index];
+                                row.Cells["parameterNameColumn"].Value = p.Name;
+                                row.Cells["parameterValueColumn"].Value = p.Value;
+                                row.Tag = p;
+                            }
                         }
                         catch (OperationCanceledException) { }
                         catch (CommunicationObjectAbortedException) { }
@@ -118,14 +128,6 @@ namespace Queue.Administrator
                         {
                             UIHelper.Warning(exception.Message);
                         }
-                    }
-
-                    foreach (var parameter in clientRequest.Parameters)
-                    {
-                        var index = parametersGridView.Rows.Add();
-                        var row = parametersGridView.Rows[index];
-                        row.Cells["parameterNameColumn"].Value = parameter.Name;
-                        row.Cells["parameterValueColumn"].Value = parameter.Value;
                     }
 
                     clientEditLink.Enabled = clientRequest.Client != null;

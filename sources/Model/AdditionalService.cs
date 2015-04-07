@@ -9,7 +9,7 @@ namespace Queue.Model
     {
         #region properties
 
-        [NotNull(Message = "Название дополнительной услуги не указано")]
+        [NotNull(Message = "Название не указано")]
         [Property]
         public virtual string Name { get; set; }
 

@@ -11,39 +11,42 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class AdditionalServicesForm : Queue.UI.WinForms.RichForm
+    public partial class OperatorInterruptionsForm : Queue.UI.WinForms.RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;
         private User currentUser;
         private TaskPool taskPool;
 
-        private BindingList<AdditionalService> additionalServices;
+        private BindingList<OperatorInterruption> operatorInterruptions;
 
-        public AdditionalServicesForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        public OperatorInterruptionsForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
         {
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
             channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+
             taskPool = new TaskPool();
+
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
             InitializeComponent();
         }
 
-        private async void AdditionalServicesForm_Load(object sender, EventArgs e)
+        private async void OperatorInterruptionsForm_Load(object sender, EventArgs e)
         {
             using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
-                    additionalServices = new BindingList<AdditionalService>(new List<AdditionalService>
-                        (await taskPool.AddTask(channel.Service.GetAdditionalServices())));
-                    additionalServicesBindingSource.DataSource = additionalServices;
+                    operatorInterruptions = new BindingList<OperatorInterruption>(new List<OperatorInterruption>
+                        (await taskPool.AddTask(channel.Service.GetOperatorInterruptions())));
+                    operatorInterruptionsBindingSource.DataSource = operatorInterruptions;
                 }
+
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
                 catch (ObjectDisposedException) { }
@@ -71,11 +74,11 @@ namespace Queue.Administrator
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            using (var f = new EditAdditionalServiceForm(channelBuilder, currentUser))
+            using (var f = new EditOperatorInterruptionForm(channelBuilder, currentUser))
             {
                 f.Saved += (s, eventArgs) =>
                 {
-                    additionalServices.Add(f.AdditionalService);
+                    operatorInterruptions.Add(f.OperatorInterruption);
                     f.Close();
                 };
 
@@ -83,26 +86,26 @@ namespace Queue.Administrator
             }
         }
 
-        private void AdditionalServicesForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void OperatorInterruptionsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Cancel();
         }
 
-        private void additionalServicesGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void operatorInterruptionsGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            var currentRow = additionalServicesGridView.CurrentRow;
+            var currentRow = operatorInterruptionsGridView.CurrentRow;
             if (currentRow == null)
             {
                 return;
             }
 
-            AdditionalService additionalService = additionalServices[currentRow.Index];
+            OperatorInterruption operatorInterruption = operatorInterruptions[currentRow.Index];
 
-            using (var f = new EditAdditionalServiceForm(channelBuilder, currentUser, additionalService.Id))
+            using (var f = new EditOperatorInterruptionForm(channelBuilder, currentUser, operatorInterruption.Id))
             {
                 f.Saved += (s, eventArgs) =>
                 {
-                    additionalService.Update(f.AdditionalService);
+                    operatorInterruption.Update(f.OperatorInterruption);
                     f.Close();
                 };
 
@@ -110,24 +113,24 @@ namespace Queue.Administrator
             }
         }
 
-        private async void additionalServicesGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        private async void operatorInterruptionsGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
-            var currentRow = additionalServicesGridView.CurrentRow;
+            var currentRow = operatorInterruptionsGridView.CurrentRow;
             if (currentRow == null)
             {
                 return;
             }
 
-            if (MessageBox.Show("Вы действительно хотите удалить дополнительную услугу?",
+            if (MessageBox.Show("Вы действительно хотите удалить перерыв оператора?",
                 "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                AdditionalService additionalService = additionalServices[currentRow.Index];
+                OperatorInterruption operatorInterruption = operatorInterruptions[currentRow.Index];
 
                 using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
                 {
                     try
                     {
-                        await taskPool.AddTask(channel.Service.DeleteAdditionalService(additionalService.Id));
+                        await taskPool.AddTask(channel.Service.DeleteOperatorInterruption(operatorInterruption.Id));
                     }
                     catch (OperationCanceledException) { }
                     catch (CommunicationObjectAbortedException) { }
