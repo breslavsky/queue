@@ -108,7 +108,7 @@
             this.selectUserControl.Name = "selectUserControl";
             this.selectUserControl.Size = new System.Drawing.Size(220, 21);
             this.selectUserControl.TabIndex = 1;
-            this.selectUserControl.UseResetButton = true;
+            this.selectUserControl.UseResetButton = false;
             this.selectUserControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.selectUserControl_SelectedChanged);
             // 
             // passwordLabel

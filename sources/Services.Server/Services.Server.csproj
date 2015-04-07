@@ -125,6 +125,7 @@
     <Compile Include="ServerService\ClientsRequests.cs" />
     <Compile Include="ServerService\Config.cs" />
     <Compile Include="ServerService\Metric.cs" />
+    <Compile Include="ServerService\OperatorInterruption.cs" />
     <Compile Include="ServerService\Offices.cs" />
     <Compile Include="ServerService\PINs.cs" />
     <Compile Include="ServerService\QueuePlan.cs" />

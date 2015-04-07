@@ -31,9 +31,6 @@
             this.emailColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mobileColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.workplaceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.isInterruptionColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.InterruptionStartTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.InterruptionFinishTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.operatorsTabPage.SuspendLayout();
             this.usersTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.usersGridView)).BeginInit();
@@ -102,10 +99,7 @@
             this.patronymicColumn,
             this.emailColumn,
             this.mobileColumn,
-            this.workplaceColumn,
-            this.isInterruptionColumn,
-            this.InterruptionStartTimeColumn,
-            this.InterruptionFinishTimeColumn});
+            this.workplaceColumn});
             this.usersGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.usersGridView.Location = new System.Drawing.Point(0, 0);
             this.usersGridView.Margin = new System.Windows.Forms.Padding(0);
@@ -210,29 +204,6 @@
             this.workplaceColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.workplaceColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // isInterruptionColumn
-            // 
-            this.isInterruptionColumn.HeaderText = "Перерыв";
-            this.isInterruptionColumn.Name = "isInterruptionColumn";
-            this.isInterruptionColumn.ReadOnly = true;
-            this.isInterruptionColumn.Width = 80;
-            // 
-            // InterruptionStartTimeColumn
-            // 
-            this.InterruptionStartTimeColumn.HeaderText = "Начало перерыва";
-            this.InterruptionStartTimeColumn.Name = "InterruptionStartTimeColumn";
-            this.InterruptionStartTimeColumn.ReadOnly = true;
-            this.InterruptionStartTimeColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.InterruptionStartTimeColumn.Width = 150;
-            // 
-            // InterruptionFinishTimeColumn
-            // 
-            this.InterruptionFinishTimeColumn.HeaderText = "Окончание перерыва";
-            this.InterruptionFinishTimeColumn.Name = "InterruptionFinishTimeColumn";
-            this.InterruptionFinishTimeColumn.ReadOnly = true;
-            this.InterruptionFinishTimeColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.InterruptionFinishTimeColumn.Width = 150;
-            // 
             // UsersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -270,9 +241,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn emailColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn mobileColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn workplaceColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn isInterruptionColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn InterruptionStartTimeColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn InterruptionFinishTimeColumn;
 
     }
 }

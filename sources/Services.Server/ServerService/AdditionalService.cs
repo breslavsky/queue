@@ -21,7 +21,8 @@ namespace Queue.Services.Server
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    var additionalServices = session.CreateCriteria<AdditionalService>().List<AdditionalService>();
+                    var additionalServices = session.CreateCriteria<AdditionalService>()
+                        .List<AdditionalService>();
 
                     return Mapper.Map<IList<AdditionalService>, DTO.AdditionalService[]>(additionalServices);
                 }

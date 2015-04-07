@@ -193,7 +193,9 @@ namespace Queue.Administrator
                             Code = "0.0",
                             Name = "Новая услуга",
                             LiveRegistrator = all,
-                            EarlyRegistrator = all
+                            EarlyRegistrator = all,
+                            TimeIntervalRounding = TimeSpan.FromMinutes(5),
+                            MaxSubjects = 5
                         };
                     }
 

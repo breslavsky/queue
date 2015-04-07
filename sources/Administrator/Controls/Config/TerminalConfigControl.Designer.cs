@@ -38,8 +38,8 @@
             this.terminalPINLabel = new System.Windows.Forms.Label();
             this.currentDayRecordingCheckBox = new System.Windows.Forms.CheckBox();
             this.windowTemplateEditor = new ICSharpCode.TextEditor.TextEditorControl();
-            this.previewLabel = new System.Windows.Forms.LinkLabel();
             this.templateLabel = new System.Windows.Forms.LinkLabel();
+            this.windowTemplateLabel = new System.Windows.Forms.Label();
             this.terminallayoutGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.columnsUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rowsUpDown)).BeginInit();
@@ -96,9 +96,9 @@
             // 
             // terminalColumnsLabel
             // 
-            this.terminalColumnsLabel.Location = new System.Drawing.Point(5, 20);
+            this.terminalColumnsLabel.Location = new System.Drawing.Point(5, 10);
             this.terminalColumnsLabel.Name = "terminalColumnsLabel";
-            this.terminalColumnsLabel.Size = new System.Drawing.Size(55, 20);
+            this.terminalColumnsLabel.Size = new System.Drawing.Size(55, 30);
             this.terminalColumnsLabel.TabIndex = 2;
             this.terminalColumnsLabel.Text = "Колонок";
             this.terminalColumnsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -152,28 +152,17 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.windowTemplateEditor.IsReadOnly = false;
             this.windowTemplateEditor.LineViewerStyle = ICSharpCode.TextEditor.Document.LineViewerStyle.FullRow;
-            this.windowTemplateEditor.Location = new System.Drawing.Point(5, 120);
+            this.windowTemplateEditor.Location = new System.Drawing.Point(5, 135);
             this.windowTemplateEditor.Margin = new System.Windows.Forms.Padding(0);
             this.windowTemplateEditor.Name = "windowTemplateEditor";
-            this.windowTemplateEditor.Size = new System.Drawing.Size(640, 264);
+            this.windowTemplateEditor.Size = new System.Drawing.Size(640, 249);
             this.windowTemplateEditor.TabIndex = 11;
             this.windowTemplateEditor.Leave += new System.EventHandler(this.windowTemplateEditor_Leave);
-            // 
-            // previewLabel
-            // 
-            this.previewLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.previewLabel.Location = new System.Drawing.Point(5, 390);
-            this.previewLabel.Name = "previewLabel";
-            this.previewLabel.Size = new System.Drawing.Size(86, 13);
-            this.previewLabel.TabIndex = 12;
-            this.previewLabel.TabStop = true;
-            this.previewLabel.Text = "[предпросмотр]";
-            this.previewLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.previewLabel_LinkClicked);
             // 
             // templateLabel
             // 
             this.templateLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.templateLabel.Location = new System.Drawing.Point(90, 390);
+            this.templateLabel.Location = new System.Drawing.Point(5, 390);
             this.templateLabel.Name = "templateLabel";
             this.templateLabel.Size = new System.Drawing.Size(84, 13);
             this.templateLabel.TabIndex = 13;
@@ -181,11 +170,20 @@
             this.templateLabel.Text = "[по умолчанию]";
             this.templateLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.templateLabel_LinkClicked);
             // 
+            // windowTemplateLabel
+            // 
+            this.windowTemplateLabel.AutoSize = true;
+            this.windowTemplateLabel.Location = new System.Drawing.Point(5, 115);
+            this.windowTemplateLabel.Name = "windowTemplateLabel";
+            this.windowTemplateLabel.Size = new System.Drawing.Size(76, 13);
+            this.windowTemplateLabel.TabIndex = 14;
+            this.windowTemplateLabel.Text = "Шаблон окна:";
+            // 
             // TerminalConfigControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.previewLabel);
+            this.Controls.Add(this.windowTemplateLabel);
             this.Controls.Add(this.templateLabel);
             this.Controls.Add(this.windowTemplateEditor);
             this.Controls.Add(this.terminallayoutGroupBox);
@@ -200,6 +198,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.rowsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PINUpDown)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -215,7 +214,7 @@
         private System.Windows.Forms.Label terminalPINLabel;
         private System.Windows.Forms.CheckBox currentDayRecordingCheckBox;
         private ICSharpCode.TextEditor.TextEditorControl windowTemplateEditor;
-        private System.Windows.Forms.LinkLabel previewLabel;
         private System.Windows.Forms.LinkLabel templateLabel;
+        private System.Windows.Forms.Label windowTemplateLabel;
     }
 }

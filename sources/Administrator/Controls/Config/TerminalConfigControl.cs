@@ -4,10 +4,8 @@ using Junte.WCF.Common;
 using Queue.Resources;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
-using Queue.UI.Common;
 using Queue.UI.WinForms;
 using System;
-using System.Diagnostics;
 using System.ServiceModel;
 using System.Windows.Forms;
 
@@ -95,18 +93,6 @@ namespace Queue.Administrator
         private void currentDayRecordingCheckBox_Leave(object sender, EventArgs e)
         {
             config.CurrentDayRecording = currentDayRecordingCheckBox.Checked;
-        }
-
-        private void previewLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs eventArgs)
-        {
-            try
-            {
-                Process.Start(XPSGenerator.FromXaml(windowTemplateEditor.Text, null));
-            }
-            catch (Exception exception)
-            {
-                UIHelper.Warning(exception.Message);
-            }
         }
 
         private void templateLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

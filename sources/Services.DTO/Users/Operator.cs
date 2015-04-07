@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace Queue.Services.DTO
 {
@@ -7,14 +6,5 @@ namespace Queue.Services.DTO
     {
         [DataMember]
         public Workplace Workplace { get; set; }
-
-        [DataMember]
-        public virtual bool IsInterruption { get; set; }
-
-        [DataMember]
-        public TimeSpan InterruptionStartTime { get; set; }
-
-        [DataMember]
-        public TimeSpan InterruptionFinishTime { get; set; }
     }
 }

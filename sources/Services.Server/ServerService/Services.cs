@@ -379,14 +379,15 @@ namespace Queue.Services.Server
                     var service = session.Get<Service>(serviceId);
                     if (service == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId), string.Format("Услуга [{0}] не найдена", serviceId));
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId),
+                            string.Format("Услуга [{0}] не найдена", serviceId));
                     }
 
-                    var serviceSteps = session.CreateCriteria<ServiceStep>()
+                    var steps = session.CreateCriteria<ServiceStep>()
                         .Add(Restrictions.Eq("Service", service))
                         .AddOrder(Order.Asc("SortId"))
                         .List<ServiceStep>();
-                    return Mapper.Map<IList<ServiceStep>, DTO.ServiceStep[]>(serviceSteps);
+                    return Mapper.Map<IList<ServiceStep>, DTO.ServiceStep[]>(steps);
                 }
             });
         }

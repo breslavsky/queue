@@ -110,6 +110,7 @@
     <Compile Include="Users\Administrator.cs" />
     <Compile Include="Users\Operator.cs" />
     <Compile Include="Users\User.cs" />
+    <Compile Include="OperatorInterruption.cs" />
     <Compile Include="Workplace.cs" />
     <Compile Include="ServiceStep.cs" />
     <Compile Include="AdditionalService.cs" />

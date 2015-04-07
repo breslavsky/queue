@@ -201,6 +201,21 @@ namespace Queue.Services.Contracts
         Task DeleteUser(Guid userId);
 
         [OperationContract]
+        Task<DTO.OperatorInterruption[]> GetOperatorInterruptions(Guid operatorId);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<DTO.OperatorInterruption> GetOperatorInterruption(Guid operatorInterruptionId);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<DTO.OperatorInterruption> EditOperatorInterruption(Guid operatorInterruptionId);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task DeleteOperatorInterruption(Guid operatorInterruptionId);
+
+        [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task ChangeUserPassword(Guid userId, string password);
 

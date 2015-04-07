@@ -68,6 +68,7 @@ namespace Queue.Services.Server
 
             Mapper.CreateMap<Administrator, DTO.Administrator>();
             Mapper.CreateMap<Operator, DTO.Operator>();
+            Mapper.CreateMap<OperatorInterruption, DTO.OperatorInterruption>();
         }
     }
 

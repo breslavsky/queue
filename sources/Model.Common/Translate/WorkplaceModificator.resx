@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="A_EN" xml:space="preserve">
+    <value>a</value>
+  </data>
+  <data name="B_EN" xml:space="preserve">
+    <value>b</value>
+  </data>
   <data name="CHAR1" xml:space="preserve">
     <value>а</value>
   </data>
@@ -140,6 +146,24 @@
   </data>
   <data name="CHAR8" xml:space="preserve">
     <value>з</value>
+  </data>
+  <data name="C_EN" xml:space="preserve">
+    <value>c</value>
+  </data>
+  <data name="D_EN" xml:space="preserve">
+    <value>d</value>
+  </data>
+  <data name="E_EN" xml:space="preserve">
+    <value>e</value>
+  </data>
+  <data name="F_EN" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="G_EN" xml:space="preserve">
+    <value>g</value>
+  </data>
+  <data name="H_EN" xml:space="preserve">
+    <value>h</value>
   </data>
   <data name="None" xml:space="preserve">
     <value> </value>

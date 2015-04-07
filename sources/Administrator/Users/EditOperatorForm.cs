@@ -61,9 +61,6 @@ namespace Queue.Administrator
                 mobileTextBox.Text = queueOperator.Mobile;
                 isActiveCheckBox.Checked = queueOperator.IsActive;
                 workplaceControl.Select<Workplace>(queueOperator.Workplace);
-                isInterruptionCheckBox.Checked = queueOperator.IsInterruption;
-                interruptionStartTimeTextBox.Text = queueOperator.InterruptionStartTime.ToString("hh\\:mm");
-                interruptionFinishTimeTextBox.Text = queueOperator.InterruptionFinishTime.ToString("hh\\:mm");
             }
         }
 
@@ -143,35 +140,6 @@ namespace Queue.Administrator
         private void isActiveCheckBox_Leave(object sender, EventArgs e)
         {
             queueOperator.IsActive = isActiveCheckBox.Checked;
-        }
-
-        private void isInterruptionCheckBox_Leave(object sender, EventArgs e)
-        {
-            queueOperator.IsInterruption = isInterruptionCheckBox.Checked;
-        }
-
-        private void interruptionStartTimeTextBox_Leave(object sender, EventArgs e)
-        {
-            try
-            {
-                queueOperator.InterruptionStartTime = TimeSpan.Parse(interruptionStartTimeTextBox.Text);
-            }
-            catch
-            {
-                throw new FormatException("Ошибочный формат времени");
-            }
-        }
-
-        private void interruptionFinishTimeTextBox_Leave(object sender, EventArgs e)
-        {
-            try
-            {
-                queueOperator.InterruptionFinishTime = TimeSpan.Parse(interruptionFinishTimeTextBox.Text);
-            }
-            catch
-            {
-                throw new FormatException("Ошибочный формат времени");
-            }
         }
 
         #endregion bindings

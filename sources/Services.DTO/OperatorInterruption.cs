@@ -10,6 +10,9 @@ namespace Queue.Services.DTO
         public Operator Operator { get; set; }
 
         [DataMember]
+        public DayOfWeek DayOfWeek { get; set; }
+
+        [DataMember]
         public TimeSpan StartTime { get; set; }
 
         [DataMember]

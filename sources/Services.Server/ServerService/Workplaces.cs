@@ -129,6 +129,13 @@ namespace Queue.Services.Server
                         throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(workplaceId), string.Format("Рабочее место [{0}] не найдено", workplaceId));
                     }
 
+                    foreach (var o in session.CreateCriteria<Operator>()
+                        .Add(Restrictions.Eq("Workplace", workplace))
+                        .List<Operator>())
+                    {
+                        session.SessionFactory.EvictEntity("Operator", o.Id);
+                    }
+
                     session.Delete(workplace);
                     transaction.Commit();
                 }

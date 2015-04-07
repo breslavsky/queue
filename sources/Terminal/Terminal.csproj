@@ -29,13 +29,12 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>http://release.queue.name/1.4/Queue.Terminal/</InstallUrl>
     <ProductName>Терминал очереди</ProductName>
-    <PublisherName>Junte Ltd.</PublisherName>
-    <SuiteName>Junte Queue System</SuiteName>
+    <PublisherName>Junte Queue</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>2</ApplicationRevision>
-    <ApplicationVersion>1.4.1.%2a</ApplicationVersion>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>1.4.6.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>

@@ -42,10 +42,6 @@
             this.passwordButton = new System.Windows.Forms.Button();
             this.workplaceControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.workplaceLabel = new System.Windows.Forms.Label();
-            this.interruptionStartTimeTextBox = new System.Windows.Forms.MaskedTextBox();
-            this.interruptionLabel = new System.Windows.Forms.Label();
-            this.interruptionFinishTimeTextBox = new System.Windows.Forms.MaskedTextBox();
-            this.isInterruptionCheckBox = new System.Windows.Forms.CheckBox();
             this.isActiveCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
@@ -137,7 +133,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(185, 210);
+            this.saveButton.Location = new System.Drawing.Point(185, 160);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 10;
@@ -147,7 +143,7 @@
             // 
             // passwordButton
             // 
-            this.passwordButton.Location = new System.Drawing.Point(5, 210);
+            this.passwordButton.Location = new System.Drawing.Point(5, 160);
             this.passwordButton.Name = "passwordButton";
             this.passwordButton.Size = new System.Drawing.Size(75, 25);
             this.passwordButton.TabIndex = 9;
@@ -174,53 +170,10 @@
             this.workplaceLabel.Text = "Рабочее место";
             this.workplaceLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // interruptionStartTimeTextBox
-            // 
-            this.interruptionStartTimeTextBox.Location = new System.Drawing.Point(115, 180);
-            this.interruptionStartTimeTextBox.Mask = "00:00";
-            this.interruptionStartTimeTextBox.Name = "interruptionStartTimeTextBox";
-            this.interruptionStartTimeTextBox.Size = new System.Drawing.Size(35, 20);
-            this.interruptionStartTimeTextBox.TabIndex = 7;
-            this.interruptionStartTimeTextBox.Text = "0000";
-            this.interruptionStartTimeTextBox.ValidatingType = typeof(System.DateTime);
-            this.interruptionStartTimeTextBox.Leave += new System.EventHandler(this.interruptionStartTimeTextBox_Leave);
-            // 
-            // interruptionLabel
-            // 
-            this.interruptionLabel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.interruptionLabel.Location = new System.Drawing.Point(5, 180);
-            this.interruptionLabel.Name = "interruptionLabel";
-            this.interruptionLabel.Size = new System.Drawing.Size(105, 20);
-            this.interruptionLabel.TabIndex = 0;
-            this.interruptionLabel.Text = "Время перерыва";
-            this.interruptionLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // interruptionFinishTimeTextBox
-            // 
-            this.interruptionFinishTimeTextBox.Location = new System.Drawing.Point(155, 180);
-            this.interruptionFinishTimeTextBox.Mask = "00:00";
-            this.interruptionFinishTimeTextBox.Name = "interruptionFinishTimeTextBox";
-            this.interruptionFinishTimeTextBox.Size = new System.Drawing.Size(35, 20);
-            this.interruptionFinishTimeTextBox.TabIndex = 8;
-            this.interruptionFinishTimeTextBox.Text = "0000";
-            this.interruptionFinishTimeTextBox.ValidatingType = typeof(System.DateTime);
-            this.interruptionFinishTimeTextBox.Leave += new System.EventHandler(this.interruptionFinishTimeTextBox_Leave);
-            // 
-            // isInterruptionCheckBox
-            // 
-            this.isInterruptionCheckBox.AutoSize = true;
-            this.isInterruptionCheckBox.Location = new System.Drawing.Point(115, 160);
-            this.isInterruptionCheckBox.Name = "isInterruptionCheckBox";
-            this.isInterruptionCheckBox.Size = new System.Drawing.Size(72, 17);
-            this.isInterruptionCheckBox.TabIndex = 6;
-            this.isInterruptionCheckBox.Text = "Перерыв";
-            this.isInterruptionCheckBox.UseVisualStyleBackColor = true;
-            this.isInterruptionCheckBox.Leave += new System.EventHandler(this.isInterruptionCheckBox_Leave);
-            // 
             // isActiveCheckBox
             // 
             this.isActiveCheckBox.AutoSize = true;
-            this.isActiveCheckBox.Location = new System.Drawing.Point(115, 215);
+            this.isActiveCheckBox.Location = new System.Drawing.Point(115, 165);
             this.isActiveCheckBox.Name = "isActiveCheckBox";
             this.isActiveCheckBox.Size = new System.Drawing.Size(68, 17);
             this.isActiveCheckBox.TabIndex = 11;
@@ -232,7 +185,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(269, 241);
+            this.ClientSize = new System.Drawing.Size(269, 191);
             this.Controls.Add(this.isActiveCheckBox);
             this.Controls.Add(this.surnameLabel);
             this.Controls.Add(this.surnameTextBox);
@@ -246,10 +199,6 @@
             this.Controls.Add(this.mobileTextBox);
             this.Controls.Add(this.workplaceLabel);
             this.Controls.Add(this.workplaceControl);
-            this.Controls.Add(this.isInterruptionCheckBox);
-            this.Controls.Add(this.interruptionLabel);
-            this.Controls.Add(this.interruptionStartTimeTextBox);
-            this.Controls.Add(this.interruptionFinishTimeTextBox);
             this.Controls.Add(this.passwordButton);
             this.Controls.Add(this.saveButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -278,10 +227,6 @@
         private System.Windows.Forms.Button passwordButton;
         private UI.WinForms.IdentifiedEntityControl workplaceControl;
         private System.Windows.Forms.Label workplaceLabel;
-        private System.Windows.Forms.MaskedTextBox interruptionStartTimeTextBox;
-        private System.Windows.Forms.Label interruptionLabel;
-        private System.Windows.Forms.MaskedTextBox interruptionFinishTimeTextBox;
-        private System.Windows.Forms.CheckBox isInterruptionCheckBox;
         private System.Windows.Forms.CheckBox isActiveCheckBox;
     }
 }

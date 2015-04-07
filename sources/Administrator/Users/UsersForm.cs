@@ -1,13 +1,9 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
-using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
-using Queue.UI.WinForms;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
@@ -125,10 +121,6 @@ namespace Queue.Administrator
                 {
                     row.Cells["workplaceColumn"].Value = workplace;
                 }
-
-                row.Cells["isInterruptionColumn"].Value = queueOperator.IsInterruption;
-                row.Cells["InterruptionStartTimeColumn"].Value = queueOperator.InterruptionStartTime.ToString("hh\\:mm\\:ss");
-                row.Cells["InterruptionFinishTimeColumn"].Value = queueOperator.InterruptionFinishTime.ToString("hh\\:mm\\:ss");
             }
             row.Tag = user;
         }
@@ -239,17 +231,11 @@ namespace Queue.Administrator
         {
             if (usersTabs.SelectedTab.Equals(operatorsTabPage))
             {
-                workplaceColumn.Visible =
-                    isInterruptionColumn.Visible =
-                    InterruptionStartTimeColumn.Visible =
-                    InterruptionFinishTimeColumn.Visible = true;
+                workplaceColumn.Visible = true;
             }
             else if (usersTabs.SelectedTab.Equals(administratorsTabPage))
             {
-                workplaceColumn.Visible =
-                    isInterruptionColumn.Visible =
-                    InterruptionStartTimeColumn.Visible =
-                    InterruptionFinishTimeColumn.Visible = false;
+                workplaceColumn.Visible = false;
             }
 
             foreach (DataGridViewRow row in usersGridView.Rows)

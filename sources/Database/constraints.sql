@@ -74,7 +74,7 @@ ALTER TABLE _service_rendering DROP CONSTRAINT ServiceRenderingToServiceStepRefe
 -- SEPARATOR
 ALTER TABLE _service_rendering ADD CONSTRAINT ServiceRenderingToServiceStepReference FOREIGN KEY(ServiceStepId)
 REFERENCES _service_step (Id)
-ON DELETE CASCADE;
+ON DELETE SET NULL;
 -- SEPARATOR
 ALTER TABLE _service_weekday_schedule DROP CONSTRAINT ServiceWeekdayScheduleToScheduleReference;
 -- SEPARATOR
@@ -127,5 +127,11 @@ ON DELETE CASCADE;
 ALTER TABLE _user_event DROP CONSTRAINT UserEventToUserReference;
 -- SEPARATOR
 ALTER TABLE _user_event ADD CONSTRAINT UserEventToUserReference FOREIGN KEY(UserId)
+REFERENCES _user (Id)
+ON DELETE CASCADE;
+-- SEPARATOR
+ALTER TABLE _operator_interruption DROP CONSTRAINT OperatorInterruptionToOperatorReference;
+-- SEPARATOR
+ALTER TABLE _operator_interruption ADD CONSTRAINT OperatorInterruptionToOperatorReference FOREIGN KEY(OperatorId)
 REFERENCES _user (Id)
 ON DELETE CASCADE;

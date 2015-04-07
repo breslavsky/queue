@@ -126,75 +126,114 @@ namespace Queue.Database
             {
                 Log("Загрузка рабочих мест");
 
-                int count = session.CreateCriteria<Workplace>()
-                    .SetProjection(Projections.Count(Projections.Id()))
-                    .UniqueResult<int>();
-                if (count == 0)
+                var w1 = session.CreateCriteria<Workplace>()
+                    .Add(Restrictions.Eq("Type", WorkplaceType.Window))
+                    .Add(Restrictions.Eq("Number", 1))
+                    .SetMaxResults(1)
+                    .UniqueResult<Workplace>();
+                if (w1 == null)
                 {
-                    var workplace1 = new Workplace();
-                    workplace1.Type = WorkplaceType.Window;
-                    workplace1.Number = 1;
-                    session.Save(workplace1);
+                    w1 = new Workplace();
+                    w1.Type = WorkplaceType.Window;
+                    w1.Number = 1;
+                    session.Save(w1);
+                }
 
-                    var workplace2 = new Workplace();
-                    workplace2.Type = WorkplaceType.Window;
-                    workplace2.Number = 2;
-                    session.Save(workplace2);
+                var w2 = session.CreateCriteria<Workplace>()
+                    .Add(Restrictions.Eq("Type", WorkplaceType.Cabinet))
+                    .Add(Restrictions.Eq("Number", 10))
+                    .SetMaxResults(1)
+                    .UniqueResult<Workplace>();
+                if (w2 == null)
+                {
+                    w2 = new Workplace();
+                    w2.Type = WorkplaceType.Cabinet;
+                    w2.Number = 10;
+                    session.Save(w2);
+                }
 
-                    var workplace3 = new Workplace();
-                    workplace3.Type = WorkplaceType.Window;
-                    workplace3.Number = 3;
-                    session.Save(workplace3);
+                var w3 = session.CreateCriteria<Workplace>()
+                    .Add(Restrictions.Eq("Type", WorkplaceType.Room))
+                    .Add(Restrictions.Eq("Number", 5))
+                    .SetMaxResults(1)
+                    .UniqueResult<Workplace>();
+                if (w3 == null)
+                {
+                    w3 = new Workplace();
+                    w3.Type = WorkplaceType.Room;
+                    w3.Number = 5;
+                    session.Save(w3);
                 }
 
                 Log("Загрузка операторов");
 
-                count = session.CreateCriteria<Operator>()
-                    .SetProjection(Projections.Count(Projections.Id()))
-                    .UniqueResult<int>();
-                if (count == 0)
+                var o1 = session.CreateCriteria<Operator>()
+                    .Add(Restrictions.Eq("Surname", "Сидоров"))
+                    .SetMaxResults(1)
+                    .UniqueResult<Operator>();
+                if (o1 == null)
                 {
-                    var o1 = new Operator()
+                    o1 = new Operator()
                     {
                         IsActive = true,
                         Name = "Денис",
-                        Surname = "Сидоров"
+                        Surname = "Сидоров",
+                        SessionId = Guid.NewGuid(),
+                        Workplace = w1
                     };
                     session.Save(o1);
+                }
 
-                    var o2 = new Operator()
+                var o2 = session.CreateCriteria<Operator>()
+                    .Add(Restrictions.Eq("Surname", "Шитиков"))
+                    .SetMaxResults(1)
+                    .UniqueResult<Operator>();
+                if (o2 == null)
+                {
+                    o2 = new Operator()
                     {
                         IsActive = true,
                         Name = "Андрей",
-                        Surname = "Шитиков"
+                        Surname = "Шитиков",
+                        SessionId = Guid.NewGuid(),
+                        Workplace = w2
                     };
                     session.Save(o2);
+                }
 
-                    var o3 = new Operator()
+                var o3 = session.CreateCriteria<Operator>()
+                    .Add(Restrictions.Eq("Surname", "Меньшова"))
+                    .SetMaxResults(1)
+                    .UniqueResult<Operator>();
+                if (o3 == null)
+                {
+                    o3 = new Operator()
                     {
                         IsActive = true,
                         Name = "Ирина",
-                        Surname = "Меньшова"
+                        Surname = "Меньшова",
+                        SessionId = Guid.NewGuid(),
+                        Workplace = w3
                     };
                     session.Save(o3);
+                }
 
-                    foreach (var o in new[] { o1, o2, o3 })
+                foreach (var o in new[] { o1, o2, o3 })
+                {
+                    foreach (var d in new[] { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday,
+                        DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday })
                     {
-                        foreach (var d in new[] { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday,
-                            DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday })
+                        var s = session.CreateCriteria<DefaultWeekdaySchedule>()
+                            .Add(Expression.Eq("DayOfWeek", d))
+                            .UniqueResult<DefaultWeekdaySchedule>();
+                        if (s != null)
                         {
-                            var s = session.CreateCriteria<DefaultWeekdaySchedule>()
-                                .Add(Expression.Eq("DayOfWeek", d))
-                                .UniqueResult<DefaultWeekdaySchedule>();
-                            if (s != null)
+                            session.Save(new ServiceRendering()
                             {
-                                session.Save(new ServiceRendering()
-                                {
-                                    Mode = ServiceRenderingMode.AllRequests,
-                                    Operator = o,
-                                    Schedule = s
-                                });
-                            }
+                                Mode = ServiceRenderingMode.AllRequests,
+                                Operator = o,
+                                Schedule = s
+                            });
                         }
                     }
                 }
@@ -207,15 +246,28 @@ namespace Queue.Database
 
                 for (int i = 1; i < 10; i++)
                 {
-                    session.Save(new Service()
+                    var code = string.Format("{0}.0", i);
+
+                    var s = session.CreateCriteria<Service>()
+                        .Add(Restrictions.Eq("Code", code))
+                        .SetMaxResults(1)
+                        .UniqueResult<Service>();
+                    if (s == null)
                     {
-                        IsActive = true,
-                        Code = string.Format("{0}.0", i),
-                        Name = string.Format("Новая услуга {0}", i),
-                        LiveRegistrator = all,
-                        EarlyRegistrator = all,
-                        SortId = i
-                    });
+                        session.Save(new Service()
+                        {
+                            IsActive = true,
+                            Code = code,
+                            Name = string.Format("Новая услуга {0}", i),
+                            LiveRegistrator = all,
+                            EarlyRegistrator = all,
+                            TimeIntervalRounding = TimeSpan.FromMinutes(5),
+                            MaxEarlyDays = 30,
+                            ClientRequire = true,
+                            MaxSubjects = 5,
+                            SortId = i
+                        });
+                    }
                 }
 
                 transaction.Commit();
@@ -355,6 +407,7 @@ namespace Queue.Database
                     {
                         IsActive = true,
                         Surname = "Администратор",
+                        SessionId = Guid.NewGuid(),
                         Permissions = AdministratorPermissions.Config
                             | AdministratorPermissions.Clients
                             | AdministratorPermissions.ClientsRequests
@@ -387,11 +440,13 @@ namespace Queue.Database
                             IsWorked = true,
                             ClientInterval = TimeSpan.FromMinutes(10),
                             StartTime = new TimeSpan(9, 0, 0),
-                            FinishTime = new TimeSpan(18, 0, 0),
+                            InterruptionStartTime = new TimeSpan(12, 0, 0),
+                            InterruptionFinishTime = new TimeSpan(13, 0, 0),
+                            FinishTime = new TimeSpan(23, 0, 0),
                             MaxClientRequests = 10,
                             RenderingMode = ServiceRenderingMode.AllRequests,
                             EarlyStartTime = new TimeSpan(9, 0, 0),
-                            EarlyFinishTime = new TimeSpan(18, 0, 0),
+                            EarlyFinishTime = new TimeSpan(23, 0, 0),
                             EarlyReservation = 50
                         });
                     }

@@ -53,7 +53,6 @@
             this.httpGroupBox = new System.Windows.Forms.GroupBox();
             this.httpPortUpDown = new System.Windows.Forms.NumericUpDown();
             this.httpHostTextBox = new System.Windows.Forms.TextBox();
-            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
             this.panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -323,13 +322,6 @@
             this.httpHostTextBox.TabIndex = 0;
             this.httpHostTextBox.Leave += new System.EventHandler(this.httpHostTextBox_Leave);
             // 
-            // notifyIcon
-            // 
-            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.Text = "Junte Queue Server";
-            this.notifyIcon.Visible = true;
-            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
-            // 
             // serviceStateTimer
             // 
             this.serviceStateTimer.Interval = 1000;
@@ -350,7 +342,6 @@
             this.Text = "Сервер очереди";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.panel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.serviceGroupBox.ResumeLayout(false);
@@ -378,7 +369,6 @@
         private System.Windows.Forms.GroupBox tcpGroupBox;
         private System.Windows.Forms.NumericUpDown tcpPortUpDown;
         private System.Windows.Forms.TextBox tcpHostTextBox;
-        private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.CheckBox httpCheckBox;
         private System.Windows.Forms.GroupBox httpGroupBox;
         private System.Windows.Forms.NumericUpDown httpPortUpDown;

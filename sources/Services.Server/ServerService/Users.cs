@@ -243,16 +243,9 @@ namespace Queue.Services.Server
                             string.Format("Пользователь [{0}] не найден", userId));
                     }
 
-                    if (user is Administrator)
+                    if (!user.Equals(currentUser))
                     {
                         CheckPermission(UserRole.Administrator, AdministratorPermissions.Users);
-                    }
-                    else
-                    {
-                        if (!user.Equals(currentUser))
-                        {
-                            throw new FaultException("Пароль возможно изменить только самому себе");
-                        }
                     }
 
                     try
