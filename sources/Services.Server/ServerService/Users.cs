@@ -350,9 +350,6 @@ namespace Queue.Services.Server
                     queueOperator.Email = source.Email;
                     queueOperator.Mobile = source.Mobile;
                     queueOperator.IsActive = source.IsActive;
-                    queueOperator.IsInterruption = source.IsInterruption;
-                    queueOperator.InterruptionStartTime = source.InterruptionStartTime;
-                    queueOperator.InterruptionFinishTime = source.InterruptionFinishTime;
 
                     if (source.Workplace != null)
                     {

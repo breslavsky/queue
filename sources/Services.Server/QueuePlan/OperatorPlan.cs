@@ -105,10 +105,10 @@ namespace Queue.Services.Server
             var reservedIntervals = new List<TimeInterval>(clientRequestIntervals);
 
             // Если установлен перерыв у оператора
-            if (Operator.IsInterruption)
-            {
-                reservedIntervals.Add(new TimeInterval(Operator.InterruptionStartTime, Operator.InterruptionFinishTime));
-            }
+            //if (Operator.IsInterruption)
+            //{
+            //    reservedIntervals.Add(new TimeInterval(Operator.InterruptionStartTime, Operator.InterruptionFinishTime));
+            //}
 
             // Если установлен перерыв у расписания
             if (schedule.IsInterruption)

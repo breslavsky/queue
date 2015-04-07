@@ -209,7 +209,7 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<DTO.OperatorInterruption> EditOperatorInterruption(Guid operatorInterruptionId);
+        Task<DTO.OperatorInterruption> EditOperatorInterruption(DTO.OperatorInterruption source);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
