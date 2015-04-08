@@ -26,6 +26,8 @@
             this.defaultScheduleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.servicesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.additionalServicesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.operatorInterruptionsFormMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.officesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientRequestsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.clientRequestsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,12 +40,12 @@
             this.operatorsRatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scheduleReportMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.exceptionScheduleReportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.officesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.currentUserMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.serverStateLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.currentDateTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.operatorInterruptionsFormMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.topMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             this.SuspendLayout();
@@ -59,7 +61,8 @@
             this.clientRequestsMenu,
             this.queuePlanMenu,
             this.reportsMenuItem,
-            this.officesMenuItem,
+            this.toolStripTextBox1,
+            this.currentUserMenuItem,
             this.logoutMenuItem});
             this.topMenu.Location = new System.Drawing.Point(0, 0);
             this.topMenu.MdiWindowListItem = this.formsMenuItem;
@@ -100,7 +103,8 @@
             this.defaultScheduleMenuItem,
             this.servicesMenuItem,
             this.additionalServicesMenuItem,
-            this.operatorInterruptionsFormMenuItem});
+            this.operatorInterruptionsFormMenuItem,
+            this.officesMenuItem});
             this.dictionariesMenu.Image = ((System.Drawing.Image)(resources.GetObject("dictionariesMenu.Image")));
             this.dictionariesMenu.Name = "dictionariesMenu";
             this.dictionariesMenu.Size = new System.Drawing.Size(110, 20);
@@ -145,6 +149,22 @@
             this.additionalServicesMenuItem.Tag = "AdditionalServices";
             this.additionalServicesMenuItem.Text = "Дополнительные услуги";
             this.additionalServicesMenuItem.Click += new System.EventHandler(this.additionalServicesMenuItem_Click);
+            // 
+            // operatorInterruptionsFormMenuItem
+            // 
+            this.operatorInterruptionsFormMenuItem.Name = "operatorInterruptionsFormMenuItem";
+            this.operatorInterruptionsFormMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.operatorInterruptionsFormMenuItem.Tag = "OperatorInterruptions";
+            this.operatorInterruptionsFormMenuItem.Text = "Перерывы операторов";
+            this.operatorInterruptionsFormMenuItem.Click += new System.EventHandler(this.operatorInterruptionsFormMenuItem_Click);
+            // 
+            // officesMenuItem
+            // 
+            this.officesMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("officesMenuItem.Image")));
+            this.officesMenuItem.Name = "officesMenuItem";
+            this.officesMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.officesMenuItem.Text = "Филиалы";
+            this.officesMenuItem.Click += new System.EventHandler(this.officesMenuItem_Click);
             // 
             // clientsMenuItem
             // 
@@ -249,14 +269,13 @@
             this.exceptionScheduleReportMenuItem.Text = "Исключения в расписании";
             this.exceptionScheduleReportMenuItem.Click += new System.EventHandler(this.exceptionScheduleReportMenuItem_Click);
             // 
-            // officesMenuItem
+            // currentUserMenuItem
             // 
-            this.officesMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("officesMenuItem.Image")));
-            this.officesMenuItem.Name = "officesMenuItem";
-            this.officesMenuItem.Size = new System.Drawing.Size(87, 20);
-            this.officesMenuItem.Tag = "Offices";
-            this.officesMenuItem.Text = "Филиалы";
-            this.officesMenuItem.Click += new System.EventHandler(this.officesMenuItem_Click);
+            this.currentUserMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.currentUserMenuItem.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.currentUserMenuItem.Name = "currentUserMenuItem";
+            this.currentUserMenuItem.Size = new System.Drawing.Size(28, 20);
+            this.currentUserMenuItem.Text = "...";
             // 
             // logoutMenuItem
             // 
@@ -289,13 +308,16 @@
             this.currentDateTimeLabel.Size = new System.Drawing.Size(12, 17);
             this.currentDateTimeLabel.Text = "-";
             // 
-            // operatorInterruptionsFormMenuItem
+            // toolStripTextBox1
             // 
-            this.operatorInterruptionsFormMenuItem.Name = "operatorInterruptionsFormMenuItem";
-            this.operatorInterruptionsFormMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.operatorInterruptionsFormMenuItem.Tag = "OperatorInterruptions";
-            this.operatorInterruptionsFormMenuItem.Text = "Перерывы операторов";
-            this.operatorInterruptionsFormMenuItem.Click += new System.EventHandler(this.operatorInterruptionsFormMenuItem_Click);
+            this.toolStripTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.toolStripTextBox1.Enabled = false;
+            this.toolStripTextBox1.HideSelection = false;
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.ReadOnly = true;
+            this.toolStripTextBox1.Size = new System.Drawing.Size(5, 20);
+            this.toolStripTextBox1.Text = "|";
+            this.toolStripTextBox1.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // AdministratorForm
             // 
@@ -335,7 +357,6 @@
         private System.Windows.Forms.ToolStripMenuItem queuePlanMenu;
         private System.Windows.Forms.ToolStripMenuItem reportsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem serviceRatingReportMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem officesMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logoutMenuItem;
         private System.Windows.Forms.StatusStrip statusBar;
         private System.Windows.Forms.ToolStripStatusLabel serverStateLabel;
@@ -349,6 +370,9 @@
         private System.Windows.Forms.ToolStripMenuItem operatorsRatingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem additionalServicesMenuItem;
         private System.Windows.Forms.ToolStripMenuItem operatorInterruptionsFormMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem currentUserMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem officesMenuItem;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
 
     }
 }

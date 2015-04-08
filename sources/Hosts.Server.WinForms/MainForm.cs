@@ -81,20 +81,17 @@ namespace Queue.Hosts.Server.WinForms
         {
             bool serviceInstalled = serviceManager.ServiceInstalled();
 
-            installServiseButton.Text = serviceInstalled ?
-                 UnistallServiceButtonTitle :
-                 InstallServiceButtonTitle;
+            installServiseButton.Text = serviceInstalled ? UnistallServiceButtonTitle
+                 : InstallServiceButtonTitle;
 
             runServiceButton.Enabled = serviceInstalled;
 
             bool runned = serviceManager.ServiceRunned();
-            runServiceButton.Text = runned ?
-                                        StopServiceButtonTitle :
-                                        StartServiceButtonTitle;
+            runServiceButton.Text = runned ? StopServiceButtonTitle
+                : StartServiceButtonTitle;
 
-            serviceStatePicture.Image = runned ?
-                                            Resources.online.ToBitmap() :
-                                            Resources.offline.ToBitmap();
+            serviceStatePicture.Image = runned ? Resources.online
+                : Resources.offline;
 
             startButton.Enabled = !started && !runned;
             stopButton.Enabled = started && !runned;

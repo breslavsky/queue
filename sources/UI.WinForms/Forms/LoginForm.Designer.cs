@@ -90,7 +90,7 @@
             this.productNameLabel.Name = "productNameLabel";
             this.productNameLabel.Size = new System.Drawing.Size(202, 15);
             this.productNameLabel.TabIndex = 2;
-            this.productNameLabel.Text = "система электронной очереди";
+            this.productNameLabel.Text = "универсальная электронная очередь";
             this.productNameLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // loginSettingsControl

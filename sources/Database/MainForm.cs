@@ -270,6 +270,25 @@ namespace Queue.Database
                     }
                 }
 
+                Log("Загрузка дополнительных услуг");
+
+                foreach (var n in new string[] { "Ксерокопия документа", "Заполнение бланка" })
+                {
+                    var a = session.CreateCriteria<AdditionalService>()
+                        .Add(Restrictions.Eq("Name", n))
+                        .SetMaxResults(1)
+                        .UniqueResult<AdditionalService>();
+                    if (a == null)
+                    {
+                        session.Save(new AdditionalService()
+                        {
+                            Name = n,
+                            Price = 500,
+                            Measure = "шт"
+                        });
+                    }
+                }
+
                 transaction.Commit();
             }
 
@@ -420,6 +439,7 @@ namespace Queue.Database
                             | AdministratorPermissions.Reports
                             | AdministratorPermissions.Offices
                             | AdministratorPermissions.AdditionalServices
+                            | AdministratorPermissions.OperatorInterruptions
                     };
                     session.Save(administrator);
                 }

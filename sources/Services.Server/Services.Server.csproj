@@ -132,8 +132,10 @@
     <Compile Include="ServerService\Reports.cs" />
     <Compile Include="ServerService\Schedule.cs" />
     <Compile Include="ServerService\ServiceGroups.cs" />
+    <Compile Include="ServerService\ServiceRendering.cs" />
     <Compile Include="ServerService\Services.cs" />
     <Compile Include="ServerService\ServicesParameters.cs" />
+    <Compile Include="ServerService\ServiceStep.cs" />
     <Compile Include="ServerService\Users.cs" />
     <Compile Include="ServerService\Workplaces.cs" />
     <Compile Include="ServerService.cs" />

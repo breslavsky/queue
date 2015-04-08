@@ -28,21 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.stateLabel = new System.Windows.Forms.Label();
             this.numberLabel = new System.Windows.Forms.Label();
-            this.parametersLabel = new System.Windows.Forms.Label();
             this.parametersGridView = new System.Windows.Forms.DataGridView();
-            this.parameterNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.parameterValueColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.parametersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.requestDateLabel = new System.Windows.Forms.Label();
             this.clientLabel = new System.Windows.Forms.Label();
             this.serviceLabel = new System.Windows.Forms.Label();
             this.eventsGridView = new System.Windows.Forms.DataGridView();
-            this.createDateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.messageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.eventsLabel = new System.Windows.Forms.Label();
+            this.createDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.messageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.eventsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.operatorLabel = new System.Windows.Forms.Label();
             this.serviceChangeLink = new System.Windows.Forms.LinkLabel();
             this.isPriorityCheckBox = new System.Windows.Forms.CheckBox();
@@ -69,11 +73,28 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.serviceStepControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.operatorControl = new Queue.UI.WinForms.IdentifiedEntityControl();
+            this.additionalServicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.clientRequestTabControl = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.additionalServicesGridView = new System.Windows.Forms.DataGridView();
+            this.additionalServiceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.parametersGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.parametersBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eventsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).BeginInit();
             this.topMenu.SuspendLayout();
             this.editPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.additionalServicesBindingSource)).BeginInit();
+            this.clientRequestTabControl.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.additionalServicesGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // stateLabel
@@ -94,20 +115,12 @@
             this.numberLabel.Text = "Номер";
             this.numberLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // parametersLabel
-            // 
-            this.parametersLabel.Location = new System.Drawing.Point(325, 5);
-            this.parametersLabel.Name = "parametersLabel";
-            this.parametersLabel.Size = new System.Drawing.Size(295, 20);
-            this.parametersLabel.TabIndex = 0;
-            this.parametersLabel.Text = "Параметры услуги";
-            this.parametersLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
             // parametersGridView
             // 
             this.parametersGridView.AllowUserToAddRows = false;
             this.parametersGridView.AllowUserToDeleteRows = false;
             this.parametersGridView.AllowUserToResizeRows = false;
+            this.parametersGridView.AutoGenerateColumns = false;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -118,32 +131,38 @@
             this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.parametersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.parametersGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.parameterNameColumn,
-            this.parameterValueColumn});
-            this.parametersGridView.Location = new System.Drawing.Point(325, 30);
+            this.nameDataGridViewTextBoxColumn,
+            this.valueDataGridViewTextBoxColumn});
+            this.parametersGridView.DataSource = this.parametersBindingSource;
+            this.parametersGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.parametersGridView.Location = new System.Drawing.Point(0, 0);
             this.parametersGridView.MultiSelect = false;
             this.parametersGridView.Name = "parametersGridView";
             this.parametersGridView.ReadOnly = true;
             this.parametersGridView.RowHeadersVisible = false;
-            this.parametersGridView.Size = new System.Drawing.Size(295, 305);
+            this.parametersGridView.Size = new System.Drawing.Size(537, 305);
             this.parametersGridView.TabIndex = 0;
             // 
-            // parameterNameColumn
+            // nameDataGridViewTextBoxColumn
             // 
-            this.parameterNameColumn.HeaderText = "Название";
-            this.parameterNameColumn.Name = "parameterNameColumn";
-            this.parameterNameColumn.ReadOnly = true;
-            this.parameterNameColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.parameterNameColumn.Width = 150;
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.FillWeight = 120F;
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Наименование";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.nameDataGridViewTextBoxColumn.Width = 120;
             // 
-            // parameterValueColumn
+            // valueDataGridViewTextBoxColumn
             // 
-            this.parameterValueColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.parameterValueColumn.FillWeight = 150F;
-            this.parameterValueColumn.HeaderText = "Значение";
-            this.parameterValueColumn.Name = "parameterValueColumn";
-            this.parameterValueColumn.ReadOnly = true;
-            this.parameterValueColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
+            this.valueDataGridViewTextBoxColumn.HeaderText = "Значение";
+            this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
+            this.valueDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // parametersBindingSource
+            // 
+            this.parametersBindingSource.DataSource = typeof(Queue.Services.DTO.ClientRequestParameter);
             // 
             // requestDateLabel
             // 
@@ -177,6 +196,7 @@
             this.eventsGridView.AllowUserToAddRows = false;
             this.eventsGridView.AllowUserToDeleteRows = false;
             this.eventsGridView.AllowUserToResizeRows = false;
+            this.eventsGridView.AutoGenerateColumns = false;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -187,41 +207,36 @@
             this.eventsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.eventsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.eventsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.createDateColumn,
-            this.messageColumn});
-            this.eventsGridView.Location = new System.Drawing.Point(10, 405);
+            this.createDateDataGridViewTextBoxColumn,
+            this.messageDataGridViewTextBoxColumn});
+            this.eventsGridView.DataSource = this.eventsBindingSource;
+            this.eventsGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.eventsGridView.Location = new System.Drawing.Point(0, 0);
             this.eventsGridView.MultiSelect = false;
             this.eventsGridView.Name = "eventsGridView";
             this.eventsGridView.ReadOnly = true;
             this.eventsGridView.RowHeadersVisible = false;
-            this.eventsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.eventsGridView.Size = new System.Drawing.Size(615, 120);
+            this.eventsGridView.Size = new System.Drawing.Size(542, 305);
             this.eventsGridView.TabIndex = 0;
             // 
-            // createDateColumn
+            // createDateDataGridViewTextBoxColumn
             // 
-            this.createDateColumn.HeaderText = "Дата";
-            this.createDateColumn.Name = "createDateColumn";
-            this.createDateColumn.ReadOnly = true;
-            this.createDateColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.createDateColumn.Width = 130;
+            this.createDateDataGridViewTextBoxColumn.DataPropertyName = "CreateDate";
+            this.createDateDataGridViewTextBoxColumn.HeaderText = "Дата";
+            this.createDateDataGridViewTextBoxColumn.Name = "createDateDataGridViewTextBoxColumn";
+            this.createDateDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // messageColumn
+            // messageDataGridViewTextBoxColumn
             // 
-            this.messageColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.messageColumn.HeaderText = "Сообщение";
-            this.messageColumn.Name = "messageColumn";
-            this.messageColumn.ReadOnly = true;
-            this.messageColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.messageDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.messageDataGridViewTextBoxColumn.DataPropertyName = "Message";
+            this.messageDataGridViewTextBoxColumn.HeaderText = "Сообщение";
+            this.messageDataGridViewTextBoxColumn.Name = "messageDataGridViewTextBoxColumn";
+            this.messageDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // eventsLabel
+            // eventsBindingSource
             // 
-            this.eventsLabel.Location = new System.Drawing.Point(10, 375);
-            this.eventsLabel.Name = "eventsLabel";
-            this.eventsLabel.Size = new System.Drawing.Size(615, 20);
-            this.eventsLabel.TabIndex = 0;
-            this.eventsLabel.Text = "Журнал событий";
-            this.eventsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.eventsBindingSource.DataSource = typeof(Queue.Services.DTO.ClientRequestEvent);
             // 
             // operatorLabel
             // 
@@ -296,7 +311,7 @@
             this.reportMenuItem});
             this.topMenu.Location = new System.Drawing.Point(0, 0);
             this.topMenu.Name = "topMenu";
-            this.topMenu.Size = new System.Drawing.Size(634, 24);
+            this.topMenu.Size = new System.Drawing.Size(884, 24);
             this.topMenu.TabIndex = 0;
             this.topMenu.Text = "menuStrip1";
             // 
@@ -434,11 +449,9 @@
             this.editPanel.Controls.Add(this.stateTextBlock);
             this.editPanel.Controls.Add(this.operatorLabel);
             this.editPanel.Controls.Add(this.operatorControl);
-            this.editPanel.Controls.Add(this.parametersLabel);
-            this.editPanel.Controls.Add(this.parametersGridView);
             this.editPanel.Location = new System.Drawing.Point(0, 25);
             this.editPanel.Name = "editPanel";
-            this.editPanel.Size = new System.Drawing.Size(635, 340);
+            this.editPanel.Size = new System.Drawing.Size(330, 340);
             this.editPanel.TabIndex = 16;
             this.editPanel.EnabledChanged += new System.EventHandler(this.editPanel_EnabledChanged);
             // 
@@ -495,28 +508,140 @@
             this.operatorControl.UseResetButton = true;
             this.operatorControl.Leave += new System.EventHandler(this.operatorsControl_Leave);
             // 
+            // additionalServicesBindingSource
+            // 
+            this.additionalServicesBindingSource.DataSource = typeof(Queue.Services.DTO.ClientRequestAdditionalService);
+            // 
+            // clientRequestTabControl
+            // 
+            this.clientRequestTabControl.Controls.Add(this.tabPage1);
+            this.clientRequestTabControl.Controls.Add(this.tabPage2);
+            this.clientRequestTabControl.Controls.Add(this.tabPage3);
+            this.clientRequestTabControl.Location = new System.Drawing.Point(330, 25);
+            this.clientRequestTabControl.Name = "clientRequestTabControl";
+            this.clientRequestTabControl.Padding = new System.Drawing.Point(5, 5);
+            this.clientRequestTabControl.SelectedIndex = 0;
+            this.clientRequestTabControl.Size = new System.Drawing.Size(550, 335);
+            this.clientRequestTabControl.TabIndex = 17;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.eventsGridView);
+            this.tabPage1.Location = new System.Drawing.Point(4, 26);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(542, 305);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "События";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.parametersGridView);
+            this.tabPage2.Location = new System.Drawing.Point(4, 26);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(537, 305);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Параметры";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.additionalServicesGridView);
+            this.tabPage3.Location = new System.Drawing.Point(4, 26);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(537, 305);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Дополнительные услуги";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // additionalServicesGridView
+            // 
+            this.additionalServicesGridView.AllowUserToAddRows = false;
+            this.additionalServicesGridView.AllowUserToDeleteRows = false;
+            this.additionalServicesGridView.AllowUserToResizeRows = false;
+            this.additionalServicesGridView.AutoGenerateColumns = false;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.additionalServicesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.additionalServicesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.additionalServicesGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.additionalServiceDataGridViewTextBoxColumn,
+            this.quantityDataGridViewTextBoxColumn,
+            this.Sum});
+            this.additionalServicesGridView.DataSource = this.additionalServicesBindingSource;
+            this.additionalServicesGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.additionalServicesGridView.Location = new System.Drawing.Point(0, 0);
+            this.additionalServicesGridView.MultiSelect = false;
+            this.additionalServicesGridView.Name = "additionalServicesGridView";
+            this.additionalServicesGridView.ReadOnly = true;
+            this.additionalServicesGridView.RowHeadersVisible = false;
+            this.additionalServicesGridView.Size = new System.Drawing.Size(537, 305);
+            this.additionalServicesGridView.TabIndex = 1;
+            // 
+            // additionalServiceDataGridViewTextBoxColumn
+            // 
+            this.additionalServiceDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.additionalServiceDataGridViewTextBoxColumn.DataPropertyName = "AdditionalService";
+            this.additionalServiceDataGridViewTextBoxColumn.HeaderText = "Дополнительная услуга";
+            this.additionalServiceDataGridViewTextBoxColumn.Name = "additionalServiceDataGridViewTextBoxColumn";
+            this.additionalServiceDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // quantityDataGridViewTextBoxColumn
+            // 
+            this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.quantityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.quantityDataGridViewTextBoxColumn.FillWeight = 70F;
+            this.quantityDataGridViewTextBoxColumn.HeaderText = "Кол-во";
+            this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
+            this.quantityDataGridViewTextBoxColumn.ReadOnly = true;
+            this.quantityDataGridViewTextBoxColumn.Width = 70;
+            // 
+            // Sum
+            // 
+            this.Sum.DataPropertyName = "Sum";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "C2";
+            dataGridViewCellStyle5.NullValue = null;
+            this.Sum.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Sum.HeaderText = "Сумма";
+            this.Sum.Name = "Sum";
+            this.Sum.ReadOnly = true;
+            // 
             // EditClientRequestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(634, 536);
+            this.ClientSize = new System.Drawing.Size(884, 366);
+            this.Controls.Add(this.clientRequestTabControl);
             this.Controls.Add(this.topMenu);
             this.Controls.Add(this.editPanel);
-            this.Controls.Add(this.eventsLabel);
-            this.Controls.Add(this.eventsGridView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.MinimumSize = new System.Drawing.Size(650, 489);
+            this.MinimumSize = new System.Drawing.Size(900, 400);
             this.Name = "EditClientRequestForm";
             this.Text = "Запрос клиента";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditClientRequestForm_FormClosing);
             this.Load += new System.EventHandler(this.EditClientRequestForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.parametersGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.parametersBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventsGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eventsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).EndInit();
             this.topMenu.ResumeLayout(false);
             this.topMenu.PerformLayout();
             this.editPanel.ResumeLayout(false);
             this.editPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.additionalServicesBindingSource)).EndInit();
+            this.clientRequestTabControl.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.additionalServicesGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -526,13 +651,11 @@
 
         private System.Windows.Forms.Label stateLabel;
         private System.Windows.Forms.Label numberLabel;
-        private System.Windows.Forms.Label parametersLabel;
         private System.Windows.Forms.DataGridView parametersGridView;
         private System.Windows.Forms.Label requestDateLabel;
         private System.Windows.Forms.Label clientLabel;
         private System.Windows.Forms.Label serviceLabel;
         private System.Windows.Forms.DataGridView eventsGridView;
-        private System.Windows.Forms.Label eventsLabel;
         private System.Windows.Forms.Label operatorLabel;
         private System.Windows.Forms.LinkLabel serviceChangeLink;
         private System.Windows.Forms.CheckBox isPriorityCheckBox;
@@ -548,10 +671,6 @@
         private System.Windows.Forms.Label clientTextBlock;
         private System.Windows.Forms.Label serviceTextBlock;
         private System.Windows.Forms.Label stateTextBlock;
-        private System.Windows.Forms.DataGridViewTextBoxColumn createDateColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn messageColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn parameterNameColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn parameterValueColumn;
         private System.Windows.Forms.Label requestTimeLabel;
         private System.Windows.Forms.Label serviceTypeLabel;
         private System.Windows.Forms.Label serviceTypeTextBlock;
@@ -563,5 +682,20 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.DateTimePicker requestDatePicker;
         private UI.WinForms.TimePicker requestTimePicker;
+        private System.Windows.Forms.BindingSource eventsBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn createDateDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn messageDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
+        private System.Windows.Forms.BindingSource parametersBindingSource;
+        private System.Windows.Forms.BindingSource additionalServicesBindingSource;
+        private System.Windows.Forms.TabControl clientRequestTabControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.DataGridView additionalServicesGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn additionalServiceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn quantityDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Sum;
     }
 }

@@ -47,7 +47,7 @@ namespace Queue.Administrator
 
             InitializeComponent();
 
-            Text = currentUser.ToString();
+            Text = currentUserMenuItem.Text = currentUser.ToString();
 
             CheckPermissions();
         }
@@ -94,11 +94,11 @@ namespace Queue.Administrator
 
         private void CheckPermissions()
         {
-            var items = new List<ToolStripMenuItem>(topMenu.Items.Cast<ToolStripMenuItem>());
-            items.AddRange(dictionariesMenu.DropDownItems.Cast<ToolStripMenuItem>());
-            items.AddRange(clientRequestsMenu.DropDownItems.Cast<ToolStripMenuItem>());
+            var items = new List<ToolStripItem>(topMenu.Items.Cast<ToolStripItem>());
+            items.AddRange(dictionariesMenu.DropDownItems.Cast<ToolStripItem>());
+            items.AddRange(clientRequestsMenu.DropDownItems.Cast<ToolStripItem>());
 
-            foreach (ToolStripMenuItem c in items)
+            foreach (ToolStripItem c in items)
             {
                 string p = c.Tag as string;
                 if (!string.IsNullOrEmpty(p))

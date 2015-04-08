@@ -984,17 +984,6 @@
         YII=
 </value>
   </data>
-  <data name="officesMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
-        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAACLEAAAixAGsYeJ3AAAAGHRFWHRTb2Z0d2FyZQBBZG9i
-        ZSBGaXJld29ya3NPsx9OAAAA7klEQVQ4T52TwQ2CQBBF9wxYgQmhAN0DYEf04MFaLAT0bGzDux2YuM5L
-        GDPAgsHDi98/fz7LRp333lVV1QphJS27LF9GgzVcKIgNQp7nIUkSB+hYBpYK3iEEB+hYBhZPkKbpEX6e
-        oCxLFp7CVcN4dV3fAY3HrM881fsWFEWhxz1pWN5/A+jeO5EhOymQ4Y6BfDbyveHy9A7QeMz6zG5QoCWW
-        LMsOWoAez3UveokE5Clnngxou2SJFvRsZ/SAQYE8iYt7CHvRN+Pf8JiRsTvjgpe+tw2ijf+yO7ETTH6+
-        cz5Q0FljJZ3+nf8p6bz37gNg33HUEvEvVgAAAABJRU5ErkJggg==
-</value>
-  </data>
   <data name="logoutMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
@@ -1017,6 +1006,17 @@
         LMs7A2ycAxBjzBabKiSeqaqqDfgG8DHF6roeApIkCQKappl1Lv14ANNGCQv6yODFNQqA2qUoCmrNXtBG
         AbjhiEO80aoP7qcA/5ym6TgAQQd3bD5prR//A0wo4RQswWdOEzeA2m9RgG6MS/rI8Mk1CoCfZ965Fsb1
         A8B3Pn4Z02c59AcAbOxxIINWPmE/Qw927IUPcHXHFBJAlxYg6g1IZDALc1HGTgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="officesMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
+        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAACLEAAAixAGsYeJ3AAAAGHRFWHRTb2Z0d2FyZQBBZG9i
+        ZSBGaXJld29ya3NPsx9OAAAA7klEQVQ4T52TwQ2CQBBF9wxYgQmhAN0DYEf04MFaLAT0bGzDux2YuM5L
+        GDPAgsHDi98/fz7LRp333lVV1QphJS27LF9GgzVcKIgNQp7nIUkSB+hYBpYK3iEEB+hYBhZPkKbpEX6e
+        oCxLFp7CVcN4dV3fAY3HrM881fsWFEWhxz1pWN5/A+jeO5EhOymQ4Y6BfDbyveHy9A7QeMz6zG5QoCWW
+        LMsOWoAez3UveokE5Clnngxou2SJFvRsZ/SAQYE8iYt7CHvRN+Pf8JiRsTvjgpe+tw2ijf+yO7ETTH6+
+        cz5Q0FljJZ3+nf8p6bz37gNg33HUEvEvVgAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="queueMonitorMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

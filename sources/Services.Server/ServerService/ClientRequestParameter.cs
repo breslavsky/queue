@@ -17,7 +17,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                CheckPermission(UserRole.Operator);
+                CheckPermission(UserRole.All);
 
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())

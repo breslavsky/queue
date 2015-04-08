@@ -564,7 +564,6 @@ namespace Queue.Services.Server
                         schedule = session.CreateCriteria<DefaultExceptionSchedule>()
                             .Add(Expression.Eq("ScheduleDate", PlanDate))
                             .UniqueResult<DefaultExceptionSchedule>();
-
                         if (schedule == null)
                         {
                             var dayOfWeek = PlanDate.DayOfWeek;

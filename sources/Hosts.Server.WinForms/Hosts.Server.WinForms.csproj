@@ -197,8 +197,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\online.ico" />
-    <None Include="Resources\offline.ico" />
+    <Content Include="Resources\offline.png" />
+    <Content Include="Resources\online.png" />
     <Content Include="server.ico" />
   </ItemGroup>
   <ItemGroup>

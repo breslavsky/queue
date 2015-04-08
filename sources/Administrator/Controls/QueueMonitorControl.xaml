@@ -67,7 +67,8 @@
                     Minimum="40"
                     Orientation="Vertical"
                     PreviewMouseUp="zoom_Updated"
-                    RenderTransformOrigin="0.5,0.5" />
+                    RenderTransformOrigin="0.5,0.5"
+                    Value="60" />
             <ScrollViewer x:Name="clientRequestsScrollViewer"
                           Grid.Row="1"
                           Grid.Column="1"

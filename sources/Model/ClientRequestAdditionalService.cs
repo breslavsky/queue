@@ -21,6 +21,7 @@ namespace Queue.Model
         [ManyToOne(ClassType = typeof(AdditionalService), Column = "AdditionalServiceId", ForeignKey = "ClientRequestAdditionalServiceToAdditionalServiceReference")]
         public virtual AdditionalService AdditionalService { get; set; }
 
+        [Min(Value = 1, Message = "Количество не указано")]
         [Property]
         public virtual float Quantity { get; set; }
 

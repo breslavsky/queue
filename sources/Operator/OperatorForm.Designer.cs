@@ -24,6 +24,8 @@ namespace Queue.Operator
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.serverStateLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.currentDateTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -62,11 +64,15 @@ namespace Queue.Operator
             this.clientRequestTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.parametersGridView = new System.Windows.Forms.DataGridView();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.parametersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.addAdditionalServiceButton = new System.Windows.Forms.Button();
             this.additionalServicesGridView = new System.Windows.Forms.DataGridView();
             this.additionalServiceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.additionalServicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.stepPanel = new System.Windows.Forms.Panel();
             this.step1Panel = new System.Windows.Forms.Panel();
@@ -91,9 +97,6 @@ namespace Queue.Operator
             this.clientColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serviceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.parametersBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.mainTabControl.SuspendLayout();
@@ -103,6 +106,7 @@ namespace Queue.Operator
             this.clientRequestTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.parametersGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.parametersBindingSource)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.additionalServicesGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.additionalServicesBindingSource)).BeginInit();
@@ -113,7 +117,6 @@ namespace Queue.Operator
             ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).BeginInit();
             this.clientRequestsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clientRequestsGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.parametersBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // statusBar
@@ -170,6 +173,7 @@ namespace Queue.Operator
             // 
             // versionLabel
             // 
+            this.versionLabel.ForeColor = System.Drawing.SystemColors.ButtonShadow;
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(12, 17);
             this.versionLabel.Text = "-";
@@ -516,6 +520,27 @@ namespace Queue.Operator
             this.parametersGridView.Size = new System.Drawing.Size(465, 120);
             this.parametersGridView.TabIndex = 0;
             // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.FillWeight = 150F;
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Название";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.nameDataGridViewTextBoxColumn.Width = 150;
+            // 
+            // valueDataGridViewTextBoxColumn
+            // 
+            this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
+            this.valueDataGridViewTextBoxColumn.HeaderText = "Значение";
+            this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
+            this.valueDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // parametersBindingSource
+            // 
+            this.parametersBindingSource.DataSource = typeof(Queue.Services.DTO.ClientRequestParameter);
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.addAdditionalServiceButton);
@@ -554,7 +579,8 @@ namespace Queue.Operator
             this.additionalServicesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.additionalServicesGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.additionalServiceDataGridViewTextBoxColumn,
-            this.quantityDataGridViewTextBoxColumn});
+            this.quantityDataGridViewTextBoxColumn,
+            this.Sum});
             this.additionalServicesGridView.DataSource = this.additionalServicesBindingSource;
             this.additionalServicesGridView.Location = new System.Drawing.Point(5, 5);
             this.additionalServicesGridView.MultiSelect = false;
@@ -578,11 +604,24 @@ namespace Queue.Operator
             // quantityDataGridViewTextBoxColumn
             // 
             this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.quantityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
             this.quantityDataGridViewTextBoxColumn.FillWeight = 70F;
             this.quantityDataGridViewTextBoxColumn.HeaderText = "Кол-во";
             this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
             this.quantityDataGridViewTextBoxColumn.ReadOnly = true;
             this.quantityDataGridViewTextBoxColumn.Width = 70;
+            // 
+            // Sum
+            // 
+            this.Sum.DataPropertyName = "Sum";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "C2";
+            dataGridViewCellStyle4.NullValue = null;
+            this.Sum.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Sum.HeaderText = "Сумма";
+            this.Sum.Name = "Sum";
+            this.Sum.ReadOnly = true;
             // 
             // additionalServicesBindingSource
             // 
@@ -752,15 +791,15 @@ namespace Queue.Operator
             this.clientRequestsGridView.AllowUserToDeleteRows = false;
             this.clientRequestsGridView.AllowUserToResizeColumns = false;
             this.clientRequestsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.clientRequestsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.clientRequestsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.clientRequestsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.clientRequestsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.numberColumn,
@@ -783,8 +822,8 @@ namespace Queue.Operator
             // 
             // numberColumn
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.numberColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.numberColumn.DefaultCellStyle = dataGridViewCellStyle6;
             this.numberColumn.HeaderText = "Номер";
             this.numberColumn.Name = "numberColumn";
             this.numberColumn.ReadOnly = true;
@@ -793,8 +832,8 @@ namespace Queue.Operator
             // 
             // subjectsColumn
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.subjectsColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.subjectsColumn.DefaultCellStyle = dataGridViewCellStyle7;
             this.subjectsColumn.HeaderText = "Объектов";
             this.subjectsColumn.Name = "subjectsColumn";
             this.subjectsColumn.ReadOnly = true;
@@ -810,8 +849,8 @@ namespace Queue.Operator
             // 
             // timeIntervalColumn
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.timeIntervalColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.timeIntervalColumn.DefaultCellStyle = dataGridViewCellStyle8;
             this.timeIntervalColumn.HeaderText = "Интервал (мин)";
             this.timeIntervalColumn.Name = "timeIntervalColumn";
             this.timeIntervalColumn.ReadOnly = true;
@@ -842,27 +881,6 @@ namespace Queue.Operator
             this.stateColumn.ReadOnly = true;
             this.stateColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // parametersBindingSource
-            // 
-            this.parametersBindingSource.DataSource = typeof(Queue.Services.DTO.ClientRequestParameter);
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.FillWeight = 150F;
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Название";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nameDataGridViewTextBoxColumn.Width = 150;
-            // 
-            // valueDataGridViewTextBoxColumn
-            // 
-            this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
-            this.valueDataGridViewTextBoxColumn.HeaderText = "Значение";
-            this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
-            this.valueDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
             // OperatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -889,6 +907,7 @@ namespace Queue.Operator
             this.clientRequestTabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.parametersGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.parametersBindingSource)).EndInit();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.additionalServicesGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.additionalServicesBindingSource)).EndInit();
@@ -900,7 +919,6 @@ namespace Queue.Operator
             ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).EndInit();
             this.clientRequestsTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.clientRequestsGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.parametersBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -973,11 +991,12 @@ namespace Queue.Operator
         private System.Windows.Forms.DataGridView additionalServicesGridView;
         private System.Windows.Forms.Button addAdditionalServiceButton;
         private System.Windows.Forms.BindingSource additionalServicesBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn additionalServiceDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn quantityDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource parametersBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn additionalServiceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn quantityDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Sum;
 
     }
 }

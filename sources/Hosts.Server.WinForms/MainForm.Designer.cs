@@ -39,10 +39,10 @@
             this.runServiceButton = new System.Windows.Forms.Button();
             this.installServiseButton = new System.Windows.Forms.Button();
             this.settingsGroupBox = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.languageControl = new Queue.UI.WinForms.EnumItemControl();
             this.httpCheckBox = new System.Windows.Forms.CheckBox();
             this.tcpCheckBox = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.languageControl = new Queue.UI.WinForms.EnumItemControl();
             this.saveButton = new System.Windows.Forms.Button();
             this.debugCheckBox = new System.Windows.Forms.CheckBox();
             this.databaseGroupBox = new System.Windows.Forms.GroupBox();
@@ -133,9 +133,9 @@
             // 
             // runServiceButton
             // 
-            this.runServiceButton.Location = new System.Drawing.Point(235, 20);
+            this.runServiceButton.Location = new System.Drawing.Point(220, 20);
             this.runServiceButton.Name = "runServiceButton";
-            this.runServiceButton.Size = new System.Drawing.Size(160, 35);
+            this.runServiceButton.Size = new System.Drawing.Size(175, 35);
             this.runServiceButton.TabIndex = 1;
             this.runServiceButton.Text = "Запустить службу";
             this.runServiceButton.UseVisualStyleBackColor = true;
@@ -145,7 +145,7 @@
             // 
             this.installServiseButton.Location = new System.Drawing.Point(5, 20);
             this.installServiseButton.Name = "installServiseButton";
-            this.installServiseButton.Size = new System.Drawing.Size(160, 35);
+            this.installServiseButton.Size = new System.Drawing.Size(180, 35);
             this.installServiseButton.TabIndex = 0;
             this.installServiseButton.Text = "Установить службу";
             this.installServiseButton.UseVisualStyleBackColor = true;
@@ -169,23 +169,6 @@
             this.settingsGroupBox.TabIndex = 11;
             this.settingsGroupBox.TabStop = false;
             this.settingsGroupBox.Text = "Настройки";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(195, 305);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "Язык";
-            // 
-            // languageControl
-            // 
-            this.languageControl.Location = new System.Drawing.Point(240, 300);
-            this.languageControl.Name = "languageControl";
-            this.languageControl.Size = new System.Drawing.Size(150, 21);
-            this.languageControl.TabIndex = 10;
-            this.languageControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.languageControl_SelectedChanged);
             // 
             // httpCheckBox
             // 
@@ -211,11 +194,28 @@
             this.tcpCheckBox.CheckedChanged += new System.EventHandler(this.tcpCheckBox_CheckedChanged);
             this.tcpCheckBox.Leave += new System.EventHandler(this.tcpCheckBox_Leave);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(195, 305);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Язык";
+            // 
+            // languageControl
+            // 
+            this.languageControl.Location = new System.Drawing.Point(240, 300);
+            this.languageControl.Name = "languageControl";
+            this.languageControl.Size = new System.Drawing.Size(150, 21);
+            this.languageControl.TabIndex = 10;
+            this.languageControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.languageControl_SelectedChanged);
+            // 
             // saveButton
             // 
             this.saveButton.Location = new System.Drawing.Point(10, 330);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(380, 30);
+            this.saveButton.Size = new System.Drawing.Size(380, 35);
             this.saveButton.TabIndex = 9;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;

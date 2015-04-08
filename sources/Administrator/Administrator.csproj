@@ -627,6 +627,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\DataSources\Queue.Services.DTO.AdditionalService.datasource" />
+    <None Include="Properties\DataSources\Queue.Services.DTO.ClientRequestAdditionalService.datasource" />
+    <None Include="Properties\DataSources\Queue.Services.DTO.ClientRequestEvent.datasource" />
+    <None Include="Properties\DataSources\Queue.Services.DTO.ClientRequestParameter.datasource" />
     <None Include="Properties\DataSources\Queue.Services.DTO.OperatorInterruption.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

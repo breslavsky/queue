@@ -98,23 +98,13 @@ namespace Queue.Administrator
                             eventsGridView.Rows.Clear();
 
                             var events = await taskPool.AddTask(channel.Service.GetClientRequestEvents(clientRequestId));
-                            foreach (var e in events.Reverse())
-                            {
-                                int index = eventsGridView.Rows.Add();
-                                var row = eventsGridView.Rows[index];
-                                row.Cells["createDateColumn"].Value = e.CreateDate.ToString();
-                                row.Cells["messageColumn"].Value = e.Message;
-                            }
+                            eventsBindingSource.DataSource = events.Reverse();
 
-                            var parameters = await taskPool.AddTask(channel.Service.GetClientRequestParameters(service.Id));
-                            foreach (var p in parameters)
-                            {
-                                int index = parametersGridView.Rows.Add();
-                                var row = parametersGridView.Rows[index];
-                                row.Cells["parameterNameColumn"].Value = p.Name;
-                                row.Cells["parameterValueColumn"].Value = p.Value;
-                                row.Tag = p;
-                            }
+                            var parameters = await taskPool.AddTask(channel.Service.GetClientRequestParameters(clientRequestId));
+                            parametersBindingSource.DataSource = parameters;
+
+                            var additionalServices = await taskPool.AddTask(channel.Service.GetClientRequestAdditionalServices(clientRequestId));
+                            additionalServicesBindingSource.DataSource = additionalServices;
                         }
                         catch (OperationCanceledException) { }
                         catch (CommunicationObjectAbortedException) { }

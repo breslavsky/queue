@@ -30,6 +30,11 @@ namespace Queue.Services.DTO
             set { SetProperty(ref quantity, value); }
         }
 
+        public decimal Sum
+        {
+            get { return additionalService.Price * (decimal)quantity; }
+        }
+
         public override string ToString()
         {
             return string.Format("{0} {1} {2}", additionalService, quantity, additionalService.Measure);
