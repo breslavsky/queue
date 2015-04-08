@@ -182,70 +182,13 @@ namespace Queue.Administrator.Reports
 
         private async void createReportButton_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
                 try
                 {
                     createReportButton.Enabled = false;
 
-                    ServiceRatingReportSettings settings;
-                    DateTime startDate, finishDate;
-
-                    ReportDetailLevel detailLevel = (ReportDetailLevel)detailLevelTabControl.SelectedIndex;
-                    switch (detailLevel)
-                    {
-                        case ReportDetailLevel.Year:
-
-                            int startYear = (int)startYearComboBox.SelectedItem;
-                            int finishYear = (int)finishYearComboBox.SelectedItem;
-
-                            settings = new ServiceRatingReportSettings()
-                            {
-                                StartYear = startYear,
-                                FinishYear = finishYear,
-                                IsServiceTypes = isServiceTypesCheckBox.Checked
-                            };
-                            break;
-
-                        case ReportDetailLevel.Month:
-
-                            startDate = startMonthPicker.Value;
-                            finishDate = finishMonthPicker.Value;
-
-                            settings = new ServiceRatingReportSettings()
-                            {
-                                StartYear = startDate.Year,
-                                StartMonth = startDate.Month,
-                                FinishYear = finishDate.Year,
-                                FinishMonth = finishDate.Month,
-                                IsServiceTypes = isServiceTypesCheckBox.Checked
-                            };
-                            break;
-
-                        case ReportDetailLevel.Day:
-
-                            startDate = startDatePicker.Value;
-                            finishDate = finishDatePicker.Value;
-
-                            settings = new ServiceRatingReportSettings()
-                            {
-                                StartYear = startDate.Year,
-                                StartMonth = startDate.Month,
-                                FinishYear = finishDate.Year,
-                                FinishMonth = finishDate.Month,
-                                StartDay = startDate.Day,
-                                FinishDay = finishDate.Day,
-                                IsServiceTypes = isServiceTypesCheckBox.Checked
-                            };
-                            break;
-
-                        default:
-                            throw new Exception("Неверный тип детализации");
-                    }
-
-                    Guid[] servicesIds = isFullCheckBox.Checked ? new Guid[0] : await GetSelectedServices();
-
-                    byte[] report = await taskPool.AddTask(channel.Service.GetServiceRatingReport(servicesIds, detailLevel, settings));
+                    byte[] report = await taskPool.AddTask(channel.Service.GetServiceRatingReport(await GetReportSettings()));
                     string path = Path.GetTempPath() + Path.GetRandomFileName() + ".xls";
 
                     FileStream file = File.OpenWrite(path);
@@ -271,6 +214,51 @@ namespace Queue.Administrator.Reports
                     createReportButton.Enabled = true;
                 }
             }
+        }
+
+        private async Task<ServiceRatingReportSettings> GetReportSettings()
+        {
+            ServiceRatingReportSettings settings = null;
+            switch ((ReportDetailLevel)detailLevelTabControl.SelectedIndex)
+            {
+                case ReportDetailLevel.Year:
+                    settings = new ServiceRatingReportSettings()
+                    {
+                        StartYear = (int)startYearComboBox.SelectedItem,
+                        FinishYear = (int)finishYearComboBox.SelectedItem,
+                    };
+                    break;
+
+                case ReportDetailLevel.Month:
+                    settings = new ServiceRatingReportSettings()
+                    {
+                        StartYear = startMonthPicker.Value.Year,
+                        StartMonth = startMonthPicker.Value.Month,
+                        FinishYear = finishMonthPicker.Value.Year,
+                        FinishMonth = finishMonthPicker.Value.Month
+                    };
+                    break;
+
+                case ReportDetailLevel.Day:
+                    settings = new ServiceRatingReportSettings()
+                    {
+                        StartYear = startDatePicker.Value.Year,
+                        StartMonth = startDatePicker.Value.Month,
+                        StartDay = startDatePicker.Value.Day,
+                        FinishYear = finishDatePicker.Value.Year,
+                        FinishMonth = finishDatePicker.Value.Month,
+                        FinishDay = finishDatePicker.Value.Day
+                    };
+                    break;
+
+                default:
+                    throw new ApplicationException("Неверный тип детализации");
+            }
+
+            settings.DetailLevel = (ReportDetailLevel)detailLevelTabControl.SelectedIndex;
+            settings.Services = isFullCheckBox.Checked ? new Guid[0] : await GetSelectedServices();
+
+            return settings;
         }
 
         private void ServiceRatingReportForm_FormClosing(object sender, FormClosingEventArgs e)

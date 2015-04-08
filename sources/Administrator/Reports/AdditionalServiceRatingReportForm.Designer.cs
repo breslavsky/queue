@@ -1,6 +1,6 @@
 ﻿namespace Queue.Administrator.Reports
 {
-    partial class OperatorRatingReportForm
+    partial class AdditionalServiceRatingReportForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.detailLevelTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -40,47 +39,29 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.startDatePicker = new System.Windows.Forms.DateTimePicker();
             this.finishDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.isFullCheckBox = new System.Windows.Forms.CheckBox();
-            this.operatorsListBox = new System.Windows.Forms.CheckedListBox();
+            this.additionalServicesListBox = new System.Windows.Forms.CheckedListBox();
             this.createReportButton = new System.Windows.Forms.Button();
-            this.mainLayoutPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.detailLevelTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.mainLayoutPanel.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // mainLayoutPanel
-            // 
-            this.mainLayoutPanel.ColumnCount = 2;
-            this.mainLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 210F));
-            this.mainLayoutPanel.Controls.Add(this.panel1, 1, 0);
-            this.mainLayoutPanel.Controls.Add(this.panel2, 0, 0);
-            this.mainLayoutPanel.Controls.Add(this.operatorsListBox, 0, 1);
-            this.mainLayoutPanel.Controls.Add(this.createReportButton, 1, 2);
-            this.mainLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainLayoutPanel.Location = new System.Drawing.Point(0, 0);
-            this.mainLayoutPanel.Name = "mainLayoutPanel";
-            this.mainLayoutPanel.RowCount = 3;
-            this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.mainLayoutPanel.Size = new System.Drawing.Size(765, 505);
-            this.mainLayoutPanel.TabIndex = 1;
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.detailLevelTabControl);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(555, 0);
+            this.panel1.Location = new System.Drawing.Point(640, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
             this.mainLayoutPanel.SetRowSpan(this.panel1, 2);
-            this.panel1.Size = new System.Drawing.Size(210, 465);
+            this.panel1.Size = new System.Drawing.Size(210, 467);
             this.panel1.TabIndex = 0;
             // 
             // detailLevelTabControl
@@ -186,6 +167,25 @@
             this.finishDatePicker.Size = new System.Drawing.Size(120, 20);
             this.finishDatePicker.TabIndex = 0;
             // 
+            // mainLayoutPanel
+            // 
+            this.mainLayoutPanel.ColumnCount = 2;
+            this.mainLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.mainLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 210F));
+            this.mainLayoutPanel.Controls.Add(this.panel1, 1, 0);
+            this.mainLayoutPanel.Controls.Add(this.panel2, 0, 0);
+            this.mainLayoutPanel.Controls.Add(this.additionalServicesListBox, 0, 1);
+            this.mainLayoutPanel.Controls.Add(this.createReportButton, 1, 2);
+            this.mainLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.mainLayoutPanel.Name = "mainLayoutPanel";
+            this.mainLayoutPanel.RowCount = 3;
+            this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.mainLayoutPanel.Size = new System.Drawing.Size(850, 507);
+            this.mainLayoutPanel.TabIndex = 2;
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.isFullCheckBox);
@@ -193,7 +193,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(555, 30);
+            this.panel2.Size = new System.Drawing.Size(640, 30);
             this.panel2.TabIndex = 0;
             // 
             // isFullCheckBox
@@ -201,48 +201,48 @@
             this.isFullCheckBox.AutoSize = true;
             this.isFullCheckBox.Location = new System.Drawing.Point(5, 5);
             this.isFullCheckBox.Name = "isFullCheckBox";
-            this.isFullCheckBox.Size = new System.Drawing.Size(133, 17);
+            this.isFullCheckBox.Size = new System.Drawing.Size(203, 17);
             this.isFullCheckBox.TabIndex = 0;
-            this.isFullCheckBox.Text = "По всем операторам";
+            this.isFullCheckBox.Text = "По всем дополниткльным услугам";
             this.isFullCheckBox.UseVisualStyleBackColor = true;
             this.isFullCheckBox.CheckedChanged += new System.EventHandler(this.isFullCheckBox_CheckedChanged);
             // 
-            // operatorsListBox
+            // additionalServicesListBox
             // 
-            this.operatorsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.operatorsListBox.FormattingEnabled = true;
-            this.operatorsListBox.Location = new System.Drawing.Point(3, 33);
-            this.operatorsListBox.Name = "operatorsListBox";
-            this.operatorsListBox.Size = new System.Drawing.Size(549, 429);
-            this.operatorsListBox.TabIndex = 1;
+            this.additionalServicesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.additionalServicesListBox.FormattingEnabled = true;
+            this.additionalServicesListBox.Location = new System.Drawing.Point(3, 33);
+            this.additionalServicesListBox.Name = "additionalServicesListBox";
+            this.additionalServicesListBox.Size = new System.Drawing.Size(634, 431);
+            this.additionalServicesListBox.TabIndex = 1;
             // 
             // createReportButton
             // 
             this.createReportButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.createReportButton.Location = new System.Drawing.Point(662, 472);
+            this.createReportButton.Location = new System.Drawing.Point(747, 474);
             this.createReportButton.Name = "createReportButton";
             this.createReportButton.Size = new System.Drawing.Size(100, 25);
             this.createReportButton.TabIndex = 0;
             this.createReportButton.Text = "Сформировать";
             this.createReportButton.Click += new System.EventHandler(this.createReportButton_Click);
             // 
-            // OperatorRatingReportForm
+            // AdditionalServiceRatingReportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(765, 505);
+            this.ClientSize = new System.Drawing.Size(850, 507);
             this.Controls.Add(this.mainLayoutPanel);
-            this.Name = "OperatorRatingReportForm";
-            this.Text = "Отчет: рейтинг операторов";
+            this.Name = "AdditionalServiceRatingReportForm";
+            this.Text = "Отчет: рейтинг дополнительных услуг";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OperatorRatingReportForm_FormClosing);
-            this.Load += new System.EventHandler(this.OperatorRatingReportForm_Load);
-            this.mainLayoutPanel.ResumeLayout(false);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AdditionalServiceRatingReportForm_FormClosing);
+            this.Load += new System.EventHandler(this.AdditionalServiceRatingReportForm_Load);
             this.panel1.ResumeLayout(false);
             this.detailLevelTabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            this.mainLayoutPanel.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
@@ -251,7 +251,6 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel mainLayoutPanel;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TabControl detailLevelTabControl;
         private System.Windows.Forms.TabPage tabPage1;
@@ -263,9 +262,11 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.DateTimePicker startDatePicker;
         private System.Windows.Forms.DateTimePicker finishDatePicker;
-        private System.Windows.Forms.Button createReportButton;
+        private System.Windows.Forms.TableLayoutPanel mainLayoutPanel;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.CheckBox isFullCheckBox;
-        private System.Windows.Forms.CheckedListBox operatorsListBox;
+        private System.Windows.Forms.CheckedListBox additionalServicesListBox;
+        private System.Windows.Forms.Button createReportButton;
+
     }
 }

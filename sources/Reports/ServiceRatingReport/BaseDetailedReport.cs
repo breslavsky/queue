@@ -19,13 +19,11 @@ namespace Queue.Reports.ServiceRatingReport
 {
     public abstract class BaseDetailedReport<T>
     {
-        protected Guid[] servicesIds;
         protected ServiceRatingReportSettings settings;
 
-        public BaseDetailedReport(Guid[] servicesIds, ServiceRatingReportSettings settings)
+        public BaseDetailedReport(ServiceRatingReportSettings settings)
         {
             this.settings = settings;
-            this.servicesIds = servicesIds;
         }
 
         protected ISessionProvider SessionProvider
@@ -44,9 +42,9 @@ namespace Queue.Reports.ServiceRatingReport
             }
 
             Conjunction conjunction = Expression.Conjunction();
-            if (servicesIds.Length > 0)
+            if (settings.Services.Length > 0)
             {
-                conjunction.Add(Expression.In("Service.Id", servicesIds));
+                conjunction.Add(Expression.In("Service.Id", settings.Services));
             }
 
             conjunction.Add(Expression.Ge("RequestDate", startDate));
@@ -154,8 +152,6 @@ namespace Queue.Reports.ServiceRatingReport
             return projections;
         }
 
-        protected abstract DateTime GetFinishDate();
-
         protected abstract ProjectionList GetProjections();
 
         protected ServiceGroupDto GetServicesHierarchy()
@@ -165,14 +161,14 @@ namespace Queue.Reports.ServiceRatingReport
                 IList<ServiceDto> rootServices = new List<ServiceDto>();
                 IList<ServiceGroupDto> rootGroups = new List<ServiceGroupDto>();
 
-                if (servicesIds.Length == 0)
+                if (settings.Services.Length == 0)
                 {
                     rootServices = GetGroupServices(session, null);
                     rootGroups = GetServicesGroups(session, null);
                 }
                 else
                 {
-                    foreach (Guid serviceId in servicesIds)
+                    foreach (Guid serviceId in settings.Services)
                     {
                         Service service = session.Get<Service>(serviceId);
                         if (service == null)
@@ -199,6 +195,8 @@ namespace Queue.Reports.ServiceRatingReport
                     };
             }
         }
+
+        protected abstract DateTime GetFinishDate();
 
         protected abstract DateTime GetStartDate();
 

@@ -2,13 +2,13 @@
 using Queue.Model.Common;
 using System.ServiceModel;
 
-namespace Queue.Reports.ServiceRatingReport
+namespace Queue.Reports.AdditionalServicesRatingReport
 {
-    public class ServiceRatingReport : BaseReport
+    public class AdditionalServiceRatingReport : BaseReport
     {
-        private readonly ServiceRatingReportSettings settings;
+        private readonly AdditionalServicesRatingReportSettings settings;
 
-        public ServiceRatingReport(ServiceRatingReportSettings settings)
+        public AdditionalServiceRatingReport(AdditionalServicesRatingReportSettings settings)
         {
             this.settings = settings;
         }
@@ -20,11 +20,11 @@ namespace Queue.Reports.ServiceRatingReport
                 case ReportDetailLevel.Year:
                     return new YearDetailedReport(settings).Generate();
 
-                case ReportDetailLevel.Month:
-                    return new MonthDetailedReport(settings).Generate();
+                //case ReportDetailLevel.Month:
+                //    return new MonthDetailedReport(settings).Generate();
 
-                case ReportDetailLevel.Day:
-                    return new DayDetailedReport(settings).Generate();
+                //case ReportDetailLevel.Day:
+                //    return new DayDetailedReport(settings).Generate();
 
                 default:
                     throw new FaultException(string.Format("Указанный уровень детализации не поддерживается: {0}", settings.DetailLevel.ToString()));

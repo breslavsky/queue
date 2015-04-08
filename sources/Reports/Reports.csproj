@@ -93,6 +93,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdditionalServicesRatingReport\AdditionalServiceRatingReport.cs" />
+    <Compile Include="AdditionalServicesRatingReport\AdditionalServiceStatisticsDTO.cs" />
+    <Compile Include="AdditionalServicesRatingReport\BaseDetailedReport.cs" />
+    <Compile Include="AdditionalServicesRatingReport\YearDetailedReport.cs" />
     <Compile Include="BaseReport.cs" />
     <Compile Include="ClientRequestReport\ClientRequestReport.cs" />
     <Compile Include="ExceptionScheduleReport\ExceptionScheduleReport.cs" />
@@ -128,6 +132,7 @@
     <None Include="Templates\ExceptionSchedule.xls" />
     <None Include="Templates\QueuePlan.xls" />
     <None Include="Templates\OperatorRating.xls" />
+    <None Include="Templates\AdditionalServiceRating.xls" />
     <None Include="Templates\ServiceRating.xls" />
   </ItemGroup>
   <ItemGroup>

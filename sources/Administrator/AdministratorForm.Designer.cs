@@ -40,12 +40,13 @@
             this.operatorsRatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scheduleReportMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.exceptionScheduleReportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.additionalServiceReportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.currentUserMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.serverStateLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.currentDateTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.topMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             this.SuspendLayout();
@@ -233,7 +234,8 @@
             this.reportsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.serviceRatingReportMenuItem,
             this.operatorsRatingToolStripMenuItem,
-            this.scheduleReportMenu});
+            this.scheduleReportMenu,
+            this.additionalServiceReportMenuItem});
             this.reportsMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("reportsMenuItem.Image")));
             this.reportsMenuItem.Name = "reportsMenuItem";
             this.reportsMenuItem.Size = new System.Drawing.Size(76, 20);
@@ -243,14 +245,14 @@
             // serviceRatingReportMenuItem
             // 
             this.serviceRatingReportMenuItem.Name = "serviceRatingReportMenuItem";
-            this.serviceRatingReportMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.serviceRatingReportMenuItem.Size = new System.Drawing.Size(247, 22);
             this.serviceRatingReportMenuItem.Text = "Рейтинг услуг";
             this.serviceRatingReportMenuItem.Click += new System.EventHandler(this.serviceRatingReportMenuItem_Click);
             // 
             // operatorsRatingToolStripMenuItem
             // 
             this.operatorsRatingToolStripMenuItem.Name = "operatorsRatingToolStripMenuItem";
-            this.operatorsRatingToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.operatorsRatingToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.operatorsRatingToolStripMenuItem.Text = "Рейтинг операторов";
             this.operatorsRatingToolStripMenuItem.Click += new System.EventHandler(this.operatorsRatingToolStripMenuItem_Click);
             // 
@@ -259,7 +261,7 @@
             this.scheduleReportMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exceptionScheduleReportMenuItem});
             this.scheduleReportMenu.Name = "scheduleReportMenu";
-            this.scheduleReportMenu.Size = new System.Drawing.Size(186, 22);
+            this.scheduleReportMenu.Size = new System.Drawing.Size(247, 22);
             this.scheduleReportMenu.Text = "Расписание услуг";
             // 
             // exceptionScheduleReportMenuItem
@@ -268,6 +270,24 @@
             this.exceptionScheduleReportMenuItem.Size = new System.Drawing.Size(223, 22);
             this.exceptionScheduleReportMenuItem.Text = "Исключения в расписании";
             this.exceptionScheduleReportMenuItem.Click += new System.EventHandler(this.exceptionScheduleReportMenuItem_Click);
+            // 
+            // additionalServiceReportMenuItem
+            // 
+            this.additionalServiceReportMenuItem.Name = "additionalServiceReportMenuItem";
+            this.additionalServiceReportMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.additionalServiceReportMenuItem.Text = "Рейтинг дополнительных услуг";
+            this.additionalServiceReportMenuItem.Click += new System.EventHandler(this.additionalServiceReportMenuItem_Click);
+            // 
+            // toolStripTextBox1
+            // 
+            this.toolStripTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.toolStripTextBox1.Enabled = false;
+            this.toolStripTextBox1.HideSelection = false;
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.ReadOnly = true;
+            this.toolStripTextBox1.Size = new System.Drawing.Size(5, 20);
+            this.toolStripTextBox1.Text = "|";
+            this.toolStripTextBox1.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // currentUserMenuItem
             // 
@@ -307,17 +327,6 @@
             this.currentDateTimeLabel.Name = "currentDateTimeLabel";
             this.currentDateTimeLabel.Size = new System.Drawing.Size(12, 17);
             this.currentDateTimeLabel.Text = "-";
-            // 
-            // toolStripTextBox1
-            // 
-            this.toolStripTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.toolStripTextBox1.Enabled = false;
-            this.toolStripTextBox1.HideSelection = false;
-            this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.ReadOnly = true;
-            this.toolStripTextBox1.Size = new System.Drawing.Size(5, 20);
-            this.toolStripTextBox1.Text = "|";
-            this.toolStripTextBox1.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // AdministratorForm
             // 
@@ -370,9 +379,13 @@
         private System.Windows.Forms.ToolStripMenuItem operatorsRatingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem additionalServicesMenuItem;
         private System.Windows.Forms.ToolStripMenuItem operatorInterruptionsFormMenuItem;
+
         private System.Windows.Forms.ToolStripMenuItem currentUserMenuItem;
         private System.Windows.Forms.ToolStripMenuItem officesMenuItem;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+
+        private System.Windows.Forms.ToolStripMenuItem additionalServiceReportMenuItem;
+
 
     }
 }

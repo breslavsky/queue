@@ -19,7 +19,6 @@ namespace Queue.Reports.OperatorRatingReport
     public abstract class BaseDetailedReport<T>
     {
         protected OperatorRatingReportSettings settings;
-        protected Guid[] operators;
 
         private Lazy<Operator[]> allOperators;
 
@@ -28,10 +27,9 @@ namespace Queue.Reports.OperatorRatingReport
             get { return ServiceLocator.Current.GetInstance<ISessionProvider>(); }
         }
 
-        public BaseDetailedReport(Guid[] operators, OperatorRatingReportSettings settings)
+        public BaseDetailedReport(OperatorRatingReportSettings settings)
         {
             this.settings = settings;
-            this.operators = operators;
 
             allOperators = new Lazy<Operator[]>(() =>
             {
@@ -56,9 +54,9 @@ namespace Queue.Reports.OperatorRatingReport
             }
 
             Conjunction conjunction = Expression.Conjunction();
-            if (operators.Length > 0)
+            if (settings.Operators.Length > 0)
             {
-                conjunction.Add(Expression.In("Operator.Id", operators));
+                conjunction.Add(Expression.In("Operator.Id", settings.Operators));
             }
             else
             {

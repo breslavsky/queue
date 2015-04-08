@@ -438,10 +438,13 @@ namespace Queue.Services.Contracts
         Task DeleteServiceParameter(Guid serviceParameterId);
 
         [OperationContract]
-        Task<byte[]> GetServiceRatingReport(Guid[] services, ReportDetailLevel detailLavel, ServiceRatingReportSettings settings);
+        Task<byte[]> GetServiceRatingReport(ServiceRatingReportSettings settings);
 
         [OperationContract]
-        Task<byte[]> GetOperatorRatingReport(Guid[] operators, ReportDetailLevel detailLavel, OperatorRatingReportSettings settings);
+        Task<byte[]> GetOperatorRatingReport(OperatorRatingReportSettings settings);
+
+        [OperationContract]
+        Task<byte[]> GetAdditinalServicesRatingReport(AdditionalServicesRatingReportSettings settings);
 
         [OperationContract]
         Task<byte[]> GetExceptionScheduleReport(DateTime fromDate);

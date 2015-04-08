@@ -71,16 +71,16 @@
             this.nameLabel.Size = new System.Drawing.Size(135, 60);
             this.nameLabel.TabIndex = 4;
             this.nameLabel.Text = "Наименование";
-            this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.nameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // measureLabel
             // 
-            this.measureLabel.Location = new System.Drawing.Point(5, 95);
+            this.measureLabel.Location = new System.Drawing.Point(5, 105);
             this.measureLabel.Name = "measureLabel";
-            this.measureLabel.Size = new System.Drawing.Size(135, 30);
+            this.measureLabel.Size = new System.Drawing.Size(135, 20);
             this.measureLabel.TabIndex = 6;
             this.measureLabel.Text = "Единица измерения";
-            this.measureLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.measureLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // measureTextBox
             // 
@@ -92,12 +92,12 @@
             // 
             // priceLabel
             // 
-            this.priceLabel.Location = new System.Drawing.Point(5, 65);
+            this.priceLabel.Location = new System.Drawing.Point(5, 75);
             this.priceLabel.Name = "priceLabel";
-            this.priceLabel.Size = new System.Drawing.Size(135, 30);
+            this.priceLabel.Size = new System.Drawing.Size(135, 20);
             this.priceLabel.TabIndex = 8;
             this.priceLabel.Text = "Стоимость";
-            this.priceLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.priceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // priceUpDown
             // 
