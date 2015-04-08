@@ -19,7 +19,7 @@ namespace Queue.Services.DTO
         public string Value
         {
             get { return value; }
-            set { SetProperty(ref value, value); }
+            set { SetProperty(ref this.value, value); }
         }
 
         public override string ToString()
