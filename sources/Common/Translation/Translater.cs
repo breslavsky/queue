@@ -7,7 +7,7 @@ using System.Resources;
 
 namespace Queue.Common
 {
-    public class Translater
+    public class Translater : ITranslater
     {
         private readonly ResourceManager manager;
 
@@ -53,7 +53,7 @@ namespace Queue.Common
             return result;
         }
 
-        public string GetString(string key, params object[] parameters)
+        public string GetString(object key, params object[] parameters)
         {
             string result = null;
 
@@ -61,13 +61,13 @@ namespace Queue.Common
             {
                 try
                 {
-                    string str = manager.GetString(key);
+                    string str = manager.GetString(key.ToString());
                     result = parameters.Length > 0 ? string.Format(str, parameters) : str;
                 }
                 catch { }
             }
 
-            return result ?? key;
+            return result ?? key.ToString();
         }
 
         public static string Message(string key, params object[] parameters)
@@ -77,7 +77,18 @@ namespace Queue.Common
 
         public static string Enum<T>(T value, string mod = null) where T : struct, IConvertible
         {
-            return new Translater(typeof(T), mod).GetString(value.ToString());
+            ITranslater translater = null;
+
+            if (value is DayOfWeek)
+            {
+                translater = new DayOfWeekTranslater();
+            }
+            else
+            {
+                translater = new Translater(typeof(T), mod);
+            }
+
+            return translater.GetString(value);
         }
     }
 }

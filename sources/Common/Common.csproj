@@ -56,7 +56,9 @@
     <Compile Include="ServerTime.cs" />
     <Compile Include="TicksInterval.cs" />
     <Compile Include="Language.cs" />
-    <Compile Include="Translater.cs" />
+    <Compile Include="Translation\DayOfWeekTranslater.cs" />
+    <Compile Include="Translation\ITranslater.cs" />
+    <Compile Include="Translation\Translater.cs" />
     <Compile Include="Translate\Language.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
