@@ -254,6 +254,9 @@ namespace Queue.Services.Contracts
         Task DeleteOffice(Guid officeId);
 
         [OperationContract]
+        Task<IdentifiedEntityLink[]> GetAdditionalServiceLinks();
+
+        [OperationContract]
         Task<AdditionalService[]> GetAdditionalServices();
 
         [OperationContract]

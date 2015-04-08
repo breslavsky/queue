@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>13</ApplicationRevision>
+    <ApplicationRevision>16</ApplicationRevision>
     <ApplicationVersion>1.4.6.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -288,6 +288,8 @@
   <ItemGroup>
     <Content Include="constraints.sql" />
     <Content Include="database.ico" />
+    <Content Include="Patches\009.sql" />
+    <Content Include="Patches\008.sql" />
     <Content Include="Patches\007.sql" />
     <Content Include="Patches\001.sql" />
     <Content Include="Patches\002.sql" />

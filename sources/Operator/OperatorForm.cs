@@ -9,6 +9,8 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.ServiceModel;
 using System.Threading;
@@ -37,6 +39,9 @@ namespace Queue.Operator
         private readonly TaskPool taskPool;
         private ClientRequestPlan currentClientRequestPlan;
         private Channel<IServerTcpService> pingChannel;
+
+        private BindingList<ClientRequestAdditionalService> additionalServices;
+        private BindingList<ClientRequestParameter> parameters;
 
         public OperatorForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
@@ -132,43 +137,19 @@ namespace Queue.Operator
                             stateTextBlock.Text = Translater.Enum(clientRequest.State);
                             stateTextBlock.BackColor = ColorTranslator.FromHtml(clientRequest.Color);
 
-                            parametersGridView.Rows.Clear();
-
                             using (var channel = channelManager.CreateChannel())
                             {
                                 try
                                 {
-                                    var parameters = await taskPool.AddTask(channel.Service.GetClientRequestParameters(service.Id));
-                                    foreach (var p in parameters)
-                                    {
-                                        int index = parametersGridView.Rows.Add();
-                                        var row = parametersGridView.Rows[index];
-                                        row.Cells["parameterNameColumn"].Value = p.Name;
-                                        row.Cells["parameterValueColumn"].Value = p.Value;
-                                        row.Tag = p;
-                                    }
-                                }
-                                catch (Exception exception)
-                                {
-                                    logger.Warn(exception);
-                                }
-                            }
+                                    parametersGridView.Rows.Clear();
+                                    parameters = new BindingList<ClientRequestParameter>(new List<ClientRequestParameter>
+                                        (await taskPool.AddTask(channel.Service.GetClientRequestParameters(clientRequest.Id))));
+                                    parametersBindingSource.DataSource = additionalServices;
 
-                            additionalServicesGridView.Rows.Clear();
-
-                            using (var channel = channelManager.CreateChannel())
-                            {
-                                try
-                                {
-                                    var additionalServices = await taskPool.AddTask(channel.Service.GetClientRequestAdditionalServices(service.Id));
-                                    foreach (var a in additionalServices)
-                                    {
-                                        int index = additionalServicesGridView.Rows.Add();
-                                        var row = additionalServicesGridView.Rows[index];
-                                        row.Cells["additionalServiceColumn"].Value = a.AdditionalService;
-                                        row.Cells["quantity"].Value = a.Quantity;
-                                        row.Tag = a;
-                                    }
+                                    additionalServicesGridView.Rows.Clear();
+                                    additionalServices = new BindingList<ClientRequestAdditionalService>(new List<ClientRequestAdditionalService>
+                                        (await taskPool.AddTask(channel.Service.GetClientRequestAdditionalServices(clientRequest.Id))));
+                                    additionalServicesBindingSource.DataSource = additionalServices;
                                 }
                                 catch (Exception exception)
                                 {
@@ -235,6 +216,7 @@ namespace Queue.Operator
                         stateTextBlock.Text = string.Empty;
                         stateTextBlock.BackColor = Color.White;
                         parametersGridView.Rows.Clear();
+                        additionalServicesGridView.Rows.Clear();
 
                         versionLabel.Text = string.Empty;
 
@@ -856,12 +838,42 @@ namespace Queue.Operator
 
         #endregion buttons
 
+        #region additional services
+
         private void addAdditionalServiceButton_Click(object sender, EventArgs e)
         {
-            using (var f = new EditClientRequestAdditionalServiceForm(channelBuilder, currentUser))
+            if (currentClientRequestPlan.ClientRequest != null)
+            {
+                var clientRequest = currentClientRequestPlan.ClientRequest;
+
+                using (var f = new EditClientRequestAdditionalServiceForm(channelBuilder, currentUser, clientRequest.Id))
+                {
+                    f.Saved += (s, eventArgs) =>
+                    {
+                        additionalServices.Add(f.ClientRequestAdditionalService);
+                        f.Close();
+                    };
+
+                    f.ShowDialog();
+                }
+            }
+        }
+
+        private void additionalServicesGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var currentRow = additionalServicesGridView.CurrentRow;
+            if (currentRow == null)
+            {
+                return;
+            }
+
+            ClientRequestAdditionalService additionalService = additionalServices[currentRow.Index];
+
+            using (var f = new EditClientRequestAdditionalServiceForm(channelBuilder, currentUser, null, additionalService.Id))
             {
                 f.Saved += (s, eventArgs) =>
                 {
+                    additionalService.Update(f.ClientRequestAdditionalService);
                     f.Close();
                 };
 
@@ -869,8 +881,45 @@ namespace Queue.Operator
             }
         }
 
-        private void additionalServicesGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        private async void additionalServicesGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
+            var currentRow = additionalServicesGridView.CurrentRow;
+            if (currentRow == null)
+            {
+                return;
+            }
+
+            if (MessageBox.Show("Вы действительно хотите удалить дополнительную услугу?",
+                "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                var additionalService = additionalServices[currentRow.Index];
+
+                using (var channel = channelManager.CreateChannel())
+                {
+                    try
+                    {
+                        await taskPool.AddTask(channel.Service.DeleteClientRequestAdditionalService(additionalService.Id));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                }
+            }
+            else
+            {
+                e.Cancel = true;
+            }
         }
+
+        #endregion additional services
     }
 }

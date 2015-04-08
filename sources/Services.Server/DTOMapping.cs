@@ -138,6 +138,7 @@ namespace Queue.Services.Server
             Mapper.AddProfile(new ServiceDTOProfile());
             Mapper.CreateMap<ClientRequest, DTO.ClientRequest>();
             Mapper.CreateMap<ClientRequestParameter, DTO.ClientRequestParameter>();
+            Mapper.CreateMap<ClientRequestAdditionalService, DTO.ClientRequestAdditionalService>();
             Mapper.CreateMap<ClientRequestPlan, DTO.ClientRequestPlan>();
         }
     }

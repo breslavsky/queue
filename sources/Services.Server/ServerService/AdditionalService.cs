@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Junte.Data.NHibernate;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -12,6 +13,20 @@ namespace Queue.Services.Server
 {
     public partial class ServerService
     {
+        public async Task<DTO.IdentifiedEntityLink[]> GetAdditionalServiceLinks()
+        {
+            return await Task.Run(() =>
+            {
+                using (var session = sessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    var additionalServices = session.CreateCriteria<AdditionalService>()
+                        .List<IdentifiedEntity>();
+                    return Mapper.Map<IList<IdentifiedEntity>, DTO.IdentifiedEntityLink[]>(additionalServices);
+                }
+            });
+        }
+
         public async Task<DTO.AdditionalService[]> GetAdditionalServices()
         {
             return await Task.Run(() =>

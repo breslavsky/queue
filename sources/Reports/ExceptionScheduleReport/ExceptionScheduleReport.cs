@@ -134,7 +134,7 @@ namespace Queue.Reports.ExceptionScheduleReport
                 IsInterruption = source.IsInterruption;
                 InterruptionStartTime = source.InterruptionStartTime;
                 InterruptionFinishTime = source.InterruptionFinishTime;
-                ClientInterval = source.ClientInterval;
+                ClientInterval = source.LiveClientInterval;
                 Intersection = source.Intersection;
                 MaxClientRequests = source.MaxClientRequests;
             }

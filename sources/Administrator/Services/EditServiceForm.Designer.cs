@@ -152,7 +152,7 @@
             this.exceptionScheduleControl.Location = new System.Drawing.Point(10, 65);
             this.exceptionScheduleControl.Name = "exceptionScheduleControl";
             this.exceptionScheduleControl.Schedule = null;
-            this.exceptionScheduleControl.Size = new System.Drawing.Size(790, 310);
+            this.exceptionScheduleControl.Size = new System.Drawing.Size(790, 320);
             this.exceptionScheduleControl.TabIndex = 2;
             // 
             // commonTabPage
@@ -659,7 +659,7 @@
             this.weekdayScheduleControl.Location = new System.Drawing.Point(5, 45);
             this.weekdayScheduleControl.Name = "weekdayScheduleControl";
             this.weekdayScheduleControl.Schedule = null;
-            this.weekdayScheduleControl.Size = new System.Drawing.Size(790, 310);
+            this.weekdayScheduleControl.Size = new System.Drawing.Size(790, 320);
             this.weekdayScheduleControl.TabIndex = 0;
             // 
             // tuesdayTabPage

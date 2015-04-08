@@ -1,13 +1,11 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
-using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
-using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Operator
 {
@@ -18,6 +16,8 @@ namespace Queue.Operator
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;
         private User currentUser;
+        private ClientRequest clientRequest;
+        private Guid clientRequestId;
         private ClientRequestAdditionalService clientRequestAdditionalService;
         private Guid clientRequestAdditionalServiceId;
         private TaskPool taskPool;
@@ -34,7 +34,8 @@ namespace Queue.Operator
             }
         }
 
-        public EditClientRequestAdditionalServiceForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? clientRequestAdditionalServiceId = null)
+        public EditClientRequestAdditionalServiceForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser,
+            Guid? clientRequestId, Guid? clientRequestAdditionalServiceId = null)
             : base()
         {
             InitializeComponent();
@@ -42,6 +43,8 @@ namespace Queue.Operator
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
+            this.clientRequestId = clientRequestId.HasValue
+                ? clientRequestId.Value : Guid.Empty;
             this.clientRequestAdditionalServiceId = clientRequestAdditionalServiceId.HasValue ?
                 clientRequestAdditionalServiceId.Value : Guid.Empty;
 
@@ -63,7 +66,7 @@ namespace Queue.Operator
             Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
-        private void EditClientRequestAdditionalServiceForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void EditAdditionalServiceForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             taskPool.Cancel();
 
@@ -81,7 +84,7 @@ namespace Queue.Operator
             }
         }
 
-        private async void EditClientRequestAdditionalServiceForm_Load(object sender, EventArgs e)
+        private async void EditAdditionalServiceForm_Load(object sender, EventArgs e)
         {
             using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
@@ -89,7 +92,12 @@ namespace Queue.Operator
                 {
                     Enabled = false;
 
-                    additionalServiceControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(UserRole.Operator)));
+                    if (clientRequestId != Guid.Empty)
+                    {
+                        clientRequest = await taskPool.AddTask(channel.Service.GetClientRequest(clientRequestId));
+                    }
+
+                    additionalServiceControl.Initialize(await taskPool.AddTask(channel.Service.GetAdditionalServiceLinks()));
 
                     if (clientRequestAdditionalServiceId != Guid.Empty)
                     {
@@ -99,6 +107,7 @@ namespace Queue.Operator
                     {
                         ClientRequestAdditionalService = new ClientRequestAdditionalService()
                         {
+                            ClientRequest = clientRequest,
                             Quantity = 1
                         };
                     }

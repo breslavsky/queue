@@ -6,16 +6,37 @@ namespace Queue.Services.DTO
     [DataContract]
     public class OperatorInterruption : IdentifiedEntity
     {
-        [DataMember]
-        public Operator Operator { get; set; }
+        private Operator queueOperator;
+        private DayOfWeek dayOfWeek;
+        private TimeSpan startTime;
+        private TimeSpan finishTime;
 
         [DataMember]
-        public DayOfWeek DayOfWeek { get; set; }
+        public Operator Operator
+        {
+            get { return queueOperator; }
+            set { SetProperty(ref queueOperator, value); }
+        }
 
         [DataMember]
-        public TimeSpan StartTime { get; set; }
+        public DayOfWeek DayOfWeek
+        {
+            get { return dayOfWeek; }
+            set { SetProperty(ref dayOfWeek, value); }
+        }
 
         [DataMember]
-        public TimeSpan FinishTime { get; set; }
+        public TimeSpan StartTime
+        {
+            get { return startTime; }
+            set { SetProperty(ref startTime, value); }
+        }
+
+        [DataMember]
+        public TimeSpan FinishTime
+        {
+            get { return finishTime; }
+            set { SetProperty(ref finishTime, value); }
+        }
     }
 }

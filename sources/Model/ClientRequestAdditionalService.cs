@@ -9,6 +9,14 @@ namespace Queue.Model
     {
         #region properties
 
+        [NotNull(Message = "Запрос клиента не указан")]
+        [ManyToOne(ClassType = typeof(ClientRequest), Column = "ClientRequestId", ForeignKey = "ClientRequestAdditionalServiceToClientRequestReference")]
+        public virtual ClientRequest ClientRequest { get; set; }
+
+        [NotNull(Message = "Оператор не указан")]
+        [ManyToOne(ClassType = typeof(Operator), Column = "OperatorId", ForeignKey = "ClientRequestAdditionalServiceToOperatorReference")]
+        public virtual Operator Operator { get; set; }
+
         [NotNull(Message = "Дополнительная услуга не указана")]
         [ManyToOne(ClassType = typeof(AdditionalService), Column = "AdditionalServiceId", ForeignKey = "ClientRequestAdditionalServiceToAdditionalServiceReference")]
         public virtual AdditionalService AdditionalService { get; set; }

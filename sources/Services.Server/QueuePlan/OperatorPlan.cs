@@ -56,7 +56,8 @@ namespace Queue.Services.Server
 
             if (!clientRequest.IsClosed)
             {
-                var clientInterval = TimeSpan.FromTicks(schedule.ClientInterval.Ticks * clientRequest.Subjects);
+                var clientInterval = TimeSpan.FromTicks(clientRequest.Type == ClientRequestType.Live
+                    ? schedule.LiveClientInterval.Ticks : schedule.EarlyClientInterval.Ticks * clientRequest.Subjects);
 
                 switch (clientRequest.State)
                 {
@@ -115,7 +116,7 @@ namespace Queue.Services.Server
                 reservedIntervals.Add(new TimeInterval(schedule.InterruptionStartTime, schedule.InterruptionFinishTime));
             }
 
-            var clientInterval = TimeSpan.FromTicks(schedule.ClientInterval.Ticks * subjects);
+            var clientInterval = TimeSpan.FromTicks(schedule.LiveClientInterval.Ticks * subjects);
 
             var renderStartTime = startTime;
 

@@ -438,7 +438,8 @@ namespace Queue.Database
                         {
                             DayOfWeek = d,
                             IsWorked = true,
-                            ClientInterval = TimeSpan.FromMinutes(10),
+                            LiveClientInterval = TimeSpan.FromMinutes(10),
+                            EarlyClientInterval = TimeSpan.FromMinutes(10),
                             StartTime = new TimeSpan(9, 0, 0),
                             InterruptionStartTime = new TimeSpan(12, 0, 0),
                             InterruptionFinishTime = new TimeSpan(13, 0, 0),

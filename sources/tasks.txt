@@ -9,3 +9,5 @@ if (!clientRequest.Equals(source))
 {
 	throw new FaultException("Текущий запрос клиента не соответствует запросу клиента для изминения");
 }
+
+e.Cancel = true;

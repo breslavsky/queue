@@ -16,9 +16,9 @@
         private void InitializeComponent()
         {
             this.exceptionTabPage = new System.Windows.Forms.TabPage();
-            this.exceptionScheduleControl = new Queue.Administrator.ScheduleControl();
             this.exceptionScheduleDatePicker = new System.Windows.Forms.DateTimePicker();
             this.exceptionScheduleCheckBox = new System.Windows.Forms.CheckBox();
+            this.exceptionScheduleControl = new Queue.Administrator.ScheduleControl();
             this.weekdayTabPage = new System.Windows.Forms.TabPage();
             this.weekdayTabControl = new System.Windows.Forms.TabControl();
             this.mondayTabPage = new System.Windows.Forms.TabPage();
@@ -50,14 +50,6 @@
             this.exceptionTabPage.Text = "Исключения в расписании";
             this.exceptionTabPage.UseVisualStyleBackColor = true;
             // 
-            // exceptionScheduleControl
-            // 
-            this.exceptionScheduleControl.Location = new System.Drawing.Point(15, 65);
-            this.exceptionScheduleControl.Name = "exceptionScheduleControl";
-            this.exceptionScheduleControl.Schedule = null;
-            this.exceptionScheduleControl.Size = new System.Drawing.Size(790, 310);
-            this.exceptionScheduleControl.TabIndex = 0;
-            // 
             // exceptionScheduleDatePicker
             // 
             this.exceptionScheduleDatePicker.Location = new System.Drawing.Point(15, 15);
@@ -79,6 +71,14 @@
             this.exceptionScheduleCheckBox.UseVisualStyleBackColor = true;
             this.exceptionScheduleCheckBox.CheckedChanged += new System.EventHandler(this.exceptionScheduleCheckBox_CheckedChanged);
             this.exceptionScheduleCheckBox.Click += new System.EventHandler(this.exceptionScheduleCheckBox_Click);
+            // 
+            // exceptionScheduleControl
+            // 
+            this.exceptionScheduleControl.Location = new System.Drawing.Point(15, 65);
+            this.exceptionScheduleControl.Name = "exceptionScheduleControl";
+            this.exceptionScheduleControl.Schedule = null;
+            this.exceptionScheduleControl.Size = new System.Drawing.Size(790, 320);
+            this.exceptionScheduleControl.TabIndex = 0;
             // 
             // weekdayTabPage
             // 
@@ -130,7 +130,7 @@
             this.weekdayScheduleControl.Location = new System.Drawing.Point(5, 5);
             this.weekdayScheduleControl.Name = "weekdayScheduleControl";
             this.weekdayScheduleControl.Schedule = null;
-            this.weekdayScheduleControl.Size = new System.Drawing.Size(790, 310);
+            this.weekdayScheduleControl.Size = new System.Drawing.Size(790, 325);
             this.weekdayScheduleControl.TabIndex = 0;
             // 
             // tuesdayTabPage

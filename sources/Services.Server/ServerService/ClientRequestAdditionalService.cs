@@ -85,6 +85,24 @@ namespace Queue.Services.Server
                         clientRequestAdditionalService = new ClientRequestAdditionalService();
                     }
 
+                    if (source.ClientRequest != null)
+                    {
+                        Guid clientRequestId = source.ClientRequest.Id;
+
+                        ClientRequest clientRequest = session.Get<ClientRequest>(clientRequestId);
+                        if (clientRequest == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientRequestId),
+                                string.Format("Запрос клиента [{0}] не найден", clientRequestId));
+                        }
+
+                        clientRequestAdditionalService.ClientRequest = clientRequest;
+                    }
+                    else
+                    {
+                        clientRequestAdditionalService.ClientRequest = null;
+                    }
+
                     if (source.AdditionalService != null)
                     {
                         Guid additionalServiceId = source.AdditionalService.Id;
@@ -103,6 +121,7 @@ namespace Queue.Services.Server
                         clientRequestAdditionalService.AdditionalService = null;
                     }
 
+                    clientRequestAdditionalService.Operator = currentUser as Operator;
                     clientRequestAdditionalService.Quantity = source.Quantity;
 
                     var errors = clientRequestAdditionalService.Validate();
@@ -128,7 +147,7 @@ namespace Queue.Services.Server
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    var clientRequestAdditionalService = session.Get<AdditionalService>(clientRequestAdditionalServiceId);
+                    var clientRequestAdditionalService = session.Get<ClientRequestAdditionalService>(clientRequestAdditionalServiceId);
                     if (clientRequestAdditionalService == null)
                     {
                         throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientRequestAdditionalServiceId),

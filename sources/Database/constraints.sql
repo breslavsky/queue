@@ -136,8 +136,20 @@ ALTER TABLE _operator_interruption ADD CONSTRAINT OperatorInterruptionToOperator
 REFERENCES _user (Id)
 ON DELETE CASCADE;
 -- SEPARATOR
-ALTER TABLE client_request_additional_service DROP CONSTRAINT ClientRequestAdditionalServiceToAdditionalServiceReference;
+ALTER TABLE _client_request_additional_service DROP CONSTRAINT ClientRequestAdditionalServiceToAdditionalServiceReference;
 -- SEPARATOR
-ALTER TABLE client_request_additional_service ADD CONSTRAINT ClientRequestAdditionalServiceToAdditionalServiceReference FOREIGN KEY(AdditionalServiceId)
+ALTER TABLE _client_request_additional_service ADD CONSTRAINT ClientRequestAdditionalServiceToAdditionalServiceReference FOREIGN KEY(AdditionalServiceId)
 REFERENCES _additional_service (Id)
+ON DELETE CASCADE;
+-- SEPARATOR
+ALTER TABLE _client_request_additional_service DROP CONSTRAINT ClientRequestAdditionalServiceToOperatorReference;
+-- SEPARATOR
+ALTER TABLE _client_request_additional_service ADD CONSTRAINT ClientRequestAdditionalServiceToOperatorReference FOREIGN KEY(OperatorId)
+REFERENCES _user (Id)
+ON DELETE CASCADE;
+-- SEPARATOR
+ALTER TABLE _client_request_additional_service DROP CONSTRAINT ClientRequestAdditionalServiceToClientRequestReference;
+-- SEPARATOR
+ALTER TABLE _client_request_additional_service ADD CONSTRAINT ClientRequestAdditionalServiceToClientRequestReference FOREIGN KEY(ClientRequestId)
+REFERENCES _client_request (Id)
 ON DELETE CASCADE;

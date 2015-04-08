@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.saveButton = new System.Windows.Forms.Button();
             this.addServiceRenderingButton = new System.Windows.Forms.Button();
             this.serviceRenderingsGridView = new System.Windows.Forms.DataGridView();
@@ -39,7 +39,10 @@
             this.priorityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.maxClientRequestsMeasureLabel = new System.Windows.Forms.Label();
             this.earlyGroupBox = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.earlyClientIntervalUpDown = new System.Windows.Forms.NumericUpDown();
             this.earlyTimeLabel = new System.Windows.Forms.Label();
+            this.minLabel3 = new System.Windows.Forms.Label();
             this.earlyStartTimeTextBox = new System.Windows.Forms.MaskedTextBox();
             this.earlyFinishTimeTextBox = new System.Windows.Forms.MaskedTextBox();
             this.earlyReservationLabel = new System.Windows.Forms.Label();
@@ -54,8 +57,8 @@
             this.interruptionPanel = new System.Windows.Forms.Panel();
             this.interruptionStartTimeTextBox = new System.Windows.Forms.MaskedTextBox();
             this.interruptionFinishTimeTextBox = new System.Windows.Forms.MaskedTextBox();
-            this.clientIntervalLabel = new System.Windows.Forms.Label();
-            this.clientIntervalUpDown = new System.Windows.Forms.NumericUpDown();
+            this.liveClientIntervalLabel = new System.Windows.Forms.Label();
+            this.liveClientIntervalUpDown = new System.Windows.Forms.NumericUpDown();
             this.minLabel1 = new System.Windows.Forms.Label();
             this.intersectionLabel = new System.Windows.Forms.Label();
             this.intersectionUpDown = new System.Windows.Forms.NumericUpDown();
@@ -66,17 +69,18 @@
             this.serviceRenderingsLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.serviceRenderingsGridView)).BeginInit();
             this.earlyGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.earlyClientIntervalUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.earlyReservationUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxClientRequestsUpDown)).BeginInit();
             this.interruptionPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.clientIntervalUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.liveClientIntervalUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.intersectionUpDown)).BeginInit();
             this.schedulePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(135, 265);
+            this.saveButton.Location = new System.Drawing.Point(135, 285);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 1;
@@ -98,14 +102,14 @@
             this.serviceRenderingsGridView.AllowUserToAddRows = false;
             this.serviceRenderingsGridView.AllowUserToResizeColumns = false;
             this.serviceRenderingsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.serviceRenderingsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.serviceRenderingsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.serviceRenderingsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.serviceRenderingsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.operatorColumn,
@@ -151,8 +155,8 @@
             // 
             // priorityColumn
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.priorityColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.priorityColumn.DefaultCellStyle = dataGridViewCellStyle6;
             this.priorityColumn.HeaderText = "Приоритет";
             this.priorityColumn.Name = "priorityColumn";
             this.priorityColumn.ReadOnly = true;
@@ -169,7 +173,10 @@
             // 
             // earlyGroupBox
             // 
+            this.earlyGroupBox.Controls.Add(this.label1);
+            this.earlyGroupBox.Controls.Add(this.earlyClientIntervalUpDown);
             this.earlyGroupBox.Controls.Add(this.earlyTimeLabel);
+            this.earlyGroupBox.Controls.Add(this.minLabel3);
             this.earlyGroupBox.Controls.Add(this.earlyStartTimeTextBox);
             this.earlyGroupBox.Controls.Add(this.earlyFinishTimeTextBox);
             this.earlyGroupBox.Controls.Add(this.earlyReservationLabel);
@@ -178,19 +185,50 @@
             this.earlyGroupBox.Enabled = false;
             this.earlyGroupBox.Location = new System.Drawing.Point(10, 155);
             this.earlyGroupBox.Name = "earlyGroupBox";
-            this.earlyGroupBox.Size = new System.Drawing.Size(195, 75);
+            this.earlyGroupBox.Size = new System.Drawing.Size(195, 95);
             this.earlyGroupBox.TabIndex = 0;
             this.earlyGroupBox.TabStop = false;
             this.earlyGroupBox.Text = "По записи";
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(5, 65);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(105, 25);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Время оказания";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // earlyClientIntervalUpDown
+            // 
+            this.earlyClientIntervalUpDown.Location = new System.Drawing.Point(115, 70);
+            this.earlyClientIntervalUpDown.Maximum = new decimal(new int[] {
+            600,
+            0,
+            0,
+            0});
+            this.earlyClientIntervalUpDown.Name = "earlyClientIntervalUpDown";
+            this.earlyClientIntervalUpDown.Size = new System.Drawing.Size(35, 20);
+            this.earlyClientIntervalUpDown.TabIndex = 4;
+            this.earlyClientIntervalUpDown.Leave += new System.EventHandler(this.earlyClientIntervalUpDown_Leave);
             // 
             // earlyTimeLabel
             // 
             this.earlyTimeLabel.Location = new System.Drawing.Point(5, 15);
             this.earlyTimeLabel.Name = "earlyTimeLabel";
-            this.earlyTimeLabel.Size = new System.Drawing.Size(105, 23);
+            this.earlyTimeLabel.Size = new System.Drawing.Size(105, 25);
             this.earlyTimeLabel.TabIndex = 0;
             this.earlyTimeLabel.Text = "Время записи";
             this.earlyTimeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // minLabel3
+            // 
+            this.minLabel3.AutoSize = true;
+            this.minLabel3.Location = new System.Drawing.Point(155, 75);
+            this.minLabel3.Name = "minLabel3";
+            this.minLabel3.Size = new System.Drawing.Size(30, 13);
+            this.minLabel3.TabIndex = 5;
+            this.minLabel3.Text = "мин.";
             // 
             // earlyStartTimeTextBox
             // 
@@ -218,7 +256,7 @@
             // 
             this.earlyReservationLabel.Location = new System.Drawing.Point(5, 40);
             this.earlyReservationLabel.Name = "earlyReservationLabel";
-            this.earlyReservationLabel.Size = new System.Drawing.Size(105, 23);
+            this.earlyReservationLabel.Size = new System.Drawing.Size(105, 25);
             this.earlyReservationLabel.TabIndex = 0;
             this.earlyReservationLabel.Text = "Кол-во запросов";
             this.earlyReservationLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -254,7 +292,7 @@
             // 
             this.timeLabel.Location = new System.Drawing.Point(10, 0);
             this.timeLabel.Name = "timeLabel";
-            this.timeLabel.Size = new System.Drawing.Size(115, 23);
+            this.timeLabel.Size = new System.Drawing.Size(115, 25);
             this.timeLabel.TabIndex = 0;
             this.timeLabel.Text = "Время оказания";
             this.timeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -274,11 +312,12 @@
             // 
             // maxClientRequestsLabel
             // 
-            this.maxClientRequestsLabel.Location = new System.Drawing.Point(10, 110);
+            this.maxClientRequestsLabel.Location = new System.Drawing.Point(10, 100);
             this.maxClientRequestsLabel.Name = "maxClientRequestsLabel";
-            this.maxClientRequestsLabel.Size = new System.Drawing.Size(115, 13);
+            this.maxClientRequestsLabel.Size = new System.Drawing.Size(115, 25);
             this.maxClientRequestsLabel.TabIndex = 0;
             this.maxClientRequestsLabel.Text = "Запросов на клиента";
+            this.maxClientRequestsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // startTimeTextBox
             // 
@@ -304,9 +343,9 @@
             // 
             // isInterruptionCheckBox
             // 
-            this.isInterruptionCheckBox.Location = new System.Drawing.Point(15, 35);
+            this.isInterruptionCheckBox.Location = new System.Drawing.Point(15, 25);
             this.isInterruptionCheckBox.Name = "isInterruptionCheckBox";
-            this.isInterruptionCheckBox.Size = new System.Drawing.Size(110, 17);
+            this.isInterruptionCheckBox.Size = new System.Drawing.Size(110, 25);
             this.isInterruptionCheckBox.TabIndex = 0;
             this.isInterruptionCheckBox.Tag = "1";
             this.isInterruptionCheckBox.Text = "Перерыв";
@@ -347,27 +386,27 @@
             this.interruptionFinishTimeTextBox.ValidatingType = typeof(System.DateTime);
             this.interruptionFinishTimeTextBox.Leave += new System.EventHandler(this.interruptionFinishTimeTextBox_Leave);
             // 
-            // clientIntervalLabel
+            // liveClientIntervalLabel
             // 
-            this.clientIntervalLabel.Location = new System.Drawing.Point(10, 60);
-            this.clientIntervalLabel.Name = "clientIntervalLabel";
-            this.clientIntervalLabel.Size = new System.Drawing.Size(115, 13);
-            this.clientIntervalLabel.TabIndex = 0;
-            this.clientIntervalLabel.Text = "Время оказания";
-            this.clientIntervalLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.liveClientIntervalLabel.Location = new System.Drawing.Point(10, 50);
+            this.liveClientIntervalLabel.Name = "liveClientIntervalLabel";
+            this.liveClientIntervalLabel.Size = new System.Drawing.Size(115, 25);
+            this.liveClientIntervalLabel.TabIndex = 0;
+            this.liveClientIntervalLabel.Text = "Время оказания";
+            this.liveClientIntervalLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // clientIntervalUpDown
+            // liveClientIntervalUpDown
             // 
-            this.clientIntervalUpDown.Location = new System.Drawing.Point(130, 55);
-            this.clientIntervalUpDown.Maximum = new decimal(new int[] {
+            this.liveClientIntervalUpDown.Location = new System.Drawing.Point(130, 55);
+            this.liveClientIntervalUpDown.Maximum = new decimal(new int[] {
             600,
             0,
             0,
             0});
-            this.clientIntervalUpDown.Name = "clientIntervalUpDown";
-            this.clientIntervalUpDown.Size = new System.Drawing.Size(40, 20);
-            this.clientIntervalUpDown.TabIndex = 0;
-            this.clientIntervalUpDown.Leave += new System.EventHandler(this.clientIntervalUpDown_Leave);
+            this.liveClientIntervalUpDown.Name = "liveClientIntervalUpDown";
+            this.liveClientIntervalUpDown.Size = new System.Drawing.Size(40, 20);
+            this.liveClientIntervalUpDown.TabIndex = 0;
+            this.liveClientIntervalUpDown.Leave += new System.EventHandler(this.liveClientIntervalUpDown_Leave);
             // 
             // minLabel1
             // 
@@ -380,9 +419,9 @@
             // 
             // intersectionLabel
             // 
-            this.intersectionLabel.Location = new System.Drawing.Point(10, 80);
+            this.intersectionLabel.Location = new System.Drawing.Point(10, 75);
             this.intersectionLabel.Name = "intersectionLabel";
-            this.intersectionLabel.Size = new System.Drawing.Size(115, 18);
+            this.intersectionLabel.Size = new System.Drawing.Size(115, 25);
             this.intersectionLabel.TabIndex = 0;
             this.intersectionLabel.Text = "Время наложения";
             this.intersectionLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -427,8 +466,8 @@
             this.schedulePanel.Controls.Add(this.finishTimeTextBox);
             this.schedulePanel.Controls.Add(this.isInterruptionCheckBox);
             this.schedulePanel.Controls.Add(this.interruptionPanel);
-            this.schedulePanel.Controls.Add(this.clientIntervalLabel);
-            this.schedulePanel.Controls.Add(this.clientIntervalUpDown);
+            this.schedulePanel.Controls.Add(this.liveClientIntervalLabel);
+            this.schedulePanel.Controls.Add(this.liveClientIntervalUpDown);
             this.schedulePanel.Controls.Add(this.minLabel1);
             this.schedulePanel.Controls.Add(this.intersectionLabel);
             this.schedulePanel.Controls.Add(this.intersectionUpDown);
@@ -443,7 +482,7 @@
             this.schedulePanel.Controls.Add(this.addServiceRenderingButton);
             this.schedulePanel.Location = new System.Drawing.Point(5, 25);
             this.schedulePanel.Name = "schedulePanel";
-            this.schedulePanel.Size = new System.Drawing.Size(780, 235);
+            this.schedulePanel.Size = new System.Drawing.Size(780, 255);
             this.schedulePanel.TabIndex = 2;
             // 
             // renderingModeControl
@@ -472,15 +511,16 @@
             this.Controls.Add(this.schedulePanel);
             this.Controls.Add(this.saveButton);
             this.Name = "ScheduleControl";
-            this.Size = new System.Drawing.Size(790, 310);
+            this.Size = new System.Drawing.Size(790, 320);
             ((System.ComponentModel.ISupportInitialize)(this.serviceRenderingsGridView)).EndInit();
             this.earlyGroupBox.ResumeLayout(false);
             this.earlyGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.earlyClientIntervalUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.earlyReservationUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxClientRequestsUpDown)).EndInit();
             this.interruptionPanel.ResumeLayout(false);
             this.interruptionPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.clientIntervalUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.liveClientIntervalUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.intersectionUpDown)).EndInit();
             this.schedulePanel.ResumeLayout(false);
             this.schedulePanel.PerformLayout();
@@ -492,14 +532,14 @@
 
         private System.Windows.Forms.MaskedTextBox interruptionFinishTimeTextBox;
         private System.Windows.Forms.MaskedTextBox interruptionStartTimeTextBox;
-        private System.Windows.Forms.NumericUpDown clientIntervalUpDown;
+        private System.Windows.Forms.NumericUpDown liveClientIntervalUpDown;
         private System.Windows.Forms.NumericUpDown earlyReservationUpDown;
         private System.Windows.Forms.CheckBox isInterruptionCheckBox;
         private System.Windows.Forms.Label earlyReservationLabel;
         private System.Windows.Forms.MaskedTextBox startTimeTextBox;
         private System.Windows.Forms.CheckBox isWorkedCheckBox;
         private System.Windows.Forms.MaskedTextBox finishTimeTextBox;
-        private System.Windows.Forms.Label clientIntervalLabel;
+        private System.Windows.Forms.Label liveClientIntervalLabel;
         private System.Windows.Forms.Label intersectionLabel;
         private System.Windows.Forms.NumericUpDown intersectionUpDown;
         private System.Windows.Forms.Label minLabel1;
@@ -524,5 +564,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn priorityColumn;
         private UI.WinForms.EnumItemControl renderingModeControl;
         private System.Windows.Forms.Label serviceRenderingsLabel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown earlyClientIntervalUpDown;
+        private System.Windows.Forms.Label minLabel3;
     }
 }

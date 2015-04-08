@@ -429,7 +429,8 @@ namespace Queue.Services.Server
 
             report.Add(string.Format("Поиск интервалов времени с {0:hh\\:mm\\:ss}", startTime));
 
-            var clientInterval = TimeSpan.FromTicks(schedule.ClientInterval.Ticks * subjects);
+            var clientInterval = TimeSpan.FromTicks(requestType == ClientRequestType.Live
+                ? schedule.LiveClientInterval.Ticks : schedule.EarlyClientInterval.Ticks * subjects);
 
             int openedRequests = 0;
 

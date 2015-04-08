@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Junte.Data.NHibernate;
 using NHibernate.Criterion;
 using Queue.Model;
 using Queue.Model.Common;
@@ -93,13 +92,14 @@ namespace Queue.Services.Server
                             IsInterruption = template.IsInterruption,
                             InterruptionStartTime = template.InterruptionStartTime,
                             InterruptionFinishTime = template.InterruptionFinishTime,
-                            ClientInterval = template.ClientInterval,
+                            LiveClientInterval = template.LiveClientInterval,
                             Intersection = template.Intersection,
                             MaxClientRequests = template.MaxClientRequests,
                             RenderingMode = template.RenderingMode,
                             EarlyStartTime = template.EarlyStartTime,
                             EarlyFinishTime = template.EarlyFinishTime,
-                            EarlyReservation = template.EarlyReservation
+                            EarlyReservation = template.EarlyReservation,
+                            EarlyClientInterval = template.EarlyClientInterval
                         };
                         session.Save(schedule);
 
@@ -205,13 +205,14 @@ namespace Queue.Services.Server
                             IsInterruption = template.IsInterruption,
                             InterruptionStartTime = template.InterruptionStartTime,
                             InterruptionFinishTime = template.InterruptionFinishTime,
-                            ClientInterval = template.ClientInterval,
+                            LiveClientInterval = template.LiveClientInterval,
                             Intersection = template.Intersection,
                             MaxClientRequests = template.MaxClientRequests,
                             RenderingMode = template.RenderingMode,
                             EarlyStartTime = template.EarlyStartTime,
                             EarlyFinishTime = template.EarlyFinishTime,
-                            EarlyReservation = template.EarlyReservation
+                            EarlyReservation = template.EarlyReservation,
+                            EarlyClientInterval = template.EarlyClientInterval
                         };
                         session.Save(schedule);
 
@@ -336,13 +337,14 @@ namespace Queue.Services.Server
                             IsInterruption = template.IsInterruption,
                             InterruptionStartTime = template.InterruptionStartTime,
                             InterruptionFinishTime = template.InterruptionFinishTime,
-                            ClientInterval = template.ClientInterval,
+                            LiveClientInterval = template.LiveClientInterval,
                             Intersection = template.Intersection,
                             MaxClientRequests = template.MaxClientRequests,
                             RenderingMode = template.RenderingMode,
                             EarlyStartTime = template.EarlyStartTime,
                             EarlyFinishTime = template.EarlyFinishTime,
-                            EarlyReservation = template.EarlyReservation
+                            EarlyReservation = template.EarlyReservation,
+                            EarlyClientInterval = template.EarlyClientInterval
                         };
                         session.Save(schedule);
 
@@ -419,13 +421,14 @@ namespace Queue.Services.Server
                     schedule.IsInterruption = source.IsInterruption;
                     schedule.InterruptionStartTime = source.InterruptionStartTime;
                     schedule.InterruptionFinishTime = source.InterruptionFinishTime;
-                    schedule.ClientInterval = source.ClientInterval;
+                    schedule.LiveClientInterval = source.LiveClientInterval;
                     schedule.Intersection = source.Intersection;
                     schedule.MaxClientRequests = source.MaxClientRequests;
                     schedule.RenderingMode = source.RenderingMode;
                     schedule.EarlyStartTime = source.EarlyStartTime;
                     schedule.EarlyFinishTime = source.EarlyFinishTime;
                     schedule.EarlyReservation = source.EarlyReservation;
+                    schedule.EarlyClientInterval = source.EarlyClientInterval;
 
                     var errors = schedule.Validate();
                     if (errors.Length > 0)

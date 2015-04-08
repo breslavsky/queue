@@ -19,7 +19,7 @@ namespace Queue.Services.DTO
             IsInterruption = true;
             InterruptionStartTime = new TimeSpan(12, 0, 0);
             InterruptionFinishTime = new TimeSpan(13, 0, 0);
-            ClientInterval = new TimeSpan(0, 10, 0);
+            LiveClientInterval = new TimeSpan(0, 10, 0);
             Intersection = TimeSpan.Zero;
             MaxClientRequests = byte.MaxValue;
             RenderingMode = ServiceRenderingMode.AllRequests;
@@ -47,7 +47,10 @@ namespace Queue.Services.DTO
         public TimeSpan InterruptionFinishTime { get; set; }
 
         [DataMember]
-        public TimeSpan ClientInterval { get; set; }
+        public TimeSpan LiveClientInterval { get; set; }
+
+        [DataMember]
+        public TimeSpan EarlyClientInterval { get; set; }
 
         [DataMember]
         public TimeSpan Intersection { get; set; }

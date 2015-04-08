@@ -32,7 +32,7 @@ namespace Queue.Services.DTO
 
         public override string ToString()
         {
-            return Name;
+            return name;
         }
     }
 }

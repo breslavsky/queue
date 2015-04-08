@@ -210,7 +210,7 @@ namespace Queue.Services.Server
                                     case ClientRequestState.Rendering:
                                         message = string.Format("Начало обслуживания клиента [{0}] у оператора [{1}]", client, queueOperator);
                                         var schedule = todayQueuePlan.GetServiceSchedule(clientRequest.Service);
-                                        clientRequest.Rendering(schedule.ClientInterval);
+                                        clientRequest.Rendering(schedule.LiveClientInterval);
                                         break;
 
                                     default:

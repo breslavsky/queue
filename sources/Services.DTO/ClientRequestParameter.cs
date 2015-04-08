@@ -5,15 +5,26 @@ namespace Queue.Services.DTO
     [DataContract]
     public class ClientRequestParameter : IdentifiedEntity
     {
-        [DataMember]
-        public string Name { get; set; }
+        private string name;
+        private string value;
 
         [DataMember]
-        public string Value { get; set; }
+        public string Name
+        {
+            get { return name; }
+            set { SetProperty(ref name, value); }
+        }
+
+        [DataMember]
+        public string Value
+        {
+            get { return value; }
+            set { SetProperty(ref value, value); }
+        }
 
         public override string ToString()
         {
-            return string.Format("{0} {1}", Name, Value);
+            return string.Format("{0} {1}", name, value);
         }
     }
 }

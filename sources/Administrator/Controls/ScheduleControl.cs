@@ -46,13 +46,14 @@ namespace Queue.Administrator
                     isInterruptionCheckBox.Checked = schedule.IsInterruption;
                     interruptionStartTimeTextBox.Text = schedule.InterruptionStartTime.ToString("hh\\:mm");
                     interruptionFinishTimeTextBox.Text = schedule.InterruptionFinishTime.ToString("hh\\:mm");
-                    clientIntervalUpDown.Value = (decimal)schedule.ClientInterval.TotalMinutes;
+                    liveClientIntervalUpDown.Value = (decimal)schedule.LiveClientInterval.TotalMinutes;
                     intersectionUpDown.Value = (decimal)schedule.Intersection.TotalMinutes;
                     maxClientRequestsUpDown.Value = schedule.MaxClientRequests;
                     renderingModeControl.Select<ServiceRenderingMode>(schedule.RenderingMode);
                     earlyStartTimeTextBox.Text = schedule.EarlyStartTime.ToString("hh\\:mm");
                     earlyFinishTimeTextBox.Text = schedule.FinishTime.ToString("hh\\:mm");
                     earlyReservationUpDown.Value = schedule.EarlyReservation;
+                    earlyClientIntervalUpDown.Value = (decimal)schedule.EarlyClientInterval.TotalMinutes;
 
                     RenderingModeUpdate();
 
@@ -267,9 +268,9 @@ namespace Queue.Administrator
             }
         }
 
-        private void clientIntervalUpDown_Leave(object sender, EventArgs e)
+        private void liveClientIntervalUpDown_Leave(object sender, EventArgs e)
         {
-            schedule.ClientInterval = TimeSpan.FromMinutes((double)clientIntervalUpDown.Value);
+            schedule.LiveClientInterval = TimeSpan.FromMinutes((double)liveClientIntervalUpDown.Value);
         }
 
         private void intersectionUpDown_Leave(object sender, EventArgs e)
@@ -330,6 +331,11 @@ namespace Queue.Administrator
         private void earlyReservationUpDown_Leave(object sender, EventArgs e)
         {
             schedule.EarlyReservation = (int)earlyReservationUpDown.Value;
+        }
+
+        private void earlyClientIntervalUpDown_Leave(object sender, EventArgs e)
+        {
+            schedule.EarlyClientInterval = TimeSpan.FromMinutes((double)earlyClientIntervalUpDown.Value);
         }
 
         #endregion bindings

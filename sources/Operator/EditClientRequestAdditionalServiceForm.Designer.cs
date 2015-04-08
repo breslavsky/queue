@@ -101,8 +101,8 @@
             this.MinimumSize = new System.Drawing.Size(100, 130);
             this.Name = "EditClientRequestAdditionalServiceForm";
             this.Text = "Редактирование дополнительной услуги запроса клиента";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EditClientRequestAdditionalServiceForm_FormClosed);
-            this.Load += new System.EventHandler(this.EditClientRequestAdditionalServiceForm_Load);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EditAdditionalServiceForm_FormClosed);
+            this.Load += new System.EventHandler(this.EditAdditionalServiceForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.quantityUpDown)).EndInit();
             this.ResumeLayout(false);
 

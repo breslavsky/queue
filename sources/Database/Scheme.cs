@@ -24,7 +24,9 @@ namespace Queue.Database
             {4, Scheme._004},
             {5, Scheme._005},
             {6, Scheme._006},
-            {7, Scheme._007}
+            {7, Scheme._007},
+            {8, Scheme._008},
+            {9, Scheme._009}
         };
     }
 }

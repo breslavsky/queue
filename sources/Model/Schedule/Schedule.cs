@@ -31,7 +31,10 @@ namespace Queue.Model
         public virtual TimeSpan InterruptionFinishTime { get; set; }
 
         [Property]
-        public virtual TimeSpan ClientInterval { get; set; }
+        public virtual TimeSpan LiveClientInterval { get; set; }
+
+        [Property]
+        public virtual TimeSpan EarlyClientInterval { get; set; }
 
         [Property]
         public virtual TimeSpan Intersection { get; set; }
@@ -67,9 +70,14 @@ namespace Queue.Model
                 result.Add(new ValidationError("Время начала не может быть больше времени окончания оказания услуги"));
             }
 
-            if (ClientInterval <= TimeSpan.Zero)
+            if (LiveClientInterval <= TimeSpan.Zero)
             {
-                result.Add(new ValidationError("Время оказания услуги не может нулевым"));
+                result.Add(new ValidationError("Время оказания услуги в живой очереди не может нулевым"));
+            }
+
+            if (EarlyClientInterval <= TimeSpan.Zero)
+            {
+                result.Add(new ValidationError("Время оказания услуги по записи не может нулевым"));
             }
 
             if (IsInterruption)
