@@ -253,6 +253,12 @@
     <Compile Include="OperatorInterruptions\OperatorInterruptionsForm.Designer.cs">
       <DependentUpon>OperatorInterruptionsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Reports\AdditionalServiceRatingReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\AdditionalServiceRatingReportForm.Designer.cs">
+      <DependentUpon>AdditionalServiceRatingReportForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Schedule\CurrentScheduleForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -479,6 +485,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OperatorInterruptions\OperatorInterruptionsForm.resx">
       <DependentUpon>OperatorInterruptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\AdditionalServiceRatingReportForm.resx">
+      <DependentUpon>AdditionalServiceRatingReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Schedule\CurrentScheduleForm.resx">
       <DependentUpon>CurrentScheduleForm.cs</DependentUpon>

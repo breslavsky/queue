@@ -47,7 +47,9 @@
     <Compile Include="EventType.cs" />
     <Compile Include="PINUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\AdditionalServicesRatingReportSettings.cs" />
     <Compile Include="Reports\OperatorRatingReportSettings.cs" />
+    <Compile Include="Reports\RatingReportSettings.cs" />
     <Compile Include="Reports\ReportDetailLevel.cs" />
     <Compile Include="Reports\ServiceRatingReportSettings.cs" />
     <Compile Include="ServiceParameterType.cs" />

@@ -11,8 +11,8 @@ namespace Queue.Reports.ServiceRatingReport
 {
     internal class MonthDetailedReport : BaseDetailedReport<ServiceMonthRating>
     {
-        public MonthDetailedReport(Guid[] services, ServiceRatingReportSettings settings)
-            : base(services, settings)
+        public MonthDetailedReport(ServiceRatingReportSettings settings)
+            : base(settings)
         {
         }
 

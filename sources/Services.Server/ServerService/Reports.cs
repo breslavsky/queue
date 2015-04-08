@@ -1,6 +1,7 @@
 ﻿using NPOI.HSSF.UserModel;
 using Queue.Model.Common;
 using Queue.Reports;
+using Queue.Reports.AdditionalServicesRatingReport;
 using Queue.Reports.ClientRequestReport;
 using Queue.Reports.ExceptionScheduleReport;
 using Queue.Reports.OperatorRatingReport;
@@ -13,21 +14,30 @@ namespace Queue.Services.Server
 {
     public partial class ServerService
     {
-        public async Task<byte[]> GetServiceRatingReport(Guid[] services, ReportDetailLevel detailLavel, ServiceRatingReportSettings settings)
+        public async Task<byte[]> GetServiceRatingReport(ServiceRatingReportSettings settings)
         {
             return await Task.Run(() =>
             {
                 CheckPermission(UserRole.Administrator, AdministratorPermissions.Reports);
-                return GenerateReport(new ServiceRatingReport(services, detailLavel, settings));
+                return GenerateReport(new ServiceRatingReport(settings));
             });
         }
 
-        public async Task<byte[]> GetOperatorRatingReport(Guid[] operators, ReportDetailLevel detailLavel, OperatorRatingReportSettings settings)
+        public async Task<byte[]> GetOperatorRatingReport(OperatorRatingReportSettings settings)
         {
             return await Task.Run(() =>
             {
                 CheckPermission(UserRole.Administrator, AdministratorPermissions.Reports);
-                return GenerateReport(new OperatorRatingReport(operators, detailLavel, settings));
+                return GenerateReport(new OperatorRatingReport(settings));
+            });
+        }
+
+        public async Task<byte[]> GetAdditinalServicesRatingReport(AdditionalServicesRatingReportSettings settings)
+        {
+            return await Task.Run(() =>
+            {
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.Reports);
+                return GenerateReport(new AdditionalServiceRatingReport(settings));
             });
         }
 

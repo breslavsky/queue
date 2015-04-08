@@ -66,14 +66,8 @@ namespace Queue.Model
         [Property]
         public virtual TimeSpan RequestTime
         {
-            get
-            {
-                return requestTime;
-            }
-            set
-            {
-                WaitingStartTime = requestTime = value;
-            }
+            get { return requestTime; }
+            set { WaitingStartTime = requestTime = value; }
         }
 
         [Min(Value = 1, Message = "Количество объектов не может быть менее 1")]

@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator.Reports
 {
-    public partial class OperatorRatingReportForm : Queue.UI.WinForms.RichForm
+    public partial class AdditionalServiceRatingReportForm : Form
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
@@ -22,7 +22,7 @@ namespace Queue.Administrator.Reports
         private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
-        public OperatorRatingReportForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        public AdditionalServiceRatingReportForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
         {
             InitializeComponent();
 
@@ -52,9 +52,14 @@ namespace Queue.Administrator.Reports
             Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
-        private void OperatorRatingReportForm_Load(object sender, EventArgs e)
+        private void isFullCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            LoadOperators();
+            additionalServicesListBox.Enabled = !isFullCheckBox.Checked;
+        }
+
+        private void AdditionalServiceRatingReportForm_Load(object sender, EventArgs e)
+        {
+            LoadAdditionalServices();
 
             DateTime currentDate = ServerDateTime.Today;
             finishMonthPicker.Value = currentDate;
@@ -70,15 +75,15 @@ namespace Queue.Administrator.Reports
             isFullCheckBox.Checked = true;
         }
 
-        private async void LoadOperators()
+        private async void LoadAdditionalServices()
         {
             using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
                 try
                 {
-                    foreach (IdentifiedEntity op in await channel.Service.GetUserLinks(UserRole.Operator))
+                    foreach (IdentifiedEntity op in await channel.Service.GetAdditionalServiceLinks())
                     {
-                        operatorsListBox.Items.Add(op, true);
+                        additionalServicesListBox.Items.Add(op, true);
                     }
                 }
                 catch (OperationCanceledException) { }
@@ -94,11 +99,6 @@ namespace Queue.Administrator.Reports
                     UIHelper.Warning(exception.Message);
                 }
             }
-        }
-
-        private void isFullCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            operatorsListBox.Enabled = !isFullCheckBox.Checked;
         }
 
         private void startYearComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -122,7 +122,7 @@ namespace Queue.Administrator.Reports
                 {
                     createReportButton.Enabled = false;
 
-                    byte[] report = await taskPool.AddTask(channel.Service.GetOperatorRatingReport(GetReportSettings()));
+                    byte[] report = await taskPool.AddTask(channel.Service.GetAdditinalServicesRatingReport(GetReportSettings()));
                     string path = Path.GetTempPath() + Path.GetRandomFileName() + ".xls";
 
                     FileStream file = File.OpenWrite(path);
@@ -150,13 +150,13 @@ namespace Queue.Administrator.Reports
             }
         }
 
-        private OperatorRatingReportSettings GetReportSettings()
+        private AdditionalServicesRatingReportSettings GetReportSettings()
         {
-            OperatorRatingReportSettings settings = null;
+            AdditionalServicesRatingReportSettings settings = null;
             switch ((ReportDetailLevel)detailLevelTabControl.SelectedIndex)
             {
                 case ReportDetailLevel.Year:
-                    settings = new OperatorRatingReportSettings()
+                    settings = new AdditionalServicesRatingReportSettings()
                     {
                         StartYear = (int)startYearComboBox.SelectedItem,
                         FinishYear = (int)finishYearComboBox.SelectedItem,
@@ -164,7 +164,7 @@ namespace Queue.Administrator.Reports
                     break;
 
                 case ReportDetailLevel.Month:
-                    settings = new OperatorRatingReportSettings()
+                    settings = new AdditionalServicesRatingReportSettings()
                     {
                         StartYear = startMonthPicker.Value.Year,
                         StartMonth = startMonthPicker.Value.Month,
@@ -174,7 +174,7 @@ namespace Queue.Administrator.Reports
                     break;
 
                 case ReportDetailLevel.Day:
-                    settings = new OperatorRatingReportSettings()
+                    settings = new AdditionalServicesRatingReportSettings()
                     {
                         StartYear = startDatePicker.Value.Year,
                         StartMonth = startDatePicker.Value.Month,
@@ -190,20 +190,20 @@ namespace Queue.Administrator.Reports
             }
 
             settings.DetailLevel = (ReportDetailLevel)detailLevelTabControl.SelectedIndex;
-            settings.Operators = isFullCheckBox.Checked ? new Guid[0] : GetSelectedOperators();
+            settings.Services = isFullCheckBox.Checked ? new Guid[0] : GetSelectedAdditionalServices();
 
             return settings;
         }
 
-        private Guid[] GetSelectedOperators()
+        private Guid[] GetSelectedAdditionalServices()
         {
-            return operatorsListBox.CheckedItems
-                                        .Cast<IdentifiedEntityLink>()
-                                        .Select(o => o.Id)
-                                        .ToArray();
+            return additionalServicesListBox.CheckedItems
+                                            .Cast<IdentifiedEntityLink>()
+                                            .Select(o => o.Id)
+                                            .ToArray();
         }
 
-        private void OperatorRatingReportForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void AdditionalServiceRatingReportForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Cancel();
         }

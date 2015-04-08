@@ -236,6 +236,11 @@ namespace Queue.Administrator
             ShowForm<ServiceRatingReportForm>(() => new ServiceRatingReportForm(channelBuilder, currentUser));
         }
 
+        private void additionalServiceReportMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowForm<AdditionalServiceRatingReportForm>(() => new AdditionalServiceRatingReportForm(channelBuilder, currentUser));
+        }
+
         private void servicesMenuItem_Click(object sender, EventArgs eventArgs)
         {
             ShowForm<ServicesForm>(() => new ServicesForm(channelBuilder, currentUser));
