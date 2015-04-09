@@ -44,7 +44,7 @@
     </Feature>
 
     <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="ApplicationShortcut" Guid="149F0678-5F58-434C-BC37-D0A50850F523">
+      <Component Id="ApplicationShortcut" Guid="EFB32835-C78B-4E79-918D-1C1B8FE01EF5">
         <Shortcut Id="Shortcut"
              Name="$(var.ProductTitle)"
              Description="$(var.ProductTitle)"

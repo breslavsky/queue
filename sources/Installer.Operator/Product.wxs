@@ -44,11 +44,11 @@
     </Feature>
 
     <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="ApplicationShortcut" Guid="149F0678-5F58-434C-BC37-D0A50850F523">
+      <Component Id="ApplicationShortcut" Guid="6CE65F61-933A-40C3-A829-4CBAF6525053">
         <Shortcut Id="Shortcut"
              Name="$(var.ProductTitle)"
              Description="$(var.ProductTitle)"
-             Target="[INSTALLFOLDER]$(var.Hosts.Metric.WinForms.TargetFileName)"
+             Target="[INSTALLFOLDER]$(var.Operator.TargetFileName)"
              WorkingDirectory="INSTALLFOLDER" />
         <Shortcut Id="UninstallShortcut"
             Name="Удалить $(var.ProductTitle)"
