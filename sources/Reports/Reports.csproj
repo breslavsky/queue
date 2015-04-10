@@ -96,9 +96,11 @@
     <Compile Include="AdditionalServicesRatingReport\AdditionalServiceRatingReport.cs" />
     <Compile Include="AdditionalServicesRatingReport\AdditionalServiceRating.cs" />
     <Compile Include="AdditionalServicesRatingReport\BaseDetailedReport.cs" />
-    <Compile Include="AdditionalServicesRatingReport\DayAdditionalServiceRating.cs" />
-    <Compile Include="AdditionalServicesRatingReport\MonthAdditionalServiceRating.cs" />
-    <Compile Include="AdditionalServicesRatingReport\YearAdditionalServiceRating.cs" />
+    <Compile Include="AdditionalServicesRatingReport\AdditionalServiceDayRating.cs" />
+    <Compile Include="AdditionalServicesRatingReport\DayDetailedReport.cs" />
+    <Compile Include="AdditionalServicesRatingReport\AdditionalServiceMonthRating.cs" />
+    <Compile Include="AdditionalServicesRatingReport\MonthDetailedReport.cs" />
+    <Compile Include="AdditionalServicesRatingReport\AdditionalServiceYearRating.cs" />
     <Compile Include="AdditionalServicesRatingReport\YearDetailedReport.cs" />
     <Compile Include="BaseReport.cs" />
     <Compile Include="ClientRequestReport\ClientRequestReport.cs" />

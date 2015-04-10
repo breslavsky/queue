@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Queue.Reports.AdditionalServicesRatingReport
 {
-    internal class YearDetailedReport : BaseDetailedReport<YearAdditionalServiceRating>
+    internal class YearDetailedReport : BaseDetailedReport<AdditionalServiceYearRating>
     {
         public YearDetailedReport(AdditionalServicesRatingReportSettings settings)
             : base(settings)
@@ -30,18 +30,16 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
         protected override void ModifyProjections(QueryOverProjectionBuilder<ClientRequestAdditionalService> builder)
         {
-            YearAdditionalServiceRating dto = null;
+            AdditionalServiceYearRating dto = null;
             ClientRequest request = null;
             builder.Select(Projections.GroupProperty(
                 Projections.SqlFunction("YEAR", NHibernateUtil.Date, Projections.Property(() => request.RequestDate))).WithAlias(() => dto.Year));
         }
 
-        protected override void RenderData(ISession session, ISheet worksheet, IList<YearAdditionalServiceRating> data)
+        protected override void RenderData(ISession session, ISheet worksheet, IList<AdditionalServiceYearRating> data)
         {
             worksheet.SetColumnHidden(1, true);
             worksheet.SetColumnHidden(2, true);
-
-            WriteOperatorsHeader(worksheet, session);
 
             ReportDataItem[] items = data.GroupBy(y => y.Year)
                                             .Select(y => new ReportDataItem()
@@ -71,7 +69,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
         {
             public int Year;
 
-            public YearAdditionalServiceRating[] Rating;
+            public AdditionalServiceYearRating[] Rating;
         }
     }
 }

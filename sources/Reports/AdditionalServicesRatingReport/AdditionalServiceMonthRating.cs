@@ -1,6 +1,6 @@
 ﻿namespace Queue.Reports.AdditionalServicesRatingReport
 {
-    public class MonthAdditionalServiceRating : AdditionalServiceRating
+    public class AdditionalServiceMonthRating : AdditionalServiceYearRating
     {
         public int Month { get; set; }
     }

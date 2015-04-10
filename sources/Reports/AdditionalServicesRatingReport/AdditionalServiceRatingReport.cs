@@ -20,11 +20,11 @@ namespace Queue.Reports.AdditionalServicesRatingReport
                 case ReportDetailLevel.Year:
                     return new YearDetailedReport(settings).Generate();
 
-                //case ReportDetailLevel.Month:
-                //    return new MonthDetailedReport(settings).Generate();
+                case ReportDetailLevel.Month:
+                    return new MonthDetailedReport(settings).Generate();
 
-                //case ReportDetailLevel.Day:
-                //    return new DayDetailedReport(settings).Generate();
+                case ReportDetailLevel.Day:
+                    return new DayDetailedReport(settings).Generate();
 
                 default:
                     throw new FaultException(string.Format("Указанный уровень детализации не поддерживается: {0}", settings.DetailLevel.ToString()));

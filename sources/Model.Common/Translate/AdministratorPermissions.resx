@@ -121,7 +121,7 @@
     <value>Дополнительные услуги</value>
   </data>
   <data name="All" xml:space="preserve">
-    <value>All</value>
+    <value>Все</value>
   </data>
   <data name="Clients" xml:space="preserve">
     <value>Клиенты</value>
@@ -142,7 +142,7 @@
     <value>Нет</value>
   </data>
   <data name="Offices" xml:space="preserve">
-    <value>Филаилы</value>
+    <value>Филиалы</value>
   </data>
   <data name="OperatorInterruptions" xml:space="preserve">
     <value>Перерывы операторов</value>

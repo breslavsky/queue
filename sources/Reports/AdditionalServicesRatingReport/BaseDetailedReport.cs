@@ -58,7 +58,8 @@ namespace Queue.Reports.AdditionalServicesRatingReport
                 ClientRequestAdditionalServiceQuery query = session.QueryOver<ClientRequestAdditionalService>(() => service)
                                                                     .JoinAlias(() => service.ClientRequest, () => request)
                                                                     .JoinAlias(() => service.AdditionalService, () => additionalService)
-                                                                    .Where(Restrictions.On(() => request.RequestDate).IsBetween(startDate).And(finishDate));
+                                                                    .Where(Restrictions.On(() => request.RequestDate).IsBetween(startDate).And(finishDate))
+                                                                    .Where(Restrictions.On(() => request.State).IsIn(new ClientRequestState[] { ClientRequestState.Rendered }));
 
                 if (settings.Services.Length > 0)
                 {
@@ -67,6 +68,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
                 IList<T> results = query.SelectList(CreateProjections)
                                         .TransformUsing(Transformers.AliasToBean<T>())
+                                        .Where(Restrictions.Gt(Projections.Count<T>(f => f.Quantity), 0))
                                         .List<T>();
 
                 if (results.Count == 0)
@@ -85,6 +87,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
                 cell.SetCellValue(string.Format("Период с {0} по {1}", startDate.ToShortDateString(), finishDate.ToShortDateString()));
                 cell.CellStyle = boldCellStyle;
 
+                WriteOperatorsHeader(worksheet, session);
                 RenderData(session, worksheet, results);
 
                 return workbook;
@@ -149,7 +152,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
                          .ToArray();
         }
 
-        protected void WriteOperatorsHeader(ISheet worksheet, ISession session)
+        private void WriteOperatorsHeader(ISheet worksheet, ISession session)
         {
             IRow nameRow = worksheet.GetRow(0);
             IRow statRow = worksheet.GetRow(1);
