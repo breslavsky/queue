@@ -2,18 +2,18 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?include $(var.Installer.Common.ProjectDir)Consts.wxi ?>
 
-  <?define ProductName="Queue Server" ?>
-  <?define ProductTitle="Сервер очереди" ?>
-  <?define ProductVersion="1.4.6.0" ?>
-  <?define ProductCode="AA34004B-596B-45C2-B20E-93415B80861C"?>
-  <?define UpgradeCode="58081157-52CE-4D31-8882-CB4A69FCAFDF"?>
+  <?define ProductName="Queue Operator" ?>
+  <?define ProductTitle="Оператор очереди" ?>
+  <?define ProductVersion="1.4.0.0" ?>
+  <?define ProductCode="0C0037CC-0D5E-4B3C-83B7-9682A8E92EB3"?>
+  <?define UpgradeCode="C74374A5-EE0C-4F3C-99D5-AEF1AC93017B"?>
 
   <Product Id="$(var.ProductCode)"
-          Name="$(var.ProductName)"
-          Language="1049"
-          Version="$(var.ProductVersion)"
-          Manufacturer="$(var.Manufacturer)"
-          UpgradeCode="$(var.UpgradeCode)">
+            Name="$(var.ProductName)"
+            Language="1049"
+            Version="$(var.ProductVersion)"
+            Manufacturer="$(var.Manufacturer)"
+            UpgradeCode="$(var.UpgradeCode)">
 
     <Package InstallerVersion="300" Compressed="yes" InstallScope="perMachine" />
 
@@ -44,11 +44,11 @@
     </Feature>
 
     <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="ApplicationShortcut" Guid="EFB32835-C78B-4E79-918D-1C1B8FE01EF5">
+      <Component Id="ApplicationShortcut" Guid="6CE65F61-933A-40C3-A829-4CBAF6525053">
         <Shortcut Id="Shortcut"
              Name="$(var.ProductTitle)"
              Description="$(var.ProductTitle)"
-             Target="[INSTALLFOLDER]$(var.Hosts.Server.WinForms.TargetFileName)"
+             Target="[INSTALLFOLDER]$(var.Operator.TargetFileName)"
              WorkingDirectory="INSTALLFOLDER" />
         <Shortcut Id="UninstallShortcut"
             Name="Удалить $(var.ProductTitle)"
@@ -72,9 +72,5 @@
       <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg" Order="2">1</Publish>
       <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="2">1</Publish>
     </UI>
-
-    <InstallExecuteSequence>
-      <DeleteServices>NOT UPGRADINGPRODUCTCODE</DeleteServices>
-    </InstallExecuteSequence>
   </Product>
 </Wix>
