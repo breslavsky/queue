@@ -1,6 +1,7 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
+using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
@@ -23,7 +24,8 @@ namespace Queue.Administrator
     {
         public event EventHandler<EventArgs> Saved;
 
-        private static Properties.Settings settings = Properties.Settings.Default;
+        private IConfigurationManager configuration;
+        private AdministratorSettings settings;
 
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;
@@ -136,6 +138,9 @@ namespace Queue.Administrator
 
         private async void EditClientRequestForm_Load(object sender, EventArgs e)
         {
+            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+            settings = configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
+
             Enabled = false;
 
             using (var channel = channelManager.CreateChannel())
@@ -214,7 +219,7 @@ namespace Queue.Administrator
                     PrintQueue printQueue;
                     try
                     {
-                        printQueue = new PrintServer().GetPrintQueue(settings.DefaultPrintQueue);
+                        printQueue = new PrintServer().GetPrintQueue(settings.CouponPrinter);
                     }
                     catch
                     {

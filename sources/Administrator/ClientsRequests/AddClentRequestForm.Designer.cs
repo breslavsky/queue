@@ -27,32 +27,28 @@
             this.earlyRadioButton = new System.Windows.Forms.RadioButton();
             this.liveRadioButton = new System.Windows.Forms.RadioButton();
             this.clientGroupBox = new System.Windows.Forms.GroupBox();
-            this.clientMobileTextBox = new System.Windows.Forms.MaskedTextBox();
-            this.mobileLabel = new System.Windows.Forms.Label();
             this.surnameLabel = new System.Windows.Forms.Label();
             this.clientSurnameTextBox = new System.Windows.Forms.TextBox();
             this.nameLabel = new System.Windows.Forms.Label();
             this.clientNameTextBox = new System.Windows.Forms.TextBox();
             this.patronymicLabel = new System.Windows.Forms.Label();
             this.clientPatronymicTextBox = new System.Windows.Forms.TextBox();
+            this.mobileLabel = new System.Windows.Forms.Label();
+            this.clientMobileTextBox = new System.Windows.Forms.MaskedTextBox();
             this.couponAutoPrintCheckBox = new System.Windows.Forms.CheckBox();
             this.queueTypePanel = new System.Windows.Forms.Panel();
             this.clientsListBox = new System.Windows.Forms.ListBox();
             this.clearCurrentClientButton = new System.Windows.Forms.Button();
+            this.subjectsLabel = new System.Windows.Forms.Label();
+            this.subjectsUpDown = new System.Windows.Forms.NumericUpDown();
             this.queueTypeLiveGroupBox = new System.Windows.Forms.GroupBox();
             this.liveStatusLabel = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.printersComboBox = new System.Windows.Forms.ComboBox();
-            this.printButton = new System.Windows.Forms.Button();
-            this.subjectsUpDown = new System.Windows.Forms.NumericUpDown();
-            this.subjectsLabel = new System.Windows.Forms.Label();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.queueTypeEarlyGroupBox.SuspendLayout();
             this.clientGroupBox.SuspendLayout();
             this.queueTypePanel.SuspendLayout();
-            this.queueTypeLiveGroupBox.SuspendLayout();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).BeginInit();
+            this.queueTypeLiveGroupBox.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -191,24 +187,6 @@
             this.clientGroupBox.TabStop = false;
             this.clientGroupBox.Text = "Данные клиента";
             // 
-            // clientMobileTextBox
-            // 
-            this.clientMobileTextBox.Location = new System.Drawing.Point(85, 120);
-            this.clientMobileTextBox.Mask = "8(999)-000-0000";
-            this.clientMobileTextBox.Name = "clientMobileTextBox";
-            this.clientMobileTextBox.Size = new System.Drawing.Size(90, 20);
-            this.clientMobileTextBox.TabIndex = 4;
-            this.clientMobileTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.clientMobileTextBox_KeyDown);
-            // 
-            // mobileLabel
-            // 
-            this.mobileLabel.Location = new System.Drawing.Point(10, 120);
-            this.mobileLabel.Name = "mobileLabel";
-            this.mobileLabel.Size = new System.Drawing.Size(70, 20);
-            this.mobileLabel.TabIndex = 19;
-            this.mobileLabel.Text = "Мобильный";
-            this.mobileLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
             // surnameLabel
             // 
             this.surnameLabel.Location = new System.Drawing.Point(10, 30);
@@ -261,21 +239,40 @@
             this.clientPatronymicTextBox.TabIndex = 3;
             this.clientPatronymicTextBox.Leave += new System.EventHandler(this.clientPatronymicTextBox_Leave);
             // 
+            // mobileLabel
+            // 
+            this.mobileLabel.Location = new System.Drawing.Point(10, 120);
+            this.mobileLabel.Name = "mobileLabel";
+            this.mobileLabel.Size = new System.Drawing.Size(70, 20);
+            this.mobileLabel.TabIndex = 19;
+            this.mobileLabel.Text = "Мобильный";
+            this.mobileLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // clientMobileTextBox
+            // 
+            this.clientMobileTextBox.Location = new System.Drawing.Point(85, 120);
+            this.clientMobileTextBox.Mask = "8(999)-000-0000";
+            this.clientMobileTextBox.Name = "clientMobileTextBox";
+            this.clientMobileTextBox.Size = new System.Drawing.Size(90, 20);
+            this.clientMobileTextBox.TabIndex = 4;
+            this.clientMobileTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.clientMobileTextBox_KeyDown);
+            // 
             // couponAutoPrintCheckBox
             // 
-            this.couponAutoPrintCheckBox.AutoSize = true;
+            this.couponAutoPrintCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.couponAutoPrintCheckBox.Checked = true;
             this.couponAutoPrintCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.couponAutoPrintCheckBox.Location = new System.Drawing.Point(35, 35);
+            this.couponAutoPrintCheckBox.Location = new System.Drawing.Point(100, 560);
             this.couponAutoPrintCheckBox.Margin = new System.Windows.Forms.Padding(5);
             this.couponAutoPrintCheckBox.Name = "couponAutoPrintCheckBox";
-            this.couponAutoPrintCheckBox.Size = new System.Drawing.Size(147, 17);
+            this.couponAutoPrintCheckBox.Size = new System.Drawing.Size(180, 30);
             this.couponAutoPrintCheckBox.TabIndex = 14;
             this.couponAutoPrintCheckBox.Text = "Автоматическая печать";
             this.couponAutoPrintCheckBox.UseVisualStyleBackColor = true;
             // 
             // queueTypePanel
             // 
+            this.queueTypePanel.Controls.Add(this.couponAutoPrintCheckBox);
             this.queueTypePanel.Controls.Add(this.clientGroupBox);
             this.queueTypePanel.Controls.Add(this.clientsListBox);
             this.queueTypePanel.Controls.Add(this.clearCurrentClientButton);
@@ -287,7 +284,6 @@
             this.queueTypePanel.Controls.Add(this.queueTypeEarlyGroupBox);
             this.queueTypePanel.Controls.Add(this.priorityCheckBox);
             this.queueTypePanel.Controls.Add(this.addButton);
-            this.queueTypePanel.Controls.Add(this.panel1);
             this.queueTypePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.queueTypePanel.Location = new System.Drawing.Point(404, 0);
             this.queueTypePanel.Margin = new System.Windows.Forms.Padding(0);
@@ -315,6 +311,33 @@
             this.clearCurrentClientButton.UseVisualStyleBackColor = true;
             this.clearCurrentClientButton.Click += new System.EventHandler(this.clearCurrentClientButton_Click);
             // 
+            // subjectsLabel
+            // 
+            this.subjectsLabel.Location = new System.Drawing.Point(15, 260);
+            this.subjectsLabel.Name = "subjectsLabel";
+            this.subjectsLabel.Size = new System.Drawing.Size(65, 13);
+            this.subjectsLabel.TabIndex = 0;
+            this.subjectsLabel.Text = "Объектов";
+            this.subjectsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.subjectsLabel.Click += new System.EventHandler(this.subjectsLabel_Click);
+            // 
+            // subjectsUpDown
+            // 
+            this.subjectsUpDown.Location = new System.Drawing.Point(85, 255);
+            this.subjectsUpDown.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.subjectsUpDown.Name = "subjectsUpDown";
+            this.subjectsUpDown.Size = new System.Drawing.Size(50, 20);
+            this.subjectsUpDown.TabIndex = 7;
+            this.subjectsUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // queueTypeLiveGroupBox
             // 
             this.queueTypeLiveGroupBox.Controls.Add(this.liveStatusLabel);
@@ -336,63 +359,6 @@
             this.liveStatusLabel.Size = new System.Drawing.Size(246, 15);
             this.liveStatusLabel.TabIndex = 0;
             this.liveStatusLabel.Text = "-";
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.printersComboBox);
-            this.panel1.Controls.Add(this.couponAutoPrintCheckBox);
-            this.panel1.Controls.Add(this.printButton);
-            this.panel1.Location = new System.Drawing.Point(0, 530);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(280, 60);
-            this.panel1.TabIndex = 13;
-            // 
-            // printersComboBox
-            // 
-            this.printersComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.printersComboBox.FormattingEnabled = true;
-            this.printersComboBox.Location = new System.Drawing.Point(15, 5);
-            this.printersComboBox.Name = "printersComboBox";
-            this.printersComboBox.Size = new System.Drawing.Size(250, 21);
-            this.printersComboBox.TabIndex = 13;
-            this.printersComboBox.SelectionChangeCommitted += new System.EventHandler(this.printersComboBox_SelectionChangeCommitted);
-            // 
-            // printButton
-            // 
-            this.printButton.Location = new System.Drawing.Point(190, 30);
-            this.printButton.Name = "printButton";
-            this.printButton.Size = new System.Drawing.Size(75, 25);
-            this.printButton.TabIndex = 15;
-            this.printButton.Text = "Печать";
-            this.printButton.Click += new System.EventHandler(this.printButton_Click);
-            // 
-            // subjectsUpDown
-            // 
-            this.subjectsUpDown.Location = new System.Drawing.Point(85, 255);
-            this.subjectsUpDown.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.subjectsUpDown.Name = "subjectsUpDown";
-            this.subjectsUpDown.Size = new System.Drawing.Size(50, 20);
-            this.subjectsUpDown.TabIndex = 7;
-            this.subjectsUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // subjectsLabel
-            // 
-            this.subjectsLabel.Location = new System.Drawing.Point(15, 260);
-            this.subjectsLabel.Name = "subjectsLabel";
-            this.subjectsLabel.Size = new System.Drawing.Size(65, 13);
-            this.subjectsLabel.TabIndex = 0;
-            this.subjectsLabel.Text = "Объектов";
-            this.subjectsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.subjectsLabel.Click += new System.EventHandler(this.subjectsLabel_Click);
             // 
             // mainTableLayoutPanel
             // 
@@ -428,10 +394,8 @@
             this.clientGroupBox.ResumeLayout(false);
             this.clientGroupBox.PerformLayout();
             this.queueTypePanel.ResumeLayout(false);
-            this.queueTypeLiveGroupBox.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).EndInit();
+            this.queueTypeLiveGroupBox.ResumeLayout(false);
             this.mainTableLayoutPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -461,9 +425,6 @@
         private System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
         private System.Windows.Forms.Label subjectsLabel;
         private System.Windows.Forms.NumericUpDown subjectsUpDown;
-        private System.Windows.Forms.ComboBox printersComboBox;
-        private System.Windows.Forms.Button printButton;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label liveStatusLabel;
         private System.Windows.Forms.Label earlyStatusLabel;
         private System.Windows.Forms.GroupBox queueTypeLiveGroupBox;

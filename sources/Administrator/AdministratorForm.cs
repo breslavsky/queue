@@ -290,5 +290,10 @@ namespace Queue.Administrator
         {
             ShowForm<OperatorInterruptionsForm>(() => new OperatorInterruptionsForm(channelBuilder, currentUser));
         }
+
+        private void currentUserMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowForm<CurrentUserForm>(() => new CurrentUserForm(channelBuilder, currentUser));
+        }
     }
 }

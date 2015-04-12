@@ -296,6 +296,7 @@
             this.currentUserMenuItem.Name = "currentUserMenuItem";
             this.currentUserMenuItem.Size = new System.Drawing.Size(28, 20);
             this.currentUserMenuItem.Text = "...";
+            this.currentUserMenuItem.Click += new System.EventHandler(this.currentUserMenuItem_Click);
             // 
             // logoutMenuItem
             // 

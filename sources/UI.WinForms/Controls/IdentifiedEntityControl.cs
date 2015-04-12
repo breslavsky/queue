@@ -21,6 +21,14 @@ namespace Queue.UI.WinForms
             InitializeComponent();
         }
 
+        private void IdentifiedEntityControl_Load(object sender, EventArgs e)
+        {
+            if (!UseResetButton)
+            {
+                comboBox.Width += resetButton.Width;
+            }
+        }
+
         public void Initialize(IdentifiedEntityLink[] entities)
         {
             frozen = true;
@@ -56,11 +64,6 @@ namespace Queue.UI.WinForms
         {
             comboBox.Items.Clear();
             comboBox.Enabled = false;
-        }
-
-        private void resetButton_VisibleChanged(object sender, System.EventArgs e)
-        {
-            //comboBox.Width += resetButton.Visible ? -resetButton.Width : resetButton.Width;
         }
 
         private void resetButton_Click(object sender, System.EventArgs e)
