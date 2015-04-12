@@ -3,8 +3,8 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Queue.Media")]
-[assembly: AssemblyDescription("Queue.Media")]
+[assembly: AssemblyTitle("Queue.Resources")]
+[assembly: AssemblyDescription("Queue.Resources")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany(Product.Company)]
 [assembly: AssemblyProduct(Product.Name)]
@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark(Product.Trademark)]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: Guid("9F80473A-137B-46B5-A8AE-069B3A9C1A30")]
+[assembly: Guid("3FF3110D-6819-4985-B0E2-5713A87E2D8A")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: NeutralResourcesLanguageAttribute(Product.Language)]

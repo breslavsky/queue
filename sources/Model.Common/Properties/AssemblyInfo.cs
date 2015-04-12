@@ -1,36 +1,18 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using Queue.Common;
+using System.Reflection;
+using System.Resources;
 using System.Runtime.InteropServices;
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
 [assembly: AssemblyTitle("Model.Common")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Model.Common")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Model.Common")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany(Product.Company)]
+[assembly: AssemblyProduct(Product.Name)]
+[assembly: AssemblyCopyright(Product.Copyright)]
+[assembly: AssemblyTrademark(Product.Trademark)]
 [assembly: AssemblyCulture("")]
-
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
-// COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
-
-// The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f56bb3d2-9e21-4c92-848e-8634c2da6608")]
-
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
+[assembly: Guid("9A4DB318-74D9-4A35-B1BC-B2EF6703B8EE")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: NeutralResourcesLanguageAttribute(Product.Language)]

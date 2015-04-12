@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark(Product.Trademark)]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: Guid("3708e4b1-7ce8-4100-9b22-bf6e83093823")]
+[assembly: Guid(Product.Administrator.Guid)]
 [assembly: AssemblyVersion(Product.Administrator.Version)]
 [assembly: AssemblyFileVersion(Product.Administrator.Version)]
 [assembly: NeutralResourcesLanguageAttribute(Product.Language)]
