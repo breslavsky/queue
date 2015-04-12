@@ -234,8 +234,8 @@
             this.reportsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.serviceRatingReportMenuItem,
             this.operatorsRatingToolStripMenuItem,
-            this.scheduleReportMenu,
-            this.additionalServiceReportMenuItem});
+            this.additionalServiceReportMenuItem,
+            this.scheduleReportMenu});
             this.reportsMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("reportsMenuItem.Image")));
             this.reportsMenuItem.Name = "reportsMenuItem";
             this.reportsMenuItem.Size = new System.Drawing.Size(76, 20);
