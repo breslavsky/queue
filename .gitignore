@@ -227,3 +227,4 @@ pip-log.txt
 /sources/UI.Silverlight/UI.Silverlight.csproj.user
 *.exe
 Google Диск.lnk
+/install/*.msi

@@ -104,13 +104,13 @@ namespace Queue.Administrator
 
                         using (var loginForm = new LoginForm(UserRole.Administrator))
                         {
-                            loginForm.ConnectionSettings.Endpoint = office.Endpoint;
+                            loginForm.LoginSettings.Endpoint = office.Endpoint;
 
                             if (loginForm.ShowDialog() == DialogResult.OK)
                             {
                                 var user = loginForm.User;
 
-                                office.Endpoint = loginForm.ConnectionSettings.Endpoint;
+                                office.Endpoint = loginForm.LoginSettings.Endpoint;
                                 office.SessionId = user.SessionId;
 
                                 using (var channel = channelManager.CreateChannel())

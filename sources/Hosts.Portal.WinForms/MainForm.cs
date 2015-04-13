@@ -30,6 +30,7 @@ namespace Hosts.Portal.WinForms
         private bool started;
         private PortalInstance portal;
         private ServiceManager serviceManager;
+        private LoginSettings loginSettings;
 
         public MainForm()
         {
@@ -49,7 +50,8 @@ namespace Hosts.Portal.WinForms
 
             RegisterContainer();
 
-            loginSettingsControl.Initialize(UserRole.Administrator, taskPool);
+            loginSettings = configurationManager.GetSection<LoginSettings>(LoginSettings.SectionKey);
+            loginSettingsControl.Initialize(loginSettings, UserRole.Administrator, taskPool);
 
             Text += string.Format(" ({0})", typeof(PortalInstance).Assembly.GetName().Version);
 
@@ -114,7 +116,7 @@ namespace Hosts.Portal.WinForms
 
                 startButton.Enabled = false;
 
-                portal = new PortalInstance(settings, loginSettingsControl.LoginSettings);
+                portal = new PortalInstance(settings, loginSettings);
                 await portal.Start();
 
                 startButton.Enabled = false;

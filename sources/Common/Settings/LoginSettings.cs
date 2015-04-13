@@ -37,5 +37,10 @@ namespace Queue.Common
         {
             return false;
         }
+
+        public void Reset()
+        {
+            Password = string.Empty;
+        }
     }
 }

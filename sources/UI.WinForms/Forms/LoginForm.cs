@@ -37,13 +37,14 @@ namespace Queue.UI.WinForms
         {
             configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
             settings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
+            LoginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
 
             loginFormSettingsBindingSource.DataSource = settings;
 
             languageControl.Select<Language>(settings.Language);
             AdjustSelectedLanguage();
 
-            loginSettingsControl.Initialize(userRole, taskPool);
+            loginSettingsControl.Initialize(LoginSettings, userRole, taskPool);
             loginSettingsControl.OnConnected += OnConnected;
             loginSettingsControl.OnSubmit += OnSubmit;
 
@@ -58,10 +59,7 @@ namespace Queue.UI.WinForms
             get { return loginSettingsControl.ChannelBuilder; }
         }
 
-        public LoginSettings ConnectionSettings
-        {
-            get { return loginSettingsControl.LoginSettings; }
-        }
+        public LoginSettings LoginSettings { get; private set; }
 
         public User User { get; private set; }
 
@@ -92,11 +90,11 @@ namespace Queue.UI.WinForms
                 {
                     loginButton.Enabled = false;
 
-                    User = await taskPool.AddTask(channel.Service.UserLogin(selectedUser.Id, ConnectionSettings.Password));
+                    User = await taskPool.AddTask(channel.Service.UserLogin(selectedUser.Id, LoginSettings.Password));
 
                     if (!settings.IsRemember)
                     {
-                        ConnectionSettings.Password = string.Empty;
+                        LoginSettings.Password = string.Empty;
                     }
 
                     settings.Language = languageControl.Selected<Language>();
@@ -155,15 +153,6 @@ namespace Queue.UI.WinForms
         private void taskPool_OnRemoveTask(object sender, EventArgs e)
         {
             Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
-
-        public static void ResetSettings()
-        {
-            IConfigurationManager configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-            LoginFormSettings settings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
-            settings.IsRemember = false;
-
-            configuration.Save();
         }
     }
 }

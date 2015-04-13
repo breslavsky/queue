@@ -4,7 +4,6 @@ using Queue.Common;
 using Queue.Model.Common;
 using Queue.UI.WinForms;
 using System;
-using System.Globalization;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
 
@@ -50,8 +49,12 @@ namespace Queue.Administrator
 
         private static void ResetSettings()
         {
-            LoginForm.ResetSettings();
-            LoginSettingsControl.ResetSettings();
+            IConfigurationManager configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+
+            configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey).Reset();
+            configuration.GetSection<LoginSettings>(LoginSettings.SectionKey).Reset();
+
+            configuration.Save();
         }
     }
 }

@@ -31,5 +31,10 @@ namespace Queue.UI.WinForms
         {
             return false;
         }
+
+        public void Reset()
+        {
+            IsRemember = false;
+        }
     }
 }

@@ -27,6 +27,7 @@ namespace Queue.Hosts.Media.WinForms
         private MediaSettings settings;
         private bool started;
         private MediaInstance media;
+        private LoginSettings loginSettings;
 
         public MainForm()
         {
@@ -46,7 +47,8 @@ namespace Queue.Hosts.Media.WinForms
 
             RegisterContainer();
 
-            loginSettingsControl.Initialize(UserRole.Administrator, taskPool);
+            loginSettings = configurationManager.GetSection<LoginSettings>(LoginSettings.SectionKey);
+            loginSettingsControl.Initialize(loginSettings, UserRole.Administrator, taskPool);
 
             Text += string.Format(" ({0})", typeof(MediaInstance).Assembly.GetName().Version);
 
@@ -85,7 +87,7 @@ namespace Queue.Hosts.Media.WinForms
             stopButton.Enabled = started && !runned;
         }
 
-        private void saveButton_Click(object sender, System.EventArgs e)
+        private void saveButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -103,7 +105,7 @@ namespace Queue.Hosts.Media.WinForms
             StartMedia();
         }
 
-        private void serviceStateTimer_Tick(object sender, System.EventArgs e)
+        private void serviceStateTimer_Tick(object sender, EventArgs e)
         {
             AdjustServiceState();
         }
@@ -185,7 +187,7 @@ namespace Queue.Hosts.Media.WinForms
 
                 startButton.Enabled = false;
 
-                media = new MediaInstance(settings, loginSettingsControl.LoginSettings);
+                media = new MediaInstance(settings, loginSettings);
                 await media.Start();
 
                 startButton.Enabled = false;

@@ -22,7 +22,8 @@ $ProductCode = [guid]::NewGuid();
 
 Invoke-MsBuild $WIX_PROJECT_FILE -properties @{'Configuration'='Release'; 'DefineConstants'="""ProductVersion=$ProductVersion;ProductCode=$ProductCode""" };
 
-If (!(Test-Path $INSTALLERS_PATH)) { 
+If (!(Test-Path $INSTALLERS_PATH)) 
+{ 
    New-Item -Path $INSTALLERS_PATH -ItemType Directory;
 }
 

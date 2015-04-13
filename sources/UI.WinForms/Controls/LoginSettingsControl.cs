@@ -1,7 +1,6 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
-using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -17,7 +16,8 @@ namespace Queue.UI.WinForms
     {
         private UserRole userRole;
         private TaskPool taskPool;
-        private IConfigurationManager configuration;
+
+        private LoginSettings loginSettings;
 
         public ChannelManager<IServerTcpService> ChannelManager { get; private set; }
 
@@ -32,24 +32,20 @@ namespace Queue.UI.WinForms
 
         public EventHandler OnSubmit = delegate { };
 
-        public LoginSettings LoginSettings { get; private set; }
-
         public LoginSettingsControl()
         {
             InitializeComponent();
         }
 
-        public void Initialize(UserRole userRole, TaskPool taskPool)
+        public void Initialize(LoginSettings loginSettings, UserRole userRole, TaskPool taskPool)
         {
             this.userRole = userRole;
             this.taskPool = taskPool;
+            this.loginSettings = loginSettings;
 
-            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-            LoginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
+            serverConnectionSettingsBindingSource.DataSource = loginSettings;
 
-            serverConnectionSettingsBindingSource.DataSource = LoginSettings;
-
-            if (LoginSettings.User != Guid.Empty)
+            if (loginSettings.User != Guid.Empty)
             {
                 ConnectToServer();
             }
@@ -78,7 +74,7 @@ namespace Queue.UI.WinForms
 
             try
             {
-                if (string.IsNullOrWhiteSpace(LoginSettings.Endpoint))
+                if (string.IsNullOrWhiteSpace(loginSettings.Endpoint))
                 {
                     throw new QueueException("Не указан адрес сервера");
                 }
@@ -90,7 +86,7 @@ namespace Queue.UI.WinForms
 
                 ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(),
                                                                             Bindings.NetTcpBinding,
-                                                                            new EndpointAddress(LoginSettings.Endpoint));
+                                                                            new EndpointAddress(loginSettings.Endpoint));
                 if (ChannelManager != null)
                 {
                     ChannelManager.Dispose();
@@ -103,9 +99,9 @@ namespace Queue.UI.WinForms
                     connectButton.Enabled = false;
 
                     selectUserControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(userRole)));
-                    if (LoginSettings.User != Guid.Empty)
+                    if (loginSettings.User != Guid.Empty)
                     {
-                        selectUserControl.Select<User>(new User() { Id = LoginSettings.User });
+                        selectUserControl.Select<User>(new User() { Id = loginSettings.User });
                     }
 
                     passwordTextBox.Focus();
@@ -161,10 +157,7 @@ namespace Queue.UI.WinForms
 
         private void selectUserControl_SelectedChanged(object sender, EventArgs e)
         {
-            if (LoginSettings != null)
-            {
-                LoginSettings.User = selectUserControl.Selected<User>().Id;
-            }
+            loginSettings.User = selectUserControl.Selected<User>().Id;
         }
 
         internal void Close()
@@ -173,15 +166,6 @@ namespace Queue.UI.WinForms
             {
                 ChannelManager.Dispose();
             }
-        }
-
-        public static void ResetSettings()
-        {
-            IConfigurationManager configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-            LoginSettings connection = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
-            connection.Password = string.Empty;
-
-            configuration.Save();
         }
     }
 }
