@@ -45,7 +45,7 @@
             // 
             this.rememberCheckBox.AutoSize = true;
             this.rememberCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.loginFormSettingsBindingSource, "IsRemember", true));
-            this.rememberCheckBox.Location = new System.Drawing.Point(21, 315);
+            this.rememberCheckBox.Location = new System.Drawing.Point(180, 315);
             this.rememberCheckBox.Name = "rememberCheckBox";
             this.rememberCheckBox.Size = new System.Drawing.Size(82, 17);
             this.rememberCheckBox.TabIndex = 0;
@@ -59,7 +59,7 @@
             // loginButton
             // 
             this.loginButton.Image = ((System.Drawing.Image)(resources.GetObject("loginButton.Image")));
-            this.loginButton.Location = new System.Drawing.Point(257, 307);
+            this.loginButton.Location = new System.Drawing.Point(265, 310);
             this.loginButton.Name = "loginButton";
             this.loginButton.Size = new System.Drawing.Size(80, 25);
             this.loginButton.TabIndex = 0;
@@ -97,7 +97,7 @@
             // 
             this.loginSettingsControl.Location = new System.Drawing.Point(10, 136);
             this.loginSettingsControl.Name = "loginSettingsControl";
-            this.loginSettingsControl.Size = new System.Drawing.Size(330, 168);
+            this.loginSettingsControl.Size = new System.Drawing.Size(335, 174);
             this.loginSettingsControl.TabIndex = 3;
             // 
             // LoginForm

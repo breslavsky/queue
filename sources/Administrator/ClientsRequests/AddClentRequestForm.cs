@@ -1,6 +1,7 @@
 ﻿using Junte.Parallel.Common;
 using Junte.UI.WinForms;
 using Junte.WCF.Common;
+using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
@@ -20,7 +21,8 @@ namespace Queue.Administrator
 {
     public partial class AddClentRequestForm : Queue.UI.WinForms.RichForm
     {
-        private static Properties.Settings settings = Properties.Settings.Default;
+        private IConfigurationManager configuration;
+        private AdministratorSettings settings;
 
         #region fields
 
@@ -240,15 +242,8 @@ namespace Queue.Administrator
 
         private void AddClientRequestForm_Load(object sender, EventArgs e)
         {
-            foreach (var p in new PrintServer().GetPrintQueues(new[] {
-                EnumeratedPrintQueueTypes.Local, EnumeratedPrintQueueTypes.Connections }))
-            {
-                printersComboBox.Items.Add(p.FullName);
-            }
-
-            printersComboBox.SelectedItem = string.IsNullOrWhiteSpace(settings.DefaultPrintQueue)
-                    ? LocalPrintServer.GetDefaultPrintQueue().FullName
-                    : settings.DefaultPrintQueue;
+            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+            settings = configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
 
             earlyDatePicker.MinDate = earlyDatePicker.Value = ServerDateTime.Today;
 
@@ -542,11 +537,6 @@ namespace Queue.Administrator
             }
         }
 
-        private void printButton_Click(object sender, EventArgs e)
-        {
-            PrintCoupon();
-        }
-
         private void PrintCoupon()
         {
             if (!string.IsNullOrWhiteSpace(xpsCouponFile))
@@ -554,7 +544,7 @@ namespace Queue.Administrator
                 PrintQueue printQueue;
                 try
                 {
-                    printQueue = new PrintServer().GetPrintQueue(settings.DefaultPrintQueue);
+                    printQueue = new PrintServer().GetPrintQueue(settings.CouponPrinter);
                 }
                 catch
                 {
@@ -563,12 +553,6 @@ namespace Queue.Administrator
                 }
                 printQueue.AddJob(xpsCouponFile, xpsCouponFile, false);
             }
-        }
-
-        private void printersComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            settings.DefaultPrintQueue = (string)printersComboBox.SelectedItem;
-            settings.Save();
         }
 
         private void servicesTreeView_AfterExpand(object sender, TreeViewEventArgs e)

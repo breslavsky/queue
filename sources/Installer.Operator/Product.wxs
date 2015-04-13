@@ -4,8 +4,6 @@
 
   <?define ProductName="Queue Operator" ?>
   <?define ProductTitle="Оператор очереди" ?>
-  <?define ProductVersion="1.4.0.0" ?>
-  <?define ProductCode="0C0037CC-0D5E-4B3C-83B7-9682A8E92EB3"?>
   <?define UpgradeCode="C74374A5-EE0C-4F3C-99D5-AEF1AC93017B"?>
 
   <Product Id="$(var.ProductCode)"

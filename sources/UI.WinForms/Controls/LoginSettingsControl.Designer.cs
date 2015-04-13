@@ -30,20 +30,67 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginSettingsControl));
+            this.serverConnectionSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.loginGroupBox = new System.Windows.Forms.GroupBox();
+            this.passwordLabel = new System.Windows.Forms.Label();
+            this.passwordTextBox = new System.Windows.Forms.TextBox();
+            this.loginLabel = new System.Windows.Forms.Label();
             this.connectionGroupBox = new System.Windows.Forms.GroupBox();
             this.connectButton = new System.Windows.Forms.Button();
             this.serverLabel = new System.Windows.Forms.Label();
             this.endpointTextBox = new System.Windows.Forms.TextBox();
-            this.serverConnectionSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.loginGroupBox = new System.Windows.Forms.GroupBox();
             this.selectUserControl = new Queue.UI.WinForms.IdentifiedEntityControl();
-            this.passwordLabel = new System.Windows.Forms.Label();
-            this.passwordTextBox = new System.Windows.Forms.TextBox();
-            this.loginLabel = new System.Windows.Forms.Label();
-            this.connectionGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serverConnectionSettingsBindingSource)).BeginInit();
             this.loginGroupBox.SuspendLayout();
+            this.connectionGroupBox.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // serverConnectionSettingsBindingSource
+            // 
+            this.serverConnectionSettingsBindingSource.DataSource = typeof(Queue.Common.LoginSettings);
+            // 
+            // loginGroupBox
+            // 
+            this.loginGroupBox.Controls.Add(this.selectUserControl);
+            this.loginGroupBox.Controls.Add(this.passwordLabel);
+            this.loginGroupBox.Controls.Add(this.passwordTextBox);
+            this.loginGroupBox.Controls.Add(this.loginLabel);
+            this.loginGroupBox.Enabled = false;
+            this.loginGroupBox.Location = new System.Drawing.Point(3, 79);
+            this.loginGroupBox.Name = "loginGroupBox";
+            this.loginGroupBox.Size = new System.Drawing.Size(330, 92);
+            this.loginGroupBox.TabIndex = 2;
+            this.loginGroupBox.TabStop = false;
+            this.loginGroupBox.Text = "Данные пользователя";
+            // 
+            // passwordLabel
+            // 
+            this.passwordLabel.AutoSize = true;
+            this.passwordLabel.Location = new System.Drawing.Point(10, 60);
+            this.passwordLabel.Name = "passwordLabel";
+            this.passwordLabel.Size = new System.Drawing.Size(45, 13);
+            this.passwordLabel.TabIndex = 0;
+            this.passwordLabel.Text = "Пароль";
+            // 
+            // passwordTextBox
+            // 
+            this.passwordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.serverConnectionSettingsBindingSource, "Password", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.passwordTextBox.Location = new System.Drawing.Point(100, 60);
+            this.passwordTextBox.Name = "passwordTextBox";
+            this.passwordTextBox.Size = new System.Drawing.Size(220, 20);
+            this.passwordTextBox.TabIndex = 0;
+            this.passwordTextBox.UseSystemPasswordChar = true;
+            this.passwordTextBox.Enter += new System.EventHandler(this.passwordTextBox_Enter);
+            this.passwordTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.passwordTextBox_KeyDown);
+            // 
+            // loginLabel
+            // 
+            this.loginLabel.AutoSize = true;
+            this.loginLabel.Location = new System.Drawing.Point(10, 30);
+            this.loginLabel.Name = "loginLabel";
+            this.loginLabel.Size = new System.Drawing.Size(80, 13);
+            this.loginLabel.TabIndex = 0;
+            this.loginLabel.Text = "Пользователь";
             // 
             // connectionGroupBox
             // 
@@ -84,24 +131,6 @@
             this.endpointTextBox.TabIndex = 0;
             this.endpointTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.endpointTextBox_KeyDown);
             // 
-            // serverConnectionSettingsBindingSource
-            // 
-            this.serverConnectionSettingsBindingSource.DataSource = typeof(Queue.Common.LoginSettings);
-            // 
-            // loginGroupBox
-            // 
-            this.loginGroupBox.Controls.Add(this.selectUserControl);
-            this.loginGroupBox.Controls.Add(this.passwordLabel);
-            this.loginGroupBox.Controls.Add(this.passwordTextBox);
-            this.loginGroupBox.Controls.Add(this.loginLabel);
-            this.loginGroupBox.Enabled = false;
-            this.loginGroupBox.Location = new System.Drawing.Point(3, 79);
-            this.loginGroupBox.Name = "loginGroupBox";
-            this.loginGroupBox.Size = new System.Drawing.Size(330, 92);
-            this.loginGroupBox.TabIndex = 2;
-            this.loginGroupBox.TabStop = false;
-            this.loginGroupBox.Text = "Данные пользователя";
-            // 
             // selectUserControl
             // 
             this.selectUserControl.Location = new System.Drawing.Point(100, 30);
@@ -111,35 +140,6 @@
             this.selectUserControl.UseResetButton = false;
             this.selectUserControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.selectUserControl_SelectedChanged);
             // 
-            // passwordLabel
-            // 
-            this.passwordLabel.AutoSize = true;
-            this.passwordLabel.Location = new System.Drawing.Point(10, 60);
-            this.passwordLabel.Name = "passwordLabel";
-            this.passwordLabel.Size = new System.Drawing.Size(45, 13);
-            this.passwordLabel.TabIndex = 0;
-            this.passwordLabel.Text = "Пароль";
-            // 
-            // passwordTextBox
-            // 
-            this.passwordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.serverConnectionSettingsBindingSource, "Password", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.passwordTextBox.Location = new System.Drawing.Point(100, 60);
-            this.passwordTextBox.Name = "passwordTextBox";
-            this.passwordTextBox.Size = new System.Drawing.Size(220, 20);
-            this.passwordTextBox.TabIndex = 0;
-            this.passwordTextBox.UseSystemPasswordChar = true;
-            this.passwordTextBox.Enter += new System.EventHandler(this.passwordTextBox_Enter);
-            this.passwordTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.passwordTextBox_KeyDown);
-            // 
-            // loginLabel
-            // 
-            this.loginLabel.AutoSize = true;
-            this.loginLabel.Location = new System.Drawing.Point(10, 30);
-            this.loginLabel.Name = "loginLabel";
-            this.loginLabel.Size = new System.Drawing.Size(80, 13);
-            this.loginLabel.TabIndex = 0;
-            this.loginLabel.Text = "Пользователь";
-            // 
             // LoginSettingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -148,11 +148,11 @@
             this.Controls.Add(this.connectionGroupBox);
             this.Name = "LoginSettingsControl";
             this.Size = new System.Drawing.Size(340, 176);
-            this.connectionGroupBox.ResumeLayout(false);
-            this.connectionGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serverConnectionSettingsBindingSource)).EndInit();
             this.loginGroupBox.ResumeLayout(false);
             this.loginGroupBox.PerformLayout();
+            this.connectionGroupBox.ResumeLayout(false);
+            this.connectionGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }

@@ -69,6 +69,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Language_short.resx</DependentUpon>
     </Compile>
+    <Compile Include="Product.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Translate\Language.en-US.resx">

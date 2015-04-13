@@ -1,38 +1,18 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+﻿using Queue.Common;
+using System.Reflection;
 using System.Resources;
+using System.Runtime.InteropServices;
 
-// Управление общими сведениями о сборке осуществляется с помощью 
-// набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
-// связанные со сборкой.
 [assembly: AssemblyTitle("Queue.UI.WinForms")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Queue.UI.WinForms")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Queue.UI.WinForms")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany(Product.Company)]
+[assembly: AssemblyProduct(Product.Name)]
+[assembly: AssemblyCopyright(Product.Copyright)]
+[assembly: AssemblyTrademark(Product.Trademark)]
 [assembly: AssemblyCulture("")]
-
-// Параметр ComVisible со значением FALSE делает типы в сборке невидимыми 
-// для COM-компонентов.  Если требуется обратиться к типу в этой сборке через 
-// COM, задайте атрибуту ComVisible значение TRUE для этого типа.
 [assembly: ComVisible(false)]
-
-// Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("fd7063c8-018d-4535-baa7-14da2539a647")]
-
-// Сведения о версии сборки состоят из следующих четырех значений:
-//
-//      Основной номер версии
-//      Дополнительный номер версии 
-//      Номер построения
-//      Редакция
-//
-// Можно задать все значения или принять номер построения и номер редакции по умолчанию, 
-// используя "*", как показано ниже:
-// [assembly: AssemblyVersion("1.0.*")]
+[assembly: Guid("CE92A1A2-F0C3-46B8-9992-81F84577A71B")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: NeutralResourcesLanguageAttribute("")]
+[assembly: NeutralResourcesLanguageAttribute(Product.Language)]

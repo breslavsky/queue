@@ -41,7 +41,7 @@
             this.comboBox.FormattingEnabled = true;
             this.comboBox.Location = new System.Drawing.Point(0, 0);
             this.comboBox.Name = "comboBox";
-            this.comboBox.Size = new System.Drawing.Size(125, 21);
+            this.comboBox.Size = new System.Drawing.Size(130, 21);
             this.comboBox.TabIndex = 0;
             this.comboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
@@ -49,12 +49,11 @@
             // 
             this.resetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.resetButton.Image = ((System.Drawing.Image)(resources.GetObject("resetButton.Image")));
-            this.resetButton.Location = new System.Drawing.Point(127, 0);
+            this.resetButton.Location = new System.Drawing.Point(130, 0);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(20, 20);
             this.resetButton.TabIndex = 1;
             this.resetButton.UseVisualStyleBackColor = true;
-            this.resetButton.VisibleChanged += new System.EventHandler(this.resetButton_VisibleChanged);
             this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // IdentifiedEntityControl
@@ -64,7 +63,8 @@
             this.Controls.Add(this.resetButton);
             this.Controls.Add(this.comboBox);
             this.Name = "IdentifiedEntityControl";
-            this.Size = new System.Drawing.Size(154, 21);
+            this.Size = new System.Drawing.Size(150, 21);
+            this.Load += new System.EventHandler(this.IdentifiedEntityControl_Load);
             this.ResumeLayout(false);
 
         }

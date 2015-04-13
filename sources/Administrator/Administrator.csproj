@@ -247,6 +247,7 @@
     <Compile Include="CurrentUserForm.Designer.cs">
       <DependentUpon>CurrentUserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdministratorSettings.cs" />
     <Compile Include="OperatorInterruptions\EditOperatorInterruptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -560,16 +561,6 @@
     <EmbeddedResource Include="Reports\OperatorRatingReportForm.resx">
       <DependentUpon>OperatorRatingReportForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="Services\EditServiceForm.resx">
       <DependentUpon>EditServiceForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -650,15 +641,6 @@
     <None Include="Properties\DataSources\Queue.Services.DTO.ClientRequestEvent.datasource" />
     <None Include="Properties\DataSources\Queue.Services.DTO.ClientRequestParameter.datasource" />
     <None Include="Properties\DataSources\Queue.Services.DTO.OperatorInterruption.datasource" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
@@ -705,12 +687,12 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 и x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <ProductName>Клиентский профиль .NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

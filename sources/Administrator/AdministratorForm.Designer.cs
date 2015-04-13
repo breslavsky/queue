@@ -234,8 +234,8 @@
             this.reportsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.serviceRatingReportMenuItem,
             this.operatorsRatingToolStripMenuItem,
-            this.scheduleReportMenu,
-            this.additionalServiceReportMenuItem});
+            this.additionalServiceReportMenuItem,
+            this.scheduleReportMenu});
             this.reportsMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("reportsMenuItem.Image")));
             this.reportsMenuItem.Name = "reportsMenuItem";
             this.reportsMenuItem.Size = new System.Drawing.Size(76, 20);
@@ -296,6 +296,7 @@
             this.currentUserMenuItem.Name = "currentUserMenuItem";
             this.currentUserMenuItem.Size = new System.Drawing.Size(28, 20);
             this.currentUserMenuItem.Text = "...";
+            this.currentUserMenuItem.Click += new System.EventHandler(this.currentUserMenuItem_Click);
             // 
             // logoutMenuItem
             // 
