@@ -3,8 +3,8 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Queue.Metric")]
-[assembly: AssemblyDescription("Queue.Metric")]
+[assembly: AssemblyTitle(Product.Metric.Name)]
+[assembly: AssemblyDescription(Product.Metric.Description)]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany(Product.Company)]
 [assembly: AssemblyProduct(Product.Name)]
@@ -13,6 +13,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("0EE7E15D-08ED-492C-AEC6-514B856C4950")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion(Product.Metric.Version)]
+[assembly: AssemblyFileVersion(Product.Metric.Version)]
 [assembly: NeutralResourcesLanguageAttribute(Product.Language)]

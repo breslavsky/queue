@@ -4,8 +4,6 @@
 
   <?define ProductName="Queue Media" ?>
   <?define ProductTitle="Медиа служба очереди" ?>
-  <?define ProductVersion="1.4.0.0" ?>
-  <?define ProductCode="816B815C-BF37-44D6-9AEF-7BE8539AAC00"?>
   <?define UpgradeCode="1793500C-0A3C-4195-8A09-A015DCC551B0"?>
 
   <Product Id="$(var.ProductCode)"

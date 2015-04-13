@@ -3,8 +3,8 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Queue.Server")]
-[assembly: AssemblyDescription("Queue.Server")]
+[assembly: AssemblyTitle(Product.Server.Name)]
+[assembly: AssemblyDescription(Product.Server.Description)]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany(Product.Company)]
 [assembly: AssemblyProduct(Product.Name)]

@@ -4,8 +4,6 @@
 
   <?define ProductName="Queue Portal" ?>
   <?define ProductTitle="Портал очереди" ?>
-  <?define ProductVersion="1.4.1.0" ?>
-  <?define ProductCode="1A5F220B-DF53-4FC1-85A9-95C935763D66"?>
   <?define UpgradeCode="D44E3BFF-77AF-4081-9F88-9928E3104555"?>
 
   <Product Id="$(var.ProductCode)"

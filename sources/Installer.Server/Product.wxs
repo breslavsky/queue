@@ -4,8 +4,6 @@
 
   <?define ProductName="Queue Server" ?>
   <?define ProductTitle="Сервер очереди" ?>
-  <?define ProductVersion="1.4.6.0" ?>
-  <?define ProductCode="AA34004B-596B-45C2-B20E-93415B80861C"?>
   <?define UpgradeCode="58081157-52CE-4D31-8882-CB4A69FCAFDF"?>
 
   <Product Id="$(var.ProductCode)"

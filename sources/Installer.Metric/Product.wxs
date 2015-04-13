@@ -4,8 +4,6 @@
 
   <?define ProductName="Queue Metric" ?>
   <?define ProductTitle="Метрики очереди" ?>
-  <?define ProductVersion="1.2.1.50" ?>
-  <?define ProductCode="14FA36D0-11CA-45A4-9983-0ECF1C9D3C63"?>
   <?define UpgradeCode="62CE0951-2272-419D-9D63-9AAEF58DCD7A"?>
 
   <Product Id="$(var.ProductCode)"
