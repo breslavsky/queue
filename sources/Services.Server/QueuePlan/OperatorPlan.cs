@@ -1,5 +1,4 @@
-﻿using NLog;
-using Queue.Model;
+﻿using Queue.Model;
 using Queue.Model.Common;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,6 @@ namespace Queue.Services.Server
     public sealed class OperatorPlan
     {
         public ClientRequestPlan currentClientRequestPlan;
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly List<TimeInterval> clientRequestIntervals = new List<TimeInterval>();
         private readonly TimeInterval[] interruptionIntervals;
@@ -52,10 +50,10 @@ namespace Queue.Services.Server
 
         public void AddClientRequest(ClientRequest clientRequest, Schedule schedule)
         {
-            TimeSpan startTime = TimeSpan.Zero, finishTime = TimeSpan.Zero;
-
             if (!clientRequest.IsClosed)
             {
+                TimeSpan startTime, finishTime;
+
                 var clientInterval = TimeSpan.FromTicks(clientRequest.Type == ClientRequestType.Live
                     ? schedule.LiveClientInterval.Ticks : schedule.EarlyClientInterval.Ticks * clientRequest.Subjects);
 
@@ -121,7 +119,7 @@ namespace Queue.Services.Server
             var renderStartTime = startTime;
 
             foreach (var exception in reservedIntervals
-                .Where<TimeInterval>(i => i.FinishTime >= startTime)
+                .Where(i => i.FinishTime >= startTime)
                 .OrderBy(i => i.FinishTime))
             {
                 var renderFinishTime = exception.StartTime;
@@ -170,9 +168,6 @@ namespace Queue.Services.Server
                 case NotifyCollectionChangedAction.Reset:
                     CurrentClientRequestPlan = null;
                     clientRequestIntervals.Clear();
-                    break;
-
-                default:
                     break;
             }
         }

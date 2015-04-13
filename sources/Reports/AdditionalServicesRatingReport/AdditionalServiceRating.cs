@@ -1,5 +1,4 @@
 ﻿using Queue.Model;
-using System;
 
 namespace Queue.Reports.AdditionalServicesRatingReport
 {
@@ -9,6 +8,6 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
         public Operator Operator { get; set; }
 
-        public Single Quantity { get; set; }
+        public float Quantity { get; set; }
     }
 }

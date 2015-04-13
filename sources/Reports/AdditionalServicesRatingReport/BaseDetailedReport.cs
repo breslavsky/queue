@@ -34,7 +34,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
             get { return ServiceLocator.Current.GetInstance<ISessionProvider>(); }
         }
 
-        public BaseDetailedReport(AdditionalServicesRatingReportSettings settings)
+        protected BaseDetailedReport(AdditionalServicesRatingReportSettings settings)
         {
             this.settings = settings;
         }
@@ -55,11 +55,11 @@ namespace Queue.Reports.AdditionalServicesRatingReport
                 ClientRequest request = null;
                 AdditionalService additionalService = null;
 
-                ClientRequestAdditionalServiceQuery query = session.QueryOver<ClientRequestAdditionalService>(() => service)
+                ClientRequestAdditionalServiceQuery query = session.QueryOver(() => service)
                                                                     .JoinAlias(() => service.ClientRequest, () => request)
                                                                     .JoinAlias(() => service.AdditionalService, () => additionalService)
                                                                     .Where(Restrictions.On(() => request.RequestDate).IsBetween(startDate).And(finishDate))
-                                                                    .Where(Restrictions.On(() => request.State).IsIn(new ClientRequestState[] { ClientRequestState.Rendered }));
+                                                                    .Where(Restrictions.On(() => request.State).IsIn(new[] { ClientRequestState.Rendered }));
 
                 if (settings.Services.Length > 0)
                 {
@@ -158,7 +158,6 @@ namespace Queue.Reports.AdditionalServicesRatingReport
             IRow statRow = worksheet.GetRow(1);
             IRow formulaRow = worksheet.GetRow(2);
             ICellStyle statStyle = statRow.GetCell(4).CellStyle;
-            ICellStyle totalRowStyle = formulaRow.GetCell(4).CellStyle;
 
             IFont font = worksheet.Workbook.CreateFont();
             font.Boldweight = 1000;
@@ -199,7 +198,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
             foreach (Operator oper in operators)
             {
-                AdditionalServiceRating rating = ratings.SingleOrDefault(r => r.Operator == oper && r.Service == service);
+                AdditionalServiceRating rating = ratings.SingleOrDefault(r => r.Operator.Equals(oper) && r.Service.Equals(service));
                 if (rating != null)
                 {
                     totalCount += rating.Quantity;
@@ -238,13 +237,13 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
         protected ICellStyle CreateCellBoldStyle(IWorkbook workBook)
         {
-            ICellStyle boldCellStyle = workBook.CreateCellStyle();
+            ICellStyle style = workBook.CreateCellStyle();
 
             IFont font = workBook.CreateFont();
             font.Boldweight = 1000;
-            boldCellStyle.SetFont(font);
+            style.SetFont(font);
 
-            return boldCellStyle;
+            return style;
         }
     }
 }

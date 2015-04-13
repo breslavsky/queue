@@ -27,7 +27,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
                     return new DayDetailedReport(settings).Generate();
 
                 default:
-                    throw new FaultException(string.Format("Указанный уровень детализации не поддерживается: {0}", settings.DetailLevel.ToString()));
+                    throw new FaultException(string.Format("Указанный уровень детализации не поддерживается: {0}", settings.DetailLevel));
             }
         }
     }

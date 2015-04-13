@@ -8,7 +8,7 @@ namespace Queue.Common
 {
     public class ConfigurationManager : IConfigurationManager
     {
-        private string app;
+        private readonly string app;
         private Configuration configuration;
 
         public ConfigurationManager(string app = null)
@@ -20,12 +20,11 @@ namespace Queue.Common
 
         private void Load()
         {
-            ExeConfigurationFileMap configMap = new ExeConfigurationFileMap();
-
-            configMap.ExeConfigFilename = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                                                                    "Junte",
-                                                                     app,
-                                                                    "app.config");
+            ExeConfigurationFileMap configMap = new ExeConfigurationFileMap
+            {
+                ExeConfigFilename =
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Junte", app, "app.config")
+            };
 
             configuration = NetConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
         }

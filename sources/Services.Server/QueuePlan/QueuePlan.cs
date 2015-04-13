@@ -28,13 +28,13 @@ namespace Queue.Services.Server
 
         private List<ClientRequest> clientRequests = new List<ClientRequest>();
 
-        private Dictionary<ServiceRenderingKey, ServiceRendering[]> serviceRenderings
+        private readonly Dictionary<ServiceRenderingKey, ServiceRendering[]> serviceRenderings
             = new Dictionary<ServiceRenderingKey, ServiceRendering[]>();
 
-        private Dictionary<Service, Schedule> serviceSchedule
+        private readonly Dictionary<Service, Schedule> serviceSchedule
             = new Dictionary<Service, Schedule>();
 
-        private EntityStorage storage = new EntityStorage();
+        private readonly EntityStorage storage = new EntityStorage();
 
         public QueuePlan()
         {
@@ -170,7 +170,7 @@ namespace Queue.Services.Server
 
                     try
                     {
-                        OperatorPlan targetOperatorPlan = null;
+                        OperatorPlan targetOperatorPlan;
 
                         if (conditionClientRequest.Operator != null)
                         {
@@ -293,7 +293,7 @@ namespace Queue.Services.Server
                 {
                     var e = new QueuePlanEventArgs()
                     {
-                        Operator = (Operator)o.Operator
+                        Operator = o.Operator
                     };
 
                     if (o.CurrentClientRequestPlan != null)
@@ -469,7 +469,7 @@ namespace Queue.Services.Server
 
                     if (timeIntervals.Count() > 1000)
                     {
-                        throw new OverflowException(string.Format("Возможно переполнение памяти. Обратитесь к администратору."));
+                        throw new OverflowException("Возможно переполнение памяти. Обратитесь к администратору.");
                     }
                 }
             }
@@ -533,7 +533,10 @@ namespace Queue.Services.Server
                          .Add(new Disjunction()
                              .Add(Restrictions.Eq("Mode", serviceRenderingMode))
                              .Add(Restrictions.Eq("Mode", ServiceRenderingMode.AllRequests)))
-                         .List<ServiceRendering>().ToArray());
+                         .List<ServiceRendering>()
+                         .ToArray());
+
+                    transaction.Commit();
                 }
             }
 
@@ -543,7 +546,7 @@ namespace Queue.Services.Server
         /// <summary>
         /// Получить расписание для услуги
         /// </summary>
-        /// <param name="date"></param>
+        /// <param name="service"></param>
         /// <returns></returns>
         public Schedule GetServiceSchedule(Service service)
         {
@@ -555,28 +558,28 @@ namespace Queue.Services.Server
                 using (var transaction = session.BeginTransaction())
                 {
                     Schedule schedule = session.CreateCriteria<ServiceExceptionSchedule>()
-                         .Add(Expression.Eq("Service", service))
-                         .Add(Expression.Eq("ScheduleDate", PlanDate))
+                         .Add(Restrictions.Eq("Service", service))
+                         .Add(Restrictions.Eq("ScheduleDate", PlanDate))
                          .SetMaxResults(1)
                          .UniqueResult<ServiceExceptionSchedule>();
                     if (schedule == null)
                     {
                         schedule = session.CreateCriteria<DefaultExceptionSchedule>()
-                            .Add(Expression.Eq("ScheduleDate", PlanDate))
+                            .Add(Restrictions.Eq("ScheduleDate", PlanDate))
                             .UniqueResult<DefaultExceptionSchedule>();
                         if (schedule == null)
                         {
                             var dayOfWeek = PlanDate.DayOfWeek;
 
                             schedule = session.CreateCriteria<ServiceWeekdaySchedule>()
-                                .Add(Expression.Eq("Service", service))
-                                .Add(Expression.Eq("DayOfWeek", dayOfWeek))
+                                .Add(Restrictions.Eq("Service", service))
+                                .Add(Restrictions.Eq("DayOfWeek", dayOfWeek))
                                 .SetMaxResults(1)
                                 .UniqueResult<ServiceWeekdaySchedule>();
                             if (schedule == null)
                             {
                                 schedule = session.CreateCriteria<DefaultWeekdaySchedule>()
-                                    .Add(Expression.Eq("DayOfWeek", dayOfWeek))
+                                    .Add(Restrictions.Eq("DayOfWeek", dayOfWeek))
                                     .UniqueResult<DefaultWeekdaySchedule>();
                             }
                         }
@@ -588,6 +591,7 @@ namespace Queue.Services.Server
                     }
 
                     serviceSchedule.Add(service, schedule);
+                    transaction.Commit();
                 }
             }
 
@@ -671,6 +675,7 @@ namespace Queue.Services.Server
                     .UniqueResult<int>();
 
                 NotDistributedClientRequests.Clear();
+                transaction.Commit();
             }
         }
     }

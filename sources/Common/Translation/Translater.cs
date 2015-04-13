@@ -13,12 +13,12 @@ namespace Queue.Common
 
         private Translater(Assembly assembly, string resource, string modification = null)
         {
-            this.manager = CreateResouceManager(assembly, resource, modification);
+            manager = CreateResouceManager(assembly, resource, modification);
         }
 
         public Translater(Type type, string modification = null)
         {
-            this.manager = CreateResouceManager(type.Assembly, type.Name, modification);
+            manager = CreateResouceManager(type.Assembly, type.Name, modification);
         }
 
         private ResourceManager CreateResouceManager(Assembly assembly, string name, string modification = null)
@@ -39,18 +39,22 @@ namespace Queue.Common
 
         public DictionaryEntry[] GetStrings()
         {
-            DictionaryEntry[] result = new DictionaryEntry[] { };
-            if (manager != null)
+            DictionaryEntry[] result = { };
+            if (manager == null)
             {
-                try
-                {
-                    result = manager.GetResourceSet(CultureInfo.CurrentCulture, true, true)
-                                         .Cast<DictionaryEntry>()
-                                         .ToArray();
-                }
-                catch { }
+                return result;
             }
-            return result;
+
+            try
+            {
+                return manager.GetResourceSet(CultureInfo.CurrentCulture, true, true)
+                    .Cast<DictionaryEntry>()
+                    .ToArray();
+            }
+            catch
+            {
+                return result;
+            }
         }
 
         public string GetString(object key, params object[] parameters)
