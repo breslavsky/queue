@@ -42,7 +42,7 @@ namespace Queue.Notification.Views
             this.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
             Mouse.OverrideCursor = Cursors.None;
 
-            InitializeModel();
+            model.Initialize(CreateVLCControl());
         }
 
         private void model_ClientRequestsLengthChanged(object sender, int length)
@@ -55,7 +55,7 @@ namespace Queue.Notification.Views
             CallingClientRequestsControl.Model.AddToClientRequests(e);
         }
 
-        private void InitializeModel()
+        private VlcControl CreateVLCControl()
         {
             try
             {
@@ -76,12 +76,14 @@ namespace Queue.Notification.Views
                 });
                 videoGrid.Children.Add(vlcImage);
 
-                model.Initialize(vlcControl);
+                return vlcControl;
             }
             catch (Exception ex)
             {
-                UIHelper.Warning(null, ex.Message);
+                UIHelper.Warning(null, string.Format("Ошибка при инициализации плеера VLC: {0}", ex.Message));
             }
+
+            return null;
         }
 
         private void InitVlcContext()

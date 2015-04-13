@@ -244,6 +244,11 @@ namespace Queue.Notification.ViewModels
         {
             UpdateTicker(config);
 
+            if (vlcControl == null)
+            {
+                return;
+            }
+
             foreach (MediaConfigFile file in mediaFiles)
             {
                 vlcControl.Medias.Add(new LocationMedia(string.Format(MediaFileUriPattern, config.ServiceUrl, file.Id)));
