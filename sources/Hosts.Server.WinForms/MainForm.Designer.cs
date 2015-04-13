@@ -73,7 +73,7 @@
             // 
             this.startButton.Location = new System.Drawing.Point(5, 5);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(190, 30);
+            this.startButton.Size = new System.Drawing.Size(195, 30);
             this.startButton.TabIndex = 0;
             this.startButton.Text = "Запустить сервер";
             this.startButton.UseVisualStyleBackColor = true;
@@ -84,7 +84,7 @@
             this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel.Location = new System.Drawing.Point(0, 0);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(406, 591);
+            this.panel.Size = new System.Drawing.Size(404, 592);
             this.panel.TabIndex = 2;
             // 
             // pictureBox1
@@ -93,7 +93,7 @@
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(400, 94);
+            this.pictureBox1.Size = new System.Drawing.Size(398, 94);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox1.TabIndex = 13;
             this.pictureBox1.TabStop = false;
@@ -115,9 +115,9 @@
             this.serviceGroupBox.Controls.Add(this.runServiceButton);
             this.serviceGroupBox.Controls.Add(this.installServiseButton);
             this.serviceGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serviceGroupBox.Location = new System.Drawing.Point(3, 479);
+            this.serviceGroupBox.Location = new System.Drawing.Point(3, 480);
             this.serviceGroupBox.Name = "serviceGroupBox";
-            this.serviceGroupBox.Size = new System.Drawing.Size(400, 59);
+            this.serviceGroupBox.Size = new System.Drawing.Size(398, 59);
             this.serviceGroupBox.TabIndex = 2;
             this.serviceGroupBox.TabStop = false;
             this.serviceGroupBox.Text = "Служба";
@@ -165,7 +165,7 @@
             this.settingsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingsGroupBox.Location = new System.Drawing.Point(3, 103);
             this.settingsGroupBox.Name = "settingsGroupBox";
-            this.settingsGroupBox.Size = new System.Drawing.Size(400, 370);
+            this.settingsGroupBox.Size = new System.Drawing.Size(398, 371);
             this.settingsGroupBox.TabIndex = 11;
             this.settingsGroupBox.TabStop = false;
             this.settingsGroupBox.Text = "Настройки";
@@ -213,9 +213,9 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(10, 330);
+            this.saveButton.Location = new System.Drawing.Point(5, 330);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(380, 35);
+            this.saveButton.Size = new System.Drawing.Size(390, 35);
             this.saveButton.TabIndex = 9;
             this.saveButton.Text = "Сохранить";
             this.saveButton.UseVisualStyleBackColor = true;
@@ -345,7 +345,7 @@
             this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
             this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.layoutPanel.Size = new System.Drawing.Size(406, 591);
+            this.layoutPanel.Size = new System.Drawing.Size(404, 592);
             this.layoutPanel.TabIndex = 14;
             // 
             // panel1
@@ -353,9 +353,9 @@
             this.panel1.Controls.Add(this.stopButton);
             this.panel1.Controls.Add(this.startButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 544);
+            this.panel1.Location = new System.Drawing.Point(3, 545);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(400, 44);
+            this.panel1.Size = new System.Drawing.Size(398, 44);
             this.panel1.TabIndex = 14;
             // 
             // MainForm
@@ -363,7 +363,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(406, 591);
+            this.ClientSize = new System.Drawing.Size(404, 592);
             this.Controls.Add(this.layoutPanel);
             this.Controls.Add(this.panel);
             this.DoubleBuffered = true;

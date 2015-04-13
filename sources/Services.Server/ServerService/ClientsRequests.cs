@@ -518,6 +518,26 @@ namespace Queue.Services.Server
             });
         }
 
+        public async Task DeleteClientRequest(Guid clientRequestId)
+        {
+            await Task.Run(() =>
+            {
+                using (ISession session = sessionProvider.OpenSession())
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    ClientRequest clientRequest = session.Get<ClientRequest>(clientRequestId);
+                    if (clientRequest == null)
+                    {
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientRequestId),
+                            string.Format("Запрос клиента [{0}] не найден", clientRequestId));
+                    }
+
+                    session.Delete(clientRequest);
+                    transaction.Commit();
+                }
+            });
+        }
+
         private Workplace[] GetCouponWorkplaces(ClientRequest clientRequest)
         {
             QueuePlan queuePlan;

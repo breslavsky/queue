@@ -331,5 +331,34 @@ namespace Queue.Administrator
         }
 
         #endregion bindings
+
+        private async void clientRequestsGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно хотите удалить запрос клиента?",
+                "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                ClientRequest clientRequest = e.Row.Tag as ClientRequest;
+
+                using (var channel = channelManager.CreateChannel())
+                {
+                    try
+                    {
+                        await taskPool.AddTask(channel.Service.DeleteClientRequest(clientRequest.Id));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                }
+            }
+        }
     }
 }

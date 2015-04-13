@@ -86,6 +86,10 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
+        Task DeleteClientRequest(Guid clientRequestId);
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
         Task<ClientRequest> CancelClientRequest(Guid clientRequestId);
 
         [OperationContract]
