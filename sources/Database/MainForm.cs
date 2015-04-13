@@ -417,14 +417,15 @@ namespace Queue.Database
                     session.Save(notificationConfig);
                 }
 
-                Log("Инициализация администратора");
+                Log("Инициализация пользователей");
 
-                int count = session.CreateCriteria<Administrator>()
-                    .SetProjection(Projections.Count(Projections.Id()))
-                    .UniqueResult<int>();
-                if (count == 0)
+                Administrator administrator = session.CreateCriteria<Administrator>()
+                    .Add(Restrictions.Eq("Surname", "Администратор"))
+                    .SetMaxResults(1)
+                    .UniqueResult<Administrator>();
+                if (administrator == null)
                 {
-                    var administrator = new Administrator()
+                    session.Save(new Administrator()
                     {
                         IsActive = true,
                         Surname = "Администратор",
@@ -442,8 +443,23 @@ namespace Queue.Database
                             | AdministratorPermissions.Offices
                             | AdministratorPermissions.AdditionalServices
                             | AdministratorPermissions.OperatorInterruptions
-                    };
-                    session.Save(administrator);
+                    });
+                }
+
+                administrator = session.CreateCriteria<Administrator>()
+                    .Add(Restrictions.Eq("Surname", "Терминал записи"))
+                    .SetMaxResults(1)
+                    .UniqueResult<Administrator>();
+                if (administrator == null)
+                {
+                    session.Save(new Administrator()
+                    {
+                        IsActive = true,
+                        Surname = "Терминал записи",
+                        SessionId = Guid.NewGuid(),
+                        Permissions = AdministratorPermissions.Clients
+                            | AdministratorPermissions.ClientsRequests
+                    });
                 }
 
                 Log("Инициализация расписания по уполчанию");
