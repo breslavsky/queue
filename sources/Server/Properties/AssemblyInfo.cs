@@ -13,6 +13,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("E2B57D32-DAE8-4DB8-8E18-51310659E954")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion(Product.Server.Version)]
+[assembly: AssemblyFileVersion(Product.Server.Version)]
 [assembly: NeutralResourcesLanguageAttribute(Product.Language)]
