@@ -19,6 +19,8 @@ namespace Queue.Simulator
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            RegisterContainer();
+
             while (true)
             {
                 using (LoginForm loginForm = new LoginForm(UserRole.Administrator))

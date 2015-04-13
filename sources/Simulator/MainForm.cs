@@ -4,8 +4,8 @@ using Junte.WCF.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
+using System.Reflection;
 using System.ServiceModel;
-using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Simulator
 {
@@ -59,6 +59,8 @@ namespace Queue.Simulator
 
         private async void MainForm_Load(object sender, EventArgs eventArgs)
         {
+            Text += string.Format(" ({0})", Assembly.GetEntryAssembly().GetName().Version);
+
             using (var channel = channelManager.CreateChannel())
             {
                 try

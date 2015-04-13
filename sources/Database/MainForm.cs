@@ -37,6 +37,8 @@ namespace Queue.Database
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Text += string.Format(" ({0})", Assembly.GetEntryAssembly().GetName().Version);
+
             configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
             profiles = configuration.GetSection<DatabaseSettingsProfiles>(SectionKey);
 

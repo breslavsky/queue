@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.topMenu = new System.Windows.Forms.MenuStrip();
             this.clientRequestsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.logoutButton = new System.Windows.Forms.ToolStripMenuItem();
             this.opeatorsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logoutButton = new System.Windows.Forms.ToolStripMenuItem();
             this.topMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,14 +56,6 @@
             this.clientRequestsMenuItem.Text = "Симулятор запросов";
             this.clientRequestsMenuItem.Click += new System.EventHandler(this.clientRequestsMenuItem_Click);
             // 
-            // logoutButton
-            // 
-            this.logoutButton.Image = ((System.Drawing.Image)(resources.GetObject("logoutButton.Image")));
-            this.logoutButton.Name = "logoutButton";
-            this.logoutButton.Size = new System.Drawing.Size(69, 20);
-            this.logoutButton.Text = "Выход";
-            this.logoutButton.Click += new System.EventHandler(this.logoutButton_Click);
-            // 
             // opeatorsMenuItem
             // 
             this.opeatorsMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("opeatorsMenuItem.Image")));
@@ -71,6 +63,14 @@
             this.opeatorsMenuItem.Size = new System.Drawing.Size(165, 20);
             this.opeatorsMenuItem.Text = "Симулятор операторов";
             this.opeatorsMenuItem.Click += new System.EventHandler(this.opeatorsMenuItem_Click);
+            // 
+            // logoutButton
+            // 
+            this.logoutButton.Image = ((System.Drawing.Image)(resources.GetObject("logoutButton.Image")));
+            this.logoutButton.Name = "logoutButton";
+            this.logoutButton.Size = new System.Drawing.Size(69, 20);
+            this.logoutButton.Text = "Выход";
+            this.logoutButton.Click += new System.EventHandler(this.logoutButton_Click);
             // 
             // MainForm
             // 
@@ -84,6 +84,7 @@
             this.Text = "Симлятор";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.topMenu.ResumeLayout(false);
             this.topMenu.PerformLayout();
             this.ResumeLayout(false);

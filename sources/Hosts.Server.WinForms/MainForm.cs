@@ -2,7 +2,6 @@
 using NLog;
 using Queue.Common;
 using Queue.Hosts.Common;
-using Queue.Hosts.Server.WinForms.Properties;
 using Queue.Server;
 using System;
 using System.IO;
@@ -47,7 +46,7 @@ namespace Queue.Hosts.Server.WinForms
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Text += string.Format(" ({0})", typeof(ServerInstance).Assembly.GetName().Version);
+            Text += string.Format(" ({0})", Assembly.GetEntryAssembly().GetName().Version);
 
             languageControl.Select<Language>(settings.Language);
 
@@ -90,8 +89,8 @@ namespace Queue.Hosts.Server.WinForms
             runServiceButton.Text = runned ? StopServiceButtonTitle
                 : StartServiceButtonTitle;
 
-            serviceStatePicture.Image = runned ? Resources.online
-                : Resources.offline;
+            serviceStatePicture.Image = runned ? Icons.online
+                : Icons.offline;
 
             startButton.Enabled = !started && !runned;
             stopButton.Enabled = started && !runned;

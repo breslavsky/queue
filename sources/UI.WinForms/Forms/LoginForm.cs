@@ -7,6 +7,7 @@ using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
+using System.Reflection;
 using System.ServiceModel;
 using System.Windows.Forms;
 
@@ -35,6 +36,8 @@ namespace Queue.UI.WinForms
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
+            Text += string.Format(" ({0})", Assembly.GetEntryAssembly().GetName().Version);
+
             configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
             settings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
             LoginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);

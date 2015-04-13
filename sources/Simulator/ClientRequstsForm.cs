@@ -95,6 +95,10 @@ namespace Queue.Simulator
                 {
                     services.AddRange(await taskPool.AddTask(channel.Service.GetServices(serviceGroup.Id)));
                 }
+                else
+                {
+                    services.AddRange(await taskPool.AddTask(channel.Service.GetRootServices()));
+                }
 
                 return services.ToArray();
             }
