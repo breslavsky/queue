@@ -47,7 +47,7 @@ namespace Queue.UI.WinForms
             languageControl.Select<Language>(settings.Language);
             AdjustSelectedLanguage();
 
-            loginSettingsControl.Initialize(LoginSettings, userRole, taskPool);
+            loginSettingsControl.Initialize(LoginSettings, userRole);
             loginSettingsControl.OnConnected += OnConnected;
             loginSettingsControl.OnSubmit += OnSubmit;
 

@@ -31,7 +31,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -248,6 +248,12 @@
       <DependentUpon>CurrentUserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="AdministratorSettings.cs" />
+    <Compile Include="Offices\OfficeLoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Offices\OfficeLoginForm.Designer.cs">
+      <DependentUpon>OfficeLoginForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="OperatorInterruptions\EditOperatorInterruptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -490,6 +496,9 @@
     <EmbeddedResource Include="CurrentUserForm.resx">
       <DependentUpon>CurrentUserForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Offices\OfficeLoginForm.resx">
+      <DependentUpon>OfficeLoginForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OperatorInterruptions\EditOperatorInterruptionForm.resx">
       <DependentUpon>EditOperatorInterruptionForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -687,12 +696,12 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 и x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <ProductName>Клиентский профиль .NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

@@ -39,7 +39,7 @@
             this.connectButton = new System.Windows.Forms.Button();
             this.serverLabel = new System.Windows.Forms.Label();
             this.endpointTextBox = new System.Windows.Forms.TextBox();
-            this.selectUserControl = new Queue.UI.WinForms.IdentifiedEntityControl();
+            this.userControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             ((System.ComponentModel.ISupportInitialize)(this.serverConnectionSettingsBindingSource)).BeginInit();
             this.loginGroupBox.SuspendLayout();
             this.connectionGroupBox.SuspendLayout();
@@ -51,7 +51,7 @@
             // 
             // loginGroupBox
             // 
-            this.loginGroupBox.Controls.Add(this.selectUserControl);
+            this.loginGroupBox.Controls.Add(this.userControl);
             this.loginGroupBox.Controls.Add(this.passwordLabel);
             this.loginGroupBox.Controls.Add(this.passwordTextBox);
             this.loginGroupBox.Controls.Add(this.loginLabel);
@@ -133,12 +133,12 @@
             // 
             // selectUserControl
             // 
-            this.selectUserControl.Location = new System.Drawing.Point(100, 30);
-            this.selectUserControl.Name = "selectUserControl";
-            this.selectUserControl.Size = new System.Drawing.Size(220, 21);
-            this.selectUserControl.TabIndex = 1;
-            this.selectUserControl.UseResetButton = false;
-            this.selectUserControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.selectUserControl_SelectedChanged);
+            this.userControl.Location = new System.Drawing.Point(100, 30);
+            this.userControl.Name = "selectUserControl";
+            this.userControl.Size = new System.Drawing.Size(220, 21);
+            this.userControl.TabIndex = 1;
+            this.userControl.UseResetButton = false;
+            this.userControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.selectUserControl_SelectedChanged);
             // 
             // LoginSettingsControl
             // 
@@ -168,6 +168,6 @@
         private System.Windows.Forms.TextBox passwordTextBox;
         private System.Windows.Forms.Label loginLabel;
         private System.Windows.Forms.BindingSource serverConnectionSettingsBindingSource;
-        private IdentifiedEntityControl selectUserControl;
+        private IdentifiedEntityControl userControl;
     }
 }

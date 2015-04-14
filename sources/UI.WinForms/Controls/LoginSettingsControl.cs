@@ -15,7 +15,6 @@ namespace Queue.UI.WinForms
     public partial class LoginSettingsControl : RichUserControl
     {
         private UserRole userRole;
-        private TaskPool taskPool;
 
         private LoginSettings loginSettings;
 
@@ -25,7 +24,7 @@ namespace Queue.UI.WinForms
 
         public User SelectedUser
         {
-            get { return selectUserControl.Selected<User>(); }
+            get { return userControl.Selected<User>(); }
         }
 
         public EventHandler OnConnected = delegate { };
@@ -37,10 +36,9 @@ namespace Queue.UI.WinForms
             InitializeComponent();
         }
 
-        public void Initialize(LoginSettings loginSettings, UserRole userRole, TaskPool taskPool)
+        public void Initialize(LoginSettings loginSettings, UserRole userRole)
         {
             this.userRole = userRole;
-            this.taskPool = taskPool;
             this.loginSettings = loginSettings;
 
             serverConnectionSettingsBindingSource.DataSource = loginSettings;
@@ -98,10 +96,10 @@ namespace Queue.UI.WinForms
                 {
                     connectButton.Enabled = false;
 
-                    selectUserControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(userRole)));
+                    userControl.Initialize(await channel.Service.GetUserLinks(userRole));
                     if (loginSettings.User != Guid.Empty)
                     {
-                        selectUserControl.Select<User>(new User() { Id = loginSettings.User });
+                        userControl.Select<User>(new User() { Id = loginSettings.User });
                     }
 
                     passwordTextBox.Focus();
@@ -157,7 +155,7 @@ namespace Queue.UI.WinForms
 
         private void selectUserControl_SelectedChanged(object sender, EventArgs e)
         {
-            loginSettings.User = selectUserControl.Selected<User>().Id;
+            loginSettings.User = userControl.Selected<User>().Id;
         }
 
         internal void Close()

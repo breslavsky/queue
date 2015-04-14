@@ -102,16 +102,12 @@ namespace Queue.Administrator
                 {
                     case LoginColumn:
 
-                        using (var loginForm = new LoginForm(UserRole.Administrator))
+                        using (var f = new OfficeLoginForm(channelBuilder, currentUser, office.Id))
                         {
-                            loginForm.LoginSettings.Endpoint = office.Endpoint;
-
-                            if (loginForm.ShowDialog() == DialogResult.OK)
+                            if (f.ShowDialog() == DialogResult.OK)
                             {
-                                var user = loginForm.User;
-
-                                office.Endpoint = loginForm.LoginSettings.Endpoint;
-                                office.SessionId = user.SessionId;
+                                office.Endpoint = f.Endpoint;
+                                office.SessionId = f.SessionId;
 
                                 using (var channel = channelManager.CreateChannel())
                                 {
