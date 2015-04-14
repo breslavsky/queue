@@ -133,11 +133,6 @@ namespace Queue.UI.WPF.ViewModels
 
         private void SetLanguage(Language lang)
         {
-            if (lang == Language.zh_CN)
-            {
-                lang = Language.ru_RU;
-            }
-
             language = lang;
             foreach (LetterKeyboardButton btn in letters)
             {

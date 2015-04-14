@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.stopButton = new System.Windows.Forms.Button();
             this.serviceGroupBox = new System.Windows.Forms.GroupBox();
@@ -36,25 +37,25 @@
             this.installServiseButton = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
             this.settingsGroupBox = new System.Windows.Forms.GroupBox();
+            this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
             this.saveButton = new System.Windows.Forms.Button();
             this.serverGroupBox = new System.Windows.Forms.GroupBox();
             this.portUpDown = new System.Windows.Forms.NumericUpDown();
+            this.portalSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.portLabel = new System.Windows.Forms.Label();
-            this.serviceStateTimer = new System.Windows.Forms.Timer();
+            this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
             this.layoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
-            this.portalSettingsBindingSource = new System.Windows.Forms.BindingSource();
             this.serviceGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).BeginInit();
             this.settingsGroupBox.SuspendLayout();
             this.serverGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.portalSettingsBindingSource)).BeginInit();
             this.layoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.portalSettingsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // stopButton
@@ -74,7 +75,7 @@
             this.serviceGroupBox.Controls.Add(this.runServiceButton);
             this.serviceGroupBox.Controls.Add(this.installServiseButton);
             this.serviceGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serviceGroupBox.Location = new System.Drawing.Point(3, 403);
+            this.serviceGroupBox.Location = new System.Drawing.Point(3, 413);
             this.serviceGroupBox.Name = "serviceGroupBox";
             this.serviceGroupBox.Size = new System.Drawing.Size(398, 59);
             this.serviceGroupBox.TabIndex = 14;
@@ -130,14 +131,21 @@
             this.settingsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingsGroupBox.Location = new System.Drawing.Point(3, 103);
             this.settingsGroupBox.Name = "settingsGroupBox";
-            this.settingsGroupBox.Size = new System.Drawing.Size(398, 294);
+            this.settingsGroupBox.Size = new System.Drawing.Size(398, 304);
             this.settingsGroupBox.TabIndex = 16;
             this.settingsGroupBox.TabStop = false;
             this.settingsGroupBox.Text = "Настройки";
             // 
+            // loginSettingsControl
+            // 
+            this.loginSettingsControl.Location = new System.Drawing.Point(10, 15);
+            this.loginSettingsControl.Name = "loginSettingsControl";
+            this.loginSettingsControl.Size = new System.Drawing.Size(345, 190);
+            this.loginSettingsControl.TabIndex = 0;
+            // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(5, 260);
+            this.saveButton.Location = new System.Drawing.Point(5, 265);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(390, 35);
             this.saveButton.TabIndex = 10;
@@ -149,7 +157,7 @@
             // 
             this.serverGroupBox.Controls.Add(this.portUpDown);
             this.serverGroupBox.Controls.Add(this.portLabel);
-            this.serverGroupBox.Location = new System.Drawing.Point(5, 210);
+            this.serverGroupBox.Location = new System.Drawing.Point(5, 215);
             this.serverGroupBox.Name = "serverGroupBox";
             this.serverGroupBox.Size = new System.Drawing.Size(176, 46);
             this.serverGroupBox.TabIndex = 3;
@@ -179,6 +187,10 @@
             0,
             0});
             // 
+            // portalSettingsBindingSource
+            // 
+            this.portalSettingsBindingSource.DataSource = typeof(Queue.Portal.PortalSettings);
+            // 
             // portLabel
             // 
             this.portLabel.Location = new System.Drawing.Point(10, 15);
@@ -206,10 +218,10 @@
             this.layoutPanel.Name = "layoutPanel";
             this.layoutPanel.RowCount = 4;
             this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 310F));
             this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
             this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.layoutPanel.Size = new System.Drawing.Size(404, 512);
+            this.layoutPanel.Size = new System.Drawing.Size(404, 522);
             this.layoutPanel.TabIndex = 17;
             // 
             // pictureBox1
@@ -228,27 +240,16 @@
             this.panel1.Controls.Add(this.startButton);
             this.panel1.Controls.Add(this.stopButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 468);
+            this.panel1.Location = new System.Drawing.Point(3, 478);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(398, 41);
             this.panel1.TabIndex = 17;
-            // 
-            // loginSettingsControl
-            // 
-            this.loginSettingsControl.Location = new System.Drawing.Point(10, 15);
-            this.loginSettingsControl.Name = "loginSettingsControl";
-            this.loginSettingsControl.Size = new System.Drawing.Size(345, 190);
-            this.loginSettingsControl.TabIndex = 0;
-            // 
-            // portalSettingsBindingSource
-            // 
-            this.portalSettingsBindingSource.DataSource = typeof(Queue.Portal.PortalSettings);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(404, 512);
+            this.ClientSize = new System.Drawing.Size(404, 522);
             this.Controls.Add(this.layoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(420, 550);
@@ -262,10 +263,10 @@
             this.settingsGroupBox.ResumeLayout(false);
             this.serverGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.portalSettingsBindingSource)).EndInit();
             this.layoutPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.portalSettingsBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }

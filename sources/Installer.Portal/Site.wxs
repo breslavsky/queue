@@ -190,6 +190,9 @@
       <Component Id="cmpF80950632DEBE87C7BDE61090846EAF9" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="FEEC4BE5-F94A-4882-8FF0-00634E27E07C">
         <File Id="filE567F4973678A8F136BB45518F901667" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\watch.js" />
       </Component>
+      <Component Id="cmpF80950632DEBE87C71DE61090846EAF9" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="FEEC4BE5-F94A-4882-8FF0-00634E27E07C">
+        <File Id="filE567F4973678A81136BB45518F901667" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\watch.js" />
+      </Component>
       <Component Id="cmpA4AB98AAF4CAC620BB722FE0A5B04F85" Directory="dirE77428803EC50E88FFB028BA543A4EF7" Guid="FB35D291-F8D8-4D5E-AB56-E664B379CFB9">
         <File Id="fil67D9F54D1DFCD2D5BD76B773982377C4" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\operator\index.html" />
       </Component>
