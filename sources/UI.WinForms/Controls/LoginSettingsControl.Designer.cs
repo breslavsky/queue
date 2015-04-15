@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginSettingsControl));
             this.serverConnectionSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.loginGroupBox = new System.Windows.Forms.GroupBox();
+            this.userControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.passwordLabel = new System.Windows.Forms.Label();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.loginLabel = new System.Windows.Forms.Label();
@@ -39,7 +40,6 @@
             this.connectButton = new System.Windows.Forms.Button();
             this.serverLabel = new System.Windows.Forms.Label();
             this.endpointTextBox = new System.Windows.Forms.TextBox();
-            this.userControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             ((System.ComponentModel.ISupportInitialize)(this.serverConnectionSettingsBindingSource)).BeginInit();
             this.loginGroupBox.SuspendLayout();
             this.connectionGroupBox.SuspendLayout();
@@ -56,12 +56,21 @@
             this.loginGroupBox.Controls.Add(this.passwordTextBox);
             this.loginGroupBox.Controls.Add(this.loginLabel);
             this.loginGroupBox.Enabled = false;
-            this.loginGroupBox.Location = new System.Drawing.Point(3, 79);
+            this.loginGroupBox.Location = new System.Drawing.Point(0, 79);
             this.loginGroupBox.Name = "loginGroupBox";
             this.loginGroupBox.Size = new System.Drawing.Size(330, 92);
             this.loginGroupBox.TabIndex = 2;
             this.loginGroupBox.TabStop = false;
             this.loginGroupBox.Text = "Данные пользователя";
+            // 
+            // userControl
+            // 
+            this.userControl.Location = new System.Drawing.Point(100, 30);
+            this.userControl.Name = "userControl";
+            this.userControl.Size = new System.Drawing.Size(220, 21);
+            this.userControl.TabIndex = 1;
+            this.userControl.UseResetButton = false;
+            this.userControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.selectUserControl_SelectedChanged);
             // 
             // passwordLabel
             // 
@@ -97,7 +106,7 @@
             this.connectionGroupBox.Controls.Add(this.connectButton);
             this.connectionGroupBox.Controls.Add(this.serverLabel);
             this.connectionGroupBox.Controls.Add(this.endpointTextBox);
-            this.connectionGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.connectionGroupBox.Location = new System.Drawing.Point(0, 3);
             this.connectionGroupBox.Name = "connectionGroupBox";
             this.connectionGroupBox.Size = new System.Drawing.Size(330, 70);
             this.connectionGroupBox.TabIndex = 1;
@@ -131,15 +140,6 @@
             this.endpointTextBox.TabIndex = 0;
             this.endpointTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.endpointTextBox_KeyDown);
             // 
-            // selectUserControl
-            // 
-            this.userControl.Location = new System.Drawing.Point(100, 30);
-            this.userControl.Name = "selectUserControl";
-            this.userControl.Size = new System.Drawing.Size(220, 21);
-            this.userControl.TabIndex = 1;
-            this.userControl.UseResetButton = false;
-            this.userControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.selectUserControl_SelectedChanged);
-            // 
             // LoginSettingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -147,7 +147,7 @@
             this.Controls.Add(this.loginGroupBox);
             this.Controls.Add(this.connectionGroupBox);
             this.Name = "LoginSettingsControl";
-            this.Size = new System.Drawing.Size(340, 176);
+            this.Size = new System.Drawing.Size(330, 170);
             ((System.ComponentModel.ISupportInitialize)(this.serverConnectionSettingsBindingSource)).EndInit();
             this.loginGroupBox.ResumeLayout(false);
             this.loginGroupBox.PerformLayout();

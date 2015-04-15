@@ -39,19 +39,19 @@
             this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.layoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.serviceGroupBox = new System.Windows.Forms.GroupBox();
             this.serviceStatePicture = new System.Windows.Forms.PictureBox();
             this.runServiceButton = new System.Windows.Forms.Button();
             this.installServiseButton = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.settingsGroupBox.SuspendLayout();
             this.databaseGroupBox.SuspendLayout();
             this.layoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.serviceGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // stopButton
@@ -72,7 +72,7 @@
             this.settingsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingsGroupBox.Location = new System.Drawing.Point(3, 103);
             this.settingsGroupBox.Name = "settingsGroupBox";
-            this.settingsGroupBox.Size = new System.Drawing.Size(398, 267);
+            this.settingsGroupBox.Size = new System.Drawing.Size(398, 268);
             this.settingsGroupBox.TabIndex = 15;
             this.settingsGroupBox.TabStop = false;
             this.settingsGroupBox.Text = "Настройки";
@@ -144,15 +144,25 @@
             this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 65F));
             this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.layoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.layoutPanel.Size = new System.Drawing.Size(404, 488);
+            this.layoutPanel.Size = new System.Drawing.Size(404, 489);
             this.layoutPanel.TabIndex = 17;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(398, 94);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 17;
+            this.pictureBox1.TabStop = false;
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.startButton);
             this.panel1.Controls.Add(this.stopButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 441);
+            this.panel1.Location = new System.Drawing.Point(3, 442);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(398, 44);
             this.panel1.TabIndex = 0;
@@ -162,7 +172,7 @@
             this.serviceGroupBox.Controls.Add(this.serviceStatePicture);
             this.serviceGroupBox.Controls.Add(this.runServiceButton);
             this.serviceGroupBox.Controls.Add(this.installServiseButton);
-            this.serviceGroupBox.Location = new System.Drawing.Point(3, 376);
+            this.serviceGroupBox.Location = new System.Drawing.Point(3, 377);
             this.serviceGroupBox.Name = "serviceGroupBox";
             this.serviceGroupBox.Size = new System.Drawing.Size(395, 59);
             this.serviceGroupBox.TabIndex = 14;
@@ -198,21 +208,11 @@
             this.installServiseButton.UseVisualStyleBackColor = true;
             this.installServiseButton.Click += new System.EventHandler(this.installServiseButton_Click);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(398, 94);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 17;
-            this.pictureBox1.TabStop = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(404, 488);
+            this.ClientSize = new System.Drawing.Size(404, 489);
             this.Controls.Add(this.layoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(420, 527);
@@ -225,10 +225,10 @@
             this.settingsGroupBox.ResumeLayout(false);
             this.databaseGroupBox.ResumeLayout(false);
             this.layoutPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.serviceGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }

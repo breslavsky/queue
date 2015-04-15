@@ -74,10 +74,10 @@ namespace Hosts.Portal.WinForms
                  UnistallServiceButtonTitle :
                  InstallServiceButtonTitle;
 
-            runServiceButton.Enabled = serviceInstalled;
+            startServiceButton.Enabled = serviceInstalled;
 
             bool runned = serviceManager.ServiceRunned();
-            runServiceButton.Text = runned ?
+            startServiceButton.Text = runned ?
                                         StopServiceButtonTitle :
                                         StartServiceButtonTitle;
 
@@ -185,7 +185,7 @@ namespace Hosts.Portal.WinForms
             AdjustServiceState();
         }
 
-        private void runServiceButton_Click(object sender, EventArgs e)
+        private void startServiceButton_Click(object sender, EventArgs e)
         {
             try
             {

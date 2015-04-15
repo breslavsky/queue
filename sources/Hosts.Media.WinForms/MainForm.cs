@@ -72,10 +72,10 @@ namespace Queue.Hosts.Media.WinForms
                  UnistallServiceButtonTitle :
                  InstallServiceButtonTitle;
 
-            runServiceButton.Enabled = serviceInstalled;
+            startServiceButton.Enabled = serviceInstalled;
 
             bool runned = serviceManager.ServiceRunned();
-            runServiceButton.Text = runned ?
+            startServiceButton.Text = runned ?
                                         StopServiceButtonTitle :
                                         StartServiceButtonTitle;
 
@@ -144,7 +144,7 @@ namespace Queue.Hosts.Media.WinForms
             AdjustServiceState();
         }
 
-        private void runServiceButton_Click(object sender, EventArgs e)
+        private void startServiceButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -230,20 +230,6 @@ namespace Queue.Hosts.Media.WinForms
                 StopMedia();
             }
             catch { }
-        }
-
-        private void MainForm_Resize(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Minimized)
-            {
-                Hide();
-            }
-        }
-
-        private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            Show();
-            WindowState = FormWindowState.Normal;
         }
     }
 }

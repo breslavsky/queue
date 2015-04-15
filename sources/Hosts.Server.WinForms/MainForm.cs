@@ -83,10 +83,10 @@ namespace Queue.Hosts.Server.WinForms
             installServiseButton.Text = serviceInstalled ? UnistallServiceButtonTitle
                  : InstallServiceButtonTitle;
 
-            runServiceButton.Enabled = serviceInstalled;
+            startServiceButton.Enabled = serviceInstalled;
 
             bool runned = serviceManager.ServiceRunned();
-            runServiceButton.Text = runned ? StopServiceButtonTitle
+            startServiceButton.Text = runned ? StopServiceButtonTitle
                 : StartServiceButtonTitle;
 
             serviceStatePicture.Image = runned ? Icons.online
@@ -263,7 +263,7 @@ namespace Queue.Hosts.Server.WinForms
             AdjustServiceState();
         }
 
-        private void runServiceButton_Click(object sender, EventArgs e)
+        private void startServiceButton_Click(object sender, EventArgs e)
         {
             try
             {
