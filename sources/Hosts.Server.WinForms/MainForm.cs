@@ -46,7 +46,7 @@ namespace Queue.Hosts.Server.WinForms
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Text += string.Format(" ({0})", Assembly.GetEntryAssembly().GetName().Version);
+            Text += string.Format(" ({0})", typeof(ServerInstance).Assembly.GetName().Version);
 
             languageControl.Select<Language>(settings.Language);
 

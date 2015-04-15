@@ -9,7 +9,7 @@ namespace Queue.Common
     {
         ru_RU,
         en_US,
-        zh_CN
+        //zh_CN
     }
 
     public static partial class TranslationExtensions
@@ -18,7 +18,7 @@ namespace Queue.Common
         {
             {Language.ru_RU, "ru-RU"},
             {Language.en_US, "en-US"},
-            {Language.zh_CN, "zh-CN"}
+            //{Language.zh_CN, "zh-CN"}
         };
 
         public static Language GetLanguage(this CultureInfo culture)
