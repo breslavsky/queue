@@ -2,9 +2,9 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?include $(var.Installer.Common.ProjectDir)Consts.wxi ?>
 
-  <?define ProductName="Queue Operator" ?>
-  <?define ProductTitle="Оператор очереди" ?>
-  <?define UpgradeCode="C74374A5-EE0C-4F3C-99D5-AEF1AC93017B"?>
+  <?define ProductName="Queue Terminal" ?>
+  <?define ProductTitle="Терминал записи" ?>
+  <?define UpgradeCode="5E9E95C2-3CAA-497C-98BD-D61CD0D5566F"?>
 
   <Product Id="$(var.ProductCode)"
             Name="$(var.ProductName)"
@@ -42,11 +42,11 @@
     </Feature>
 
     <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="ApplicationShortcut" Guid="6CE65F61-933A-40C3-A829-4CBAF6525053">
+      <Component Id="ApplicationShortcut" Guid="AB5C270E-4398-49AF-B467-8838E6978B5B">
         <Shortcut Id="Shortcut"
              Name="$(var.ProductTitle)"
              Description="$(var.ProductTitle)"
-             Target="[INSTALLFOLDER]$(var.Operator.TargetFileName)"
+             Target="[INSTALLFOLDER]$(var.Terminal.TargetFileName)"
              WorkingDirectory="INSTALLFOLDER" />
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
         <RegistryValue Root="HKCU"

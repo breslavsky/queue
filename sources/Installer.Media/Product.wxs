@@ -48,10 +48,6 @@
              Description="$(var.ProductTitle)"
              Target="[INSTALLFOLDER]$(var.Hosts.Media.WinForms.TargetFileName)"
              WorkingDirectory="INSTALLFOLDER" />
-        <Shortcut Id="UninstallShortcut"
-            Name="Удалить $(var.ProductTitle)"
-            Target="[System64Folder]msiexec.exe"
-            Arguments="/x [ProductCode]" />
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
         <RegistryValue Root="HKCU"
                        Key="Software\$(var.Manufacturer)\$(var.ProductName)"

@@ -16,8 +16,7 @@ if (-Not (Get-Command "Invoke-MsBuild" -errorAction SilentlyContinue))
 
 Invoke-MsBuild $PROJECT_FILE -properties @{'Configuration'='Release'};
 
-
-$ProductVersion = [Reflection.Assembly]::LoadFile("$PROJECT_PATH\Bin\Release\$DLL_FILE").GetName().Version.ToString();
+$ProductVersion = [System.Reflection.AssemblyName]::GetAssemblyName("$PROJECT_PATH\Bin\Release\$DLL_FILE").Version.ToString();
 $ProductCode = [guid]::NewGuid();
 
 

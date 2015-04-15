@@ -1,9 +1,154 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Fragment>
     <DirectoryRef Id="INSTALLFOLDER">
       <Directory Id="dir0C90AB180A09D13DFC6C2464F39ACEBE" Name="www" />
     </DirectoryRef>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="SiteFiles">
+      <Component Id="cmp60B1FB55579F20C4E5992381931290B2" Directory="dir0C90AB180A09D13DFC6C2464F39ACEBE" Guid="136CF601-13A8-466B-8B57-EDF55D5DEC1E">
+        <File Id="fil89EE66C5D7799C97E597520C8837930A" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\favicon.ico" />
+      </Component>
+      <Component Id="cmp0FCA79CB347FEC00C9A9E32C68351AD7" Directory="dir0C90AB180A09D13DFC6C2464F39ACEBE" Guid="94FF1CF4-A377-4F30-BD3C-B8876FA8D4D8">
+        <File Id="fil8378A64B4858A892EBCFD5F89490E063" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\index.html" />
+      </Component>
+      <Component Id="cmp45C02ED8F5B75116D37DAA2DD3AB97BD" Directory="dir0C90AB180A09D13DFC6C2464F39ACEBE" Guid="5EFEE2DE-308F-4311-BB31-079DFBAEDF40">
+        <File Id="filA55E7D38A29644F9C113B1A679117BFC" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\loading.png" />
+      </Component>
+      <Component Id="cmp9556C7D069B1FA1FA5D6CA724F15FD6B" Directory="dir0C90AB180A09D13DFC6C2464F39ACEBE" Guid="2281E204-13D7-4EB9-86D5-D2D98B69F59B">
+        <File Id="fil2C20EFB49DEA3B36BF635BD7B9D749BD" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\main.css" />
+      </Component>
+      <Component Id="cmp173A2DEE4BB0479B3FC7FE5E005CB7F1" Directory="dir0C90AB180A09D13DFC6C2464F39ACEBE" Guid="003FC6DA-7964-4557-89E7-DE57BD9002F8">
+        <File Id="fil2905D0DB1EB44F6BFEE6940A2BE0AE4C" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\main.js" />
+      </Component>
+      <Component Id="cmp1BC75490E485EFEB72874CA56B2ABA0D" Directory="dir0C90AB180A09D13DFC6C2464F39ACEBE" Guid="F76B48AE-C542-4589-9F53-F9F308D7D879">
+        <File Id="fil87A4C52D2FEB718AA05FE352F73DD038" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\social.png" />
+      </Component>
+      <Component Id="cmp2E8CEF429C2674C8DAC0A64AC7967B3A" Directory="dirB1C0C30C82DEF241A760B5C6CE723B52" Guid="0623BA1D-1023-496C-9D0E-F529FC01B61D">
+        <File Id="filE95ED2929246F82850BF750C115E5479" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\css\bootstrap-responsive.css" />
+      </Component>
+      <Component Id="cmp77396E15992EDDA98D4ABC7B77AFA2E0" Directory="dirB1C0C30C82DEF241A760B5C6CE723B52" Guid="099A0602-5C52-41AD-9F1A-EFEE2A3D624A">
+        <File Id="fil86F48EBE647E90D54A755987848A832C" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\css\bootstrap-responsive.min.css" />
+      </Component>
+      <Component Id="cmpA3A577367DC021DC3B25D47D6A12A5ED" Directory="dirB1C0C30C82DEF241A760B5C6CE723B52" Guid="8815DC75-8E4A-4AF6-AA59-C42116EB8ACC">
+        <File Id="fil9936C31B2BBE6E882FCB16CDBCA845A5" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\css\bootstrap.css" />
+      </Component>
+      <Component Id="cmp6A66D2B333CAC3EAB48C5F34EF6A2BE3" Directory="dirB1C0C30C82DEF241A760B5C6CE723B52" Guid="2AEED442-6B71-4292-88A2-4A1869DE7436">
+        <File Id="filAA25CA900D94EFB1984CFE9BBF3FE370" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\css\bootstrap.min.css" />
+      </Component>
+      <Component Id="cmpC93EFADBA3A3B64BC31A9D55A48EB445" Directory="dirDBA54732411C5883933F39746C3AE972" Guid="8F712625-9063-4C94-9D3E-6F325A29CF24">
+        <File Id="filCB13ADB0DB255DEDB205920D79E2C57F" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\img\glyphicons-halflings-white.png" />
+      </Component>
+      <Component Id="cmp7692C7A044AA80542971069E411EDBA1" Directory="dirDBA54732411C5883933F39746C3AE972" Guid="9885ABE6-FB7F-451A-88C8-02E0005160EF">
+        <File Id="filAE3149D81EBEADACBD4AA22E41B5CE99" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\img\glyphicons-halflings.png" />
+      </Component>
+      <Component Id="cmp708752248F027F0A8DCE12F3E5E6CE8A" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="7A607859-B56A-4D19-8D7D-D9E185E7868E">
+        <File Id="fil60E4B0685F57C79DD293C335DB88DDB7" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-affix.js" />
+      </Component>
+      <Component Id="cmp2F8F6CDF907671747ACD59363BE6D5D6" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="AC6DD86B-2985-469F-B4EA-608CD348C632">
+        <File Id="fil6E23E3DD5EBDD480868DDEC5F4E22C9F" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-alert.js" />
+      </Component>
+      <Component Id="cmp44984A6E6561B8019E22FB3C64202C9E" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="6A5EA79F-2564-471E-A6F4-2794503AD153">
+        <File Id="filAF931D77A4B9FC44C085472B207B0760" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-button.js" />
+      </Component>
+      <Component Id="cmp8626D1E1B760F867A45236F396276EF6" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="E3B3FA90-9461-4EFB-82A5-CF78A7503942">
+        <File Id="fil93EC0B47FA8015C4D574F3356A14132C" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-carousel.js" />
+      </Component>
+      <Component Id="cmp941D091505A0C524DCEB9334F7E0E775" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="DE5EDC73-0405-44CA-B197-96A1BAF6DF5C">
+        <File Id="fil9D6D6979939BFB1AEF2F9BDC787E127D" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-collapse.js" />
+      </Component>
+      <Component Id="cmpCD942FCD010856FDA02BE6AB57041C1E" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="AE4D31E7-9A10-4B0E-BACC-5D27C575DB22">
+        <File Id="filF691C3192852E4681EB168AE9A9D6AE3" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-dropdown.js" />
+      </Component>
+      <Component Id="cmp9575CE1502B7869D7F4BDF49DD568E21" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="03037CB9-75D2-42CF-9CEF-5ED4CDCEA391">
+        <File Id="fil790D48D6C60CF27364ACF177D5036844" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-modal.js" />
+      </Component>
+      <Component Id="cmp6FB427E3C9DD94062B1D0145999F7214" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="D3242722-256C-41B0-B096-D007D1AF0702">
+        <File Id="filA6E16243947C1F9972A8F45CF8351634" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-popover.js" />
+      </Component>
+      <Component Id="cmpF27725D5FABB9CDB032EACB2CB5FCB22" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="255CDA1E-77ED-4B9E-BF04-7DD8808475D4">
+        <File Id="filD889D3F495CBA6C21F265ABB447CE67C" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-scrollspy.js" />
+      </Component>
+      <Component Id="cmp6EAA7BF8733C5D6395BE9A27165E593C" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="C8BB2DA4-2817-4ABF-82BA-93386B730713">
+        <File Id="filD11E891D5E306E87C8683B801EB10D22" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-tab.js" />
+      </Component>
+      <Component Id="cmp7623B235ED1492519C82FD0EE9F8CC5C" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="F5ABF668-8F22-42EE-8F95-E29A1EF54F40">
+        <File Id="filC3CD62D0291EAC58A81386078F7D1D03" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-tooltip.js" />
+      </Component>
+      <Component Id="cmp2635C9BC1726F13EE6CAF9E25E2B7B14" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="49007C67-1893-4438-9FA7-33A58EC0E9D8">
+        <File Id="fil3693AD52BA5B0E47B24B43CD69C59B4A" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-transition.js" />
+      </Component>
+      <Component Id="cmpD7FAC5F6AB89737C1E31C6EB132BF48E" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="56FF19C6-AD62-4AEC-8D16-EF43A50E8758">
+        <File Id="fil884E2644A10DED96F200AB9E9E0C864A" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-typeahead.js" />
+      </Component>
+      <Component Id="cmp18297653CF756265E9AFC55308E830E0" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="25A0B73C-058A-4524-887D-35144D3BC5AB">
+        <File Id="fil971643B9966131E33576766D8D38B4C5" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap.js" />
+      </Component>
+      <Component Id="cmpF5023DF7FC3A1A75D0526F61306AD4B8" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="55C8BF5D-77DF-4823-8343-88E68D041053">
+        <File Id="filEF04AF9CC5F668967237F81080586707" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap.min.js" />
+      </Component>
+      <Component Id="cmp3BE0CD69D824411A4671496023236F6A" Directory="dir78E67451A6FAD9C5AD709F8CB75C576E" Guid="C1A7901F-E755-4197-B8F1-76B2DF94F106">
+        <File Id="filB72A98BF12287190C24BEFA09F50E67B" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\client\index.html" />
+      </Component>
+      <Component Id="cmp567CABD304C33E9A2A40CBF263DE6B05" Directory="dir78E67451A6FAD9C5AD709F8CB75C576E" Guid="D44E57F9-B734-422E-806D-533A97E96B49">
+        <File Id="fil15D3782D53B72F19ABD48305A075C7D1" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\client\main.css" />
+      </Component>
+      <Component Id="cmp834081CA8884F351CDE76A4DB30E7D13" Directory="dir78E67451A6FAD9C5AD709F8CB75C576E" Guid="C81437D2-B355-4820-81C8-3454A503260F">
+        <File Id="filE0B6605DAE2BF369597186417D346496" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\client\main.js" />
+      </Component>
+      <Component Id="cmp5C489D244A821AA5B9DE119642B30572" Directory="dirDC030F3D705B9C69FD809C50B5A7F21E" Guid="A4B54791-2957-4FF3-B139-8FF182E89EBF">
+        <File Id="filA81F9E8D4BC5DA57EE403EE44F52E7D0" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\date\date-ru-RU.js" />
+      </Component>
+      <Component Id="cmpB1941728560C52D8D5C41ACEFB607046" Directory="dirDC030F3D705B9C69FD809C50B5A7F21E" Guid="A40F2547-75ED-4740-81E5-9F547A933106">
+        <File Id="filDF4E560BD8362C8DC22767FA22EFD685" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\date\date.js" />
+      </Component>
+      <Component Id="cmpE9CF9AE6472BA293AE14C23C58CD0B1B" Directory="dirD5E708FC527F53DF3FCB7C18EF7F0AB6" Guid="5659D20F-F6FE-4778-9EC5-7074F0283D7E">
+        <File Id="filDC3B936781216FE6DAE15E366BA9E2CD" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\fullcalendar\fullcalendar.css" />
+      </Component>
+      <Component Id="cmpA50B777FA02120656DAADFEB87E8C94D" Directory="dirD5E708FC527F53DF3FCB7C18EF7F0AB6" Guid="3C0F4C9F-2070-4FB5-B84D-5D3D02804B39">
+        <File Id="fil71758F1BE62CE5EEA15DD2B0C1F23DE0" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\fullcalendar\fullcalendar.js" />
+      </Component>
+      <Component Id="cmpC143F02C1145EEF2A614F77B254ECBD6" Directory="dirD5E708FC527F53DF3FCB7C18EF7F0AB6" Guid="BFB65ACA-A647-42D7-8199-C623F2326BB3">
+        <File Id="fil38E478D8BC3D83A767208420BFC59CD6" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\fullcalendar\fullcalendar.min.js" />
+      </Component>
+      <Component Id="cmp94A68666830ECC0681615DC5F4BE3937" Directory="dirD5E708FC527F53DF3FCB7C18EF7F0AB6" Guid="DA64A412-216E-49AD-B196-FDD4FEE0D57E">
+        <File Id="fil1FC3837595D22E2F39D7A3179FF23FE6" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\fullcalendar\fullcalendar.print.css" />
+      </Component>
+      <Component Id="cmp152F9F495A99B102B216BF7B09E2789D" Directory="dirD5E708FC527F53DF3FCB7C18EF7F0AB6" Guid="A501CB9F-FF35-4176-83FE-0B3687147D12">
+        <File Id="filCC6DFB23085C1BB36A0D0668C2CFABE5" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\fullcalendar\gcal.js" />
+      </Component>
+      <Component Id="cmpCDB74050833BF31D4FFC0B7491FE279A" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="1E185FDA-4DC4-4652-92A4-460A4D8E3D06">
+        <File Id="fil740A0CD4EE3FCC3C1D73DAA03F929CCB" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\apng-canvas.min.js" />
+      </Component>
+      <Component Id="cmpEC6F4AA0D661BFB7E14F88F72E51A54B" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="AD3B0D47-492D-4BA5-81BC-7BDB50B16188">
+        <File Id="fil34DA0FF49F4441F812FED518D2F69B1D" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\common.js" />
+      </Component>
+      <Component Id="cmp1249613C9C3813F01027C018DE5610BC" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="1F6278B3-514C-4B17-A03B-286738938368">
+        <File Id="filC6769E2A3C9156685916DCCBE378A592" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\jquery.cookie.js" />
+      </Component>
+      <Component Id="cmp537109DE5B9CE619027E23CCCCF7F95F" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="3A6C697D-DE96-4042-9C70-704E39241DE2">
+        <File Id="fil08E8EC27B21A35C3A7167DF13A1A8ACC" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\jquery.min.js" />
+      </Component>
+      <Component Id="cmp3277448B3CE4663616E781D38026E107" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="3D6048BD-3989-4986-BE28-84AC8E9A87D5">
+        <File Id="fil3EB8B3234E08531E731A325F60AF9CF1" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\jquery.PrintArea.js" />
+      </Component>
+      <Component Id="cmp75B1F4F106236E239020725E33CE9B47" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="6AD67CBD-4717-4D34-A210-E527AA7DBEC9">
+        <File Id="filB0B6CA1CACDA1917F87DCB1582120669" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\jquery.sparkline.min.js" />
+      </Component>
+      <Component Id="cmp4B58FC7CBEB9576C298EC30A3CDF7590" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="1F713CFE-BCEB-4378-9907-257FDCE9219E">
+        <File Id="fil4E2716185D9B2074684CB421E69779B1" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\string.format.min.js" />
+      </Component>
+      <Component Id="cmp8C944EEB021700A1C81C02407ED65935" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="637AF7CB-524C-4B63-8E24-B16C036DB6EC">
+        <File Id="fil061410A7884C6043A3DDE8F7629B0C9E" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\translation.js" />
+      </Component>
+      <Component Id="cmpF80950632DEBE87C7BDE61090846EAF9" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="DF77A4EB-2F43-462A-8FEC-2E0FB9114165">
+        <File Id="filE567F4973678A8F136BB45518F901667" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\watch.js" />
+      </Component>
+      <Component Id="cmpA4AB98AAF4CAC620BB722FE0A5B04F85" Directory="dirE77428803EC50E88FFB028BA543A4EF7" Guid="DE829B60-BEF9-49D3-AE40-2EBDF874B45B">
+        <File Id="fil67D9F54D1DFCD2D5BD76B773982377C4" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\operator\index.html" />
+      </Component>
+    </ComponentGroup>
   </Fragment>
   <Fragment>
     <DirectoryRef Id="dir0C90AB180A09D13DFC6C2464F39ACEBE">
@@ -49,150 +194,5 @@
     <DirectoryRef Id="dir0C90AB180A09D13DFC6C2464F39ACEBE">
       <Directory Id="dirE77428803EC50E88FFB028BA543A4EF7" Name="operator" />
     </DirectoryRef>
-  </Fragment>
-  <Fragment>
-    <ComponentGroup Id="SiteFiles">
-      <Component Id="cmp60B1FB55579F20C4E5992381931290B2" Directory="dir0C90AB180A09D13DFC6C2464F39ACEBE" Guid="B0532C5E-CE08-42FA-AFE0-3B4EFD0F22DD">
-        <File Id="fil89EE66C5D7799C97E597520C8837930A" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\favicon.ico" />
-      </Component>
-      <Component Id="cmp0FCA79CB347FEC00C9A9E32C68351AD7" Directory="dir0C90AB180A09D13DFC6C2464F39ACEBE" Guid="22958444-37C5-4CEB-87C0-9E5121C50FC1">
-        <File Id="fil8378A64B4858A892EBCFD5F89490E063" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\index.html" />
-      </Component>
-      <Component Id="cmp45C02ED8F5B75116D37DAA2DD3AB97BD" Directory="dir0C90AB180A09D13DFC6C2464F39ACEBE" Guid="F817F97E-0B2A-4ED3-8EE0-CB530B1D70E2">
-        <File Id="filA55E7D38A29644F9C113B1A679117BFC" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\loading.png" />
-      </Component>
-      <Component Id="cmp9556C7D069B1FA1FA5D6CA724F15FD6B" Directory="dir0C90AB180A09D13DFC6C2464F39ACEBE" Guid="F394C46B-2022-4FC3-9457-B9F37B0DD9D3">
-        <File Id="fil2C20EFB49DEA3B36BF635BD7B9D749BD" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\main.css" />
-      </Component>
-      <Component Id="cmp173A2DEE4BB0479B3FC7FE5E005CB7F1" Directory="dir0C90AB180A09D13DFC6C2464F39ACEBE" Guid="9A119866-B132-49AF-B9AF-134E75FB51C1">
-        <File Id="fil2905D0DB1EB44F6BFEE6940A2BE0AE4C" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\main.js" />
-      </Component>
-      <Component Id="cmp1BC75490E485EFEB72874CA56B2ABA0D" Directory="dir0C90AB180A09D13DFC6C2464F39ACEBE" Guid="6487F089-F648-4DB7-9E6B-369698E24312">
-        <File Id="fil87A4C52D2FEB718AA05FE352F73DD038" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\social.png" />
-      </Component>
-      <Component Id="cmp2E8CEF429C2674C8DAC0A64AC7967B3A" Directory="dirB1C0C30C82DEF241A760B5C6CE723B52" Guid="47EE8A5D-D083-4C96-96E0-234FD96D1694">
-        <File Id="filE95ED2929246F82850BF750C115E5479" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\css\bootstrap-responsive.css" />
-      </Component>
-      <Component Id="cmp77396E15992EDDA98D4ABC7B77AFA2E0" Directory="dirB1C0C30C82DEF241A760B5C6CE723B52" Guid="98F492A3-120F-4CEC-B3A2-C2154C392B1B">
-        <File Id="fil86F48EBE647E90D54A755987848A832C" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\css\bootstrap-responsive.min.css" />
-      </Component>
-      <Component Id="cmpA3A577367DC021DC3B25D47D6A12A5ED" Directory="dirB1C0C30C82DEF241A760B5C6CE723B52" Guid="22D16103-C362-4305-BDC7-7A3002D500A6">
-        <File Id="fil9936C31B2BBE6E882FCB16CDBCA845A5" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\css\bootstrap.css" />
-      </Component>
-      <Component Id="cmp6A66D2B333CAC3EAB48C5F34EF6A2BE3" Directory="dirB1C0C30C82DEF241A760B5C6CE723B52" Guid="6683DF52-75D0-4600-BA1A-D334E925C98D">
-        <File Id="filAA25CA900D94EFB1984CFE9BBF3FE370" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\css\bootstrap.min.css" />
-      </Component>
-      <Component Id="cmpC93EFADBA3A3B64BC31A9D55A48EB445" Directory="dirDBA54732411C5883933F39746C3AE972" Guid="EDFCBB29-CDA0-4D18-9CB4-A5130AB6DF49">
-        <File Id="filCB13ADB0DB255DEDB205920D79E2C57F" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\img\glyphicons-halflings-white.png" />
-      </Component>
-      <Component Id="cmp7692C7A044AA80542971069E411EDBA1" Directory="dirDBA54732411C5883933F39746C3AE972" Guid="C80BDCEF-66A8-4C57-B47B-906EE9F6F3D1">
-        <File Id="filAE3149D81EBEADACBD4AA22E41B5CE99" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\img\glyphicons-halflings.png" />
-      </Component>
-      <Component Id="cmp708752248F027F0A8DCE12F3E5E6CE8A" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="C34741A6-6793-490F-87B1-09B48FAECFC7">
-        <File Id="fil60E4B0685F57C79DD293C335DB88DDB7" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-affix.js" />
-      </Component>
-      <Component Id="cmp2F8F6CDF907671747ACD59363BE6D5D6" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="D74B1A9B-FF6C-4EDE-82FA-8F3A838F69D8">
-        <File Id="fil6E23E3DD5EBDD480868DDEC5F4E22C9F" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-alert.js" />
-      </Component>
-      <Component Id="cmp44984A6E6561B8019E22FB3C64202C9E" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="22E4E320-F2DE-4D5F-9ABC-CE86855A563A">
-        <File Id="filAF931D77A4B9FC44C085472B207B0760" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-button.js" />
-      </Component>
-      <Component Id="cmp8626D1E1B760F867A45236F396276EF6" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="59CF9708-2AFD-4132-99B6-21F8666E931F">
-        <File Id="fil93EC0B47FA8015C4D574F3356A14132C" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-carousel.js" />
-      </Component>
-      <Component Id="cmp941D091505A0C524DCEB9334F7E0E775" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="BEC47877-4E04-41B9-AFD2-2EE0B80CD29A">
-        <File Id="fil9D6D6979939BFB1AEF2F9BDC787E127D" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-collapse.js" />
-      </Component>
-      <Component Id="cmpCD942FCD010856FDA02BE6AB57041C1E" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="13256EAF-634B-44B2-9C3A-B9274769100C">
-        <File Id="filF691C3192852E4681EB168AE9A9D6AE3" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-dropdown.js" />
-      </Component>
-      <Component Id="cmp9575CE1502B7869D7F4BDF49DD568E21" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="05111465-4B83-43EC-8A9D-AC55FE33C947">
-        <File Id="fil790D48D6C60CF27364ACF177D5036844" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-modal.js" />
-      </Component>
-      <Component Id="cmp6FB427E3C9DD94062B1D0145999F7214" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="0316713E-AE64-4EA1-8E16-D3E9675CE31E">
-        <File Id="filA6E16243947C1F9972A8F45CF8351634" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-popover.js" />
-      </Component>
-      <Component Id="cmpF27725D5FABB9CDB032EACB2CB5FCB22" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="CFA4E163-4DF7-4956-BDE6-BE01EA2CF775">
-        <File Id="filD889D3F495CBA6C21F265ABB447CE67C" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-scrollspy.js" />
-      </Component>
-      <Component Id="cmp6EAA7BF8733C5D6395BE9A27165E593C" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="EBF3386D-58C7-4C71-8DF8-96917B1687DA">
-        <File Id="filD11E891D5E306E87C8683B801EB10D22" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-tab.js" />
-      </Component>
-      <Component Id="cmp7623B235ED1492519C82FD0EE9F8CC5C" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="E711FA59-9817-450A-A793-69770EABC4D1">
-        <File Id="filC3CD62D0291EAC58A81386078F7D1D03" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-tooltip.js" />
-      </Component>
-      <Component Id="cmp2635C9BC1726F13EE6CAF9E25E2B7B14" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="65BE0704-749B-41DB-A096-3FD3FB413135">
-        <File Id="fil3693AD52BA5B0E47B24B43CD69C59B4A" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-transition.js" />
-      </Component>
-      <Component Id="cmpD7FAC5F6AB89737C1E31C6EB132BF48E" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="1B4D437B-C244-4574-939B-1783EABF43EE">
-        <File Id="fil884E2644A10DED96F200AB9E9E0C864A" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap-typeahead.js" />
-      </Component>
-      <Component Id="cmp18297653CF756265E9AFC55308E830E0" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="7B57406D-3274-460F-95F7-6AB220F009A5">
-        <File Id="fil971643B9966131E33576766D8D38B4C5" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap.js" />
-      </Component>
-      <Component Id="cmpF5023DF7FC3A1A75D0526F61306AD4B8" Directory="dirA4663A69F37FCBAAA0FF8DE8100EF61B" Guid="D8652A23-A217-4561-9892-CDA92F0CFBB6">
-        <File Id="filEF04AF9CC5F668967237F81080586707" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\bootstrap\js\bootstrap.min.js" />
-      </Component>
-      <Component Id="cmp3BE0CD69D824411A4671496023236F6A" Directory="dir78E67451A6FAD9C5AD709F8CB75C576E" Guid="807AC669-D8B4-4F37-BCF2-F2F239147F2A">
-        <File Id="filB72A98BF12287190C24BEFA09F50E67B" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\client\index.html" />
-      </Component>
-      <Component Id="cmp567CABD304C33E9A2A40CBF263DE6B05" Directory="dir78E67451A6FAD9C5AD709F8CB75C576E" Guid="941CDFE2-B02A-4684-A399-43E04A107089">
-        <File Id="fil15D3782D53B72F19ABD48305A075C7D1" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\client\main.css" />
-      </Component>
-      <Component Id="cmp834081CA8884F351CDE76A4DB30E7D13" Directory="dir78E67451A6FAD9C5AD709F8CB75C576E" Guid="AD162E3A-1196-46B0-AE86-D276E8BCD174">
-        <File Id="filE0B6605DAE2BF369597186417D346496" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\client\main.js" />
-      </Component>
-      <Component Id="cmp5C489D244A821AA5B9DE119642B30572" Directory="dirDC030F3D705B9C69FD809C50B5A7F21E" Guid="CC2D245D-01EF-4EB4-9A44-8498AF066862">
-        <File Id="filA81F9E8D4BC5DA57EE403EE44F52E7D0" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\date\date-ru-RU.js" />
-      </Component>
-      <Component Id="cmpB1941728560C52D8D5C41ACEFB607046" Directory="dirDC030F3D705B9C69FD809C50B5A7F21E" Guid="CB29E7A0-E3B0-4A0A-AAD5-754C3F6271B4">
-        <File Id="filDF4E560BD8362C8DC22767FA22EFD685" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\date\date.js" />
-      </Component>
-      <Component Id="cmpE9CF9AE6472BA293AE14C23C58CD0B1B" Directory="dirD5E708FC527F53DF3FCB7C18EF7F0AB6" Guid="99D55BD8-7576-4B7A-8EC5-F73A40EE8974">
-        <File Id="filDC3B936781216FE6DAE15E366BA9E2CD" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\fullcalendar\fullcalendar.css" />
-      </Component>
-      <Component Id="cmpA50B777FA02120656DAADFEB87E8C94D" Directory="dirD5E708FC527F53DF3FCB7C18EF7F0AB6" Guid="9EFD85BD-09E7-449F-AEF4-8F2FE183FDEE">
-        <File Id="fil71758F1BE62CE5EEA15DD2B0C1F23DE0" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\fullcalendar\fullcalendar.js" />
-      </Component>
-      <Component Id="cmpC143F02C1145EEF2A614F77B254ECBD6" Directory="dirD5E708FC527F53DF3FCB7C18EF7F0AB6" Guid="7423D531-EC82-40EA-9EAD-5BC8CEF18496">
-        <File Id="fil38E478D8BC3D83A767208420BFC59CD6" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\fullcalendar\fullcalendar.min.js" />
-      </Component>
-      <Component Id="cmp94A68666830ECC0681615DC5F4BE3937" Directory="dirD5E708FC527F53DF3FCB7C18EF7F0AB6" Guid="F2D609F8-4575-4D8F-8AA7-61036E57CB7E">
-        <File Id="fil1FC3837595D22E2F39D7A3179FF23FE6" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\fullcalendar\fullcalendar.print.css" />
-      </Component>
-      <Component Id="cmp152F9F495A99B102B216BF7B09E2789D" Directory="dirD5E708FC527F53DF3FCB7C18EF7F0AB6" Guid="9ECFAB95-EDA9-413D-83A0-C265CCEED994">
-        <File Id="filCC6DFB23085C1BB36A0D0668C2CFABE5" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\fullcalendar\gcal.js" />
-      </Component>
-      <Component Id="cmpCDB74050833BF31D4FFC0B7491FE279A" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="C49FD349-DFDD-4F83-A4FD-97178AFC4930">
-        <File Id="fil740A0CD4EE3FCC3C1D73DAA03F929CCB" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\apng-canvas.min.js" />
-      </Component>
-      <Component Id="cmpEC6F4AA0D661BFB7E14F88F72E51A54B" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="2CE15DD1-C3EC-40A9-81FE-84919B626E88">
-        <File Id="fil34DA0FF49F4441F812FED518D2F69B1D" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\common.js" />
-      </Component>
-      <Component Id="cmp1249613C9C3813F01027C018DE5610BC" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="799AF694-A838-4B2D-9721-38BD2211AD0F">
-        <File Id="filC6769E2A3C9156685916DCCBE378A592" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\jquery.cookie.js" />
-      </Component>
-      <Component Id="cmp537109DE5B9CE619027E23CCCCF7F95F" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="DFD6F547-3436-4234-AF79-D69EBD56F067">
-        <File Id="fil08E8EC27B21A35C3A7167DF13A1A8ACC" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\jquery.min.js" />
-      </Component>
-      <Component Id="cmp3277448B3CE4663616E781D38026E107" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="3D119D7F-D8FF-4AFF-8692-5AF78A31DCC7">
-        <File Id="fil3EB8B3234E08531E731A325F60AF9CF1" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\jquery.PrintArea.js" />
-      </Component>
-      <Component Id="cmp75B1F4F106236E239020725E33CE9B47" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="72B1607F-D509-4929-9CDC-9A36E7C1CB5B">
-        <File Id="filB0B6CA1CACDA1917F87DCB1582120669" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\jquery.sparkline.min.js" />
-      </Component>
-      <Component Id="cmp4B58FC7CBEB9576C298EC30A3CDF7590" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="69CD9908-5FAD-4251-AFDA-D72DC6B2100A">
-        <File Id="fil4E2716185D9B2074684CB421E69779B1" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\string.format.min.js" />
-      </Component>
-      <Component Id="cmp8C944EEB021700A1C81C02407ED65935" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="9CB91D5B-FBE3-4AE9-88C3-02F9BAC9DE47">
-        <File Id="fil061410A7884C6043A3DDE8F7629B0C9E" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\translation.js" />
-      </Component>
-      <Component Id="cmpF80950632DEBE87C7BDE61090846EAF9" Directory="dir1FBB1A642871B9B455E9704DC4FAD702" Guid="FEEC4BE5-F94A-4882-8FF0-00634E27E07C">
-        <File Id="filE567F4973678A8F136BB45518F901667" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\js\watch.js" />
-      </Component>
-      <Component Id="cmpA4AB98AAF4CAC620BB722FE0A5B04F85" Directory="dirE77428803EC50E88FFB028BA543A4EF7" Guid="FB35D291-F8D8-4D5E-AB56-E664B379CFB9">
-        <File Id="fil67D9F54D1DFCD2D5BD76B773982377C4" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\operator\index.html" />
-      </Component>
-    </ComponentGroup>
   </Fragment>
 </Wix>

@@ -4,9 +4,9 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>3.9</ProductVersion>
-    <ProjectGuid>e4d17481-1dd0-4c3e-b51b-64c8b47a3521</ProjectGuid>
+    <ProjectGuid>f4f9152e-4299-470a-8744-f890ee7d777c</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>Installer.Media</OutputName>
+    <OutputName>Installer.Notification</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
@@ -14,13 +14,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <DefineConstants>Debug;ProductVersion=1.4.0.0;ProductCode=8637E9B0-595B-4147-9DFA-2A54F544B528</DefineConstants>
+    <DefineConstants>Debug;ProductVersion=1.4.0.0;ProductCode=A70FA558-5F0B-4ECD-AF34-39B9DE76EF01</DefineConstants>
     <SuppressIces>ICE40</SuppressIces>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <SuppressIces>ICE40</SuppressIces>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Files.wxs" />
@@ -33,25 +32,17 @@
     <EmbeddedResource Include="WixUI_ru-ru.wxl" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hosts.Media.WinForms\Hosts.Media.WinForms.csproj">
-      <Name>Hosts.Media.WinForms</Name>
-      <Project>{2f06e543-dc6d-4a88-92e9-d44d2853f65e}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\Hosts.Media.WinService\Hosts.Media.WinService.csproj">
-      <Name>Hosts.Media.WinService</Name>
-      <Project>{8704fcfb-0913-4669-a82c-ec68d8a3be03}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
     <ProjectReference Include="..\Installer.Common\Installer.Common.wixproj">
       <Name>Installer.Common</Name>
       <Project>{28d996a4-24eb-4314-ae9c-27452fa87d26}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\Notification\Notification.csproj">
+      <Name>Notification</Name>
+      <Project>{d5e41abd-b624-44dd-bc00-3431e7a10070}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>

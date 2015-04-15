@@ -4,9 +4,9 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>3.9</ProductVersion>
-    <ProjectGuid>e4d17481-1dd0-4c3e-b51b-64c8b47a3521</ProjectGuid>
+    <ProjectGuid>472866e7-be86-45d2-8503-3a1d1f475782</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>Installer.Media</OutputName>
+    <OutputName>Installer.Database</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
@@ -14,36 +14,21 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <DefineConstants>Debug;ProductVersion=1.4.0.0;ProductCode=8637E9B0-595B-4147-9DFA-2A54F544B528</DefineConstants>
+    <DefineConstants>Debug;ProductVersion=1.4.0.0;ProductCode=A51699A8-2FAD-441F-9FC0-1DD0523B65FB</DefineConstants>
     <SuppressIces>ICE40</SuppressIces>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <SuppressIces>ICE40</SuppressIces>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Files.wxs" />
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="WixUI_ru-ru.wxl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Hosts.Media.WinForms\Hosts.Media.WinForms.csproj">
-      <Name>Hosts.Media.WinForms</Name>
-      <Project>{2f06e543-dc6d-4a88-92e9-d44d2853f65e}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-    <ProjectReference Include="..\Hosts.Media.WinService\Hosts.Media.WinService.csproj">
-      <Name>Hosts.Media.WinService</Name>
-      <Project>{8704fcfb-0913-4669-a82c-ec68d8a3be03}</Project>
+    <ProjectReference Include="..\Database\Database.csproj">
+      <Name>Database</Name>
+      <Project>{3f1eecc0-3b45-4a62-8101-0fdcc7293d29}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
@@ -63,6 +48,12 @@
       <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
     </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="WixUI_ru-ru.wxl" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--

@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLFOLDER" />
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="CoreFiles">
+            <Component Id="cmpFD65F52CD5EC0B46A750F8EEFC3D4422" Directory="INSTALLFOLDER" Guid="5E0CD27E-667B-4219-95D8-6827E747D034">
+                <File Id="fil1F7E777B326B02F60B86F747002F8605" KeyPath="yes" Source="$(var.Database.TargetDir)\AutoMapper.dll" />
+            </Component>
+            <Component Id="cmpEEC7AC6B3009FA88C57EB2972A7A8F5B" Directory="INSTALLFOLDER" Guid="453EE595-0F10-448C-9281-DD46BD8D1675">
+                <File Id="fil4F01E53E158206D8C82AC24B4DFEE253" KeyPath="yes" Source="$(var.Database.TargetDir)\AutoMapper.Net4.dll" />
+            </Component>
+            <Component Id="cmpDBEEEBDAEE67A307026A7C9AC97B9B2A" Directory="INSTALLFOLDER" Guid="4C1C4DAA-F351-4B57-A66A-C3C74DD28936">
+                <File Id="filFD169E0363615C9BE8CAFE60196DAD45" KeyPath="yes" Source="$(var.Database.TargetDir)\Crad.Windows.Forms.Actions.dll" />
+            </Component>
+            <Component Id="cmp730E2FFFAB351C1FBB3C16D211F149E6" Directory="INSTALLFOLDER" Guid="F20C3FD2-D0B7-4496-8179-314147608AD1">
+                <File Id="fil82F4EB518EA8CC3FD38BEB0C241522A6" KeyPath="yes" Source="$(var.Database.TargetDir)\FluentNHibernate.dll" />
+            </Component>
+            <Component Id="cmp695F3B89FCD90C669B1958F6D20D523D" Directory="INSTALLFOLDER" Guid="8ABDB794-C6EE-41E7-89BB-4F87844E891D">
+                <File Id="filECAAB6E721DE437D50D73A1F554EB461" KeyPath="yes" Source="$(var.Database.TargetDir)\Icons.resx" />
+            </Component>
+            <Component Id="cmp352B68CBE9EBE02EAAF5E18B20685A67" Directory="INSTALLFOLDER" Guid="2B124939-227A-4781-89DC-9A320A3F26EB">
+                <File Id="filA63A4BC4A9B457FDF7E41EF87D6642AB" KeyPath="yes" Source="$(var.Database.TargetDir)\ICSharpCode.TextEditor.dll" />
+            </Component>
+            <Component Id="cmpAD8551805C0E384D4FD6CD718C5E8381" Directory="INSTALLFOLDER" Guid="E9395D5D-E913-4537-8F5A-66CCFB053DDB">
+                <File Id="fil1300C7FBD2C9D42B5651E43A08F7DA1E" KeyPath="yes" Source="$(var.Database.TargetDir)\Iesi.Collections.dll" />
+            </Component>
+            <Component Id="cmp0A57C036E7477C8B804C1F689B87C13B" Directory="INSTALLFOLDER" Guid="FA136BD0-59AA-454C-8B37-4F6506D3B162">
+                <File Id="fil49662034001F51D47047F3B3EB3856D0" KeyPath="yes" Source="$(var.Database.TargetDir)\Junte.Data.Common.dll" />
+            </Component>
+            <Component Id="cmp391ED0FC564C14BE2F75C7141F49032B" Directory="INSTALLFOLDER" Guid="AB938EC0-909A-4DAE-B1D2-EDF51CE2364B">
+                <File Id="fil932D4827097051DB5496919693E3018A" KeyPath="yes" Source="$(var.Database.TargetDir)\Junte.Data.NHibernate.dll" />
+            </Component>
+            <Component Id="cmp2D1101A09A3F5FA0CDF5E565334E6BDB" Directory="INSTALLFOLDER" Guid="84281CE5-A093-424F-90E4-68EA3B1348A7">
+                <File Id="fil81321EAB16548C89F71B94A9BAC8302E" KeyPath="yes" Source="$(var.Database.TargetDir)\Junte.Parallel.Common.dll" />
+            </Component>
+            <Component Id="cmp96AB944A74A73C7899AC9EBB5BFD5292" Directory="INSTALLFOLDER" Guid="74B5E60C-E43E-466E-8AEA-4EB1A36364F2">
+                <File Id="filF67A86BDA1D3A3AED997B22C92DB408A" KeyPath="yes" Source="$(var.Database.TargetDir)\Junte.UI.WinForms.dll" />
+            </Component>
+            <Component Id="cmp0B7A799FDA415DC5BB15E17BA3EC7CEF" Directory="INSTALLFOLDER" Guid="C72B0AF9-100F-4AE3-877D-8D49F158BBD6">
+                <File Id="fil91980D27D0CD6E0DE104A02CB3EDFBE3" KeyPath="yes" Source="$(var.Database.TargetDir)\Junte.UI.WinForms.NHibernate.dll" />
+            </Component>
+            <Component Id="cmpC255AEA61B1C33749B73878AE58A3200" Directory="INSTALLFOLDER" Guid="A451DCDB-19CB-454F-93C5-6D9AC96613FB">
+                <File Id="fil285F0AEF7B68A083AE2D8E5A0E7D7C8B" KeyPath="yes" Source="$(var.Database.TargetDir)\Junte.WCF.Common.dll" />
+            </Component>
+            <Component Id="cmpF2F1C15A47B64F045101B1AE5B4D6054" Directory="INSTALLFOLDER" Guid="4E86ED80-7808-4876-9FC4-CE07735FC636">
+                <File Id="filC342596B66E98254BB6E1CFFE50AE4AA" KeyPath="yes" Source="$(var.Database.TargetDir)\Microsoft.Practices.ServiceLocation.dll" />
+            </Component>
+            <Component Id="cmpAA856A11EEF773F32618D29332CADFD0" Directory="INSTALLFOLDER" Guid="09804D87-ED4A-4978-9225-281B8C87215E">
+                <File Id="filFBB0E3892854598F759A072FB8581B46" KeyPath="yes" Source="$(var.Database.TargetDir)\Microsoft.Practices.Unity.Configuration.dll" />
+            </Component>
+            <Component Id="cmp5141EFC969B8F1A9A0F1A01FFAD874BA" Directory="INSTALLFOLDER" Guid="0C9CB3AC-8C56-407E-8DA9-C4D689FCE20F">
+                <File Id="filE0B15D2B280E1EDFAB44F822C47D44ED" KeyPath="yes" Source="$(var.Database.TargetDir)\Microsoft.Practices.Unity.dll" />
+            </Component>
+            <Component Id="cmpB48E67D919D1C42D78781F3B5D6E4336" Directory="INSTALLFOLDER" Guid="2582977B-BF34-49BE-BF6C-CDD776F4C8B3">
+                <File Id="fil53564AE840DB9CE660FE1F02DB1CB224" KeyPath="yes" Source="$(var.Database.TargetDir)\Microsoft.Practices.Unity.RegistrationByConvention.dll" />
+            </Component>
+            <Component Id="cmpBB1767D7C200C536ABB2D361F40F9D92" Directory="INSTALLFOLDER" Guid="474A2720-8A18-48EA-A7F1-A4221F2905B5">
+                <File Id="fil4E0F4321F336BF83461A34116F3E30B7" KeyPath="yes" Source="$(var.Database.TargetDir)\Microsoft.WindowsAPICodePack.dll" />
+            </Component>
+            <Component Id="cmp676659A682F8B2F9B96DCCEF64974212" Directory="INSTALLFOLDER" Guid="5B376488-AAC3-47EB-9D12-DFEB22827899">
+                <File Id="fil0265A3E6AF60A95388CA878A6B71E0A9" KeyPath="yes" Source="$(var.Database.TargetDir)\Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll" />
+            </Component>
+            <Component Id="cmp7EB0B903F4227AB6B6118ABC9E5F8148" Directory="INSTALLFOLDER" Guid="E7122CDE-7EF1-4714-A88B-99D5B13ECF21">
+                <File Id="filA3EDB683FF7C2E0EEBB09EB53647274C" KeyPath="yes" Source="$(var.Database.TargetDir)\Microsoft.WindowsAPICodePack.Sensors.dll" />
+            </Component>
+            <Component Id="cmp702FCD8F941D530EED089ED86491F3AF" Directory="INSTALLFOLDER" Guid="931E0AA7-5989-4846-9B46-DC77C1290B8C">
+                <File Id="filAAF0A287D1C4C9A238DFF053ADA2B1C8" KeyPath="yes" Source="$(var.Database.TargetDir)\Microsoft.WindowsAPICodePack.Shell.dll" />
+            </Component>
+            <Component Id="cmp886200E0570F6ED803412CBE764B2AAA" Directory="INSTALLFOLDER" Guid="480EE35F-885A-42B2-B05E-46290413FC30">
+                <File Id="filC908B4FCB7196AA89E1DEF78CC58910C" KeyPath="yes" Source="$(var.Database.TargetDir)\Microsoft.WindowsAPICodePack.ShellExtensions.dll" />
+            </Component>
+            <Component Id="cmpA1ECE8DB012BBA16B976018E9D98B56D" Directory="INSTALLFOLDER" Guid="958131B1-7F59-4E12-AE90-36A43C2CC77A">
+                <File Id="filC55FB4457A2C6CA4AE46C6FCC459FDE1" KeyPath="yes" Source="$(var.Database.TargetDir)\NHibernate.dll" />
+            </Component>
+            <Component Id="cmp4DF6D8BE3FE45464337ABFEB5559E3A2" Directory="INSTALLFOLDER" Guid="D0700278-CE2A-4D89-809D-6F40C26CF0E9">
+                <File Id="fil1EF6643CE31BF2606EFB9190B521C794" KeyPath="yes" Source="$(var.Database.TargetDir)\NHibernate.Mapping.Attributes.dll" />
+            </Component>
+            <Component Id="cmp29BB8F57044D76D02FF5E6AF31B7DD68" Directory="INSTALLFOLDER" Guid="3ADB7166-CB1F-4FB1-B162-6D144ED30563">
+                <File Id="filA3EF2D57B176A42CDA6CD8C795D89651" KeyPath="yes" Source="$(var.Database.TargetDir)\NHibernate.Validator.dll" />
+            </Component>
+            <Component Id="cmpB0751B8FC1E91828723DBE949D8ED3C7" Directory="INSTALLFOLDER" Guid="2B18A078-A721-46A7-A164-3D13EF269498">
+                <File Id="filADFE9E5EC55BF88347B1A04AF21CA490" KeyPath="yes" Source="$(var.Database.TargetDir)\NHibernate.Validator.Specific.dll" />
+            </Component>
+            <Component Id="cmpB7F1EBE42DCB1051B92D42C1EF84E2F9" Directory="INSTALLFOLDER" Guid="B4D9C59F-690E-444B-B421-EE3F99F92777">
+                <File Id="filA09ADF42C6343B9B7C7780D266455CC4" KeyPath="yes" Source="$(var.Database.TargetDir)\NLog.dll" />
+            </Component>
+            <Component Id="cmp55C662695779CA92FAA1C1E8F030C8C5" Directory="INSTALLFOLDER" Guid="657E2D93-C436-44A6-A05D-9F470B7E5646">
+                <File Id="filF091F2ECF8894DC2ED432C5359E96097" KeyPath="yes" Source="$(var.Database.TargetDir)\Queue.Common.dll" />
+            </Component>
+            <Component Id="cmp77385174125D7B80AA523A704A29B5D2" Directory="INSTALLFOLDER" Guid="D3CF4A9C-958F-456E-B392-1E43716E3633">
+                <File Id="filD2FAD00DF11022940CB18962E32A96AC" KeyPath="yes" Source="$(var.Database.TargetDir)\Queue.Database.exe" />
+            </Component>
+            <Component Id="cmpD69E0E19539B324CB13CDC4EC6F3B770" Directory="INSTALLFOLDER" Guid="549CF6F0-6A0F-4C6D-B3B5-6201B2F1203E">
+                <File Id="filB14CA0BBF5ACE64A4CBD7A0B33245A14" KeyPath="yes" Source="$(var.Database.TargetDir)\Queue.Database.exe.config" />
+            </Component>
+            <Component Id="cmp2CE2F83A5AB32BAFBA87C152C2C6F326" Directory="INSTALLFOLDER" Guid="8C77AA8D-E474-488B-B87C-1D6C0D6EA77B">
+                <File Id="filA43D6849C111501753C2BC7E8E96E9A0" KeyPath="yes" Source="$(var.Database.TargetDir)\Queue.Model.Common.dll" />
+            </Component>
+            <Component Id="cmp6DC3B5112C8E1BBC28D8321BA38A65DB" Directory="INSTALLFOLDER" Guid="7927B973-15D2-42FB-9E7B-BA3A981E62FE">
+                <File Id="fil2071BFBA1667BF5D04F6A2EC3054ACDC" KeyPath="yes" Source="$(var.Database.TargetDir)\Queue.Model.dll" />
+            </Component>
+            <Component Id="cmpAF2452D9F055213DFF4CBF47699CF6C2" Directory="INSTALLFOLDER" Guid="D620A20E-5790-4DE7-8DFB-79B42C41AD6C">
+                <File Id="fil3C1C1CCB59D8869C917A56097CB5F2F3" KeyPath="yes" Source="$(var.Database.TargetDir)\Queue.Resources.dll" />
+            </Component>
+            <Component Id="cmp3111FB7FBF8E83855ABE23B857069FBD" Directory="INSTALLFOLDER" Guid="BA9D5A23-6C81-4613-8DE3-089F2FE6362D">
+                <File Id="fil5083433A7E8CCB9C46CE1C735BE07909" KeyPath="yes" Source="$(var.Database.TargetDir)\Queue.Services.Common.dll" />
+            </Component>
+            <Component Id="cmpC4E247D01A6FC492047FFCAFBA4A2F7E" Directory="INSTALLFOLDER" Guid="3C76D19A-EBF2-408C-8B74-6C951F2B3EA5">
+                <File Id="filC31EFD008AE5A05C968392FCDA6865C4" KeyPath="yes" Source="$(var.Database.TargetDir)\Queue.Services.Contracts.dll" />
+            </Component>
+            <Component Id="cmp43DB63E4B74D1504244115D8B4DEBC10" Directory="INSTALLFOLDER" Guid="9F6B06A5-C97A-4FB4-87F4-4E0DE127E000">
+                <File Id="fil0AE4E4ED0D0ADF966E5E800E7EDC6425" KeyPath="yes" Source="$(var.Database.TargetDir)\Queue.Services.DTO.dll" />
+            </Component>
+            <Component Id="cmp2EA797F4FA085D3806DD1914FBA7581B" Directory="INSTALLFOLDER" Guid="08F1D7E7-4C6A-42C7-9387-33F1BD776589">
+                <File Id="fil8C8DDD7A3BC84C219EE029983D5F8477" KeyPath="yes" Source="$(var.Database.TargetDir)\Queue.UI.Common.dll" />
+            </Component>
+            <Component Id="cmpDEBF93F703C4F623A75B793A9E8EAF13" Directory="INSTALLFOLDER" Guid="F499824F-CCD5-474C-B18B-4B5BF98F6133">
+                <File Id="filF7EA23D4DED6D5A4218DC0EA8DC146CD" KeyPath="yes" Source="$(var.Database.TargetDir)\Queue.UI.WinForms.dll" />
+            </Component>
+        </ComponentGroup>
+    </Fragment>
+</Wix>

@@ -61,7 +61,7 @@ namespace Queue.Notification.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Информационное табло.
+        ///   Looks up a localized string similar to Табло оповещений.
         /// </summary>
         internal static string AppName {
             get {

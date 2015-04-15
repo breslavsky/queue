@@ -81,7 +81,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.topMenu;
             this.Name = "MainForm";
-            this.Text = "Симлятор";
+            this.Text = "Симулятор";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);

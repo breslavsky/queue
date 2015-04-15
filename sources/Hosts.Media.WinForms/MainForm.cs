@@ -48,7 +48,7 @@ namespace Queue.Hosts.Media.WinForms
             RegisterContainer();
 
             loginSettings = configurationManager.GetSection<LoginSettings>(LoginSettings.SectionKey);
-            loginSettingsControl.Initialize(loginSettings, UserRole.Administrator, taskPool);
+            loginSettingsControl.Initialize(loginSettings, UserRole.Administrator);
 
             Text += string.Format(" ({0})", typeof(MediaInstance).Assembly.GetName().Version);
 

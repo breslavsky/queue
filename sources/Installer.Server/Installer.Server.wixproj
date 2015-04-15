@@ -15,7 +15,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <DefineConstants>Debug</DefineConstants>
+    <DefineConstants>Debug;ProductVersion=1.4.0.0;ProductCode=024A776E-72F6-4BA1-8D2E-BA4425F67B68</DefineConstants>
     <CompilerAdditionalOptions>
     </CompilerAdditionalOptions>
     <SuppressIces>ICE40</SuppressIces>
