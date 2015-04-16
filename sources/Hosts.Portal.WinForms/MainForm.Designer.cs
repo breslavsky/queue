@@ -37,21 +37,21 @@
             this.installServiseButton = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
             this.settingsGroupBox = new System.Windows.Forms.GroupBox();
+            this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
             this.serverGroupBox = new System.Windows.Forms.GroupBox();
             this.portLabel = new System.Windows.Forms.Label();
             this.portUpDown = new System.Windows.Forms.NumericUpDown();
+            this.portalSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.saveButton = new System.Windows.Forms.Button();
             this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
-            this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
-            this.portalSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.serviceGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).BeginInit();
             this.settingsGroupBox.SuspendLayout();
             this.serverGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.portalSettingsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // stopButton
@@ -130,6 +130,13 @@
             this.settingsGroupBox.TabStop = false;
             this.settingsGroupBox.Text = "Настройки";
             // 
+            // loginSettingsControl
+            // 
+            this.loginSettingsControl.Location = new System.Drawing.Point(5, 20);
+            this.loginSettingsControl.Name = "loginSettingsControl";
+            this.loginSettingsControl.Size = new System.Drawing.Size(395, 170);
+            this.loginSettingsControl.TabIndex = 0;
+            // 
             // serverGroupBox
             // 
             this.serverGroupBox.Controls.Add(this.portLabel);
@@ -173,6 +180,10 @@
             0,
             0});
             // 
+            // portalSettingsBindingSource
+            // 
+            this.portalSettingsBindingSource.DataSource = typeof(Queue.Portal.PortalSettings);
+            // 
             // saveButton
             // 
             this.saveButton.Location = new System.Drawing.Point(5, 245);
@@ -198,17 +209,6 @@
             this.logoPictureBox.TabIndex = 18;
             this.logoPictureBox.TabStop = false;
             // 
-            // loginSettingsControl
-            // 
-            this.loginSettingsControl.Location = new System.Drawing.Point(5, 20);
-            this.loginSettingsControl.Name = "loginSettingsControl";
-            this.loginSettingsControl.Size = new System.Drawing.Size(395, 170);
-            this.loginSettingsControl.TabIndex = 0;
-            // 
-            // portalSettingsBindingSource
-            // 
-            this.portalSettingsBindingSource.DataSource = typeof(Queue.Portal.PortalSettings);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -231,8 +231,8 @@
             this.settingsGroupBox.ResumeLayout(false);
             this.serverGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.portalSettingsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }

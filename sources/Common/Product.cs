@@ -40,7 +40,7 @@
         {
             public const string Name = "Queue Server";
             public const string Description = "";
-            public const string Build = "0";
+            public const string Build = "5";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "933F65E8-910F-4429-BA0B-16B3CF43E620";
         }
@@ -49,7 +49,7 @@
         {
             public const string Name = "Queue Portal";
             public const string Description = "";
-            public const string Build = "0";
+            public const string Build = "5";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "F337BE00-134F-4C83-B316-BCBA4491B940";
         }
@@ -67,7 +67,7 @@
         {
             public const string Name = "Queue Media";
             public const string Description = "";
-            public const string Build = "0";
+            public const string Build = "5";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "D16407F8-CE16-4FCC-A96F-78350D7CD525";
         }
@@ -85,7 +85,7 @@
         {
             public const string Name = "Queue Operator";
             public const string Description = "";
-            public const string Build = "0";
+            public const string Build = "5";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "1B26F703-3003-47F7-9204-4A11361F75F5";
         }
@@ -94,7 +94,7 @@
         {
             public const string Name = "Queue Terminal";
             public const string Description = "";
-            public const string Build = "0";
+            public const string Build = "5";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "940AE5A5-2825-4F85-A62C-66A97D9E4C06";
         }
