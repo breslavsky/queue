@@ -61,10 +61,10 @@ namespace Queue.Hosts.Metric.WinForms
                  UnistallServiceButtonTitle :
                  InstallServiceButtonTitle;
 
-            runServiceButton.Enabled = serviceInstalled;
+            startServiceButton.Enabled = serviceInstalled;
 
             bool runned = serviceManager.ServiceRunned();
-            runServiceButton.Text = runned ?
+            startServiceButton.Text = runned ?
                                         StopServiceButtonTitle :
                                         StartServiceButtonTitle;
 
@@ -113,7 +113,7 @@ namespace Queue.Hosts.Metric.WinForms
             AdjustServiceState();
         }
 
-        private void runServiceButton_Click(object sender, EventArgs e)
+        private void startServiceButton_Click(object sender, EventArgs e)
         {
             try
             {
