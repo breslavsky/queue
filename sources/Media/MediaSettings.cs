@@ -6,7 +6,7 @@ namespace Queue.Media
     {
         public MediaSettings()
         {
-            Port = 9090;
+            Port = 4506;
         }
 
         [ConfigurationProperty("port", IsRequired = true)]
