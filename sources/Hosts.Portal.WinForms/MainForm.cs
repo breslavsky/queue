@@ -43,7 +43,7 @@ namespace Hosts.Portal.WinForms
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            configurationManager = new ConfigurationManager(HostsConsts.PortalApp);
+            configurationManager = new ConfigurationManager(HostsConsts.PortalApp, Environment.SpecialFolder.CommonApplicationData);
             settings = configurationManager.GetSection<PortalSettings>(HostsConsts.PortalSettingsSectionKey);
             portalSettingsBindingSource.DataSource = settings;
 

@@ -40,7 +40,7 @@ namespace Queue.Hosts.Metric.WinForms
 
         private void LoadConfiguration()
         {
-            configuration = new ConfigurationManager(HostsConsts.MetricApp);
+            configuration = new ConfigurationManager(HostsConsts.MetricApp, Environment.SpecialFolder.CommonApplicationData);
             settings = configuration.GetSection<MetricSettings>(HostsConsts.MetricSettingsSectionKey);
         }
 

@@ -24,7 +24,7 @@ namespace Queue.Hosts.Media.WinService
 
             try
             {
-                ConfigurationManager configuration = new ConfigurationManager(HostsConsts.MediaApp);
+                ConfigurationManager configuration = new ConfigurationManager(HostsConsts.MediaApp, Environment.SpecialFolder.CommonApplicationData);
                 MediaSettings mediaSettings = configuration.GetSection<MediaSettings>(HostsConsts.MediaSettingsSectionKey);
                 LoginSettings connectionSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
 

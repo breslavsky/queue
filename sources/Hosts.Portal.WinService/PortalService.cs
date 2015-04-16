@@ -24,7 +24,7 @@ namespace Hosts.Portal.WinService
 
             try
             {
-                ConfigurationManager configuration = new ConfigurationManager(HostsConsts.PortalApp);
+                ConfigurationManager configuration = new ConfigurationManager(HostsConsts.PortalApp, Environment.SpecialFolder.CommonApplicationData);
                 PortalSettings portalSettings = configuration.GetSection<PortalSettings>(HostsConsts.PortalSettingsSectionKey);
                 LoginSettings connectionSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
 

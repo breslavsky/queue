@@ -41,7 +41,7 @@ namespace Queue.Hosts.Media.WinForms
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            configurationManager = new ConfigurationManager(HostsConsts.MediaApp);
+            configurationManager = new ConfigurationManager(HostsConsts.MediaApp, Environment.SpecialFolder.CommonApplicationData);
             settings = configurationManager.GetSection<MediaSettings>(HostsConsts.MediaSettingsSectionKey);
             mediaSettingsBindingSource.DataSource = settings;
 

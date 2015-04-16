@@ -26,7 +26,7 @@ namespace Queue.Hosts.Server.WinService
 
             try
             {
-                ConfigurationManager configuration = new ConfigurationManager(HostsConsts.ServerApp);
+                ConfigurationManager configuration = new ConfigurationManager(HostsConsts.ServerApp, Environment.SpecialFolder.CommonApplicationData);
                 ServerSettings settings = configuration.GetSection<ServerSettings>(HostsConsts.ServerSettingsSectionKey);
 
                 CultureInfo culture = settings.Language.GetCulture();

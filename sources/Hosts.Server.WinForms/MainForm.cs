@@ -40,7 +40,7 @@ namespace Queue.Hosts.Server.WinForms
 
         private void LoadConfiguration()
         {
-            configuration = new ConfigurationManager(HostsConsts.ServerApp);
+            configuration = new ConfigurationManager(HostsConsts.ServerApp, Environment.SpecialFolder.CommonApplicationData);
             settings = configuration.GetSection<ServerSettings>(HostsConsts.ServerSettingsSectionKey);
         }
 

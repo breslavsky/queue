@@ -10,10 +10,12 @@ namespace Queue.Common
     {
         private readonly string app;
         private Configuration configuration;
+        private Environment.SpecialFolder folder;
 
-        public ConfigurationManager(string app = null)
+        public ConfigurationManager(string app = null, Environment.SpecialFolder folder = Environment.SpecialFolder.ApplicationData)
         {
             this.app = app ?? Assembly.GetEntryAssembly().GetName().Name;
+            this.folder = folder;
 
             Load();
         }
@@ -22,8 +24,7 @@ namespace Queue.Common
         {
             ExeConfigurationFileMap configMap = new ExeConfigurationFileMap
             {
-                ExeConfigFilename =
-                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Junte", app, "app.config")
+                ExeConfigFilename = Path.Combine(Environment.GetFolderPath(folder), "Junte", app, "app.config")
             };
 
             configuration = NetConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
