@@ -374,11 +374,11 @@ $("#add-request .submit").click(function () {
 //#region search
 $('#search').typeahead({
     minLength: 5,
-    source: function (filter, callback) {
+    source: function (query, callback) {
         var map = {};
         $.ajax({
             url: "/find-services",
-            data: { filter: filter },
+            data: { query: query },
             dataType: "json",
             global: false,
             success: function (services) {

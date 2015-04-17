@@ -49,7 +49,7 @@
         {
             public const string Name = "Queue Portal";
             public const string Description = "";
-            public const string Build = "5";
+            public const string Build = "6";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "F337BE00-134F-4C83-B316-BCBA4491B940";
         }

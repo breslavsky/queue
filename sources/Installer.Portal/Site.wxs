@@ -118,9 +118,6 @@
       <Component Id="cmp3F8633F1E519291FA25C47229E8EC039" Directory="dirA380CAE18F71BF115FAAE71F5447F4B9" Guid="2642E8E6-92FE-4CF1-9EEC-F6C57A5A3CDD">
         <File Id="fil37D01FD3BD55A78B8B1CC3CBB3CB1DF0" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\flot\jquery.colorhelpers.min.js" />
       </Component>
-      <Component Id="cmp8F8C542A0D4F3CE8048E2D1AEF4A1098" Directory="dirA380CAE18F71BF115FAAE71F5447F4B9" Guid="0FD17372-2F89-4A7A-B372-ECA38575DD3B">
-        <File Id="filE3BF26F009AA2AFC8CAEBDB25C9FDC37" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\flot\jquery.colorhelpers.min.js.map" />
-      </Component>
       <Component Id="cmp248034B3D399A14CDDF49C9E6608EB38" Directory="dirA380CAE18F71BF115FAAE71F5447F4B9" Guid="00A4471F-AAA2-42BC-8494-20E02A294D17">
         <File Id="fil887B0073FD91043981388CF144553FF2" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\www\flot\jquery.flot.canvas.js" />
       </Component>

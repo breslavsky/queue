@@ -109,13 +109,6 @@
     <Compile Include="PortalSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
-    <None Include="www\flot\excanvas.min.js.map">
-      <DependentUpon>excanvas.min.js</DependentUpon>
-    </None>
-    <None Include="www\flot\jquery.colorhelpers.min.js.map">
-      <DependentUpon>jquery.colorhelpers.min.js</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
