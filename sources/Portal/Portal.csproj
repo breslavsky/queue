@@ -109,6 +109,13 @@
     <Compile Include="PortalSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
+    <None Include="www\flot\excanvas.min.js.map">
+      <DependentUpon>excanvas.min.js</DependentUpon>
+    </None>
+    <None Include="www\flot\jquery.colorhelpers.min.js.map">
+      <DependentUpon>jquery.colorhelpers.min.js</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -161,41 +168,111 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="www\clientaccesspolicy.xml" />
-    <Content Include="www\flot\excanvas.js" />
-    <Content Include="www\flot\excanvas.min.js" />
-    <Content Include="www\flot\jquery.colorhelpers.js" />
-    <Content Include="www\flot\jquery.colorhelpers.min.js" />
-    <Content Include="www\flot\jquery.flot.canvas.js" />
-    <Content Include="www\flot\jquery.flot.canvas.min.js" />
-    <Content Include="www\flot\jquery.flot.categories.js" />
-    <Content Include="www\flot\jquery.flot.categories.min.js" />
-    <Content Include="www\flot\jquery.flot.crosshair.js" />
-    <Content Include="www\flot\jquery.flot.crosshair.min.js" />
-    <Content Include="www\flot\jquery.flot.errorbars.js" />
-    <Content Include="www\flot\jquery.flot.errorbars.min.js" />
-    <Content Include="www\flot\jquery.flot.fillbetween.js" />
-    <Content Include="www\flot\jquery.flot.fillbetween.min.js" />
-    <Content Include="www\flot\jquery.flot.image.js" />
-    <Content Include="www\flot\jquery.flot.image.min.js" />
-    <Content Include="www\flot\jquery.flot.js" />
-    <Content Include="www\flot\jquery.flot.min.js" />
-    <Content Include="www\flot\jquery.flot.navigate.js" />
-    <Content Include="www\flot\jquery.flot.navigate.min.js" />
-    <Content Include="www\flot\jquery.flot.pie.js" />
-    <Content Include="www\flot\jquery.flot.pie.min.js" />
-    <Content Include="www\flot\jquery.flot.resize.js" />
-    <Content Include="www\flot\jquery.flot.resize.min.js" />
-    <Content Include="www\flot\jquery.flot.selection.js" />
-    <Content Include="www\flot\jquery.flot.selection.min.js" />
-    <Content Include="www\flot\jquery.flot.stack.js" />
-    <Content Include="www\flot\jquery.flot.stack.min.js" />
-    <Content Include="www\flot\jquery.flot.symbol.js" />
-    <Content Include="www\flot\jquery.flot.symbol.min.js" />
-    <Content Include="www\flot\jquery.flot.threshold.js" />
-    <Content Include="www\flot\jquery.flot.threshold.min.js" />
-    <Content Include="www\flot\jquery.flot.time.js" />
-    <Content Include="www\flot\jquery.flot.time.min.js" />
+    <Content Include="www\clientaccesspolicy.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\excanvas.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\excanvas.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.colorhelpers.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.colorhelpers.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.canvas.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.canvas.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.categories.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.categories.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.crosshair.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.crosshair.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.errorbars.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.errorbars.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.fillbetween.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.fillbetween.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.image.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.image.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.navigate.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.navigate.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.pie.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.pie.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.resize.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.resize.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.selection.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.selection.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.stack.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.stack.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.symbol.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.symbol.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.threshold.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.threshold.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.time.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\flot\jquery.flot.time.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="www\js\apng-canvas.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -307,8 +384,12 @@
     <Content Include="www\js\jquery.sparkline.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="www\js\justgage.min.js" />
-    <Content Include="www\js\raphael.min.js" />
+    <Content Include="www\js\justgage.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="www\js\raphael.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="www\js\translation.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -330,7 +411,9 @@
     <Content Include="www\operator\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="www\operator\Queue.Operator.Silverlight.xap" />
+    <Content Include="www\operator\Queue.Operator.Silverlight.xap">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="www\social.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
