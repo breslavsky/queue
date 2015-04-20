@@ -3,7 +3,7 @@
   <?include $(var.Installer.Common.ProjectDir)Consts.wxi ?>
 
   <?define ProductName="Queue Notification" ?>
-  <?define ProductTitle="Табло оповещений" ?>
+  <?define ProductTitle="Модуль оповещения" ?>
   <?define UpgradeCode="84A9AC38-F26B-4F54-86AA-011CC9B41F7E"?>
 
   <Product Id="$(var.ProductCode)"

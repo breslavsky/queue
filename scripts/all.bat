@@ -1,3 +1,5 @@
+del /Q ..\install\*.msi
+
 call administrator.bat
 call database.bat
 call display.bat

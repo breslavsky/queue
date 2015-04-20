@@ -4,7 +4,6 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Hosts.Common;
-using Queue.Hosts.Media.WinForms.Properties;
 using Queue.Media;
 using Queue.Model.Common;
 using System;
@@ -80,8 +79,8 @@ namespace Queue.Hosts.Media.WinForms
                                         StartServiceButtonTitle;
 
             serviceStatePicture.Image = runned ?
-                                            Resources.online.ToBitmap() :
-                                            Resources.offline.ToBitmap();
+                                            Icons.online :
+                                            Icons.offline;
 
             startButton.Enabled = !started && !runned;
             stopButton.Enabled = started && !runned;

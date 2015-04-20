@@ -3,7 +3,7 @@
   <?include $(var.Installer.Common.ProjectDir)Consts.wxi ?>
 
   <?define ProductName="Queue Database" ?>
-  <?define ProductTitle="Управление базой данной" ?>
+  <?define ProductTitle="База данных" ?>
   <?define UpgradeCode="7C801852-C6F9-482B-AC8B-3F0D92B26B3C"?>
 
   <Product Id="$(var.ProductCode)"

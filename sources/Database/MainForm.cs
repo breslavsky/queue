@@ -419,11 +419,11 @@ namespace Queue.Database
 
                 Log("Инициализация пользователей");
 
-                Administrator administrator = session.CreateCriteria<Administrator>()
+                Administrator user = session.CreateCriteria<Administrator>()
                     .Add(Restrictions.Eq("Surname", "Администратор"))
                     .SetMaxResults(1)
                     .UniqueResult<Administrator>();
-                if (administrator == null)
+                if (user == null)
                 {
                     session.Save(new Administrator()
                     {
@@ -446,11 +446,11 @@ namespace Queue.Database
                     });
                 }
 
-                administrator = session.CreateCriteria<Administrator>()
+                user = session.CreateCriteria<Administrator>()
                     .Add(Restrictions.Eq("Surname", "Терминал записи"))
                     .SetMaxResults(1)
                     .UniqueResult<Administrator>();
-                if (administrator == null)
+                if (user == null)
                 {
                     session.Save(new Administrator()
                     {
@@ -459,6 +459,50 @@ namespace Queue.Database
                         SessionId = Guid.NewGuid(),
                         Permissions = AdministratorPermissions.Clients
                             | AdministratorPermissions.ClientsRequests
+                    });
+                }
+
+                user = session.CreateCriteria<Administrator>()
+                    .Add(Restrictions.Eq("Surname", "Портал"))
+                    .SetMaxResults(1)
+                    .UniqueResult<Administrator>();
+                if (user == null)
+                {
+                    session.Save(new Administrator()
+                    {
+                        IsActive = true,
+                        Surname = "Портал",
+                        SessionId = Guid.NewGuid(),
+                        Permissions = AdministratorPermissions.Clients
+                            | AdministratorPermissions.ClientsRequests
+                    });
+                }
+
+                user = session.CreateCriteria<Administrator>()
+                    .Add(Restrictions.Eq("Surname", "Медиа-служба"))
+                    .SetMaxResults(1)
+                    .UniqueResult<Administrator>();
+                if (user == null)
+                {
+                    session.Save(new Administrator()
+                    {
+                        IsActive = true,
+                        Surname = "Медиа-служба",
+                        SessionId = Guid.NewGuid()
+                    });
+                }
+
+                user = session.CreateCriteria<Administrator>()
+                    .Add(Restrictions.Eq("Surname", "Метрики"))
+                    .SetMaxResults(1)
+                    .UniqueResult<Administrator>();
+                if (user == null)
+                {
+                    session.Save(new Administrator()
+                    {
+                        IsActive = true,
+                        Surname = "Метрики",
+                        SessionId = Guid.NewGuid()
                     });
                 }
 
