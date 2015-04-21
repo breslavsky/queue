@@ -91,7 +91,7 @@ namespace Queue.Administrator
 
         private void templateLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            couponTemplateEditor.Text = Templates.ClientRequestCoupon;
+            config.Template = couponTemplateEditor.Text = Templates.ClientRequestCoupon;
         }
 
         private async void saveButton_Click(object sender, EventArgs e)
