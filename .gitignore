@@ -228,3 +228,4 @@ pip-log.txt
 *.exe
 Google Диск.lnk
 /install/*.msi
+/sources/queue.sln.ide

@@ -2,18 +2,12 @@
 using NHibernate.Criterion;
 using Queue.Model;
 using Queue.Model.Common;
-using Queue.Resources;
 using Queue.Services.Common;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.ServiceModel;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Markup;
-using System.Xml;
-using Grid = System.Windows.Controls.Grid;
 
 namespace Queue.Services.Server
 {
@@ -158,33 +152,7 @@ namespace Queue.Services.Server
                         throw new SystemException();
                     }
 
-                    var template = source.Template;
-
-                    Exception exception = null;
-
-                    var thread = new Thread(new ThreadStart(() =>
-                    {
-                        try
-                        {
-                            var grid = (Grid)XamlReader.Load(XmlReader.Create(new StringReader(template)));
-                        }
-                        catch (Exception e)
-                        {
-                            exception = e;
-                        }
-                    }));
-
-                    thread.SetApartmentState(ApartmentState.STA);
-                    thread.IsBackground = true;
-                    thread.Start();
-                    thread.Join();
-
-                    if (exception != null)
-                    {
-                        throw new FaultException(exception.Message);
-                    }
-
-                    сonfig.Template = template;
+                    сonfig.Template = source.Template;
 
                     session.Save(сonfig);
                     transaction.Commit();
