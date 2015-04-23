@@ -57,15 +57,15 @@ namespace Queue.Services.Server
                 using (var transaction = session.BeginTransaction())
                 {
                     var serviceGroup = session.Get<ServiceGroup>(serviceGroupId);
-                    if (serviceGroupId == null)
+                    if (serviceGroup == null)
                     {
                         throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceGroupId), string.Format("Группа услуг [{0}] не найдена", serviceGroupId));
                     }
 
                     var services = session.CreateCriteria<Service>()
-                        .Add(Restrictions.Eq("ServiceGroup", serviceGroup))
-                        .AddOrder(Order.Asc("SortId"))
-                        .List<Service>();
+										.Add(Restrictions.Eq("ServiceGroup", serviceGroup))
+										.AddOrder(Order.Asc("SortId"))
+										.List<Service>();
 
                     return Mapper.Map<IList<Service>, DTO.Service[]>(services);
                 }
@@ -79,7 +79,7 @@ namespace Queue.Services.Server
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    Service service = session.Get<Service>(serviceId);
+                    var service = session.Get<Service>(serviceId);
                     if (service == null)
                     {
                         throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId), string.Format("Услуга [{0}] не найдена", serviceId));
