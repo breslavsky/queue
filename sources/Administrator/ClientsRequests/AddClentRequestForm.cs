@@ -12,14 +12,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Printing;
 using System.ServiceModel;
 using System.Windows.Forms;
 using SelectionMode = System.Windows.Forms.SelectionMode;
 
 namespace Queue.Administrator
 {
-    public partial class AddClentRequestForm : Queue.UI.WinForms.RichForm
+    public partial class AddClentRequestForm : UI.WinForms.RichForm
     {
         private IConfigurationManager configuration;
         private AdministratorSettings settings;
@@ -33,7 +32,6 @@ namespace Queue.Administrator
         private string[] freeTimeReport;
         private Service selectedService;
         private TaskPool taskPool;
-        private string xpsCouponFile;
 
         #endregion fields
 
@@ -186,15 +184,13 @@ namespace Queue.Administrator
                             ClientRequestCoupon data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
                             CouponConfig config = await taskPool.AddTask(channel.Service.GetCouponConfig());
 
-                            xpsCouponFile = XPSGenerator.FromXaml(config.Template, data);
-
                             if (couponAutoPrintCheckBox.Checked)
                             {
-                                PrintCoupon();
+                                XPSUtils.PrintXaml(config.Template, data, settings.CouponPrinter);
                             }
                             else
                             {
-                                Process.Start(xpsCouponFile);
+                                Process.Start(XPSUtils.WriteXaml(config.Template, data));
                             }
                         }
                     }
@@ -415,7 +411,7 @@ namespace Queue.Administrator
                     }
                 }
 
-                if (earlyRadioButton.Checked && earlyDatePicker.Value != null)
+                if (earlyRadioButton.Checked && earlyDatePicker != null)
                 {
                     var selectedDate = earlyDatePicker.Value;
 
@@ -534,24 +530,6 @@ namespace Queue.Administrator
                 {
                     UIHelper.Warning(exception.Message);
                 }
-            }
-        }
-
-        private void PrintCoupon()
-        {
-            if (!string.IsNullOrWhiteSpace(xpsCouponFile))
-            {
-                PrintQueue printQueue;
-                try
-                {
-                    printQueue = new PrintServer().GetPrintQueue(settings.CouponPrinter);
-                }
-                catch
-                {
-                    UIHelper.Warning("Ошибка получения принтера, будет использован принтер по умолчанию");
-                    printQueue = LocalPrintServer.GetDefaultPrintQueue();
-                }
-                printQueue.AddJob(xpsCouponFile, xpsCouponFile, false);
             }
         }
 

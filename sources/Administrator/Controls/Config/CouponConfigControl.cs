@@ -81,7 +81,7 @@ namespace Queue.Administrator
         {
             try
             {
-                Process.Start(XPSGenerator.FromXaml(couponTemplateEditor.Text, null));
+                Process.Start(XPSUtils.WriteXaml(couponTemplateEditor.Text, null));
             }
             catch (Exception exception)
             {

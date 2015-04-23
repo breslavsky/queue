@@ -8,7 +8,6 @@ using Queue.UI.Common;
 using Queue.UI.WPF;
 using System;
 using System.Collections.Generic;
-using System.Printing;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -47,7 +46,7 @@ namespace Queue.Terminal.ViewModels
                 {
                     await channel.Service.OpenUserSession(Model.CurrentAdministrator.SessionId);
 
-                    ClientRequest clientRequest = await AddClientRequest(channel);
+                    var clientRequest = await AddClientRequest(channel);
 
                     Success = true;
 
@@ -112,17 +111,9 @@ namespace Queue.Terminal.ViewModels
 
         private async Task PrintCoupon(Channel<IServerTcpService> channel, ClientRequest clientRequest)
         {
-            ClientRequestCoupon data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
-            string template = ServiceLocator.Current.GetInstance<CouponConfig>().Template;
-            string xpsFile = XPSGenerator.FromXaml(template, data);
-            try
-            {
-                PrintQueue defaultPrintQueue = LocalPrintServer.GetDefaultPrintQueue();
-                defaultPrintQueue.AddJob(clientRequest.ToString(), xpsFile, false);
-            }
-            catch
-            {
-            }
+            var data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
+            var template = ServiceLocator.Current.GetInstance<CouponConfig>().Template;
+            XPSUtils.PrintXaml(template, data);
         }
 
         #region IDisposable

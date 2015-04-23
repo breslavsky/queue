@@ -25,7 +25,7 @@ namespace Queue.Common
         {
             try
             {
-                string path = string.Format("{0}.Translate.{1}{2}",
+                var path = string.Format("{0}.Translate.{1}{2}",
                                         assembly.GetName().Name,
                                         name,
                                         modification == null ? string.Empty : "_" + modification);
@@ -65,7 +65,7 @@ namespace Queue.Common
             {
                 try
                 {
-                    string str = manager.GetString(key.ToString());
+                    var str = manager.GetString(key.ToString());
                     result = parameters.Length > 0 ? string.Format(str, parameters) : str;
                 }
                 catch { }
