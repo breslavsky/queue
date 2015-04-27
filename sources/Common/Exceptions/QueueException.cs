@@ -21,6 +21,7 @@ namespace Queue.Common
         }
 
         protected QueueException(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
+            : base(info, context)
+        { }
     }
 }

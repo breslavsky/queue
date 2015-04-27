@@ -21,11 +21,11 @@ namespace Queue.Administrator
 
             while (true)
             {
-                using (LoginForm loginForm = new LoginForm(UserRole.Administrator))
+                using (var loginForm = new LoginForm(UserRole.Administrator))
                 {
                     if (loginForm.ShowDialog() == DialogResult.OK)
                     {
-                        AdministratorForm mainForm = new AdministratorForm(loginForm.ChannelBuilder, (QueueAdministrator)loginForm.User);
+                        var mainForm = new AdministratorForm(loginForm.ChannelBuilder, (QueueAdministrator)loginForm.User);
                         Application.Run(mainForm);
 
                         if (mainForm.IsLogout)
@@ -42,14 +42,14 @@ namespace Queue.Administrator
 
         private static void RegisterContainer()
         {
-            IUnityContainer container = new UnityContainer();
+            var container = new UnityContainer();
             container.RegisterInstance<IConfigurationManager>(new ConfigurationManager());
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 
         private static void ResetSettings()
         {
-            IConfigurationManager configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+            var configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
 
             configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey).Reset();
             configuration.GetSection<LoginSettings>(LoginSettings.SectionKey).Reset();

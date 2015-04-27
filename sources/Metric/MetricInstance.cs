@@ -7,7 +7,6 @@ using NLog;
 using Queue.Model;
 using Queue.Model.Common;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
@@ -16,7 +15,7 @@ namespace Queue.Metric
 {
     public class MetricInstance : IDisposable
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private SessionProvider sessionProvider;
 
@@ -76,9 +75,9 @@ namespace Queue.Metric
 
         private void CollectQueuePlanMetric(ISession session)
         {
-            DateTime requestDate = DateTime.Now;
+            var requestDate = DateTime.Now;
 
-            ProjectionList projections = Projections.ProjectionList()
+            var projections = Projections.ProjectionList()
                     .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("State", ClientRequestState.Waiting),
                          Projections.Constant(1, NHibernateUtil.Int32), Projections.Constant(0, NHibernateUtil.Int32))), "Waiting")
                     .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("State", ClientRequestState.Rendered),
@@ -97,12 +96,12 @@ namespace Queue.Metric
                          Projections.Property("Productivity"), Projections.Constant(0, NHibernateUtil.Single))), "Productivity");
 
             IList<QueuePlanMetric> queuePlanMetrics = session.CreateCriteria<ClientRequest>()
-                .Add(Expression.Eq("RequestDate", requestDate.Date))
+                .Add(Restrictions.Eq("RequestDate", requestDate.Date))
                 .SetProjection(projections)
                 .SetResultTransformer(Transformers.AliasToBean(typeof(QueuePlanMetric)))
                 .List<QueuePlanMetric>();
 
-            foreach (QueuePlanMetric m in queuePlanMetrics)
+            foreach (var m in queuePlanMetrics)
             {
                 m.Year = requestDate.Year;
                 m.Month = requestDate.Month;
@@ -128,9 +127,8 @@ namespace Queue.Metric
 
         private void CollectQueuePlanServiceMetric(ISession session)
         {
-            DateTime requestDate = DateTime.Now;
-
-            ProjectionList projections = Projections.ProjectionList()
+            var requestDate = DateTime.Now;
+            var projections = Projections.ProjectionList()
                     .Add(Projections.GroupProperty("Service"))
                     .Add(Projections.Property("Service"), "Service")
                     .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("State", ClientRequestState.Waiting),
@@ -150,13 +148,13 @@ namespace Queue.Metric
                     .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("State", ClientRequestState.Rendered),
                          Projections.Property("Productivity"), Projections.Constant(0, NHibernateUtil.Single))), "Productivity");
 
-            IList<QueuePlanServiceMetric> queuePlanServiceMetrics = session.CreateCriteria<ClientRequest>()
-                                                                            .Add(Expression.Eq("RequestDate", requestDate.Date))
+            var queuePlanServiceMetrics = session.CreateCriteria<ClientRequest>()
+                                                                            .Add(Restrictions.Eq("RequestDate", requestDate.Date))
                                                                             .SetProjection(projections)
                                                                             .SetResultTransformer(Transformers.AliasToBean(typeof(QueuePlanServiceMetric)))
                                                                             .List<QueuePlanServiceMetric>();
 
-            foreach (QueuePlanServiceMetric m in queuePlanServiceMetrics)
+            foreach (var m in queuePlanServiceMetrics)
             {
                 m.Year = requestDate.Year;
                 m.Month = requestDate.Month;
@@ -170,7 +168,7 @@ namespace Queue.Metric
                     m.Productivity /= m.Rendered;
                 }
 
-                ValidationError error = m.Validate().FirstOrDefault();
+                var error = m.Validate().FirstOrDefault();
                 if (error != null)
                 {
                     logger.Error(error.Message);
@@ -182,8 +180,8 @@ namespace Queue.Metric
 
         private void CollectQueuePlanOperatorMetric(ISession session)
         {
-            DateTime requestDate = DateTime.Now;
-            ProjectionList projections = Projections.ProjectionList()
+            var requestDate = DateTime.Now;
+            var projections = Projections.ProjectionList()
                      .Add(Projections.GroupProperty("Operator"))
                      .Add(Projections.Property("Operator"), "Operator")
                      .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("State", ClientRequestState.Rendered),
@@ -198,13 +196,13 @@ namespace Queue.Metric
                      .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("State", ClientRequestState.Rendered),
                           Projections.Property("Productivity"), Projections.Constant(0, NHibernateUtil.Single))), "Productivity");
 
-            IList<QueuePlanOperatorMetric> queuePlanOperatorMetrics = session.CreateCriteria<ClientRequest>()
-                                                                            .Add(Expression.Eq("RequestDate", requestDate.Date))
+            var queuePlanOperatorMetrics = session.CreateCriteria<ClientRequest>()
+                                                                            .Add(Restrictions.Eq("RequestDate", requestDate.Date))
                                                                             .SetProjection(projections)
                                                                             .SetResultTransformer(Transformers.AliasToBean(typeof(QueuePlanOperatorMetric)))
                                                                             .List<QueuePlanOperatorMetric>();
 
-            foreach (QueuePlanOperatorMetric m in queuePlanOperatorMetrics)
+            foreach (var m in queuePlanOperatorMetrics)
             {
                 m.Year = requestDate.Year;
                 m.Month = requestDate.Month;
@@ -218,7 +216,7 @@ namespace Queue.Metric
                     m.Productivity /= m.Rendered;
                 }
 
-                ValidationError error = m.Validate().FirstOrDefault();
+                var error = m.Validate().FirstOrDefault();
                 if (error != null)
                 {
                     logger.Error(error.Message);

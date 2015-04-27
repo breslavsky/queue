@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using NHibernate;
 using NHibernate.Criterion;
 using Queue.Common;
 using Queue.Model;
@@ -236,23 +235,6 @@ namespace Queue.Services.Server
 
                     logger.Info("Добавление нового запроса в план очереди");
 
-                    /*foreach (var p in service.Parameters)
-                    {
-                        if (!parameters.ContainsKey(p.Id))
-                        {
-                            throw new FaultException(string.Format("Не удалось найти параметр услуги [{0}]", p));
-                        }
-
-                        try
-                        {
-                            clientRequest.Parameters.Add(p.Compile(parameters[p.Id]));
-                        }
-                        catch (Exception exception)
-                        {
-                            throw new FaultException(exception.Message);
-                        }
-                    }*/
-
                     using (var locker = queuePlan.WriteLock())
                     {
                         clientRequest.Number = ++queuePlan.LastNumber;
@@ -394,23 +376,6 @@ namespace Queue.Services.Server
 
                     logger.Info("Добавление нового запроса в план очереди");
 
-                    /*foreach (var p in service.Parameters)
-                    {
-                        if (!parameters.ContainsKey(p.Id))
-                        {
-                            throw new FaultException(string.Format("Не удалось найти параметр услуги [{0}]", p));
-                        }
-
-                        try
-                        {
-                            clientRequest.Parameters.Add(p.Compile(parameters[p.Id]));
-                        }
-                        catch (Exception exception)
-                        {
-                            throw new FaultException(exception.Message);
-                        }
-                    }*/
-
                     using (var locker = todayQueuePlan.WriteLock())
                     {
                         clientRequest.Number = ++todayQueuePlan.LastNumber;
@@ -459,8 +424,8 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                using (ISession session = sessionProvider.OpenSession())
-                using (ITransaction transaction = session.BeginTransaction())
+                using (var session = sessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
                 {
                     ClientRequest clientRequest = session.Get<ClientRequest>(clientRequestId);
                     if (clientRequest == null)
@@ -498,7 +463,7 @@ namespace Queue.Services.Server
 
                     if (clientRequest.Type == ClientRequestType.Live && isToday)
                     {
-                        QueuePlan todayQueuePlan = queueInstance.TodayQueuePlan;
+                        var todayQueuePlan = queueInstance.TodayQueuePlan;
                         using (var locker = todayQueuePlan.ReadLock())
                         {
                             ClientRequestPlan clientRequestPlan = todayQueuePlan.OperatorsPlans
@@ -522,10 +487,10 @@ namespace Queue.Services.Server
         {
             await Task.Run(() =>
             {
-                using (ISession session = sessionProvider.OpenSession())
-                using (ITransaction transaction = session.BeginTransaction())
+                using (var session = sessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
                 {
-                    ClientRequest clientRequest = session.Get<ClientRequest>(clientRequestId);
+                    var clientRequest = session.Get<ClientRequest>(clientRequestId);
                     if (clientRequest == null)
                     {
                         throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(clientRequestId),

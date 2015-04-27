@@ -9,12 +9,12 @@ namespace Queue.Common
 
         public EnumItem(T value)
         {
-            this.Value = value;
+            Value = value;
         }
 
         public static EnumItem<T>[] GetItems()
         {
-            List<EnumItem<T>> result = new List<EnumItem<T>>();
+            var result = new List<EnumItem<T>>();
             foreach (T value in Enum.GetValues(typeof(T)))
             {
                 result.Add(new EnumItem<T>(value));

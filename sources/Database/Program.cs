@@ -16,6 +16,7 @@ namespace Queue.Database
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             RegisterContainer();
+
             Application.Run(new MainForm());
         }
 

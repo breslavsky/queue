@@ -375,7 +375,7 @@ namespace Queue.Administrator
             {
                 Padding = new Thickness(5, 5, 5, 5)
             };
-            textBlock.Inlines.Add(new Run("Не распределенные") { FontWeight = FontWeights.Bold });
+            textBlock.Inlines.Add(new Run("Нераспределенные") { FontWeight = FontWeights.Bold });
 
             currentBlockY = index * BLOCK_BOX_HEIGHT;
             operatorsCanvas.Children.Add(CreateBlockBox(textBlock, BlockBoxWidth, BLOCK_BOX_HEIGHT, 0, currentBlockY, Colors.LightPink));

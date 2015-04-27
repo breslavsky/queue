@@ -18,9 +18,8 @@ namespace Queue.UI.WPF
     {
         public static List<TChild> FindChildren<TChild>(this DependencyObject d) where TChild : DependencyObject
         {
-            List<TChild> children = new List<TChild>();
-
-            int childCount = VisualTreeHelper.GetChildrenCount(d);
+            var children = new List<TChild>();
+            var childCount = VisualTreeHelper.GetChildrenCount(d);
 
             for (int i = 0; i < childCount; i++)
             {
@@ -42,18 +41,18 @@ namespace Queue.UI.WPF
 
         public static SolidColorBrush GetBrushForColor(this string color)
         {
-            Drawing.Color c = Drawing.ColorTranslator.FromHtml(color);
+            var c = Drawing.ColorTranslator.FromHtml(color);
             return new SolidColorBrush(Color.FromRgb(c.R, c.G, c.B));
         }
 
         public static Image ToWpfImage(this Bitmap bitmap)
         {
-            MemoryStream memoryStream = new MemoryStream();
+            var memoryStream = new MemoryStream();
 
             bitmap.Save(memoryStream, ImageFormat.Png);
             memoryStream.Position = 0;
 
-            BitmapImage bitmapImage = new BitmapImage();
+            var bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
             bitmapImage.StreamSource = memoryStream;
             bitmapImage.EndInit();
@@ -63,7 +62,7 @@ namespace Queue.UI.WPF
 
         public static void FadeIn(this UIElement targetControl)
         {
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(1)));
+            var fadeInAnimation = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(1)));
             Storyboard.SetTarget(fadeInAnimation, targetControl);
             Storyboard.SetTargetProperty(fadeInAnimation, new PropertyPath(UIElement.OpacityProperty));
             Storyboard storyboard = new Storyboard();
@@ -73,7 +72,7 @@ namespace Queue.UI.WPF
 
         public static void FadeOut(this UIElement targetControl)
         {
-            DoubleAnimation fadeInAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(1)));
+            var fadeInAnimation = new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(1)));
             Storyboard.SetTarget(fadeInAnimation, targetControl);
             Storyboard.SetTargetProperty(fadeInAnimation, new PropertyPath(UIElement.OpacityProperty));
             Storyboard storyboard = new Storyboard();
@@ -88,7 +87,7 @@ namespace Queue.UI.WPF
 
         public static void Blur(this UIElement targetControl, int radius)
         {
-            BlurEffect blurEffect = new BlurEffect();
+            var blurEffect = new BlurEffect();
             blurEffect.Radius = radius;
             targetControl.Effect = blurEffect;
         }
@@ -100,7 +99,7 @@ namespace Queue.UI.WPF
 
         public static void TopMost(this FrameworkElement targetControl)
         {
-            Panel parent = (Panel)targetControl.Parent;
+            var parent = targetControl.Parent as Panel;
             parent.Children.Remove(targetControl);
             parent.Children.Add(targetControl);
         }

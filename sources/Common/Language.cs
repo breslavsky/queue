@@ -8,8 +8,7 @@ namespace Queue.Common
     public enum Language
     {
         ru_RU,
-        en_US,
-        //zh_CN
+        en_US
     }
 
     public static partial class TranslationExtensions
@@ -17,8 +16,7 @@ namespace Queue.Common
         private static Dictionary<Language, string> CulturesNames = new Dictionary<Language, string>()
         {
             {Language.ru_RU, "ru-RU"},
-            {Language.en_US, "en-US"},
-            //{Language.zh_CN, "zh-CN"}
+            {Language.en_US, "en-US"}
         };
 
         public static Language GetLanguage(this CultureInfo culture)
@@ -28,7 +26,7 @@ namespace Queue.Common
 
         public static void SetCurrent(this Language language)
         {
-            CultureInfo culture = language.GetCulture();
+            var culture = language.GetCulture();
 
             CultureInfo.DefaultThreadCurrentUICulture = culture;
             CultureInfo.DefaultThreadCurrentCulture = culture;

@@ -157,7 +157,7 @@ namespace Queue.Services.Portal
                 ClientRequestCoupon data = await channel.Service.GetClientRequestCoupon(Guid.Parse(requestId));
                 CouponConfig config = await channel.Service.GetCouponConfig();
 
-                Thread thread = new Thread(new ThreadStart(() => xpsFile = XPSGenerator.FromXaml(config.Template, data)));
+                Thread thread = new Thread(new ThreadStart(() => xpsFile = XPSUtils.WriteXaml(config.Template, data)));
 
                 thread.SetApartmentState(ApartmentState.STA);
                 thread.Start();

@@ -40,7 +40,7 @@ namespace Queue.Services.Server
                 using (var transaction = session.BeginTransaction())
                 {
                     var services = session.CreateCriteria<Service>()
-                        .Add(Expression.IsNull("ServiceGroup"))
+                        .Add(Restrictions.IsNull("ServiceGroup"))
                         .AddOrder(Order.Asc("SortId"))
                         .List<Service>();
 
@@ -57,15 +57,15 @@ namespace Queue.Services.Server
                 using (var transaction = session.BeginTransaction())
                 {
                     var serviceGroup = session.Get<ServiceGroup>(serviceGroupId);
-                    if (serviceGroupId == null)
+                    if (serviceGroup == null)
                     {
                         throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceGroupId), string.Format("Группа услуг [{0}] не найдена", serviceGroupId));
                     }
 
                     var services = session.CreateCriteria<Service>()
-                        .Add(Restrictions.Eq("ServiceGroup", serviceGroup))
-                        .AddOrder(Order.Asc("SortId"))
-                        .List<Service>();
+                                        .Add(Restrictions.Eq("ServiceGroup", serviceGroup))
+                                        .AddOrder(Order.Asc("SortId"))
+                                        .List<Service>();
 
                     return Mapper.Map<IList<Service>, DTO.Service[]>(services);
                 }
@@ -79,7 +79,7 @@ namespace Queue.Services.Server
                 using (var session = sessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    Service service = session.Get<Service>(serviceId);
+                    var service = session.Get<Service>(serviceId);
                     if (service == null)
                     {
                         throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId), string.Format("Услуга [{0}] не найдена", serviceId));
@@ -97,7 +97,7 @@ namespace Queue.Services.Server
                 using (var session = sessionProvider.OpenSession())
                 {
                     ICriteria criteria = session.CreateCriteria<Service>()
-                        .Add(Expression.Eq("IsActive", true))
+                        .Add(Restrictions.Eq("IsActive", true))
                         .AddOrder(Order.Asc("Name"))
                         .SetFirstResult(startIndex)
                         .SetMaxResults(maxResults);
@@ -105,8 +105,8 @@ namespace Queue.Services.Server
                     if (query.Length > 0)
                     {
                         criteria.Add(new Disjunction()
-                            .Add(Expression.InsensitiveLike("Name", query, MatchMode.Anywhere))
-                            .Add(Expression.InsensitiveLike("Tags", query, MatchMode.Anywhere)));
+                            .Add(Restrictions.InsensitiveLike("Name", query, MatchMode.Anywhere))
+                            .Add(Restrictions.InsensitiveLike("Tags", query, MatchMode.Anywhere)));
                     }
 
                     return Mapper.Map<IList<Service>, DTO.Service[]>(criteria.List<Service>());
@@ -262,17 +262,17 @@ namespace Queue.Services.Server
                     }
 
                     var criteria = session.CreateCriteria<Service>()
-                        .Add(Expression.Lt("SortId", service.SortId))
+                        .Add(Restrictions.Lt("SortId", service.SortId))
                         .AddOrder(Order.Desc("SortId"))
                         .SetMaxResults(1);
 
                     if (service.ServiceGroup != null)
                     {
-                        criteria.Add(Expression.Eq("ServiceGroup", service.ServiceGroup));
+                        criteria.Add(Restrictions.Eq("ServiceGroup", service.ServiceGroup));
                     }
                     else
                     {
-                        criteria.Add(Expression.IsNull("ServiceGroup"));
+                        criteria.Add(Restrictions.IsNull("ServiceGroup"));
                     }
 
                     var prevService = criteria.UniqueResult<Service>();
@@ -312,17 +312,17 @@ namespace Queue.Services.Server
                     }
 
                     var criteria = session.CreateCriteria<Service>()
-                        .Add(Expression.Gt("SortId", service.SortId))
+                        .Add(Restrictions.Gt("SortId", service.SortId))
                         .AddOrder(Order.Asc("SortId"))
                         .SetMaxResults(1);
 
                     if (service.ServiceGroup != null)
                     {
-                        criteria.Add(Expression.Eq("ServiceGroup", service.ServiceGroup));
+                        criteria.Add(Restrictions.Eq("ServiceGroup", service.ServiceGroup));
                     }
                     else
                     {
-                        criteria.Add(Expression.IsNull("ServiceGroup"));
+                        criteria.Add(Restrictions.IsNull("ServiceGroup"));
                     }
 
                     var nextService = criteria.UniqueResult<Service>();

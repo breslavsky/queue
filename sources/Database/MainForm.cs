@@ -3,7 +3,6 @@ using Junte.UI.WinForms.NHibernate;
 using Junte.UI.WinForms.NHibernate.Configuration;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
-using NHibernate;
 using NHibernate.Criterion;
 using NLog;
 using Queue.Common;
@@ -17,7 +16,7 @@ using System.Windows.Forms;
 
 namespace Queue.Database
 {
-    public partial class MainForm : Queue.UI.WinForms.RichForm
+    public partial class MainForm : UI.WinForms.RichForm
     {
         private const string SectionKey = "profiles";
 
@@ -29,8 +28,7 @@ namespace Queue.Database
         private IUnityContainer container;
         private ISessionProvider sessionProvider;
 
-        public MainForm()
-            : base()
+        public MainForm() : base()
         {
             InitializeComponent();
         }
@@ -47,8 +45,8 @@ namespace Queue.Database
 
         private void checkPatchesMenuItem_Click(object sender, EventArgs e)
         {
-            using (ISession session = sessionProvider.OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
+            using (var session = sessionProvider.OpenSession())
+            using (var transaction = session.BeginTransaction())
             {
                 var schemeConfig = session.Get<SchemeConfig>(ConfigType.Scheme);
                 if (schemeConfig != null)
@@ -108,7 +106,7 @@ namespace Queue.Database
         private bool DatabaseConnect(DatabaseSettings s)
         {
             sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, s);
-            container.RegisterInstance<ISessionProvider>(sessionProvider);
+            container.RegisterInstance(sessionProvider);
 
             schemaMenu.Enabled = dataMenu.Enabled = true;
             connectButton.Enabled = false;
@@ -123,8 +121,8 @@ namespace Queue.Database
         {
             Log("Загрузка демонстрационных данных");
 
-            using (ISession session = sessionProvider.OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
+            using (var session = sessionProvider.OpenSession())
+            using (var transaction = session.BeginTransaction())
             {
                 Log("Загрузка рабочих мест");
 

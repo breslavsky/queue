@@ -13,14 +13,13 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Printing;
 using System.ServiceModel;
 using System.Windows.Forms;
 using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
 {
-    public partial class EditClientRequestForm : Queue.UI.WinForms.RichForm
+    public partial class EditClientRequestForm : UI.WinForms.RichForm
     {
         public event EventHandler<EventArgs> Saved;
 
@@ -214,19 +213,7 @@ namespace Queue.Administrator
 
                     ClientRequestCoupon data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
                     CouponConfig config = await taskPool.AddTask(channel.Service.GetCouponConfig());
-                    string xpsFile = XPSGenerator.FromXaml(config.Template, data);
-
-                    PrintQueue printQueue;
-                    try
-                    {
-                        printQueue = new PrintServer().GetPrintQueue(settings.CouponPrinter);
-                    }
-                    catch
-                    {
-                        UIHelper.Warning("Ошибка получения принтера, будет использован принтер по умолчанию");
-                        printQueue = LocalPrintServer.GetDefaultPrintQueue();
-                    }
-                    printQueue.AddJob(xpsFile, xpsFile, false);
+                    XPSUtils.PrintXaml(config.Template, data, settings.CouponPrinter);
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

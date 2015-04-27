@@ -22,7 +22,7 @@ namespace Queue.Common
 
         private void Load()
         {
-            ExeConfigurationFileMap configMap = new ExeConfigurationFileMap
+            var configMap = new ExeConfigurationFileMap
             {
                 ExeConfigFilename = Path.Combine(Environment.GetFolderPath(folder), "Junte", app, "app.config")
             };

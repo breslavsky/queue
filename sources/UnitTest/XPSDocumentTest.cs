@@ -36,7 +36,7 @@ namespace UnitTest
                     }}
                 };
 
-            string xpsFile = XPSGenerator.FromXaml(Queue.Resources.Templates.ClientRequestCoupon, data);
+            string xpsFile = XPSUtils.WriteXaml(Queue.Resources.Templates.ClientRequestCoupon, data);
             try
             {
                 PrintQueue defaultPrintQueue = LocalPrintServer.GetDefaultPrintQueue();

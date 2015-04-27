@@ -15,28 +15,6 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <PublishUrl>\\ivanovo\release.queue.name\1.5\Queue.Database\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Web</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Background</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://release.queue.name/1.5/Queue.Database/</InstallUrl>
-    <TargetCulture>ru</TargetCulture>
-    <ProductName>База данных очереди</ProductName>
-    <PublisherName>Junte Queue</PublisherName>
-    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
-    <WebPage>index.html</WebPage>
-    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>3</ApplicationRevision>
-    <ApplicationVersion>1.5.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <CreateDesktopShortcut>true</CreateDesktopShortcut>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -85,10 +63,6 @@
     <StartupObject>Queue.Database.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Crad.Windows.Forms.Actions, Version=1.3.0.0, Culture=neutral, PublicKeyToken=81de48f2c6979a5b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ActionListWinForms.1.3.0.0\lib\net40\Crad.Windows.Forms.Actions.dll</HintPath>
-    </Reference>
     <Reference Include="FluentNHibernate, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FluentNHibernate.2.0.1.0\lib\net40\FluentNHibernate.dll</HintPath>
@@ -104,8 +78,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.Data.NHibernate.1.2.2.1\lib\net45\Junte.Data.NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.UI.WinForms">
-      <HintPath>..\packages\Junte.UI.WinForms.1.2.0.2\lib\net45\Junte.UI.WinForms.dll</HintPath>
+    <Reference Include="Junte.UI.WinForms, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.UI.WinForms.1.2.1.0\lib\net45\Junte.UI.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="Junte.UI.WinForms.NHibernate, Version=1.2.0.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -288,7 +263,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
