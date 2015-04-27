@@ -117,15 +117,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="SMTPUnitTest.cs" />
-    <Compile Include="TimeSpanTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AutomapperTest.cs" />
-    <Compile Include="DTOUnitTest.cs" />
     <Compile Include="AdditionalServicesGenerator.cs" />
     <Compile Include="XPSDocumentTest.cs" />
     <Compile Include="StorageTest.cs" />
-    <Compile Include="LinqTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

@@ -55,7 +55,7 @@ namespace Queue.Terminal.ViewModels
                 }
                 catch (FaultException exception)
                 {
-                    warn = screen.ShowWarning(exception.Reason, () => navigator.NextPage());
+                    warn = screen.ShowWarning(exception.Reason, () => navigator.Reset());
                 }
                 catch (Exception exception)
                 {
@@ -120,9 +120,7 @@ namespace Queue.Terminal.ViewModels
                 PrintQueue defaultPrintQueue = LocalPrintServer.GetDefaultPrintQueue();
                 defaultPrintQueue.AddJob(clientRequest.ToString(), xpsFile, false);
             }
-            catch
-            {
-            }
+            catch { }
         }
 
         #region IDisposable
