@@ -10,10 +10,7 @@
             </Component>
             <Component Id="cmpEEC7AC6B3009FA88C57EB2972A7A8F5B" Directory="INSTALLFOLDER" Guid="F4E1BC5A-5158-43AB-8925-1BD7CD098C1D">
                 <File Id="fil4F01E53E158206D8C82AC24B4DFEE253" KeyPath="yes" Source="$(var.Administrator.TargetDir)\AutoMapper.Net4.dll" />
-            </Component>
-            <Component Id="cmpDBEEEBDAEE67A307026A7C9AC97B9B2A" Directory="INSTALLFOLDER" Guid="FDD21671-B896-4564-A57F-22459D20FF4A">
-                <File Id="filFD169E0363615C9BE8CAFE60196DAD45" KeyPath="yes" Source="$(var.Administrator.TargetDir)\Crad.Windows.Forms.Actions.dll" />
-            </Component>
+            </Component>            
             <Component Id="cmp695F3B89FCD90C669B1958F6D20D523D" Directory="INSTALLFOLDER" Guid="A19F5899-5C28-4231-ACAE-9C5863E03BD7">
                 <File Id="filECAAB6E721DE437D50D73A1F554EB461" KeyPath="yes" Source="$(var.Administrator.TargetDir)\Icons.resx" />
             </Component>

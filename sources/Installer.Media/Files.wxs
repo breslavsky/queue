@@ -30,10 +30,7 @@
       </Component>
       <Component Id="cmp1955E8AFA18A4EF586F89F19D5F94DCD" Guid="1955E8AF-A18A-4EF5-86F8-9F19D5F94DCD">
         <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\AutoMapper.Net4.dll" />
-      </Component>
-      <Component Id="cmpDBEEEBDAEE67A307026A7C9AC97B9B2A" Guid="A4627E22-692B-4C09-912E-BE7175452DB7">
-        <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Crad.Windows.Forms.Actions.dll" />
-      </Component>
+      </Component>      
       <Component Id="cmp695F3B89FCD90C669B1958F6D20D523D" Guid="CC5BDB0E-AA95-4280-BE6C-3E6F7940A21F">
         <File KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Icons.resx" />
       </Component>

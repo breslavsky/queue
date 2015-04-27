@@ -10,10 +10,7 @@
             </Component>
             <Component Id="cmpEEC7AC6B3009FA88C57EB2972A7A8F5B" Directory="INSTALLFOLDER" Guid="453EE595-0F10-448C-9281-DD46BD8D1675">
                 <File Id="fil4F01E53E158206D8C82AC24B4DFEE253" KeyPath="yes" Source="$(var.Database.TargetDir)\AutoMapper.Net4.dll" />
-            </Component>
-            <Component Id="cmpDBEEEBDAEE67A307026A7C9AC97B9B2A" Directory="INSTALLFOLDER" Guid="4C1C4DAA-F351-4B57-A66A-C3C74DD28936">
-                <File Id="filFD169E0363615C9BE8CAFE60196DAD45" KeyPath="yes" Source="$(var.Database.TargetDir)\Crad.Windows.Forms.Actions.dll" />
-            </Component>
+            </Component>            
             <Component Id="cmp730E2FFFAB351C1FBB3C16D211F149E6" Directory="INSTALLFOLDER" Guid="F20C3FD2-D0B7-4496-8179-314147608AD1">
                 <File Id="fil82F4EB518EA8CC3FD38BEB0C241522A6" KeyPath="yes" Source="$(var.Database.TargetDir)\FluentNHibernate.dll" />
             </Component>

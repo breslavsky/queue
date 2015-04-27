@@ -26,10 +26,7 @@
       </Component>
       <Component Id="cmpB926D95F6C8244AC9AC11F81732AB322" Directory="INSTALLFOLDER" Guid="B926D95F-6C82-44AC-9AC1-1F81732AB322">
         <File Id="fil44A2AFE6387B4F8FB0253DECC3B4C4C4" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\AutoMapper.Net4.dll" />
-      </Component>
-      <Component Id="cmpDBEEEBDAEE67A307026A7C9AC97B9B2A" Directory="INSTALLFOLDER" Guid="667AFC32-66F4-4158-9660-7C8224F9E727">
-        <File Id="filFD169E0363615C9BE8CAFE60196DAD45" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\Crad.Windows.Forms.Actions.dll" />
-      </Component>
+      </Component>      
       <Component Id="cmp695F3B89FCD90C669B1958F6D20D523D" Directory="INSTALLFOLDER" Guid="9CF8B7CF-A8BB-4BE4-837D-759A374E7DD0">
         <File Id="filECAAB6E721DE437D50D73A1F554EB461" KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\Icons.resx" />
       </Component>
