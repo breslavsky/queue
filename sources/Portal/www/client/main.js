@@ -444,46 +444,9 @@ if (sessionId != undefined) {
 }
 
 //#region functions
-function loadRootServiceGroups() {
-    $.ajax({
-        url: "root-service-groups",
-        dataType: "json",
-        success: function (serviceGroups) {
-            $("#main").empty();
-
-            $("<h2 />").html("Каталог услуг")
-                .appendTo("#main");
-
-            var grid = $("<div class='row' />");
-            for (var i = 0; i < serviceGroups.length; i++) {
-                var serviceGroup = serviceGroups[i];
-
-                if (!serviceGroup.IsActive) {
-                    continue;
-                }
-
-                var button = $("<div class='span6 service-group' />")
-                    .append($("<button class='btn btn-large btn-block' />")
-                        .append($("<table />")
-                            .append($("<tr />")
-                                .append($("<td />").addClass("code").css("background-color", serviceGroup.Color).html(serviceGroup.Code))
-                                .append($("<td />").addClass("name").html(serviceGroup.Name.fixLength()))))
-                        .data("service-group", serviceGroup)
-                        .attr("title", serviceGroup.Name)
-                        .bind("click", function () { loadServiceGroup($(this).data("service-group")); }));
-                if (!String.nullOrEmpty(serviceGroup.Comment)) {
-                    button.append($("<div class='comment' />").html(serviceGroup.Comment));
-                }
-                grid.append(button);
-            }
-            $("#main").append(grid);
-        }
-    });
-}
-
 function loadServiceGroup(serviceGroup) {
     $.ajax({
-        url: "service-group/" + serviceGroup.Id + "/child-groups",
+        url: serviceGroup != undefined ? "service-group/" + serviceGroup.Id + "/child-groups" : "root-service-groups",
         dataType: "json",
         serviceGroup: serviceGroup,
         success: function (serviceGroups) {
@@ -493,26 +456,28 @@ function loadServiceGroup(serviceGroup) {
             $("<li />").append(
                 $("<a href='javascript:;'/>").html("Каталог услуг")
                 .bind("click", function () {
-                    loadRootServiceGroups();
+                    loadServiceGroup();
                 })).appendTo(breadcrumb);
-            var serviceGroup = this.serviceGroup.Parent;
-            while (serviceGroup != undefined) {
+            if (this.serviceGroup != undefined) {
+                var parentServiceGroup = this.serviceGroup.Parent;
+                while (parentServiceGroup != undefined) {
+                    breadcrumb.children().last().append($("<span class='divider'>&rarr;</span>"));
+                    $("<li />").append(
+                        $("<a href='javascript:;' />").data("service-group", parentServiceGroup).html(parentServiceGroup.Name)
+                        .bind("click", function () {
+                            loadServiceGroup($(this).data("service-group"));
+                        })).appendTo(breadcrumb);
+                    parentServiceGroup = parentServiceGroup.Parent;
+                };
+
                 breadcrumb.children().last().append($("<span class='divider'>&rarr;</span>"));
-                $("<li />").append(
-                    $("<a href='javascript:;' />").data("service-group", serviceGroup).html(serviceGroup.Name)
-                    .bind("click", function () {
-                        loadServiceGroup($(this).data("service-group"));
-                    })).appendTo(breadcrumb);
-                serviceGroup = serviceGroup.Parent;
-            };
+                $("<li />").html(this.serviceGroup.Name).appendTo(breadcrumb);
+                breadcrumb.appendTo("#main");
 
-            breadcrumb.children().last().append($("<span class='divider'>&rarr;</span>"));
-            $("<li />").html(this.serviceGroup.Name).appendTo(breadcrumb);
-            breadcrumb.appendTo("#main");
-
-            if (!String.nullOrEmpty(this.serviceGroup.Description)) {
-                $("#main").append(this.serviceGroup.Description);
-                $("<hr/>").appendTo("#main");
+                if (!String.nullOrEmpty(this.serviceGroup.Description)) {
+                    $("#main").append(this.serviceGroup.Description);
+                    $("<hr/>").appendTo("#main");
+                }
             }
 
             var grid = $("<div class='row' />");
@@ -540,7 +505,7 @@ function loadServiceGroup(serviceGroup) {
             $("#main").append(grid);
 
             $.ajax({
-                url: "service-group/" + this.serviceGroup.Id + "/services",
+                url: this.serviceGroup != undefined ? "service-group/" + this.serviceGroup.Id + "/services" : "root-services",
                 dataType: "json",
                 success: function (services) {
                     var grid = $("<div class='row' />");
@@ -555,7 +520,7 @@ function loadServiceGroup(serviceGroup) {
                         .append($("<button class='btn btn-large btn-block' />")
                             .append($("<table />")
                                 .append($("<tr />")
-                                    .append($("<td />").addClass("code").css("background-color", service.ServiceGroup.Color).html(service.Code))
+                                    .append($("<td />").addClass("code").css("background-color", service.ServiceGroup != undefined ? service.ServiceGroup.Color : "default").html(service.Code))
                                     .append($("<td />").addClass("name").html(service.Name.fixLength()))))
                             .attr("title", service.Name)
                             .prop("service", service)
@@ -579,7 +544,7 @@ function loadService(service) {
     $("<li />").append(
     $("<a href='javascript:;'/>").html("Каталог услуг")
     .bind("click", function () {
-        loadRootServiceGroups();
+        loadServiceGroup();
     })).appendTo(breadcrumb);
     var serviceGroup = service.ServiceGroup;
     while (serviceGroup != undefined) {
@@ -874,7 +839,7 @@ function loadService(service) {
                                     start.setMinutes(timeSpan.minutes);
 
                                     var end = new Date(start);
-                                    var timeSpan = TimeSpan.parseExact(freeTime.Schedule.ClientInterval);
+                                    var timeSpan = TimeSpan.parseExact(freeTime.Schedule.EarlyClientInterval);
                                     end.setHours(start.getHours() + timeSpan.hours);
                                     end.setMinutes(start.getMinutes() + timeSpan.minutes);
 
@@ -911,5 +876,5 @@ function loadService(service) {
 //#endregion
 
 $(document).on("portalConfigLoaded", function () {
-    loadRootServiceGroups();
+    loadServiceGroup();
 });
