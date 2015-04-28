@@ -215,8 +215,8 @@ namespace Queue.Services.Server
                     }
 
                     var criteria = session.CreateCriteria<ServiceStep>()
-                        .Add(Expression.Gt("Service", serviceStep.Service))
-                        .Add(Expression.Lt("SortId", serviceStep.SortId))
+                        .Add(Expression.Eq("Service", serviceStep.Service))
+                        .Add(Expression.Gt("SortId", serviceStep.SortId))
                         .AddOrder(Order.Desc("SortId"))
                         .SetMaxResults(1);
 
