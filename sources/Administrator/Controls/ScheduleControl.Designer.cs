@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.saveButton = new System.Windows.Forms.Button();
             this.addServiceRenderingButton = new System.Windows.Forms.Button();
             this.serviceRenderingsGridView = new System.Windows.Forms.DataGridView();
@@ -47,7 +47,6 @@
             this.earlyFinishTimeTextBox = new System.Windows.Forms.MaskedTextBox();
             this.earlyReservationLabel = new System.Windows.Forms.Label();
             this.earlyReservationUpDown = new System.Windows.Forms.NumericUpDown();
-            this.earlyReservationPercentLabel = new System.Windows.Forms.Label();
             this.timeLabel = new System.Windows.Forms.Label();
             this.maxClientRequestsUpDown = new System.Windows.Forms.NumericUpDown();
             this.maxClientRequestsLabel = new System.Windows.Forms.Label();
@@ -102,14 +101,14 @@
             this.serviceRenderingsGridView.AllowUserToAddRows = false;
             this.serviceRenderingsGridView.AllowUserToResizeColumns = false;
             this.serviceRenderingsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.serviceRenderingsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.serviceRenderingsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.serviceRenderingsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.serviceRenderingsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.operatorColumn,
@@ -155,8 +154,8 @@
             // 
             // priorityColumn
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.priorityColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.priorityColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.priorityColumn.HeaderText = "Приоритет";
             this.priorityColumn.Name = "priorityColumn";
             this.priorityColumn.ReadOnly = true;
@@ -181,7 +180,6 @@
             this.earlyGroupBox.Controls.Add(this.earlyFinishTimeTextBox);
             this.earlyGroupBox.Controls.Add(this.earlyReservationLabel);
             this.earlyGroupBox.Controls.Add(this.earlyReservationUpDown);
-            this.earlyGroupBox.Controls.Add(this.earlyReservationPercentLabel);
             this.earlyGroupBox.Enabled = false;
             this.earlyGroupBox.Location = new System.Drawing.Point(10, 155);
             this.earlyGroupBox.Name = "earlyGroupBox";
@@ -258,7 +256,7 @@
             this.earlyReservationLabel.Name = "earlyReservationLabel";
             this.earlyReservationLabel.Size = new System.Drawing.Size(105, 25);
             this.earlyReservationLabel.TabIndex = 0;
-            this.earlyReservationLabel.Text = "Кол-во запросов";
+            this.earlyReservationLabel.Text = "% резервирования";
             this.earlyReservationLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // earlyReservationUpDown
@@ -278,15 +276,6 @@
             this.earlyReservationUpDown.Size = new System.Drawing.Size(35, 20);
             this.earlyReservationUpDown.TabIndex = 0;
             this.earlyReservationUpDown.Leave += new System.EventHandler(this.earlyReservationUpDown_Leave);
-            // 
-            // earlyReservationPercentLabel
-            // 
-            this.earlyReservationPercentLabel.AutoSize = true;
-            this.earlyReservationPercentLabel.Location = new System.Drawing.Point(155, 50);
-            this.earlyReservationPercentLabel.Name = "earlyReservationPercentLabel";
-            this.earlyReservationPercentLabel.Size = new System.Drawing.Size(15, 13);
-            this.earlyReservationPercentLabel.TabIndex = 0;
-            this.earlyReservationPercentLabel.Text = "%";
             // 
             // timeLabel
             // 
@@ -549,7 +538,6 @@
         private System.Windows.Forms.Label earlyTimeLabel;
         private System.Windows.Forms.Label timeLabel;
         private System.Windows.Forms.Panel interruptionPanel;
-        private System.Windows.Forms.Label earlyReservationPercentLabel;
         private System.Windows.Forms.GroupBox earlyGroupBox;
         private System.Windows.Forms.Label maxClientRequestsLabel;
         private System.Windows.Forms.NumericUpDown maxClientRequestsUpDown;

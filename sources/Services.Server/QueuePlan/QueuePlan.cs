@@ -476,16 +476,15 @@ namespace Queue.Services.Server
 
             int freeTimeIntervals;
 
-            if (requestType == ClientRequestType.Early && schedule.RenderingMode == ServiceRenderingMode.AllRequests)
+            if (PlanDate != DateTime.Today)
             {
                 int maxRequests = (int)((schedule.EarlyFinishTime - schedule.EarlyStartTime).Ticks / clientInterval.Ticks);
                 int maxEarlyClientRequests = (maxRequests * schedule.EarlyReservation / 100) * potentialOperatorsPlans.Count;
 
                 freeTimeIntervals = maxEarlyClientRequests - openedRequests;
-
                 if (freeTimeIntervals <= 0)
                 {
-                    throw new Exception("Возможности предварительной записи для данной услуги на указанный день исчерпаны");
+                    throw new Exception("Возможности резервирования для данной услуги на указанный день исчерпаны");
                 }
 
                 timeIntervals.RemoveAll(i => i < schedule.EarlyStartTime);
