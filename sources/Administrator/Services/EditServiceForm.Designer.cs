@@ -110,7 +110,6 @@
             this.serviceParametersControl.Name = "serviceParametersControl";
             this.serviceParametersControl.Size = new System.Drawing.Size(830, 450);
             this.serviceParametersControl.TabIndex = 0;
-            this.serviceParametersControl.Load += new System.EventHandler(this.serviceParametersControl_Load);
             // 
             // exceptionScheduleTabPage
             // 

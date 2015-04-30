@@ -27,15 +27,17 @@
             this.deleteServiceGroupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteServiceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.movePanel = new System.Windows.Forms.Panel();
             this.buttonUp = new System.Windows.Forms.Button();
             this.contextMenuStrip.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
+            this.movePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonDown
             // 
             this.buttonDown.Image = ((System.Drawing.Image)(resources.GetObject("buttonDown.Image")));
-            this.buttonDown.Location = new System.Drawing.Point(584, 30);
+            this.buttonDown.Location = new System.Drawing.Point(0, 25);
             this.buttonDown.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.buttonDown.Name = "buttonDown";
             this.buttonDown.Size = new System.Drawing.Size(30, 25);
@@ -52,8 +54,7 @@
             this.servicesTreeView.Location = new System.Drawing.Point(0, 0);
             this.servicesTreeView.Margin = new System.Windows.Forms.Padding(0);
             this.servicesTreeView.Name = "servicesTreeView";
-            this.mainLayoutPanel.SetRowSpan(this.servicesTreeView, 2);
-            this.servicesTreeView.Size = new System.Drawing.Size(579, 442);
+            this.servicesTreeView.Size = new System.Drawing.Size(589, 442);
             this.servicesTreeView.TabIndex = 0;
             this.servicesTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.serviceGroupsTreeView_AfterCheck);
             this.servicesTreeView.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.servicesTreeView_AfterExpand);
@@ -73,7 +74,7 @@
             this.deleteServiceGroupMenuItem,
             this.deleteServiceMenuItem});
             this.contextMenuStrip.Name = "serviceCategoriesTreeMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(203, 158);
+            this.contextMenuStrip.Size = new System.Drawing.Size(203, 136);
             this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
             // 
             // addServiceGroupMenuItem
@@ -122,28 +123,35 @@
             // 
             this.mainLayoutPanel.ColumnCount = 2;
             this.mainLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.mainLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.mainLayoutPanel.Controls.Add(this.servicesTreeView, 0, 0);
-            this.mainLayoutPanel.Controls.Add(this.buttonUp, 1, 0);
-            this.mainLayoutPanel.Controls.Add(this.buttonDown, 1, 1);
+            this.mainLayoutPanel.Controls.Add(this.movePanel, 1, 0);
             this.mainLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainLayoutPanel.Location = new System.Drawing.Point(10, 10);
             this.mainLayoutPanel.Name = "mainLayoutPanel";
-            this.mainLayoutPanel.RowCount = 2;
-            this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.mainLayoutPanel.RowCount = 1;
+            this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.mainLayoutPanel.Size = new System.Drawing.Size(624, 442);
             this.mainLayoutPanel.TabIndex = 0;
+            // 
+            // movePanel
+            // 
+            this.movePanel.Controls.Add(this.buttonUp);
+            this.movePanel.Controls.Add(this.buttonDown);
+            this.movePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.movePanel.Location = new System.Drawing.Point(592, 3);
+            this.movePanel.Name = "movePanel";
+            this.movePanel.Size = new System.Drawing.Size(29, 436);
+            this.movePanel.TabIndex = 1;
             // 
             // buttonUp
             // 
             this.buttonUp.Image = ((System.Drawing.Image)(resources.GetObject("buttonUp.Image")));
-            this.buttonUp.Location = new System.Drawing.Point(584, 0);
+            this.buttonUp.Location = new System.Drawing.Point(0, 0);
             this.buttonUp.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.buttonUp.Name = "buttonUp";
             this.buttonUp.Size = new System.Drawing.Size(30, 25);
-            this.buttonUp.TabIndex = 0;
-            this.buttonUp.Click += new System.EventHandler(this.buttonUp_Click);
+            this.buttonUp.TabIndex = 1;
             // 
             // ServicesForm
             // 
@@ -160,6 +168,7 @@
             this.Load += new System.EventHandler(this.ServicesForm_Load);
             this.contextMenuStrip.ResumeLayout(false);
             this.mainLayoutPanel.ResumeLayout(false);
+            this.movePanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -172,10 +181,11 @@
         private System.Windows.Forms.ToolStripMenuItem addServiceGroupMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteServiceMenuItem;
         private System.Windows.Forms.TableLayoutPanel mainLayoutPanel;
-        private System.Windows.Forms.Button buttonUp;
         private System.Windows.Forms.ToolStripMenuItem addServiceMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editServiceGroupMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editServiceMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteServiceGroupMenuItem;
+        private System.Windows.Forms.Panel movePanel;
+        private System.Windows.Forms.Button buttonUp;
     }
 }

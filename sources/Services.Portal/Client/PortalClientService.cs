@@ -336,15 +336,7 @@ namespace Queue.Services.Portal
                 var parameters = HttpUtility.ParseQueryString(body);
                 var token = parameters["token"];
 
-                var referer = request.Headers[HttpRequestHeader.Referer];
-                var uri = new System.Uri(referer);
-                var query = HttpUtility.ParseQueryString(uri.Query);
-
-                var q = query["q"];
-
-                query = HttpUtility.ParseQueryString(q);
-
-                var url = string.Format("http://ulogin.ru/token.php?token={0}&host={1}", token, query["host"]);
+                var url = string.Format("http://ulogin.ru/token.php?token={0}&host={1}", token, request.Headers[HttpRequestHeader.Host]);
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
                 var responseStream = new StreamReader(httpWebRequest.GetResponse().GetResponseStream(), Encoding.UTF8);
 

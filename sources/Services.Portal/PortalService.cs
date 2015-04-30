@@ -62,7 +62,11 @@ namespace Queue.Services.Portal
 
         public Stream GetContent(string path)
         {
+#if DEBUG
+            string webClientPath = "\\git\\queue\\sources\\Portal\\www";
+#else
             string webClientPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "www");
+#endif
             string file = Path.Combine(webClientPath, path);
 
             response.ContentType = ContentType.GetType(Path.GetExtension(file));

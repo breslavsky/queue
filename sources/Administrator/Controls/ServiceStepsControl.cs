@@ -174,5 +174,85 @@ namespace Queue.Administrator
                 }
             }
         }
+
+        private async void serviceStepUpButton_Click(object sender, EventArgs e)
+        {
+            if (stepsGridView.SelectedRows.Count > 0)
+            {
+                var currentRow = stepsGridView.SelectedRows[0];
+                int currentRowIndex = currentRow.Index;
+                if (currentRowIndex > 0)
+                {
+                    var serviceStep = currentRow.Tag as ServiceStep;
+
+                    using (var channel = channelManager.CreateChannel())
+                    {
+                        try
+                        {
+                            if (await channel.Service.ServiceStepUp(serviceStep.Id))
+                            {
+                                int prevRowIndex = currentRowIndex - 1;
+                                stepsGridView.ClearSelection();
+                                stepsGridView.Rows.RemoveAt(currentRowIndex);
+                                stepsGridView.Rows.Insert(prevRowIndex, currentRow);
+                                currentRow.Selected = true;
+                            }
+                        }
+                        catch (OperationCanceledException) { }
+                        catch (CommunicationObjectAbortedException) { }
+                        catch (ObjectDisposedException) { }
+                        catch (InvalidOperationException) { }
+                        catch (FaultException exception)
+                        {
+                            UIHelper.Warning(exception.Reason.ToString());
+                        }
+                        catch (Exception exception)
+                        {
+                            UIHelper.Warning(exception.Message);
+                        }
+                    }
+                }
+            }
+        }
+
+        private async void serviceStepDownButton_Click(object sender, EventArgs e)
+        {
+            if (stepsGridView.SelectedRows.Count > 0)
+            {
+                var currentRow = stepsGridView.SelectedRows[0];
+                int currentRowIndex = currentRow.Index;
+                if (currentRowIndex < stepsGridView.Rows.Count - 1)
+                {
+                    var serviceStep = currentRow.Tag as ServiceStep;
+
+                    using (var channel = channelManager.CreateChannel())
+                    {
+                        try
+                        {
+                            if (await channel.Service.ServiceStepDown(serviceStep.Id))
+                            {
+                                int nextRowIndex = currentRowIndex + 1;
+                                stepsGridView.ClearSelection();
+                                stepsGridView.Rows.RemoveAt(currentRowIndex);
+                                stepsGridView.Rows.Insert(nextRowIndex, currentRow);
+                                currentRow.Selected = true;
+                            }
+                        }
+                        catch (OperationCanceledException) { }
+                        catch (CommunicationObjectAbortedException) { }
+                        catch (ObjectDisposedException) { }
+                        catch (InvalidOperationException) { }
+                        catch (FaultException exception)
+                        {
+                            UIHelper.Warning(exception.Reason.ToString());
+                        }
+                        catch (Exception exception)
+                        {
+                            UIHelper.Warning(exception.Message);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

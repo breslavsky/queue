@@ -305,6 +305,11 @@ namespace Queue.Administrator
             service.TimeIntervalRounding = TimeSpan.FromMinutes((double)timeIntervalRoundingUpDown.Value);
         }
 
+        private void isUseTypeCheckBox_Leave(object sender, EventArgs e)
+        {
+            service.IsUseType = isUseTypeCheckBox.Checked;
+        }
+
         #endregion bindings
 
         private void serviceTabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -501,14 +506,5 @@ namespace Queue.Administrator
         }
 
         #endregion exception schedule
-
-        private void isUseTypeCheckBox_Leave(object sender, EventArgs e)
-        {
-            service.IsUseType = isUseTypeCheckBox.Checked;
-        }
-
-        private void serviceParametersControl_Load(object sender, EventArgs e)
-        {
-        }
     }
 }
