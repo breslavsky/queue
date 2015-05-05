@@ -132,8 +132,6 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer.Database", "Insta
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer.Simulator", "Installer.Simulator\Installer.Simulator.wixproj", "{0A07F807-26DC-4057-81B1-0878C1672054}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HiberTest", "HiberTest\HiberTest.csproj", "{A4BD04D1-B76A-4ECA-83C3-79B11D8818EE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -684,16 +682,6 @@ Global
 		{0A07F807-26DC-4057-81B1-0878C1672054}.Release|Mixed Platforms.Build.0 = Release|x86
 		{0A07F807-26DC-4057-81B1-0878C1672054}.Release|x86.ActiveCfg = Release|x86
 		{0A07F807-26DC-4057-81B1-0878C1672054}.Release|x86.Build.0 = Release|x86
-		{A4BD04D1-B76A-4ECA-83C3-79B11D8818EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4BD04D1-B76A-4ECA-83C3-79B11D8818EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4BD04D1-B76A-4ECA-83C3-79B11D8818EE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{A4BD04D1-B76A-4ECA-83C3-79B11D8818EE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{A4BD04D1-B76A-4ECA-83C3-79B11D8818EE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A4BD04D1-B76A-4ECA-83C3-79B11D8818EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4BD04D1-B76A-4ECA-83C3-79B11D8818EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4BD04D1-B76A-4ECA-83C3-79B11D8818EE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{A4BD04D1-B76A-4ECA-83C3-79B11D8818EE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{A4BD04D1-B76A-4ECA-83C3-79B11D8818EE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -734,6 +722,5 @@ Global
 		{5CF226DF-73D4-4173-BD09-3EC4732579F9} = {0DADF4F9-BC60-44C0-9DBE-01695940B394}
 		{472866E7-BE86-45D2-8503-3A1D1F475782} = {0DADF4F9-BC60-44C0-9DBE-01695940B394}
 		{0A07F807-26DC-4057-81B1-0878C1672054} = {0DADF4F9-BC60-44C0-9DBE-01695940B394}
-		{A4BD04D1-B76A-4ECA-83C3-79B11D8818EE} = {1D370001-385F-4908-AF13-A98082764118}
 	EndGlobalSection
 EndGlobal
