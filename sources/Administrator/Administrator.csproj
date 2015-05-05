@@ -90,9 +90,9 @@
     <Reference Include="Junte.Parallel">
       <HintPath>..\packages\Junte.Parallel.1.0.0.0\lib\net45\Junte.Parallel.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.UI.WinForms, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Junte.UI.WinForms, Version=1.2.1.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.UI.WinForms.1.2.1.0\lib\net45\Junte.UI.WinForms.dll</HintPath>
+      <HintPath>..\packages\Junte.UI.WinForms.1.2.1.1\lib\net45\Junte.UI.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="Junte.WCF">
       <HintPath>..\packages\Junte.WCF.1.0.1.0\lib\net45\Junte.WCF.dll</HintPath>
@@ -127,8 +127,9 @@
     <Reference Include="Microsoft.WindowsAPICodePack.ShellExtensions">
       <HintPath>..\packages\winapicp.1.1\lib\Microsoft.WindowsAPICodePack.ShellExtensions.dll</HintPath>
     </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
+    <Reference Include="NLog, Version=3.2.1.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.3.2.1\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

@@ -40,8 +40,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Junte.UI.WinForms">
-      <HintPath>..\packages\Junte.UI.WinForms.1.2.1.0\lib\net45\Junte.UI.WinForms.dll</HintPath>
+    <Reference Include="Junte.UI.WinForms, Version=1.2.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.UI.WinForms.1.2.1.1\lib\net45\Junte.UI.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack">
       <HintPath>..\packages\winapicp.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
