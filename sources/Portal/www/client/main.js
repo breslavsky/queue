@@ -1,13 +1,19 @@
 ﻿var MAX_TEXT_LENGTH = 80;
 var SERVICE_URI = "/client";
 
+var clientRequestRegistrator = {
+    terminal: 1,
+    manager: 2,
+    portal: 4
+};
+
 //#region apng
 $("#loading img").each(function () { APNG.animateImage(this); });
 //#endregion
 
 //#region ulogin
 $("#uLogin").attr("data-ulogin", $("#uLogin").attr("data-ulogin")
-    .replace("{HTTP_HOST}", document.location.host));
+    .replace("{HTTP_LOCATION}", document.location));
 //#endregion
 
 //#region bind global ajax events
@@ -497,7 +503,7 @@ function loadServiceGroup(serviceGroup) {
                         .data("service-group", serviceGroup)
                         .attr("title", serviceGroup.Name)
                         .bind("click", function () { loadServiceGroup($(this).data("service-group")); }));
-                if (serviceGroup.Comment.length > 0) {
+                if (serviceGroup.Comment) {
                     button.append($("<div class='comment' />").html(serviceGroup.Comment));
                 }
                 grid.append(button);
@@ -788,87 +794,98 @@ function loadService(service) {
             }
         },
         events: function (start, end, callback) {
-            var index = 0;
-            var dayLoaded = function () {
-                if (--index == 0) {
-                    $("#loading").hide();
-                    callback(events);
-                }
-            }
-
             events = [];
 
-            for (var date = start; date < end; date.setDate(date.getDate() + 1)) {
-                if (date >= Date.today()) {
-                    $.ajax({
-                        url: "queue-plan/" + date.toString("dd.MM.yyyy") + "/1/service/" + service.Id + "/free-time",
-                        dataType: "json",
-                        global: false,
-                        date: date.toString(),
-                        error: function (request, status) {
-                            var start = new Date(this.date);
-                            events.push({
-                                title: request.responseText.clear(),
-                                start: start,
-                                allDay: true,
-                                backgroundColor: "#8A0000"
-                            });
-                        },
-                        success: function (freeTime) {
-                            var intervals = freeTime.TimeIntervals;
+            if (parseInt(service.EarlyRegistrator) & clientRequestRegistrator.portal) {
+                var index = 0;
+                var dayLoaded = function () {
+                    if (--index == 0) {
+                        $("#loading").hide();
+                        callback(events);
+                    }
+                }
 
-                            if (intervals.length > 0) {
+                for (var date = start; date < end; date.setDate(date.getDate() + 1)) {
+                    if (date >= Date.today()) {
+                        $.ajax({
+                            url: "queue-plan/" + date.toString("dd.MM.yyyy") + "/1/service/" + service.Id + "/free-time",
+                            dataType: "json",
+                            global: false,
+                            date: date.toString(),
+                            error: function (request, status) {
                                 var start = new Date(this.date);
                                 events.push({
-                                    title: "Доступно " + freeTime.FreeTimeIntervals + " талонов",
-                                    start: start,
-                                    allDay: true
-                                });
-
-                                var map = [];
-
-                                for (var i = 0; i < intervals.length; i++) {
-                                    var interval = intervals[i];
-                                    if (map[interval] != undefined) {
-                                        continue;
-                                    }
-
-                                    var start = new Date(this.date);
-                                    var timeSpan = TimeSpan.parseExact(interval);
-                                    start.setHours(timeSpan.hours);
-                                    start.setMinutes(timeSpan.minutes);
-
-                                    var end = new Date(start);
-                                    var timeSpan = TimeSpan.parseExact(freeTime.Schedule.EarlyClientInterval);
-                                    end.setHours(start.getHours() + timeSpan.hours);
-                                    end.setMinutes(start.getMinutes() + timeSpan.minutes);
-
-                                    events.push({
-                                        title: "Доступно",
-                                        start: start,
-                                        end: end,
-                                        allDay: false
-                                    });
-
-                                    map[interval] = true;
-                                }
-                            } else {
-                                var start = new Date(this.date);
-                                events.push({
-                                    title: "Нет свободного времени",
+                                    title: request.responseText.clear(),
                                     start: start,
                                     allDay: true,
                                     backgroundColor: "#8A0000"
                                 });
-                            }
-                        }
-                    }).always(dayLoaded);
-                    index++;
-                }
-            }
+                            },
+                            success: function (freeTime) {
+                                var intervals = freeTime.TimeIntervals;
 
-            if (index > 0) {
-                $("#loading").show();
+                                if (intervals.length > 0) {
+                                    var start = new Date(this.date);
+                                    events.push({
+                                        title: "Доступно " + freeTime.FreeTimeIntervals + " талонов",
+                                        start: start,
+                                        allDay: true
+                                    });
+
+                                    var map = [];
+
+                                    for (var i = 0; i < intervals.length; i++) {
+                                        var interval = intervals[i];
+                                        if (map[interval] != undefined) {
+                                            continue;
+                                        }
+
+                                        var start = new Date(this.date);
+                                        var timeSpan = TimeSpan.parseExact(interval);
+                                        start.setHours(timeSpan.hours);
+                                        start.setMinutes(timeSpan.minutes);
+
+                                        var end = new Date(start);
+                                        var timeSpan = TimeSpan.parseExact(freeTime.Schedule.EarlyClientInterval);
+                                        end.setHours(start.getHours() + timeSpan.hours);
+                                        end.setMinutes(start.getMinutes() + timeSpan.minutes);
+
+                                        events.push({
+                                            title: "Доступно",
+                                            start: start,
+                                            end: end,
+                                            allDay: false
+                                        });
+
+                                        map[interval] = true;
+                                    }
+                                } else {
+                                    var start = new Date(this.date);
+                                    events.push({
+                                        title: "Нет свободного времени",
+                                        start: start,
+                                        allDay: true,
+                                        backgroundColor: "#8A0000"
+                                    });
+                                }
+                            }
+                        }).always(dayLoaded);
+                        index++;
+                    }
+                }
+
+                if (index > 0) {
+                    $("#loading").show();
+                }
+            } else {
+                events.push({
+                    title: "Предварительная запись для данной услуги на портале отключена",
+                    start: start,
+                    end: end,
+                    allDay: true,
+                    backgroundColor: "#8A0000"
+                });
+                callback(events);
             }
         }
     });
