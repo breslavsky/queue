@@ -1,5 +1,5 @@
-﻿using Junte.Parallel.Common;
-using Junte.WCF.Common;
+﻿using Junte.Parallel;
+using Junte.WCF;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;

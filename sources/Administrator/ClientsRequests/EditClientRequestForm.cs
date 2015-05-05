@@ -1,6 +1,7 @@
-﻿using Junte.Parallel.Common;
+﻿using Junte.Configuration;
+using Junte.Parallel;
 using Junte.UI.WinForms;
-using Junte.WCF.Common;
+using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
 using Queue.Model.Common;
@@ -77,7 +78,7 @@ namespace Queue.Administrator
                     requestDatePicker.Value = clientRequest.RequestDate;
                     requestTimePicker.Value = clientRequest.RequestTime;
                     subjectsUpDown.Value = clientRequest.Subjects;
-                    typeControl.Select<ClientRequestType>(clientRequest.Type);
+                    typeControl.Select(clientRequest.Type);
                     clientTextBlock.Text = clientRequest.Client != null ? clientRequest.Client.ToString() : string.Empty;
 
                     var service = clientRequest.Service;
@@ -87,14 +88,14 @@ namespace Queue.Administrator
                     stateTextBlock.Text = Translater.Enum(clientRequest.State);
                     stateTextBlock.BackColor = ColorTranslator.FromHtml(clientRequest.Color);
 
-                    operatorControl.Select<QueueOperator>(clientRequest.Operator);
+                    operatorControl.Select(clientRequest.Operator);
 
                     using (var channel = channelManager.CreateChannel())
                     {
                         try
                         {
                             serviceStepControl.Initialize(await channel.Service.GetServiceStepLinks(service.Id));
-                            serviceStepControl.Select<ServiceStep>(clientRequest.ServiceStep);
+                            serviceStepControl.Select(clientRequest.ServiceStep);
 
                             eventsGridView.Rows.Clear();
 

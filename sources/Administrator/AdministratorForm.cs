@@ -1,6 +1,6 @@
-﻿using Junte.Parallel.Common;
+﻿using Junte.Parallel;
 using Junte.UI.WinForms;
-using Junte.WCF.Common;
+using Junte.WCF;
 using NLog;
 using Queue.Administrator.Reports;
 using Queue.Common;

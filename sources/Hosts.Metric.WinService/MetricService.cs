@@ -1,5 +1,5 @@
-﻿using NLog;
-using Queue.Common;
+﻿using Junte.Configuration;
+using NLog;
 using Queue.Hosts.Common;
 using Queue.Metric;
 using System;
@@ -24,7 +24,7 @@ namespace Queue.Hosts.Metric.WinService
 
             try
             {
-                ConfigurationManager configuration = new ConfigurationManager(HostsConsts.MetricApp, Environment.SpecialFolder.CommonApplicationData);
+                var configuration = new ConfigurationManager(HostsConsts.MetricApp, Environment.SpecialFolder.CommonApplicationData);
                 MetricSettings settings = configuration.GetSection<MetricSettings>(HostsConsts.MetricSettingsSectionKey);
 
                 metric = new MetricInstance(settings);

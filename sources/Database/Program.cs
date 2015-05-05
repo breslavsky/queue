@@ -1,6 +1,6 @@
-﻿using Microsoft.Practices.ServiceLocation;
+﻿using Junte.Configuration;
+using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
-using Queue.Common;
 using System;
 using System.Windows.Forms;
 

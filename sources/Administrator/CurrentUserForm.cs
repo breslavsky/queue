@@ -1,21 +1,14 @@
-﻿using Junte.Parallel.Common;
+﻿using Junte.Configuration;
+using Junte.Parallel;
 using Junte.UI.WinForms;
-using Junte.WCF.Common;
+using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
-using Queue.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Printing;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Queue.Administrator

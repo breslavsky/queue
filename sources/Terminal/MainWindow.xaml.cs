@@ -1,10 +1,10 @@
-﻿using Junte.Parallel.Common;
+﻿using Junte.Configuration;
+using Junte.Parallel;
 using Junte.UI.WPF;
-using Junte.WCF.Common;
+using Junte.WCF;
 using MahApps.Metro.Controls;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
-using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;

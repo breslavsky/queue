@@ -1,20 +1,17 @@
-﻿using Junte.Parallel.Common;
+﻿using Junte.Parallel;
 using Junte.UI.WinForms;
-using Junte.WCF.Common;
+using Junte.WCF;
 using Queue.Common;
-using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class CurrentScheduleForm : Queue.UI.WinForms.RichForm
+    public partial class CurrentScheduleForm : UI.WinForms.RichForm
     {
         #region filelds
 

@@ -1,20 +1,12 @@
-﻿using Junte.Data.Common;
-using Junte.Parallel.Common;
+﻿using Junte.Parallel;
 using Junte.UI.WinForms;
-using Junte.WCF.Common;
+using Junte.WCF;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
 
@@ -120,6 +112,7 @@ namespace Queue.Administrator
         }
 
         #region bindings
+
         private void surnameTextBox_Leave(object sender, EventArgs e)
         {
             administrator.Surname = surnameTextBox.Text;

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Junte.Data.NHibernate;
-using Junte.WCF.Common;
+using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NHibernate.Caches.SysCache2;

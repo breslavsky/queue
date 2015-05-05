@@ -1,5 +1,5 @@
 ﻿using Junte.Data.NHibernate;
-using Junte.Parallel.Common;
+using Junte.Parallel;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate.Criterion;
 using NLog;

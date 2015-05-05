@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using Junte.Configuration;
+using NLog;
 using Queue.Common;
 using Queue.Hosts.Common;
 using Queue.Portal;

@@ -1,4 +1,5 @@
-﻿using Junte.WCF.Common;
+﻿using Junte.Configuration;
+using Junte.WCF;
 using MahApps.Metro.Controls;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
@@ -47,9 +48,9 @@ namespace Queue.Display
             InitializeContainer();
 
             content.NavigationService.Navigate(new HomePage()
-                {
-                    DataContext = new HomePageViewModel()
-                });
+            {
+                DataContext = new HomePageViewModel()
+            });
 
             Application.Current.MainWindow.KeyDown += OnKeyDown;
 
@@ -80,7 +81,7 @@ namespace Queue.Display
         {
             if (Keyboard.IsKeyDown(Key.LeftShift) && (e.Key == Key.Escape))
             {
-                Common.IConfigurationManager configuration = ServiceLocator.Current.GetInstance<Common.IConfigurationManager>();
+                IConfigurationManager configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
                 LoginFormSettings loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
                 loginFormSettings.IsRemember = false;
                 configuration.Save();

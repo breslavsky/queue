@@ -1,5 +1,5 @@
-﻿using Junte.Parallel.Common;
-using Junte.WCF.Common;
+﻿using Junte.Parallel;
+using Junte.WCF;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class SelectServiceForm : Queue.UI.WinForms.RichForm
+    public partial class SelectServiceForm : RichForm
     {
         #region fields
 

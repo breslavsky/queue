@@ -35,9 +35,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Junte.Parallel.Common, Version=1.0.0.50, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.Parallel.Common.1.0.0.50\lib\net40\Junte.Parallel.Common.dll</HintPath>
+    <Reference Include="Junte.Parallel">
+      <HintPath>..\packages\Junte.Parallel.1.0.0.0\lib\net45\Junte.Parallel.dll</HintPath>
     </Reference>
     <Reference Include="Junte.UI.Common, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -47,9 +46,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.UI.WPF.1.0.1.1\lib\net45\Junte.UI.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.WCF.Common, Version=1.0.0.35, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.WCF.Common.1.0.0.35\lib\net45\Junte.WCF.Common.dll</HintPath>
+    <Reference Include="Junte.WCF">
+      <HintPath>..\packages\Junte.WCF.1.0.1.0\lib\net45\Junte.WCF.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

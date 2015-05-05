@@ -1,6 +1,6 @@
-﻿using Junte.UI.WinForms;
+﻿using Junte.Configuration;
+using Junte.UI.WinForms;
 using NLog;
-using Queue.Common;
 using Queue.Hosts.Common;
 using Queue.Metric;
 using System;

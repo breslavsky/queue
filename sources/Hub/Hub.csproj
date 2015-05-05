@@ -50,9 +50,12 @@
     <ApplicationIcon>hub.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Junte.Parallel.Common, Version=1.0.0.50, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Junte.Configuration">
+      <HintPath>..\packages\Junte.Configuration.1.0.0.0\lib\net45\Junte.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Junte.Parallel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.Parallel.Common.1.0.0.50\lib\net40\Junte.Parallel.Common.dll</HintPath>
+      <HintPath>..\packages\Junte.Parallel.1.0.0.0\lib\net45\Junte.Parallel.dll</HintPath>
     </Reference>
     <Reference Include="Junte.UI.Common, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -62,9 +65,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.UI.WinForms.1.2.1.0\lib\net45\Junte.UI.WinForms.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.WCF.Common, Version=1.0.0.35, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.WCF.Common.1.0.0.35\lib\net45\Junte.WCF.Common.dll</HintPath>
+    <Reference Include="Junte.WCF">
+      <HintPath>..\packages\Junte.WCF.1.0.1.0\lib\net45\Junte.WCF.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack">
       <HintPath>..\packages\winapicp.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>

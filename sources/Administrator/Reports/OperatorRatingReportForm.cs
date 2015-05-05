@@ -1,6 +1,6 @@
-﻿using Junte.Parallel.Common;
+﻿using Junte.Parallel;
 using Junte.UI.WinForms;
-using Junte.WCF.Common;
+using Junte.WCF;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator.Reports
 {
-    public partial class OperatorRatingReportForm : Queue.UI.WinForms.RichForm
+    public partial class OperatorRatingReportForm : UI.WinForms.RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;

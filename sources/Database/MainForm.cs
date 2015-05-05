@@ -1,11 +1,11 @@
-﻿using Junte.Data.NHibernate;
+﻿using Junte.Configuration;
+using Junte.Data.NHibernate;
 using Junte.UI.WinForms.NHibernate;
 using Junte.UI.WinForms.NHibernate.Configuration;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NHibernate.Criterion;
 using NLog;
-using Queue.Common;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Resources;

@@ -1,6 +1,7 @@
-﻿using Junte.Parallel.Common;
+﻿using Junte.Configuration;
+using Junte.Parallel;
 using Junte.UI.WinForms;
-using Junte.WCF.Common;
+using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
 using Queue.Model.Common;

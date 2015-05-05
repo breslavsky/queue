@@ -1,6 +1,5 @@
-﻿using Junte.Parallel.Common;
-using Junte.UI.WinForms;
-using Junte.WCF.Common;
+﻿using Junte.UI.WinForms;
+using Junte.WCF;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;

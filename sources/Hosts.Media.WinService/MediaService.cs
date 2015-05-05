@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using Junte.Configuration;
+using NLog;
 using Queue.Common;
 using Queue.Hosts.Common;
 using Queue.Media;
@@ -24,7 +25,7 @@ namespace Queue.Hosts.Media.WinService
 
             try
             {
-                ConfigurationManager configuration = new ConfigurationManager(HostsConsts.MediaApp, Environment.SpecialFolder.CommonApplicationData);
+                var configuration = new ConfigurationManager(HostsConsts.MediaApp, Environment.SpecialFolder.CommonApplicationData);
                 MediaSettings mediaSettings = configuration.GetSection<MediaSettings>(HostsConsts.MediaSettingsSectionKey);
                 LoginSettings connectionSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
 

@@ -1,6 +1,7 @@
-﻿using Junte.Parallel.Common;
+﻿using Junte.Configuration;
+using Junte.Parallel;
 using Junte.UI.WPF;
-using Junte.WCF.Common;
+using Junte.WCF;
 using MahApps.Metro;
 using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
@@ -38,7 +39,7 @@ namespace Queue.Display.ViewModels
 
         public event EventHandler OnLogined;
 
-        private Common.IConfigurationManager configuration;
+        private IConfigurationManager configuration;
         private DisplayLoginSettings loginSettings;
         private Language selectedLanguage;
 
@@ -138,7 +139,7 @@ namespace Queue.Display.ViewModels
 
         private void LoadSettings()
         {
-            configuration = ServiceLocator.Current.GetInstance<Common.IConfigurationManager>();
+            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
             loginSettings = configuration.GetSection<DisplayLoginSettings>(DisplayLoginSettings.SectionKey);
 
             Endpoint = loginSettings.Endpoint;

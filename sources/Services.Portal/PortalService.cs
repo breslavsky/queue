@@ -1,11 +1,10 @@
-﻿using Junte.WCF.Common;
+﻿using Junte.WCF;
 using NLog;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
 using System.IO;
 using System.Net;
-using System.Reflection;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Threading.Tasks;

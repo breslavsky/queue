@@ -1,5 +1,5 @@
-﻿using Junte.Parallel.Common;
-using Junte.WCF.Common;
+﻿using Junte.Parallel;
+using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -21,12 +21,12 @@ namespace Queue.Terminal.Views
 
         public TerminalPage()
         {
-            this.terminalModel = ServiceLocator.Current.GetInstance<ClientRequestModel>();
-            this.taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
-            this.screen = ServiceLocator.Current.GetInstance<IMainWindow>();
-            this.navigator = ServiceLocator.Current.GetInstance<Navigator>();
-            this.channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
-            this.terminalConfig = ServiceLocator.Current.GetInstance<TerminalConfig>();
+            terminalModel = ServiceLocator.Current.GetInstance<ClientRequestModel>();
+            taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
+            screen = ServiceLocator.Current.GetInstance<IMainWindow>();
+            navigator = ServiceLocator.Current.GetInstance<Navigator>();
+            channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
+            terminalConfig = ServiceLocator.Current.GetInstance<TerminalConfig>();
 
             DataContext = Activator.CreateInstance(ModelType);
         }

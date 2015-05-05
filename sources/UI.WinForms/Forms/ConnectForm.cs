@@ -1,6 +1,6 @@
-﻿using Junte.Parallel.Common;
+﻿using Junte.Parallel;
 using Junte.UI.WinForms;
-using Junte.WCF.Common;
+using Junte.WCF;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using System;
@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class ConnectForm : Queue.UI.WinForms.RichForm
+    public partial class ConnectForm : RichForm
     {
         public bool IsRemember;
 

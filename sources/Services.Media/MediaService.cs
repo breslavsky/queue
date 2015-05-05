@@ -1,5 +1,4 @@
-﻿using Junte.WCF.Common;
-
+﻿using Junte.WCF;
 using NLog;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;

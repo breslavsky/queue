@@ -1,6 +1,6 @@
-﻿using Junte.Parallel.Common;
+﻿using Junte.Parallel;
 using Junte.UI.WPF;
-using Junte.WCF.Common;
+using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
 using Queue.Model.Common;
@@ -116,10 +116,10 @@ namespace Queue.Display.ViewModels
                 if (IsActiveRequest(plan))
                 {
                     CurrentRequests.Add(new ClientRequestWrapper()
-                        {
-                            Request = plan.ClientRequest,
-                            Operator = op
-                        });
+                    {
+                        Request = plan.ClientRequest,
+                        Operator = op
+                    });
                 }
             }
             ShowNotification = CurrentRequests.Count > 0;

@@ -1,5 +1,6 @@
-﻿using Junte.Parallel.Common;
-using Junte.WCF.Common;
+﻿using Junte.Configuration;
+using Junte.Parallel;
+using Junte.WCF;
 using MahApps.Metro.Controls;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
@@ -72,18 +73,18 @@ namespace Queue.Notification
             IUnityContainer container = ServiceLocator.Current.GetInstance<IUnityContainer>();
 
             taskPool = new TaskPool();
-            container.RegisterInstance<DuplexChannelBuilder<IServerTcpService>>(connectPage.Model.ChannelBuilder);
-            container.RegisterInstance<TaskPool>(taskPool);
+            container.RegisterInstance(connectPage.Model.ChannelBuilder);
+            container.RegisterInstance(taskPool);
 
             channelManager = new ChannelManager<IServerTcpService>(container.Resolve<DuplexChannelBuilder<IServerTcpService>>());
-            container.RegisterInstance<ChannelManager<IServerTcpService>>(channelManager);
+            container.RegisterInstance(channelManager);
         }
 
         private void MainWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (Keyboard.IsKeyDown(Key.LeftShift) && e.Key == Key.Escape)
             {
-                Common.IConfigurationManager configuration = ServiceLocator.Current.GetInstance<Common.IConfigurationManager>();
+                IConfigurationManager configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
                 LoginFormSettings loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
                 loginFormSettings.IsRemember = false;
                 configuration.Save();

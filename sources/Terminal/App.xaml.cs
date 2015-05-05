@@ -1,6 +1,6 @@
-﻿using Microsoft.Practices.ServiceLocation;
+﻿using Junte.Configuration;
+using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
-using Queue.Common;
 using System.Windows;
 
 namespace Queue.Terminal
@@ -23,7 +23,7 @@ namespace Queue.Terminal
 
         private void RegisterTypes(IUnityContainer container)
         {
-            container.RegisterInstance<IUnityContainer>(container);
+            container.RegisterInstance(container);
             container.RegisterInstance<IConfigurationManager>(new ConfigurationManager());
         }
     }

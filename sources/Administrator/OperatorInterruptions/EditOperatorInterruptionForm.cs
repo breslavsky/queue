@@ -1,6 +1,6 @@
-﻿using Junte.Parallel.Common;
+﻿using Junte.Parallel;
 using Junte.UI.WinForms;
-using Junte.WCF.Common;
+using Junte.WCF;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -29,8 +29,8 @@ namespace Queue.Administrator
             {
                 operatorInterruption = value;
 
-                operatorControl.Select<QueueOperator>(operatorInterruption.Operator);
-                dayOfWeekControl.Select<DayOfWeek>(operatorInterruption.DayOfWeek);
+                operatorControl.Select(operatorInterruption.Operator);
+                dayOfWeekControl.Select(operatorInterruption.DayOfWeek);
                 startTimePicker.Value = operatorInterruption.StartTime;
                 finishTimePicker.Value = operatorInterruption.FinishTime;
             }

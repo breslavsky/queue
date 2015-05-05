@@ -1,4 +1,4 @@
-﻿using Junte.WCF.Common;
+﻿using Junte.WCF;
 using NLog;
 using Queue.Model.Common;
 using Queue.Services.Common;

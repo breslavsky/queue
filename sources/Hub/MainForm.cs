@@ -1,5 +1,5 @@
-﻿using Junte.Parallel.Common;
-using Junte.WCF.Common;
+﻿using Junte.Parallel;
+using Junte.WCF;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -13,7 +13,7 @@ using Timer = System.Timers.Timer;
 
 namespace Queue.Hub
 {
-    public partial class MainForm : Queue.UI.WinForms.RichForm
+    public partial class MainForm : UI.WinForms.RichForm
     {
         private static Properties.Settings settings = Properties.Settings.Default;
 

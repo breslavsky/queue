@@ -1,23 +1,11 @@
-﻿using Junte.Parallel.Common;
+﻿using Junte.Parallel;
 using Junte.UI.WinForms;
-using Junte.WCF.Common;
+using Junte.WCF;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
-using System.Diagnostics;
-using System.IO;
-using System.IO.Packaging;
-using System.Net.Http;
-using System.Net.Http.Handlers;
 using System.ServiceModel;
-using System.Threading;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Markup;
-using System.Windows.Xps.Packaging;
-using System.Xml;
-using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
