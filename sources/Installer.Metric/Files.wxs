@@ -24,9 +24,6 @@
       <Component Id="cmp948733428A3A84379B174418F81B7410" Guid="7886FA5C-FBBD-46FE-843A-AD21842B433F">
         <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetPath).config" />
       </Component>
-      <Component Id="cmpDBEEEBDAEE67A307026A7C9AC97B9B2A" Guid="9AA2EBFE-3E93-4F59-8203-F00A2D84F98D">
-        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Crad.Windows.Forms.Actions.dll" />
-      </Component>
       <Component Id="cmp730E2FFFAB351C1FBB3C16D211F149E6" Guid="5A46E1BE-04D8-4B16-9F30-48CD39B94EA0">
         <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\FluentNHibernate.dll" />
       </Component>
