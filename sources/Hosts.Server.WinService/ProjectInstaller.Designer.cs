@@ -42,6 +42,8 @@
             this.serviceInstaller.Description = "Junte Queue Server Service";
             this.serviceInstaller.DisplayName = "Junte Queue Server";
             this.serviceInstaller.ServiceName = "JunteQueueServer";
+            this.serviceInstaller.ServicesDependedOn = new string[] {
+        "MSSQLSERVER"};
             this.serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
