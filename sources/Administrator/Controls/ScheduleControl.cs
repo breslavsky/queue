@@ -55,8 +55,6 @@ namespace Queue.Administrator
                     earlyReservationUpDown.Value = schedule.EarlyReservation;
                     earlyClientIntervalUpDown.Value = (decimal)schedule.EarlyClientInterval.TotalMinutes;
 
-                    RenderingModeUpdate();
-
                     Invoke(new MethodInvoker(async () =>
                     {
                         using (var channel = channelManager.CreateChannel())
@@ -283,20 +281,9 @@ namespace Queue.Administrator
             schedule.MaxClientRequests = (int)maxClientRequestsUpDown.Value;
         }
 
-        private void renderingModeControl_SelectedChanged(object sender, EventArgs e)
-        {
-            RenderingModeUpdate();
-        }
-
         private void renderingModeControl_Leave(object sender, EventArgs e)
         {
             schedule.RenderingMode = renderingModeControl.Selected<ServiceRenderingMode>();
-        }
-
-        private void RenderingModeUpdate()
-        {
-            var selectedMode = renderingModeControl.Selected<ServiceRenderingMode>();
-            earlyGroupBox.Enabled = selectedMode == ServiceRenderingMode.AllRequests;
         }
 
         private void renderingModeComboBox_Leave(object sender, EventArgs e)
