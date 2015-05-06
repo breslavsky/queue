@@ -1,5 +1,4 @@
 ﻿using Junte.Data.NHibernate;
-using Junte.Parallel;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate.Criterion;
 using NLog;
@@ -429,8 +428,9 @@ namespace Queue.Services.Server
 
             report.Add(string.Format("Поиск интервалов времени с {0:hh\\:mm\\:ss}", startTime));
 
-            var clientInterval = TimeSpan.FromTicks(requestType == ClientRequestType.Live
-                ? schedule.LiveClientInterval.Ticks : schedule.EarlyClientInterval.Ticks * subjects);
+            var clientInterval = requestType == ClientRequestType.Live
+                ? schedule.LiveClientInterval : schedule.EarlyClientInterval;
+            clientInterval = TimeSpan.FromTicks(clientInterval.Ticks * subjects);
 
             int openedRequests = 0;
 
@@ -478,8 +478,11 @@ namespace Queue.Services.Server
 
             if (PlanDate != DateTime.Today)
             {
-                int maxRequests = (int)((schedule.EarlyFinishTime - schedule.EarlyStartTime).Ticks / clientInterval.Ticks);
-                int maxEarlyClientRequests = (maxRequests * schedule.EarlyReservation / 100) * potentialOperatorsPlans.Count;
+                int maxRequests = (int)((schedule.EarlyFinishTime - schedule.EarlyStartTime).Ticks / clientInterval.Ticks) * potentialOperatorsPlans.Count; ;
+                report.Add(string.Format("Максимальное кол-во запросов {0}", maxRequests));
+
+                int maxEarlyClientRequests = maxRequests * schedule.EarlyReservation / 100;
+                report.Add(string.Format("Максимальное кол-во запросов с учетом резервирования {0}", maxEarlyClientRequests));
 
                 freeTimeIntervals = maxEarlyClientRequests - openedRequests;
                 if (freeTimeIntervals <= 0)
