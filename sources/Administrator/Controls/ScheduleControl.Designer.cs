@@ -180,7 +180,6 @@
             this.earlyGroupBox.Controls.Add(this.earlyFinishTimeTextBox);
             this.earlyGroupBox.Controls.Add(this.earlyReservationLabel);
             this.earlyGroupBox.Controls.Add(this.earlyReservationUpDown);
-            this.earlyGroupBox.Enabled = false;
             this.earlyGroupBox.Location = new System.Drawing.Point(10, 155);
             this.earlyGroupBox.Name = "earlyGroupBox";
             this.earlyGroupBox.Size = new System.Drawing.Size(195, 95);
@@ -480,7 +479,6 @@
             this.renderingModeControl.Name = "renderingModeControl";
             this.renderingModeControl.Size = new System.Drawing.Size(195, 21);
             this.renderingModeControl.TabIndex = 1;
-            this.renderingModeControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.renderingModeControl_SelectedChanged);
             this.renderingModeControl.Leave += new System.EventHandler(this.renderingModeControl_Leave);
             // 
             // serviceRenderingsLabel
