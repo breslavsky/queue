@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class ConfigForm : Queue.UI.WinForms.RichForm
+    public partial class ConfigForm : RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;

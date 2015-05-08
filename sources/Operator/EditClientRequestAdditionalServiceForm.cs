@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Queue.Operator
 {
-    public partial class EditClientRequestAdditionalServiceForm : Queue.UI.WinForms.RichForm
+    public partial class EditClientRequestAdditionalServiceForm : RichForm
     {
         public event EventHandler<EventArgs> Saved;
 

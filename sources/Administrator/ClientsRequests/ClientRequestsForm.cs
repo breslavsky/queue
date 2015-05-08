@@ -13,7 +13,7 @@ using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
 {
-    public partial class ClientRequestsForm : Queue.UI.WinForms.RichForm
+    public partial class ClientRequestsForm : RichForm
     {
         private const byte PageSize = 50;
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;

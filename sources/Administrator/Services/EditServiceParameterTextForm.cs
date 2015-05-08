@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class EditServiceParameterTextForm : UI.WinForms.RichForm
+    public partial class EditServiceParameterTextForm : RichForm
     {
         public event EventHandler<EventArgs> Saved;
 

@@ -1,4 +1,4 @@
-﻿using Queue.Common;
+﻿using Junte.Translation;
 using Queue.Model.Common;
 using System.Runtime.Serialization;
 

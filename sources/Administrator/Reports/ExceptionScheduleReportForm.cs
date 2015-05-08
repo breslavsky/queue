@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class ExceptionScheduleReportForm : Queue.UI.WinForms.RichForm
+    public partial class ExceptionScheduleReportForm : RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;

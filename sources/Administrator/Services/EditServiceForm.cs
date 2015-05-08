@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class EditServiceForm : Queue.UI.WinForms.RichForm
+    public partial class EditServiceForm : RichForm
     {
         public event EventHandler<EventArgs> Saved;
 

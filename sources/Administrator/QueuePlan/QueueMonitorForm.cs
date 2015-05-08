@@ -13,7 +13,7 @@ using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
 {
-    public partial class QueueMonitorForm : Queue.UI.WinForms.RichForm
+    public partial class QueueMonitorForm : RichForm
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 

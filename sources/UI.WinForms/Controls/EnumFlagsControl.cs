@@ -1,7 +1,7 @@
-﻿using Queue.Common;
+﻿using Junte.UI.WinForms;
+using Queue.Common;
 using System;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {

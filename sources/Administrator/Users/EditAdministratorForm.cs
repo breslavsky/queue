@@ -12,7 +12,7 @@ using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class EditAdministratorForm : Queue.UI.WinForms.RichForm
+    public partial class EditAdministratorForm : RichForm
     {
         public event EventHandler<EventArgs> Saved;
 

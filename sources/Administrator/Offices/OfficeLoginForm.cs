@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class OfficeLoginForm : Queue.UI.WinForms.RichForm
+    public partial class OfficeLoginForm : RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;

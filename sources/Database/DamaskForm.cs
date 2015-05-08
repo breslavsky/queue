@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace Queue.Database
 {
-    public partial class DamaskForm : Queue.UI.WinForms.RichForm
+    public partial class DamaskForm : RichForm
     {
         private ISession session;
 

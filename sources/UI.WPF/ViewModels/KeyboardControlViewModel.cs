@@ -1,4 +1,5 @@
-﻿using Junte.UI.WPF;
+﻿using Junte.Translation;
+using Junte.UI.WPF;
 using Queue.Common;
 using System;
 using System.Collections.Generic;

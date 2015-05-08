@@ -1,4 +1,5 @@
 ﻿using Junte.Parallel;
+using Junte.UI.WinForms;
 using Junte.WCF;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
@@ -13,7 +14,7 @@ using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Simulator
 {
-    public partial class OperatorsForm : Queue.UI.WinForms.RichForm
+    public partial class OperatorsForm : RichForm
     {
         private CancellationTokenSource cancellationTokenSource;
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;

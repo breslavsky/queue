@@ -20,7 +20,7 @@ using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
 {
-    public partial class EditClientRequestForm : UI.WinForms.RichForm
+    public partial class EditClientRequestForm : RichForm
     {
         public event EventHandler<EventArgs> Saved;
 

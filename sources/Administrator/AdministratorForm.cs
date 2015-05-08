@@ -20,7 +20,7 @@ using Timer = System.Timers.Timer;
 
 namespace Queue.Administrator
 {
-    public partial class AdministratorForm : Queue.UI.WinForms.RichForm
+    public partial class AdministratorForm : RichForm
     {
         private const int PingInterval = 10000;
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();

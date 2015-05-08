@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class OperatorInterruptionsForm : Queue.UI.WinForms.RichForm
+    public partial class OperatorInterruptionsForm : RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;

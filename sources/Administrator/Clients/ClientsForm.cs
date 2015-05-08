@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class ClientsForm : Queue.UI.WinForms.RichForm
+    public partial class ClientsForm : RichForm
     {
         private const byte PageSize = 50;
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;

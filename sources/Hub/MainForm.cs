@@ -1,4 +1,5 @@
 ﻿using Junte.Parallel;
+using Junte.UI.WinForms;
 using Junte.WCF;
 using Queue.Common;
 using Queue.Model.Common;
@@ -13,7 +14,7 @@ using Timer = System.Timers.Timer;
 
 namespace Queue.Hub
 {
-    public partial class MainForm : UI.WinForms.RichForm
+    public partial class MainForm : RichForm
     {
         private static Properties.Settings settings = Properties.Settings.Default;
 
@@ -29,7 +30,7 @@ namespace Queue.Hub
 
         private Timer pingTimer;
 
-        private int PING_INTERVAL = 10000;
+        private int PingInterval = 10000;
 
         public MainForm(DuplexChannelBuilder<IServerTcpService> channelBuilder)
             : base()
@@ -68,9 +69,9 @@ namespace Queue.Hub
         private void pingTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             pingTimer.Stop();
-            if (pingTimer.Interval < PING_INTERVAL)
+            if (pingTimer.Interval < PingInterval)
             {
-                pingTimer.Interval = PING_INTERVAL;
+                pingTimer.Interval = PingInterval;
             }
 
             try

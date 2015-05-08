@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class ServicesForm : Queue.UI.WinForms.RichForm
+    public partial class ServicesForm : RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Queue.Hosts.Server.WinForms
 {
-    public partial class MainForm : Queue.UI.WinForms.RichForm
+    public partial class MainForm : RichForm
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 

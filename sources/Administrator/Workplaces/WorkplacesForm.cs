@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class WorkplacesForm : Queue.UI.WinForms.RichForm
+    public partial class WorkplacesForm : RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;

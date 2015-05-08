@@ -11,7 +11,7 @@ using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
 {
-    public partial class UsersForm : Queue.UI.WinForms.RichForm
+    public partial class UsersForm : RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;

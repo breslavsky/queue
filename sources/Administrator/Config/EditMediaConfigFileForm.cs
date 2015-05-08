@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class EditMediaConfigFileForm : Queue.UI.WinForms.RichForm
+    public partial class EditMediaConfigFileForm : RichForm
     {
         public event EventHandler<EventArgs> Saved;
 

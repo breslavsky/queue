@@ -14,6 +14,7 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>опубликовать\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -90,9 +90,13 @@
     <Reference Include="Junte.Parallel">
       <HintPath>..\packages\Junte.Parallel.1.0.0.0\lib\net45\Junte.Parallel.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.UI.WinForms, Version=1.2.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.UI.WinForms.1.2.1.1\lib\net45\Junte.UI.WinForms.dll</HintPath>
+    <Reference Include="Junte.Translation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Junte.Translation.1.0.0.0\lib\net45\Junte.Translation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Junte.UI.WinForms, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Junte.UI.WinForms.1.2.2.0\lib\net45\Junte.UI.WinForms.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Junte.WCF">
       <HintPath>..\packages\Junte.WCF.1.0.1.0\lib\net45\Junte.WCF.dll</HintPath>
@@ -112,20 +116,9 @@
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack">
-      <HintPath>..\packages\winapicp.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack.ExtendedLinguisticServices">
-      <HintPath>..\packages\winapicp.1.1\lib\Microsoft.WindowsAPICodePack.ExtendedLinguisticServices.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack.Sensors">
-      <HintPath>..\packages\winapicp.1.1\lib\Microsoft.WindowsAPICodePack.Sensors.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
-      <HintPath>..\packages\winapicp.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack.ShellExtensions">
-      <HintPath>..\packages\winapicp.1.1\lib\Microsoft.WindowsAPICodePack.ShellExtensions.dll</HintPath>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack-Core.1.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=3.2.1.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -193,15 +186,11 @@
     <Compile Include="ClientsRequests\ClientRequestsForm.Designer.cs">
       <DependentUpon>ClientRequestsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Clients\ClientsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Clients\ClientsForm.cs" />
     <Compile Include="Clients\ClientsForm.Designer.cs">
       <DependentUpon>ClientsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Config\ConfigForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Config\ConfigForm.cs" />
     <Compile Include="Config\ConfigForm.Designer.cs">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
@@ -246,15 +235,11 @@
     <Compile Include="Offices\OfficeLoginForm.Designer.cs">
       <DependentUpon>OfficeLoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OperatorInterruptions\EditOperatorInterruptionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="OperatorInterruptions\EditOperatorInterruptionForm.cs" />
     <Compile Include="OperatorInterruptions\EditOperatorInterruptionForm.Designer.cs">
       <DependentUpon>EditOperatorInterruptionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OperatorInterruptions\OperatorInterruptionsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="OperatorInterruptions\OperatorInterruptionsForm.cs" />
     <Compile Include="OperatorInterruptions\OperatorInterruptionsForm.Designer.cs">
       <DependentUpon>OperatorInterruptionsForm.cs</DependentUpon>
     </Compile>
@@ -270,21 +255,15 @@
     <Compile Include="Schedule\CurrentScheduleForm.Designer.cs">
       <DependentUpon>CurrentScheduleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Schedule\DefaultScheduleForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Schedule\DefaultScheduleForm.cs" />
     <Compile Include="Schedule\DefaultScheduleForm.Designer.cs">
       <DependentUpon>DefaultScheduleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Users\EditAdministratorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Users\EditAdministratorForm.cs" />
     <Compile Include="Users\EditAdministratorForm.Designer.cs">
       <DependentUpon>EditAdministratorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Clients\EditClientForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Clients\EditClientForm.cs" />
     <Compile Include="Clients\EditClientForm.Designer.cs">
       <DependentUpon>EditClientForm.cs</DependentUpon>
     </Compile>
@@ -294,9 +273,7 @@
     <Compile Include="ClientsRequests\EditClientRequestForm.Designer.cs">
       <DependentUpon>EditClientRequestForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Config\EditMediaConfigFileForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Config\EditMediaConfigFileForm.cs" />
     <Compile Include="Config\EditMediaConfigFileForm.Designer.cs">
       <DependentUpon>EditMediaConfigFileForm.cs</DependentUpon>
     </Compile>
@@ -312,15 +289,11 @@
     <Compile Include="Offices\EditOfficeForm.Designer.cs">
       <DependentUpon>EditOfficeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\EditServiceRenderingForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Services\EditServiceRenderingForm.cs" />
     <Compile Include="Services\EditServiceRenderingForm.Designer.cs">
       <DependentUpon>EditServiceRenderingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Workplaces\EditWorkplaceForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Workplaces\EditWorkplaceForm.cs" />
     <Compile Include="Workplaces\EditWorkplaceForm.Designer.cs">
       <DependentUpon>EditWorkplaceForm.cs</DependentUpon>
     </Compile>
@@ -336,15 +309,11 @@
     <Compile Include="Controls\Config\NotificationConfigControl.Designer.cs">
       <DependentUpon>NotificationConfigControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Offices\OfficesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Offices\OfficesForm.cs" />
     <Compile Include="Offices\OfficesForm.Designer.cs">
       <DependentUpon>OfficesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdministratorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="AdministratorForm.cs" />
     <Compile Include="AdministratorForm.Designer.cs">
       <DependentUpon>AdministratorForm.cs</DependentUpon>
     </Compile>
@@ -354,9 +323,7 @@
     <Compile Include="Controls\Config\PortalConfigControl.Designer.cs">
       <DependentUpon>PortalConfigControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="QueuePlan\QueueMonitorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="QueuePlan\QueueMonitorForm.cs" />
     <Compile Include="QueuePlan\QueueMonitorForm.Designer.cs">
       <DependentUpon>QueueMonitorForm.cs</DependentUpon>
     </Compile>
@@ -374,9 +341,7 @@
     <Compile Include="Controls\ServiceParametersControl.Designer.cs">
       <DependentUpon>ServiceParametersControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Reports\ServiceRatingReportForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Reports\ServiceRatingReportForm.cs" />
     <Compile Include="Reports\ServiceRatingReportForm.Designer.cs">
       <DependentUpon>ServiceRatingReportForm.cs</DependentUpon>
     </Compile>
@@ -392,9 +357,7 @@
     <Compile Include="Controls\Config\TerminalConfigControl.Designer.cs">
       <DependentUpon>TerminalConfigControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\EditServiceStepForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Services\EditServiceStepForm.cs" />
     <Compile Include="Services\EditServiceStepForm.Designer.cs">
       <DependentUpon>EditServiceStepForm.cs</DependentUpon>
     </Compile>
@@ -410,39 +373,27 @@
     <Compile Include="Workplaces\WorkplacesForm.Designer.cs">
       <DependentUpon>WorkplacesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Users\UsersForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Users\UsersForm.cs" />
     <Compile Include="Users\UsersForm.Designer.cs">
       <DependentUpon>UsersForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\EditServiceForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Services\EditServiceForm.cs" />
     <Compile Include="Services\EditServiceForm.Designer.cs">
       <DependentUpon>EditServiceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\EditServiceGroupForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Services\EditServiceGroupForm.cs" />
     <Compile Include="Services\EditServiceGroupForm.Designer.cs">
       <DependentUpon>EditServiceGroupForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\ServicesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Services\ServicesForm.cs" />
     <Compile Include="Services\ServicesForm.Designer.cs">
       <DependentUpon>ServicesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Reports\ExceptionScheduleReportForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Reports\ExceptionScheduleReportForm.cs" />
     <Compile Include="Reports\ExceptionScheduleReportForm.Designer.cs">
       <DependentUpon>ExceptionScheduleReportForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Users\EditOperatorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Users\EditOperatorForm.cs" />
     <Compile Include="Users\EditOperatorForm.Designer.cs">
       <DependentUpon>EditOperatorForm.cs</DependentUpon>
     </Compile>
@@ -688,12 +639,12 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 и x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>Клиентский профиль .NET Framework 3.5 SP1</ProductName>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

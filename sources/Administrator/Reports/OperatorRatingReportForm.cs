@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator.Reports
 {
-    public partial class OperatorRatingReportForm : UI.WinForms.RichForm
+    public partial class OperatorRatingReportForm : RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;

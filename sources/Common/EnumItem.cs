@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Junte.Translation;
+using System;
 using System.Collections.Generic;
 
 namespace Queue.Common

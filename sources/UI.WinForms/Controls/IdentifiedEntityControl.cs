@@ -1,6 +1,6 @@
-﻿using Queue.Services.DTO;
+﻿using Junte.UI.WinForms;
+using Queue.Services.DTO;
 using System;
-using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {

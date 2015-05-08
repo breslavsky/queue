@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Junte.UI.WinForms;
+using System;
 using System.Diagnostics;
 using System.Reflection;
 
 namespace Queue.UI.WinForms
 {
-    public partial class AboutForm : Queue.UI.WinForms.RichForm
+    public partial class AboutForm : RichForm
     {
         public AboutForm()
         {

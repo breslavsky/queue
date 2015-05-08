@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class PasswordForm : Queue.UI.WinForms.RichForm
+    public partial class PasswordForm : RichForm
     {
         public string Password
         {

@@ -9,7 +9,7 @@ using System.ServiceModel;
 
 namespace Queue.Simulator
 {
-    public partial class MainForm : Queue.UI.WinForms.RichForm
+    public partial class MainForm : RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;

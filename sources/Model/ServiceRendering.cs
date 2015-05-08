@@ -1,7 +1,7 @@
 ﻿using Junte.Data.NHibernate;
+using Junte.Translation;
 using NHibernate.Mapping.Attributes;
 using NHibernate.Validator.Constraints;
-using Queue.Common;
 using Queue.Model.Common;
 
 namespace Queue.Model

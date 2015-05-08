@@ -1,5 +1,6 @@
 ﻿using Junte.Configuration;
 using Junte.Data.NHibernate;
+using Junte.UI.WinForms;
 using Junte.UI.WinForms.NHibernate;
 using Junte.UI.WinForms.NHibernate.Configuration;
 using Microsoft.Practices.ServiceLocation;
@@ -16,7 +17,7 @@ using System.Windows.Forms;
 
 namespace Queue.Database
 {
-    public partial class MainForm : UI.WinForms.RichForm
+    public partial class MainForm : RichForm
     {
         private const string SectionKey = "profiles";
 
@@ -28,7 +29,8 @@ namespace Queue.Database
         private IUnityContainer container;
         private ISessionProvider sessionProvider;
 
-        public MainForm() : base()
+        public MainForm()
+            : base()
         {
             InitializeComponent();
         }

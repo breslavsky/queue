@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class AdditionalServicesForm : UI.WinForms.RichForm
+    public partial class AdditionalServicesForm : RichForm
     {
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private ChannelManager<IServerTcpService> channelManager;

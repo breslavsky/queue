@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class EditServiceGroupForm : Queue.UI.WinForms.RichForm
+    public partial class EditServiceGroupForm : RichForm
     {
         public event EventHandler<EventArgs> Saved;
 

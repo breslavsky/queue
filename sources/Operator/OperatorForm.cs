@@ -1,4 +1,5 @@
 ﻿using Junte.Parallel;
+using Junte.Translation;
 using Junte.UI.WinForms;
 using Junte.WCF;
 using NLog;
@@ -26,7 +27,7 @@ using Timer = System.Timers.Timer;
 
 namespace Queue.Operator
 {
-    public partial class OperatorForm : Queue.UI.WinForms.RichForm
+    public partial class OperatorForm : RichForm
     {
         private const int PingInterval = 10000;
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();

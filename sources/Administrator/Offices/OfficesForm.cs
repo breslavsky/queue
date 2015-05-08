@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class OfficesForm : Queue.UI.WinForms.RichForm
+    public partial class OfficesForm : RichForm
     {
         private const string LoginColumn = "loginColumn";
         private const string ManageColumn = "manageColumn";

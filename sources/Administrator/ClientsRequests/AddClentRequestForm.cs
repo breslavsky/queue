@@ -19,7 +19,7 @@ using SelectionMode = System.Windows.Forms.SelectionMode;
 
 namespace Queue.Administrator
 {
-    public partial class AddClentRequestForm : UI.WinForms.RichForm
+    public partial class AddClentRequestForm : RichForm
     {
         private IConfigurationManager configuration;
         private AdministratorSettings settings;

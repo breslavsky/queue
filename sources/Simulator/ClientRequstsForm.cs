@@ -1,4 +1,5 @@
 ﻿using Junte.Parallel;
+using Junte.UI.WinForms;
 using Junte.WCF;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -11,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Queue.Simulator
 {
-    public partial class ClientRequstsForm : Queue.UI.WinForms.RichForm
+    public partial class ClientRequstsForm : RichForm
     {
         private const int Subjects = 1;
         private CancellationTokenSource cancellationTokenSource;

@@ -11,7 +11,7 @@ using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
 {
-    public partial class EditOperatorInterruptionForm : Queue.UI.WinForms.RichForm
+    public partial class EditOperatorInterruptionForm : RichForm
     {
         public event EventHandler<EventArgs> Saved;
 
