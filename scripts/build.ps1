@@ -16,9 +16,8 @@ if (-Not (Get-Command "Invoke-MsBuild" -errorAction SilentlyContinue))
 
 Invoke-MsBuild $PROJECT_FILE -properties @{'Configuration'='Release'};
 
-$ProductVersion = [System.Reflection.AssemblyName]::GetAssemblyName("$PROJECT_PATH\Bin\Release\$DLL_FILE").Version.ToString();
+$ProductVersion = [System.Reflection.AssemblyName]::GetAssemblyName("$PROJECT_PATH\Bin\Release\$DLL_FILE").Version;
 $ProductCode = [guid]::NewGuid();
-
 
 Invoke-MsBuild $WIX_PROJECT_FILE -properties @{'Configuration'='Release'; 'DefineConstants'="""ProductVersion=$ProductVersion;ProductCode=$ProductCode""" };
 
@@ -27,6 +26,8 @@ If (!(Test-Path $INSTALLERS_PATH))
    New-Item -Path $INSTALLERS_PATH -ItemType Directory;
 }
 
-Copy-Item "$WIX_PROJECT_PATH\bin\Release\ru-ru\Installer.$PROJECT_NAME.msi" "$INSTALLERS_PATH\$PROJECT_NAME $ProductVersion.msi";
+$OutputFile = [string]::Format("{0}\{1} {2}.{3}.{4}.msi", $INSTALLERS_PATH, $PROJECT_NAME, $ProductVersion.Major, $ProductVersion.Minor, $ProductVersion.Build);
+
+Copy-Item "$WIX_PROJECT_PATH\bin\Release\ru-ru\Installer.$PROJECT_NAME.msi" "$OutputFile";
 
 Write-Output "Completed";
