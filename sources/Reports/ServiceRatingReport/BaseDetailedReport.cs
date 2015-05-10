@@ -1,4 +1,5 @@
 ﻿using Junte.Data.NHibernate;
+using Junte.Translation;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using NHibernate.Criterion;
@@ -6,7 +7,6 @@ using NHibernate.Transform;
 using NHibernate.Type;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
-using Queue.Common;
 using Queue.Model;
 using Queue.Model.Common;
 using System;
@@ -188,11 +188,11 @@ namespace Queue.Reports.ServiceRatingReport
                 }
 
                 return new ServiceGroupDto()
-                    {
-                        Id = Guid.Empty,
-                        ServicesGroups = rootGroups.ToArray(),
-                        Services = rootServices.ToArray()
-                    };
+                {
+                    Id = Guid.Empty,
+                    ServicesGroups = rootGroups.ToArray(),
+                    Services = rootServices.ToArray()
+                };
             }
         }
 

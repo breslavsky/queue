@@ -9,72 +9,72 @@ using System.Xml;
 
 namespace Queue.UI.Common
 {
-	public class XPSUtils
-	{
-		public static string WriteXaml(string template, object dataContext)
-		{
-			return InternalCreateFileFromXaml(template, dataContext).Path;
-		}
+    public class XPSUtils
+    {
+        public static string WriteXaml(string template, object dataContext)
+        {
+            return InternalCreateFileFromXaml(template, dataContext).Path;
+        }
 
-		public static void PrintXaml(string template, object dataContext, string printer = null)
-		{
-			CreateXpsFileResult result = InternalCreateFileFromXaml(template, dataContext);
+        public static void PrintXaml(string template, object dataContext, string printer = null)
+        {
+            var result = InternalCreateFileFromXaml(template, dataContext);
 
-			var printQueue = GetPrintQueue(printer);
-			printQueue.AddJob(result.Path, result.Path, false, result.Ticket);
-		}
+            var printQueue = GetPrintQueue(printer);
+            printQueue.AddJob(result.Path, result.Path, false, result.Ticket);
+        }
 
-		private static PrintQueue GetPrintQueue(string printer)
-		{
-			if (printer == null)
-			{
-				return LocalPrintServer.GetDefaultPrintQueue();
-			}
+        private static PrintQueue GetPrintQueue(string printer)
+        {
+            if (printer == null)
+            {
+                return LocalPrintServer.GetDefaultPrintQueue();
+            }
 
-			try
-			{
-				return new PrintServer().GetPrintQueue(printer);
-			}
-			catch
-			{
-				UIHelper.Warning("Ошибка получения принтера, будет использован принтер по умолчанию");
-				return LocalPrintServer.GetDefaultPrintQueue();
-			}
-		}
+            try
+            {
+                return new PrintServer().GetPrintQueue(printer);
+            }
+            catch
+            {
+                UIHelper.Warning("Ошибка получения принтера, будет использован принтер по умолчанию");
+                return LocalPrintServer.GetDefaultPrintQueue();
+            }
+        }
 
-		private static CreateXpsFileResult InternalCreateFileFromXaml(string template, object dataContext)
-		{
-			string xpsFile = Path.GetTempFileName() + ".xps";
+        private static CreateXpsFileResult InternalCreateFileFromXaml(string template, object dataContext)
+        {
+            string xpsFile = Path.GetTempFileName() + ".xps";
 
-			using (var stream = new XmlTextReader(new StringReader(template)))
-			using (var container = Package.Open(xpsFile, FileMode.Create))
-			using (var document = new XpsDocument(container, CompressionOption.SuperFast))
-			{
-				var root = XamlReader.Load(stream) as FrameworkElement;
+            using (var stream = new XmlTextReader(new StringReader(template)))
+            using (var container = Package.Open(xpsFile, FileMode.Create))
+            using (var document = new XpsDocument(container, CompressionOption.SuperFast))
+            {
+                var root = XamlReader.Load(stream) as FrameworkElement;
 
-				root.DataContext = dataContext;
-				root.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-				root.UpdateLayout();
+                root.DataContext = dataContext;
+                root.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                root.UpdateLayout();
 
-				var ticket = new PrintTicket()
-				{
-					PageMediaSize = new PageMediaSize(root.DesiredSize.Width, root.DesiredSize.Height)
-				};
+                var ticket = new PrintTicket()
+                {
+                    PageMediaSize = new PageMediaSize(root.DesiredSize.Width, root.DesiredSize.Height)
+                };
 
-				XpsDocument.CreateXpsDocumentWriter(document).Write(root, ticket);
+                XpsDocument.CreateXpsDocumentWriter(document).Write(root, ticket);
 
-				return new CreateXpsFileResult()
-				{
-					Path = xpsFile,
-					Ticket = ticket
-				};
-			}
-		}
+                return new CreateXpsFileResult()
+                {
+                    Path = xpsFile,
+                    Ticket = ticket
+                };
+            }
+        }
 
-		private struct CreateXpsFileResult
-		{
-			public string Path;
-			public PrintTicket Ticket;
-		}
-	}
+        private struct CreateXpsFileResult
+        {
+            public string Path;
+            public PrintTicket Ticket;
+        }
+    }
 }

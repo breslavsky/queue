@@ -1,4 +1,5 @@
 ﻿using Junte.Parallel;
+using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;

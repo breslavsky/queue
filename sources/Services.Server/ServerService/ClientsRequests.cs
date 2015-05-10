@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Junte.Translation;
 using NHibernate.Criterion;
-using Queue.Common;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Services.Common;

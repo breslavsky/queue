@@ -15,10 +15,12 @@ using System.Threading.Tasks;
 
 namespace Queue.Services.Server
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession, ConcurrencyMode = ConcurrencyMode.Multiple, IncludeExceptionDetailInFaults = true)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession,
+                    ConcurrencyMode = ConcurrencyMode.Multiple,
+                    IncludeExceptionDetailInFaults = true)]
     public partial class ServerService : IServerTcpService, IServerHttpService
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private IContextChannel channel;
         private User currentUser;
@@ -80,10 +82,7 @@ namespace Queue.Services.Server
 
         public async Task<DateTime> GetDateTime()
         {
-            return await Task.Run(() =>
-            {
-                return DateTime.Now;
-            });
+            return await Task.Run(() => DateTime.Now);
         }
 
         public bool IsSubscribed(ServerServiceEventType eventType)
@@ -262,10 +261,7 @@ namespace Queue.Services.Server
         {
             try
             {
-                Task.Run(() =>
-                {
-                    eventsCallback.CallClient(e.ClientRequest);
-                });
+                Task.Run(() => eventsCallback.CallClient(e.ClientRequest));
             }
             catch (ObjectDisposedException exception)
             {
@@ -282,10 +278,7 @@ namespace Queue.Services.Server
         {
             try
             {
-                Task.Run(() =>
-                {
-                    eventsCallback.ClientRequestUpdated(e.ClientRequest);
-                });
+                Task.Run(() => eventsCallback.ClientRequestUpdated(e.ClientRequest));
             }
             catch (ObjectDisposedException exception)
             {
@@ -308,10 +301,7 @@ namespace Queue.Services.Server
             {
                 try
                 {
-                    Task.Run(() =>
-                    {
-                        eventsCallback.ConfigUpdated(e.Config);
-                    });
+                    Task.Run(() => eventsCallback.ConfigUpdated(e.Config));
                 }
                 catch (ObjectDisposedException exception)
                 {
@@ -334,10 +324,7 @@ namespace Queue.Services.Server
             {
                 try
                 {
-                    Task.Run(() =>
-                    {
-                        eventsCallback.CurrentClientRequestPlanUpdated(e.ClientRequestPlan, e.Operator);
-                    });
+                    Task.Run(() => eventsCallback.CurrentClientRequestPlanUpdated(e.ClientRequestPlan, e.Operator));
                 }
                 catch (ObjectDisposedException exception)
                 {
@@ -355,10 +342,7 @@ namespace Queue.Services.Server
         {
             try
             {
-                Task.Run(() =>
-                {
-                    eventsCallback.Event(e.Event);
-                });
+                Task.Run(() => eventsCallback.Event(e.Event));
             }
             catch (ObjectDisposedException exception)
             {
@@ -382,10 +366,7 @@ namespace Queue.Services.Server
             {
                 try
                 {
-                    Task.Run(() =>
-                    {
-                        eventsCallback.OperatorPlanMetricsUpdated(e.OperatorPlanMetrics);
-                    });
+                    Task.Run(() => eventsCallback.OperatorPlanMetricsUpdated(e.OperatorPlanMetrics));
                 }
                 catch (ObjectDisposedException exception)
                 {

@@ -1,4 +1,4 @@
-﻿using Queue.Common;
+﻿using Junte.Translation;
 using Queue.Services.DTO;
 using System.Windows.Controls;
 using System.Windows.Media;

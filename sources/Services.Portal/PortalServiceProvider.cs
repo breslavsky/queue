@@ -21,7 +21,7 @@ namespace Queue.Services.Portal
 
         public object GetInstance(InstanceContext instanceContext, Message message)
         {
-            return this.GetInstance(instanceContext);
+            return GetInstance(instanceContext);
         }
 
         public object GetInstance(InstanceContext instanceContext)

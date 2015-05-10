@@ -5,18 +5,19 @@ using Queue.Services.DTO;
 using System;
 using System.IO;
 using System.Net;
-using System.Reflection;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Threading.Tasks;
 
 namespace Queue.Services.Portal
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple,
-        IncludeExceptionDetailInFaults = true, UseSynchronizationContext = false)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall,
+                    ConcurrencyMode = ConcurrencyMode.Multiple,
+                    IncludeExceptionDetailInFaults = true,
+                    UseSynchronizationContext = false)]
     public partial class PortalService : IPortalService
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly DuplexChannelBuilder<IServerTcpService> channelBuilder;
         protected readonly ChannelManager<IServerTcpService> channelManager;

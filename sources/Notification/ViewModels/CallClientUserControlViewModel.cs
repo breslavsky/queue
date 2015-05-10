@@ -1,5 +1,5 @@
-﻿using Junte.UI.WPF;
-using Queue.Common;
+﻿using Junte.Translation;
+using Junte.UI.WPF;
 using Queue.Services.DTO;
 
 namespace Queue.Notification.ViewModels

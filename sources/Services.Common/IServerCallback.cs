@@ -3,14 +3,14 @@ using System.ServiceModel;
 
 namespace Queue.Services.Common
 {
-    [ServiceKnownTypeAttribute(typeof(DefaultConfig))]
-    [ServiceKnownTypeAttribute(typeof(CouponConfig))]
-    [ServiceKnownTypeAttribute(typeof(SMTPConfig))]
-    [ServiceKnownTypeAttribute(typeof(PortalConfig))]
-    [ServiceKnownTypeAttribute(typeof(MediaConfig))]
-    [ServiceKnownTypeAttribute(typeof(TerminalConfig))]
-    [ServiceKnownTypeAttribute(typeof(DesignConfig))]
-    [ServiceKnownTypeAttribute(typeof(NotificationConfig))]
+    [ServiceKnownType(typeof(DefaultConfig))]
+    [ServiceKnownType(typeof(CouponConfig))]
+    [ServiceKnownType(typeof(SMTPConfig))]
+    [ServiceKnownType(typeof(PortalConfig))]
+    [ServiceKnownType(typeof(MediaConfig))]
+    [ServiceKnownType(typeof(TerminalConfig))]
+    [ServiceKnownType(typeof(DesignConfig))]
+    [ServiceKnownType(typeof(NotificationConfig))]
     public interface IServerCallback
     {
         [OperationContract(IsOneWay = true)]

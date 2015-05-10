@@ -1,4 +1,4 @@
-﻿using Queue.Common;
+﻿using Junte.Translation;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
 using System;

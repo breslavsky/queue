@@ -22,7 +22,7 @@ namespace Queue.UI.WinForms
             try
             {
                 comboBox.Items.Clear();
-                EnumItem<T>[] items = EnumItem<T>.GetItems();
+                var items = EnumItem<T>.GetItems();
                 comboBox.Items.AddRange(items);
                 comboBox.Enabled = items.Length > 0;
                 comboBox.SelectedItem = items.FirstOrDefault();
@@ -63,8 +63,8 @@ namespace Queue.UI.WinForms
             frozen = true;
             try
             {
-                object selected = comboBox.SelectedItem;
-                object[] items = new object[comboBox.Items.Count];
+                var selected = comboBox.SelectedItem;
+                var items = new object[comboBox.Items.Count];
                 comboBox.Items.CopyTo(items, 0);
 
                 comboBox.Items.Clear();

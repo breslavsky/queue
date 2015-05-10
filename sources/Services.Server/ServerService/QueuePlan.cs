@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Queue.Common;
+using Junte.Translation;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Services.Common;
