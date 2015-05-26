@@ -36,6 +36,8 @@ namespace Queue.Terminal
                     throw new ApplicationException("Элемент \"pageFrame\" не найден или тип элемента с данным именем не Frame");
                 }
 
+                pageFrame.Navigated += (s, args) => pageFrame.NavigationService.RemoveBackEntry();
+
                 Content = rootObject;
 
                 ServiceLocator.Current.GetInstance<IUnityContainer>().RegisterInstance<IMainWindow>(this);

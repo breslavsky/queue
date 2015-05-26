@@ -97,18 +97,18 @@ namespace Queue.Terminal
             IUnityContainer container = ServiceLocator.Current.GetInstance<IUnityContainer>();
 
             taskPool = new TaskPool();
-            container.RegisterInstance<DuplexChannelBuilder<IServerTcpService>>(loginPage.Model.ChannelBuilder);
-            container.RegisterInstance<TaskPool>(taskPool);
+            container.RegisterInstance(loginPage.Model.ChannelBuilder);
+            container.RegisterInstance(taskPool);
 
             channelManager = new ChannelManager<IServerTcpService>(container.Resolve<DuplexChannelBuilder<IServerTcpService>>());
-            container.RegisterInstance<ChannelManager<IServerTcpService>>(channelManager);
-            container.RegisterInstance<ClientRequestModel>(new ClientRequestModel()
+            container.RegisterInstance(channelManager);
+            container.RegisterInstance(new ClientRequestModel()
             {
                 CurrentAdministrator = (Administrator)loginPage.Model.User
             });
 
             navigator = container.Resolve<Navigator>();
-            container.RegisterInstance<Navigator>(navigator);
+            container.RegisterInstance(navigator);
             await LoadConfigs(container);
         }
 
@@ -119,9 +119,9 @@ namespace Queue.Terminal
                 try
                 {
                     await channel.Service.OpenUserSession(loginPage.Model.User.SessionId);
-                    container.RegisterInstance<TerminalConfig>(await taskPool.AddTask(channel.Service.GetTerminalConfig()));
-                    container.RegisterInstance<DefaultConfig>(await taskPool.AddTask(channel.Service.GetDefaultConfig()));
-                    container.RegisterInstance<CouponConfig>(await taskPool.AddTask(channel.Service.GetCouponConfig()));
+                    container.RegisterInstance(await taskPool.AddTask(channel.Service.GetTerminalConfig()));
+                    container.RegisterInstance(await taskPool.AddTask(channel.Service.GetDefaultConfig()));
+                    container.RegisterInstance(await taskPool.AddTask(channel.Service.GetCouponConfig()));
                 }
                 catch (FaultException exception)
                 {
@@ -134,7 +134,7 @@ namespace Queue.Terminal
             }
         }
 
-        private void MainWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if (Keyboard.IsKeyDown(Key.LeftShift) && e.Key == Key.Escape)
             {
