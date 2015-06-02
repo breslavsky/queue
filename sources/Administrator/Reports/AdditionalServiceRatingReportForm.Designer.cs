@@ -201,9 +201,9 @@
             this.isFullCheckBox.AutoSize = true;
             this.isFullCheckBox.Location = new System.Drawing.Point(5, 5);
             this.isFullCheckBox.Name = "isFullCheckBox";
-            this.isFullCheckBox.Size = new System.Drawing.Size(203, 17);
+            this.isFullCheckBox.Size = new System.Drawing.Size(197, 17);
             this.isFullCheckBox.TabIndex = 0;
-            this.isFullCheckBox.Text = "По всем дополниткльным услугам";
+            this.isFullCheckBox.Text = "По всем дополнитльным услугам";
             this.isFullCheckBox.UseVisualStyleBackColor = true;
             this.isFullCheckBox.CheckedChanged += new System.EventHandler(this.isFullCheckBox_CheckedChanged);
             // 
