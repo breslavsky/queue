@@ -76,7 +76,7 @@
         {
             public const string Name = "Queue Administrator";
             public const string Description = "";
-            public const string Build = "8";
+            public const string Build = "9";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "06C4B3D8-20FF-4D84-B14D-30A8BA06CDE6";
         }
@@ -94,7 +94,7 @@
         {
             public const string Name = "Queue Terminal";
             public const string Description = "";
-            public const string Build = "5";
+            public const string Build = "6";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "940AE5A5-2825-4F85-A62C-66A97D9E4C06";
         }

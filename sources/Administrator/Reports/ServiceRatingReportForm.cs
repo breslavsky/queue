@@ -21,8 +21,8 @@ namespace Queue.Administrator.Reports
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
 
-        private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
 
         public ServiceRatingReportForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
@@ -257,6 +257,7 @@ namespace Queue.Administrator.Reports
 
             settings.DetailLevel = (ReportDetailLevel)detailLevelTabControl.SelectedIndex;
             settings.Services = isFullCheckBox.Checked ? new Guid[0] : await GetSelectedServices();
+            settings.IsServiceTypes = isServiceTypesCheckBox.Checked;
 
             return settings;
         }

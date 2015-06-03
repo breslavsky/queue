@@ -236,8 +236,8 @@ namespace Queue.Reports.ServiceRatingReport
 
         protected void WriteServiceData(ISheet worksheet, ServiceRating[] ratings, ServiceDto service, ref int rowIndex)
         {
-            IRow row = worksheet.CreateRow(rowIndex++);
-            ICell cell = row.CreateCell(4);
+            var row = worksheet.CreateRow(rowIndex++);
+            var cell = row.CreateCell(4);
             cell.SetCellValue(service.Name);
 
             if (settings.IsServiceTypes && service.IsUseType)
