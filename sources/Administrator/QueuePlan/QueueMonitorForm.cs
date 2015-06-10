@@ -66,7 +66,7 @@ namespace Queue.Administrator
 
         private void QueueMonitorForm_Load(object sender, EventArgs e)
         {
-            planDateTimePicker.Value = ServerDateTime.Now;
+            planDateTimePicker.Value = ServerDateTime.Today;
         }
 
         private async void queueMonitorControl_OperatorLogin(object sender, QueueMonitorEventArgs eventArgs)
