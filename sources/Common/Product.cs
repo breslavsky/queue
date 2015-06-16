@@ -22,7 +22,7 @@
         {
             public const string Name = "Queue Database";
             public const string Description = "";
-            public const string Build = "0";
+            public const string Build = "5";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "7ED0004B-0B6F-4BEE-8756-265D2A0B5C97";
         }
@@ -40,7 +40,7 @@
         {
             public const string Name = "Queue Server";
             public const string Description = "";
-            public const string Build = "6";
+            public const string Build = "7";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "933F65E8-910F-4429-BA0B-16B3CF43E620";
         }

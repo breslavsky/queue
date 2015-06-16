@@ -34,6 +34,9 @@ namespace Queue.Model
         [Property]
         public virtual int MaxRenderingTime { get; set; }
 
+        [Property]
+        public virtual bool IsDebug { get; set; }
+
         #endregion properties
     }
 }

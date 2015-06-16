@@ -260,6 +260,16 @@ namespace Queue.Services.Server
 
                     session.Save(queueEvent);
 
+                    var defaultConfig = session.Get<DefaultConfig>(ConfigType.Default);
+                    if (defaultConfig.IsDebug)
+                    {
+                        session.Save(new QueuePlanReport()
+                        {
+                            ClientRequest = clientRequest,
+                            Report = string.Join(Environment.NewLine, queuePlan.Report)
+                        });
+                    }
+
                     if (isRequestDateToday)
                     {
                         using (var locker = queuePlan.WriteLock())
@@ -402,6 +412,16 @@ namespace Queue.Services.Server
                     };
 
                     session.Save(queueEvent);
+
+                    var defaultConfig = session.Get<DefaultConfig>(ConfigType.Default);
+                    if (defaultConfig.IsDebug)
+                    {
+                        session.Save(new QueuePlanReport()
+                        {
+                            ClientRequest = clientRequest,
+                            Report = string.Join(Environment.NewLine, todayQueuePlan.Report)
+                        });
+                    }
 
                     using (var locker = todayQueuePlan.WriteLock())
                     {

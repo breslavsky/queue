@@ -30,6 +30,9 @@ namespace Queue.Services.DTO
 
         [DataMember]
         public int MaxRenderingTime { get; set; }
+
+        [DataMember]
+        public bool IsDebug { get; set; }
     }
 
     [DataContract]

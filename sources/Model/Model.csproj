@@ -120,6 +120,7 @@
     <Compile Include="ServiceStep.cs" />
     <Compile Include="AdditionalService.cs" />
     <Compile Include="ClientRequestAdditionalService.cs" />
+    <Compile Include="QueuePlanReport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
