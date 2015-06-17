@@ -50,11 +50,11 @@ namespace Queue.Reports.ServiceRatingReport
             conjunction.Add(Expression.Ge("RequestDate", startDate));
             conjunction.Add(Expression.Le("RequestDate", finishDate));
 
-            ProjectionList projections = GetProjections();
+            var projections = GetProjections();
 
-            using (ISession session = SessionProvider.OpenSession())
+            using (var session = SessionProvider.OpenSession())
             {
-                T[] data = session.CreateCriteria<ClientRequest>()
+                var data = session.CreateCriteria<ClientRequest>()
                        .Add(conjunction)
                        .SetProjection(projections)
                        .SetResultTransformer(Transformers.AliasToBean(typeof(T)))
@@ -66,18 +66,13 @@ namespace Queue.Reports.ServiceRatingReport
                     throw new FaultException("Пустой отчет");
                 }
 
-                HSSFWorkbook workbook = new HSSFWorkbook(new MemoryStream(Templates.ServiceRating));
-                ISheet worksheet = workbook.GetSheetAt(0);
+                var workbook = new HSSFWorkbook(new MemoryStream(Templates.ServiceRating));
+                var worksheet = workbook.GetSheetAt(0);
 
-                IDataFormat format = workbook.CreateDataFormat();
-                ICellStyle boldCellStyle = CreateCellBoldStyle(workbook);
+                var boldCellStyle = CreateCellBoldStyle(workbook);
 
-                IRow row;
-                ICell cell;
-                int rowIndex = worksheet.LastRowNum + 1;
-
-                row = worksheet.GetRow(0);
-                cell = row.CreateCell(0);
+                var row = worksheet.GetRow(0);
+                var cell = row.CreateCell(0);
                 cell.SetCellValue(string.Format("Период с {0} по {1}", startDate.ToShortDateString(), finishDate.ToShortDateString()));
                 cell.CellStyle = boldCellStyle;
 
@@ -89,9 +84,9 @@ namespace Queue.Reports.ServiceRatingReport
 
         protected ICellStyle CreateCellBoldStyle(IWorkbook workBook)
         {
-            ICellStyle boldCellStyle = workBook.CreateCellStyle();
+            var boldCellStyle = workBook.CreateCellStyle();
 
-            IFont font = workBook.CreateFont();
+            var font = workBook.CreateFont();
             font.Boldweight = 1000;
             boldCellStyle.SetFont(font);
 
@@ -100,7 +95,7 @@ namespace Queue.Reports.ServiceRatingReport
 
         protected ProjectionList GetCommonProjections()
         {
-            ProjectionList projections = Projections.ProjectionList();
+            var projections = Projections.ProjectionList();
 
             projections
                 .Add(Projections.GroupProperty("Service"))
@@ -127,11 +122,13 @@ namespace Queue.Reports.ServiceRatingReport
                     Projections.Constant(1, NHibernateUtil.Int32), Projections.Constant(0, NHibernateUtil.Int32))), "Canceled")
 
                 .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("State", ClientRequestState.Rendered),
-                    Projections.SqlProjection("({alias}.RenderFinishTime - {alias}.RenderStartTime) / Subjects as RenderTime", new string[] { "RenderTime" }, new IType[] { NHibernateUtil.TimeSpan }),
+                    Projections.Conditional(Restrictions.Le("Subjects", 0),
+                        Projections.SqlProjection("({alias}.RenderFinishTime - {alias}.RenderStartTime) as RenderTime", new[] { "RenderTime" }, new IType[] { NHibernateUtil.TimeSpan }),
+                        Projections.SqlProjection("({alias}.RenderFinishTime - {alias}.RenderStartTime) / Subjects as RenderTime", new[] { "RenderTime" }, new IType[] { NHibernateUtil.TimeSpan })),
                     Projections.Constant(TimeSpan.Zero, NHibernateUtil.TimeSpan))), "RenderTime")
 
                 .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("State", ClientRequestState.Rendered),
-                    Projections.SqlProjection("({alias}.RenderStartTime - {alias}.WaitingStartTime) as WaitingTime", new string[] { "WaitingTime" }, new IType[] { NHibernateUtil.TimeSpan }),
+                    Projections.SqlProjection("({alias}.RenderStartTime - {alias}.WaitingStartTime) as WaitingTime", new[] { "WaitingTime" }, new IType[] { NHibernateUtil.TimeSpan }),
                     Projections.Constant(TimeSpan.Zero, NHibernateUtil.TimeSpan))), "WaitingTime")
 
                 .Add(Projections.Sum("Subjects"), "SubjectsTotal")
@@ -239,8 +236,8 @@ namespace Queue.Reports.ServiceRatingReport
 
         protected void WriteServiceData(ISheet worksheet, ServiceRating[] ratings, ServiceDto service, ref int rowIndex)
         {
-            IRow row = worksheet.CreateRow(rowIndex++);
-            ICell cell = row.CreateCell(4);
+            var row = worksheet.CreateRow(rowIndex++);
+            var cell = row.CreateCell(4);
             cell.SetCellValue(service.Name);
 
             if (settings.IsServiceTypes && service.IsUseType)

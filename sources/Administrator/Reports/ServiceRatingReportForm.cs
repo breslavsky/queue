@@ -21,8 +21,8 @@ namespace Queue.Administrator.Reports
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
         private User currentUser;
 
-        private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
 
         public ServiceRatingReportForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
@@ -59,17 +59,17 @@ namespace Queue.Administrator.Reports
         {
             LoadServiceGroup(servicesTreeView.Nodes);
 
-            DateTime currentDate = ServerDateTime.Today;
+            var currentDate = ServerDateTime.Today;
             finishMonthPicker.Value = currentDate;
             finishDatePicker.Value = currentDate;
         }
 
         private void startYearComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int startYear = (int)startYearComboBox.SelectedItem;
-            int currentYear = ServerDateTime.Today.Year;
+            var startYear = (int)startYearComboBox.SelectedItem;
+            var currentYear = ServerDateTime.Today.Year;
             finishYearComboBox.Items.Clear();
-            for (int year = startYear; year <= currentYear; year++)
+            for (var year = startYear; year <= currentYear; year++)
             {
                 finishYearComboBox.Items.Add(year);
             }
@@ -134,11 +134,11 @@ namespace Queue.Administrator.Reports
 
             if (e.Node is ServiceGroupTreeNode)
             {
-                (e.Node as ServiceGroupTreeNode).SetChecked(e.Node.Checked);
+                ((ServiceGroupTreeNode)e.Node).SetChecked(e.Node.Checked);
             }
             else
             {
-                (e.Node as ServiceTreeNode).SetChecked(e.Node.Checked);
+                ((ServiceTreeNode)e.Node).SetChecked(e.Node.Checked);
             }
 
             servicesTreeView.AfterCheck += servicesTreeView_AfterCheck;
@@ -154,22 +154,24 @@ namespace Queue.Administrator.Reports
             List<Guid> servicesIds = new List<Guid>();
             foreach (TreeNode node in nodes)
             {
-                if (!node.Checked)
-                {
-                    continue;
-                }
-
                 if (node is ServiceTreeNode)
                 {
-                    servicesIds.Add((node as ServiceTreeNode).Service.Id);
+                    if (node.Checked)
+                    {
+                        servicesIds.Add((node as ServiceTreeNode).Service.Id);
+                    }
                 }
                 else
                 {
-                    ServiceGroupTreeNode groupNode = node as ServiceGroupTreeNode;
-
-                    servicesIds.AddRange(groupNode.IsLoaded ?
-                        await GetSelectedServices(node.Nodes) :
-                        await groupNode.GetAllServices());
+                    var groupNode = (ServiceGroupTreeNode)node;
+                    if (groupNode.IsLoaded)
+                    {
+                        servicesIds.AddRange(await GetSelectedServices(node.Nodes));
+                    }
+                    else if (groupNode.Checked)
+                    {
+                        servicesIds.AddRange(await groupNode.GetAllServices());
+                    }
                 }
             }
             return servicesIds.ToArray();
@@ -178,20 +180,37 @@ namespace Queue.Administrator.Reports
         private void isFullCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             servicesTreeView.Enabled = !isFullCheckBox.Checked;
+            if (!isFullCheckBox.Checked)
+            {
+                ResetCheckedNodes(servicesTreeView.Nodes);
+            }
+        }
+
+        private static void ResetCheckedNodes(TreeNodeCollection nodes)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.Checked)
+                {
+                    node.Checked = false;
+                }
+
+                ResetCheckedNodes(node.Nodes);
+            }
         }
 
         private async void createReportButton_Click(object sender, EventArgs e)
         {
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
                     createReportButton.Enabled = false;
 
-                    byte[] report = await taskPool.AddTask(channel.Service.GetServiceRatingReport(await GetReportSettings()));
-                    string path = Path.GetTempPath() + Path.GetRandomFileName() + ".xls";
+                    var report = await taskPool.AddTask(channel.Service.GetServiceRatingReport(await GetReportSettings()));
+                    var path = Path.GetTempPath() + Path.GetRandomFileName() + ".xls";
 
-                    FileStream file = File.OpenWrite(path);
+                    var file = File.OpenWrite(path);
                     file.Write(report, 0, report.Length);
                     file.Close();
 
@@ -218,7 +237,7 @@ namespace Queue.Administrator.Reports
 
         private async Task<ServiceRatingReportSettings> GetReportSettings()
         {
-            ServiceRatingReportSettings settings = null;
+            ServiceRatingReportSettings settings;
             switch ((ReportDetailLevel)detailLevelTabControl.SelectedIndex)
             {
                 case ReportDetailLevel.Year:
@@ -257,6 +276,7 @@ namespace Queue.Administrator.Reports
 
             settings.DetailLevel = (ReportDetailLevel)detailLevelTabControl.SelectedIndex;
             settings.Services = isFullCheckBox.Checked ? new Guid[0] : await GetSelectedServices();
+            settings.IsServiceTypes = isServiceTypesCheckBox.Checked;
 
             return settings;
         }
@@ -288,11 +308,11 @@ namespace Queue.Administrator.Reports
 
         private class ServiceGroupTreeNode : TreeNode
         {
-            private ServiceRatingReportForm form;
+            private readonly ServiceRatingReportForm form;
 
             public ServiceGroup Group { get; private set; }
 
-            public bool IsLoaded { get; set; }
+            public bool IsLoaded { get; private set; }
 
             public ServiceGroupTreeNode(ServiceRatingReportForm form, ServiceGroup group)
             {
@@ -353,9 +373,9 @@ namespace Queue.Administrator.Reports
 
             internal async Task<Guid[]> GetAllServices()
             {
-                List<Guid> result = new List<Guid>();
+                var result = new List<Guid>();
 
-                using (Channel<IServerTcpService> channel = form.channelManager.CreateChannel())
+                using (var channel = form.channelManager.CreateChannel())
                 {
                     try
                     {
@@ -369,11 +389,11 @@ namespace Queue.Administrator.Reports
 
             private async Task<Guid[]> GetGroupServices(Channel<IServerTcpService> channel, ServiceGroup group)
             {
-                List<Guid> result = new List<Guid>();
+                var result = new List<Guid>();
 
                 result.AddRange((await form.taskPool.AddTask(channel.Service.GetServices(Group.Id))).Select(s => s.Id));
 
-                foreach (ServiceGroup child in await form.taskPool.AddTask(channel.Service.GetServiceGroups(Group.Id)))
+                foreach (var child in await form.taskPool.AddTask(channel.Service.GetServiceGroups(Group.Id)))
                 {
                     result.AddRange(await GetGroupServices(channel, child));
                 }
@@ -429,7 +449,7 @@ namespace Queue.Administrator.Reports
             {
                 if (Parent is ServiceGroupTreeNode)
                 {
-                    (Parent as ServiceGroupTreeNode).AdjustCheckState();
+                    ((ServiceGroupTreeNode)Parent).AdjustCheckState();
                 }
             }
         }

@@ -226,7 +226,7 @@ namespace Queue.Database
                         DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday })
                     {
                         var s = session.CreateCriteria<DefaultWeekdaySchedule>()
-                            .Add(Expression.Eq("DayOfWeek", d))
+                            .Add(Restrictions.Eq("DayOfWeek", d))
                             .UniqueResult<DefaultWeekdaySchedule>();
                         if (s != null)
                         {
@@ -512,7 +512,7 @@ namespace Queue.Database
                         DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday })
                 {
                     var s = session.CreateCriteria<DefaultWeekdaySchedule>()
-                        .Add(Expression.Eq("DayOfWeek", d))
+                        .Add(Restrictions.Eq("DayOfWeek", d))
                         .UniqueResult<DefaultWeekdaySchedule>();
                     if (s == null)
                     {
