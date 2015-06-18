@@ -148,7 +148,7 @@
     <value>Минуты</value>
   </data>
   <data name="NameWatermark" xml:space="preserve">
-    <value>Введите ваше имя</value>
+    <value>Введите ваше ФИО</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Вперед</value>
