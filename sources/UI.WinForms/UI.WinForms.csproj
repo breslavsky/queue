@@ -115,6 +115,8 @@
     <Compile Include="Controls\LoginSettingsControl.Designer.cs">
       <DependentUpon>LoginSettingsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataGridViewTranslatableCell.cs" />
+    <Compile Include="DataGridViewTranslatableColumn.cs" />
     <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
