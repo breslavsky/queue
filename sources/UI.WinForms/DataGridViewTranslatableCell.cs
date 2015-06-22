@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Junte.Translation;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
@@ -12,14 +13,7 @@ namespace Queue.UI.WinForms
                                                     TypeConverter formattedValueTypeConverter,
                                                     DataGridViewDataErrorContexts context)
         {
-            var val = (string)base.GetFormattedValue(value, rowIndex, ref cellStyle, valueTypeConverter, formattedValueTypeConverter, context);
-
-            //if (value is IConvertible)
-            //{
-            //    Translater.Enum(Enum.Parse(value.GetType(), value.ToString()), "short");
-            //}
-            //this.OwningColumn
-            return val;
+            return Translater.Enum(value);
         }
     }
 }
