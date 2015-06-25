@@ -52,44 +52,42 @@ namespace Queue.Model
 
         public override ValidationError[] Validate()
         {
-            var errors = base.Validate();
-
-            var result = new List<ValidationError>(errors);
+            var errors = new List<ValidationError>(base.Validate());
 
             if (StartTime > FinishTime)
             {
-                result.Add(new ValidationError("Время начала не может быть больше времени окончания оказания услуги"));
+                errors.Add(new ValidationError("Время начала не может быть больше времени окончания оказания услуги"));
             }
 
             if (LiveClientInterval <= TimeSpan.Zero)
             {
-                result.Add(new ValidationError("Время оказания услуги в живой очереди не может нулевым"));
+                errors.Add(new ValidationError("Время оказания услуги в живой очереди не может нулевым"));
             }
 
             if (EarlyClientInterval <= TimeSpan.Zero)
             {
-                result.Add(new ValidationError("Время оказания услуги по записи не может нулевым"));
+                errors.Add(new ValidationError("Время оказания услуги по записи не может нулевым"));
             }
 
             if (RenderingMode == ServiceRenderingMode.AllRequests)
             {
                 if (EarlyStartTime < StartTime)
                 {
-                    result.Add(new ValidationError("Время начала предварительной записи не может быть меньше времени начала оказания услуги"));
+                    errors.Add(new ValidationError("Время начала предварительной записи не может быть меньше времени начала оказания услуги"));
                 }
 
                 if (EarlyFinishTime > FinishTime)
                 {
-                    result.Add(new ValidationError("Время окончания предварительной записи не может быть больше времени окончания оказания услуги"));
+                    errors.Add(new ValidationError("Время окончания предварительной записи не может быть больше времени окончания оказания услуги"));
                 }
 
                 if (EarlyStartTime > EarlyFinishTime)
                 {
-                    result.Add(new ValidationError("Время начала предварительной записи не может быть больше времени окончания предварительной записи"));
+                    errors.Add(new ValidationError("Время начала предварительной записи не может быть больше времени окончания предварительной записи"));
                 }
             }
 
-            return result.ToArray();
+            return errors.ToArray();
         }
     }
 }

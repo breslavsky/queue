@@ -140,12 +140,6 @@ namespace Queue.Hosts.Server.WinForms
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if ((started) && (!UIHelper.Question("Сервер запущен. В случае выхода из программы он будет остановлен. Продолжить?")))
-            {
-                e.Cancel = true;
-                return;
-            }
-
             try
             {
                 StopServer();

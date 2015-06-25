@@ -31,17 +31,20 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.operatorLabel = new System.Windows.Forms.Label();
             this.dayOfWeekLabel = new System.Windows.Forms.Label();
-            this.startTimeLabel = new System.Windows.Forms.Label();
-            this.finishTimeLabel = new System.Windows.Forms.Label();
+            this.startLabel = new System.Windows.Forms.Label();
             this.operatorControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.startTimePicker = new Queue.UI.WinForms.TimePicker();
             this.finishTimePicker = new Queue.UI.WinForms.TimePicker();
             this.dayOfWeekControl = new Queue.UI.WinForms.EnumItemControl();
+            this.typeControl = new Queue.UI.WinForms.EnumItemControl();
+            this.typeLabel = new System.Windows.Forms.Label();
+            this.targetDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.targetDateLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(220, 115);
+            this.saveButton.Location = new System.Drawing.Point(220, 160);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 2;
@@ -60,30 +63,21 @@
             // 
             // dayOfWeekLabel
             // 
-            this.dayOfWeekLabel.Location = new System.Drawing.Point(5, 35);
+            this.dayOfWeekLabel.Location = new System.Drawing.Point(5, 70);
             this.dayOfWeekLabel.Name = "dayOfWeekLabel";
             this.dayOfWeekLabel.Size = new System.Drawing.Size(135, 25);
             this.dayOfWeekLabel.TabIndex = 7;
             this.dayOfWeekLabel.Text = "День недели";
             this.dayOfWeekLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // startTimeLabel
+            // startLabel
             // 
-            this.startTimeLabel.Location = new System.Drawing.Point(5, 60);
-            this.startTimeLabel.Name = "startTimeLabel";
-            this.startTimeLabel.Size = new System.Drawing.Size(135, 25);
-            this.startTimeLabel.TabIndex = 8;
-            this.startTimeLabel.Text = "Время начала";
-            this.startTimeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // finishTimeLabel
-            // 
-            this.finishTimeLabel.Location = new System.Drawing.Point(5, 85);
-            this.finishTimeLabel.Name = "finishTimeLabel";
-            this.finishTimeLabel.Size = new System.Drawing.Size(135, 25);
-            this.finishTimeLabel.TabIndex = 9;
-            this.finishTimeLabel.Text = "Время окончания";
-            this.finishTimeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.startLabel.Location = new System.Drawing.Point(5, 130);
+            this.startLabel.Name = "startLabel";
+            this.startLabel.Size = new System.Drawing.Size(135, 25);
+            this.startLabel.TabIndex = 8;
+            this.startLabel.Text = "Время перерыва";
+            this.startLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // operatorControl
             // 
@@ -96,7 +90,7 @@
             // 
             // startTimePicker
             // 
-            this.startTimePicker.Location = new System.Drawing.Point(140, 65);
+            this.startTimePicker.Location = new System.Drawing.Point(140, 135);
             this.startTimePicker.Name = "startTimePicker";
             this.startTimePicker.Size = new System.Drawing.Size(35, 20);
             this.startTimePicker.TabIndex = 11;
@@ -105,7 +99,7 @@
             // 
             // finishTimePicker
             // 
-            this.finishTimePicker.Location = new System.Drawing.Point(140, 90);
+            this.finishTimePicker.Location = new System.Drawing.Point(180, 135);
             this.finishTimePicker.Name = "finishTimePicker";
             this.finishTimePicker.Size = new System.Drawing.Size(35, 20);
             this.finishTimePicker.TabIndex = 12;
@@ -114,23 +108,61 @@
             // 
             // dayOfWeekControl
             // 
-            this.dayOfWeekControl.Location = new System.Drawing.Point(140, 40);
+            this.dayOfWeekControl.Location = new System.Drawing.Point(140, 75);
             this.dayOfWeekControl.Name = "dayOfWeekControl";
-            this.dayOfWeekControl.Size = new System.Drawing.Size(150, 21);
+            this.dayOfWeekControl.Size = new System.Drawing.Size(155, 21);
             this.dayOfWeekControl.TabIndex = 13;
             this.dayOfWeekControl.Leave += new System.EventHandler(this.dayOfWeekControl_Leave);
+            // 
+            // typeControl
+            // 
+            this.typeControl.Location = new System.Drawing.Point(140, 45);
+            this.typeControl.Name = "typeControl";
+            this.typeControl.Size = new System.Drawing.Size(155, 21);
+            this.typeControl.TabIndex = 14;
+            this.typeControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.typeControl_SelectedChanged);
+            this.typeControl.Leave += new System.EventHandler(this.typeControl_Leave);
+            // 
+            // typeLabel
+            // 
+            this.typeLabel.Location = new System.Drawing.Point(5, 40);
+            this.typeLabel.Name = "typeLabel";
+            this.typeLabel.Size = new System.Drawing.Size(135, 25);
+            this.typeLabel.TabIndex = 15;
+            this.typeLabel.Text = "Тип перерыва";
+            this.typeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // targetDatePicker
+            // 
+            this.targetDatePicker.Location = new System.Drawing.Point(140, 105);
+            this.targetDatePicker.Name = "targetDatePicker";
+            this.targetDatePicker.Size = new System.Drawing.Size(150, 20);
+            this.targetDatePicker.TabIndex = 16;
+            this.targetDatePicker.Leave += new System.EventHandler(this.targetDatePicker_Leave);
+            // 
+            // targetDateLabel
+            // 
+            this.targetDateLabel.Location = new System.Drawing.Point(5, 100);
+            this.targetDateLabel.Name = "targetDateLabel";
+            this.targetDateLabel.Size = new System.Drawing.Size(135, 25);
+            this.targetDateLabel.TabIndex = 17;
+            this.targetDateLabel.Text = "Указанный день";
+            this.targetDateLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // EditOperatorInterruptionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(299, 146);
+            this.ClientSize = new System.Drawing.Size(299, 191);
+            this.Controls.Add(this.targetDateLabel);
+            this.Controls.Add(this.targetDatePicker);
+            this.Controls.Add(this.typeLabel);
+            this.Controls.Add(this.typeControl);
             this.Controls.Add(this.dayOfWeekControl);
             this.Controls.Add(this.finishTimePicker);
             this.Controls.Add(this.startTimePicker);
             this.Controls.Add(this.operatorControl);
-            this.Controls.Add(this.finishTimeLabel);
-            this.Controls.Add(this.startTimeLabel);
+            this.Controls.Add(this.startLabel);
             this.Controls.Add(this.dayOfWeekLabel);
             this.Controls.Add(this.operatorLabel);
             this.Controls.Add(this.saveButton);
@@ -149,11 +181,14 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Label operatorLabel;
         private System.Windows.Forms.Label dayOfWeekLabel;
-        private System.Windows.Forms.Label startTimeLabel;
-        private System.Windows.Forms.Label finishTimeLabel;
+        private System.Windows.Forms.Label startLabel;
         private UI.WinForms.IdentifiedEntityControl operatorControl;
         private UI.WinForms.TimePicker startTimePicker;
         private UI.WinForms.TimePicker finishTimePicker;
         private UI.WinForms.EnumItemControl dayOfWeekControl;
+        private UI.WinForms.EnumItemControl typeControl;
+        private System.Windows.Forms.Label typeLabel;
+        private System.Windows.Forms.DateTimePicker targetDatePicker;
+        private System.Windows.Forms.Label targetDateLabel;
     }
 }

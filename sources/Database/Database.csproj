@@ -244,6 +244,9 @@
     <Content Include="Patches\004.sql" />
     <Content Include="Patches\005.sql" />
     <Content Include="Patches\006.sql" />
+    <Content Include="Patches\010.sql" />
+    <Content Include="Patches\011.sql" />
+    <Content Include="Patches\012.sql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

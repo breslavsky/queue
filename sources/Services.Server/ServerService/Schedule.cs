@@ -122,7 +122,8 @@ namespace Queue.Services.Server
                     {
                         transaction.Commit();
 
-                        session.Refresh(schedule);
+                        // Why?
+                        //session.Refresh(schedule);
 
                         todayQueuePlan.Flush(QueuePlanFlushMode.ServiceSchedule);
                         todayQueuePlan.Build(DateTime.Now.TimeOfDay);

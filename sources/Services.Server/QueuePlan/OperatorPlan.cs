@@ -13,12 +13,10 @@ namespace Queue.Services.Server
         public ClientRequestPlan currentClientRequestPlan;
 
         private readonly List<TimeInterval> clientRequestIntervals = new List<TimeInterval>();
-        private readonly TimeInterval[] interruptionIntervals;
 
-        public OperatorPlan(Operator queueOperator, TimeInterval[] interruptionIntervals)
+        public OperatorPlan(Operator queueOperator)
         {
             Operator = queueOperator;
-            this.interruptionIntervals = interruptionIntervals;
 
             Metrics = new OperatorPlanMetrics(queueOperator);
 
@@ -48,7 +46,7 @@ namespace Queue.Services.Server
 
         public TimeSpan PlanTime { get; set; }
 
-        public void AddClientRequest(ClientRequest clientRequest, Schedule schedule)
+        public void AddClientRequest(ClientRequest clientRequest, Schedule schedule, TimeInterval[] interruptions)
         {
             if (!clientRequest.IsClosed)
             {
@@ -70,7 +68,7 @@ namespace Queue.Services.Server
                         {
                             startTime = PlanTime;
                         }
-                        startTime = GetNearTimeInterval(startTime, schedule);
+                        startTime = GetNearTimeInterval(startTime, schedule, interruptions);
                         finishTime = startTime.Add(clientInterval);
                         break;
 
@@ -100,12 +98,13 @@ namespace Queue.Services.Server
             }
         }
 
-        public TimeSpan GetNearTimeInterval(TimeSpan startTime, Schedule schedule, int subjects = 1)
+        public TimeSpan GetNearTimeInterval(TimeSpan startTime, Schedule schedule, TimeInterval[] interruptions, int subjects = 1)
         {
             // Недоступные интервалы
             var reservedIntervals = new List<TimeInterval>();
+
             // Перерывы оператора
-            reservedIntervals.AddRange(interruptionIntervals);
+            reservedIntervals.AddRange(interruptions);
             // Запланированные запросы клиентов
             reservedIntervals.AddRange(clientRequestIntervals);
 

@@ -108,6 +108,7 @@
     <Compile Include="UserRole.cs" />
     <Compile Include="WorkplaceModificator.cs" />
     <Compile Include="WorkplaceType.cs" />
+    <Compile Include="OperatorInterruptionType.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Translate\AdministratorPermissions.en-US.resx" />

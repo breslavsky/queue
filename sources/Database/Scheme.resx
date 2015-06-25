@@ -148,4 +148,13 @@
   <data name="_009" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>patches\009.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="_010" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>patches\010.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="_011" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>patches\011.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="_012" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>patches\012.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

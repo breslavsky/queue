@@ -30,9 +30,12 @@ namespace Queue.Administrator
                 operatorInterruption = value;
 
                 operatorControl.Select(operatorInterruption.Operator);
+                typeControl.Select(operatorInterruption.Type);
                 dayOfWeekControl.Select(operatorInterruption.DayOfWeek);
                 startTimePicker.Value = operatorInterruption.StartTime;
                 finishTimePicker.Value = operatorInterruption.FinishTime;
+
+                AdjustType();
             }
         }
 
@@ -85,6 +88,7 @@ namespace Queue.Administrator
 
         private async void EditOperatorInterruptionForm_Load(object sender, EventArgs e)
         {
+            typeControl.Initialize<OperatorInterruptionType>();
             dayOfWeekControl.Initialize<DayOfWeek>();
 
             using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
@@ -166,6 +170,16 @@ namespace Queue.Administrator
             operatorInterruption.Operator = operatorControl.Selected<QueueOperator>();
         }
 
+        private void typeControl_Leave(object sender, EventArgs e)
+        {
+            operatorInterruption.Type = typeControl.Selected<OperatorInterruptionType>();
+        }
+
+        private void targetDatePicker_Leave(object sender, EventArgs e)
+        {
+            operatorInterruption.TargetDate = targetDatePicker.Value;
+        }
+
         private void dayOfWeekControl_Leave(object sender, EventArgs e)
         {
             operatorInterruption.DayOfWeek = dayOfWeekControl.Selected<DayOfWeek>();
@@ -179,6 +193,19 @@ namespace Queue.Administrator
         private void finishTimePicker_Leave(object sender, EventArgs e)
         {
             operatorInterruption.FinishTime = finishTimePicker.Value;
+        }
+
+        private void typeControl_SelectedChanged(object sender, EventArgs e)
+        {
+            AdjustType();
+        }
+
+        private void AdjustType()
+        {
+            var type = typeControl.Selected<OperatorInterruptionType>();
+
+            dayOfWeekControl.Enabled = type == OperatorInterruptionType.Weekday;
+            targetDatePicker.Enabled = type == OperatorInterruptionType.TargetDate;
         }
     }
 }

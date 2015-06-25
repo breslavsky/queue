@@ -77,6 +77,8 @@ namespace Queue.Services.Server
                         interruption = new OperatorInterruption();
                     }
 
+                    interruption.Type = source.Type;
+                    interruption.TargetDate = source.TargetDate.Date;
                     interruption.DayOfWeek = source.DayOfWeek;
                     interruption.StartTime = source.StartTime;
                     interruption.FinishTime = source.FinishTime;
@@ -106,7 +108,15 @@ namespace Queue.Services.Server
                     }
 
                     session.Save(interruption);
-                    transaction.Commit();
+
+                    var todayQueuePlan = queueInstance.TodayQueuePlan;
+                    using (var locker = todayQueuePlan.WriteLock())
+                    {
+                        transaction.Commit();
+
+                        todayQueuePlan.Flush(QueuePlanFlushMode.OperatorInterruptions);
+                        todayQueuePlan.Build(DateTime.Now.TimeOfDay);
+                    }
 
                     return Mapper.Map<OperatorInterruption, DTO.OperatorInterruption>(interruption);
                 }
@@ -130,7 +140,15 @@ namespace Queue.Services.Server
                     }
 
                     session.Delete(interruption);
-                    transaction.Commit();
+
+                    var todayQueuePlan = queueInstance.TodayQueuePlan;
+                    using (var locker = todayQueuePlan.WriteLock())
+                    {
+                        transaction.Commit();
+
+                        todayQueuePlan.Flush(QueuePlanFlushMode.OperatorInterruptions);
+                        todayQueuePlan.Build(DateTime.Now.TimeOfDay);
+                    }
                 }
             });
         }

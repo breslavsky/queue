@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.saveButton = new System.Windows.Forms.Button();
             this.addServiceRenderingButton = new System.Windows.Forms.Button();
             this.serviceRenderingsGridView = new System.Windows.Forms.DataGridView();
@@ -74,7 +74,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(135, 285);
+            this.saveButton.Location = new System.Drawing.Point(135, 270);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 1;
@@ -84,7 +84,7 @@
             // 
             // addServiceRenderingButton
             // 
-            this.addServiceRenderingButton.Location = new System.Drawing.Point(695, 190);
+            this.addServiceRenderingButton.Location = new System.Drawing.Point(695, 195);
             this.addServiceRenderingButton.Name = "addServiceRenderingButton";
             this.addServiceRenderingButton.Size = new System.Drawing.Size(80, 25);
             this.addServiceRenderingButton.TabIndex = 0;
@@ -96,21 +96,21 @@
             this.serviceRenderingsGridView.AllowUserToAddRows = false;
             this.serviceRenderingsGridView.AllowUserToResizeColumns = false;
             this.serviceRenderingsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.serviceRenderingsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.serviceRenderingsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.serviceRenderingsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.serviceRenderingsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.operatorColumn,
             this.serviceStepColumn,
             this.modeColumn,
             this.priorityColumn});
-            this.serviceRenderingsGridView.Location = new System.Drawing.Point(215, 30);
+            this.serviceRenderingsGridView.Location = new System.Drawing.Point(215, 35);
             this.serviceRenderingsGridView.MultiSelect = false;
             this.serviceRenderingsGridView.Name = "serviceRenderingsGridView";
             this.serviceRenderingsGridView.ReadOnly = true;
@@ -149,8 +149,8 @@
             // 
             // priorityColumn
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.priorityColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.priorityColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.priorityColumn.HeaderText = "Приоритет";
             this.priorityColumn.Name = "priorityColumn";
             this.priorityColumn.ReadOnly = true;
@@ -159,7 +159,7 @@
             // maxClientRequestsMeasureLabel
             // 
             this.maxClientRequestsMeasureLabel.AutoSize = true;
-            this.maxClientRequestsMeasureLabel.Location = new System.Drawing.Point(170, 110);
+            this.maxClientRequestsMeasureLabel.Location = new System.Drawing.Point(170, 90);
             this.maxClientRequestsMeasureLabel.Name = "maxClientRequestsMeasureLabel";
             this.maxClientRequestsMeasureLabel.Size = new System.Drawing.Size(23, 13);
             this.maxClientRequestsMeasureLabel.TabIndex = 0;
@@ -175,7 +175,7 @@
             this.earlyGroupBox.Controls.Add(this.earlyFinishTimeTextBox);
             this.earlyGroupBox.Controls.Add(this.earlyReservationLabel);
             this.earlyGroupBox.Controls.Add(this.earlyReservationUpDown);
-            this.earlyGroupBox.Location = new System.Drawing.Point(10, 155);
+            this.earlyGroupBox.Location = new System.Drawing.Point(10, 135);
             this.earlyGroupBox.Name = "earlyGroupBox";
             this.earlyGroupBox.Size = new System.Drawing.Size(195, 95);
             this.earlyGroupBox.TabIndex = 0;
@@ -273,7 +273,7 @@
             // 
             // timeLabel
             // 
-            this.timeLabel.Location = new System.Drawing.Point(10, 25);
+            this.timeLabel.Location = new System.Drawing.Point(10, 5);
             this.timeLabel.Name = "timeLabel";
             this.timeLabel.Size = new System.Drawing.Size(115, 25);
             this.timeLabel.TabIndex = 0;
@@ -282,7 +282,7 @@
             // 
             // maxClientRequestsUpDown
             // 
-            this.maxClientRequestsUpDown.Location = new System.Drawing.Point(130, 105);
+            this.maxClientRequestsUpDown.Location = new System.Drawing.Point(130, 85);
             this.maxClientRequestsUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -295,7 +295,7 @@
             // 
             // maxClientRequestsLabel
             // 
-            this.maxClientRequestsLabel.Location = new System.Drawing.Point(10, 100);
+            this.maxClientRequestsLabel.Location = new System.Drawing.Point(10, 80);
             this.maxClientRequestsLabel.Name = "maxClientRequestsLabel";
             this.maxClientRequestsLabel.Size = new System.Drawing.Size(115, 25);
             this.maxClientRequestsLabel.TabIndex = 0;
@@ -304,7 +304,7 @@
             // 
             // startTimeTextBox
             // 
-            this.startTimeTextBox.Location = new System.Drawing.Point(130, 30);
+            this.startTimeTextBox.Location = new System.Drawing.Point(130, 10);
             this.startTimeTextBox.Mask = "00:00";
             this.startTimeTextBox.Name = "startTimeTextBox";
             this.startTimeTextBox.Size = new System.Drawing.Size(35, 20);
@@ -315,7 +315,7 @@
             // 
             // finishTimeTextBox
             // 
-            this.finishTimeTextBox.Location = new System.Drawing.Point(170, 30);
+            this.finishTimeTextBox.Location = new System.Drawing.Point(170, 10);
             this.finishTimeTextBox.Mask = "00:00";
             this.finishTimeTextBox.Name = "finishTimeTextBox";
             this.finishTimeTextBox.Size = new System.Drawing.Size(35, 20);
@@ -326,7 +326,7 @@
             // 
             // liveClientIntervalLabel
             // 
-            this.liveClientIntervalLabel.Location = new System.Drawing.Point(10, 50);
+            this.liveClientIntervalLabel.Location = new System.Drawing.Point(10, 30);
             this.liveClientIntervalLabel.Name = "liveClientIntervalLabel";
             this.liveClientIntervalLabel.Size = new System.Drawing.Size(115, 25);
             this.liveClientIntervalLabel.TabIndex = 0;
@@ -335,7 +335,7 @@
             // 
             // liveClientIntervalUpDown
             // 
-            this.liveClientIntervalUpDown.Location = new System.Drawing.Point(130, 55);
+            this.liveClientIntervalUpDown.Location = new System.Drawing.Point(130, 35);
             this.liveClientIntervalUpDown.Maximum = new decimal(new int[] {
             600,
             0,
@@ -349,7 +349,7 @@
             // minLabel1
             // 
             this.minLabel1.AutoSize = true;
-            this.minLabel1.Location = new System.Drawing.Point(170, 65);
+            this.minLabel1.Location = new System.Drawing.Point(170, 45);
             this.minLabel1.Name = "minLabel1";
             this.minLabel1.Size = new System.Drawing.Size(30, 13);
             this.minLabel1.TabIndex = 0;
@@ -357,7 +357,7 @@
             // 
             // intersectionLabel
             // 
-            this.intersectionLabel.Location = new System.Drawing.Point(10, 75);
+            this.intersectionLabel.Location = new System.Drawing.Point(10, 55);
             this.intersectionLabel.Name = "intersectionLabel";
             this.intersectionLabel.Size = new System.Drawing.Size(115, 25);
             this.intersectionLabel.TabIndex = 0;
@@ -366,7 +366,7 @@
             // 
             // intersectionUpDown
             // 
-            this.intersectionUpDown.Location = new System.Drawing.Point(130, 80);
+            this.intersectionUpDown.Location = new System.Drawing.Point(130, 60);
             this.intersectionUpDown.Maximum = new decimal(new int[] {
             600,
             0,
@@ -380,7 +380,7 @@
             // minLabel2
             // 
             this.minLabel2.AutoSize = true;
-            this.minLabel2.Location = new System.Drawing.Point(170, 85);
+            this.minLabel2.Location = new System.Drawing.Point(170, 65);
             this.minLabel2.Name = "minLabel2";
             this.minLabel2.Size = new System.Drawing.Size(30, 13);
             this.minLabel2.TabIndex = 0;
@@ -418,12 +418,12 @@
             this.schedulePanel.Controls.Add(this.addServiceRenderingButton);
             this.schedulePanel.Location = new System.Drawing.Point(5, 25);
             this.schedulePanel.Name = "schedulePanel";
-            this.schedulePanel.Size = new System.Drawing.Size(780, 255);
+            this.schedulePanel.Size = new System.Drawing.Size(780, 240);
             this.schedulePanel.TabIndex = 2;
             // 
             // renderingModeControl
             // 
-            this.renderingModeControl.Location = new System.Drawing.Point(10, 130);
+            this.renderingModeControl.Location = new System.Drawing.Point(10, 110);
             this.renderingModeControl.Name = "renderingModeControl";
             this.renderingModeControl.Size = new System.Drawing.Size(195, 21);
             this.renderingModeControl.TabIndex = 1;
@@ -431,7 +431,7 @@
             // 
             // serviceRenderingsLabel
             // 
-            this.serviceRenderingsLabel.Location = new System.Drawing.Point(215, 5);
+            this.serviceRenderingsLabel.Location = new System.Drawing.Point(215, 10);
             this.serviceRenderingsLabel.Name = "serviceRenderingsLabel";
             this.serviceRenderingsLabel.Size = new System.Drawing.Size(560, 20);
             this.serviceRenderingsLabel.TabIndex = 2;
@@ -446,7 +446,7 @@
             this.Controls.Add(this.schedulePanel);
             this.Controls.Add(this.saveButton);
             this.Name = "ScheduleControl";
-            this.Size = new System.Drawing.Size(790, 320);
+            this.Size = new System.Drawing.Size(790, 305);
             ((System.ComponentModel.ISupportInitialize)(this.serviceRenderingsGridView)).EndInit();
             this.earlyGroupBox.ResumeLayout(false);
             this.earlyGroupBox.PerformLayout();

@@ -22,6 +22,8 @@
             this.operatorInterruptionsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.addAdditionalServiceButton = new System.Windows.Forms.Button();
             this.operatorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TargetDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dayOfWeekColumn = new Queue.UI.WinForms.DataGridViewTranslatableColumn();
             this.startTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.finishTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -42,7 +44,7 @@
             this.mainTableLayoutPanel.RowCount = 2;
             this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.mainTableLayoutPanel.Size = new System.Drawing.Size(547, 292);
+            this.mainTableLayoutPanel.Size = new System.Drawing.Size(764, 292);
             this.mainTableLayoutPanel.TabIndex = 0;
             // 
             // operatorInterruptionsGridView
@@ -62,6 +64,8 @@
             this.operatorInterruptionsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.operatorInterruptionsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.operatorColumn,
+            this.Type,
+            this.TargetDate,
             this.dayOfWeekColumn,
             this.startTimeColumn,
             this.finishTimeColumn});
@@ -74,7 +78,7 @@
             this.operatorInterruptionsGridView.ReadOnly = true;
             this.operatorInterruptionsGridView.RowHeadersVisible = false;
             this.operatorInterruptionsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.operatorInterruptionsGridView.Size = new System.Drawing.Size(547, 257);
+            this.operatorInterruptionsGridView.Size = new System.Drawing.Size(764, 257);
             this.operatorInterruptionsGridView.TabIndex = 0;
             this.operatorInterruptionsGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.operatorInterruptionsGridView_CellMouseDoubleClick);
             this.operatorInterruptionsGridView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.operatorInterruptionsGridView_UserDeletingRow);
@@ -100,6 +104,21 @@
             this.operatorColumn.HeaderText = "Оператор";
             this.operatorColumn.Name = "operatorColumn";
             this.operatorColumn.ReadOnly = true;
+            // 
+            // Type
+            // 
+            this.Type.DataPropertyName = "Type";
+            this.Type.HeaderText = "Тип";
+            this.Type.Name = "Type";
+            this.Type.ReadOnly = true;
+            // 
+            // TargetDate
+            // 
+            this.TargetDate.DataPropertyName = "TargetDate";
+            this.TargetDate.HeaderText = "Целевая дата";
+            this.TargetDate.Name = "TargetDate";
+            this.TargetDate.ReadOnly = true;
+            this.TargetDate.Width = 150;
             // 
             // dayOfWeekColumn
             // 
@@ -129,9 +148,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(567, 312);
+            this.ClientSize = new System.Drawing.Size(784, 312);
             this.Controls.Add(this.mainTableLayoutPanel);
-            this.MinimumSize = new System.Drawing.Size(500, 350);
+            this.MinimumSize = new System.Drawing.Size(800, 350);
             this.Name = "OperatorInterruptionsForm";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Перерывы операторов";
@@ -152,6 +171,8 @@
         private System.Windows.Forms.DataGridView operatorInterruptionsGridView;
         private System.Windows.Forms.BindingSource operatorInterruptionsBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn operatorColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TargetDate;
         private UI.WinForms.DataGridViewTranslatableColumn dayOfWeekColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn startTimeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn finishTimeColumn;

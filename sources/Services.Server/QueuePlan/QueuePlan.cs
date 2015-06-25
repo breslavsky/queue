@@ -19,7 +19,8 @@ namespace Queue.Services.Server
     {
         ServiceSchedule = 1,
         ServiceRenderings = 2,
-        Full = ServiceSchedule | ServiceRenderings
+        OperatorInterruptions = 4,
+        Full = ServiceSchedule | ServiceRenderings | OperatorInterruptions
     }
 
     public sealed class QueuePlan : Synchronized, IDisposable
@@ -27,6 +28,9 @@ namespace Queue.Services.Server
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private List<ClientRequest> clientRequests = new List<ClientRequest>();
+
+        private readonly Dictionary<Operator, TimeInterval[]> operatorInterruptions
+            = new Dictionary<Operator, TimeInterval[]>();
 
         private readonly Dictionary<ServiceRenderingKey, ServiceRendering[]> serviceRenderings
             = new Dictionary<ServiceRenderingKey, ServiceRendering[]>();
@@ -210,11 +214,13 @@ namespace Queue.Services.Server
                                 requestTime = planTime;
                             }
 
+                            Report.Add(string.Format("Определено расписание для услуги [{0}]", schedule));
+
                             var operatorPlanMetrics = potentialOperatorsPlans
                                 .Select(p => new
                                 {
                                     OperatorPlan = p.OperatorPlan,
-                                    NearTimeInterval = p.OperatorPlan.GetNearTimeInterval(requestTime, schedule, conditionClientRequest.Subjects),
+                                    NearTimeInterval = p.OperatorPlan.GetNearTimeInterval(requestTime, schedule, GetOperatorInterruptions(p.OperatorPlan.Operator), conditionClientRequest.Subjects),
                                     IsOnline = p.OperatorPlan.Operator.Online,
                                     Availability = p.OperatorPlan.CurrentClientRequestPlan == null || !p.OperatorPlan.CurrentClientRequestPlan.ClientRequest.InWorking,
                                     Priority = p.Priority,
@@ -242,7 +248,7 @@ namespace Queue.Services.Server
 
                         if (targetOperatorPlan != null)
                         {
-                            targetOperatorPlan.AddClientRequest(conditionClientRequest, schedule);
+                            targetOperatorPlan.AddClientRequest(conditionClientRequest, schedule, GetOperatorInterruptions(targetOperatorPlan.Operator));
 
                             Report.Add(string.Format("Оператор [{0}] назначен для [{1}]", targetOperatorPlan, conditionClientRequest));
                         }
@@ -345,6 +351,11 @@ namespace Queue.Services.Server
             {
                 serviceRenderings.Clear();
             }
+
+            if (mode.HasFlag(QueuePlanFlushMode.OperatorInterruptions))
+            {
+                operatorInterruptions.Clear();
+            }
         }
 
         /// <summary>
@@ -435,19 +446,19 @@ namespace Queue.Services.Server
 
             int openedRequests = 0;
 
-            foreach (var potentialOperatorsPlan in potentialOperatorsPlans)
+            foreach (var potentialOperatorPlan in potentialOperatorsPlans)
             {
-                openedRequests += potentialOperatorsPlan.ClientRequestPlans
+                openedRequests += potentialOperatorPlan.ClientRequestPlans
                     .Select(p => p.ClientRequest)
                     .Count(r => r.Type == requestType);
 
-                report.Add(string.Format("В плане оператора [{0}] {1} открытых запросов", potentialOperatorsPlan, openedRequests));
+                report.Add(string.Format("В плане оператора [{0}] {1} открытых запросов", potentialOperatorPlan, openedRequests));
 
                 var intervalTime = startTime;
 
                 while (intervalTime < schedule.FinishTime)
                 {
-                    intervalTime = potentialOperatorsPlan.GetNearTimeInterval(intervalTime, schedule, subjects);
+                    intervalTime = potentialOperatorPlan.GetNearTimeInterval(intervalTime, schedule, GetOperatorInterruptions(potentialOperatorPlan.Operator), subjects);
 
                     report.Add(string.Format("Найден ближайший интвервал времени {0:hh\\:mm\\:ss}", intervalTime));
 
@@ -544,6 +555,39 @@ namespace Queue.Services.Server
             }
 
             return serviceRenderings[key];
+        }
+
+        /// <summary>
+        /// Получить перерывы оператора
+        /// </summary>
+        public TimeInterval[] GetOperatorInterruptions(Operator queueOperator)
+        {
+            if (!operatorInterruptions.ContainsKey(queueOperator))
+            {
+                logger.Info("Загрузка перерывов оператора [{0}]", queueOperator);
+
+                using (var session = sessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    operatorInterruptions.Add(queueOperator, session.CreateCriteria<OperatorInterruption>()
+                         .Add(Restrictions.Eq("Operator", queueOperator))
+                         .Add(new Disjunction()
+                            .Add(new Conjunction()
+                                .Add(Restrictions.Eq("Type", OperatorInterruptionType.Weekday))
+                                .Add(Restrictions.Eq("Weekday", PlanDate.DayOfWeek)))
+                            .Add(new Conjunction()
+                                .Add(Restrictions.Eq("Type", OperatorInterruptionType.TargetDate))
+                                .Add(Restrictions.Eq("TargetDate", PlanDate))))
+
+                         .List<OperatorInterruption>()
+                         .Select(i => new TimeInterval(i.StartTime, i.FinishTime))
+                         .ToArray());
+
+                    transaction.Commit();
+                }
+            }
+
+            return operatorInterruptions[queueOperator];
         }
 
         /// <summary>
@@ -646,14 +690,7 @@ namespace Queue.Services.Server
                 OperatorsPlans.Clear();
                 foreach (var o in operators)
                 {
-                    var interruptionIntervals = session.CreateCriteria<OperatorInterruption>()
-                        .Add(Restrictions.Eq("Operator", o))
-                        .Add(Restrictions.Eq("DayOfWeek", PlanDate.DayOfWeek))
-                        .List<OperatorInterruption>()
-                        .Select(i => new TimeInterval(i.StartTime, i.FinishTime))
-                        .ToArray();
-
-                    OperatorsPlans.Add(new OperatorPlan(storage.Put(o), interruptionIntervals));
+                    OperatorsPlans.Add(new OperatorPlan(storage.Put(o)));
                     logger.Debug("Загружен оператор [{0}]", o);
                 }
 

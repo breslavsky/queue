@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Queue.Model.Common;
+using System;
 using System.Runtime.Serialization;
 
 namespace Queue.Services.DTO
@@ -7,6 +8,8 @@ namespace Queue.Services.DTO
     public class OperatorInterruption : IdentifiedEntity
     {
         private Operator queueOperator;
+        private OperatorInterruptionType type;
+        private DateTime targetDate;
         private DayOfWeek dayOfWeek;
         private TimeSpan startTime;
         private TimeSpan finishTime;
@@ -16,6 +19,20 @@ namespace Queue.Services.DTO
         {
             get { return queueOperator; }
             set { SetProperty(ref queueOperator, value); }
+        }
+
+        [DataMember]
+        public OperatorInterruptionType Type
+        {
+            get { return type; }
+            set { SetProperty(ref type, value); }
+        }
+
+        [DataMember]
+        public DateTime TargetDate
+        {
+            get { return targetDate; }
+            set { SetProperty(ref targetDate, value); }
         }
 
         [DataMember]

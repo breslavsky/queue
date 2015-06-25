@@ -1,7 +1,9 @@
 ﻿using Junte.Data.NHibernate;
 using NHibernate.Mapping.Attributes;
 using NHibernate.Validator.Constraints;
+using Queue.Model.Common;
 using System;
+using System.Collections.Generic;
 
 namespace Queue.Model
 {
@@ -14,6 +16,12 @@ namespace Queue.Model
         [NotNull(Message = "Оператор не указан")]
         [ManyToOne(ClassType = typeof(Operator), Column = "OperatorId", ForeignKey = "OperatorInterruptionToOperatorReference")]
         public virtual Operator Operator { get; set; }
+
+        [Property]
+        public virtual OperatorInterruptionType Type { get; set; }
+
+        [Property]
+        public virtual DateTime TargetDate { get; set; }
 
         [Property]
         public virtual DayOfWeek DayOfWeek { get; set; }
@@ -29,6 +37,18 @@ namespace Queue.Model
         public override string ToString()
         {
             return string.Format("Перерыв с {0} до {1}", StartTime, FinishTime);
+        }
+
+        public override ValidationError[] Validate()
+        {
+            var errors = new List<ValidationError>(base.Validate());
+
+            if (StartTime > FinishTime)
+            {
+                errors.Add(new ValidationError("Время начала не может быть больше времени окончания перерыва"));
+            }
+
+            return errors.ToArray();
         }
     }
 }
