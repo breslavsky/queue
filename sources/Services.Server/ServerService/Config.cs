@@ -51,6 +51,7 @@ namespace Queue.Services.Server
                     сonfig.WorkFinishTime = source.WorkFinishTime;
                     сonfig.MaxClientRequests = source.MaxClientRequests;
                     сonfig.MaxRenderingTime = source.MaxRenderingTime;
+                    сonfig.IsDebug = source.IsDebug;
 
                     var errors = сonfig.Validate();
                     if (errors.Length > 0)

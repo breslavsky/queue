@@ -38,6 +38,7 @@ namespace Queue.Administrator
                     workFinishTimeTextBox.Text = config.WorkFinishTime.ToString("hh\\:mm");
                     maxClientRequestsUpDown.Value = config.MaxClientRequests;
                     maxRenderingTimeUpDown.Value = config.MaxRenderingTime;
+                    isDebugCheckBox.Checked = config.IsDebug;
                 }
             }
         }
@@ -109,6 +110,11 @@ namespace Queue.Administrator
                 UIHelper.Warning("Ошибочный формат времени окончания рабочего дня");
                 return;
             }
+        }
+
+        private void isDebugCheckBox_Leave(object sender, EventArgs e)
+        {
+            config.IsDebug = isDebugCheckBox.Checked;
         }
 
         private async void saveButton_Click(object sender, EventArgs e)

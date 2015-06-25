@@ -7,12 +7,8 @@ namespace Queue.Server
 {
     public class ServerSettings : ConfigurationSection
     {
-        [ConfigurationProperty("debug")]
-        public bool Debug
-        {
-            get { return (bool)this["debug"]; }
-            set { this["debug"] = value; }
-        }
+        private const string DefaultSerialKey = "0000-0000-0000-0000-0000";
+        private const string DefaultRegisterKey = "0000-0000-0000-0000-0000";
 
         [ConfigurationProperty("database")]
         public DatabaseSettings Database
@@ -28,6 +24,13 @@ namespace Queue.Server
             set { this["services"] = value; }
         }
 
+        [ConfigurationProperty("licence")]
+        public ProductLicenceConfig Licence
+        {
+            get { return (ProductLicenceConfig)this["licence"]; }
+            set { this["licence"] = value; }
+        }
+
         [ConfigurationProperty("language")]
         public Language Language
         {
@@ -39,7 +42,7 @@ namespace Queue.Server
         {
             Database = GetDefaultDatabaseSettings();
             Services = GetDefaultServicesConfig();
-            Debug = true;
+            Licence = GetDefaultLicenseConfig();
             Language = CultureInfo.CurrentCulture.GetLanguage();
         }
 
@@ -75,6 +78,16 @@ namespace Queue.Server
                     Host = "localhost",
                     Port = 4505
                 }
+            };
+        }
+
+        private ProductLicenceConfig GetDefaultLicenseConfig()
+        {
+            return new ProductLicenceConfig()
+            {
+                LicenseType = ProductLicenceType.NonCommercial,
+                SerialKey = DefaultSerialKey,
+                RegisterKey = DefaultRegisterKey
             };
         }
     }
@@ -122,6 +135,35 @@ namespace Queue.Server
         {
             get { return (int)this["port"]; }
             set { this["port"] = value; }
+        }
+
+        public override bool IsReadOnly()
+        {
+            return false;
+        }
+    }
+
+    public class ProductLicenceConfig : ConfigurationElement
+    {
+        [ConfigurationProperty("licenseType", IsRequired = true)]
+        public ProductLicenceType LicenseType
+        {
+            get { return (ProductLicenceType)this["licenseType"]; }
+            set { this["licenseType"] = value; }
+        }
+
+        [ConfigurationProperty("serialKey", IsRequired = true)]
+        public string SerialKey
+        {
+            get { return (string)this["serialKey"]; }
+            set { this["serialKey"] = value; }
+        }
+
+        [ConfigurationProperty("registerKey", IsRequired = true)]
+        public string RegisterKey
+        {
+            get { return (string)this["registerKey"]; }
+            set { this["registerKey"] = value; }
         }
 
         public override bool IsReadOnly()

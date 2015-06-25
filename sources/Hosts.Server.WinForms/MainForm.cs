@@ -35,8 +35,8 @@ namespace Queue.Hosts.Server.WinForms
             LoadConfiguration();
 
             editDatabaseSettingsControl.Settings = settings.Database;
-            debugCheckBox.Checked = settings.Debug;
             languageControl.Initialize<Language>();
+            licenseTypeControl.Initialize<ProductLicenceType>();
         }
 
         private void LoadConfiguration()
@@ -53,6 +53,7 @@ namespace Queue.Hosts.Server.WinForms
 
             AdjustServiceSettings();
             AdjustServiceState();
+            AdjustLicenseSettings();
 
             serviceStateTimer.Start();
         }
@@ -75,6 +76,15 @@ namespace Queue.Hosts.Server.WinForms
             httpCheckBox.Checked = http.Enabled;
             httpHostTextBox.Text = http.Host;
             httpPortUpDown.Value = http.Port;
+        }
+
+        private void AdjustLicenseSettings()
+        {
+            ProductLicenceConfig licence = settings.Licence;
+
+            licenseTypeControl.Select<ProductLicenceType>(licence.LicenseType);
+            serialKeyTextBox.Text = licence.SerialKey;
+            registerKeyTextBox.Text = licence.RegisterKey;
         }
 
         private void AdjustServiceState()
@@ -194,11 +204,6 @@ namespace Queue.Hosts.Server.WinForms
 
         #region bindings
 
-        private void debugCheckBox_Leave(object sender, EventArgs e)
-        {
-            settings.Debug = debugCheckBox.Checked;
-        }
-
         private void tcpHostTextBox_Leave(object sender, EventArgs e)
         {
             settings.Services.TcpService.Host = tcpHostTextBox.Text;
@@ -237,6 +242,21 @@ namespace Queue.Hosts.Server.WinForms
         private void httpCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             httpGroupBox.Enabled = httpCheckBox.Checked;
+        }
+
+        private void licenseTypeControl_Leave(object sender, EventArgs e)
+        {
+            settings.Licence.LicenseType = licenseTypeControl.Selected<ProductLicenceType>();
+        }
+
+        private void serialKeyTextBox_Leave(object sender, EventArgs e)
+        {
+            settings.Licence.SerialKey = serialKeyTextBox.Text;
+        }
+
+        private void registerKeyTextBox_Leave(object sender, EventArgs e)
+        {
+            settings.Licence.RegisterKey = registerKeyTextBox.Text;
         }
 
         #endregion bindings

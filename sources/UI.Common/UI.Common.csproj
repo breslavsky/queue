@@ -40,8 +40,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Junte.Translation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Junte.Translation.1.0.0.0\lib\net45\Junte.Translation.dll</HintPath>
+    <Reference Include="Junte.Translation, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Junte.Translation.1.0.1.0\lib\net45\Junte.Translation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Junte.UI.WinForms, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">

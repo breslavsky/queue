@@ -40,6 +40,7 @@
             this.workStartTimeTextBox = new System.Windows.Forms.MaskedTextBox();
             this.workFinishTimeTextBox = new System.Windows.Forms.MaskedTextBox();
             this.saveButton = new System.Windows.Forms.Button();
+            this.isDebugCheckBox = new System.Windows.Forms.CheckBox();
             this.maxRenderingGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.maxClientRequestsUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxRenderingTimeUpDown)).BeginInit();
@@ -170,10 +171,22 @@
             this.saveButton.Text = "Записать";
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
+            // debugCheckBox
+            // 
+            this.isDebugCheckBox.AutoSize = true;
+            this.isDebugCheckBox.Location = new System.Drawing.Point(415, 100);
+            this.isDebugCheckBox.Name = "debugCheckBox";
+            this.isDebugCheckBox.Size = new System.Drawing.Size(105, 17);
+            this.isDebugCheckBox.TabIndex = 13;
+            this.isDebugCheckBox.Text = "Режим отладки";
+            this.isDebugCheckBox.UseVisualStyleBackColor = true;
+            this.isDebugCheckBox.Leave += new System.EventHandler(this.isDebugCheckBox_Leave);
+            // 
             // DefaultConfigControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.isDebugCheckBox);
             this.Controls.Add(this.maxRenderingGroupBox);
             this.Controls.Add(this.queueNameLabel);
             this.Controls.Add(this.queueNameTextBox);
@@ -206,5 +219,6 @@
         private System.Windows.Forms.MaskedTextBox workStartTimeTextBox;
         private System.Windows.Forms.MaskedTextBox workFinishTimeTextBox;
         private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.CheckBox isDebugCheckBox;
     }
 }
