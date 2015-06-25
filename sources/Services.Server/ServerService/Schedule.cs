@@ -88,9 +88,6 @@ namespace Queue.Services.Server
                             StartTime = template.StartTime,
                             FinishTime = template.FinishTime,
                             IsWorked = template.IsWorked,
-                            IsInterruption = template.IsInterruption,
-                            InterruptionStartTime = template.InterruptionStartTime,
-                            InterruptionFinishTime = template.InterruptionFinishTime,
                             LiveClientInterval = template.LiveClientInterval,
                             Intersection = template.Intersection,
                             MaxClientRequests = template.MaxClientRequests,
@@ -201,9 +198,6 @@ namespace Queue.Services.Server
                             StartTime = template.StartTime,
                             FinishTime = template.FinishTime,
                             IsWorked = template.IsWorked,
-                            IsInterruption = template.IsInterruption,
-                            InterruptionStartTime = template.InterruptionStartTime,
-                            InterruptionFinishTime = template.InterruptionFinishTime,
                             LiveClientInterval = template.LiveClientInterval,
                             Intersection = template.Intersection,
                             MaxClientRequests = template.MaxClientRequests,
@@ -333,9 +327,6 @@ namespace Queue.Services.Server
                             StartTime = template.StartTime,
                             FinishTime = template.FinishTime,
                             IsWorked = template.IsWorked,
-                            IsInterruption = template.IsInterruption,
-                            InterruptionStartTime = template.InterruptionStartTime,
-                            InterruptionFinishTime = template.InterruptionFinishTime,
                             LiveClientInterval = template.LiveClientInterval,
                             Intersection = template.Intersection,
                             MaxClientRequests = template.MaxClientRequests,
@@ -417,9 +408,6 @@ namespace Queue.Services.Server
                     schedule.StartTime = source.StartTime;
                     schedule.FinishTime = source.FinishTime;
                     schedule.IsWorked = source.IsWorked;
-                    schedule.IsInterruption = source.IsInterruption;
-                    schedule.InterruptionStartTime = source.InterruptionStartTime;
-                    schedule.InterruptionFinishTime = source.InterruptionFinishTime;
                     schedule.LiveClientInterval = source.LiveClientInterval;
                     schedule.Intersection = source.Intersection;
                     schedule.MaxClientRequests = source.MaxClientRequests;

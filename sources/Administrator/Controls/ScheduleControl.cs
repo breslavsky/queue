@@ -42,9 +42,6 @@ namespace Queue.Administrator
                     isWorkedCheckBox.Checked = schedule.IsWorked;
                     startTimeTextBox.Text = schedule.StartTime.ToString("hh\\:mm");
                     finishTimeTextBox.Text = schedule.FinishTime.ToString("hh\\:mm");
-                    isInterruptionCheckBox.Checked = schedule.IsInterruption;
-                    interruptionStartTimeTextBox.Text = schedule.InterruptionStartTime.ToString("hh\\:mm");
-                    interruptionFinishTimeTextBox.Text = schedule.InterruptionFinishTime.ToString("hh\\:mm");
                     liveClientIntervalUpDown.Value = (decimal)schedule.LiveClientInterval.TotalMinutes;
                     intersectionUpDown.Value = (decimal)schedule.Intersection.TotalMinutes;
                     maxClientRequestsUpDown.Value = schedule.MaxClientRequests;
@@ -224,40 +221,6 @@ namespace Queue.Administrator
             try
             {
                 schedule.FinishTime = TimeSpan.Parse(finishTimeTextBox.Text);
-            }
-            catch
-            {
-                throw new FormatException("Ошибочный формат времени");
-            }
-        }
-
-        private void isInterruptionCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            interruptionPanel.Enabled = isInterruptionCheckBox.Checked;
-        }
-
-        private void isInterruptionCheckBox_Leave(object sender, EventArgs e)
-        {
-            schedule.IsInterruption = isInterruptionCheckBox.Checked;
-        }
-
-        private void interruptionStartTimeTextBox_Leave(object sender, EventArgs e)
-        {
-            try
-            {
-                schedule.InterruptionStartTime = TimeSpan.Parse(interruptionStartTimeTextBox.Text);
-            }
-            catch
-            {
-                throw new FormatException("Ошибочный формат времени");
-            }
-        }
-
-        private void interruptionFinishTimeTextBox_Leave(object sender, EventArgs e)
-        {
-            try
-            {
-                schedule.InterruptionFinishTime = TimeSpan.Parse(interruptionFinishTimeTextBox.Text);
             }
             catch
             {

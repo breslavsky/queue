@@ -102,22 +102,13 @@ namespace Queue.Reports.ExceptionScheduleReport
                     cell = row.CreateCell(3);
                     cell.SetCellValue(item.FinishTime.ToString());
 
-                    if (item.IsInterruption)
-                    {
-                        cell = row.CreateCell(4);
-                        cell.SetCellValue(item.InterruptionStartTime.ToString());
-
-                        cell = row.CreateCell(5);
-                        cell.SetCellValue(item.InterruptionFinishTime.ToString());
-                    }
-
-                    cell = row.CreateCell(6);
+                    cell = row.CreateCell(4);
                     cell.SetCellValue(item.ClientInterval.Minutes);
 
-                    cell = row.CreateCell(7);
+                    cell = row.CreateCell(5);
                     cell.SetCellValue(item.Intersection.Minutes);
 
-                    cell = row.CreateCell(8);
+                    cell = row.CreateCell(6);
                     cell.SetCellValue(item.MaxClientRequests);
                 }
             };
@@ -131,9 +122,6 @@ namespace Queue.Reports.ExceptionScheduleReport
                 IsWorked = source.IsWorked;
                 StartTime = source.StartTime;
                 FinishTime = source.FinishTime;
-                IsInterruption = source.IsInterruption;
-                InterruptionStartTime = source.InterruptionStartTime;
-                InterruptionFinishTime = source.InterruptionFinishTime;
                 ClientInterval = source.LiveClientInterval;
                 Intersection = source.Intersection;
                 MaxClientRequests = source.MaxClientRequests;
@@ -146,12 +134,6 @@ namespace Queue.Reports.ExceptionScheduleReport
             public TimeSpan StartTime { get; set; }
 
             public TimeSpan FinishTime { get; set; }
-
-            public bool IsInterruption { get; set; }
-
-            public TimeSpan InterruptionStartTime { get; set; }
-
-            public TimeSpan InterruptionFinishTime { get; set; }
 
             public TimeSpan ClientInterval { get; set; }
 

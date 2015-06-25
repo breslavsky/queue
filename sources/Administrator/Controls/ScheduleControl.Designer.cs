@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.saveButton = new System.Windows.Forms.Button();
             this.addServiceRenderingButton = new System.Windows.Forms.Button();
             this.serviceRenderingsGridView = new System.Windows.Forms.DataGridView();
@@ -52,10 +52,6 @@
             this.maxClientRequestsLabel = new System.Windows.Forms.Label();
             this.startTimeTextBox = new System.Windows.Forms.MaskedTextBox();
             this.finishTimeTextBox = new System.Windows.Forms.MaskedTextBox();
-            this.isInterruptionCheckBox = new System.Windows.Forms.CheckBox();
-            this.interruptionPanel = new System.Windows.Forms.Panel();
-            this.interruptionStartTimeTextBox = new System.Windows.Forms.MaskedTextBox();
-            this.interruptionFinishTimeTextBox = new System.Windows.Forms.MaskedTextBox();
             this.liveClientIntervalLabel = new System.Windows.Forms.Label();
             this.liveClientIntervalUpDown = new System.Windows.Forms.NumericUpDown();
             this.minLabel1 = new System.Windows.Forms.Label();
@@ -71,7 +67,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.earlyClientIntervalUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.earlyReservationUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxClientRequestsUpDown)).BeginInit();
-            this.interruptionPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.liveClientIntervalUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.intersectionUpDown)).BeginInit();
             this.schedulePanel.SuspendLayout();
@@ -101,14 +96,14 @@
             this.serviceRenderingsGridView.AllowUserToAddRows = false;
             this.serviceRenderingsGridView.AllowUserToResizeColumns = false;
             this.serviceRenderingsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.serviceRenderingsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.serviceRenderingsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.serviceRenderingsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.serviceRenderingsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.operatorColumn,
@@ -154,8 +149,8 @@
             // 
             // priorityColumn
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.priorityColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.priorityColumn.DefaultCellStyle = dataGridViewCellStyle4;
             this.priorityColumn.HeaderText = "Приоритет";
             this.priorityColumn.Name = "priorityColumn";
             this.priorityColumn.ReadOnly = true;
@@ -278,11 +273,11 @@
             // 
             // timeLabel
             // 
-            this.timeLabel.Location = new System.Drawing.Point(10, 0);
+            this.timeLabel.Location = new System.Drawing.Point(10, 25);
             this.timeLabel.Name = "timeLabel";
             this.timeLabel.Size = new System.Drawing.Size(115, 25);
             this.timeLabel.TabIndex = 0;
-            this.timeLabel.Text = "Время оказания";
+            this.timeLabel.Text = "Период оказания";
             this.timeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // maxClientRequestsUpDown
@@ -309,7 +304,7 @@
             // 
             // startTimeTextBox
             // 
-            this.startTimeTextBox.Location = new System.Drawing.Point(130, 5);
+            this.startTimeTextBox.Location = new System.Drawing.Point(130, 30);
             this.startTimeTextBox.Mask = "00:00";
             this.startTimeTextBox.Name = "startTimeTextBox";
             this.startTimeTextBox.Size = new System.Drawing.Size(35, 20);
@@ -320,7 +315,7 @@
             // 
             // finishTimeTextBox
             // 
-            this.finishTimeTextBox.Location = new System.Drawing.Point(170, 5);
+            this.finishTimeTextBox.Location = new System.Drawing.Point(170, 30);
             this.finishTimeTextBox.Mask = "00:00";
             this.finishTimeTextBox.Name = "finishTimeTextBox";
             this.finishTimeTextBox.Size = new System.Drawing.Size(35, 20);
@@ -328,51 +323,6 @@
             this.finishTimeTextBox.Text = "0000";
             this.finishTimeTextBox.ValidatingType = typeof(System.DateTime);
             this.finishTimeTextBox.Leave += new System.EventHandler(this.finishTimeTextBox_Leave);
-            // 
-            // isInterruptionCheckBox
-            // 
-            this.isInterruptionCheckBox.Location = new System.Drawing.Point(15, 25);
-            this.isInterruptionCheckBox.Name = "isInterruptionCheckBox";
-            this.isInterruptionCheckBox.Size = new System.Drawing.Size(110, 25);
-            this.isInterruptionCheckBox.TabIndex = 0;
-            this.isInterruptionCheckBox.Tag = "1";
-            this.isInterruptionCheckBox.Text = "Перерыв";
-            this.isInterruptionCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.isInterruptionCheckBox.UseVisualStyleBackColor = true;
-            this.isInterruptionCheckBox.CheckedChanged += new System.EventHandler(this.isInterruptionCheckBox_CheckedChanged);
-            this.isInterruptionCheckBox.Leave += new System.EventHandler(this.isInterruptionCheckBox_Leave);
-            // 
-            // interruptionPanel
-            // 
-            this.interruptionPanel.Controls.Add(this.interruptionStartTimeTextBox);
-            this.interruptionPanel.Controls.Add(this.interruptionFinishTimeTextBox);
-            this.interruptionPanel.Enabled = false;
-            this.interruptionPanel.Location = new System.Drawing.Point(130, 30);
-            this.interruptionPanel.Name = "interruptionPanel";
-            this.interruptionPanel.Size = new System.Drawing.Size(75, 20);
-            this.interruptionPanel.TabIndex = 0;
-            // 
-            // interruptionStartTimeTextBox
-            // 
-            this.interruptionStartTimeTextBox.Location = new System.Drawing.Point(0, 0);
-            this.interruptionStartTimeTextBox.Mask = "00:00";
-            this.interruptionStartTimeTextBox.Name = "interruptionStartTimeTextBox";
-            this.interruptionStartTimeTextBox.Size = new System.Drawing.Size(35, 20);
-            this.interruptionStartTimeTextBox.TabIndex = 0;
-            this.interruptionStartTimeTextBox.Text = "0000";
-            this.interruptionStartTimeTextBox.ValidatingType = typeof(System.DateTime);
-            this.interruptionStartTimeTextBox.Leave += new System.EventHandler(this.interruptionStartTimeTextBox_Leave);
-            // 
-            // interruptionFinishTimeTextBox
-            // 
-            this.interruptionFinishTimeTextBox.Location = new System.Drawing.Point(40, 0);
-            this.interruptionFinishTimeTextBox.Mask = "00:00";
-            this.interruptionFinishTimeTextBox.Name = "interruptionFinishTimeTextBox";
-            this.interruptionFinishTimeTextBox.Size = new System.Drawing.Size(35, 20);
-            this.interruptionFinishTimeTextBox.TabIndex = 0;
-            this.interruptionFinishTimeTextBox.Text = "0000";
-            this.interruptionFinishTimeTextBox.ValidatingType = typeof(System.DateTime);
-            this.interruptionFinishTimeTextBox.Leave += new System.EventHandler(this.interruptionFinishTimeTextBox_Leave);
             // 
             // liveClientIntervalLabel
             // 
@@ -452,8 +402,6 @@
             this.schedulePanel.Controls.Add(this.timeLabel);
             this.schedulePanel.Controls.Add(this.startTimeTextBox);
             this.schedulePanel.Controls.Add(this.finishTimeTextBox);
-            this.schedulePanel.Controls.Add(this.isInterruptionCheckBox);
-            this.schedulePanel.Controls.Add(this.interruptionPanel);
             this.schedulePanel.Controls.Add(this.liveClientIntervalLabel);
             this.schedulePanel.Controls.Add(this.liveClientIntervalUpDown);
             this.schedulePanel.Controls.Add(this.minLabel1);
@@ -505,8 +453,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.earlyClientIntervalUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.earlyReservationUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxClientRequestsUpDown)).EndInit();
-            this.interruptionPanel.ResumeLayout(false);
-            this.interruptionPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.liveClientIntervalUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.intersectionUpDown)).EndInit();
             this.schedulePanel.ResumeLayout(false);
@@ -517,11 +463,8 @@
 
         #endregion
 
-        private System.Windows.Forms.MaskedTextBox interruptionFinishTimeTextBox;
-        private System.Windows.Forms.MaskedTextBox interruptionStartTimeTextBox;
         private System.Windows.Forms.NumericUpDown liveClientIntervalUpDown;
         private System.Windows.Forms.NumericUpDown earlyReservationUpDown;
-        private System.Windows.Forms.CheckBox isInterruptionCheckBox;
         private System.Windows.Forms.Label earlyReservationLabel;
         private System.Windows.Forms.MaskedTextBox startTimeTextBox;
         private System.Windows.Forms.CheckBox isWorkedCheckBox;
@@ -535,7 +478,6 @@
         private System.Windows.Forms.MaskedTextBox earlyStartTimeTextBox;
         private System.Windows.Forms.Label earlyTimeLabel;
         private System.Windows.Forms.Label timeLabel;
-        private System.Windows.Forms.Panel interruptionPanel;
         private System.Windows.Forms.GroupBox earlyGroupBox;
         private System.Windows.Forms.Label maxClientRequestsLabel;
         private System.Windows.Forms.NumericUpDown maxClientRequestsUpDown;
