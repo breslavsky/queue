@@ -132,9 +132,6 @@
   <data name="InterruptionStartTimeColumn.HeaderText" xml:space="preserve">
     <value>Interruption start</value>
   </data>
-  <data name="isInterruptionColumn.HeaderText" xml:space="preserve">
-    <value>Interruption</value>
-  </data>
   <data name="managersTabPage.Text" xml:space="preserve">
     <value>Managers</value>
   </data>

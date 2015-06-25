@@ -108,11 +108,6 @@ namespace Queue.Services.Server
             reservedIntervals.AddRange(interruptionIntervals);
             // Запланированные запросы клиентов
             reservedIntervals.AddRange(clientRequestIntervals);
-            // Если установлен перерыв у расписания
-            if (schedule.IsInterruption)
-            {
-                reservedIntervals.Add(new TimeInterval(schedule.InterruptionStartTime, schedule.InterruptionFinishTime));
-            }
 
             var clientInterval = TimeSpan.FromTicks(schedule.LiveClientInterval.Ticks * subjects);
 

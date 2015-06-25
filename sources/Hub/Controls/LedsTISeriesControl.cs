@@ -122,6 +122,11 @@ namespace Queue.Hub
             }
         }
 
+        private void testButton_Click(object sender, EventArgs e)
+        {
+            Display(16, (short)(new Random().Next(1, 999)), 3);
+        }
+
         private void refresh()
         {
             if (Port != null)

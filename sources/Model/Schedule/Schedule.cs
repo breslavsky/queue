@@ -22,15 +22,6 @@ namespace Queue.Model
         public virtual bool IsWorked { get; set; }
 
         [Property]
-        public virtual bool IsInterruption { get; set; }
-
-        [Property]
-        public virtual TimeSpan InterruptionStartTime { get; set; }
-
-        [Property]
-        public virtual TimeSpan InterruptionFinishTime { get; set; }
-
-        [Property]
         public virtual TimeSpan LiveClientInterval { get; set; }
 
         [Property]
@@ -78,24 +69,6 @@ namespace Queue.Model
             if (EarlyClientInterval <= TimeSpan.Zero)
             {
                 result.Add(new ValidationError("Время оказания услуги по записи не может нулевым"));
-            }
-
-            if (IsInterruption)
-            {
-                if (InterruptionStartTime < StartTime)
-                {
-                    result.Add(new ValidationError("Время начала перерыва должно быть больше времени начала оказания услуги"));
-                }
-
-                if (InterruptionFinishTime > FinishTime)
-                {
-                    result.Add(new ValidationError("Время окончания перерыва должно быть меньше времени окончания оказания услуги"));
-                }
-
-                if (InterruptionStartTime > InterruptionFinishTime)
-                {
-                    result.Add(new ValidationError("Время начала перерыва должно быть меньше времени окончания перерыва", "InterruptionStartTime"));
-                }
             }
 
             if (RenderingMode == ServiceRenderingMode.AllRequests)

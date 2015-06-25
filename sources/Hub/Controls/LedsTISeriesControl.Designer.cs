@@ -30,14 +30,15 @@
         {
             this.portComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.testButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // serialPortComboBox
+            // portComboBox
             // 
-            this.portComboBox.FormattingEnabled = true;
             this.portComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.portComboBox.FormattingEnabled = true;
             this.portComboBox.Location = new System.Drawing.Point(65, 5);
-            this.portComboBox.Name = "serialPortComboBox";
+            this.portComboBox.Name = "portComboBox";
             this.portComboBox.Size = new System.Drawing.Size(140, 21);
             this.portComboBox.TabIndex = 0;
             this.portComboBox.SelectedIndexChanged += new System.EventHandler(this.portComboBox_SelectedIndexChanged);
@@ -51,13 +52,24 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "COM порт";
             // 
-            // LedsTISeriesSerialControl
+            // testButton
+            // 
+            this.testButton.Location = new System.Drawing.Point(5, 35);
+            this.testButton.Name = "testButton";
+            this.testButton.Size = new System.Drawing.Size(75, 23);
+            this.testButton.TabIndex = 1;
+            this.testButton.Text = "Test";
+            this.testButton.UseVisualStyleBackColor = true;
+            this.testButton.Click += new System.EventHandler(this.testButton_Click);
+            // 
+            // LedsTISeriesControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.testButton);
             this.Controls.Add(this.portComboBox);
             this.Controls.Add(this.label1);
-            this.Name = "LedsTISeriesSerialControl";
+            this.Name = "LedsTISeriesControl";
             this.Size = new System.Drawing.Size(301, 150);
             this.Load += new System.EventHandler(this.LedsTISeriesSerialController_Load);
             this.ResumeLayout(false);
@@ -69,5 +81,6 @@
 
         private System.Windows.Forms.ComboBox portComboBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button testButton;
     }
 }

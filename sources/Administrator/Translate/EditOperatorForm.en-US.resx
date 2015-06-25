@@ -120,12 +120,6 @@
   <data name="emailLabel.Text" xml:space="preserve">
     <value>Email</value>
   </data>
-  <data name="interruptionLabel.Text" xml:space="preserve">
-    <value>Time interruption</value>
-  </data>
-  <data name="isInterruptionCheckBox.Text" xml:space="preserve">
-    <value>Interruption</value>
-  </data>
   <data name="mobileLabel.Text" xml:space="preserve">
     <value>Mobile phone</value>
   </data>

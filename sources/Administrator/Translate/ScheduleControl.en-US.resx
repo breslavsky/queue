@@ -135,9 +135,6 @@
   <data name="intersectionLabel.Text" xml:space="preserve">
     <value>Time overlay</value>
   </data>
-  <data name="isInterruptionCheckBox.Text" xml:space="preserve">
-    <value>Interruption</value>
-  </data>
   <data name="isWorkedCheckBox.Text" xml:space="preserve">
     <value>Services are provided</value>
   </data>
