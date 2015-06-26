@@ -240,7 +240,7 @@ namespace Queue.Reports.ServiceRatingReport
             var cell = row.CreateCell(4);
             cell.SetCellValue(service.Name);
 
-            if (settings.IsServiceTypes && service.IsUseType)
+            if (settings.IsServiceTypes)
             {
                 cell.CellStyle = CreateCellBoldStyle(worksheet.Workbook);
 
