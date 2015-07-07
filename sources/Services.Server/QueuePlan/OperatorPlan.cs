@@ -52,8 +52,9 @@ namespace Queue.Services.Server
             {
                 TimeSpan startTime, finishTime;
 
-                var clientInterval = TimeSpan.FromTicks(clientRequest.Type == ClientRequestType.Live
-                    ? schedule.LiveClientInterval.Ticks : schedule.EarlyClientInterval.Ticks * clientRequest.Subjects);
+                var clientInterval = clientRequest.Type == ClientRequestType.Live
+                    ? schedule.LiveClientInterval : schedule.EarlyClientInterval;
+                clientInterval = TimeSpan.FromTicks(clientInterval.Ticks * clientRequest.Subjects);
 
                 switch (clientRequest.State)
                 {
