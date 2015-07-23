@@ -26,7 +26,7 @@ If (!(Test-Path $INSTALLERS_PATH))
    New-Item -Path $INSTALLERS_PATH -ItemType Directory;
 }
 
-$OutputFile = [string]::Format("{0}\{1} {2}.{3}.{4}.msi", $INSTALLERS_PATH, $PROJECT_NAME, $ProductVersion.Major, $ProductVersion.Minor, $ProductVersion.Build);
+$OutputFile = [string]::Format("{0}\{1}_{2}.{3}.{4}.msi", $INSTALLERS_PATH, $PROJECT_NAME, $ProductVersion.Major, $ProductVersion.Minor, $ProductVersion.Build);
 
 Copy-Item "$WIX_PROJECT_PATH\bin\Release\ru-ru\Installer.$PROJECT_NAME.msi" "$OutputFile";
 
