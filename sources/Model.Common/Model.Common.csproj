@@ -133,6 +133,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ClientRequestType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Translate\OperatorInterruptionType.en-US.resx" />
+    <EmbeddedResource Include="Translate\OperatorInterruptionType.resx" />
     <EmbeddedResource Include="Translate\ServiceParameterType.en-US.resx" />
     <EmbeddedResource Include="Translate\ServiceParameterType.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

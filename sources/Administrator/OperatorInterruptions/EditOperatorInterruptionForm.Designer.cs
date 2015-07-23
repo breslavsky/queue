@@ -146,7 +146,7 @@
             this.targetDateLabel.Name = "targetDateLabel";
             this.targetDateLabel.Size = new System.Drawing.Size(135, 25);
             this.targetDateLabel.TabIndex = 17;
-            this.targetDateLabel.Text = "Указанный день";
+            this.targetDateLabel.Text = "Целевая дата";
             this.targetDateLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // EditOperatorInterruptionForm

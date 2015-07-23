@@ -17,13 +17,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.operatorInterruptionsGridView = new System.Windows.Forms.DataGridView();
             this.operatorInterruptionsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.addAdditionalServiceButton = new System.Windows.Forms.Button();
             this.operatorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TargetDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TargetDate = new Queue.UI.WinForms.DataGridViewTranslatableColumn();
             this.dayOfWeekColumn = new Queue.UI.WinForms.DataGridViewTranslatableColumn();
             this.startTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.finishTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -115,9 +116,13 @@
             // TargetDate
             // 
             this.TargetDate.DataPropertyName = "TargetDate";
+            dataGridViewCellStyle2.NullValue = null;
+            this.TargetDate.DefaultCellStyle = dataGridViewCellStyle2;
             this.TargetDate.HeaderText = "Целевая дата";
             this.TargetDate.Name = "TargetDate";
             this.TargetDate.ReadOnly = true;
+            this.TargetDate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.TargetDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.TargetDate.Width = 150;
             // 
             // dayOfWeekColumn
@@ -172,7 +177,7 @@
         private System.Windows.Forms.BindingSource operatorInterruptionsBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn operatorColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Type;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TargetDate;
+        private UI.WinForms.DataGridViewTranslatableColumn TargetDate;
         private UI.WinForms.DataGridViewTranslatableColumn dayOfWeekColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn startTimeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn finishTimeColumn;
