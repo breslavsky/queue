@@ -22,6 +22,7 @@
     <Property Id="ARPPRODUCTICON" Value="appIcon" />
     <Property Id="REINSTALLMODE" Value="amus" />
     <Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable" />
+    <Property Id="SERVICE_NAME" Value="JunteQueueMetric" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
@@ -38,6 +39,7 @@
 
     <Feature Id="ProductFeature" Title="$(var.ProductName)" Level="1">
       <ComponentGroupRef Id="CoreFiles" />
+      <ComponentGroupRef Id="Service" />
       <ComponentRef Id="ApplicationShortcut" />
     </Feature>
 
@@ -57,6 +59,21 @@
                        KeyPath="yes" />
       </Component>
     </DirectoryRef>
+
+    <ComponentGroup Id="Service" Directory="INSTALLFOLDER">
+      <Component Id="cmp93335894C14342D7876502A42B3ABB24" Guid="93335894-C143-42D7-8765-02A42B3ABB24">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinService.TargetPath)" />
+        <ServiceControl
+          Id="removeQueueService"
+          Name="[SERVICE_NAME]"
+          Stop="both"
+          Remove="uninstall"
+          Wait="yes" />
+      </Component>
+      <Component Id="cmp574D649B769649149CFDC809E8D4270B" Guid="574D649B-7696-4914-9CFD-C809E8D4270B">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinService.TargetPath).config" />
+      </Component>
+    </ComponentGroup>
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" ></Property>
     <WixVariable Id="WixUIDialogBmp" Value="$(var.Installer.Common.ProjectDir)mainBanner.bmp" />

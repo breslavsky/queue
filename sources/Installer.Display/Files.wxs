@@ -7,88 +7,100 @@
   </Fragment>
   <Fragment>
     <ComponentGroup Id="CoreFiles">
-      <Component Id="cmpFD65F52CD5EC0B46A750F8EEFC3D4422" Directory="INSTALLFOLDER" Guid="81066C20-DC71-4978-8406-430F45056F18">
+      <Component Id="cmpFD65F52CD5EC0B46A750F8EEFC3D4422" Directory="INSTALLFOLDER" Guid="F8B0A151-9F2C-4BB2-B4E7-9813D7A4F232">
         <File Id="fil1F7E777B326B02F60B86F747002F8605" KeyPath="yes" Source="$(var.Display.TargetDir)\AutoMapper.dll" />
       </Component>
-      <Component Id="cmpEEC7AC6B3009FA88C57EB2972A7A8F5B" Directory="INSTALLFOLDER" Guid="1A9DC676-CA96-406B-A1D0-37FB2052CC47">
+      <Component Id="cmpEEC7AC6B3009FA88C57EB2972A7A8F5B" Directory="INSTALLFOLDER" Guid="FBD13407-5A88-4038-83A8-0491F55602C3">
         <File Id="fil4F01E53E158206D8C82AC24B4DFEE253" KeyPath="yes" Source="$(var.Display.TargetDir)\AutoMapper.Net4.dll" />
       </Component>
-      <Component Id="cmp695F3B89FCD90C669B1958F6D20D523D" Directory="INSTALLFOLDER" Guid="6309E91E-B580-40C3-B25F-46800B8BCE5F">
+      <Component Id="cmp695F3B89FCD90C669B1958F6D20D523D" Directory="INSTALLFOLDER" Guid="1CEB8726-37CE-4F59-8503-0FF1C07C0235">
         <File Id="filECAAB6E721DE437D50D73A1F554EB461" KeyPath="yes" Source="$(var.Display.TargetDir)\Icons.resx" />
       </Component>
-      <Component Id="cmp2D1101A09A3F5FA0CDF5E565334E6BDB" Directory="INSTALLFOLDER" Guid="7C98EE54-0AFA-49C6-81D0-200D4E553400">
-        <File Id="fil81321EAB16548C89F71B94A9BAC8302E" KeyPath="yes" Source="$(var.Display.TargetDir)\Junte.Parallel.Common.dll" />
+      <Component Id="cmpE5057827B5BBC477B00E24D8BF130BCF" Directory="INSTALLFOLDER" Guid="9E2CBC02-A516-4B24-9A8C-369B5817F2F1">
+        <File Id="fil1DB5A7054C250ED33EF11E0741091DAF" KeyPath="yes" Source="$(var.Display.TargetDir)\Junte.Configuration.dll" />
       </Component>
-      <Component Id="cmp52B2D1FF2A4F6C728AF038545031AA3B" Directory="INSTALLFOLDER" Guid="8AE12A24-040E-4D74-B833-1844F8A87E91">
+      <Component Id="cmp1C85ADA07BCD53B5D8BB1FE5C3936C6A" Directory="INSTALLFOLDER" Guid="D4DBE72E-5826-4DA1-AC84-C837C281B195">
+        <File Id="fil8E9A644516DAC03C44DBCE6A6701788F" KeyPath="yes" Source="$(var.Display.TargetDir)\Junte.Parallel.dll" />
+      </Component>
+      <Component Id="cmpA0E52F1E392B1546B38AC8B5DF074237" Directory="INSTALLFOLDER" Guid="6ED54F70-E0F8-4F23-A327-030B937ABC0C">
+        <File Id="filB435E9D49D0084A9B4FB363A3679323A" KeyPath="yes" Source="$(var.Display.TargetDir)\Junte.Translation.dll" />
+      </Component>
+      <Component Id="cmp96AB944A74A73C7899AC9EBB5BFD5292" Directory="INSTALLFOLDER" Guid="2B993458-7AE8-4508-B1DD-DB9691B636E8">
+        <File Id="filF67A86BDA1D3A3AED997B22C92DB408A" KeyPath="yes" Source="$(var.Display.TargetDir)\Junte.UI.WinForms.dll" />
+      </Component>
+      <Component Id="cmp52B2D1FF2A4F6C728AF038545031AA3B" Directory="INSTALLFOLDER" Guid="9953DF7B-F95F-493E-9EB5-D74153EF6CFD">
         <File Id="fil99564D5082811B5E25FCD18DCB5767F4" KeyPath="yes" Source="$(var.Display.TargetDir)\Junte.UI.WPF.dll" />
       </Component>
-      <Component Id="cmpC255AEA61B1C33749B73878AE58A3200" Directory="INSTALLFOLDER" Guid="4BEFA2E5-72D2-4045-BFB3-A2C14067E9B0">
-        <File Id="fil285F0AEF7B68A083AE2D8E5A0E7D7C8B" KeyPath="yes" Source="$(var.Display.TargetDir)\Junte.WCF.Common.dll" />
+      <Component Id="cmp08EF7A5CA33078308765DCC79D7A64D7" Directory="INSTALLFOLDER" Guid="A82DF872-B22E-4809-AF90-8E11530B97F1">
+        <File Id="fil6C2B7DD08BCCEC9AF4731DA587E1322E" KeyPath="yes" Source="$(var.Display.TargetDir)\Junte.WCF.dll" />
       </Component>
-      <Component Id="cmp223D4754378C01052DA8253A843FD297" Directory="INSTALLFOLDER" Guid="BD0AC4A6-DF9C-41E1-BDE5-CCDD187F8CA8">
+      <Component Id="cmp223D4754378C01052DA8253A843FD297" Directory="INSTALLFOLDER" Guid="5D66B1C0-D8D2-4329-A4EB-0B296CC2DFD8">
         <File Id="filBC562C5B3D9848A2114F0AF7275FF1E6" KeyPath="yes" Source="$(var.Display.TargetDir)\MahApps.Metro.dll" />
       </Component>
-      <Component Id="cmpF2F1C15A47B64F045101B1AE5B4D6054" Directory="INSTALLFOLDER" Guid="73B2C666-BBC4-4F46-9F4C-165B5C2F9863">
+      <Component Id="cmpF2F1C15A47B64F045101B1AE5B4D6054" Directory="INSTALLFOLDER" Guid="AFD36B08-49A5-4748-9491-59CBC036A2F3">
         <File Id="filC342596B66E98254BB6E1CFFE50AE4AA" KeyPath="yes" Source="$(var.Display.TargetDir)\Microsoft.Practices.ServiceLocation.dll" />
       </Component>
-      <Component Id="cmpAA856A11EEF773F32618D29332CADFD0" Directory="INSTALLFOLDER" Guid="AE03AB57-7C17-4C30-A291-9C945F8E9979">
+      <Component Id="cmpAA856A11EEF773F32618D29332CADFD0" Directory="INSTALLFOLDER" Guid="C889DED5-7CCC-4189-8DA4-89E60B792EA7">
         <File Id="filFBB0E3892854598F759A072FB8581B46" KeyPath="yes" Source="$(var.Display.TargetDir)\Microsoft.Practices.Unity.Configuration.dll" />
       </Component>
-      <Component Id="cmp5141EFC969B8F1A9A0F1A01FFAD874BA" Directory="INSTALLFOLDER" Guid="81BEC605-7B42-45F1-BED1-59DE12D50A33">
+      <Component Id="cmp5141EFC969B8F1A9A0F1A01FFAD874BA" Directory="INSTALLFOLDER" Guid="547EBA1A-05E5-40DB-A20F-DDBB4712736E">
         <File Id="filE0B15D2B280E1EDFAB44F822C47D44ED" KeyPath="yes" Source="$(var.Display.TargetDir)\Microsoft.Practices.Unity.dll" />
       </Component>
-      <Component Id="cmpB48E67D919D1C42D78781F3B5D6E4336" Directory="INSTALLFOLDER" Guid="3A9AC219-5D16-44E7-A4FA-771BA537F029">
+      <Component Id="cmpB48E67D919D1C42D78781F3B5D6E4336" Directory="INSTALLFOLDER" Guid="B3228CB1-C285-4A21-A3B4-BE8E9AFF0DA4">
         <File Id="fil53564AE840DB9CE660FE1F02DB1CB224" KeyPath="yes" Source="$(var.Display.TargetDir)\Microsoft.Practices.Unity.RegistrationByConvention.dll" />
       </Component>
-      <Component Id="cmp55C662695779CA92FAA1C1E8F030C8C5" Directory="INSTALLFOLDER" Guid="5133AB37-F2D3-479A-A91A-8792369EA803">
+      <Component Id="cmpBB1767D7C200C536ABB2D361F40F9D92" Directory="INSTALLFOLDER" Guid="DF575A25-0814-40C1-9E03-4CF7A82F7781">
+        <File Id="fil4E0F4321F336BF83461A34116F3E30B7" KeyPath="yes" Source="$(var.Display.TargetDir)\Microsoft.WindowsAPICodePack.dll" />
+      </Component>
+      <Component Id="cmp55C662695779CA92FAA1C1E8F030C8C5" Directory="INSTALLFOLDER" Guid="48504086-CBB7-4CEB-9A25-434F0B6D589A">
         <File Id="filF091F2ECF8894DC2ED432C5359E96097" KeyPath="yes" Source="$(var.Display.TargetDir)\Queue.Common.dll" />
       </Component>
-      <Component Id="cmp8E18564C676D081044527AA16CFE1D1B" Directory="INSTALLFOLDER" Guid="6B28E164-3683-47DB-9FF1-140F7A2E3405">
+      <Component Id="cmp8E18564C676D081044527AA16CFE1D1B" Directory="INSTALLFOLDER" Guid="84346E15-A50D-4109-8045-48B278FE5AC7">
         <File Id="fil7A554595133DF8608CC32128FD2E0742" KeyPath="yes" Source="$(var.Display.TargetDir)\Queue.Display.exe" />
       </Component>
-      <Component Id="cmp7807F72E0CACC9569A9DA6037B37DAA5" Directory="INSTALLFOLDER" Guid="505E012C-B812-492F-92E3-35FFA34C0D98">
+      <Component Id="cmp7807F72E0CACC9569A9DA6037B37DAA5" Directory="INSTALLFOLDER" Guid="6CE131F5-F5AC-4110-8D10-04B40543395A">
         <File Id="fil1455591B85714D9C3A9385538206AE45" KeyPath="yes" Source="$(var.Display.TargetDir)\Queue.Display.exe.config" />
       </Component>
-      <Component Id="cmp2CE2F83A5AB32BAFBA87C152C2C6F326" Directory="INSTALLFOLDER" Guid="FA199340-E6C9-47B2-B4DD-C8DE35471DC3">
+      <Component Id="cmp2CE2F83A5AB32BAFBA87C152C2C6F326" Directory="INSTALLFOLDER" Guid="32A84958-B7CD-49F5-9079-3FABE2CFEEDF">
         <File Id="filA43D6849C111501753C2BC7E8E96E9A0" KeyPath="yes" Source="$(var.Display.TargetDir)\Queue.Model.Common.dll" />
       </Component>
-      <Component Id="cmp3111FB7FBF8E83855ABE23B857069FBD" Directory="INSTALLFOLDER" Guid="DB7EA6EB-DE1A-429D-8467-1F5D7084A3F2">
+      <Component Id="cmp3111FB7FBF8E83855ABE23B857069FBD" Directory="INSTALLFOLDER" Guid="4C42202C-7433-4ED4-9BC1-545213773044">
         <File Id="fil5083433A7E8CCB9C46CE1C735BE07909" KeyPath="yes" Source="$(var.Display.TargetDir)\Queue.Services.Common.dll" />
       </Component>
-      <Component Id="cmpC4E247D01A6FC492047FFCAFBA4A2F7E" Directory="INSTALLFOLDER" Guid="86FD3854-A4F5-4E0C-805C-68588E010A51">
+      <Component Id="cmpC4E247D01A6FC492047FFCAFBA4A2F7E" Directory="INSTALLFOLDER" Guid="F45B0551-D125-4A71-8353-6BCB68D3BB59">
         <File Id="filC31EFD008AE5A05C968392FCDA6865C4" KeyPath="yes" Source="$(var.Display.TargetDir)\Queue.Services.Contracts.dll" />
       </Component>
-      <Component Id="cmp43DB63E4B74D1504244115D8B4DEBC10" Directory="INSTALLFOLDER" Guid="107425D4-F060-4590-8084-A0BF6672FA66">
+      <Component Id="cmp43DB63E4B74D1504244115D8B4DEBC10" Directory="INSTALLFOLDER" Guid="FF0C6E93-6553-48E7-A062-0BFD52128C74">
         <File Id="fil0AE4E4ED0D0ADF966E5E800E7EDC6425" KeyPath="yes" Source="$(var.Display.TargetDir)\Queue.Services.DTO.dll" />
       </Component>
-      <Component Id="cmp2EA797F4FA085D3806DD1914FBA7581B" Directory="INSTALLFOLDER" Guid="BF4038C5-D47F-45A5-90DC-296B53AA161A">
+      <Component Id="cmp2EA797F4FA085D3806DD1914FBA7581B" Directory="INSTALLFOLDER" Guid="28BF1950-BC8C-4DEC-BC8D-D38ECE53F331">
         <File Id="fil8C8DDD7A3BC84C219EE029983D5F8477" KeyPath="yes" Source="$(var.Display.TargetDir)\Queue.UI.Common.dll" />
       </Component>
-      <Component Id="cmp9F70F55787AD067536EF924C574BFF4A" Directory="INSTALLFOLDER" Guid="2B7C4FF9-B8B5-4646-A3FD-322066D3CC69">
+      <Component Id="cmp9F70F55787AD067536EF924C574BFF4A" Directory="INSTALLFOLDER" Guid="A7C7A77C-7BC9-4093-B24D-418B1AA83B12">
         <File Id="fil428B93BA97E7AA5342C05D48E1E713FE" KeyPath="yes" Source="$(var.Display.TargetDir)\Queue.UI.WPF.dll" />
       </Component>
-      <Component Id="cmp017BFB3832A5B110A2B3A350E13F2A5C" Directory="INSTALLFOLDER" Guid="D25D3F8E-E586-4ECA-8BFE-CB48A0CB68F7">
+      <Component Id="cmp017BFB3832A5B110A2B3A350E13F2A5C" Directory="INSTALLFOLDER" Guid="53FD3647-06E1-4CC8-B49D-95B4991C1ABD">
         <File Id="fil17E34524E8398461D615894C92558FE9" KeyPath="yes" Source="$(var.Display.TargetDir)\System.Windows.Interactivity.dll" />
       </Component>
-      <Component Id="cmpA8E5C72AFC0EE8E7DFDC41FE8AD1AFF2" Directory="INSTALLFOLDER" Guid="37E9E10F-8CD2-4F89-8D61-5880E23CDAC4">
+      <Component Id="cmpA8E5C72AFC0EE8E7DFDC41FE8AD1AFF2" Directory="INSTALLFOLDER" Guid="9ED41055-6B58-460D-834B-E5FC9EDAA916">
         <File Id="fil53801C0A31EE4867C20E4743F125FD98" KeyPath="yes" Source="$(var.Display.TargetDir)\TaskDialog.dll" />
       </Component>
-      <Component Id="cmpB67D3F09DB9A0300504308B88E6BD691" Directory="INSTALLFOLDER" Guid="1B74E33D-C99F-42A5-8770-E285AC15C181">
+      <Component Id="cmpB67D3F09DB9A0300504308B88E6BD691" Directory="INSTALLFOLDER" Guid="B97E1F90-5D67-45DD-BB4C-9B66C08CD950">
         <File Id="fil52A6641DBE42458F8B887F3F1457CE5A" KeyPath="yes" Source="$(var.Display.TargetDir)\WPFLocalizeExtension.dll" />
       </Component>
-      <Component Id="cmpCE678184247DBF708F576175B706E814" Directory="INSTALLFOLDER" Guid="1C31B63D-76E7-49DA-B8AF-65B733B00634">
+      <Component Id="cmpCE678184247DBF708F576175B706E814" Directory="INSTALLFOLDER" Guid="B9940AB9-E098-48D8-AD45-6ED7EF6D0BBA">
         <File Id="fil49A2655A525DD008D8B608F3CDE8618D" KeyPath="yes" Source="$(var.Display.TargetDir)\XAMLMarkupExtensions.dll" />
       </Component>
-      <Component Id="cmp9E98642C203CBE503D536267AA9C6716" Directory="dir7CB7E03714D9D7C1BF30BD3C91566568" Guid="B928B9D9-6829-40FA-A181-CB5328316226">
+      <Component Id="cmp9E98642C203CBE503D536267AA9C6716" Directory="dir7CB7E03714D9D7C1BF30BD3C91566568" Guid="16E7924D-CC53-414B-9F90-6240E1419EEE">
         <File Id="fil5D9E49DD016924C30B0F5CBD21526774" KeyPath="yes" Source="$(var.Display.TargetDir)\en-US\Queue.Common.resources.dll" />
       </Component>
-      <Component Id="cmp867D73513E6EA993A36E1AAAD8D661B4" Directory="dir7CB7E03714D9D7C1BF30BD3C91566568" Guid="5DFB9E0C-5529-4B23-ACAE-3439BA7F3DCC">
+      <Component Id="cmp867D73513E6EA993A36E1AAAD8D661B4" Directory="dir7CB7E03714D9D7C1BF30BD3C91566568" Guid="43F12FF4-21F1-4EDE-B33F-B340C7B53157">
         <File Id="fil858E115BBB4B8C720AFDD3C9EBDBC636" KeyPath="yes" Source="$(var.Display.TargetDir)\en-US\Queue.Display.resources.dll" />
       </Component>
-      <Component Id="cmpD1D82FF0036914B68146F38F4D9EB65A" Directory="dir7CB7E03714D9D7C1BF30BD3C91566568" Guid="79A131E2-720E-443C-A722-B0E610E5C675">
+      <Component Id="cmpD1D82FF0036914B68146F38F4D9EB65A" Directory="dir7CB7E03714D9D7C1BF30BD3C91566568" Guid="B270F542-E30B-4567-B940-2546954ED0FF">
         <File Id="fil8A9F9219907F477A05D75AB31BAA9002" KeyPath="yes" Source="$(var.Display.TargetDir)\en-US\Queue.Model.Common.resources.dll" />
       </Component>
-      <Component Id="cmp99C63FE2142668449450562EF3A1B863" Directory="dir7CB7E03714D9D7C1BF30BD3C91566568" Guid="CA17FF7D-8353-4CFB-A2A3-186640DE5BDA">
+      <Component Id="cmp99C63FE2142668449450562EF3A1B863" Directory="dir7CB7E03714D9D7C1BF30BD3C91566568" Guid="5844C4DF-BC0F-42D6-BF15-0AB7161D12F9">
         <File Id="filF5E01A4DCF8F3D61F890A8DA877D5914" KeyPath="yes" Source="$(var.Display.TargetDir)\en-US\Queue.UI.WPF.resources.dll" />
       </Component>
     </ComponentGroup>
