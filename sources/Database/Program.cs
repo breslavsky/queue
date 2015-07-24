@@ -23,7 +23,7 @@ namespace Queue.Database
         private static void RegisterContainer()
         {
             IUnityContainer container = new UnityContainer();
-            container.RegisterInstance<IConfigurationManager>(new ConfigurationManager(AppName));
+            container.RegisterInstance<IConfigurationManager>(new ConfigurationManager(AppName, SpecialFolder.ApplicationData));
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
     }

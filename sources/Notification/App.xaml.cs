@@ -3,11 +3,14 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
 using System.Windows;
+using SpecialFolder = System.Environment.SpecialFolder;
 
 namespace Queue.Notification
 {
     public partial class App : Application
     {
+        private const string AppName = "Queue.Notification";
+
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public App()
@@ -40,7 +43,7 @@ namespace Queue.Notification
         private void RegisterTypes(IUnityContainer container)
         {
             container.RegisterInstance<IUnityContainer>(container);
-            container.RegisterInstance<IConfigurationManager>(new ConfigurationManager());
+            container.RegisterInstance<IConfigurationManager>(new ConfigurationManager(AppName, SpecialFolder.ApplicationData));
         }
     }
 }

@@ -7,6 +7,7 @@ using Queue.UI.WinForms;
 using System;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
+using SpecialFolder = System.Environment.SpecialFolder;
 
 namespace Queue.Simulator
 {
@@ -47,7 +48,7 @@ namespace Queue.Simulator
         private static void RegisterContainer()
         {
             IUnityContainer container = new UnityContainer();
-            container.RegisterInstance<IConfigurationManager>(new ConfigurationManager(AppName));
+            container.RegisterInstance<IConfigurationManager>(new ConfigurationManager(AppName, SpecialFolder.ApplicationData));
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 

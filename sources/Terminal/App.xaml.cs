@@ -2,11 +2,14 @@
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using System.Windows;
+using SpecialFolder = System.Environment.SpecialFolder;
 
 namespace Queue.Terminal
 {
     public partial class App : Application
     {
+        private const string AppName = "Queue.Terminal";
+
         public App()
             : base()
         {
@@ -24,7 +27,7 @@ namespace Queue.Terminal
         private void RegisterTypes(IUnityContainer container)
         {
             container.RegisterInstance(container);
-            container.RegisterInstance<IConfigurationManager>(new ConfigurationManager());
+            container.RegisterInstance<IConfigurationManager>(new ConfigurationManager(AppName, SpecialFolder.ApplicationData));
         }
     }
 }

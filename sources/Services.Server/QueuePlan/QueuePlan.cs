@@ -574,7 +574,7 @@ namespace Queue.Services.Server
                          .Add(new Disjunction()
                             .Add(new Conjunction()
                                 .Add(Restrictions.Eq("Type", OperatorInterruptionType.Weekday))
-                                .Add(Restrictions.Eq("Weekday", PlanDate.DayOfWeek)))
+                                .Add(Restrictions.Eq("DayOfWeek", PlanDate.DayOfWeek)))
                             .Add(new Conjunction()
                                 .Add(Restrictions.Eq("Type", OperatorInterruptionType.TargetDate))
                                 .Add(Restrictions.Eq("TargetDate", PlanDate))))
