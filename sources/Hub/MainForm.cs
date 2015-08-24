@@ -84,7 +84,7 @@ namespace Queue.Hub
 
                         if (!pingChannel.IsConnected)
                         {
-                            pingChannel.Service.Subscribe(ServerServiceEventType.ConfigUpdated, new ServerSubscribtionArgs()
+                            pingChannel.Service.Subscribe(ServerServiceEventType., new ServerSubscribtionArgs()
                             {
                                 ConfigTypes = new ConfigType[] { ConfigType.Media }
                             });

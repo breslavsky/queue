@@ -18,8 +18,6 @@ namespace Queue.Model
 
         private TimeSpan requestTime;
 
-        private IList<ClientRequestParameter> parameters = new List<ClientRequestParameter>();
-
         #endregion fields
 
         public ClientRequest()

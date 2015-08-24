@@ -21,15 +21,6 @@ namespace Queue.Model
             SortId = DateTime.Now.Ticks;
         }
 
-        #region fields
-
-        private IList<ServiceExceptionSchedule> exceptionSchedule = new List<ServiceExceptionSchedule>();
-        private IList<ServiceParameter> parameters = new List<ServiceParameter>();
-        private IList<ServiceWeekdaySchedule> regularSchedule = new List<ServiceWeekdaySchedule>();
-        private IList<ServiceStep> steps = new List<ServiceStep>();
-
-        #endregion fields
-
         #region properties
 
         [Property]
