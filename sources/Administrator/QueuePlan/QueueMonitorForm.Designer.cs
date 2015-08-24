@@ -157,7 +157,6 @@
             this.elementHost.Size = new System.Drawing.Size(830, 545);
             this.elementHost.TabIndex = 5;
             this.elementHost.Text = "elementHost1";
-            this.elementHost.ChildChanged += new System.EventHandler<System.Windows.Forms.Integration.ChildChangedEventArgs>(this.elementHost_ChildChanged);
             this.elementHost.Child = this.queueMonitorControl;
             // 
             // QueueMonitorForm

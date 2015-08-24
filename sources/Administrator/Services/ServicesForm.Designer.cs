@@ -152,6 +152,7 @@
             this.buttonUp.Name = "buttonUp";
             this.buttonUp.Size = new System.Drawing.Size(30, 25);
             this.buttonUp.TabIndex = 1;
+            this.buttonUp.Click += new System.EventHandler(this.buttonUp_Click);
             // 
             // ServicesForm
             // 

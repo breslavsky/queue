@@ -193,9 +193,5 @@ namespace Queue.Administrator
             taskPool.Dispose();
             channelManager.Dispose();
         }
-
-        private void elementHost_ChildChanged(object sender, System.Windows.Forms.Integration.ChildChangedEventArgs e)
-        {
-        }
     }
 }
