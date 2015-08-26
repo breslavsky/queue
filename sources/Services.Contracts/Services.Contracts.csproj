@@ -60,6 +60,7 @@
     <Compile Include="IServerHttpService.cs" />
     <Compile Include="IServerService.cs" />
     <Compile Include="ClientService.cs" />
+    <Compile Include="ServerServicesPaths.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

@@ -9,13 +9,14 @@ using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
+using System.ComponentModel;
 using System.Reflection;
 using System.ServiceModel;
 using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class LoginForm : RichForm
+    public partial class LoginForm : DependencyForm
     {
         #region dependency
 
@@ -30,29 +31,33 @@ namespace Queue.UI.WinForms
 
         #endregion dependency
 
+        #region properties
+
         public User CurrentUser { get; private set; }
+
+        #endregion properties
+
+        #region fields
 
         private IClientService<IServerTcpService> serverService;
         private ChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private readonly UserRole userRole;
 
+        #endregion fields
+
         public LoginForm(UserRole userRole)
             : base()
         {
-            //if (!DesignMode)
-            //{
-            //    //ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
-            //}
-            //InitializeComponent();
+            InitializeComponent();
 
-            //this.userRole = userRole;
+            this.userRole = userRole;
 
-            //taskPool = new TaskPool();
-            //taskPool.OnAddTask += taskPool_OnAddTask;
-            //taskPool.OnRemoveTask += taskPool_OnRemoveTask;
+            taskPool = new TaskPool();
+            taskPool.OnAddTask += taskPool_OnAddTask;
+            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
-            //languageControl.Initialize<Language>();
+            languageControl.Initialize<Language>();
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
@@ -89,12 +94,6 @@ namespace Queue.UI.WinForms
 
         private async void Login()
         {
-            var selectedUser = LoginSettings.User;
-            if (selectedUser == Guid.Empty)
-            {
-                return;
-            }
-
             if (serverService != null)
             {
                 serverService.Dispose();
@@ -115,7 +114,7 @@ namespace Queue.UI.WinForms
                 {
                     loginButton.Enabled = false;
 
-                    CurrentUser = await taskPool.AddTask(channel.Service.UserLogin(selectedUser, LoginSettings.Password));
+                    CurrentUser = await taskPool.AddTask(channel.Service.UserLogin(LoginSettings.User, LoginSettings.Password));
 
                     if (!LoginFormSettings.IsRemember)
                     {

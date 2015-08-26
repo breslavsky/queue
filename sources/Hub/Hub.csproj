@@ -65,9 +65,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Junte.UI.Common.1.0.0.9\lib\net45\Junte.UI.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.UI.WinForms, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Junte.UI.WinForms.1.2.2.0\lib\net45\Junte.UI.WinForms.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Junte.UI.WinForms, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.UI.WinForms.1.2.3.0\lib\net45\Junte.UI.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="Junte.WCF">
       <HintPath>..\packages\Junte.WCF.1.0.1.0\lib\net45\Junte.WCF.dll</HintPath>

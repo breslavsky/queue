@@ -2,23 +2,35 @@
 using Junte.Translation;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
+using NLog.Internal;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.Drawing;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
 {
-    public partial class ClientRequestsForm : RichForm
+    public partial class ClientRequestsForm : DependencyForm
     {
+        #region dependency
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        #endregion dependency
+
         private const byte PageSize = 50;
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
+        private readonly ChannelManager<IServerTcpService> channelManager;
 
         private ClientRequestFilter filter = new ClientRequestFilter()
         {
@@ -28,15 +40,12 @@ namespace Queue.Administrator
         private int startIndex = 0;
         private TaskPool taskPool;
 
-        public ClientRequestsForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        public ClientRequestsForm()
             : base()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
@@ -114,7 +123,7 @@ namespace Queue.Administrator
                 var row = clientRequestsGridView.Rows[e.RowIndex];
                 var clientRequest = row.Tag as ClientRequest;
 
-                using (var f = new EditClientRequestForm(channelBuilder, currentUser, clientRequest.Id))
+                using (var f = new EditClientRequestForm(ServerService.ChannelBuilder, CurrentUser, clientRequest.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {

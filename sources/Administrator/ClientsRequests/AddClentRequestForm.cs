@@ -9,6 +9,7 @@ using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.Common;
+using Queue.UI.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,7 +22,7 @@ using SelectionMode = System.Windows.Forms.SelectionMode;
 
 namespace Queue.Administrator
 {
-    public partial class AddClentRequestForm : RichForm
+    public partial class AddClentRequestForm : DependencyForm
     {
         #region dependency
 
@@ -88,7 +89,6 @@ namespace Queue.Administrator
         public AddClentRequestForm()
             : base()
         {
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
             InitializeComponent();
 
             Settings = Configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);

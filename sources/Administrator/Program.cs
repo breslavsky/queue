@@ -17,25 +17,10 @@ using SpecialFolder = System.Environment.SpecialFolder;
 
 namespace Queue.Administrator
 {
-    public class Options
-    {
-        [Option]
-        public bool AutoLogin { get; set; }
-
-        [Option]
-        public string Host { get; set; }
-
-        [Option]
-        public int Port { get; set; }
-
-        [Option]
-        public string SessionId { get; set; }
-    }
-
     internal static class Program
     {
         private const string AppName = "Queue.Administrator";
-        private static Options options;
+        private static AppOptions options;
         private static UnityContainer container;
         private static IConfigurationManager configuration;
         private static LoginSettings loginSettings;
@@ -59,20 +44,18 @@ namespace Queue.Administrator
 
             if (options.AutoLogin)
             {
-                string host = options.Host;
-                int port = options.Port;
-                Guid sessionId = Guid.Parse(options.SessionId);
+                serverService = new ClientService<IServerTcpService>(options.Endpoint, ServerServicesPaths.Server);
 
-                //var serviceManager = new ServerServiceManager(Schemes.NET_TCP, host, port);
-                //var channelManager = serviceManager.Server.CreateChannelManager();
-                //using (var channel = channelManager.CreateChannel())
-                //{
-                //    var currentUser = channel.Service.OpenUserSession(sessionId).Result;
-                //    container.RegisterInstance<IServerServiceManager>(serviceManager);
-                //    container.RegisterInstance<User>(currentUser);
+                var channelManager = serverService.CreateChannelManager();
+                using (var channel = channelManager.CreateChannel())
+                {
+                    Guid sessionId = Guid.Parse(options.SessionId);
+                    currentUser = channel.Service.OpenUserSession(sessionId).Result as QueueAdministrator;
+                    container.RegisterInstance<IClientService<IServerTcpService>>(serverService);
+                    container.RegisterInstance<QueueAdministrator>(currentUser);
 
-                //    Application.Run(new AdministratorForm());
-                //}
+                    Application.Run(new AdministratorForm());
+                }
             }
             else
             {
@@ -84,10 +67,10 @@ namespace Queue.Administrator
                         currentUser = loginForm.CurrentUser as QueueAdministrator;
                         container.RegisterInstance<QueueAdministrator>(currentUser);
 
-                        serverService = new ClientService<IServerTcpService>(loginSettings.Endpoint);
-                        container.RegisterInstance<IClientService<IServerTcpService>>(serverService);
-
                         loginForm.Dispose();
+
+                        serverService = new ClientService<IServerTcpService>(loginSettings.Endpoint, ServerServicesPaths.Server);
+                        container.RegisterInstance<IClientService<IServerTcpService>>(serverService);
 
                         var mainForm = new AdministratorForm();
                         Application.Run(mainForm);
@@ -102,11 +85,13 @@ namespace Queue.Administrator
                     break;
                 }
             }
+
+            serverService.Dispose();
         }
 
         private static void ParseOptions()
         {
-            options = new Options();
+            options = new AppOptions();
             CommandLine.Parser.Default.ParseArguments(Environment.GetCommandLineArgs(), options);
         }
 

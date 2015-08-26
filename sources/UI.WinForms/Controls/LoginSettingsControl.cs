@@ -8,6 +8,7 @@ using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
+using System.ComponentModel;
 using System.ServiceModel;
 using System.Windows.Forms;
 
@@ -37,12 +38,13 @@ namespace Queue.UI.WinForms
 
         public LoginSettingsControl()
         {
-            if (!DesignMode)
-            {
-                //ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
-                //settingsBindingSource.DataSource = Settings;
-            }
             InitializeComponent();
+
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
+                settingsBindingSource.DataSource = Settings;
+            }
         }
 
         private void connectButton_Click(object sender, EventArgs e)
@@ -97,7 +99,7 @@ namespace Queue.UI.WinForms
                         userControl.Select<User>(new User() { Id = Settings.User });
                     }
 
-                    //passwordTextBox.Focus();
+                    passwordTextBox.Focus();
 
                     connected = true;
 
@@ -129,7 +131,7 @@ namespace Queue.UI.WinForms
 
         private void passwordTextBox_Enter(object sender, EventArgs e)
         {
-            //passwordTextBox.SelectAll();
+            passwordTextBox.SelectAll();
         }
 
         private void passwordTextBox_KeyDown(object sender, KeyEventArgs e)

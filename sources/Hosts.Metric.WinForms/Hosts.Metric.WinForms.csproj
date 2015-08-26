@@ -61,9 +61,9 @@
       <HintPath>..\packages\Junte.Translation.1.0.1.0\lib\net45\Junte.Translation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Junte.UI.WinForms, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Junte.UI.WinForms.1.2.2.0\lib\net45\Junte.UI.WinForms.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Junte.UI.WinForms, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.UI.WinForms.1.2.3.0\lib\net45\Junte.UI.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="Junte.UI.WinForms.NHibernate, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

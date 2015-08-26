@@ -21,12 +21,12 @@ namespace Queue.Services.Contracts
     {
         public DuplexChannelBuilder<T> ChannelBuilder { get; set; }
 
-        private const string Url = "";
-
-        public ClientService(string endpoint)
+        public ClientService(string endpoint, string path = "")
         {
+            var builder = new UriBuilder(endpoint);
+            builder.Path = path;
             ChannelBuilder = new DuplexChannelBuilder<T>(new ServerCallback(),
-                Bindings.NetTcpBinding, new EndpointAddress(string.Format("{0}/{1}", endpoint, Url)));
+                Bindings.NetTcpBinding, new EndpointAddress(builder.Uri));
         }
 
         public ChannelManager<T> CreateChannelManager(Guid SessionId)

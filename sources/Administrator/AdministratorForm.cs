@@ -23,7 +23,7 @@ using Timer = System.Timers.Timer;
 
 namespace Queue.Administrator
 {
-    public partial class AdministratorForm : RichForm
+    public partial class AdministratorForm : DependencyForm
     {
         #region dependency
 
@@ -45,8 +45,6 @@ namespace Queue.Administrator
         public AdministratorForm()
             : base()
         {
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
-
             channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
             taskPool = new TaskPool();
 
@@ -121,7 +119,7 @@ namespace Queue.Administrator
 
         private void clientRequestsMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<ClientRequestsForm>(() => new ClientRequestsForm(ServerService.ChannelBuilder, CurrentUser));
+            ShowForm<ClientRequestsForm>(() => new ClientRequestsForm());
         }
 
         private void clientsMenuItem_Click(object sender, EventArgs eventArgs)
