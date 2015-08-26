@@ -26,7 +26,7 @@ namespace Queue.Administrator
     {
         private const int PingInterval = 10000;
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private readonly IServerServiceManager serviceManager;
+        private readonly IServerService serviceService;
         private readonly ChannelManager<IServerTcpService> channelManager;
         private readonly QueueAdministrator currentUser;
         private Channel<IServerTcpService> pingChannel;
@@ -37,10 +37,9 @@ namespace Queue.Administrator
             : base()
         {
             var container = ServiceLocator.Current.GetInstance<IUnityContainer>();
-            serviceManager = container.Resolve<IServerServiceManager>();
             currentUser = container.Resolve<User>() as QueueAdministrator;
 
-            channelManager = serviceManager.Server.CreateChannelManager();
+            channelManager = serviceService.CreateChannelManager(currentUser.SessionId);
             taskPool = new TaskPool();
 
             pingChannel = channelManager.CreateChannel();

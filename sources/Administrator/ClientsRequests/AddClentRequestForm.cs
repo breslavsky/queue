@@ -23,14 +23,26 @@ namespace Queue.Administrator
 {
     public partial class AddClentRequestForm : RichForm
     {
+        #region dependency
+
+        [Dependency]
+        public IConfigurationManager Configuration { get; set; }
+
+        [Dependency]
+        public AdministratorSettings Settings { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        #endregion dependency
+
         #region fields
 
-        private readonly IConfigurationManager configuration;
-        private readonly AdministratorSettings settings;
-        private readonly IServerServiceManager serviceManager;
-        private readonly ChannelManager<IServerTcpService> channelManager;
+        private ChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
-        private readonly QueueAdministrator currentUser;
         private Client currentClient;
         private string[] freeTimeReport;
         private Service selectedService;
@@ -76,19 +88,16 @@ namespace Queue.Administrator
         public AddClentRequestForm()
             : base()
         {
-            var container = ServiceLocator.Current.GetInstance<IUnityContainer>();
-            configuration = container.Resolve<IConfigurationManager>();
-            serviceManager = container.Resolve<IServerServiceManager>();
-            currentUser = container.Resolve<User>() as QueueAdministrator;
+            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
-            channelManager = serviceManager.Server.CreateChannelManager();
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+            Settings = Configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
+
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
             InitializeComponent();
-
-            settings = configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
 
             clientsListBox.DisplayMember = string.Empty;
         }
@@ -192,7 +201,7 @@ namespace Queue.Administrator
 
                             if (couponAutoPrintCheckBox.Checked)
                             {
-                                XPSUtils.PrintXaml(config.Template, data, settings.CouponPrinter);
+                                XPSUtils.PrintXaml(config.Template, data, Settings.CouponPrinter);
                             }
                             else
                             {

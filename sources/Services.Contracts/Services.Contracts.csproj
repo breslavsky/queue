@@ -59,7 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IServerHttpService.cs" />
     <Compile Include="IServerService.cs" />
-    <Compile Include="ServerServiceManager.cs" />
+    <Compile Include="ClientService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
