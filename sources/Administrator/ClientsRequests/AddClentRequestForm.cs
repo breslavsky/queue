@@ -41,7 +41,7 @@ namespace Queue.Administrator
 
         #region fields
 
-        private ChannelManager<IServerTcpService> channelManager;
+        private readonly ChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private Client currentClient;
         private string[] freeTimeReport;
@@ -89,15 +89,15 @@ namespace Queue.Administrator
             : base()
         {
             ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
+            InitializeComponent();
+
+            Settings = Configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
 
             channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
-            Settings = Configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-
-            InitializeComponent();
 
             clientsListBox.DisplayMember = string.Empty;
         }

@@ -34,7 +34,7 @@ namespace Queue.Operator
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly ServerCallback callbackObject;
-        private readonly IServerServiceManager serviceManager;
+        private readonly IClientService<IServerTcpService> serverService;
         private readonly ChannelManager<IServerTcpService> channelManager;
         private readonly QueueOperator currentUser;
 
@@ -51,10 +51,10 @@ namespace Queue.Operator
         {
             InitializeComponent();
 
-            serviceManager = ServiceLocator.Current.GetInstance<IServerServiceManager>();
+            serverService = ServiceLocator.Current.GetInstance<IClientService<IServerTcpService>>();
             currentUser = ServiceLocator.Current.GetInstance<User>() as QueueOperator;
 
-            channelManager = new ChannelManager<IServerTcpService>(serviceManager.Server.ChannelBuilder, currentUser.SessionId);
+            channelManager = new ChannelManager<IServerTcpService>(serverService.ChannelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
 
             step = 0;
@@ -434,7 +434,7 @@ namespace Queue.Operator
             {
                 ClientRequest clientRequest = currentClientRequestPlan.ClientRequest;
 
-                using (var f = new SelectServiceForm(serviceManager.Server.ChannelBuilder, currentUser))
+                using (var f = new SelectServiceForm(serverService.ChannelBuilder, currentUser))
                 {
                     if (f.ShowDialog() == DialogResult.OK)
                     {
@@ -849,7 +849,7 @@ namespace Queue.Operator
             {
                 var clientRequest = currentClientRequestPlan.ClientRequest;
 
-                using (var f = new EditClientRequestAdditionalServiceForm(serviceManager.Server.ChannelBuilder, currentUser, clientRequest.Id))
+                using (var f = new EditClientRequestAdditionalServiceForm(serverService.ChannelBuilder, currentUser, clientRequest.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {
@@ -872,7 +872,7 @@ namespace Queue.Operator
 
             ClientRequestAdditionalService additionalService = additionalServices[currentRow.Index];
 
-            using (var f = new EditClientRequestAdditionalServiceForm(serviceManager.Server.ChannelBuilder, currentUser, null, additionalService.Id))
+            using (var f = new EditClientRequestAdditionalServiceForm(serverService.ChannelBuilder, currentUser, null, additionalService.Id))
             {
                 f.Saved += (s, eventArgs) =>
                 {

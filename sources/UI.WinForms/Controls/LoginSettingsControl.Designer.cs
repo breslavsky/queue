@@ -30,26 +30,24 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginSettingsControl));
-            this.serverConnectionSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.loginGroupBox = new System.Windows.Forms.GroupBox();
             this.userControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.passwordLabel = new System.Windows.Forms.Label();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.loginLabel = new System.Windows.Forms.Label();
             this.connectionGroupBox = new System.Windows.Forms.GroupBox();
-            this.portUpDown = new System.Windows.Forms.NumericUpDown();
+            this.endpointTextBox = new System.Windows.Forms.TextBox();
             this.connectButton = new System.Windows.Forms.Button();
             this.serverLabel = new System.Windows.Forms.Label();
-            this.hostTextBox = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.serverConnectionSettingsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
             this.loginGroupBox.SuspendLayout();
             this.connectionGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).BeginInit();
             this.SuspendLayout();
             // 
-            // serverConnectionSettingsBindingSource
+            // settingsBindingSource
             // 
-            this.serverConnectionSettingsBindingSource.DataSource = typeof(Queue.Common.LoginSettings);
+            this.settingsBindingSource.DataSource = typeof(Queue.Common.LoginSettings);
             // 
             // loginGroupBox
             // 
@@ -85,7 +83,7 @@
             // 
             // passwordTextBox
             // 
-            this.passwordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.serverConnectionSettingsBindingSource, "Password", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.passwordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "Password", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.passwordTextBox.Location = new System.Drawing.Point(100, 60);
             this.passwordTextBox.Name = "passwordTextBox";
             this.passwordTextBox.Size = new System.Drawing.Size(220, 20);
@@ -105,10 +103,9 @@
             // 
             // connectionGroupBox
             // 
-            this.connectionGroupBox.Controls.Add(this.portUpDown);
+            this.connectionGroupBox.Controls.Add(this.endpointTextBox);
             this.connectionGroupBox.Controls.Add(this.connectButton);
             this.connectionGroupBox.Controls.Add(this.serverLabel);
-            this.connectionGroupBox.Controls.Add(this.hostTextBox);
             this.connectionGroupBox.Location = new System.Drawing.Point(0, 3);
             this.connectionGroupBox.Name = "connectionGroupBox";
             this.connectionGroupBox.Size = new System.Drawing.Size(330, 70);
@@ -116,18 +113,13 @@
             this.connectionGroupBox.TabStop = false;
             this.connectionGroupBox.Text = "Параметры соединения";
             // 
-            // portUpDown
+            // endpointTextBox
             // 
-            this.portUpDown.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.serverConnectionSettingsBindingSource, "Port", true));
-            this.portUpDown.Location = new System.Drawing.Point(225, 30);
-            this.portUpDown.Maximum = new decimal(new int[] {
-            64000,
-            0,
-            0,
-            0});
-            this.portUpDown.Name = "portUpDown";
-            this.portUpDown.Size = new System.Drawing.Size(60, 20);
-            this.portUpDown.TabIndex = 1;
+            this.endpointTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "Endpoint", true));
+            this.endpointTextBox.Location = new System.Drawing.Point(100, 30);
+            this.endpointTextBox.Name = "endpointTextBox";
+            this.endpointTextBox.Size = new System.Drawing.Size(185, 20);
+            this.endpointTextBox.TabIndex = 1;
             // 
             // connectButton
             // 
@@ -147,15 +139,6 @@
             this.serverLabel.TabIndex = 0;
             this.serverLabel.Text = "Сервер очереди";
             // 
-            // hostTextBox
-            // 
-            this.hostTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.serverConnectionSettingsBindingSource, "Host", true));
-            this.hostTextBox.Location = new System.Drawing.Point(100, 30);
-            this.hostTextBox.Name = "hostTextBox";
-            this.hostTextBox.Size = new System.Drawing.Size(120, 20);
-            this.hostTextBox.TabIndex = 0;
-            this.hostTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.endpointTextBox_KeyDown);
-            // 
             // LoginSettingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -164,12 +147,11 @@
             this.Controls.Add(this.connectionGroupBox);
             this.Name = "LoginSettingsControl";
             this.Size = new System.Drawing.Size(330, 170);
-            ((System.ComponentModel.ISupportInitialize)(this.serverConnectionSettingsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
             this.loginGroupBox.ResumeLayout(false);
             this.loginGroupBox.PerformLayout();
             this.connectionGroupBox.ResumeLayout(false);
             this.connectionGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -179,13 +161,12 @@
         private System.Windows.Forms.GroupBox connectionGroupBox;
         private System.Windows.Forms.Button connectButton;
         private System.Windows.Forms.Label serverLabel;
-        private System.Windows.Forms.TextBox hostTextBox;
         private System.Windows.Forms.GroupBox loginGroupBox;
         private System.Windows.Forms.Label passwordLabel;
         private System.Windows.Forms.TextBox passwordTextBox;
         private System.Windows.Forms.Label loginLabel;
-        private System.Windows.Forms.BindingSource serverConnectionSettingsBindingSource;
+        private System.Windows.Forms.BindingSource settingsBindingSource;
         private IdentifiedEntityControl userControl;
-        private System.Windows.Forms.NumericUpDown portUpDown;
+        private System.Windows.Forms.TextBox endpointTextBox;
     }
 }

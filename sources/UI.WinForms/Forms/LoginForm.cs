@@ -17,57 +17,62 @@ namespace Queue.UI.WinForms
 {
     public partial class LoginForm : RichForm
     {
-        private IUnityContainer container;
-        private IServerServiceManager serviceManager;
-        private ChannelManager<IServerTcpService> channelManager;
+        #region dependency
 
+        [Dependency]
+        public IConfigurationManager Configuration { get; set; }
+
+        [Dependency]
+        public LoginFormSettings LoginFormSettings { get; set; }
+
+        [Dependency]
+        public LoginSettings LoginSettings { get; set; }
+
+        #endregion dependency
+
+        public User CurrentUser { get; private set; }
+
+        private IClientService<IServerTcpService> serverService;
+        private ChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private readonly UserRole userRole;
-        private LoginFormSettings settings;
-        private IConfigurationManager configuration;
-
-        private User currentUser;
 
         public LoginForm(UserRole userRole)
             : base()
         {
-            InitializeComponent();
+            //if (!DesignMode)
+            //{
+            //    //ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
+            //}
+            //InitializeComponent();
 
-            container = ServiceLocator.Current.GetInstance<IUnityContainer>();
+            //this.userRole = userRole;
 
-            this.userRole = userRole;
+            //taskPool = new TaskPool();
+            //taskPool.OnAddTask += taskPool_OnAddTask;
+            //taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
-            taskPool = new TaskPool();
-            taskPool.OnAddTask += taskPool_OnAddTask;
-            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-
-            languageControl.Initialize<Language>();
+            //languageControl.Initialize<Language>();
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
             Text += string.Format(" ({0})", Assembly.GetEntryAssembly().GetName().Version);
 
-            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-            settings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
-            LoginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
+            loginFormSettingsBindingSource.DataSource = LoginFormSettings;
 
-            loginFormSettingsBindingSource.DataSource = settings;
-
-            languageControl.Select(settings.Language);
+            languageControl.Select(LoginFormSettings.Language);
             AdjustSelectedLanguage();
 
-            loginSettingsControl.Initialize(LoginSettings, userRole);
+            loginSettingsControl.UserRole = userRole;
             loginSettingsControl.OnConnected += OnConnected;
             loginSettingsControl.OnSubmit += OnSubmit;
 
-            if (settings.IsRemember)
+            if (LoginFormSettings.IsRemember)
             {
                 loginSettingsControl.Connect();
             }
         }
-
-        public LoginSettings LoginSettings { get; private set; }
 
         private void languageControl_SelectedChanged(object sender, EventArgs e)
         {
@@ -76,7 +81,7 @@ namespace Queue.UI.WinForms
 
         private void AdjustSelectedLanguage()
         {
-            Language language = languageControl.Selected<Language>();
+            var language = languageControl.Selected<Language>();
             language.SetCurrent();
 
             Translate();
@@ -84,14 +89,25 @@ namespace Queue.UI.WinForms
 
         private async void Login()
         {
-            User selectedUser = loginSettingsControl.SelectedUser;
-            if (selectedUser == null)
+            var selectedUser = LoginSettings.User;
+            if (selectedUser == Guid.Empty)
             {
                 return;
             }
 
-            serviceManager = container.Resolve<IServerServiceManager>();
-            channelManager = serviceManager.Server.CreateChannelManager();
+            if (serverService != null)
+            {
+                serverService.Dispose();
+            }
+
+            serverService = new ClientService<IServerTcpService>(LoginSettings.Endpoint);
+
+            if (channelManager != null)
+            {
+                channelManager.Dispose();
+            }
+
+            channelManager = serverService.CreateChannelManager();
 
             using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
@@ -99,17 +115,16 @@ namespace Queue.UI.WinForms
                 {
                     loginButton.Enabled = false;
 
-                    currentUser = await taskPool.AddTask(channel.Service.UserLogin(selectedUser.Id, LoginSettings.Password));
-                    container.RegisterInstance<User>(currentUser);
+                    CurrentUser = await taskPool.AddTask(channel.Service.UserLogin(selectedUser, LoginSettings.Password));
 
-                    if (!settings.IsRemember)
+                    if (!LoginFormSettings.IsRemember)
                     {
                         LoginSettings.Password = string.Empty;
                     }
 
-                    settings.Language = languageControl.Selected<Language>();
+                    LoginFormSettings.Language = languageControl.Selected<Language>();
 
-                    configuration.Save();
+                    Configuration.Save();
                     DialogResult = DialogResult.OK;
                 }
                 catch (OperationCanceledException) { }
@@ -139,7 +154,16 @@ namespace Queue.UI.WinForms
         private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Dispose();
-            loginSettingsControl.Close();
+
+            if (serverService != null)
+            {
+                serverService.Dispose();
+            }
+
+            if (channelManager != null)
+            {
+                channelManager.Dispose();
+            }
         }
 
         private void OnSubmit(object sender, EventArgs e)
@@ -149,7 +173,7 @@ namespace Queue.UI.WinForms
 
         private void OnConnected(object sender, EventArgs e)
         {
-            if (settings.IsRemember)
+            if (LoginFormSettings.IsRemember)
             {
                 Login();
             }

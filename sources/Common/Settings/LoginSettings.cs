@@ -10,8 +10,6 @@ namespace Queue.Common
         public LoginSettings()
         {
             Endpoint = "net.tcp://queue:4505";
-            Host = "queue";
-            Port = 4505;
         }
 
         [ConfigurationProperty("endpoint")]
@@ -19,20 +17,6 @@ namespace Queue.Common
         {
             get { return (string)this["endpoint"]; }
             set { this["endpoint"] = value; }
-        }
-
-        [ConfigurationProperty("host")]
-        public string Host
-        {
-            get { return (string)this["host"]; }
-            set { this["host"] = value; }
-        }
-
-        [ConfigurationProperty("port")]
-        public int Port
-        {
-            get { return (int)this["port"]; }
-            set { this["port"] = value; }
         }
 
         [ConfigurationProperty("password")]

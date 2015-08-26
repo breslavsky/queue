@@ -35,8 +35,13 @@ namespace Queue.Administrator
     internal static class Program
     {
         private const string AppName = "Queue.Administrator";
-        private static UnityContainer container;
         private static Options options;
+        private static UnityContainer container;
+        private static IConfigurationManager configuration;
+        private static LoginSettings loginSettings;
+        private static LoginFormSettings loginFormSettings;
+        private static IClientService<IServerTcpService> serverService;
+        private static QueueAdministrator currentUser;
 
         [STAThread]
         private static void Main()
@@ -44,8 +49,13 @@ namespace Queue.Administrator
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            ParseOptions();
+            container = new UnityContainer();
+            configuration = new ConfigurationManager(AppName, SpecialFolder.ApplicationData);
+            loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
+            loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
+
             RegisterContainer();
+            ParseOptions();
 
             if (options.AutoLogin)
             {
@@ -53,37 +63,43 @@ namespace Queue.Administrator
                 int port = options.Port;
                 Guid sessionId = Guid.Parse(options.SessionId);
 
-                var serviceManager = new ServerServiceManager(Schemes.NET_TCP, host, port);
-                var channelManager = serviceManager.Server.CreateChannelManager();
-                using (var channel = channelManager.CreateChannel())
-                {
-                    var currentUser = channel.Service.OpenUserSession(sessionId).Result;
-                    container.RegisterInstance<IServerServiceManager>(serviceManager);
-                    container.RegisterInstance<User>(currentUser);
+                //var serviceManager = new ServerServiceManager(Schemes.NET_TCP, host, port);
+                //var channelManager = serviceManager.Server.CreateChannelManager();
+                //using (var channel = channelManager.CreateChannel())
+                //{
+                //    var currentUser = channel.Service.OpenUserSession(sessionId).Result;
+                //    container.RegisterInstance<IServerServiceManager>(serviceManager);
+                //    container.RegisterInstance<User>(currentUser);
 
-                    Application.Run(new AdministratorForm());
-                }
+                //    Application.Run(new AdministratorForm());
+                //}
             }
             else
             {
                 while (true)
                 {
-                    using (var loginForm = new LoginForm(UserRole.Administrator))
+                    var loginForm = new LoginForm(UserRole.Administrator);
+                    if (loginForm.ShowDialog() == DialogResult.OK)
                     {
-                        if (loginForm.ShowDialog() == DialogResult.OK)
+                        currentUser = loginForm.CurrentUser as QueueAdministrator;
+                        container.RegisterInstance<QueueAdministrator>(currentUser);
+
+                        serverService = new ClientService<IServerTcpService>(loginSettings.Endpoint);
+                        container.RegisterInstance<IClientService<IServerTcpService>>(serverService);
+
+                        loginForm.Dispose();
+
+                        var mainForm = new AdministratorForm();
+                        Application.Run(mainForm);
+
+                        if (mainForm.IsLogout)
                         {
-                            var mainForm = new AdministratorForm();
-                            Application.Run(mainForm);
-
-                            if (mainForm.IsLogout)
-                            {
-                                ResetSettings();
-                                continue;
-                            }
+                            ResetSettings();
+                            continue;
                         }
-
-                        break;
                     }
+
+                    break;
                 }
             }
         }
@@ -96,8 +112,9 @@ namespace Queue.Administrator
 
         private static void RegisterContainer()
         {
-            container = new UnityContainer();
-            container.RegisterInstance<IConfigurationManager>(new ConfigurationManager(AppName, SpecialFolder.ApplicationData));
+            container.RegisterInstance<IConfigurationManager>(configuration);
+            container.RegisterInstance<LoginSettings>(loginSettings);
+            container.RegisterInstance<LoginFormSettings>(loginFormSettings);
 
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }

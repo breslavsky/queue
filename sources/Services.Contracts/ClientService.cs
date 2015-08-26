@@ -7,13 +7,21 @@ namespace Queue.Services.Contracts
 {
     public interface IClientService<T>
     {
+        //TODO: скрыть!
+        DuplexChannelBuilder<T> ChannelBuilder { get; set; }
+
         ChannelManager<T> CreateChannelManager(Guid SessionId);
+
+        ChannelManager<T> CreateChannelManager();
+
+        void Dispose();
     }
 
-    public class ClientService<T>
+    public class ClientService<T> : IClientService<T>
     {
-        public readonly DuplexChannelBuilder<T> ChannelBuilder;
-        private static const string Url = "";
+        public DuplexChannelBuilder<T> ChannelBuilder { get; set; }
+
+        private const string Url = "";
 
         public ClientService(string endpoint)
         {
@@ -24,6 +32,11 @@ namespace Queue.Services.Contracts
         public ChannelManager<T> CreateChannelManager(Guid SessionId)
         {
             return new ChannelManager<T>(ChannelBuilder, SessionId);
+        }
+
+        public ChannelManager<T> CreateChannelManager()
+        {
+            return new ChannelManager<T>(ChannelBuilder);
         }
 
         public void Dispose()

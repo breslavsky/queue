@@ -37,7 +37,7 @@ namespace Queue.Administrator
                 {
                     Endpoint = office.Endpoint
                 };
-                loginSettingsControl.Initialize(loginSettings, UserRole.Administrator);
+                loginSettingsControl.UserRole = UserRole.Administrator;
             }
         }
 

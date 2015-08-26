@@ -15,11 +15,16 @@ namespace Queue.UI.WinForms
 {
     public partial class LoginSettingsControl : RichUserControl
     {
-        private UserRole userRole;
-        private LoginSettings loginSettings;
+        #region dependency
 
-        private IUnityContainer container;
-        private IServerServiceManager serviceManager;
+        [Dependency]
+        public LoginSettings Settings { get; set; }
+
+        #endregion dependency
+
+        public UserRole UserRole { get; set; }
+
+        private ClientService<IServerTcpService> serverService;
         private ChannelManager<IServerTcpService> channelManager;
 
         public User SelectedUser
@@ -32,22 +37,12 @@ namespace Queue.UI.WinForms
 
         public LoginSettingsControl()
         {
-            InitializeComponent();
-
-            container = ServiceLocator.Current.GetInstance<IUnityContainer>();
-        }
-
-        public void Initialize(LoginSettings loginSettings, UserRole userRole)
-        {
-            this.userRole = userRole;
-            this.loginSettings = loginSettings;
-
-            serverConnectionSettingsBindingSource.DataSource = loginSettings;
-
-            if (loginSettings.User != Guid.Empty)
+            if (!DesignMode)
             {
-                ConnectToServer();
+                //ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
+                //settingsBindingSource.DataSource = Settings;
             }
+            InitializeComponent();
         }
 
         private void connectButton_Click(object sender, EventArgs e)
@@ -73,38 +68,36 @@ namespace Queue.UI.WinForms
 
             try
             {
-                if (string.IsNullOrWhiteSpace(loginSettings.Endpoint))
+                if (string.IsNullOrWhiteSpace(Settings.Endpoint))
                 {
                     throw new QueueException("Не указан адрес сервера");
                 }
 
-                if (serviceManager != null)
+                if (serverService != null)
                 {
-                    serviceManager.Dispose();
+                    serverService.Dispose();
                 }
 
-                serviceManager = new ServerServiceManager(Schemes.NET_TCP, hostTextBox.Text, (int)portUpDown.Value);
+                serverService = new ClientService<IServerTcpService>(Settings.Endpoint);
 
                 if (channelManager != null)
                 {
                     channelManager.Dispose();
                 }
 
-                channelManager = serviceManager.Server.CreateChannelManager();
+                channelManager = serverService.CreateChannelManager();
 
                 using (var channel = channelManager.CreateChannel())
                 {
                     connectButton.Enabled = false;
 
-                    userControl.Initialize(await channel.Service.GetUserLinks(userRole));
-                    if (loginSettings.User != Guid.Empty)
+                    userControl.Initialize(await channel.Service.GetUserLinks(UserRole));
+                    if (Settings.User != Guid.Empty)
                     {
-                        userControl.Select<User>(new User() { Id = loginSettings.User });
+                        userControl.Select<User>(new User() { Id = Settings.User });
                     }
 
-                    container.RegisterInstance<IServerServiceManager>(serviceManager);
-
-                    passwordTextBox.Focus();
+                    //passwordTextBox.Focus();
 
                     connected = true;
 
@@ -114,7 +107,7 @@ namespace Queue.UI.WinForms
             catch (OperationCanceledException) { }
             catch (CommunicationObjectAbortedException) { }
             catch (ObjectDisposedException) { }
-            //catch (InvalidOperationException) { }
+            catch (InvalidOperationException) { }
             catch (FaultException exception)
             {
                 UIHelper.Warning(exception.Reason.ToString());
@@ -136,7 +129,7 @@ namespace Queue.UI.WinForms
 
         private void passwordTextBox_Enter(object sender, EventArgs e)
         {
-            passwordTextBox.SelectAll();
+            //passwordTextBox.SelectAll();
         }
 
         private void passwordTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -157,15 +150,7 @@ namespace Queue.UI.WinForms
 
         private void selectUserControl_SelectedChanged(object sender, EventArgs e)
         {
-            loginSettings.User = userControl.Selected<User>().Id;
-        }
-
-        internal void Close()
-        {
-            if (channelManager != null)
-            {
-                channelManager.Dispose();
-            }
+            Settings.User = userControl.Selected<User>().Id;
         }
     }
 }
