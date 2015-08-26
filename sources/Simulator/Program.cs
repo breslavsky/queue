@@ -29,15 +29,15 @@ namespace Queue.Simulator
                 {
                     if (loginForm.ShowDialog() == DialogResult.OK)
                     {
-                        MainForm mainForm = new MainForm(loginForm.ChannelBuilder, (QueueAdministrator)loginForm.User);
-                        Application.Run(mainForm);
+                        //MainForm mainForm = new MainForm(loginForm.ChannelBuilder, (QueueAdministrator)loginForm.User);
+                        //Application.Run(mainForm);
 
-                        if (mainForm.IsLogout)
-                        {
-                            ResetSettings();
+                        //if (mainForm.IsLogout)
+                        //{
+                        //    ResetSettings();
 
-                            continue;
-                        }
+                        //    continue;
+                        //}
                     }
 
                     break;

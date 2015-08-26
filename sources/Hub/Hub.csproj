@@ -51,7 +51,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Junte.Configuration">
-      <HintPath>..\packages\Junte.Configuration.1.0.0.0\lib\net45\Junte.Configuration.dll</HintPath>
+      <HintPath>..\packages\Junte.Configuration.1.0.1.0\lib\net45\Junte.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Junte.Parallel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -51,7 +51,7 @@ namespace Hosts.Portal.WinForms
             RegisterContainer();
 
             loginSettings = configurationManager.GetSection<LoginSettings>(LoginSettings.SectionKey);
-            loginSettingsControl.Initialize(loginSettings, UserRole.Administrator);
+            loginSettingsControl.UserRole = UserRole.Administrator;
 
             Text += string.Format(" ({0})", typeof(PortalInstance).Assembly.GetName().Version);
 
