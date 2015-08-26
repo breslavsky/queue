@@ -67,7 +67,8 @@ namespace Queue.Server
                 logger.Info("HTTP service host uri = ", uri);
 
                 httpServiceHost = new ServiceHost(typeof(ServerService), uri);
-                httpServiceHost.AddServiceEndpoint(typeof(IServerHttpService), Bindings.BasicHttpBinding, string.Empty);
+                var serviceEndpoint = httpServiceHost.AddServiceEndpoint(typeof(IServerHttpService), Bindings.WebHttpBinding, string.Empty);
+                //serviceEndpoint.Behaviors.Add(new WebHttpBehavior());
                 httpServiceHost.Description.Behaviors.Add(new ServiceMetadataBehavior()
                 {
                     HttpGetEnabled = true

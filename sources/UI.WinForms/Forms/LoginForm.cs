@@ -3,6 +3,7 @@ using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
@@ -16,15 +17,23 @@ namespace Queue.UI.WinForms
 {
     public partial class LoginForm : RichForm
     {
+        private IUnityContainer container;
+        private IServerServiceManager serviceManager;
+        private ChannelManager<IServerTcpService> channelManager;
+
         private readonly TaskPool taskPool;
         private readonly UserRole userRole;
         private LoginFormSettings settings;
         private IConfigurationManager configuration;
 
+        private User currentUser;
+
         public LoginForm(UserRole userRole)
             : base()
         {
             InitializeComponent();
+
+            container = ServiceLocator.Current.GetInstance<IUnityContainer>();
 
             this.userRole = userRole;
 
@@ -58,14 +67,7 @@ namespace Queue.UI.WinForms
             }
         }
 
-        public DuplexChannelBuilder<IServerTcpService> ChannelBuilder
-        {
-            get { return loginSettingsControl.ChannelBuilder; }
-        }
-
         public LoginSettings LoginSettings { get; private set; }
-
-        public User User { get; private set; }
 
         private void languageControl_SelectedChanged(object sender, EventArgs e)
         {
@@ -88,13 +90,17 @@ namespace Queue.UI.WinForms
                 return;
             }
 
-            using (Channel<IServerTcpService> channel = loginSettingsControl.ChannelManager.CreateChannel())
+            serviceManager = container.Resolve<IServerServiceManager>();
+            channelManager = serviceManager.Server.CreateChannelManager();
+
+            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {
                 try
                 {
                     loginButton.Enabled = false;
 
-                    User = await taskPool.AddTask(channel.Service.UserLogin(selectedUser.Id, LoginSettings.Password));
+                    currentUser = await taskPool.AddTask(channel.Service.UserLogin(selectedUser.Id, LoginSettings.Password));
+                    container.RegisterInstance<User>(currentUser);
 
                     if (!settings.IsRemember)
                     {

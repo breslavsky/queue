@@ -125,7 +125,7 @@ namespace Queue.Administrator
                 return;
             }
 
-            using (Channel<IServerTcpService> channel = loginSettingsControl.ChannelManager.CreateChannel())
+            /*using (Channel<IServerTcpService> channel = loginSettingsControl.ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -151,7 +151,7 @@ namespace Queue.Administrator
                 {
                     loginButton.Enabled = true;
                 }
-            }
+            }*/
         }
     }
 }

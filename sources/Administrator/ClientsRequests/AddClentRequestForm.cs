@@ -3,6 +3,7 @@ using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
@@ -15,24 +16,24 @@ using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 using SelectionMode = System.Windows.Forms.SelectionMode;
 
 namespace Queue.Administrator
 {
     public partial class AddClentRequestForm : RichForm
     {
-        private IConfigurationManager configuration;
-        private AdministratorSettings settings;
-
         #region fields
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
+        private readonly IConfigurationManager configuration;
+        private readonly AdministratorSettings settings;
+        private readonly IServerServiceManager serviceManager;
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
+        private readonly QueueAdministrator currentUser;
         private Client currentClient;
-        private User currentUser;
         private string[] freeTimeReport;
         private Service selectedService;
-        private TaskPool taskPool;
 
         #endregion fields
 
@@ -72,18 +73,22 @@ namespace Queue.Administrator
 
         #endregion properties
 
-        public AddClentRequestForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        public AddClentRequestForm()
             : base()
         {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            var container = ServiceLocator.Current.GetInstance<IUnityContainer>();
+            configuration = container.Resolve<IConfigurationManager>();
+            serviceManager = container.Resolve<IServerServiceManager>();
+            currentUser = container.Resolve<User>() as QueueAdministrator;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = serviceManager.Server.CreateChannelManager();
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
             InitializeComponent();
+
+            settings = configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
 
             clientsListBox.DisplayMember = string.Empty;
         }
@@ -239,11 +244,7 @@ namespace Queue.Administrator
 
         private void AddClientRequestForm_Load(object sender, EventArgs e)
         {
-            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-            settings = configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
-
             earlyDatePicker.MinDate = earlyDatePicker.Value = ServerDateTime.Today;
-
             LoadServiceGroup(servicesTreeView.Nodes);
         }
 

@@ -1,6 +1,8 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Administrator.Reports;
 using Queue.Common;
@@ -24,20 +26,21 @@ namespace Queue.Administrator
     {
         private const int PingInterval = 10000;
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private QueueAdministrator currentUser;
+        private readonly IServerServiceManager serviceManager;
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly QueueAdministrator currentUser;
         private Channel<IServerTcpService> pingChannel;
-        private Timer pingTimer;
-        private TaskPool taskPool;
+        private readonly Timer pingTimer;
+        private readonly TaskPool taskPool;
 
-        public AdministratorForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        public AdministratorForm()
             : base()
         {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser as QueueAdministrator;
+            var container = ServiceLocator.Current.GetInstance<IUnityContainer>();
+            serviceManager = container.Resolve<IServerServiceManager>();
+            currentUser = container.Resolve<User>() as QueueAdministrator;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = serviceManager.Server.CreateChannelManager();
             taskPool = new TaskPool();
 
             pingChannel = channelManager.CreateChannel();
@@ -89,7 +92,7 @@ namespace Queue.Administrator
 
         private void addClientRequestMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<AddClentRequestForm>(() => new AddClentRequestForm(channelBuilder, currentUser));
+            ShowForm<AddClentRequestForm>(() => new AddClentRequestForm());
         }
 
         private void CheckPermissions()
@@ -111,27 +114,27 @@ namespace Queue.Administrator
 
         private void clientRequestsMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<ClientRequestsForm>(() => new ClientRequestsForm(channelBuilder, currentUser));
+            ShowForm<ClientRequestsForm>(() => new ClientRequestsForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void clientsMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<ClientsForm>(() => new ClientsForm(channelBuilder, currentUser));
+            ShowForm<ClientsForm>(() => new ClientsForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void configMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<ConfigForm>(() => new ConfigForm(channelBuilder, currentUser));
+            ShowForm<ConfigForm>(() => new ConfigForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void defaultScheduleMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<DefaultScheduleForm>(() => new DefaultScheduleForm(channelBuilder, currentUser));
+            ShowForm<DefaultScheduleForm>(() => new DefaultScheduleForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void exceptionScheduleReportMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<ExceptionScheduleReportForm>(() => new ExceptionScheduleReportForm(channelBuilder, currentUser));
+            ShowForm<ExceptionScheduleReportForm>(() => new ExceptionScheduleReportForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void logoutMenuItem_Click(object sender, EventArgs e)
@@ -171,12 +174,12 @@ namespace Queue.Administrator
 
         private void officesMenuItem_Click(object sender, EventArgs eventArgsventArgs)
         {
-            ShowForm<OfficesForm>(() => new OfficesForm(channelBuilder, currentUser));
+            ShowForm<OfficesForm>(() => new OfficesForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void operatorsRatingToolStripMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<OperatorRatingReportForm>(() => new OperatorRatingReportForm(channelBuilder, currentUser));
+            ShowForm<OperatorRatingReportForm>(() => new OperatorRatingReportForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void pingTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -228,27 +231,27 @@ namespace Queue.Administrator
 
         private void queueMonitorMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<QueueMonitorForm>(() => new QueueMonitorForm(channelBuilder, currentUser));
+            ShowForm<QueueMonitorForm>(() => new QueueMonitorForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void serviceRatingReportMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<ServiceRatingReportForm>(() => new ServiceRatingReportForm(channelBuilder, currentUser));
+            ShowForm<ServiceRatingReportForm>(() => new ServiceRatingReportForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void additionalServiceReportMenuItem_Click(object sender, EventArgs e)
         {
-            ShowForm<AdditionalServiceRatingReportForm>(() => new AdditionalServiceRatingReportForm(channelBuilder, currentUser));
+            ShowForm<AdditionalServiceRatingReportForm>(() => new AdditionalServiceRatingReportForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void servicesMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<ServicesForm>(() => new ServicesForm(channelBuilder, currentUser));
+            ShowForm<ServicesForm>(() => new ServicesForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void additionalServicesMenuItem_Click(object sender, EventArgs e)
         {
-            ShowForm<AdditionalServicesForm>(() => new AdditionalServicesForm(channelBuilder, currentUser));
+            ShowForm<AdditionalServicesForm>(() => new AdditionalServicesForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void ShowForm<T>(Func<Form> create)
@@ -273,27 +276,27 @@ namespace Queue.Administrator
 
         private void usersMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<UsersForm>(() => new UsersForm(channelBuilder, currentUser));
+            ShowForm<UsersForm>(() => new UsersForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void workplacesMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<WorkplacesForm>(() => new WorkplacesForm(channelBuilder, currentUser));
+            ShowForm<WorkplacesForm>(() => new WorkplacesForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void сurrentScheduleMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<CurrentScheduleForm>(() => new CurrentScheduleForm(channelBuilder, currentUser));
+            ShowForm<CurrentScheduleForm>(() => new CurrentScheduleForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void operatorInterruptionsFormMenuItem_Click(object sender, EventArgs e)
         {
-            ShowForm<OperatorInterruptionsForm>(() => new OperatorInterruptionsForm(channelBuilder, currentUser));
+            ShowForm<OperatorInterruptionsForm>(() => new OperatorInterruptionsForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
 
         private void currentUserMenuItem_Click(object sender, EventArgs e)
         {
-            ShowForm<CurrentUserForm>(() => new CurrentUserForm(channelBuilder, currentUser));
+            ShowForm<CurrentUserForm>(() => new CurrentUserForm(serviceManager.Server.ChannelBuilder, currentUser));
         }
     }
 }

@@ -2,6 +2,7 @@
 using Junte.Translation;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.ServiceLocation;
 using NLog;
 using Queue.Common;
 using Queue.Model.Common;
@@ -33,9 +34,10 @@ namespace Queue.Operator
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly ServerCallback callbackObject;
-        private readonly DuplexChannelBuilder<IServerTcpService> channelBuilder;
+        private readonly IServerServiceManager serviceManager;
         private readonly ChannelManager<IServerTcpService> channelManager;
         private readonly QueueOperator currentUser;
+
         private readonly Timer pingTimer;
         private readonly TaskPool taskPool;
         private ClientRequestPlan currentClientRequestPlan;
@@ -44,15 +46,15 @@ namespace Queue.Operator
         private BindingList<ClientRequestAdditionalService> additionalServices;
         private BindingList<ClientRequestParameter> parameters;
 
-        public OperatorForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        public OperatorForm()
             : base()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser as QueueOperator;
+            serviceManager = ServiceLocator.Current.GetInstance<IServerServiceManager>();
+            currentUser = ServiceLocator.Current.GetInstance<User>() as QueueOperator;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = new ChannelManager<IServerTcpService>(serviceManager.Server.ChannelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
 
             step = 0;
@@ -432,7 +434,7 @@ namespace Queue.Operator
             {
                 ClientRequest clientRequest = currentClientRequestPlan.ClientRequest;
 
-                using (var f = new SelectServiceForm(channelBuilder, currentUser))
+                using (var f = new SelectServiceForm(serviceManager.Server.ChannelBuilder, currentUser))
                 {
                     if (f.ShowDialog() == DialogResult.OK)
                     {
@@ -847,7 +849,7 @@ namespace Queue.Operator
             {
                 var clientRequest = currentClientRequestPlan.ClientRequest;
 
-                using (var f = new EditClientRequestAdditionalServiceForm(channelBuilder, currentUser, clientRequest.Id))
+                using (var f = new EditClientRequestAdditionalServiceForm(serviceManager.Server.ChannelBuilder, currentUser, clientRequest.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {
@@ -870,7 +872,7 @@ namespace Queue.Operator
 
             ClientRequestAdditionalService additionalService = additionalServices[currentRow.Index];
 
-            using (var f = new EditClientRequestAdditionalServiceForm(channelBuilder, currentUser, null, additionalService.Id))
+            using (var f = new EditClientRequestAdditionalServiceForm(serviceManager.Server.ChannelBuilder, currentUser, null, additionalService.Id))
             {
                 f.Saved += (s, eventArgs) =>
                 {

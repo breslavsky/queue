@@ -77,12 +77,12 @@ namespace Queue.Administrator
                 {
                     var queueOperator = await channel.Service.GetUser(eventArgs.Operator.Id) as QueueOperator;
 
-                    var form = new OperatorForm(channelBuilder, queueOperator);
+                    /*var form = new OperatorForm(channelBuilder, queueOperator);
                     FormClosing += (s, e) =>
                     {
                         form.Close();
                     };
-                    form.Show();
+                    form.Show();*/
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

@@ -1,5 +1,7 @@
 ﻿using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -14,12 +16,11 @@ namespace Queue.UI.WinForms
     public partial class LoginSettingsControl : RichUserControl
     {
         private UserRole userRole;
-
         private LoginSettings loginSettings;
 
-        public ChannelManager<IServerTcpService> ChannelManager { get; private set; }
-
-        public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
+        private IUnityContainer container;
+        private IServerServiceManager serviceManager;
+        private ChannelManager<IServerTcpService> channelManager;
 
         public User SelectedUser
         {
@@ -27,12 +28,13 @@ namespace Queue.UI.WinForms
         }
 
         public EventHandler OnConnected = delegate { };
-
         public EventHandler OnSubmit = delegate { };
 
         public LoginSettingsControl()
         {
             InitializeComponent();
+
+            container = ServiceLocator.Current.GetInstance<IUnityContainer>();
         }
 
         public void Initialize(LoginSettings loginSettings, UserRole userRole)
@@ -76,22 +78,21 @@ namespace Queue.UI.WinForms
                     throw new QueueException("Не указан адрес сервера");
                 }
 
-                if (ChannelBuilder != null)
+                if (serviceManager != null)
                 {
-                    ChannelBuilder.Dispose();
+                    serviceManager.Dispose();
                 }
 
-                ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(),
-                                                                            Bindings.NetTcpBinding,
-                                                                            new EndpointAddress(loginSettings.Endpoint));
-                if (ChannelManager != null)
+                serviceManager = new ServerServiceManager(Schemes.NET_TCP, hostTextBox.Text, (int)portUpDown.Value);
+
+                if (channelManager != null)
                 {
-                    ChannelManager.Dispose();
+                    channelManager.Dispose();
                 }
 
-                ChannelManager = new ChannelManager<IServerTcpService>(ChannelBuilder);
+                channelManager = serviceManager.Server.CreateChannelManager();
 
-                using (Channel<IServerTcpService> channel = ChannelManager.CreateChannel())
+                using (var channel = channelManager.CreateChannel())
                 {
                     connectButton.Enabled = false;
 
@@ -100,6 +101,8 @@ namespace Queue.UI.WinForms
                     {
                         userControl.Select<User>(new User() { Id = loginSettings.User });
                     }
+
+                    container.RegisterInstance<IServerServiceManager>(serviceManager);
 
                     passwordTextBox.Focus();
 
@@ -111,7 +114,7 @@ namespace Queue.UI.WinForms
             catch (OperationCanceledException) { }
             catch (CommunicationObjectAbortedException) { }
             catch (ObjectDisposedException) { }
-            catch (InvalidOperationException) { }
+            //catch (InvalidOperationException) { }
             catch (FaultException exception)
             {
                 UIHelper.Warning(exception.Reason.ToString());
@@ -159,9 +162,9 @@ namespace Queue.UI.WinForms
 
         internal void Close()
         {
-            if (ChannelManager != null)
+            if (channelManager != null)
             {
-                ChannelManager.Dispose();
+                channelManager.Dispose();
             }
         }
     }

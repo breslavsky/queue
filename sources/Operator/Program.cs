@@ -30,7 +30,7 @@ namespace Queue.Operator
                 {
                     if (loginForm.ShowDialog() == DialogResult.OK)
                     {
-                        OperatorForm mainForm = new OperatorForm(loginForm.ChannelBuilder, (QueueOperator)loginForm.User);
+                        OperatorForm mainForm = new OperatorForm();
                         Application.Run(mainForm);
 
                         if (mainForm.IsLogout)
@@ -49,6 +49,7 @@ namespace Queue.Operator
         {
             IUnityContainer container = new UnityContainer();
             container.RegisterInstance<IConfigurationManager>(new ConfigurationManager(AppName, SpecialFolder.ApplicationData));
+            container.RegisterInstance<IUnityContainer>(container);
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 

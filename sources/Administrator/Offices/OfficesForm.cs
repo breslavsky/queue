@@ -144,12 +144,12 @@ namespace Queue.Administrator
                                 try
                                 {
                                     var user = await taskPool.AddTask(officeChannel.Service.OpenUserSession(office.SessionId));
-                                    var form = new AdministratorForm(officeChannelManager, user);
+                                    /*var form = new AdministratorForm(officeChannelManager, user);
                                     FormClosing += (s, e) =>
                                     {
                                         form.Close();
                                     };
-                                    form.Show();
+                                    form.Show();*/
                                 }
                                 catch (OperationCanceledException) { }
                                 catch (CommunicationObjectAbortedException) { }
