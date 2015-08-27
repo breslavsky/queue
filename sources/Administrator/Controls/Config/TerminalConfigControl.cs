@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class TerminalConfigControl : RichUserControl
+    public partial class TerminalConfigControl : DependencyUserControl
     {
         private const string HighligtingStyle = "XML";
 
@@ -132,6 +132,10 @@ namespace Queue.Administrator
                     saveButton.Enabled = true;
                 }
             }
+        }
+
+        private void TerminalConfigControl_Load(object sender, EventArgs e)
+        {
         }
     }
 }

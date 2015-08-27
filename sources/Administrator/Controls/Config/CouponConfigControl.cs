@@ -1,6 +1,7 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Resources;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -10,21 +11,27 @@ using System;
 using System.Diagnostics;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class CouponConfigControl : RichUserControl
+    public partial class CouponConfigControl : DependencyUserControl
     {
-        private const string HighligtingStyle = "XML";
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
 
         #region fields
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
-        private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
-
+        private const string HighligtingStyle = "XML";
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
         private CouponConfig config;
 
         #endregion fields
@@ -33,7 +40,11 @@ namespace Queue.Administrator
 
         public CouponConfig Config
         {
-            set
+            get
+            {
+                return config;
+            }
+            private set
             {
                 config = value;
                 if (config != null)
@@ -49,27 +60,35 @@ namespace Queue.Administrator
         public CouponConfigControl()
         {
             InitializeComponent();
-        }
 
-        public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
-        {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
         }
 
-        private void taskPool_OnAddTask(object sender, EventArgs e)
+        private async void CouponConfigControl_Load(object sender, EventArgs e)
         {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    Config = await taskPool.AddTask(channel.Service.GetCouponConfig());
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+            }
         }
 
         private void couponTemplateEditor_Leave(object sender, EventArgs e)
@@ -87,11 +106,6 @@ namespace Queue.Administrator
             {
                 UIHelper.Warning(exception.Message);
             }
-        }
-
-        private void templateLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            config.Template = couponTemplateEditor.Text = Templates.ClientRequestCoupon;
         }
 
         private async void saveButton_Click(object sender, EventArgs e)
@@ -121,6 +135,21 @@ namespace Queue.Administrator
                     saveButton.Enabled = true;
                 }
             }
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
+        private void templateLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            config.Template = couponTemplateEditor.Text = Templates.ClientRequestCoupon;
         }
     }
 }

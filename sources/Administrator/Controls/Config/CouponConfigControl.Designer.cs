@@ -116,6 +116,7 @@
             this.Controls.Add(this.tableLayoutPanel);
             this.Name = "CouponConfigControl";
             this.Size = new System.Drawing.Size(618, 435);
+            this.Load += new System.EventHandler(this.CouponConfigControl_Load);
             this.tableLayoutPanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

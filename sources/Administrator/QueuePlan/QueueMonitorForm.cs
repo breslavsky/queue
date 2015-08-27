@@ -3,7 +3,6 @@ using Junte.UI.WinForms;
 using Junte.WCF;
 using NLog;
 using Queue.Common;
-using Queue.Operator;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
@@ -101,7 +100,7 @@ namespace Queue.Administrator
 
         private void queueMonitorControl_ClientRequestEdit(object sender, QueueMonitorEventArgs e)
         {
-            using (var f = new EditClientRequestForm(channelBuilder, currentUser, e.ClientRequest.Id))
+            using (var f = new EditClientRequestForm(e.ClientRequest.Id))
             {
                 f.ShowDialog();
             }

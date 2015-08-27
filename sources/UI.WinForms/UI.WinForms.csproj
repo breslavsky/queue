@@ -127,6 +127,9 @@
     </Compile>
     <Compile Include="DataGridViewTranslatableCell.cs" />
     <Compile Include="DataGridViewTranslatableColumn.cs" />
+    <Compile Include="DependencyUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="DependencyForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -171,11 +171,11 @@
             this.saveButton.Text = "Записать";
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
-            // debugCheckBox
+            // isDebugCheckBox
             // 
             this.isDebugCheckBox.AutoSize = true;
             this.isDebugCheckBox.Location = new System.Drawing.Point(415, 100);
-            this.isDebugCheckBox.Name = "debugCheckBox";
+            this.isDebugCheckBox.Name = "isDebugCheckBox";
             this.isDebugCheckBox.Size = new System.Drawing.Size(105, 17);
             this.isDebugCheckBox.TabIndex = 13;
             this.isDebugCheckBox.Text = "Режим отладки";
@@ -196,6 +196,7 @@
             this.Controls.Add(this.saveButton);
             this.Name = "DefaultConfigControl";
             this.Size = new System.Drawing.Size(610, 130);
+            this.Load += new System.EventHandler(this.DefaultConfigControl_Load);
             this.maxRenderingGroupBox.ResumeLayout(false);
             this.maxRenderingGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.maxClientRequestsUpDown)).EndInit();

@@ -186,6 +186,7 @@
             this.Controls.Add(this.addMediaConfigFileButton);
             this.Name = "MediaConfigControl";
             this.Size = new System.Drawing.Size(520, 380);
+            this.Load += new System.EventHandler(this.MediaConfigControl_Load);
             this.tickerGroupBox.ResumeLayout(false);
             this.tickerGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tickerSpeedTrackBar)).EndInit();

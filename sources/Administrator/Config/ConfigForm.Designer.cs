@@ -75,7 +75,6 @@
             this.сonfigTabControl.SelectedIndex = 0;
             this.сonfigTabControl.Size = new System.Drawing.Size(664, 442);
             this.сonfigTabControl.TabIndex = 0;
-            this.сonfigTabControl.SelectedIndexChanged += new System.EventHandler(this.сonfigTabControl_SelectedIndexChanged);
             // 
             // defaultConfigTabPage
             // 
@@ -202,7 +201,6 @@
             this.Text = "Настройки";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConfigForm_FormClosing);
-            this.Load += new System.EventHandler(this.ConfigForm_Load);
             this.couponConfigTabPage.ResumeLayout(false);
             this.сonfigTabControl.ResumeLayout(false);
             this.defaultConfigTabPage.ResumeLayout(false);

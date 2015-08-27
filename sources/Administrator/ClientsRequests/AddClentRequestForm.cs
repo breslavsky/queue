@@ -1,8 +1,6 @@
-﻿using Junte.Configuration;
-using Junte.Parallel;
+﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
@@ -25,9 +23,6 @@ namespace Queue.Administrator
     public partial class AddClentRequestForm : DependencyForm
     {
         #region dependency
-
-        [Dependency]
-        public IConfigurationManager Configuration { get; set; }
 
         [Dependency]
         public AdministratorSettings Settings { get; set; }
@@ -90,8 +85,6 @@ namespace Queue.Administrator
             : base()
         {
             InitializeComponent();
-
-            Settings = Configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
 
             channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 

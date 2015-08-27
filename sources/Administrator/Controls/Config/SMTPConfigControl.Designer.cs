@@ -171,6 +171,7 @@
             this.Controls.Add(this.saveButton);
             this.Name = "SMTPConfigControl";
             this.Size = new System.Drawing.Size(230, 180);
+            this.Load += new System.EventHandler(this.SMTPConfigControl_Load);
             ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -1,9 +1,8 @@
-﻿using Junte.Configuration;
-using Junte.Parallel;
+﻿using Junte.Parallel;
 using Junte.Translation;
 using Junte.UI.WinForms;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -16,34 +15,50 @@ using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
 {
-    public partial class EditClientRequestForm : RichForm
+    public partial class EditClientRequestForm : DependencyForm
     {
-        public event EventHandler<EventArgs> Saved;
+        #region dependency
 
-        private IConfigurationManager configuration;
-        private AdministratorSettings settings;
+        [Dependency]
+        public AdministratorSettings Settings { get; set; }
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        #endregion dependency
+
+        #region events
+
+        public event EventHandler<EventArgs> Saved = delegate { };
+
+        #endregion events
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly Guid clientRequestId;
+        private readonly TaskPool taskPool;
         private ClientRequest clientRequest;
-        private Guid clientRequestId;
-        private User currentUser;
-        private TaskPool taskPool;
 
-        public EditClientRequestForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid clientRequestId)
+        #endregion fields
+
+        public EditClientRequestForm(Guid clientRequestId)
             : base()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
             this.clientRequestId = clientRequestId;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
@@ -138,9 +153,6 @@ namespace Queue.Administrator
 
         private async void EditClientRequestForm_Load(object sender, EventArgs e)
         {
-            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-            settings = configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
-
             Enabled = false;
 
             using (var channel = channelManager.CreateChannel())
@@ -214,7 +226,7 @@ namespace Queue.Administrator
 
                     ClientRequestCoupon data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
                     CouponConfig config = await taskPool.AddTask(channel.Service.GetCouponConfig());
-                    XPSUtils.PrintXaml(config.Template, data, settings.CouponPrinter);
+                    XPSUtils.PrintXaml(config.Template, data, Settings.CouponPrinter);
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -306,7 +318,7 @@ namespace Queue.Administrator
 
         private void clientEditLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            using (var f = new EditClientForm(channelBuilder, currentUser, clientRequest.Client.Id))
+            using (var f = new EditClientForm(clientRequest.Client.Id))
             {
                 if (f.ShowDialog() == DialogResult.OK)
                 {
@@ -338,7 +350,7 @@ namespace Queue.Administrator
 
         private void serviceChangeLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            using (var f = new SelectServiceForm(channelBuilder, currentUser))
+            using (var f = new SelectServiceForm(ServerService.ChannelBuilder, CurrentUser))
             {
                 if (f.ShowDialog() == DialogResult.OK)
                 {

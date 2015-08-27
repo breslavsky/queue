@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class SMTPConfigControl : RichUserControl
+    public partial class SMTPConfigControl : DependencyUserControl
     {
         #region fields
 
@@ -128,6 +128,10 @@ namespace Queue.Administrator
                     saveButton.Enabled = true;
                 }
             }
+        }
+
+        private void SMTPConfigControl_Load(object sender, EventArgs e)
+        {
         }
     }
 }

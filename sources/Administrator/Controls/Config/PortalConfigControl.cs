@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Queue.Administrator
 {
-    public partial class PortalConfigControl : RichUserControl
+    public partial class PortalConfigControl : DependencyUserControl
     {
         #region fields
 
@@ -134,6 +134,10 @@ namespace Queue.Administrator
                     saveButton.Enabled = true;
                 }
             }
+        }
+
+        private void PortalConfigControl_Load(object sender, EventArgs e)
+        {
         }
     }
 }

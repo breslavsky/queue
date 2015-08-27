@@ -193,6 +193,7 @@
             this.Controls.Add(this.currentDayRecordingCheckBox);
             this.Name = "TerminalConfigControl";
             this.Size = new System.Drawing.Size(654, 425);
+            this.Load += new System.EventHandler(this.TerminalConfigControl_Load);
             this.terminallayoutGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.columnsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rowsUpDown)).EndInit();

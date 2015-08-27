@@ -1,50 +1,57 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class EditClientForm : RichForm
+    public partial class EditClientForm : DependencyForm
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region events
+
         public event EventHandler<EventArgs> Saved;
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private Client client;
-        private Guid clientId;
-        private User currentUser;
-        private TaskPool taskPool;
+        #endregion events
 
-        public EditClientForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? clientId = null)
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly Guid clientId;
+        private readonly TaskPool taskPool;
+        private Client client;
+
+        #endregion fields
+
+        public EditClientForm(Guid? clientId = null)
             : base()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
             this.clientId = clientId.HasValue
                 ? clientId.Value : Guid.Empty;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-        }
-
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         public Client Client
@@ -104,35 +111,6 @@ namespace Queue.Administrator
             taskPool.Dispose();
             channelManager.Dispose();
         }
-
-        #region bindings
-
-        private void emailTextBox_Leave(object sender, EventArgs e)
-        {
-            client.Email = emailTextBox.Text;
-        }
-
-        private void mobileTextBox_Leave(object sender, EventArgs e)
-        {
-            client.Mobile = mobileTextBox.Text;
-        }
-
-        private void nameTextBox_Leave(object sender, EventArgs e)
-        {
-            client.Name = nameTextBox.Text;
-        }
-
-        private void patronymicTextBox_Leave(object sender, EventArgs e)
-        {
-            client.Patronymic = patronymicTextBox.Text;
-        }
-
-        private void surnameTextBox_Leave(object sender, EventArgs e)
-        {
-            client.Surname = surnameTextBox.Text;
-        }
-
-        #endregion bindings
 
         private async void passwordButton_Click(object sender, EventArgs e)
         {
@@ -202,5 +180,44 @@ namespace Queue.Administrator
                 }
             }
         }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
+        #region bindings
+
+        private void emailTextBox_Leave(object sender, EventArgs e)
+        {
+            client.Email = emailTextBox.Text;
+        }
+
+        private void mobileTextBox_Leave(object sender, EventArgs e)
+        {
+            client.Mobile = mobileTextBox.Text;
+        }
+
+        private void nameTextBox_Leave(object sender, EventArgs e)
+        {
+            client.Name = nameTextBox.Text;
+        }
+
+        private void patronymicTextBox_Leave(object sender, EventArgs e)
+        {
+            client.Patronymic = patronymicTextBox.Text;
+        }
+
+        private void surnameTextBox_Leave(object sender, EventArgs e)
+        {
+            client.Surname = surnameTextBox.Text;
+        }
+
+        #endregion bindings
     }
 }

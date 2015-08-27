@@ -3,7 +3,6 @@ using Junte.Translation;
 using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
-using NLog.Internal;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -22,23 +21,27 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public IClientService<IServerTcpService> ServerService { get; set; }
-
-        [Dependency]
         public QueueAdministrator CurrentUser { get; set; }
 
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
         #endregion dependency
+
+        #region fields
 
         private const byte PageSize = 50;
         private readonly ChannelManager<IServerTcpService> channelManager;
 
-        private ClientRequestFilter filter = new ClientRequestFilter()
+        private readonly ClientRequestFilter filter = new ClientRequestFilter()
         {
             IsRequestDate = true
         };
 
+        private readonly TaskPool taskPool;
         private int startIndex = 0;
-        private TaskPool taskPool;
+
+        #endregion fields
 
         public ClientRequestsForm()
             : base()
@@ -46,21 +49,12 @@ namespace Queue.Administrator
             InitializeComponent();
 
             channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
             stateControl.Initialize<ClientRequestState>();
-        }
-
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         protected override void Dispose(bool disposing)
@@ -123,7 +117,7 @@ namespace Queue.Administrator
                 var row = clientRequestsGridView.Rows[e.RowIndex];
                 var clientRequest = row.Tag as ClientRequest;
 
-                using (var f = new EditClientRequestForm(ServerService.ChannelBuilder, CurrentUser, clientRequest.Id))
+                using (var f = new EditClientRequestForm(clientRequest.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {
@@ -132,6 +126,35 @@ namespace Queue.Administrator
                     };
 
                     f.ShowDialog();
+                }
+            }
+        }
+
+        private async void clientRequestsGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            if (MessageBox.Show("Вы действительно хотите удалить запрос клиента?",
+                "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                ClientRequest clientRequest = e.Row.Tag as ClientRequest;
+
+                using (var channel = channelManager.CreateChannel())
+                {
+                    try
+                    {
+                        await taskPool.AddTask(channel.Service.DeleteClientRequest(clientRequest.Id));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
                 }
             }
         }
@@ -237,6 +260,16 @@ namespace Queue.Administrator
             row.DefaultCellStyle.BackColor = ColorTranslator.FromHtml(clientRequest.Color);
         }
 
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
         #region navigation
 
         private void nextButton_Click(object sender, EventArgs e)
@@ -340,34 +373,5 @@ namespace Queue.Administrator
         }
 
         #endregion bindings
-
-        private async void clientRequestsGridView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
-        {
-            if (MessageBox.Show("Вы действительно хотите удалить запрос клиента?",
-                "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                ClientRequest clientRequest = e.Row.Tag as ClientRequest;
-
-                using (var channel = channelManager.CreateChannel())
-                {
-                    try
-                    {
-                        await taskPool.AddTask(channel.Service.DeleteClientRequest(clientRequest.Id));
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
-                }
-            }
-        }
     }
 }

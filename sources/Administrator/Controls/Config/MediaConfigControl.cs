@@ -1,24 +1,34 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class MediaConfigControl : RichUserControl
+    public partial class MediaConfigControl : DependencyUserControl
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
         #region fields
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
         private MediaConfig config;
-        private User currentUser;
-        private TaskPool taskPool;
 
         #endregion fields
 
@@ -72,32 +82,17 @@ namespace Queue.Administrator
         public MediaConfigControl()
         {
             InitializeComponent();
-        }
 
-        public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
-        {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
         }
 
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
-
         private void addMediaConfigFileButton_Click(object sender, EventArgs e)
         {
-            using (var f = new EditMediaConfigFileForm(channelBuilder, currentUser))
+            using (var f = new EditMediaConfigFileForm())
             {
                 DataGridViewRow row = null;
 
@@ -115,6 +110,29 @@ namespace Queue.Administrator
             }
         }
 
+        private async void MediaConfigControl_Load(object sender, EventArgs e)
+        {
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    Config = await taskPool.AddTask(channel.Service.GetMediaConfig());
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+            }
+        }
+
         private void mediaConfigFilesGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             int rowIndex = e.RowIndex,
@@ -125,7 +143,7 @@ namespace Queue.Administrator
                 var row = mediaConfigFilesGridView.Rows[rowIndex];
                 MediaConfigFile mediaConfigFile = row.Tag as MediaConfigFile;
 
-                using (var f = new EditMediaConfigFileForm(channelBuilder, currentUser, mediaConfigFile.Id))
+                using (var f = new EditMediaConfigFileForm(mediaConfigFile.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {
@@ -209,6 +227,16 @@ namespace Queue.Administrator
         private void serviceUrlTextBox_Leave(object sender, EventArgs e)
         {
             config.ServiceUrl = serviceUrlTextBox.Text;
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         private void tickerSpeedTrackBar_Leave(object sender, EventArgs e)

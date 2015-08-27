@@ -113,6 +113,7 @@
             this.Controls.Add(this.saveButton);
             this.Name = "PortalConfigControl";
             this.Size = new System.Drawing.Size(680, 320);
+            this.Load += new System.EventHandler(this.PortalConfigControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

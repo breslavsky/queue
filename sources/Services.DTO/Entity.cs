@@ -12,15 +12,14 @@ namespace Queue.Services.DTO
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void SetProperty<T>(ref T field, T value, [CallerMemberName] string propName = null)
+        protected void SetProperty<T>(ref T field, T value, [CallerMemberName] string property = null)
         {
             if (!EqualityComparer<T>.Default.Equals(field, value))
             {
                 field = value;
-                PropertyChangedEventHandler pc = PropertyChanged;
-                if (pc != null)
+                if (PropertyChanged != null)
                 {
-                    pc(this, new PropertyChangedEventArgs(propName));
+                    PropertyChanged(this, new PropertyChangedEventArgs(property));
                 }
             }
         }

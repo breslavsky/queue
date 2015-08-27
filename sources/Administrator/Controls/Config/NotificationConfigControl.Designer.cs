@@ -74,6 +74,7 @@
             this.Controls.Add(this.clientRequestsLengthLabel);
             this.Name = "NotificationConfigControl";
             this.Size = new System.Drawing.Size(220, 70);
+            this.Load += new System.EventHandler(this.NotificationConfigControl_Load);
             ((System.ComponentModel.ISupportInitialize)(this.clientRequestsLengthUpDown)).EndInit();
             this.ResumeLayout(false);
 

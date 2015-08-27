@@ -56,6 +56,9 @@ namespace Queue.Server
                 tcpServiceHost = new ServiceHost(typeof(ServerService), uri);
                 tcpServiceHost.AddServiceEndpoint(typeof(IServerTcpService), Bindings.NetTcpBinding, string.Empty);
                 tcpServiceHost.Description.Behaviors.Add(new ServiceMetadataBehavior());
+
+                //https://msdn.microsoft.com/en-us/library/dn178463(v=pandp.30).aspx#sec29
+
                 tcpServiceHost.AddServiceEndpoint(typeof(IMetadataExchange), MetadataExchangeBindings.CreateMexTcpBinding(), "mex");
             }
 

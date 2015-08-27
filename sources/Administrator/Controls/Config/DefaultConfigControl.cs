@@ -1,25 +1,33 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class DefaultConfigControl : RichUserControl
+    public partial class DefaultConfigControl : DependencyUserControl
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
         #region fields
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
-        private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
-
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
         private DefaultConfig config;
 
         #endregion fields
@@ -28,7 +36,11 @@ namespace Queue.Administrator
 
         public DefaultConfig Config
         {
-            set
+            get
+            {
+                return config;
+            }
+            private set
             {
                 config = value;
                 if (config != null)
@@ -48,32 +60,40 @@ namespace Queue.Administrator
         public DefaultConfigControl()
         {
             InitializeComponent();
-        }
 
-        public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
-        {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
         }
 
-        private void taskPool_OnAddTask(object sender, EventArgs e)
+        private async void DefaultConfigControl_Load(object sender, EventArgs e)
         {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    Config = await taskPool.AddTask(channel.Service.GetDefaultConfig());
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+            }
         }
 
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        private void isDebugCheckBox_Leave(object sender, EventArgs e)
         {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
-
-        private void queueNameTextBox_Leave(object sender, EventArgs e)
-        {
-            config.QueueName = queueNameTextBox.Text;
+            config.IsDebug = isDebugCheckBox.Checked;
         }
 
         private void maxClientRequestsUpDown_Leave(object sender, EventArgs e)
@@ -86,35 +106,9 @@ namespace Queue.Administrator
             config.MaxRenderingTime = (int)maxRenderingTimeUpDown.Value;
         }
 
-        private void workStartTimeTextBox_Leave(object sender, EventArgs e)
+        private void queueNameTextBox_Leave(object sender, EventArgs e)
         {
-            try
-            {
-                config.WorkStartTime = TimeSpan.Parse(workStartTimeTextBox.Text);
-            }
-            catch
-            {
-                UIHelper.Warning("Ошибочный формат времени начала рабочего дня");
-                return;
-            }
-        }
-
-        private void workFinishTimeTextBox_Leave(object sender, EventArgs e)
-        {
-            try
-            {
-                config.WorkFinishTime = TimeSpan.Parse(workFinishTimeTextBox.Text);
-            }
-            catch
-            {
-                UIHelper.Warning("Ошибочный формат времени окончания рабочего дня");
-                return;
-            }
-        }
-
-        private void isDebugCheckBox_Leave(object sender, EventArgs e)
-        {
-            config.IsDebug = isDebugCheckBox.Checked;
+            config.QueueName = queueNameTextBox.Text;
         }
 
         private async void saveButton_Click(object sender, EventArgs e)
@@ -143,6 +137,42 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = true;
                 }
+            }
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
+        private void workFinishTimeTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                config.WorkFinishTime = TimeSpan.Parse(workFinishTimeTextBox.Text);
+            }
+            catch
+            {
+                UIHelper.Warning("Ошибочный формат времени окончания рабочего дня");
+                return;
+            }
+        }
+
+        private void workStartTimeTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                config.WorkStartTime = TimeSpan.Parse(workStartTimeTextBox.Text);
+            }
+            catch
+            {
+                UIHelper.Warning("Ошибочный формат времени начала рабочего дня");
+                return;
             }
         }
     }

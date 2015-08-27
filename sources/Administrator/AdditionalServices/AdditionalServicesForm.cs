@@ -1,37 +1,50 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class AdditionalServicesForm : RichForm
+    public partial class AdditionalServicesForm : DependencyForm
     {
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
-        private TaskPool taskPool;
+        #region dependency
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        #endregion dependency
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
+
+        #endregion fields
 
         private BindingList<AdditionalService> additionalServices;
 
-        public AdditionalServicesForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        public AdditionalServicesForm()
             : base()
         {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            InitializeComponent();
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-
-            InitializeComponent();
         }
 
         private async void AdditionalServicesForm_Load(object sender, EventArgs e)
@@ -71,7 +84,7 @@ namespace Queue.Administrator
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            using (var f = new EditAdditionalServiceForm(channelBuilder, currentUser))
+            using (var f = new EditAdditionalServiceForm())
             {
                 f.Saved += (s, eventArgs) =>
                 {
@@ -96,9 +109,9 @@ namespace Queue.Administrator
                 return;
             }
 
-            AdditionalService additionalService = additionalServices[currentRow.Index];
+            var additionalService = additionalServices[currentRow.Index];
 
-            using (var f = new EditAdditionalServiceForm(channelBuilder, currentUser, additionalService.Id))
+            using (var f = new EditAdditionalServiceForm(additionalService.Id))
             {
                 f.Saved += (s, eventArgs) =>
                 {

@@ -1,16 +1,11 @@
-﻿using CommandLine;
-using Junte.Configuration;
-using Junte.UI.WinForms;
-using Junte.WCF;
+﻿using Junte.Configuration;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
-using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
-using System.ServiceModel;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
 using SpecialFolder = System.Environment.SpecialFolder;
@@ -23,6 +18,7 @@ namespace Queue.Administrator
         private static AppOptions options;
         private static UnityContainer container;
         private static IConfigurationManager configuration;
+        private static AdministratorSettings administratorSettings;
         private static LoginSettings loginSettings;
         private static LoginFormSettings loginFormSettings;
         private static IClientService<IServerTcpService> serverService;
@@ -36,6 +32,7 @@ namespace Queue.Administrator
 
             container = new UnityContainer();
             configuration = new ConfigurationManager(AppName, SpecialFolder.ApplicationData);
+            administratorSettings = configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
             loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
             loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
 

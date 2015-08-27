@@ -99,5 +99,10 @@ namespace Queue.Administrator
                 }
             }
         }
+
+        private void NotificationConfigControl_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

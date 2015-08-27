@@ -1,8 +1,10 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -10,20 +12,37 @@ using System.Net.Http.Handlers;
 using System.ServiceModel;
 using System.Threading;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class EditMediaConfigFileForm : RichForm
+    public partial class EditMediaConfigFileForm : DependencyForm
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region events
+
         public event EventHandler<EventArgs> Saved;
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
+        #endregion events
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly Guid mediaConfigFileId;
+        private readonly TaskPool taskPool;
         private MediaConfig mediaConfig;
-        private Guid mediaConfigFileId;
         private MediaConfigFile mediaConfigFile;
-        private TaskPool taskPool;
+
+        #endregion fields
 
         #region properties
 
@@ -40,30 +59,19 @@ namespace Queue.Administrator
 
         #endregion properties
 
-        public EditMediaConfigFileForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? mediaConfigFileId = null)
+        public EditMediaConfigFileForm(Guid? mediaConfigFileId = null)
             : base()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
             this.mediaConfigFileId = mediaConfigFileId.HasValue
                 ? mediaConfigFileId.Value : Guid.Empty;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-        }
-
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         protected override void Dispose(bool disposing)
@@ -159,6 +167,16 @@ namespace Queue.Administrator
                     saveButton.Enabled = true;
                 }
             }
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         private async void uploadButton_Click(object sender, EventArgs eventArgs)
