@@ -36,7 +36,11 @@ namespace Queue.Administrator
 
         public MediaConfig Config
         {
-            set
+            get
+            {
+                return config;
+            }
+            private set
             {
                 Invoke(new MethodInvoker(async () =>
                 {
@@ -83,6 +87,12 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
+            if (designtime)
+            {
+                config = new MediaConfig();
+                return;
+            }
+
             channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
@@ -112,6 +122,10 @@ namespace Queue.Administrator
 
         private async void MediaConfigControl_Load(object sender, EventArgs e)
         {
+            if (designtime)
+            {
+                return;
+            }
             using (var channel = channelManager.CreateChannel())
             {
                 try

@@ -61,6 +61,12 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
+            if (designtime)
+            {
+                config = new CouponConfig();
+                return;
+            }
+
             channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
@@ -70,6 +76,11 @@ namespace Queue.Administrator
 
         private async void CouponConfigControl_Load(object sender, EventArgs e)
         {
+            if (designtime)
+            {
+                return;
+            }
+
             using (var channel = channelManager.CreateChannel())
             {
                 try

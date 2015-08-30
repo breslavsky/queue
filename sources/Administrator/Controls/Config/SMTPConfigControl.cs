@@ -1,25 +1,33 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
     public partial class SMTPConfigControl : DependencyUserControl
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
         #region fields
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
-        private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
-
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
         private SMTPConfig config;
 
         #endregion fields
@@ -28,7 +36,11 @@ namespace Queue.Administrator
 
         public SMTPConfig Config
         {
-            set
+            get
+            {
+                return config;
+            }
+            private set
             {
                 config = value;
                 if (config != null)
@@ -48,37 +60,18 @@ namespace Queue.Administrator
         public SMTPConfigControl()
         {
             InitializeComponent();
-        }
 
-        public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
-        {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            if (designtime)
+            {
+                config = new SMTPConfig();
+                return;
+            }
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-        }
-
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
-
-        private void serverTextBox_Leave(object sender, EventArgs e)
-        {
-            config.Server = serverTextBox.Text;
-        }
-
-        private void portUpDown_Leave(object sender, EventArgs e)
-        {
-            config.Port = (int)portUpDown.Value;
         }
 
         private void enableSslCheckBox_Leave(object sender, EventArgs e)
@@ -86,9 +79,9 @@ namespace Queue.Administrator
             config.EnableSsl = enableSslCheckBox.Checked;
         }
 
-        private void userTextBox_Leave(object sender, EventArgs e)
+        private void fromTextBox_Leave(object sender, EventArgs e)
         {
-            config.User = userTextBox.Text;
+            config.From = fromTextBox.Text;
         }
 
         private void passwordTextBox_Leave(object sender, EventArgs e)
@@ -96,9 +89,9 @@ namespace Queue.Administrator
             config.Password = passwordTextBox.Text;
         }
 
-        private void fromTextBox_Leave(object sender, EventArgs e)
+        private void portUpDown_Leave(object sender, EventArgs e)
         {
-            config.From = fromTextBox.Text;
+            config.Port = (int)portUpDown.Value;
         }
 
         private async void saveButton_Click(object sender, EventArgs e)
@@ -130,8 +123,52 @@ namespace Queue.Administrator
             }
         }
 
-        private void SMTPConfigControl_Load(object sender, EventArgs e)
+        private void serverTextBox_Leave(object sender, EventArgs e)
         {
+            config.Server = serverTextBox.Text;
+        }
+
+        private async void SMTPConfigControl_Load(object sender, EventArgs e)
+        {
+            if (designtime)
+            {
+                return;
+            }
+
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    Config = await taskPool.AddTask(channel.Service.GetSMTPConfig());
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+            }
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
+        private void userTextBox_Leave(object sender, EventArgs e)
+        {
+            config.User = userTextBox.Text;
         }
     }
 }

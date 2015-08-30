@@ -161,9 +161,9 @@
             this.maxClientRequestsMeasureLabel.AutoSize = true;
             this.maxClientRequestsMeasureLabel.Location = new System.Drawing.Point(170, 90);
             this.maxClientRequestsMeasureLabel.Name = "maxClientRequestsMeasureLabel";
-            this.maxClientRequestsMeasureLabel.Size = new System.Drawing.Size(23, 13);
+            this.maxClientRequestsMeasureLabel.Size = new System.Drawing.Size(20, 13);
             this.maxClientRequestsMeasureLabel.TabIndex = 0;
-            this.maxClientRequestsMeasureLabel.Text = "шт.";
+            this.maxClientRequestsMeasureLabel.Text = "шт";
             // 
             // earlyGroupBox
             // 
@@ -218,9 +218,9 @@
             this.minLabel3.AutoSize = true;
             this.minLabel3.Location = new System.Drawing.Point(155, 75);
             this.minLabel3.Name = "minLabel3";
-            this.minLabel3.Size = new System.Drawing.Size(30, 13);
+            this.minLabel3.Size = new System.Drawing.Size(27, 13);
             this.minLabel3.TabIndex = 5;
-            this.minLabel3.Text = "мин.";
+            this.minLabel3.Text = "мин";
             // 
             // earlyStartTimeTextBox
             // 
@@ -351,9 +351,9 @@
             this.minLabel1.AutoSize = true;
             this.minLabel1.Location = new System.Drawing.Point(170, 45);
             this.minLabel1.Name = "minLabel1";
-            this.minLabel1.Size = new System.Drawing.Size(30, 13);
+            this.minLabel1.Size = new System.Drawing.Size(27, 13);
             this.minLabel1.TabIndex = 0;
-            this.minLabel1.Text = "мин.";
+            this.minLabel1.Text = "мин";
             // 
             // intersectionLabel
             // 
@@ -382,9 +382,9 @@
             this.minLabel2.AutoSize = true;
             this.minLabel2.Location = new System.Drawing.Point(170, 65);
             this.minLabel2.Name = "minLabel2";
-            this.minLabel2.Size = new System.Drawing.Size(30, 13);
+            this.minLabel2.Size = new System.Drawing.Size(27, 13);
             this.minLabel2.TabIndex = 0;
-            this.minLabel2.Text = "мин.";
+            this.minLabel2.Text = "мин";
             // 
             // isWorkedCheckBox
             // 

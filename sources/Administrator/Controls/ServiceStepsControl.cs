@@ -1,24 +1,33 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class ServiceStepsControl : UserControl
+    public partial class ServiceStepsControl : DependencyUserControl
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
         #region fields
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
-        private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
-
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
         private Service service;
 
         #endregion fields
@@ -27,6 +36,10 @@ namespace Queue.Administrator
 
         public Service Service
         {
+            get
+            {
+                return service;
+            }
             set
             {
                 stepsGridView.Rows.Clear();
@@ -70,14 +83,9 @@ namespace Queue.Administrator
         public ServiceStepsControl()
         {
             InitializeComponent();
-        }
 
-        public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
-        {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
@@ -101,7 +109,7 @@ namespace Queue.Administrator
 
         private void addStepButton_Click(object sender, EventArgs e)
         {
-            using (var f = new EditServiceStepForm(channelBuilder, currentUser, service.Id))
+            using (var f = new EditServiceStepForm(ServerService.ChannelBuilder, CurrentUser, service.Id))
             {
                 DataGridViewRow row = null;
 
@@ -155,7 +163,7 @@ namespace Queue.Administrator
                 var row = stepsGridView.Rows[e.RowIndex];
                 ServiceStep serviceStep = row.Tag as ServiceStep;
 
-                using (var f = new EditServiceStepForm(channelBuilder, currentUser, null, serviceStep.Id))
+                using (var f = new EditServiceStepForm(ServerService.ChannelBuilder, CurrentUser, null, serviceStep.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {

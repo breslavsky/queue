@@ -87,11 +87,6 @@ namespace Queue.Administrator
 
             liveRegistratorFlagsControl.Initialize<ClientRequestRegistrator>();
             earlyRegistratorFlagsControl.Initialize<ClientRequestRegistrator>();
-
-            serviceStepsControl.Initialize(channelBuilder, currentUser);
-            weekdayScheduleControl.Initialize(channelBuilder, currentUser);
-            exceptionScheduleControl.Initialize(channelBuilder, currentUser);
-            serviceParametersControl.Initialize(channelBuilder, currentUser);
         }
 
         private void taskPool_OnAddTask(object sender, EventArgs e)

@@ -2,25 +2,34 @@
 using Junte.Translation;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class ScheduleControl : RichUserControl
+    public partial class ScheduleControl : DependencyUserControl
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
         #region fields
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
-        private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
-
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
         private Schedule schedule;
 
         #endregion fields
@@ -29,7 +38,10 @@ namespace Queue.Administrator
 
         public Schedule Schedule
         {
-            get { return schedule; }
+            get
+            {
+                return schedule;
+            }
             set
             {
                 serviceRenderingsGridView.Rows.Clear();
@@ -93,18 +105,13 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
-            renderingModeControl.Initialize<ServiceRenderingMode>();
-        }
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
-        public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
-        {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
+
+            renderingModeControl.Initialize<ServiceRenderingMode>();
         }
 
         private void taskPool_OnAddTask(object sender, EventArgs e)
@@ -131,7 +138,7 @@ namespace Queue.Administrator
         {
             DataGridViewRow row = null;
 
-            using (var f = new EditServiceRenderingForm(channelBuilder, currentUser, schedule.Id))
+            using (var f = new EditServiceRenderingForm(ServerService.ChannelBuilder, CurrentUser, schedule.Id))
             {
                 f.Saved += (s, eventArgs) =>
                 {
@@ -179,7 +186,7 @@ namespace Queue.Administrator
                 var row = serviceRenderingsGridView.Rows[e.RowIndex];
                 ServiceRendering serviceRendering = row.Tag as ServiceRendering;
 
-                using (var f = new EditServiceRenderingForm(channelBuilder, currentUser, schedule.Id, serviceRendering.Id))
+                using (var f = new EditServiceRenderingForm(ServerService.ChannelBuilder, CurrentUser, schedule.Id, serviceRendering.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {

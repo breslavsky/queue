@@ -1,6 +1,7 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -8,11 +9,22 @@ using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class ServiceParametersControl : RichUserControl
+    public partial class ServiceParametersControl : DependencyUserControl
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
         #region fields
 
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
@@ -67,18 +79,13 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
-            parameterTypeControl.Initialize<ServiceParameterType>();
-        }
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
-        public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
-        {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
+
+            parameterTypeControl.Initialize<ServiceParameterType>();
         }
 
         private void taskPool_OnAddTask(object sender, EventArgs e)

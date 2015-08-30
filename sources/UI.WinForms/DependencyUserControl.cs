@@ -7,13 +7,18 @@ namespace Queue.UI.WinForms
 {
     public class DependencyUserControl : RichUserControl
     {
+        protected bool designtime;
+
         public DependencyUserControl()
             : base()
         {
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            designtime = LicenseManager.UsageMode == LicenseUsageMode.Designtime;
+            if (designtime)
             {
-                ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this.GetType(), this);
+                return;
             }
+
+            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this.GetType(), this);
         }
     }
 }

@@ -61,6 +61,12 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
+            if (designtime)
+            {
+                config = new DefaultConfig();
+                return;
+            }
+
             channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
@@ -70,6 +76,11 @@ namespace Queue.Administrator
 
         private async void DefaultConfigControl_Load(object sender, EventArgs e)
         {
+            if (designtime)
+            {
+                return;
+            }
+
             using (var channel = channelManager.CreateChannel())
             {
                 try

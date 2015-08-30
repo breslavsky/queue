@@ -1,25 +1,33 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
     public partial class PortalConfigControl : DependencyUserControl
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
         #region fields
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
-        private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
-
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
         private PortalConfig config;
 
         #endregion fields
@@ -28,7 +36,11 @@ namespace Queue.Administrator
 
         public PortalConfig Config
         {
-            set
+            get
+            {
+                return config;
+            }
+            private set
             {
                 config = value;
                 if (config != null)
@@ -45,27 +57,35 @@ namespace Queue.Administrator
         public PortalConfigControl()
         {
             InitializeComponent();
-        }
 
-        public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
-        {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            if (designtime)
+            {
+                config = new PortalConfig();
+                return;
+            }
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
         }
 
-        private void taskPool_OnAddTask(object sender, EventArgs e)
+        private void footerTextBox_Click(object sender, EventArgs e)
         {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+            using (var f = new HtmlEditorForm())
+            {
+                f.HTML = footerTextBox.Text;
+                if (f.ShowDialog() == DialogResult.OK)
+                {
+                    footerTextBox.Text = f.HTML;
+                }
+            }
         }
 
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        private void footerTextBox_Leave(object sender, EventArgs e)
         {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+            config.Footer = footerTextBox.Text;
         }
 
         private void headerTextBox_Click(object sender, EventArgs e)
@@ -85,21 +105,32 @@ namespace Queue.Administrator
             config.Header = headerTextBox.Text;
         }
 
-        private void footerTextBox_Click(object sender, EventArgs e)
+        private async void PortalConfigControl_Load(object sender, EventArgs e)
         {
-            using (var f = new HtmlEditorForm())
+            if (designtime)
             {
-                f.HTML = footerTextBox.Text;
-                if (f.ShowDialog() == DialogResult.OK)
+                return;
+            }
+
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
                 {
-                    footerTextBox.Text = f.HTML;
+                    Config = await taskPool.AddTask(channel.Service.GetPortalConfig());
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
                 }
             }
-        }
-
-        private void footerTextBox_Leave(object sender, EventArgs e)
-        {
-            config.Footer = footerTextBox.Text;
         }
 
         private void portalCurrentDayRecordingCheckBox_Leave(object sender, EventArgs e)
@@ -136,8 +167,14 @@ namespace Queue.Administrator
             }
         }
 
-        private void PortalConfigControl_Load(object sender, EventArgs e)
+        private void taskPool_OnAddTask(object sender, EventArgs e)
         {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
     }
 }

@@ -41,9 +41,6 @@ namespace Queue.Administrator
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-
-            currentScheduleControl.Initialize(channelBuilder, currentUser);
-            selectServiceControl.Initialize(channelBuilder, currentUser);
         }
 
         private void taskPool_OnAddTask(object sender, EventArgs e)
