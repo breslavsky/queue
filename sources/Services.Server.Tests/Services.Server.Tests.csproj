@@ -95,7 +95,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{ad492499-461f-4117-a495-302089ad7b87}</Project>
-      <Name>Model</Name>
+      <Name>Model %28Model\Model%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services.Server\Services.Server.csproj">
       <Project>{7092d42d-17d1-432c-950c-ff848fa149a7}</Project>

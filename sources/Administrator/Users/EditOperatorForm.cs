@@ -1,51 +1,46 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
 {
-    public partial class EditOperatorForm : RichForm
+    public partial class EditOperatorForm : DependencyForm
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region events
+
         public event EventHandler<EventArgs> Saved;
 
+        #endregion events
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly Guid operatorId;
+        private readonly TaskPool taskPool;
         private QueueOperator queueOperator;
-        private Guid operatorId;
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
-        private TaskPool taskPool;
 
-        public EditOperatorForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? operatorId = null)
-        {
-            InitializeComponent();
+        #endregion fields
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-            this.operatorId = operatorId.HasValue
-                ? operatorId.Value : Guid.Empty;
-
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
-            taskPool = new TaskPool();
-            taskPool.OnAddTask += taskPool_OnAddTask;
-            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-        }
-
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
+        #region properties
 
         public QueueOperator Operator
         {
@@ -62,6 +57,22 @@ namespace Queue.Administrator
                 isActiveCheckBox.Checked = queueOperator.IsActive;
                 workplaceControl.Select<Workplace>(queueOperator.Workplace);
             }
+        }
+
+        #endregion properties
+
+        public EditOperatorForm(Guid? operatorId = null)
+        {
+            InitializeComponent();
+
+            this.operatorId = operatorId.HasValue
+                ? operatorId.Value : Guid.Empty;
+
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
+            taskPool = new TaskPool();
+            taskPool.OnAddTask += taskPool_OnAddTask;
+            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
         }
 
         private void EditOperatorForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -109,40 +120,6 @@ namespace Queue.Administrator
                 };
             }
         }
-
-        #region bindings
-
-        private void surnameTextBox_Leave(object sender, EventArgs e)
-        {
-            queueOperator.Surname = surnameTextBox.Text;
-        }
-
-        private void nameTextBox_Leave(object sender, EventArgs e)
-        {
-            queueOperator.Name = nameTextBox.Text;
-        }
-
-        private void patronymicTextBox_Leave(object sender, EventArgs e)
-        {
-            queueOperator.Patronymic = patronymicTextBox.Text;
-        }
-
-        private void emailTextBox_Leave(object sender, EventArgs e)
-        {
-            queueOperator.Email = emailTextBox.Text;
-        }
-
-        private void mobileTextBox_Leave(object sender, EventArgs e)
-        {
-            queueOperator.Mobile = mobileTextBox.Text;
-        }
-
-        private void isActiveCheckBox_Leave(object sender, EventArgs e)
-        {
-            queueOperator.IsActive = isActiveCheckBox.Checked;
-        }
-
-        #endregion bindings
 
         private async void passwordButton_Click(object sender, EventArgs e)
         {
@@ -213,9 +190,53 @@ namespace Queue.Administrator
             }
         }
 
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
+        #region bindings
+
         private void workplaceControl_Leave(object sender, EventArgs e)
         {
             queueOperator.Workplace = workplaceControl.Selected<Workplace>();
         }
+
+        private void emailTextBox_Leave(object sender, EventArgs e)
+        {
+            queueOperator.Email = emailTextBox.Text;
+        }
+
+        private void isActiveCheckBox_Leave(object sender, EventArgs e)
+        {
+            queueOperator.IsActive = isActiveCheckBox.Checked;
+        }
+
+        private void mobileTextBox_Leave(object sender, EventArgs e)
+        {
+            queueOperator.Mobile = mobileTextBox.Text;
+        }
+
+        private void nameTextBox_Leave(object sender, EventArgs e)
+        {
+            queueOperator.Name = nameTextBox.Text;
+        }
+
+        private void patronymicTextBox_Leave(object sender, EventArgs e)
+        {
+            queueOperator.Patronymic = patronymicTextBox.Text;
+        }
+
+        private void surnameTextBox_Leave(object sender, EventArgs e)
+        {
+            queueOperator.Surname = surnameTextBox.Text;
+        }
+
+        #endregion bindings
     }
 }

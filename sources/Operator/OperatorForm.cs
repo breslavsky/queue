@@ -3,6 +3,7 @@ using Junte.Translation;
 using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common;
 using Queue.Model.Common;
@@ -28,68 +29,35 @@ using Timer = System.Timers.Timer;
 
 namespace Queue.Operator
 {
-    public partial class OperatorForm : RichForm
+    public partial class OperatorForm : DependencyForm
     {
+        #region dependency
+
+        [Dependency]
+        public QueueOperator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region fields
+
         private const int PingInterval = 10000;
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly ServerCallback callbackObject;
-        private readonly IClientService<IServerTcpService> serverService;
         private readonly ChannelManager<IServerTcpService> channelManager;
-        private readonly QueueOperator currentUser;
-
         private readonly Timer pingTimer;
         private readonly TaskPool taskPool;
+        private BindingList<ClientRequestAdditionalService> additionalServices;
         private ClientRequestPlan currentClientRequestPlan;
+        private BindingList<ClientRequestParameter> parameters;
         private Channel<IServerTcpService> pingChannel;
 
-        private BindingList<ClientRequestAdditionalService> additionalServices;
-        private BindingList<ClientRequestParameter> parameters;
+        #endregion fields
 
-        public OperatorForm()
-            : base()
-        {
-            InitializeComponent();
-
-            serverService = ServiceLocator.Current.GetInstance<IClientService<IServerTcpService>>();
-            currentUser = ServiceLocator.Current.GetInstance<User>() as QueueOperator;
-
-            channelManager = new ChannelManager<IServerTcpService>(serverService.ChannelBuilder, currentUser.SessionId);
-            taskPool = new TaskPool();
-
-            step = 0;
-
-            foreach (Control control in stepPanel.Controls)
-            {
-                control.Location = new Point(0, 0);
-            }
-
-            Text = string.Format("{0} | {1}", currentUser, (currentUser as QueueOperator).Workplace);
-
-            serviceTypeControl.Initialize<ServiceType>();
-
-            callbackObject = new ServerCallback();
-            callbackObject.OnCurrentClientRequestPlanUpdated += callbackObject_CurrentClientRequestPlanUpdated;
-            callbackObject.OnOperatorPlanMetricsUpdated += callbackObject_OnOperatorPlanMetricsUpdated;
-
-            pingChannel = channelManager.CreateChannel(callbackObject);
-
-            pingTimer = new Timer();
-            pingTimer.Elapsed += pingTimer_Elapsed;
-        }
-
-        private bool IsAutocall
-        {
-            get
-            {
-                return isAutocallCheckBox.Checked;
-            }
-
-            set
-            {
-                isAutocallCheckBox.Checked = value;
-            }
-        }
+        #region properties
 
         public bool IsLogout { get; private set; }
 
@@ -166,15 +134,15 @@ namespace Queue.Operator
                             {
                                 case ClientRequestState.Waiting:
                                 case ClientRequestState.Postponed:
-                                    step = 1;
+                                    Step = 1;
                                     break;
 
                                 case ClientRequestState.Calling:
-                                    step = 2;
+                                    Step = 2;
                                     break;
 
                                 case ClientRequestState.Rendering:
-                                    step = 3;
+                                    Step = 3;
                                     break;
                             }
                         }
@@ -223,13 +191,26 @@ namespace Queue.Operator
 
                         versionLabel.Text = string.Empty;
 
-                        step = 0;
+                        Step = 0;
                     }
                 }));
             }
         }
 
-        private int step
+        private bool IsAutocall
+        {
+            get
+            {
+                return isAutocallCheckBox.Checked;
+            }
+
+            set
+            {
+                isAutocallCheckBox.Checked = value;
+            }
+        }
+
+        private int Step
         {
             set
             {
@@ -265,6 +246,39 @@ namespace Queue.Operator
                         break;
                 }
             }
+        }
+
+        #endregion properties
+
+        public OperatorForm()
+            : base()
+        {
+            InitializeComponent();
+
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+            taskPool = new TaskPool();
+            taskPool.OnAddTask += taskPool_OnAddTask;
+            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
+
+            Step = 0;
+
+            foreach (Control control in stepPanel.Controls)
+            {
+                control.Location = new Point(0, 0);
+            }
+
+            Text = string.Format("{0} | {1}", CurrentUser, CurrentUser.Workplace);
+
+            serviceTypeControl.Initialize<ServiceType>();
+
+            callbackObject = new ServerCallback();
+            callbackObject.OnCurrentClientRequestPlanUpdated += callbackObject_CurrentClientRequestPlanUpdated;
+            callbackObject.OnOperatorPlanMetricsUpdated += callbackObject_OnOperatorPlanMetricsUpdated;
+
+            pingChannel = channelManager.CreateChannel(callbackObject);
+
+            pingTimer = new Timer();
+            pingTimer.Elapsed += pingTimer_Elapsed;
         }
 
         protected override void Dispose(bool disposing)
@@ -396,9 +410,9 @@ namespace Queue.Operator
                     if (!pingChannel.IsConnected)
                     {
                         pingChannel.Service.Subscribe(ServerServiceEventType.CurrentClientRequestPlanUpdated,
-                            new ServerSubscribtionArgs { Operators = new DTO.Operator[] { currentUser as QueueOperator } });
+                            new ServerSubscribtionArgs { Operators = new DTO.Operator[] { CurrentUser } });
                         pingChannel.Service.Subscribe(ServerServiceEventType.OperatorPlanMetricsUpdated,
-                            new ServerSubscribtionArgs { Operators = new DTO.Operator[] { currentUser as QueueOperator } });
+                            new ServerSubscribtionArgs { Operators = new DTO.Operator[] { CurrentUser } });
                         CurrentClientRequestPlan = await taskPool.AddTask(pingChannel.Service.GetCurrentClientRequestPlan());
                     }
 
@@ -434,7 +448,7 @@ namespace Queue.Operator
             {
                 ClientRequest clientRequest = currentClientRequestPlan.ClientRequest;
 
-                using (var f = new SelectServiceForm(serverService.ChannelBuilder, currentUser))
+                using (var f = new SelectServiceForm())
                 {
                     if (f.ShowDialog() == DialogResult.OK)
                     {
@@ -573,6 +587,16 @@ namespace Queue.Operator
                     }
                 }
             }
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         #region step 1
@@ -849,7 +873,7 @@ namespace Queue.Operator
             {
                 var clientRequest = currentClientRequestPlan.ClientRequest;
 
-                using (var f = new EditClientRequestAdditionalServiceForm(serverService.ChannelBuilder, currentUser, clientRequest.Id))
+                using (var f = new EditClientRequestAdditionalServiceForm(clientRequest.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {
@@ -872,7 +896,7 @@ namespace Queue.Operator
 
             ClientRequestAdditionalService additionalService = additionalServices[currentRow.Index];
 
-            using (var f = new EditClientRequestAdditionalServiceForm(serverService.ChannelBuilder, currentUser, null, additionalService.Id))
+            using (var f = new EditClientRequestAdditionalServiceForm(null, additionalService.Id))
             {
                 f.Saved += (s, eventArgs) =>
                 {

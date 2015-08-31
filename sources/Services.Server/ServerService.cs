@@ -23,15 +23,21 @@ namespace Queue.Services.Server
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private IContextChannel channel;
-        private User currentUser;
-
         private IServerCallback eventsCallback;
 
+        private ISessionProvider sessionProvider;
+        private IQueueInstance queueInstance;
+
         private Guid sessionId;
+        private User currentUser;
+
         private IDictionary<ServerServiceEventType, Subscribtion> subscriptions;
 
         public ServerService()
         {
+            sessionProvider = ServiceLocator.Current.GetInstance<ISessionProvider>();
+            queueInstance = ServiceLocator.Current.GetInstance<IQueueInstance>();
+
             try
             {
                 sessionId = Guid.Parse(OperationContext.Current.IncomingMessageHeaders
@@ -68,16 +74,6 @@ namespace Queue.Services.Server
 #if DEBUG
             Thread.Sleep(1000);
 #endif
-        }
-
-        private IQueueInstance queueInstance
-        {
-            get { return ServiceLocator.Current.GetInstance<IQueueInstance>(); }
-        }
-
-        private ISessionProvider sessionProvider
-        {
-            get { return ServiceLocator.Current.GetInstance<ISessionProvider>(); }
         }
 
         public async Task<DateTime> GetDateTime()

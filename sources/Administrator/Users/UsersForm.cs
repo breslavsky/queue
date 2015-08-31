@@ -1,8 +1,10 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
@@ -11,22 +13,31 @@ using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
 {
-    public partial class UsersForm : RichForm
+    public partial class UsersForm : DependencyForm
     {
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
-        private TaskPool taskPool;
+        #region dependency
 
-        public UsersForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
-            : base()
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
+
+        #endregion fields
+
+        public UsersForm()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
@@ -68,7 +79,7 @@ namespace Queue.Administrator
 
             if (usersTabs.SelectedTab.Equals(operatorsTabPage))
             {
-                using (var f = new EditOperatorForm(channelBuilder, currentUser))
+                using (var f = new EditOperatorForm())
                 {
                     f.Saved += (s, eventArgs) =>
                     {
@@ -85,7 +96,7 @@ namespace Queue.Administrator
             }
             else if (usersTabs.SelectedTab.Equals(administratorsTabPage))
             {
-                using (var f = new EditAdministratorForm(channelBuilder, currentUser))
+                using (var f = new EditAdministratorForm())
                 {
                     f.Saved += (s, eventArgs) =>
                     {
@@ -171,7 +182,7 @@ namespace Queue.Administrator
 
                 if (user is QueueOperator)
                 {
-                    using (var f = new EditOperatorForm(channelBuilder, currentUser, user.Id))
+                    using (var f = new EditOperatorForm(user.Id))
                     {
                         f.Saved += (s, eventArgs) =>
                         {
@@ -184,7 +195,7 @@ namespace Queue.Administrator
                 }
                 else if (user is QueueAdministrator)
                 {
-                    using (var f = new EditAdministratorForm(channelBuilder, currentUser, user.Id))
+                    using (var f = new EditAdministratorForm(user.Id))
                     {
                         f.Saved += (s, eventArgs) =>
                         {

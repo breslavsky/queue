@@ -152,7 +152,7 @@ namespace Queue.Administrator
 
         private void currentUserMenuItem_Click(object sender, EventArgs e)
         {
-            ShowForm<CurrentUserForm>(() => new CurrentUserForm(ServerService.ChannelBuilder, CurrentUser));
+            ShowForm<CurrentUserForm>(() => new CurrentUserForm());
         }
 
         private void defaultScheduleMenuItem_Click(object sender, EventArgs eventArgs)
@@ -264,7 +264,7 @@ namespace Queue.Administrator
 
         private void queueMonitorMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<QueueMonitorForm>(() => new QueueMonitorForm(ServerService.ChannelBuilder, CurrentUser));
+            ShowForm<QueueMonitorForm>(() => new QueueMonitorForm());
         }
 
         private void serviceRatingReportMenuItem_Click(object sender, EventArgs eventArgs)
@@ -309,12 +309,12 @@ namespace Queue.Administrator
 
         private void usersMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<UsersForm>(() => new UsersForm(ServerService.ChannelBuilder, CurrentUser));
+            ShowForm<UsersForm>(() => new UsersForm());
         }
 
         private void workplacesMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<WorkplacesForm>(() => new WorkplacesForm(ServerService.ChannelBuilder, CurrentUser));
+            ShowForm<WorkplacesForm>(() => new WorkplacesForm());
         }
 
         private void сurrentScheduleMenuItem_Click(object sender, EventArgs eventArgs)

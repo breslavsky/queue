@@ -2,11 +2,13 @@
 using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
+using Queue.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
+using System.Diagnostics;
 using System.ServiceModel;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
@@ -22,6 +24,9 @@ namespace Queue.Administrator
 
         [Dependency]
         public IClientService<IServerTcpService> ServerService { get; set; }
+
+        [Dependency]
+        public LoginSettings LoginSettings { get; set; }
 
         #endregion dependency
 
@@ -146,13 +151,16 @@ namespace Queue.Administrator
                             {
                                 try
                                 {
-                                    var user = await taskPool.AddTask(officeChannel.Service.OpenUserSession(office.SessionId));
-                                    /*var form = new AdministratorForm(officeChannelManager, user);
-                                    FormClosing += (s, e) =>
+                                    var administrator = await taskPool.AddTask(officeChannel.Service.OpenUserSession(office.SessionId));
+
+                                    Process.Start(new ProcessStartInfo()
                                     {
-                                        form.Close();
-                                    };
-                                    form.Show();*/
+                                        UseShellExecute = true,
+                                        FileName = "Queue.Administrator.exe",
+                                        Arguments = string.Format("--AutoLogin --Endpoint=\"{0}\" --SessionId={1}",
+                                            LoginSettings.Endpoint, administrator.SessionId),
+                                        WorkingDirectory = Environment.CurrentDirectory
+                                    });
                                 }
                                 catch (OperationCanceledException) { }
                                 catch (CommunicationObjectAbortedException) { }

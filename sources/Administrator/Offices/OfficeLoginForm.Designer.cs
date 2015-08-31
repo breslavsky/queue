@@ -52,6 +52,7 @@
             this.ClientSize = new System.Drawing.Size(349, 222);
             this.Controls.Add(this.loginButton);
             this.Controls.Add(this.loginSettingsControl);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "OfficeLoginForm";
             this.Text = "Вход в удаленный офис";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OfficeLoginForm_FormClosing);

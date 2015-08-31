@@ -1,26 +1,47 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Operator
 {
-    public partial class EditClientRequestAdditionalServiceForm : RichForm
+    public partial class EditClientRequestAdditionalServiceForm : DependencyForm
     {
+        #region dependency
+
+        [Dependency]
+        public QueueOperator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region events
+
         public event EventHandler<EventArgs> Saved;
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
+        #endregion events
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly Guid clientRequestAdditionalServiceId;
+        private readonly Guid clientRequestId;
+        private readonly TaskPool taskPool;
         private ClientRequest clientRequest;
-        private Guid clientRequestId;
         private ClientRequestAdditionalService clientRequestAdditionalService;
-        private Guid clientRequestAdditionalServiceId;
-        private TaskPool taskPool;
+
+        #endregion fields
+
+        #region properties
 
         public ClientRequestAdditionalService ClientRequestAdditionalService
         {
@@ -34,36 +55,28 @@ namespace Queue.Operator
             }
         }
 
-        public EditClientRequestAdditionalServiceForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser,
-            Guid? clientRequestId, Guid? clientRequestAdditionalServiceId = null)
+        #endregion properties
+
+        public EditClientRequestAdditionalServiceForm(Guid? clientRequestId, Guid? clientRequestAdditionalServiceId = null)
             : base()
         {
             InitializeComponent();
-
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
 
             this.clientRequestId = clientRequestId.HasValue
                 ? clientRequestId.Value : Guid.Empty;
             this.clientRequestAdditionalServiceId = clientRequestAdditionalServiceId.HasValue ?
                 clientRequestAdditionalServiceId.Value : Guid.Empty;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
-
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
         }
 
-        private void taskPool_OnAddTask(object sender, EventArgs e)
+        private void additionalServiceControl_Leave(object sender, EventArgs e)
         {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+            clientRequestAdditionalService.AdditionalService = additionalServiceControl.Selected<AdditionalService>();
         }
 
         private void EditAdditionalServiceForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -131,6 +144,11 @@ namespace Queue.Operator
             }
         }
 
+        private void quantityUpDown_Leave(object sender, EventArgs e)
+        {
+            clientRequestAdditionalService.Quantity = (float)quantityUpDown.Value;
+        }
+
         private async void saveButton_Click(object sender, EventArgs e)
         {
             using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
@@ -165,14 +183,14 @@ namespace Queue.Operator
             }
         }
 
-        private void additionalServiceControl_Leave(object sender, EventArgs e)
+        private void taskPool_OnAddTask(object sender, EventArgs e)
         {
-            clientRequestAdditionalService.AdditionalService = additionalServiceControl.Selected<AdditionalService>();
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
         }
 
-        private void quantityUpDown_Leave(object sender, EventArgs e)
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
         {
-            clientRequestAdditionalService.Quantity = (float)quantityUpDown.Value;
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
     }
 }

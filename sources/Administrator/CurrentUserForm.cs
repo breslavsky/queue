@@ -3,6 +3,7 @@ using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
@@ -10,32 +11,44 @@ using System;
 using System.Printing;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class CurrentUserForm : Form
+    public partial class CurrentUserForm : DependencyForm
     {
-        private IConfigurationManager configuration;
-        private AdministratorSettings settings;
+        #region dependency
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
-        private TaskPool taskPool;
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
 
-        public CurrentUserForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        [Dependency]
+        public AdministratorSettings Settings { get; set; }
+
+        [Dependency]
+        public IConfigurationManager Configuration { get; set; }
+
+        #endregion dependency
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
+
+        #endregion fields
+
+        public CurrentUserForm()
         {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            InitializeComponent();
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
-
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-
-            InitializeComponent();
         }
 
         private void taskPool_OnAddTask(object sender, EventArgs e)
@@ -50,10 +63,7 @@ namespace Queue.Administrator
 
         private void CurrentUserForm_Load(object sender, EventArgs e)
         {
-            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-            settings = configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
-
-            currentUserLabel.Text = currentUser.ToString();
+            currentUserLabel.Text = CurrentUser.ToString();
 
             foreach (var p in new PrintServer().GetPrintQueues(new[] {
                 EnumeratedPrintQueueTypes.Local, EnumeratedPrintQueueTypes.Connections }))
@@ -61,9 +71,9 @@ namespace Queue.Administrator
                 couponPrintersComboBox.Items.Add(p.FullName);
             }
 
-            couponPrintersComboBox.SelectedItem = string.IsNullOrWhiteSpace(settings.CouponPrinter)
+            couponPrintersComboBox.SelectedItem = string.IsNullOrWhiteSpace(Settings.CouponPrinter)
                 ? LocalPrintServer.GetDefaultPrintQueue().FullName
-                : settings.CouponPrinter;
+                : Settings.CouponPrinter;
         }
 
         protected override void Dispose(bool disposing)
@@ -103,7 +113,7 @@ namespace Queue.Administrator
                         {
                             passwordButton.Enabled = false;
 
-                            await taskPool.AddTask(channel.Service.ChangeUserPassword(currentUser.Id, f.Password));
+                            await taskPool.AddTask(channel.Service.ChangeUserPassword(CurrentUser.Id, f.Password));
                         }
                         catch (OperationCanceledException) { }
                         catch (CommunicationObjectAbortedException) { }
@@ -128,13 +138,13 @@ namespace Queue.Administrator
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            configuration.Save();
+            Configuration.Save();
             Close();
         }
 
         private void couponPrintersComboBox_Leave(object sender, EventArgs e)
         {
-            settings.CouponPrinter = couponPrintersComboBox.SelectedItem.ToString();
+            Settings.CouponPrinter = couponPrintersComboBox.SelectedItem.ToString();
         }
     }
 }

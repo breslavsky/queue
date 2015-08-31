@@ -8,6 +8,7 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
+using System.Diagnostics;
 using System.ServiceModel;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
@@ -18,6 +19,9 @@ namespace Queue.Administrator
     public partial class QueueMonitorForm : DependencyForm
     {
         #region dependency
+
+        [Dependency]
+        public LoginSettings LoginSettings { get; set; }
 
         [Dependency]
         public QueueAdministrator CurrentUser { get; set; }
@@ -36,7 +40,7 @@ namespace Queue.Administrator
 
         #endregion fields
 
-        public QueueMonitorForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        public QueueMonitorForm()
             : base()
         {
             InitializeComponent();
@@ -77,12 +81,14 @@ namespace Queue.Administrator
                 {
                     var queueOperator = await channel.Service.GetUser(eventArgs.Operator.Id) as QueueOperator;
 
-                    /*var form = new OperatorForm(channelBuilder, queueOperator);
-                    FormClosing += (s, e) =>
+                    Process.Start(new ProcessStartInfo()
                     {
-                        form.Close();
-                    };
-                    form.Show();*/
+                        UseShellExecute = true,
+                        FileName = "Queue.Operator.exe",
+                        Arguments = string.Format("--AutoLogin --Endpoint=\"{0}\" --SessionId={1}",
+                            LoginSettings.Endpoint, queueOperator.SessionId),
+                        WorkingDirectory = Environment.CurrentDirectory
+                    });
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

@@ -7,14 +7,9 @@ namespace Queue.Services.Contracts
 {
     public interface IClientService<T> : IDisposable
     {
-        //TODO: скрыть!
-        DuplexChannelBuilder<T> ChannelBuilder { get; set; }
-
         ChannelManager<T> CreateChannelManager(Guid SessionId);
 
         ChannelManager<T> CreateChannelManager();
-
-        void Dispose();
     }
 
     public class ClientService<T> : IClientService<T>

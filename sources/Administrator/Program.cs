@@ -85,7 +85,10 @@ namespace Queue.Administrator
                 }
             }
 
-            serverService.Dispose();
+            if (serverService != null)
+            {
+                serverService.Dispose();
+            }
         }
 
         private static void ParseOptions()

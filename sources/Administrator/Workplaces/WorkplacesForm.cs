@@ -2,30 +2,39 @@
 using Junte.Translation;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class WorkplacesForm : RichForm
+    public partial class WorkplacesForm : DependencyForm
     {
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
-        private TaskPool taskPool;
+        #region dependency
 
-        public WorkplacesForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
+
+        public WorkplacesForm()
             : base()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
@@ -63,7 +72,7 @@ namespace Queue.Administrator
 
         private void addWorkplaceButton_Click(object sender, EventArgs e)
         {
-            using (var f = new EditWorkplaceForm(channelBuilder, currentUser))
+            using (var f = new EditWorkplaceForm())
             {
                 DataGridViewRow row = null;
 
@@ -126,7 +135,7 @@ namespace Queue.Administrator
                 var row = workplacesGridView.Rows[rowIndex];
                 Workplace workplace = row.Tag as Workplace;
 
-                using (var f = new EditWorkplaceForm(channelBuilder, currentUser, workplace.Id))
+                using (var f = new EditWorkplaceForm(workplace.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {

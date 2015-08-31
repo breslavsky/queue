@@ -350,7 +350,7 @@ namespace Queue.Administrator
 
         private void serviceChangeLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            using (var f = new SelectServiceForm(ServerService.ChannelBuilder, CurrentUser))
+            using (var f = new SelectServiceForm())
             {
                 if (f.ShowDialog() == DialogResult.OK)
                 {

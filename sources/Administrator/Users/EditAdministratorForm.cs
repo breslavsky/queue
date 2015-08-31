@@ -1,6 +1,7 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -12,43 +13,34 @@ using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class EditAdministratorForm : RichForm
+    public partial class EditAdministratorForm : DependencyForm
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region events
+
         public event EventHandler<EventArgs> Saved;
 
+        #endregion events
+
+        #region fields
+
+        private readonly Guid administratorId;
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
         private QueueAdministrator administrator;
-        private Guid administratorId;
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
-        private TaskPool taskPool;
 
-        public EditAdministratorForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? administratorId = null)
-        {
-            InitializeComponent();
+        #endregion fields
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-            this.administratorId = administratorId.HasValue
-                ? administratorId.Value : Guid.Empty;
-
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
-            taskPool = new TaskPool();
-            taskPool.OnAddTask += taskPool_OnAddTask;
-            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-
-            permissionsFlagsControl.Initialize<AdministratorPermissions>();
-        }
-
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
+        #region properties
 
         public QueueAdministrator Administrator
         {
@@ -65,6 +57,24 @@ namespace Queue.Administrator
                 isActiveCheckBox.Checked = administrator.IsActive;
                 permissionsFlagsControl.Select<AdministratorPermissions>(administrator.Permissions);
             }
+        }
+
+        #endregion properties
+
+        public EditAdministratorForm(Guid? administratorId = null)
+        {
+            InitializeComponent();
+
+            this.administratorId = administratorId.HasValue
+                ? administratorId.Value : Guid.Empty;
+
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
+            taskPool = new TaskPool();
+            taskPool.OnAddTask += taskPool_OnAddTask;
+            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
+
+            permissionsFlagsControl.Initialize<AdministratorPermissions>();
         }
 
         private void EditAdministratorForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -110,45 +120,6 @@ namespace Queue.Administrator
                 };
             }
         }
-
-        #region bindings
-
-        private void surnameTextBox_Leave(object sender, EventArgs e)
-        {
-            administrator.Surname = surnameTextBox.Text;
-        }
-
-        private void nameTextBox_Leave(object sender, EventArgs e)
-        {
-            administrator.Name = nameTextBox.Text;
-        }
-
-        private void patronymicTextBox_Leave(object sender, EventArgs e)
-        {
-            administrator.Patronymic = patronymicTextBox.Text;
-        }
-
-        private void emailTextBox_Leave(object sender, EventArgs e)
-        {
-            administrator.Email = emailTextBox.Text;
-        }
-
-        private void mobileTextBox_Leave(object sender, EventArgs e)
-        {
-            administrator.Mobile = mobileTextBox.Text;
-        }
-
-        private void isActiveCheckBox_Leave(object sender, EventArgs e)
-        {
-            administrator.IsActive = isActiveCheckBox.Checked;
-        }
-
-        private void permissionsFlagsControl_Leave(object sender, EventArgs e)
-        {
-            administrator.Permissions = permissionsFlagsControl.Selected<AdministratorPermissions>();
-        }
-
-        #endregion bindings
 
         private async void passwordButton_Click(object sender, EventArgs e)
         {
@@ -218,5 +189,54 @@ namespace Queue.Administrator
                 }
             }
         }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
+        #region bindings
+
+        private void emailTextBox_Leave(object sender, EventArgs e)
+        {
+            administrator.Email = emailTextBox.Text;
+        }
+
+        private void isActiveCheckBox_Leave(object sender, EventArgs e)
+        {
+            administrator.IsActive = isActiveCheckBox.Checked;
+        }
+
+        private void mobileTextBox_Leave(object sender, EventArgs e)
+        {
+            administrator.Mobile = mobileTextBox.Text;
+        }
+
+        private void nameTextBox_Leave(object sender, EventArgs e)
+        {
+            administrator.Name = nameTextBox.Text;
+        }
+
+        private void patronymicTextBox_Leave(object sender, EventArgs e)
+        {
+            administrator.Patronymic = patronymicTextBox.Text;
+        }
+
+        private void permissionsFlagsControl_Leave(object sender, EventArgs e)
+        {
+            administrator.Permissions = permissionsFlagsControl.Selected<AdministratorPermissions>();
+        }
+
+        private void surnameTextBox_Leave(object sender, EventArgs e)
+        {
+            administrator.Surname = surnameTextBox.Text;
+        }
+
+        #endregion bindings
     }
 }

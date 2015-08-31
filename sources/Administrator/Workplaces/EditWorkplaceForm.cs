@@ -1,51 +1,46 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class EditWorkplaceForm : RichForm
+    public partial class EditWorkplaceForm : DependencyForm
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region events
+
         public event EventHandler<EventArgs> Saved;
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
-        private TaskPool taskPool;
+        #endregion events
 
-        public EditWorkplaceForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? workplaceId = null)
-        {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-            this.workplaceId = workplaceId.HasValue
-                ? workplaceId.Value : Guid.Empty;
+        #region fields
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
-            taskPool = new TaskPool();
-            taskPool.OnAddTask += taskPool_OnAddTask;
-            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
+        private readonly Guid workplaceId;
+        private Workplace workplace;
 
-            InitializeComponent();
+        #endregion fields
 
-            typeControl.Initialize<WorkplaceType>();
-            modificatorControl.Initialize<WorkplaceModificator>();
-        }
-
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
+        #region properties
 
         public Workplace Workplace
         {
@@ -63,9 +58,34 @@ namespace Queue.Administrator
             }
         }
 
-        private Workplace workplace { get; set; }
+        #endregion properties
 
-        private Guid workplaceId { get; set; }
+        public EditWorkplaceForm(Guid? workplaceId = null)
+        {
+            InitializeComponent();
+
+            this.workplaceId = workplaceId.HasValue
+                ? workplaceId.Value : Guid.Empty;
+
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
+            taskPool = new TaskPool();
+            taskPool.OnAddTask += taskPool_OnAddTask;
+            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
+
+            typeControl.Initialize<WorkplaceType>();
+            modificatorControl.Initialize<WorkplaceModificator>();
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
 
         protected override void Dispose(bool disposing)
         {

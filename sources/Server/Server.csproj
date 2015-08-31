@@ -121,7 +121,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{ad492499-461f-4117-a495-302089ad7b87}</Project>
-      <Name>Model</Name>
+      <Name>Model %28Model\Model%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services.Contracts\Services.Contracts.csproj">
       <Project>{77ef6d1d-f45b-48b4-8fdd-ca004c4a12f4}</Project>

@@ -159,7 +159,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{ad492499-461f-4117-a495-302089ad7b87}</Project>
-      <Name>Model</Name>
+      <Name>Model %28Model\Model%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\Reports\Reports.csproj">
       <Project>{88611229-1f7d-4c6a-88b8-43805b287b8c}</Project>

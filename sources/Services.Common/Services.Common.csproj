@@ -52,6 +52,9 @@
     <Compile Include="ServerEventArgs.cs" />
     <Compile Include="ServerServiceEventType.cs" />
     <Compile Include="ServerSubscribtionArgs.cs" />
+    <Compile Include="HubQualityServiceEventType.cs" />
+    <Compile Include="HubQualityServiceSubscribtionArgs.cs" />
+    <Compile Include="IHubQualityCallback.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
