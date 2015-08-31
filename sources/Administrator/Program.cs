@@ -4,6 +4,7 @@ using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
+using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
 using System.Windows.Forms;
@@ -49,6 +50,7 @@ namespace Queue.Administrator
                     Guid sessionId = Guid.Parse(options.SessionId);
                     currentUser = channel.Service.OpenUserSession(sessionId).Result as QueueAdministrator;
                     container.RegisterInstance<IClientService<IServerTcpService>>(serverService);
+                    container.RegisterInstance<User>(currentUser);
                     container.RegisterInstance<QueueAdministrator>(currentUser);
 
                     Application.Run(new AdministratorForm());

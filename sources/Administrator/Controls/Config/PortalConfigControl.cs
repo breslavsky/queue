@@ -58,9 +58,10 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
+            config = new PortalConfig();
+
             if (designtime)
             {
-                config = new PortalConfig();
                 return;
             }
 

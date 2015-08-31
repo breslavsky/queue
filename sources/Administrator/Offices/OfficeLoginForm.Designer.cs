@@ -17,6 +17,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            Queue.Common.LoginSettings loginSettings1 = new Queue.Common.LoginSettings();
             this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
             this.loginButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -25,8 +26,14 @@
             // 
             this.loginSettingsControl.Location = new System.Drawing.Point(5, 5);
             this.loginSettingsControl.Name = "loginSettingsControl";
+            loginSettings1.Endpoint = "net.tcp://queue:4505";
+            loginSettings1.LockItem = false;
+            loginSettings1.Password = "";
+            loginSettings1.User = new System.Guid("00000000-0000-0000-0000-000000000000");
+            this.loginSettingsControl.Settings = loginSettings1;
             this.loginSettingsControl.Size = new System.Drawing.Size(340, 176);
             this.loginSettingsControl.TabIndex = 0;
+            this.loginSettingsControl.UserRole = Queue.Model.Common.UserRole.Administrator;
             // 
             // loginButton
             // 

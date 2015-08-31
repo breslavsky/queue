@@ -1,35 +1,47 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator.Reports
 {
-    public partial class AdditionalServiceRatingReportForm : Form
+    public partial class AdditionalServiceRatingReportForm : DependencyForm
     {
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
+        #region dependency
 
-        private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
 
-        public AdditionalServiceRatingReportForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
+
+        #endregion fields
+
+        public AdditionalServiceRatingReportForm()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
@@ -42,19 +54,9 @@ namespace Queue.Administrator.Reports
             startYearComboBox.SelectedIndex = startYearComboBox.Items.Count - 1;
         }
 
-        private void taskPool_OnAddTask(object sender, EventArgs e)
+        private void AdditionalServiceRatingReportForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
-
-        private void isFullCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            additionalServicesListBox.Enabled = !isFullCheckBox.Checked;
+            taskPool.Cancel();
         }
 
         private void AdditionalServiceRatingReportForm_Load(object sender, EventArgs e)
@@ -73,45 +75,6 @@ namespace Queue.Administrator.Reports
             startYearComboBox.SelectedIndex = startYearComboBox.Items.Count - 1;
 
             isFullCheckBox.Checked = true;
-        }
-
-        private async void LoadAdditionalServices()
-        {
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
-            {
-                try
-                {
-                    foreach (IdentifiedEntity op in await channel.Service.GetAdditionalServiceLinks())
-                    {
-                        additionalServicesListBox.Items.Add(op, true);
-                    }
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-            }
-        }
-
-        private void startYearComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int startYear = (int)startYearComboBox.SelectedItem;
-            int currentYear = ServerDateTime.Today.Year;
-            finishYearComboBox.Items.Clear();
-            for (int year = startYear; year <= currentYear; year++)
-            {
-                finishYearComboBox.Items.Add(year);
-            }
-            finishYearComboBox.SelectedIndex = finishYearComboBox.Items.Count - 1;
-            finishYearComboBox.Enabled = finishYearComboBox.Items.Count > 1;
         }
 
         private async void createReportButton_Click(object sender, EventArgs e)
@@ -203,9 +166,58 @@ namespace Queue.Administrator.Reports
                                             .ToArray();
         }
 
-        private void AdditionalServiceRatingReportForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void isFullCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            taskPool.Cancel();
+            additionalServicesListBox.Enabled = !isFullCheckBox.Checked;
+        }
+
+        private async void LoadAdditionalServices()
+        {
+            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    foreach (IdentifiedEntity op in await channel.Service.GetAdditionalServiceLinks())
+                    {
+                        additionalServicesListBox.Items.Add(op, true);
+                    }
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+            }
+        }
+
+        private void startYearComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int startYear = (int)startYearComboBox.SelectedItem;
+            int currentYear = ServerDateTime.Today.Year;
+            finishYearComboBox.Items.Clear();
+            for (int year = startYear; year <= currentYear; year++)
+            {
+                finishYearComboBox.Items.Add(year);
+            }
+            finishYearComboBox.SelectedIndex = finishYearComboBox.Items.Count - 1;
+            finishYearComboBox.Enabled = finishYearComboBox.Items.Count > 1;
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
     }
 }

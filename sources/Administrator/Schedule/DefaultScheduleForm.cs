@@ -1,46 +1,72 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
-using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class DefaultScheduleForm : RichForm
+    public partial class DefaultScheduleForm : DependencyForm
     {
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region fields
 
         private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
-        public DefaultScheduleForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        #endregion fields
+
+        public DefaultScheduleForm()
             : base()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
         }
 
-        private void taskPool_OnAddTask(object sender, EventArgs e)
+        protected override void Dispose(bool disposing)
         {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+                if (taskPool != null)
+                {
+                    taskPool.Dispose();
+                }
+                if (channelManager != null)
+                {
+                    channelManager.Dispose();
+                }
+            }
+            base.Dispose(disposing);
         }
 
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        private void DefaultScheduleForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+            taskPool.Cancel();
         }
 
         private void DefaultScheduleForm_Load(object sender, EventArgs e)
@@ -49,73 +75,9 @@ namespace Queue.Administrator
             LoadWeekdaySchedule();
         }
 
-        private async void LoadWeekdaySchedule()
+        private void exceptionScheduleCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            var dayOfWeek = (DayOfWeek)int.Parse(weekdayTabControl.SelectedTab.Tag.ToString());
-
-            using (var channel = channelManager.CreateChannel())
-            {
-                try
-                {
-                    weekdayScheduleControl.Schedule = await taskPool.AddTask(channel.Service.GetDefaultWeekdaySchedule(dayOfWeek));
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-            }
-        }
-
-        private void weekdayTabControl_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            weekdayScheduleControl.Parent = weekdayTabControl.SelectedTab;
-            LoadWeekdaySchedule();
-        }
-
-        private async void exceptionScheduleDatePicker_ValueChanged(object sender, EventArgs e)
-        {
-            var scheduleDate = exceptionScheduleDatePicker.Value;
-
-            using (var channel = channelManager.CreateChannel())
-            {
-                try
-                {
-                    exceptionScheduleDatePicker.Enabled = false;
-
-                    exceptionScheduleControl.Schedule = await taskPool.AddTask(channel.Service.GetDefaultExceptionSchedule(scheduleDate));
-
-                    exceptionScheduleCheckBox.Checked = true;
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException<ObjectNotFoundFault>)
-                {
-                    exceptionScheduleCheckBox.Checked = false;
-                    exceptionScheduleControl.Schedule = null;
-                }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    exceptionScheduleDatePicker.Enabled = true;
-                }
-            }
+            exceptionScheduleControl.Enabled = exceptionScheduleCheckBox.Checked;
         }
 
         private async void exceptionScheduleCheckBox_Click(object sender, EventArgs e)
@@ -185,34 +147,83 @@ namespace Queue.Administrator
             }
         }
 
-        private void exceptionScheduleCheckBox_CheckedChanged(object sender, EventArgs e)
+        private async void exceptionScheduleDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            exceptionScheduleControl.Enabled = exceptionScheduleCheckBox.Checked;
-        }
+            var scheduleDate = exceptionScheduleDatePicker.Value;
 
-        private void DefaultScheduleForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            taskPool.Cancel();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            using (var channel = channelManager.CreateChannel())
             {
-                if (components != null)
+                try
                 {
-                    components.Dispose();
+                    exceptionScheduleDatePicker.Enabled = false;
+
+                    exceptionScheduleControl.Schedule = await taskPool.AddTask(channel.Service.GetDefaultExceptionSchedule(scheduleDate));
+
+                    exceptionScheduleCheckBox.Checked = true;
                 }
-                if (taskPool != null)
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException<ObjectNotFoundFault>)
                 {
-                    taskPool.Dispose();
+                    exceptionScheduleCheckBox.Checked = false;
+                    exceptionScheduleControl.Schedule = null;
                 }
-                if (channelManager != null)
+                catch (FaultException exception)
                 {
-                    channelManager.Dispose();
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+                finally
+                {
+                    exceptionScheduleDatePicker.Enabled = true;
                 }
             }
-            base.Dispose(disposing);
+        }
+
+        private async void LoadWeekdaySchedule()
+        {
+            var dayOfWeek = (DayOfWeek)int.Parse(weekdayTabControl.SelectedTab.Tag.ToString());
+
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    weekdayScheduleControl.Schedule = await taskPool.AddTask(channel.Service.GetDefaultWeekdaySchedule(dayOfWeek));
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+            }
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
+        private void weekdayTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            weekdayScheduleControl.Parent = weekdayTabControl.SelectedTab;
+            LoadWeekdaySchedule();
         }
     }
 }

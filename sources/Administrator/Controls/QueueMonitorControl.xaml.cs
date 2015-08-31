@@ -24,6 +24,8 @@ namespace Queue.Administrator
 {
     public partial class QueueMonitorControl : UserControl
     {
+        #region fields
+
         private const byte BlockBoxWidth = 200;
         private const int HeartbeatTimeout = 30;
         private const int HorizontalMediumZoom = 250;
@@ -36,6 +38,28 @@ namespace Queue.Administrator
 
         private Dictionary<int, object> indexes;
         private QueuePlan queuePlan;
+
+        #endregion fields
+
+        #region properties
+
+        public QueuePlan QueuePlan
+        {
+            get
+            {
+                return queuePlan;
+            }
+            set
+            {
+                queuePlan = value;
+                if (value != null)
+                {
+                    ReloadQueuePlan();
+                }
+            }
+        }
+
+        #endregion properties
 
         public QueueMonitorControl()
         {
@@ -79,12 +103,6 @@ namespace Queue.Administrator
             };
 
             return border;
-        }
-
-        public void LoadQueuePlan(QueuePlan queuePlan)
-        {
-            this.queuePlan = queuePlan;
-            ReloadQueuePlan();
         }
 
         public void Search(int number)

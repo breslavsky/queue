@@ -1,30 +1,40 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Common;
-using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class OfficeLoginForm : RichForm
+    public partial class OfficeLoginForm : DependencyForm
     {
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly Guid officeId;
+        private readonly TaskPool taskPool;
         private Office office;
-        private Guid officeId;
-        private TaskPool taskPool;
 
-        private LoginSettings loginSettings;
+        #endregion fields
 
-        public string Endpoint { get { return loginSettings.Endpoint; } }
-
-        public Guid SessionId { get; private set; }
+        #region properties
 
         public Office Office
         {
@@ -33,36 +43,30 @@ namespace Queue.Administrator
             {
                 office = value;
 
-                loginSettings = new LoginSettings()
-                {
-                    Endpoint = office.Endpoint
-                };
-                loginSettingsControl.UserRole = UserRole.Administrator;
+                Settings.Endpoint = office.Endpoint;
             }
         }
 
-        public OfficeLoginForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid officeId)
+        public Guid SessionId { get; private set; }
+
+        public LoginSettings Settings { get; private set; }
+
+        #endregion properties
+
+        public OfficeLoginForm(Guid officeId)
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            Settings = new LoginSettings();
+            loginSettingsControl.Settings = Settings;
+
             this.officeId = officeId;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-        }
-
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         protected override void Dispose(bool disposing)
@@ -83,6 +87,44 @@ namespace Queue.Administrator
                 }
             }
             base.Dispose(disposing);
+        }
+
+        private async void loginButton_Click(object sender, EventArgs e)
+        {
+            using (var serverService = new ClientService<IServerService>(Settings.Endpoint))
+            using (var channelManager = serverService.CreateChannelManager())
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    loginButton.Enabled = false;
+
+                    var user = await taskPool.AddTask(channel.Service.UserLogin(Settings.User, Settings.Password));
+                    SessionId = user.SessionId;
+                    DialogResult = DialogResult.OK;
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+                finally
+                {
+                    loginButton.Enabled = true;
+                }
+            }
+        }
+
+        private void OfficeLoginForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            taskPool.Cancel();
         }
 
         private async void OfficeLoginForm_Load(object sender, EventArgs e)
@@ -112,46 +154,14 @@ namespace Queue.Administrator
             }
         }
 
-        private void OfficeLoginForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void taskPool_OnAddTask(object sender, EventArgs e)
         {
-            taskPool.Cancel();
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
         }
 
-        private async void loginButton_Click(object sender, EventArgs e)
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
         {
-            User selectedUser = loginSettingsControl.SelectedUser;
-            if (selectedUser == null)
-            {
-                return;
-            }
-
-            /*using (Channel<IServerTcpService> channel = loginSettingsControl.ChannelManager.CreateChannel())
-            {
-                try
-                {
-                    loginButton.Enabled = false;
-
-                    var user = await taskPool.AddTask(channel.Service.UserLogin(selectedUser.Id, loginSettings.Password));
-                    SessionId = user.SessionId;
-                    DialogResult = DialogResult.OK;
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    loginButton.Enabled = true;
-                }
-            }*/
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
     }
 }

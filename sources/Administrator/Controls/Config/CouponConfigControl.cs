@@ -61,9 +61,10 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
+            config = new CouponConfig();
+
             if (designtime)
             {
-                config = new CouponConfig();
                 return;
             }
 

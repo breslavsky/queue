@@ -1,6 +1,7 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
@@ -8,49 +9,51 @@ using System;
 using System.Drawing;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class EditServiceGroupForm : RichForm
+    public partial class EditServiceGroupForm : DependencyForm
     {
-        public event EventHandler<EventArgs> Saved;
+        #region dependency
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
-        private Guid parenGrouptId;
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly Guid parenGrouptId;
+        private readonly Guid serviceGroupId;
+        private readonly TaskPool taskPool;
         private ServiceGroup parentGroup;
         private ServiceGroup serviceGroup;
-        private Guid serviceGroupId;
-        private TaskPool taskPool;
 
-        public EditServiceGroupForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? parentId = null, Guid? serviceGroupId = null)
+        #endregion fields
+
+        public EditServiceGroupForm(Guid? parentId = null, Guid? serviceGroupId = null)
             : base()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
             this.parenGrouptId = parentId.HasValue
                 ? parentId.Value : Guid.Empty;
             this.serviceGroupId = serviceGroupId.HasValue
                 ? serviceGroupId.Value : Guid.Empty;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
         }
 
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
+        public event EventHandler<EventArgs> Saved;
 
         public ServiceGroup ServiceGroup
         {
@@ -196,6 +199,21 @@ namespace Queue.Administrator
             }
         }
 
+        private void ServiceGroupEditForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            taskPool.Cancel();
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
         #region bindings
 
         private void codeTextBox_Leave(object sender, EventArgs e)
@@ -234,10 +252,5 @@ namespace Queue.Administrator
         }
 
         #endregion bindings
-
-        private void ServiceGroupEditForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            taskPool.Cancel();
-        }
     }
 }

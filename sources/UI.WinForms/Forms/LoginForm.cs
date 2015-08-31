@@ -2,14 +2,12 @@
 using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
-using System.ComponentModel;
 using System.Reflection;
 using System.ServiceModel;
 using System.Windows.Forms;
@@ -58,6 +56,7 @@ namespace Queue.UI.WinForms
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
             languageControl.Initialize<Language>();
+            loginSettingsControl.Settings = LoginSettings;
         }
 
         private void LoginForm_Load(object sender, EventArgs e)

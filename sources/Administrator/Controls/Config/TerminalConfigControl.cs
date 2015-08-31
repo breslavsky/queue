@@ -64,9 +64,10 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
+            config = new TerminalConfig();
+
             if (designtime)
             {
-                config = new TerminalConfig();
                 return;
             }
 

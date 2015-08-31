@@ -87,9 +87,10 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
+            config = new MediaConfig();
+
             if (designtime)
             {
-                config = new MediaConfig();
                 return;
             }
 

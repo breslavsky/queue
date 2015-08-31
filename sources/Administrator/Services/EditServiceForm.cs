@@ -1,6 +1,7 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -10,23 +11,36 @@ using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class EditServiceForm : RichForm
+    public partial class EditServiceForm : DependencyForm
     {
+        #region events
+
         public event EventHandler<EventArgs> Saved;
+
+        #endregion events
+
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
 
         #region fields
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
-        private Service service;
-        private Guid serviceGroupId;
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
+        private readonly Guid serviceGroupId;
+        private readonly Guid serviceId;
         private ServiceGroup serviceGroup;
-        private Guid serviceId;
-        private TaskPool taskPool;
+        private Service service;
 
         #endregion fields
 
@@ -67,36 +81,25 @@ namespace Queue.Administrator
 
         #endregion properties
 
-        public EditServiceForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? serviceGroupId = null, Guid? serviceId = null)
+        public EditServiceForm(Guid? serviceGroupId = null, Guid? serviceId = null)
 
             : base()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
             this.serviceGroupId = serviceGroupId.HasValue
                 ? serviceGroupId.Value : Guid.Empty;
             this.serviceId = serviceId.HasValue
                 ? serviceId.Value : Guid.Empty;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
             liveRegistratorFlagsControl.Initialize<ClientRequestRegistrator>();
             earlyRegistratorFlagsControl.Initialize<ClientRequestRegistrator>();
-        }
-
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         protected override void Dispose(bool disposing)
@@ -117,40 +120,6 @@ namespace Queue.Administrator
                 }
             }
             base.Dispose(disposing);
-        }
-
-        private async void saveButton_Click(object sender, EventArgs e)
-        {
-            using (var channel = channelManager.CreateChannel())
-            {
-                try
-                {
-                    saveButton.Enabled = false;
-
-                    Service = await taskPool.AddTask(channel.Service.EditService(service));
-
-                    if (Saved != null)
-                    {
-                        Saved(this, EventArgs.Empty);
-                    }
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    saveButton.Enabled = true;
-                }
-            }
         }
 
         private void EditServiceForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -211,6 +180,67 @@ namespace Queue.Administrator
             }
         }
 
+        private async void saveButton_Click(object sender, EventArgs e)
+        {
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    saveButton.Enabled = false;
+
+                    Service = await taskPool.AddTask(channel.Service.EditService(service));
+
+                    if (Saved != null)
+                    {
+                        Saved(this, EventArgs.Empty);
+                    }
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+                finally
+                {
+                    saveButton.Enabled = true;
+                }
+            }
+        }
+
+        private void serviceTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedTab = serviceTabControl.SelectedTab;
+            if (selectedTab.Equals(stepsTabPage))
+            {
+                serviceStepsControl.Service = Service;
+            }
+            else if (selectedTab.Equals(weekdayScheduleTabPage))
+            {
+                LoadWeekdaySchedule();
+            }
+            else if (selectedTab.Equals(parametersTabPage))
+            {
+                serviceParametersControl.Service = Service;
+            }
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
         #region bindings
 
         private void clientCallDelayUpDown_Leave(object sender, EventArgs e)
@@ -250,9 +280,9 @@ namespace Queue.Administrator
             service.Description = descriptionTextBox.Text;
         }
 
-        private void liveRegistratorFlagsControl_Leave(object sender, EventArgs e)
+        private void earlyRegistratorFlagsControl_Leave(object sender, EventArgs e)
         {
-            service.LiveRegistrator = liveRegistratorFlagsControl.Selected<ClientRequestRegistrator>();
+            service.EarlyRegistrator = earlyRegistratorFlagsControl.Selected<ClientRequestRegistrator>();
         }
 
         private void isPlanSubjectsCheckBox_Leave(object sender, EventArgs e)
@@ -260,14 +290,19 @@ namespace Queue.Administrator
             service.IsPlanSubjects = isPlanSubjectsCheckBox.Checked;
         }
 
+        private void isUseTypeCheckBox_Leave(object sender, EventArgs e)
+        {
+            service.IsUseType = isUseTypeCheckBox.Checked;
+        }
+
         private void linkTextBox_Leave(object sender, EventArgs e)
         {
             service.Link = linkTextBox.Text;
         }
 
-        private void earlyRegistratorFlagsControl_Leave(object sender, EventArgs e)
+        private void liveRegistratorFlagsControl_Leave(object sender, EventArgs e)
         {
-            service.EarlyRegistrator = earlyRegistratorFlagsControl.Selected<ClientRequestRegistrator>();
+            service.LiveRegistrator = liveRegistratorFlagsControl.Selected<ClientRequestRegistrator>();
         }
 
         private void maxEarlyDaysUpDown_Leave(object sender, EventArgs e)
@@ -300,29 +335,7 @@ namespace Queue.Administrator
             service.TimeIntervalRounding = TimeSpan.FromMinutes((double)timeIntervalRoundingUpDown.Value);
         }
 
-        private void isUseTypeCheckBox_Leave(object sender, EventArgs e)
-        {
-            service.IsUseType = isUseTypeCheckBox.Checked;
-        }
-
         #endregion bindings
-
-        private void serviceTabControl_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var selectedTab = serviceTabControl.SelectedTab;
-            if (selectedTab.Equals(stepsTabPage))
-            {
-                serviceStepsControl.Service = Service;
-            }
-            else if (selectedTab.Equals(weekdayScheduleTabPage))
-            {
-                LoadWeekdaySchedule();
-            }
-            else if (selectedTab.Equals(parametersTabPage))
-            {
-                serviceParametersControl.Service = Service;
-            }
-        }
 
         #region weekday schedule
 

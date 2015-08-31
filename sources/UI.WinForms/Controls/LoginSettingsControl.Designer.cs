@@ -70,7 +70,7 @@
             this.userControl.Size = new System.Drawing.Size(220, 21);
             this.userControl.TabIndex = 1;
             this.userControl.UseResetButton = false;
-            this.userControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.selectUserControl_SelectedChanged);
+            this.userControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.userControl_SelectedChanged);
             // 
             // passwordLabel
             // 
@@ -147,6 +147,7 @@
             this.Controls.Add(this.connectionGroupBox);
             this.Name = "LoginSettingsControl";
             this.Size = new System.Drawing.Size(330, 170);
+            this.Load += new System.EventHandler(this.LoginSettingsControl_Load);
             ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
             this.loginGroupBox.ResumeLayout(false);
             this.loginGroupBox.PerformLayout();

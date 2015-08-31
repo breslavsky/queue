@@ -1,39 +1,88 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class OperatorInterruptionsForm : RichForm
+    public partial class OperatorInterruptionsForm : DependencyForm
     {
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
-        private TaskPool taskPool;
+        #region dependency
 
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
         private BindingList<OperatorInterruption> operatorInterruptions;
 
-        public OperatorInterruptionsForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        #endregion fields
+
+        public OperatorInterruptionsForm()
             : base()
         {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            InitializeComponent();
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
-
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
+        }
 
-            InitializeComponent();
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+                if (taskPool != null)
+                {
+                    taskPool.Dispose();
+                }
+                if (channelManager != null)
+                {
+                    channelManager.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            using (var f = new EditOperatorInterruptionForm())
+            {
+                f.Saved += (s, eventArgs) =>
+                {
+                    operatorInterruptions.Add(f.OperatorInterruption);
+                    f.Close();
+                };
+
+                f.ShowDialog();
+            }
+        }
+
+        private void OperatorInterruptionsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            taskPool.Cancel();
         }
 
         private async void OperatorInterruptionsForm_Load(object sender, EventArgs e)
@@ -61,35 +110,6 @@ namespace Queue.Administrator
             }
         }
 
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
-
-        private void addButton_Click(object sender, EventArgs e)
-        {
-            using (var f = new EditOperatorInterruptionForm(channelBuilder, currentUser))
-            {
-                f.Saved += (s, eventArgs) =>
-                {
-                    operatorInterruptions.Add(f.OperatorInterruption);
-                    f.Close();
-                };
-
-                f.ShowDialog();
-            }
-        }
-
-        private void OperatorInterruptionsForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            taskPool.Cancel();
-        }
-
         private void operatorInterruptionsGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             var currentRow = operatorInterruptionsGridView.CurrentRow;
@@ -100,7 +120,7 @@ namespace Queue.Administrator
 
             OperatorInterruption operatorInterruption = operatorInterruptions[currentRow.Index];
 
-            using (var f = new EditOperatorInterruptionForm(channelBuilder, currentUser, operatorInterruption.Id))
+            using (var f = new EditOperatorInterruptionForm(operatorInterruption.Id))
             {
                 f.Saved += (s, eventArgs) =>
                 {
@@ -151,24 +171,14 @@ namespace Queue.Administrator
             }
         }
 
-        protected override void Dispose(bool disposing)
+        private void taskPool_OnAddTask(object sender, EventArgs e)
         {
-            if (disposing)
-            {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
-                if (taskPool != null)
-                {
-                    taskPool.Dispose();
-                }
-                if (channelManager != null)
-                {
-                    channelManager.Dispose();
-                }
-            }
-            base.Dispose(disposing);
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
     }
 }

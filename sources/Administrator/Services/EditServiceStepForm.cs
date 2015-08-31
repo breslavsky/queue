@@ -1,53 +1,57 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class EditServiceStepForm : RichForm
+    public partial class EditServiceStepForm : DependencyForm
     {
-        public event EventHandler<EventArgs> Saved;
+        #region dependency
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly Guid serviceId;
+        private readonly Guid serviceStepId;
+        private readonly TaskPool taskPool;
         private Service service;
-        private Guid serviceId;
         private ServiceStep serviceStep;
-        private Guid serviceStepId;
-        private TaskPool taskPool;
 
-        public EditServiceStepForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? serviceId, Guid? serviceStepId = null)
+        #endregion fields
+
+        public EditServiceStepForm(Guid? serviceId, Guid? serviceStepId = null)
         {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            InitializeComponent();
+
             this.serviceId = serviceId.HasValue
                 ? serviceId.Value : Guid.Empty;
             this.serviceStepId = serviceStepId.HasValue
                 ? serviceStepId.Value : Guid.Empty;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-
-            InitializeComponent();
         }
 
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
+        public event EventHandler<EventArgs> Saved;
 
         public ServiceStep ServiceStep
         {
@@ -123,15 +127,6 @@ namespace Queue.Administrator
             }
         }
 
-        #region bindings
-
-        private void nameTextBox_Leave(object sender, EventArgs e)
-        {
-            serviceStep.Name = nameTextBox.Text;
-        }
-
-        #endregion bindings
-
         private async void saveButton_Click(object sender, EventArgs e)
         {
             using (var channel = channelManager.CreateChannel())
@@ -165,5 +160,24 @@ namespace Queue.Administrator
                 }
             }
         }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
+        #region bindings
+
+        private void nameTextBox_Leave(object sender, EventArgs e)
+        {
+            serviceStep.Name = nameTextBox.Text;
+        }
+
+        #endregion bindings
     }
 }

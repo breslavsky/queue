@@ -1,47 +1,50 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class OfficesForm : RichForm
+    public partial class OfficesForm : DependencyForm
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region fields
+
         private const string LoginColumn = "loginColumn";
         private const string ManageColumn = "manageColumn";
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
-        private TaskPool taskPool;
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
 
-        public OfficesForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        #endregion fields
+
+        public OfficesForm()
             : base()
         {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            InitializeComponent();
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-
-            InitializeComponent();
-        }
-
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         protected override void Dispose(bool disposing)
@@ -66,7 +69,7 @@ namespace Queue.Administrator
 
         private void addOfficeButton_Click(object sender, EventArgs e)
         {
-            using (var f = new EditOfficeForm(channelBuilder, currentUser))
+            using (var f = new EditOfficeForm())
             {
                 DataGridViewRow row = null;
 
@@ -100,11 +103,11 @@ namespace Queue.Administrator
                 {
                     case LoginColumn:
 
-                        using (var f = new OfficeLoginForm(channelBuilder, currentUser, office.Id))
+                        using (var f = new OfficeLoginForm(office.Id))
                         {
                             if (f.ShowDialog() == DialogResult.OK)
                             {
-                                office.Endpoint = f.Endpoint;
+                                office.Endpoint = f.Settings.Endpoint;
                                 office.SessionId = f.SessionId;
 
                                 using (var channel = channelManager.CreateChannel())
@@ -216,7 +219,7 @@ namespace Queue.Administrator
                 var row = officesGridView.Rows[rowIndex];
                 Office office = row.Tag as Office;
 
-                using (var f = new EditOfficeForm(channelBuilder, currentUser, office.Id))
+                using (var f = new EditOfficeForm(office.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {
@@ -266,6 +269,16 @@ namespace Queue.Administrator
         {
             row.Cells["nameColumn"].Value = office.Name;
             row.Tag = office;
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
     }
 }

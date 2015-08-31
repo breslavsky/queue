@@ -61,9 +61,10 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
+            config = new SMTPConfig();
+
             if (designtime)
             {
-                config = new SMTPConfig();
                 return;
             }
 

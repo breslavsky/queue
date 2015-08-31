@@ -1,6 +1,6 @@
 ﻿using Junte.Parallel;
-using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
@@ -8,14 +8,23 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class SelectServiceForm : RichForm
+    public partial class SelectServiceForm : DependencyForm
     {
+        #region dependency
+
+        [Dependency]
+        public User CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
         #region fields
 
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
-
         private ChannelManager<IServerTcpService> channelManager;
+        private User currentUser;
         private TaskPool taskPool;
 
         #endregion fields
@@ -24,7 +33,7 @@ namespace Queue.UI.WinForms
 
         public Service Service
         {
-            get { return serviceControl.Service; }
+            get { return serviceControl.SelectedService; }
         }
 
         #endregion properties
@@ -37,10 +46,11 @@ namespace Queue.UI.WinForms
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
-            taskPool = new TaskPool();
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
-            serviceControl.Initialize(channelBuilder, currentUser);
+            taskPool = new TaskPool();
+            taskPool.OnAddTask += taskPool_OnAddTask;
+            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
         }
 
         private void serviceControl_Selected(object sender, EventArgs e)
@@ -55,6 +65,16 @@ namespace Queue.UI.WinForms
         {
             taskPool.Dispose();
             channelManager.Dispose();
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
     }
 }

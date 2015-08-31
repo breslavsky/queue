@@ -110,7 +110,7 @@ namespace Queue.Administrator
 
         private void additionalServiceReportMenuItem_Click(object sender, EventArgs e)
         {
-            ShowForm<AdditionalServiceRatingReportForm>(() => new AdditionalServiceRatingReportForm(ServerService.ChannelBuilder, CurrentUser));
+            ShowForm<AdditionalServiceRatingReportForm>(() => new AdditionalServiceRatingReportForm());
         }
 
         private void additionalServicesMenuItem_Click(object sender, EventArgs e)
@@ -157,12 +157,12 @@ namespace Queue.Administrator
 
         private void defaultScheduleMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<DefaultScheduleForm>(() => new DefaultScheduleForm(ServerService.ChannelBuilder, CurrentUser));
+            ShowForm<DefaultScheduleForm>(() => new DefaultScheduleForm());
         }
 
         private void exceptionScheduleReportMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<ExceptionScheduleReportForm>(() => new ExceptionScheduleReportForm(ServerService.ChannelBuilder, CurrentUser));
+            ShowForm<ExceptionScheduleReportForm>(() => new ExceptionScheduleReportForm());
         }
 
         private void logoutMenuItem_Click(object sender, EventArgs e)
@@ -202,17 +202,17 @@ namespace Queue.Administrator
 
         private void officesMenuItem_Click(object sender, EventArgs eventArgsventArgs)
         {
-            ShowForm<OfficesForm>(() => new OfficesForm(ServerService.ChannelBuilder, CurrentUser));
+            ShowForm<OfficesForm>(() => new OfficesForm());
         }
 
         private void operatorInterruptionsFormMenuItem_Click(object sender, EventArgs e)
         {
-            ShowForm<OperatorInterruptionsForm>(() => new OperatorInterruptionsForm(ServerService.ChannelBuilder, CurrentUser));
+            ShowForm<OperatorInterruptionsForm>(() => new OperatorInterruptionsForm());
         }
 
         private void operatorsRatingToolStripMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<OperatorRatingReportForm>(() => new OperatorRatingReportForm(ServerService.ChannelBuilder, CurrentUser));
+            ShowForm<OperatorRatingReportForm>(() => new OperatorRatingReportForm());
         }
 
         private void pingTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -269,12 +269,12 @@ namespace Queue.Administrator
 
         private void serviceRatingReportMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<ServiceRatingReportForm>(() => new ServiceRatingReportForm(ServerService.ChannelBuilder, CurrentUser));
+            ShowForm<ServiceRatingReportForm>(() => new ServiceRatingReportForm());
         }
 
         private void servicesMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<ServicesForm>(() => new ServicesForm(ServerService.ChannelBuilder, CurrentUser));
+            ShowForm<ServicesForm>(() => new ServicesForm());
         }
 
         private void ShowForm<T>(Func<Form> create)
@@ -319,7 +319,7 @@ namespace Queue.Administrator
 
         private void сurrentScheduleMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            ShowForm<CurrentScheduleForm>(() => new CurrentScheduleForm(ServerService.ChannelBuilder, CurrentUser));
+            ShowForm<CurrentScheduleForm>(() => new CurrentScheduleForm());
         }
     }
 }

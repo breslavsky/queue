@@ -1,36 +1,48 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
 {
-    public partial class QueueMonitorForm : RichForm
+    public partial class QueueMonitorForm : DependencyForm
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region fields
+
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
 
-        private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
+        #endregion fields
 
         public QueueMonitorForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
             : base()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
@@ -50,17 +62,6 @@ namespace Queue.Administrator
         private void taskPool_OnRemoveTask(object sender, EventArgs e)
         {
             Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
-
-        public QueuePlan QueuePlan
-        {
-            set
-            {
-                if (value != null)
-                {
-                    queueMonitorControl.LoadQueuePlan(value);
-                }
-            }
         }
 
         private void QueueMonitorForm_Load(object sender, EventArgs e)
@@ -134,7 +135,7 @@ namespace Queue.Administrator
                         }
                     }
 
-                    QueuePlan = queuePlan;
+                    queueMonitorControl.QueuePlan = queuePlan;
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

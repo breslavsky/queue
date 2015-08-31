@@ -61,9 +61,10 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
+            config = new DefaultConfig();
+
             if (designtime)
             {
-                config = new DefaultConfig();
                 return;
             }
 

@@ -1,18 +1,28 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
-using System.Data;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class SelectServiceControl : RichUserControl
+    public partial class SelectServiceControl : DependencyUserControl
     {
+        #region dependency
+
+        [Dependency]
+        public User CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
         #region events
 
         public event EventHandler<EventArgs> Selected;
@@ -21,37 +31,36 @@ namespace Queue.UI.WinForms
 
         #region fields
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-
-        private User currentUser;
-
-        private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
-
-        private bool initialized = false;
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
 
         #endregion fields
 
         #region properties
 
-        public Service Service { get; private set; }
+        public Service SelectedService { get; private set; }
 
         #endregion properties
 
         public SelectServiceControl()
         {
             InitializeComponent();
+
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
+            taskPool = new TaskPool();
+            taskPool.OnAddTask += taskPool_OnAddTask;
+            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
         }
 
-        public void Initialize(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        private void taskPool_OnAddTask(object sender, EventArgs e)
         {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
-            taskPool = new TaskPool();
-
-            initialized = true;
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         private async void LoadServiceGroup(TreeNodeCollection nodes, ServiceGroup serviceGroup = null)
@@ -113,10 +122,7 @@ namespace Queue.UI.WinForms
 
         private void SelectServiceControl_Load(object sender, EventArgs e)
         {
-            if (initialized)
-            {
-                LoadServiceGroup(treeView.Nodes);
-            }
+            LoadServiceGroup(treeView.Nodes);
         }
 
         private void treeView_AfterExpand(object sender, TreeViewEventArgs e)
@@ -147,7 +153,7 @@ namespace Queue.UI.WinForms
 
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            Service = treeView.SelectedNode.Tag as Service;
+            SelectedService = treeView.SelectedNode.Tag as Service;
 
             Selected(this, new EventArgs());
         }

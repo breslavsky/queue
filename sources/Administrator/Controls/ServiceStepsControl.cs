@@ -109,7 +109,7 @@ namespace Queue.Administrator
 
         private void addStepButton_Click(object sender, EventArgs e)
         {
-            using (var f = new EditServiceStepForm(ServerService.ChannelBuilder, CurrentUser, service.Id))
+            using (var f = new EditServiceStepForm(service.Id))
             {
                 DataGridViewRow row = null;
 
@@ -163,7 +163,7 @@ namespace Queue.Administrator
                 var row = stepsGridView.Rows[e.RowIndex];
                 ServiceStep serviceStep = row.Tag as ServiceStep;
 
-                using (var f = new EditServiceStepForm(ServerService.ChannelBuilder, CurrentUser, null, serviceStep.Id))
+                using (var f = new EditServiceStepForm(null, serviceStep.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {

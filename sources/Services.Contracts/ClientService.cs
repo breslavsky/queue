@@ -5,7 +5,7 @@ using System.ServiceModel;
 
 namespace Queue.Services.Contracts
 {
-    public interface IClientService<T>
+    public interface IClientService<T> : IDisposable
     {
         //TODO: скрыть!
         DuplexChannelBuilder<T> ChannelBuilder { get; set; }

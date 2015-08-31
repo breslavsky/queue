@@ -5,6 +5,7 @@ using Microsoft.Practices.Unity;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
@@ -13,7 +14,7 @@ using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
 {
-    public partial class EditServiceRenderingForm : RichForm
+    public partial class EditServiceRenderingForm : DependencyForm
     {
         #region dependency
 
@@ -34,9 +35,9 @@ namespace Queue.Administrator
         #region fields
 
         private readonly ChannelManager<IServerTcpService> channelManager;
-        private readonly TaskPool taskPool;
         private readonly Guid scheduleId;
         private readonly Guid serviceRenderingId;
+        private readonly TaskPool taskPool;
         private Schedule schedule;
         private ServiceRendering serviceRendering;
 
@@ -75,16 +76,6 @@ namespace Queue.Administrator
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
             modeСontrol.Initialize<ServiceRenderingMode>();
-        }
-
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         protected override void Dispose(bool disposing)
@@ -155,30 +146,6 @@ namespace Queue.Administrator
             }
         }
 
-        #region bindings
-
-        private void operatorControl_Leave(object sender, EventArgs e)
-        {
-            serviceRendering.Operator = operatorControl.Selected<QueueOperator>();
-        }
-
-        private void priorityUpDown_Leave(object sender, EventArgs e)
-        {
-            serviceRendering.Priority = (byte)priorityUpDown.Value;
-        }
-
-        private void serviceStepControl_Leave(object sender, EventArgs e)
-        {
-            serviceRendering.ServiceStep = serviceStepControl.Selected<ServiceStep>();
-        }
-
-        private void modeСontrol_Leave(object sender, EventArgs e)
-        {
-            serviceRendering.Mode = modeСontrol.Selected<ServiceRenderingMode>();
-        }
-
-        #endregion bindings
-
         private async void saveButton_Click(object sender, EventArgs e)
         {
             using (var channel = channelManager.CreateChannel())
@@ -212,5 +179,39 @@ namespace Queue.Administrator
                 }
             }
         }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
+        #region bindings
+
+        private void modeСontrol_Leave(object sender, EventArgs e)
+        {
+            serviceRendering.Mode = modeСontrol.Selected<ServiceRenderingMode>();
+        }
+
+        private void operatorControl_Leave(object sender, EventArgs e)
+        {
+            serviceRendering.Operator = operatorControl.Selected<QueueOperator>();
+        }
+
+        private void priorityUpDown_Leave(object sender, EventArgs e)
+        {
+            serviceRendering.Priority = (byte)priorityUpDown.Value;
+        }
+
+        private void serviceStepControl_Leave(object sender, EventArgs e)
+        {
+            serviceRendering.ServiceStep = serviceStepControl.Selected<ServiceStep>();
+        }
+
+        #endregion bindings
     }
 }

@@ -56,9 +56,10 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
+            config = new NotificationConfig();
+
             if (designtime)
             {
-                config = new NotificationConfig();
                 return;
             }
 

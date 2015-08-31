@@ -1,26 +1,47 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
 {
-    public partial class EditOperatorInterruptionForm : RichForm
+    public partial class EditOperatorInterruptionForm : DependencyForm
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region events
+
         public event EventHandler<EventArgs> Saved;
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
+        #endregion events
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly Guid operatorInterruptionId;
+        private readonly TaskPool taskPool;
         private OperatorInterruption operatorInterruption;
-        private Guid operatorInterruptionId;
-        private TaskPool taskPool;
+
+        #endregion fields
+
+        #region properties
 
         public OperatorInterruption OperatorInterruption
         {
@@ -39,33 +60,34 @@ namespace Queue.Administrator
             }
         }
 
-        public EditOperatorInterruptionForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser, Guid? operatorInterruptionId = null)
+        #endregion properties
+
+        public EditOperatorInterruptionForm(Guid? operatorInterruptionId = null)
             : base()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-
             this.operatorInterruptionId = operatorInterruptionId.HasValue ?
                 operatorInterruptionId.Value : Guid.Empty;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
-
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
         }
 
-        private void taskPool_OnAddTask(object sender, EventArgs e)
+        private void AdjustType()
         {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+            var type = typeControl.Selected<OperatorInterruptionType>();
+
+            dayOfWeekControl.Enabled = type == OperatorInterruptionType.Weekday;
+            targetDatePicker.Enabled = type == OperatorInterruptionType.TargetDate;
         }
 
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        private void dayOfWeekControl_Leave(object sender, EventArgs e)
         {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+            operatorInterruption.DayOfWeek = dayOfWeekControl.Selected<DayOfWeek>();
         }
 
         private void EditAdditionalServiceForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -131,6 +153,16 @@ namespace Queue.Administrator
             }
         }
 
+        private void finishTimePicker_Leave(object sender, EventArgs e)
+        {
+            operatorInterruption.FinishTime = finishTimePicker.Value;
+        }
+
+        private void operatorControl_Leave(object sender, EventArgs e)
+        {
+            operatorInterruption.Operator = operatorControl.Selected<QueueOperator>();
+        }
+
         private async void saveButton_Click(object sender, EventArgs e)
         {
             using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
@@ -165,14 +197,9 @@ namespace Queue.Administrator
             }
         }
 
-        private void operatorControl_Leave(object sender, EventArgs e)
+        private void startTimePicker_Leave(object sender, EventArgs e)
         {
-            operatorInterruption.Operator = operatorControl.Selected<QueueOperator>();
-        }
-
-        private void typeControl_Leave(object sender, EventArgs e)
-        {
-            operatorInterruption.Type = typeControl.Selected<OperatorInterruptionType>();
+            operatorInterruption.StartTime = startTimePicker.Value;
         }
 
         private void targetDatePicker_Leave(object sender, EventArgs e)
@@ -180,32 +207,24 @@ namespace Queue.Administrator
             operatorInterruption.TargetDate = targetDatePicker.Value;
         }
 
-        private void dayOfWeekControl_Leave(object sender, EventArgs e)
+        private void taskPool_OnAddTask(object sender, EventArgs e)
         {
-            operatorInterruption.DayOfWeek = dayOfWeekControl.Selected<DayOfWeek>();
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
         }
 
-        private void startTimePicker_Leave(object sender, EventArgs e)
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
         {
-            operatorInterruption.StartTime = startTimePicker.Value;
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
-        private void finishTimePicker_Leave(object sender, EventArgs e)
+        private void typeControl_Leave(object sender, EventArgs e)
         {
-            operatorInterruption.FinishTime = finishTimePicker.Value;
+            operatorInterruption.Type = typeControl.Selected<OperatorInterruptionType>();
         }
 
         private void typeControl_SelectedChanged(object sender, EventArgs e)
         {
             AdjustType();
-        }
-
-        private void AdjustType()
-        {
-            var type = typeControl.Selected<OperatorInterruptionType>();
-
-            dayOfWeekControl.Enabled = type == OperatorInterruptionType.Weekday;
-            targetDatePicker.Enabled = type == OperatorInterruptionType.TargetDate;
         }
     }
 }

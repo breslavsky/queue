@@ -1,33 +1,45 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.Drawing;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class ServicesForm : RichForm
+    public partial class ServicesForm : DependencyForm
     {
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private User currentUser;
+        #region dependency
 
-        private ChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
 
-        public ServicesForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
+
+        #endregion fields
+
+        public ServicesForm()
             : base()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
@@ -131,7 +143,7 @@ namespace Queue.Administrator
                 parentGroupId = (selectedNode.Tag as ServiceGroup).Id;
             }
 
-            using (var f = new EditServiceGroupForm(channelBuilder, currentUser, parentGroupId))
+            using (var f = new EditServiceGroupForm())
             {
                 TreeNode treeNode = null;
 
@@ -176,7 +188,7 @@ namespace Queue.Administrator
                 serviceGroupId = (selectedNode.Tag as ServiceGroup).Id;
             }
 
-            using (var f = new EditServiceForm(channelBuilder, currentUser, serviceGroupId))
+            using (var f = new EditServiceForm())
             {
                 TreeNode treeNode = null;
 
@@ -216,7 +228,7 @@ namespace Queue.Administrator
             {
                 var serviceGroup = selectedNode.Tag as ServiceGroup;
 
-                using (var f = new EditServiceGroupForm(channelBuilder, currentUser, null, serviceGroup.Id))
+                using (var f = new EditServiceGroupForm(null, serviceGroup.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {
@@ -236,7 +248,7 @@ namespace Queue.Administrator
             {
                 var service = selectedNode.Tag as Service;
 
-                using (var f = new EditServiceForm(channelBuilder, currentUser, null, service.Id))
+                using (var f = new EditServiceForm(null, service.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {

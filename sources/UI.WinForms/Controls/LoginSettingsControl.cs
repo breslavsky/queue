@@ -1,50 +1,50 @@
 ﻿using Junte.UI.WinForms;
-using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
-using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
-using System.ComponentModel;
 using System.ServiceModel;
 using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class LoginSettingsControl : RichUserControl
+    public partial class LoginSettingsControl : DependencyUserControl
     {
-        #region dependency
-
-        [Dependency]
-        public LoginSettings Settings { get; set; }
-
-        #endregion dependency
+        #region properties
 
         public UserRole UserRole { get; set; }
 
-        private ClientService<IServerTcpService> serverService;
-        private ChannelManager<IServerTcpService> channelManager;
+        public LoginSettings Settings { get; set; }
 
-        public User SelectedUser
-        {
-            get { return userControl.Selected<User>(); }
-        }
+        #endregion properties
+
+        #region events
 
         public EventHandler OnConnected = delegate { };
         public EventHandler OnSubmit = delegate { };
+
+        #endregion events
 
         public LoginSettingsControl()
         {
             InitializeComponent();
 
-            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            Settings = new LoginSettings();
+
+            if (designtime)
             {
-                ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
-                settingsBindingSource.DataSource = Settings;
+                return;
             }
+
+            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
+        }
+
+        private void LoginSettingsControl_Load(object sender, EventArgs e)
+        {
+            settingsBindingSource.DataSource = Settings;
         }
 
         private void connectButton_Click(object sender, EventArgs e)
@@ -75,20 +75,8 @@ namespace Queue.UI.WinForms
                     throw new QueueException("Не указан адрес сервера");
                 }
 
-                if (serverService != null)
-                {
-                    serverService.Dispose();
-                }
-
-                serverService = new ClientService<IServerTcpService>(Settings.Endpoint);
-
-                if (channelManager != null)
-                {
-                    channelManager.Dispose();
-                }
-
-                channelManager = serverService.CreateChannelManager();
-
+                using (var serverService = new ClientService<IServerTcpService>(Settings.Endpoint))
+                using (var channelManager = serverService.CreateChannelManager())
                 using (var channel = channelManager.CreateChannel())
                 {
                     connectButton.Enabled = false;
@@ -150,7 +138,7 @@ namespace Queue.UI.WinForms
             }
         }
 
-        private void selectUserControl_SelectedChanged(object sender, EventArgs e)
+        private void userControl_SelectedChanged(object sender, EventArgs e)
         {
             Settings.User = userControl.Selected<User>().Id;
         }
