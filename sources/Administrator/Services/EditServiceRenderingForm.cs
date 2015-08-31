@@ -1,57 +1,48 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
 {
     public partial class EditServiceRenderingForm : RichForm
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region events
+
         public event EventHandler<EventArgs> Saved;
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
+        #endregion events
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
+        private readonly Guid scheduleId;
+        private readonly Guid serviceRenderingId;
         private Schedule schedule;
-        private Guid scheduleId;
         private ServiceRendering serviceRendering;
-        private Guid serviceRenderingId;
-        private TaskPool taskPool;
 
-        public EditServiceRenderingForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser,
-            Guid scheduleId, Guid? serviceRenderingId = null)
-        {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-            this.scheduleId = scheduleId;
-            this.serviceRenderingId = serviceRenderingId.HasValue
-                ? serviceRenderingId.Value : Guid.Empty;
+        #endregion fields
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
-            taskPool = new TaskPool();
-            taskPool.OnAddTask += taskPool_OnAddTask;
-            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-
-            InitializeComponent();
-
-            modeСontrol.Initialize<ServiceRenderingMode>();
-        }
-
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
+        #region properties
 
         public ServiceRendering ServiceRendering
         {
@@ -65,6 +56,35 @@ namespace Queue.Administrator
                 modeСontrol.Select<ServiceRenderingMode>(serviceRendering.Mode);
                 priorityUpDown.Value = serviceRendering.Priority;
             }
+        }
+
+        #endregion properties
+
+        public EditServiceRenderingForm(Guid scheduleId, Guid? serviceRenderingId = null)
+        {
+            InitializeComponent();
+
+            this.scheduleId = scheduleId;
+            this.serviceRenderingId = serviceRenderingId.HasValue
+                ? serviceRenderingId.Value : Guid.Empty;
+
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
+            taskPool = new TaskPool();
+            taskPool.OnAddTask += taskPool_OnAddTask;
+            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
+
+            modeСontrol.Initialize<ServiceRenderingMode>();
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         protected override void Dispose(bool disposing)

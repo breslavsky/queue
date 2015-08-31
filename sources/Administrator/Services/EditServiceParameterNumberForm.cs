@@ -1,54 +1,47 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class EditServiceParameterNumberForm : RichForm
+    public partial class EditServiceParameterNumberForm : DependencyForm
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region events
+
         public event EventHandler<EventArgs> Saved;
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
+        #endregion events
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly Guid serviceId;
+        private readonly Guid serviceParameterNumberId;
+        private readonly TaskPool taskPool;
         private Service service;
-        private Guid serviceId;
         private ServiceParameterNumber serviceParameterNumber;
-        private Guid serviceParameterNumberId;
-        private TaskPool taskPool;
 
-        public EditServiceParameterNumberForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser,
-            Guid? serviceId, Guid? serviceParameterNumberId = null)
-        {
-            InitializeComponent();
+        #endregion fields
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-            this.serviceId = serviceId.HasValue
-                ? serviceId.Value : Guid.Empty;
-            this.serviceParameterNumberId = serviceParameterNumberId.HasValue
-                ? serviceParameterNumberId.Value : Guid.Empty;
-
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
-            taskPool = new TaskPool();
-            taskPool.OnAddTask += taskPool_OnAddTask;
-            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-        }
-
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
+        #region properties
 
         public ServiceParameterNumber ServiceParameterNumber
         {
@@ -61,6 +54,24 @@ namespace Queue.Administrator
                 toolTipTextBox.Text = serviceParameterNumber.ToolTip;
                 isRequireCheckBox.Checked = serviceParameterNumber.IsRequire;
             }
+        }
+
+        #endregion properties
+
+        public EditServiceParameterNumberForm(Guid? serviceId, Guid? serviceParameterNumberId = null)
+        {
+            InitializeComponent();
+
+            this.serviceId = serviceId.HasValue
+                ? serviceId.Value : Guid.Empty;
+            this.serviceParameterNumberId = serviceParameterNumberId.HasValue
+                ? serviceParameterNumberId.Value : Guid.Empty;
+
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
+            taskPool = new TaskPool();
+            taskPool.OnAddTask += taskPool_OnAddTask;
+            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
         }
 
         private void EditServiceParameterNumberForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -139,6 +150,16 @@ namespace Queue.Administrator
                     saveButton.Enabled = true;
                 }
             }
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         #region bindings

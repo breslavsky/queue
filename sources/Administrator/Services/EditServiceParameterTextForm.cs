@@ -1,54 +1,47 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class EditServiceParameterTextForm : RichForm
+    public partial class EditServiceParameterTextForm : DependencyForm
     {
+        #region dependency
+
+        [Dependency]
+        public QueueAdministrator CurrentUser { get; set; }
+
+        [Dependency]
+        public IClientService<IServerTcpService> ServerService { get; set; }
+
+        #endregion dependency
+
+        #region events
+
         public event EventHandler<EventArgs> Saved;
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
+        #endregion events
+
+        #region fields
+
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
+        private readonly Guid serviceId;
+        private readonly Guid serviceParameterTextId;
         private Service service;
-        private Guid serviceId;
         private ServiceParameterText serviceParameterText;
-        private Guid serviceParameterTextId;
-        private TaskPool taskPool;
 
-        public EditServiceParameterTextForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser,
-            Guid? serviceId, Guid? serviceParameterTextId = null)
-        {
-            InitializeComponent();
+        #endregion fields
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-            this.serviceId = serviceId.HasValue
-                ? serviceId.Value : Guid.Empty;
-            this.serviceParameterTextId = serviceParameterTextId.HasValue
-                ? serviceParameterTextId.Value : Guid.Empty;
-
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
-            taskPool = new TaskPool();
-            taskPool.OnAddTask += taskPool_OnAddTask;
-            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-        }
-
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
+        #region properties
 
         public ServiceParameterText ServiceParameterText
         {
@@ -63,6 +56,34 @@ namespace Queue.Administrator
                 parameterMinLengthUpDown.Value = serviceParameterText.MinLength;
                 parameterMaxLengthUpDown.Value = serviceParameterText.MaxLength;
             }
+        }
+
+        #endregion properties
+
+        public EditServiceParameterTextForm(Guid? serviceId, Guid? serviceParameterTextId = null)
+        {
+            InitializeComponent();
+
+            this.serviceId = serviceId.HasValue
+                ? serviceId.Value : Guid.Empty;
+            this.serviceParameterTextId = serviceParameterTextId.HasValue
+                ? serviceParameterTextId.Value : Guid.Empty;
+
+            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+
+            taskPool = new TaskPool();
+            taskPool.OnAddTask += taskPool_OnAddTask;
+            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
         private void EditServiceParameterTextForm_FormClosing(object sender, FormClosingEventArgs e)

@@ -138,7 +138,7 @@ namespace Queue.Administrator
         {
             DataGridViewRow row = null;
 
-            using (var f = new EditServiceRenderingForm(ServerService.ChannelBuilder, CurrentUser, schedule.Id))
+            using (var f = new EditServiceRenderingForm(schedule.Id))
             {
                 f.Saved += (s, eventArgs) =>
                 {
@@ -186,7 +186,7 @@ namespace Queue.Administrator
                 var row = serviceRenderingsGridView.Rows[e.RowIndex];
                 ServiceRendering serviceRendering = row.Tag as ServiceRendering;
 
-                using (var f = new EditServiceRenderingForm(ServerService.ChannelBuilder, CurrentUser, schedule.Id, serviceRendering.Id))
+                using (var f = new EditServiceRenderingForm(schedule.Id, serviceRendering.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {

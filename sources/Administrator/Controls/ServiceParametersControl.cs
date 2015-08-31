@@ -27,14 +27,20 @@ namespace Queue.Administrator
 
         #region fields
 
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
+        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly TaskPool taskPool;
         private Service service;
-        private TaskPool taskPool;
+
+        #endregion fields
+
+        #region properties
 
         public Service Service
         {
+            get
+            {
+                return service;
+            }
             set
             {
                 parametersGridView.Rows.Clear();
@@ -73,7 +79,7 @@ namespace Queue.Administrator
             }
         }
 
-        #endregion fields
+        #endregion properties
 
         public ServiceParametersControl()
         {
@@ -105,7 +111,7 @@ namespace Queue.Administrator
             switch (parameterTypeControl.Selected<ServiceParameterType>())
             {
                 case ServiceParameterType.Number:
-                    using (var f = new EditServiceParameterNumberForm(channelBuilder, currentUser, service.Id))
+                    using (var f = new EditServiceParameterNumberForm(service.Id))
                     {
                         f.Saved += (s, eventArgs) =>
                         {
@@ -122,7 +128,7 @@ namespace Queue.Administrator
                     break;
 
                 case ServiceParameterType.Text:
-                    using (var f = new EditServiceParameterTextForm(channelBuilder, currentUser, service.Id))
+                    using (var f = new EditServiceParameterTextForm(service.Id))
                     {
                         f.Saved += (s, eventArgs) =>
                         {
@@ -139,7 +145,7 @@ namespace Queue.Administrator
                     break;
 
                 case ServiceParameterType.Options:
-                    using (var f = new EditServiceParameterOptionsForm(channelBuilder, currentUser, service.Id))
+                    using (var f = new EditServiceParameterOptionsForm(service.Id))
                     {
                         f.Saved += (s, eventArgs) =>
                         {
@@ -169,7 +175,7 @@ namespace Queue.Administrator
 
                 if (parameter is ServiceParameterNumber)
                 {
-                    using (var f = new EditServiceParameterNumberForm(channelBuilder, currentUser, null, parameter.Id))
+                    using (var f = new EditServiceParameterNumberForm(null, parameter.Id))
                     {
                         f.Saved += (s, eventArgs) =>
                         {
@@ -182,7 +188,7 @@ namespace Queue.Administrator
                 }
                 else if (parameter is ServiceParameterText)
                 {
-                    using (var f = new EditServiceParameterTextForm(channelBuilder, currentUser, null, parameter.Id))
+                    using (var f = new EditServiceParameterTextForm(null, parameter.Id))
                     {
                         f.Saved += (s, eventArgs) =>
                         {
@@ -195,7 +201,7 @@ namespace Queue.Administrator
                 }
                 else if (parameter is ServiceParameterOptions)
                 {
-                    using (var f = new EditServiceParameterOptionsForm(channelBuilder, currentUser, null, parameter.Id))
+                    using (var f = new EditServiceParameterOptionsForm(null, parameter.Id))
                     {
                         f.Saved += (s, eventArgs) =>
                         {
