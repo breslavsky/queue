@@ -1,5 +1,6 @@
 ﻿namespace Queue.Hosts.Common
 {
+    //TODO: переместить в продукт
     public static class HostsConsts
     {
         #region server
@@ -7,7 +8,6 @@
         public const string ServerApp = "Queue.Server";
         public const string ServerServiceName = "JunteQueueServer";
         public const string ServerServiceExe = "Queue.Hosts.Server.WinService.exe";
-        public const string ServerSettingsSectionKey = "server";
 
         #endregion server
 
@@ -37,5 +37,14 @@
         public const string MetricSettingsSectionKey = "metric";
 
         #endregion metric
+
+        #region hub
+
+        public const string HubApp = "Queue.Hub";
+        public const string HubServiceName = "JunteQueueHub";
+        public const string HubServiceExe = "Queue.Hosts.Hub.WinService.exe";
+        public const string HubSettingsSectionKey = "hub";
+
+        #endregion hub
     }
 }

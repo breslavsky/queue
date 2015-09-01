@@ -3,9 +3,11 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Services.Contracts;
-using Queue.Services.Hub.Quality;
+using Queue.Services.Hub;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 
@@ -13,15 +15,44 @@ namespace Queue.Hub
 {
     public sealed class HubInstance : IDisposable
     {
+        #region fields
+
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private IList<ServiceHost> hosts = new List<ServiceHost>();
+        private IList<IHubQualityDriver> qualityDrivers = new List<IHubQualityDriver>();
+        private HubSettings settings;
         private bool disposed;
+
+        #endregion fields
 
         public HubInstance(HubSettings settings)
         {
-            var container = new UnityContainer();
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
+            this.settings = settings;
 
+            LoadDrivers();
+            LoadServices();
+        }
+
+        private void LoadDrivers()
+        {
+            foreach (var d in settings.Drivers.Quality)
+            {
+                var assembly = Assembly.LoadFrom(d.Assembly);
+                var type = assembly.GetType(d.Type);
+
+                var driver = Activator.CreateInstance(type, d) as IHubQualityDriver;
+                if (driver == null)
+                {
+                    throw new ApplicationException(string.Format("Error load quality driver {0} from {1}", d.Type, d.Assembly));
+                }
+            }
+
+            var container = ServiceLocator.Current.GetInstance<IUnityContainer>();
+            container.RegisterInstance<IHubQualityDriver[]>(qualityDrivers.ToArray());
+        }
+
+        private void LoadServices()
+        {
             var services = settings.Services;
             var tcpService = services.TcpService;
 
@@ -30,13 +61,13 @@ namespace Queue.Hub
             if (tcpService.Enabled)
             {
                 //quality
+                var host = new HubQualityServiceHost();
+
                 uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NET_TCP, tcpService.Host, tcpService.Port, HubServicesPaths.Quality));
                 logger.Info("TCP service host uri = ", uri);
 
-                var host = new ServiceHost(typeof(HubQualityService), uri);
-                host.AddServiceEndpoint(typeof(IHubQualityService), Bindings.NetTcpBinding, string.Empty);
+                host.AddServiceEndpoint(typeof(IHubQualityTcpService), Bindings.NetTcpBinding, string.Empty);
                 host.Description.Behaviors.Add(new ServiceMetadataBehavior());
-                //https://msdn.microsoft.com/en-us/library/dn178463(v=pandp.30).aspx#sec29
                 host.AddServiceEndpoint(typeof(IMetadataExchange), MetadataExchangeBindings.CreateMexTcpBinding(), "mex");
                 hosts.Add(host);
             }
@@ -46,12 +77,13 @@ namespace Queue.Hub
             if (httpService.Enabled)
             {
                 //quality
+                var host = new HubQualityServiceHost();
+
                 uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.HTTP, httpService.Host, httpService.Port, HubServicesPaths.Quality));
                 logger.Info("HTTP service host uri = ", uri);
 
-                var host = new ServiceHost(typeof(HubQualityService), uri);
-                host.AddServiceEndpoint(typeof(IHubQualityService), Bindings.BasicHttpBinding, string.Empty);
-                //endpoint.Behaviors.Add(new WebHttpBehavior());
+                var endpoint = host.AddServiceEndpoint(typeof(IHubQualityHttpService), Bindings.BasicHttpBinding, string.Empty);
+                endpoint.Behaviors.Add(new WebHttpBehavior());
                 host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                 {
                     HttpGetEnabled = true

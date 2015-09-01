@@ -19,9 +19,11 @@ namespace Queue.Operator
         private static AppOptions options;
         private static UnityContainer container;
         private static IConfigurationManager configuration;
+        private static OperatorSettings operatorSettings;
         private static LoginSettings loginSettings;
         private static LoginFormSettings loginFormSettings;
         private static IClientService<IServerTcpService> serverService;
+        private static IClientService<IHubQualityTcpService> hubQualityService;
         private static QueueOperator currentUser;
 
         [STAThread]
@@ -31,7 +33,14 @@ namespace Queue.Operator
             Application.SetCompatibleTextRenderingDefault(false);
 
             container = new UnityContainer();
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
+
             configuration = new ConfigurationManager(AppName, SpecialFolder.ApplicationData);
+            container.RegisterInstance<IConfigurationManager>(configuration);
+
+            operatorSettings = configuration.GetSection<OperatorSettings>(OperatorSettings.SectionKey);
+            container.RegisterInstance<OperatorSettings>(operatorSettings);
+
             loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
             loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
 

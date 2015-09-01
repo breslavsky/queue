@@ -1,4 +1,4 @@
-﻿namespace Queue.Services.Hub.Quality
+﻿namespace Queue.Services.Hub
 {
     public interface IHubQualityDriverArgs
     {

@@ -55,6 +55,8 @@
     <Compile Include="HubQualityServiceEventType.cs" />
     <Compile Include="HubQualityServiceSubscribtionArgs.cs" />
     <Compile Include="IHubQualityCallback.cs" />
+    <Compile Include="HubQualityCallback.cs" />
+    <Compile Include="HubQualityEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

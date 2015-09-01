@@ -39,6 +39,9 @@ namespace Queue.Operator
         [Dependency]
         public IClientService<IServerTcpService> ServerService { get; set; }
 
+        //[Dependency]
+        //public IClientService<IHubQualityTcpService> HubQualityService { get; set; }
+
         #endregion dependency
 
         #region fields

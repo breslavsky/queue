@@ -7,6 +7,8 @@ namespace Queue.Server
 {
     public class ServerSettings : ConfigurationSection
     {
+        public const string SectionKey = "server";
+
         private const string DefaultSerialKey = "0000-0000-0000-0000-0000";
         private const string DefaultRegisterKey = "0000-0000-0000-0000-0000";
 

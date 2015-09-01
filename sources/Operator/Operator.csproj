@@ -130,6 +130,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OperatorSettings.cs" />
     <Compile Include="AppOptions.cs" />
     <Compile Include="EditClientRequestAdditionalServiceForm.cs">
       <SubType>Form</SubType>

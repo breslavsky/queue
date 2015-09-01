@@ -1,4 +1,4 @@
-﻿using Queue.Services.Hub.Quality;
+﻿using Queue.Services.Hub;
 using System;
 
 namespace Queue.Hub

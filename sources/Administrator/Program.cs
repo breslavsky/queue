@@ -32,12 +32,20 @@ namespace Queue.Administrator
             Application.SetCompatibleTextRenderingDefault(false);
 
             container = new UnityContainer();
-            configuration = new ConfigurationManager(AppName, SpecialFolder.ApplicationData);
-            administratorSettings = configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
-            loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
-            loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
-            RegisterContainer();
+            configuration = new ConfigurationManager(AppName, SpecialFolder.ApplicationData);
+            container.RegisterInstance<IConfigurationManager>(configuration);
+
+            administratorSettings = configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
+            container.RegisterInstance<AdministratorSettings>(administratorSettings);
+
+            loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
+            container.RegisterInstance<LoginSettings>(loginSettings);
+
+            loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
+            container.RegisterInstance<LoginFormSettings>(loginFormSettings);
+
             ParseOptions();
 
             if (options.AutoLogin)
@@ -95,15 +103,6 @@ namespace Queue.Administrator
         {
             options = new AppOptions();
             CommandLine.Parser.Default.ParseArguments(Environment.GetCommandLineArgs(), options);
-        }
-
-        private static void RegisterContainer()
-        {
-            container.RegisterInstance<IConfigurationManager>(configuration);
-            container.RegisterInstance<LoginSettings>(loginSettings);
-            container.RegisterInstance<LoginFormSettings>(loginFormSettings);
-
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 
         private static void ResetSettings()

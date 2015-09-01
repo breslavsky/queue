@@ -6,9 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace Queue.Services.Hub.Quality
+namespace Queue.Services.Hub
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession,
                     ConcurrencyMode = ConcurrencyMode.Multiple,
@@ -18,7 +19,7 @@ namespace Queue.Services.Hub.Quality
         #region dependency
 
         [Dependency]
-        public IList<IHubQualityDriver> Drivers { get; set; }
+        public IHubQualityDriver[] Drivers { get; set; }
 
         #endregion dependency
 

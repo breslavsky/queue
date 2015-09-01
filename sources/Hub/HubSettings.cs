@@ -54,6 +54,8 @@ namespace Queue.Hub
 
     public class HubSettings : ConfigurationSection
     {
+        public const string SectionKey = "hub";
+
         public HubSettings()
         {
             Services = GetDefaultServicesConfig();

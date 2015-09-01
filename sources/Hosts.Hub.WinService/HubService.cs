@@ -4,28 +4,35 @@ using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common;
 using Queue.Hosts.Common;
-using Queue.Server;
+using Queue.Hub;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.ServiceProcess;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using SpecialFolder = System.Environment.SpecialFolder;
 
-namespace Queue.Hosts.Server.WinService
+namespace Hosts.Hub.WinService
 {
-    public partial class ServerService : ServiceBase
+    public partial class HubService : ServiceBase
     {
         #region fields
 
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
         private static UnityContainer container;
         private static IConfigurationManager configuration;
-        private static ServerSettings settings;
-        private ServerInstance server;
+        private static HubSettings settings;
+        private HubInstance hub;
 
         #endregion fields
 
-        public ServerService()
+        public HubService()
         {
             InitializeComponent();
         }
@@ -39,18 +46,18 @@ namespace Queue.Hosts.Server.WinService
                 container = new UnityContainer();
                 ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
-                configuration = new ConfigurationManager(HostsConsts.ServerApp, SpecialFolder.ApplicationData);
+                configuration = new ConfigurationManager(HostsConsts.HubApp, SpecialFolder.ApplicationData);
                 container.RegisterInstance<IConfigurationManager>(configuration);
 
-                settings = configuration.GetSection<ServerSettings>(ServerSettings.SectionKey);
-                container.RegisterInstance<ServerSettings>(settings);
+                settings = configuration.GetSection<HubSettings>(HubSettings.SectionKey);
+                container.RegisterInstance<HubSettings>(settings);
 
                 var culture = settings.Language.GetCulture();
                 Thread.CurrentThread.CurrentCulture = culture;
                 CultureInfo.DefaultThreadCurrentCulture = culture;
 
-                server = new ServerInstance(settings);
-                server.Start();
+                hub = new HubInstance(settings);
+                hub.Start();
 
                 logger.Info("Service started");
             }
@@ -67,8 +74,8 @@ namespace Queue.Hosts.Server.WinService
 
             try
             {
-                server.Stop();
-                server.Dispose();
+                hub.Stop();
+                hub.Dispose();
             }
             catch (Exception e)
             {
