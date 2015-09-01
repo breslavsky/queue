@@ -111,17 +111,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HubQualityDriver.cs" />
     <Compile Include="Controls\LedsTISeriesControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="HubQualityDriverArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HubInstance.cs" />
     <Compile Include="HubSettings.cs" />
+    <Compile Include="Svetovod\SvetovodQualityPanel.cs" />
+    <Compile Include="Svetovod\SvetovodQualityPanelConnection.cs" />
+    <Compile Include="Svetovod\SvetovodQualityPanelDriverConfig.cs" />
     <EmbeddedResource Include="Controls\LedsTISeriesControl.resx">
       <DependentUpon>LedsTISeriesControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Svetovod\doc.pdf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

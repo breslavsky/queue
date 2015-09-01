@@ -3,7 +3,7 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Services.Contracts;
-using Queue.Services.Hub;
+using Queue.Services.Hub.Quality;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;

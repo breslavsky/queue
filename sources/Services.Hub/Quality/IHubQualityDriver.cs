@@ -2,17 +2,12 @@
 
 namespace Queue.Services.Hub.Quality
 {
-    public class HubQualityDriverArgs
-    {
-        public int Rating;
-    }
-
     public interface IHubQualityDriver : IHubDriver
     {
-        event EventHandler<HubQualityDriverArgs> Accepted;
+        event EventHandler<IHubQualityDriverArgs> Accepted;
 
-        void Enable(int deviceId);
+        void Enable(byte deviceId);
 
-        void Disable(int deviceId);
+        void Disable(byte deviceId);
     }
 }

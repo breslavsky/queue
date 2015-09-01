@@ -5,7 +5,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Threading;
 
-namespace Queue.Services.Hub.Quality
+namespace Queue.Hub
 {
     public class SvetovodQualityPanelConnection : IDisposable
     {
@@ -19,7 +19,7 @@ namespace Queue.Services.Hub.Quality
         private readonly AutoResetEvent receivedResetEvent = new AutoResetEvent(false);
         private readonly List<byte> receivedBytes = new List<byte>();
 
-        public event EventHandler<HubQualityDriverArgs> Accepted = delegate { };
+        public event EventHandler<byte> Accepted = delegate { };
 
         public SvetovodQualityPanelConnection(string port, byte sysnum)
         {
@@ -88,10 +88,7 @@ namespace Queue.Services.Hub.Quality
                     var received = receivedBytes.ToArray();
                     if (received.Length == 10)
                     {
-                        Accepted(this, new HubQualityDriverArgs()
-                            {
-                                Rating = received[9]
-                            });
+                        Accepted(this, received[9]);
 
                         break;
                     }

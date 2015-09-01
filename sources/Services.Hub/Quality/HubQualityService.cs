@@ -60,7 +60,7 @@ namespace Queue.Services.Hub.Quality
             return await Task.Run(() => message);
         }
 
-        public async Task Enable(int deviceId)
+        public async Task Enable(byte deviceId)
         {
             await Task.Run(() =>
             {
@@ -71,7 +71,7 @@ namespace Queue.Services.Hub.Quality
             });
         }
 
-        public async Task Disable(int deviceId)
+        public async Task Disable(byte deviceId)
         {
             await Task.Run(() =>
             {
@@ -174,7 +174,7 @@ namespace Queue.Services.Hub.Quality
 
         #endregion channel
 
-        private void driver_Accepted(object sender, HubQualityDriverArgs e)
+        private void driver_Accepted(object sender, IHubQualityDriverArgs e)
         {
             try
             {
