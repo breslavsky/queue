@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 
-namespace Queue.Server
+namespace Queue.Hub
 {
     public sealed class HubInstance : IDisposable
     {
@@ -50,7 +50,7 @@ namespace Queue.Server
                 logger.Info("HTTP service host uri = ", uri);
 
                 var host = new ServiceHost(typeof(HubQualityService), uri);
-                var endpoint = host.AddServiceEndpoint(typeof(IHubQualityService), Bindings.WebHttpBinding, string.Empty);
+                host.AddServiceEndpoint(typeof(IHubQualityService), Bindings.BasicHttpBinding, string.Empty);
                 //endpoint.Behaviors.Add(new WebHttpBehavior());
                 host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                 {

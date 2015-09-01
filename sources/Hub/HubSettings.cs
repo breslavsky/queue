@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Globalization;
 
-namespace Queue.Server
+namespace Queue.Hub
 {
     public class DriverConfig : ConfigurationElement
     {
@@ -21,7 +21,7 @@ namespace Queue.Server
         }
 
         [ConfigurationProperty("type", IsRequired = true)]
-        public string Enabled
+        public string Type
         {
             get { return (string)this["type"]; }
             set { this["type"] = value; }
