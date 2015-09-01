@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Queue.Server.DriverConfig">
+    <Position X="2.75" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAQAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>HubSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Queue.Server.DriversConfig">
+    <Position X="8.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HubSettings.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Quality" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Queue.Server.HttpServiceConfig" Collapsed="true">
+    <Position X="5.25" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HubSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Queue.Server.HubSettings">
+    <Position X="11.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hAAAAAAACAAACAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HubSettings.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Drivers" />
+      <Property Name="Services" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Queue.Server.ServiceConfig" Collapsed="true">
+    <Position X="5.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAQAAAAAAAACAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HubSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Queue.Server.ServicesConfig">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HubSettings.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="HttpService" />
+      <Property Name="TcpService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Queue.Server.TcpServiceConfig">
+    <Position X="2.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HubSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Queue.Server.QualityDriverConfig" Collapsed="true">
+    <Position X="5.5" Y="4.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HubSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

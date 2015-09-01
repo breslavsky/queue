@@ -13,7 +13,7 @@ namespace Queue.Services.Hub
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession,
                     ConcurrencyMode = ConcurrencyMode.Multiple,
                     IncludeExceptionDetailInFaults = true)]
-    public partial class HubQualityService : IHubQualityService, IHubQualityHttpService
+    public class HubQualityService : IHubQualityService, IHubQualityHttpService
     {
         #region dependency
 
