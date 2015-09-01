@@ -23,6 +23,7 @@ namespace Queue.Services.Server
                 using (var transaction = session.BeginTransaction())
                 {
                     var interruptions = session.CreateCriteria<OperatorInterruption>()
+                        .AddOrder(Order.Asc("Operator"))
                         .List<OperatorInterruption>();
 
                     return Mapper.Map<IList<OperatorInterruption>, DTO.OperatorInterruption[]>(interruptions);
