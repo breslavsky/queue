@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Queue.Services.Hub
+namespace Queue.Services.Hub.Quality
 {
     public class HubQualityDriverArgs
     {
