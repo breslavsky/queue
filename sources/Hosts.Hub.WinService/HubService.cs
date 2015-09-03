@@ -5,6 +5,7 @@ using NLog;
 using Queue.Common;
 using Queue.Hosts.Common;
 using Queue.Hub;
+using Queue.Hub.Settings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
