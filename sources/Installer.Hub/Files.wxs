@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Directory Id="dir7CB7E03714D9D7C1BF30BD3C91566568" Name="en-US" />
+    </DirectoryRef>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="CoreFiles">
+      <Component Id="cmpFD65F52CD5EC0B46A750F8EEFC3D4422" Directory="INSTALLFOLDER" Guid="6A368623-E510-4454-AF65-8454EB032545">
+        <File Id="fil1F7E777B326B02F60B86F747002F8605" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\AutoMapper.dll" />
+      </Component>
+      <Component Id="cmpEEC7AC6B3009FA88C57EB2972A7A8F5B" Directory="INSTALLFOLDER" Guid="8B16BD0A-BA3E-4ABF-A110-DED79AA9A2CD">
+        <File Id="fil4F01E53E158206D8C82AC24B4DFEE253" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\AutoMapper.Net4.dll" />
+      </Component>
+      <Component Id="cmp695F3B89FCD90C669B1958F6D20D523D" Directory="INSTALLFOLDER" Guid="97366F39-08F7-46E4-A3B9-45558ADD044E">
+        <File Id="filECAAB6E721DE437D50D73A1F554EB461" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Icons.resx" />
+      </Component>
+      <Component Id="cmpE5057827B5BBC477B00E24D8BF130BCF" Directory="INSTALLFOLDER" Guid="85786E98-CB03-4310-AADB-5549447929C1">
+        <File Id="fil1DB5A7054C250ED33EF11E0741091DAF" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Junte.Configuration.dll" />
+      </Component>
+      <Component Id="cmpA0E52F1E392B1546B38AC8B5DF074237" Directory="INSTALLFOLDER" Guid="B065A47B-C4C5-45F9-A1DB-72BD667E3697">
+        <File Id="filB435E9D49D0084A9B4FB363A3679323A" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Junte.Translation.dll" />
+      </Component>
+      <Component Id="cmp08EF7A5CA33078308765DCC79D7A64D7" Directory="INSTALLFOLDER" Guid="DDFB42F9-EF3B-4E72-858F-6A40666F9182">
+        <File Id="fil6C2B7DD08BCCEC9AF4731DA587E1322E" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Junte.WCF.dll" />
+      </Component>
+      <Component Id="cmpF2F1C15A47B64F045101B1AE5B4D6054" Directory="INSTALLFOLDER" Guid="55E61B79-DCF3-4E59-9AED-5BC7CEBDC9E1">
+        <File Id="filC342596B66E98254BB6E1CFFE50AE4AA" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Microsoft.Practices.ServiceLocation.dll" />
+      </Component>
+      <Component Id="cmpAA856A11EEF773F32618D29332CADFD0" Directory="INSTALLFOLDER" Guid="12B61372-1460-421E-96C0-50769D43C3AF">
+        <File Id="filFBB0E3892854598F759A072FB8581B46" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Microsoft.Practices.Unity.Configuration.dll" />
+      </Component>
+      <Component Id="cmp5141EFC969B8F1A9A0F1A01FFAD874BA" Directory="INSTALLFOLDER" Guid="6426A45B-F7F3-4E79-BFF9-F1DF8BDEA9A7">
+        <File Id="filE0B15D2B280E1EDFAB44F822C47D44ED" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Microsoft.Practices.Unity.dll" />
+      </Component>
+      <Component Id="cmpB48E67D919D1C42D78781F3B5D6E4336" Directory="INSTALLFOLDER" Guid="E50BD191-95DA-4EAD-8F4C-B4E442126B7E">
+        <File Id="fil53564AE840DB9CE660FE1F02DB1CB224" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Microsoft.Practices.Unity.RegistrationByConvention.dll" />
+      </Component>
+      <Component Id="cmpB7F1EBE42DCB1051B92D42C1EF84E2F9" Directory="INSTALLFOLDER" Guid="CFE147F0-57B8-4CF0-AA28-8D6F790FA787">
+        <File Id="filA09ADF42C6343B9B7C7780D266455CC4" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\NLog.dll" />
+      </Component>
+      <Component Id="cmp55C662695779CA92FAA1C1E8F030C8C5" Directory="INSTALLFOLDER" Guid="F731DB86-2EB5-4D2C-9852-E1CDAADE5E5D">
+        <File Id="filF091F2ECF8894DC2ED432C5359E96097" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Queue.Common.dll" />
+      </Component>
+      <Component Id="cmp70D5CE0BCF705C3CF206DC141D71CD57" Directory="INSTALLFOLDER" Guid="A5E109EA-40F3-42EB-B534-E6AA0120DBC2">
+        <File Id="fil4BE3D399883863F17E18715F8239CF29" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Queue.Hosts.Common.dll" />
+      </Component>
+      <Component Id="cmp311D1DEC8BA23D6E75456828C1C5BB79" Directory="INSTALLFOLDER" Guid="243DD901-B3C2-40DC-8920-DCBABE7CBC4E">
+        <File Id="filE5F48BBE85C7C4E1CC63F56143247981" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Queue.Hub.dll" />
+      </Component>
+      <Component Id="cmp2CE2F83A5AB32BAFBA87C152C2C6F326" Directory="INSTALLFOLDER" Guid="2D3C2158-9CB6-4D64-A3B6-89848169FF10">
+        <File Id="filA43D6849C111501753C2BC7E8E96E9A0" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Queue.Model.Common.dll" />
+      </Component>
+      <Component Id="cmp3111FB7FBF8E83855ABE23B857069FBD" Directory="INSTALLFOLDER" Guid="E65FE6A6-911D-4A48-914D-B196033515AF">
+        <File Id="fil5083433A7E8CCB9C46CE1C735BE07909" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Queue.Services.Common.dll" />
+      </Component>
+      <Component Id="cmpC4E247D01A6FC492047FFCAFBA4A2F7E" Directory="INSTALLFOLDER" Guid="EDB41997-588A-441B-90C2-BDCDC489349A">
+        <File Id="filC31EFD008AE5A05C968392FCDA6865C4" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Queue.Services.Contracts.dll" />
+      </Component>
+      <Component Id="cmp43DB63E4B74D1504244115D8B4DEBC10" Directory="INSTALLFOLDER" Guid="F3BF6715-7FDA-44AF-AF46-E8F093629B45">
+        <File Id="fil0AE4E4ED0D0ADF966E5E800E7EDC6425" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Queue.Services.DTO.dll" />
+      </Component>
+      <Component Id="cmp8269567A8686D58A7ADFE477763B2D13" Directory="INSTALLFOLDER" Guid="C1FF322F-2214-41CB-9ACF-087A1E508F4E">
+        <File Id="fil0E910CB852B59C5A1C3B74411A69F749" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\Queue.Services.Hub.dll" />
+      </Component>
+      <Component Id="cmp9E98642C203CBE503D536267AA9C6716" Directory="dir7CB7E03714D9D7C1BF30BD3C91566568" Guid="260C19C8-1AC1-4804-90E4-7C9CD954A359">
+        <File Id="fil5D9E49DD016924C30B0F5CBD21526774" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\en-US\Queue.Common.resources.dll" />
+      </Component>
+      <Component Id="cmpD1D82FF0036914B68146F38F4D9EB65A" Directory="dir7CB7E03714D9D7C1BF30BD3C91566568" Guid="81ABB398-1665-4479-A093-3EF9F91183C3">
+        <File Id="fil8A9F9219907F477A05D75AB31BAA9002" KeyPath="yes" Source="$(var.Hosts.Hub.WinService.TargetDir)\en-US\Queue.Model.Common.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
