@@ -54,7 +54,7 @@
     <EmbeddedResource Include="WixUI_ru-ru.wxl" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hub.ico" />
+    <Content Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--
