@@ -2,6 +2,7 @@
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
+using Queue.Hub.Settings;
 using Queue.Services.Contracts;
 using Queue.Services.Hub;
 using System;
@@ -15,11 +16,19 @@ namespace Queue.Hub
 {
     public sealed class HubInstance : IDisposable
     {
+        #region dependency
+
+        [Dependency]
+        public IUnityContainer Container { get; set; }
+
+        #endregion dependency
+
         #region fields
 
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private IList<ServiceHost> hosts = new List<ServiceHost>();
         private IList<IHubQualityDriver> qualityDrivers = new List<IHubQualityDriver>();
+        private IList<IHubDisplayDriver> displayDrivers = new List<IHubDisplayDriver>();
         private HubSettings settings;
         private bool disposed;
 
@@ -28,6 +37,7 @@ namespace Queue.Hub
         public HubInstance(HubSettings settings)
         {
             this.settings = settings;
+            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
             LoadDrivers();
             LoadServices();
@@ -35,20 +45,37 @@ namespace Queue.Hub
 
         private void LoadDrivers()
         {
-            foreach (var d in settings.Drivers.Quality)
+            foreach (DriverElementConfig d in settings.Drivers.Display)
             {
-                var assembly = Assembly.LoadFrom(d.Assembly);
-                var type = assembly.GetType(d.Type);
+                var config = d.Config as DriverConfig;
+                var type = Assembly.Load(config.Assembly).GetType(config.Type);
 
-                var driver = Activator.CreateInstance(type, d) as IHubQualityDriver;
+                var driver = Activator.CreateInstance(type, config) as IHubDisplayDriver;
                 if (driver == null)
                 {
-                    throw new ApplicationException(string.Format("Error load quality driver {0} from {1}", d.Type, d.Assembly));
+                    throw new ApplicationException(string.Format("Error load display driver {0} from {1}", config.Type, config.Assembly));
                 }
+
+                displayDrivers.Add(driver);
             }
 
-            var container = ServiceLocator.Current.GetInstance<IUnityContainer>();
-            container.RegisterInstance<IHubQualityDriver[]>(qualityDrivers.ToArray());
+            Container.RegisterInstance<IHubDisplayDriver[]>(displayDrivers.ToArray());
+
+            foreach (DriverElementConfig d in settings.Drivers.Quality)
+            {
+                var config = d.Config as DriverConfig;
+                var type = Assembly.Load(config.Assembly).GetType(config.Type);
+
+                var driver = Activator.CreateInstance(type, config) as IHubQualityDriver;
+                if (driver == null)
+                {
+                    throw new ApplicationException(string.Format("Error load quality driver {0} from {1}", config.Type, config.Assembly));
+                }
+
+                qualityDrivers.Add(driver);
+            }
+
+            Container.RegisterInstance<IHubQualityDriver[]>(qualityDrivers.ToArray());
         }
 
         private void LoadServices()
@@ -56,40 +83,72 @@ namespace Queue.Hub
             var services = settings.Services;
             var tcpService = services.TcpService;
 
-            Uri uri;
-
             if (tcpService.Enabled)
             {
-                //quality
-                var host = new HubQualityServiceHost();
+                {
+                    //quality
+                    var host = new HubQualityTcpServiceHost();
 
-                uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NET_TCP, tcpService.Host, tcpService.Port, HubServicesPaths.Quality));
-                logger.Info("TCP service host uri = ", uri);
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NET_TCP, tcpService.Host, tcpService.Port, HubServicesPaths.Quality));
+                    logger.Info("TCP service host uri = ", uri);
 
-                host.AddServiceEndpoint(typeof(IHubQualityTcpService), Bindings.NetTcpBinding, string.Empty);
-                host.Description.Behaviors.Add(new ServiceMetadataBehavior());
-                host.AddServiceEndpoint(typeof(IMetadataExchange), MetadataExchangeBindings.CreateMexTcpBinding(), "mex");
-                hosts.Add(host);
+                    host.AddServiceEndpoint(typeof(IHubQualityTcpService), Bindings.NetTcpBinding, uri);
+                    host.Description.Behaviors.Add(new ServiceMetadataBehavior());
+                    hosts.Add(host);
+                }
+
+                {
+                    //display
+                    var host = new HubDisplayTcpServiceHost();
+
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NET_TCP, tcpService.Host, tcpService.Port, HubServicesPaths.Display));
+                    logger.Info("TCP service host uri = ", uri);
+
+                    host.AddServiceEndpoint(typeof(IHubDisplayTcpService), Bindings.NetTcpBinding, uri);
+                    host.Description.Behaviors.Add(new ServiceMetadataBehavior());
+                    hosts.Add(host);
+                }
             }
 
             var httpService = services.HttpService;
 
             if (httpService.Enabled)
             {
-                //quality
-                var host = new HubQualityServiceHost();
-
-                uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.HTTP, httpService.Host, httpService.Port, HubServicesPaths.Quality));
-                logger.Info("HTTP service host uri = ", uri);
-
-                var endpoint = host.AddServiceEndpoint(typeof(IHubQualityHttpService), Bindings.BasicHttpBinding, string.Empty);
-                endpoint.Behaviors.Add(new WebHttpBehavior());
-                host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                 {
-                    HttpGetEnabled = true
-                });
+                    //quality
+                    var host = new HubQualityHttpServiceHost();
 
-                hosts.Add(host);
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.HTTP, httpService.Host, httpService.Port, HubServicesPaths.Quality));
+                    logger.Info("HTTP service host uri = ", uri);
+
+                    var endpoint = host.AddServiceEndpoint(typeof(IHubQualityHttpService), Bindings.WebHttpBinding, uri);
+                    endpoint.Behaviors.Add(new WebHttpBehavior());
+                    host.Description.Behaviors.Add(new ServiceMetadataBehavior()
+                    {
+                        HttpGetUrl = uri,
+                        HttpGetEnabled = true
+                    });
+
+                    hosts.Add(host);
+                }
+
+                {
+                    //display
+                    var host = new HubDisplayHttpServiceHost();
+
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.HTTP, httpService.Host, httpService.Port, HubServicesPaths.Display));
+                    logger.Info("HTTP service host uri = ", uri);
+
+                    var endpoint = host.AddServiceEndpoint(typeof(IHubDisplayHttpService), Bindings.WebHttpBinding, uri);
+                    endpoint.Behaviors.Add(new WebHttpBehavior());
+                    host.Description.Behaviors.Add(new ServiceMetadataBehavior()
+                    {
+                        HttpGetUrl = uri,
+                        HttpGetEnabled = true
+                    });
+
+                    hosts.Add(host);
+                }
             }
         }
 

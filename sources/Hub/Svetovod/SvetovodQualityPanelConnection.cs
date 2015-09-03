@@ -1,14 +1,17 @@
-﻿using Queue.Common;
+﻿using NLog;
+using Queue.Common;
 using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Threading;
 
-namespace Queue.Hub
+namespace Queue.Hub.Svetovod
 {
     public class SvetovodQualityPanelConnection : IDisposable
     {
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         private const byte StartByte = 0xe0;
         private const byte SenderByte = 0x00;
 
@@ -129,6 +132,7 @@ namespace Queue.Hub
 
         private void ComPort_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
         {
+            logger.Error(e.EventType);
         }
 
         private void ComPortDataReceived(object sender, SerialDataReceivedEventArgs e)

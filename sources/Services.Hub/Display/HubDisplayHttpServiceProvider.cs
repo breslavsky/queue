@@ -8,9 +8,9 @@ using System.ServiceModel.Dispatcher;
 
 namespace Queue.Services.Hub
 {
-    internal class HubQualityServiceProvider : IInstanceProvider, IContractBehavior
+    internal class HubDisplayHttpServiceProvider : IInstanceProvider, IContractBehavior
     {
-        public HubQualityServiceProvider()
+        public HubDisplayHttpServiceProvider()
         {
         }
 
@@ -21,7 +21,7 @@ namespace Queue.Services.Hub
 
         public object GetInstance(InstanceContext instanceContext)
         {
-            var instance = new HubQualityService();
+            var instance = new HubDisplayHttpService();
             ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(instance);
             return instance;
         }

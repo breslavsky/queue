@@ -52,11 +52,11 @@
     <Compile Include="ServerEventArgs.cs" />
     <Compile Include="ServerServiceEventType.cs" />
     <Compile Include="ServerSubscribtionArgs.cs" />
-    <Compile Include="HubQualityServiceEventType.cs" />
-    <Compile Include="HubQualityServiceSubscribtionArgs.cs" />
-    <Compile Include="IHubQualityCallback.cs" />
-    <Compile Include="HubQualityCallback.cs" />
-    <Compile Include="HubQualityEventArgs.cs" />
+    <Compile Include="Hub\Quality\HubQualityServiceEventType.cs" />
+    <Compile Include="Hub\Quality\HubQualityServiceSubscribtionArgs.cs" />
+    <Compile Include="Hub\Quality\IHubQualityCallback.cs" />
+    <Compile Include="Hub\Quality\HubQualityCallback.cs" />
+    <Compile Include="Hub\Quality\HubQualityEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

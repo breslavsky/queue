@@ -3,7 +3,7 @@ using System.Configuration;
 
 namespace Queue.Hub.Svetovod
 {
-    public class SvetovodQualityPanelDriverConfig : QualityDriverConfig
+    public class SvetovodDisplayDriverConfig : QualityDriverConfig
     {
         [ConfigurationProperty("port", IsRequired = true)]
         public string Port

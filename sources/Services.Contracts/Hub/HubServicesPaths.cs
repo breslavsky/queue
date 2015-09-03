@@ -10,5 +10,6 @@ namespace Queue.Services.Contracts
     {
         public const string Notification = "notification";
         public const string Quality = "quality";
+        public const string Display = "display";
     }
 }

@@ -51,20 +51,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bindings.cs" />
-    <Compile Include="IPortalClientService.cs" />
-    <Compile Include="IPortalService.cs" />
+    <Compile Include="Hub\Display\IHubDisplayHttpService.cs" />
+    <Compile Include="Hub\Display\IHubDisplayService.cs" />
+    <Compile Include="Hub\Display\IHubDisplayTcpService.cs" />
+    <Compile Include="Portal\IPortalClientService.cs" />
+    <Compile Include="Portal\IPortalService.cs" />
     <Compile Include="IMediaService.cs" />
-    <Compile Include="IPortalOperatorService.cs" />
+    <Compile Include="Portal\IPortalOperatorService.cs" />
     <Compile Include="IServerTcpService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IServerHttpService.cs" />
     <Compile Include="IServerService.cs" />
     <Compile Include="ClientService.cs" />
     <Compile Include="ServerServicesPaths.cs" />
-    <Compile Include="IHubQualityHttpService.cs" />
-    <Compile Include="IHubQualityService.cs" />
-    <Compile Include="HubServicesPaths.cs" />
-    <Compile Include="IHubQualityTcpService.cs" />
+    <Compile Include="Hub\Quality\IHubQualityHttpService.cs" />
+    <Compile Include="Hub\Quality\IHubQualityService.cs" />
+    <Compile Include="Hub\HubServicesPaths.cs" />
+    <Compile Include="Hub\Quality\IHubQualityTcpService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

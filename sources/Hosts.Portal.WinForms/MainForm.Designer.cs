@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            Queue.Common.LoginSettings loginSettings2 = new Queue.Common.LoginSettings();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.stopButton = new System.Windows.Forms.Button();
             this.serviceGroupBox = new System.Windows.Forms.GroupBox();
@@ -134,6 +135,11 @@
             // 
             this.loginSettingsControl.Location = new System.Drawing.Point(5, 20);
             this.loginSettingsControl.Name = "loginSettingsControl";
+            loginSettings2.Endpoint = "net.tcp://queue:4505";
+            loginSettings2.LockItem = false;
+            loginSettings2.Password = "";
+            loginSettings2.User = new System.Guid("00000000-0000-0000-0000-000000000000");
+            this.loginSettingsControl.Settings = loginSettings2;
             this.loginSettingsControl.Size = new System.Drawing.Size(395, 170);
             this.loginSettingsControl.TabIndex = 0;
             // 

@@ -1,9 +1,10 @@
-﻿using Queue.Services.Hub;
+﻿using Queue.Hub.Settings;
+using Queue.Services.Hub;
 using System;
 
-namespace Queue.Hub
+namespace Queue.Hub.Svetovod
 {
-    public class SvetovodQualityPanel : IHubQualityDriver, IDisposable
+    public class SvetovodQualityPanelDriver : IHubQualityDriver, IDisposable
     {
         #region events
 
@@ -18,7 +19,7 @@ namespace Queue.Hub
 
         #endregion fields
 
-        public SvetovodQualityPanel(SvetovodQualityPanelDriverConfig config)
+        public SvetovodQualityPanelDriver(SvetovodQualityPanelDriverConfig config)
         {
             this.config = config;
         }

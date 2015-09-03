@@ -26,7 +26,6 @@ namespace Hosts.Portal.WinForms
 
         private ConfigurationManager configurationManager;
         private PortalSettings settings;
-        private TaskPool taskPool;
         private bool started;
         private PortalInstance portal;
         private ServiceManager serviceManager;
@@ -38,8 +37,6 @@ namespace Hosts.Portal.WinForms
 
             string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.PortalServiceExe);
             serviceManager = new ServiceManager(HostsConsts.PortalServiceName, exePath);
-
-            taskPool = new TaskPool();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -62,7 +59,7 @@ namespace Hosts.Portal.WinForms
 
         private void RegisterContainer()
         {
-            IUnityContainer container = new UnityContainer();
+            var container = new UnityContainer();
             container.RegisterInstance<IConfigurationManager>(configurationManager);
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }

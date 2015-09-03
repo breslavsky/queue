@@ -65,14 +65,6 @@
       <HintPath>..\packages\Junte.Translation.1.0.1.0\lib\net45\Junte.Translation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Junte.UI.Common, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.UI.Common.1.0.0.9\lib\net45\Junte.UI.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Junte.UI.WinForms, Version=1.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.UI.WinForms.1.2.3.0\lib\net45\Junte.UI.WinForms.dll</HintPath>
-    </Reference>
     <Reference Include="Junte.WCF">
       <HintPath>..\packages\Junte.WCF.1.0.1.0\lib\net45\Junte.WCF.dll</HintPath>
     </Reference>
@@ -102,29 +94,33 @@
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\LedsTISeriesControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="HubQualityDriverArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HubInstance.cs" />
-    <Compile Include="HubSettings.cs" />
-    <Compile Include="Svetovod\SvetovodQualityPanel.cs" />
+    <Compile Include="Settings\HubSettings.cs" />
+    <Compile Include="Settings\DriverCollection.cs" />
+    <Compile Include="Settings\DriverElementConfig.cs" />
+    <Compile Include="Settings\DriverConfig.cs" />
+    <Compile Include="Settings\DriversConfig.cs" />
+    <Compile Include="Settings\HttpServiceConfig.cs" />
+    <Compile Include="Settings\ServiceConfig.cs" />
+    <Compile Include="Settings\ServicesConfig.cs" />
+    <Compile Include="Settings\TcpServiceConfig.cs" />
+    <Compile Include="Settings\DisplayDriverConfig.cs" />
+    <Compile Include="Settings\QualityDriverConfig.cs" />
+    <Compile Include="Svetovod\SvetovodDisplayDriver.cs" />
+    <Compile Include="Svetovod\SvetovodQualityPanelDriver.cs" />
     <Compile Include="Svetovod\SvetovodQualityPanelConnection.cs" />
     <Compile Include="Svetovod\SvetovodQualityPanelDriverConfig.cs" />
-    <EmbeddedResource Include="Controls\LedsTISeriesControl.resx">
-      <DependentUpon>LedsTISeriesControl.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="Svetovod\SvetovodDisplayDriverConfig.cs" />
+    <Compile Include="Svetovod\SvetovodDisplayConnection.cs" />
     <None Include="packages.config" />
     <None Include="Svetovod\doc.pdf" />
   </ItemGroup>
@@ -155,14 +151,6 @@
     <ProjectReference Include="..\Services.Hub\Services.Hub.csproj">
       <Project>{10a7abe6-88c7-42be-a272-1e988e0eb233}</Project>
       <Name>Services.Hub</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UI.Common\UI.Common.csproj">
-      <Project>{dfb572df-6412-460f-ba17-9c3fedf6fd12}</Project>
-      <Name>UI.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UI.WinForms\UI.WinForms.csproj">
-      <Project>{23b4c880-5f87-4e9d-b310-6dc25ea170b5}</Project>
-      <Name>UI.WinForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

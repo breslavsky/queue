@@ -4,17 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{10A7ABE6-88C7-42BE-A272-1E988E0EB233}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{00ABDF24-8A02-46A7-99BE-C3F642C2D80C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Queue.Services.Hub</RootNamespace>
-    <AssemblyName>Queue.Services.Hub</AssemblyName>
+    <RootNamespace>Hosts.Hub.WinForms</RootNamespace>
+    <AssemblyName>Hosts.Hub.WinForms</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,6 +25,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -31,7 +33,19 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>hub.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Junte.Configuration">
+      <HintPath>..\packages\Junte.Configuration.1.0.1.0\lib\net45\Junte.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Junte.Translation">
+      <HintPath>..\packages\Junte.Translation.1.0.1.0\lib\net45\Junte.Translation.dll</HintPath>
+    </Reference>
+    <Reference Include="Junte.UI.WinForms">
+      <HintPath>..\packages\Junte.UI.WinForms.1.2.3.0\lib\net45\Junte.UI.WinForms.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
@@ -44,56 +58,86 @@
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack">
+      <HintPath>..\packages\WindowsAPICodePack-Core.1.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.4.1.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Display\HubDisplayService.cs" />
-    <Compile Include="Display\HubDisplayTcpServiceHost.cs" />
-    <Compile Include="Display\HubDisplayServiceTcpProvider.cs" />
-    <Compile Include="Display\IHubDisplayDriver.cs" />
-    <Compile Include="Display\HubDisplayTcpService.cs" />
-    <Compile Include="Display\HubDisplayHttpService.cs" />
-    <Compile Include="Display\HubDisplayHttpServiceHost.cs" />
-    <Compile Include="Display\HubDisplayHttpServiceProvider.cs" />
-    <Compile Include="IHubDriver.cs" />
-    <Compile Include="Quality\HubQualityTcpServiceHost.cs" />
-    <Compile Include="Quality\HubQualityTcpServiceProvider.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Quality\HubQualityService.cs" />
-    <Compile Include="Quality\IHubQualityDriverArgs.cs" />
-    <Compile Include="Quality\IHubQualityDriver.cs" />
-    <Compile Include="Quality\HubQualityTcpService.cs" />
-    <Compile Include="Quality\HubQualityHttpService.cs" />
-    <Compile Include="Quality\HubQualityHttpServiceHost.cs" />
-    <Compile Include="Quality\HubQualityHttpServiceProvider.cs" />
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="hub.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{6bc9beb5-51ab-49b8-a46c-ca9ca59b2976}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Services.Common\Services.Common.csproj">
-      <Project>{03915831-23b5-462a-a144-49662864ae34}</Project>
-      <Name>Services.Common</Name>
+    <ProjectReference Include="..\Hosts.Common\Hosts.Common.csproj">
+      <Project>{923639ff-dbb2-411f-9611-a295b2c71b54}</Project>
+      <Name>Hosts.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Services.Contracts\Services.Contracts.csproj">
-      <Project>{77ef6d1d-f45b-48b4-8fdd-ca004c4a12f4}</Project>
-      <Name>Services.Contracts</Name>
+    <ProjectReference Include="..\Hub\Hub.csproj">
+      <Project>{6e97e930-a4d0-445e-bd05-610da38a96d6}</Project>
+      <Name>Hub</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
+    <ProjectReference Include="..\UI.Common\UI.Common.csproj">
+      <Project>{dfb572df-6412-460f-ba17-9c3fedf6fd12}</Project>
+      <Name>UI.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI.WinForms\UI.WinForms.csproj">
+      <Project>{23b4c880-5f87-4e9d-b310-6dc25ea170b5}</Project>
+      <Name>UI.WinForms</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

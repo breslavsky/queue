@@ -14,23 +14,23 @@ namespace Queue.Services.Hub
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession,
                     ConcurrencyMode = ConcurrencyMode.Multiple,
                     IncludeExceptionDetailInFaults = true)]
-    public class HubQualityService : IHubQualityService
+    public class HubDisplayService : IHubDisplayService
     {
         #region dependency
 
         [Dependency]
-        public IHubQualityDriver[] Drivers { get; set; }
+        public IHubDisplayDriver[] Drivers { get; set; }
 
         #endregion dependency
 
         #region fields
 
-        protected readonly Logger logger = LogManager.GetCurrentClassLogger();
-        protected IContextChannel channel;
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private IContextChannel channel;
 
         #endregion fields
 
-        public HubQualityService()
+        public HubDisplayService()
         {
             logger.Debug("Создан новый экземпляр службы");
 
@@ -48,6 +48,17 @@ namespace Queue.Services.Hub
             return await Task.Run(() => message);
         }
 
+        public async Task ShowNumber(byte deviceId, short number)
+        {
+            await Task.Run(() =>
+            {
+                foreach (var d in Drivers)
+                {
+                    d.ShowNumber(deviceId, number);
+                }
+            });
+        }
+
         public async Task<string[]> GetDrivers()
         {
             return await Task.Run(() =>
@@ -58,28 +69,6 @@ namespace Queue.Services.Hub
                     drivers.Add(d.GetType().FullName);
                 }
                 return drivers.ToArray();
-            });
-        }
-
-        public async Task Enable(byte deviceId)
-        {
-            await Task.Run(() =>
-            {
-                foreach (var d in Drivers)
-                {
-                    d.Enable(deviceId);
-                }
-            });
-        }
-
-        public async Task Disable(byte deviceId)
-        {
-            await Task.Run(() =>
-            {
-                foreach (var d in Drivers)
-                {
-                    d.Disable(deviceId);
-                }
             });
         }
 
