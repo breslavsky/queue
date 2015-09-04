@@ -76,7 +76,7 @@
         {
             public const string Name = "Queue Hub";
             public const string Description = "";
-            public const string Build = "1";
+            public const string Build = "3";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "7B7C4061-8EE4-49AC-943D-19B7227E27D6";
         }

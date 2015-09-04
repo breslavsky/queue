@@ -1,11 +1,9 @@
 ﻿using NLog;
-using Queue.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
-using System.Threading;
 
 namespace Queue.Hub.Svetovod
 {
@@ -17,7 +15,7 @@ namespace Queue.Hub.Svetovod
 
         private const byte StartByte = 0xe0;
         private const byte SenderByte = 0x00;
-        private const byte Segments = 0x03;
+        private const byte Segments = 0x04;
 
         private readonly SerialPort port;
         private bool disposed;
