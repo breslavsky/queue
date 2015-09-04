@@ -68,6 +68,7 @@ namespace Queue.Hub.Svetovod
             header.Add(StartByte);
             header.Add(SenderByte);
             header.Add(sysnum);
+            header.Add(com0);
             header.Add(com1);
             header.Add(com2);
 
