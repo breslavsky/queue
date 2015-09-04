@@ -126,6 +126,10 @@
       <Project>{923639ff-dbb2-411f-9611-a295b2c71b54}</Project>
       <Name>Hosts.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hosts.Hub.WinService\Hosts.Hub.WinService.csproj">
+      <Project>{cab79645-ae89-4300-809f-dc2d2cf8c5e8}</Project>
+      <Name>Hosts.Hub.WinService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hub\Hub.csproj">
       <Project>{6e97e930-a4d0-445e-bd05-610da38a96d6}</Project>
       <Name>Hub</Name>
