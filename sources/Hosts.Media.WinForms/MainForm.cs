@@ -1,5 +1,4 @@
 ﻿using Junte.Configuration;
-using Junte.Parallel;
 using Junte.UI.WinForms;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
@@ -22,7 +21,6 @@ namespace Queue.Hosts.Media.WinForms
         private const string StopServiceButtonTitle = "Остановить службу";
 
         private ServiceManager serviceManager;
-        private TaskPool taskPool;
         private ConfigurationManager configurationManager;
         private MediaSettings settings;
         private bool started;
@@ -35,8 +33,6 @@ namespace Queue.Hosts.Media.WinForms
 
             string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.MediaServiceExe);
             serviceManager = new ServiceManager(HostsConsts.MediaServiceName, exePath);
-
-            taskPool = new TaskPool();
         }
 
         private void MainForm_Load(object sender, EventArgs e)

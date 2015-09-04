@@ -1,36 +1,18 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using Queue.Common;
+using System.Reflection;
+using System.Resources;
 using System.Runtime.InteropServices;
 
-// Управление общими сведениями о сборке осуществляется с помощью 
-// набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
-// связанные со сборкой.
-[assembly: AssemblyTitle("Hosts.Hub.WinForms")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle(Product.Hub.Name)]
+[assembly: AssemblyDescription(Product.Hub.Description)]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Hosts.Hub.WinForms")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany(Product.Company)]
+[assembly: AssemblyProduct(Product.Name)]
+[assembly: AssemblyCopyright(Product.Copyright)]
+[assembly: AssemblyTrademark(Product.Trademark)]
 [assembly: AssemblyCulture("")]
-
-// Параметр ComVisible со значением FALSE делает типы в сборке невидимыми 
-// для COM-компонентов.  Если требуется обратиться к типу в этой сборке через 
-// COM, задайте атрибуту ComVisible значение TRUE для этого типа.
 [assembly: ComVisible(false)]
-
-// Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("1d539da8-573f-4d6b-a520-c1cdb7413fed")]
-
-// Сведения о версии сборки состоят из следующих четырех значений:
-//
-//      Основной номер версии
-//      Дополнительный номер версии 
-//      Номер построения
-//      Редакция
-//
-// Можно задать все значения или принять номер построения и номер редакции по умолчанию, 
-// используя "*", как показано ниже:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: Guid(Product.Server.Guid)]
+[assembly: AssemblyVersion(Product.Hub.Version)]
+[assembly: AssemblyFileVersion(Product.Hub.Version)]
+[assembly: NeutralResourcesLanguageAttribute(Product.Language)]

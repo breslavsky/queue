@@ -72,6 +72,15 @@
             public const string Guid = "D16407F8-CE16-4FCC-A96F-78350D7CD525";
         }
 
+        public struct Hub
+        {
+            public const string Name = "Queue Hub";
+            public const string Description = "";
+            public const string Build = "1";
+            public const string Version = Product.Version.Full + "." + Build;
+            public const string Guid = "7B7C4061-8EE4-49AC-943D-19B7227E27D6";
+        }
+
         public struct Administrator
         {
             public const string Name = "Queue Administrator";
