@@ -22,7 +22,7 @@
     <Property Id="ARPPRODUCTICON" Value="appIcon" />
     <Property Id="REINSTALLMODE" Value="amus" />
     <Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable" />
-    <Property Id="SERVICE_NAME" Value="JunteQueueMetric" />
+    <Property Id="SERVICE_NAME" Value="JunteQueueHub" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
@@ -48,7 +48,7 @@
         <Shortcut Id="Shortcut"
              Name="$(var.ProductTitle)"
              Description="$(var.ProductTitle)"
-             Target="[INSTALLFOLDER]$(var.Hosts.Hub.WinService.TargetFileName)"
+             Target="[INSTALLFOLDER]$(var.Hosts.Hub.WinForms.TargetFileName)"
              WorkingDirectory="INSTALLFOLDER" />
         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
         <RegistryValue Root="HKCU"
