@@ -1,83 +1,37 @@
-﻿using NLog;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO.Ports;
 using System.Linq;
 
 namespace Queue.Hub.Svetovod
 {
-    public class SvetovodDisplayConnection : IDisposable
+    public class SvetovodDisplayConnection : SvetovodConnection
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-
         #region fields
 
-        private const byte StartByte = 0xe0;
-        private const byte SenderByte = 0x00;
         private const byte Segments = 0x04;
-
-        private readonly SerialPort port;
-        private bool disposed;
 
         #endregion fields
 
-        public SvetovodDisplayConnection(string port)
+        public SvetovodDisplayConnection(string port) :
+            base(port)
         {
-            this.port = new SerialPort()
-             {
-                 PortName = port,
-                 BaudRate = 115200,
-                 DataBits = 8,
-                 Parity = Parity.None,
-                 StopBits = StopBits.One
-             };
-            this.port.Open();
         }
 
         public void ShowNumber(byte sysnum, short number)
         {
-            byte[] body = GetBody(sysnum, number, Segments);
-            List<byte> buffer = new List<byte>();
+            var body = GetBody(sysnum, number, Segments);
+            var buffer = new List<byte>();
 
             buffer.AddRange(CreateHeader(sysnum, 0x00, 0x00, (byte)(body.Length - 1)));
             buffer.AddRange(body);
 
             byte[] data = buffer.ToArray();
-            logger.Debug("Запись [{0}]", string.Join(" ", data));
-            port.Write(data, 0, data.Length);
+            logger.Debug("Запись [{0}]", String.Join(" ", data));
+            WriteToPort(data);
         }
 
         #region protocol
-
-        private static byte High(int number)
-        {
-            return Convert.ToByte(number >> 8);
-        }
-
-        private static byte Low(int number)
-        {
-            return Convert.ToByte(number & 0x00FF);
-        }
-
-        private static byte[] CreateHeader(byte sysnum, byte com0, byte com1, byte com2)
-        {
-            var header = new List<byte>();
-            header.Add(StartByte);
-            header.Add(SenderByte);
-            header.Add(sysnum);
-            header.Add(com0);
-            header.Add(com1);
-            header.Add(com2);
-
-            var crc = header.Sum(i => i);
-            var crcl = Low(crc);
-            var crch = (byte)(High(crc) + Low(crc));
-            header.Add(crch);
-            header.Add(crcl);
-
-            return header.ToArray();
-        }
 
         private static byte GetDigit(byte digit)
         {
@@ -143,15 +97,15 @@ namespace Queue.Hub.Svetovod
                 throw new Exception();
             }
 
-            char[] digits = source.ToCharArray();
+            var digits = source.ToCharArray();
 
-            List<byte> units = new List<byte>();
+            var units = new List<byte>();
             foreach (var d in digits)
             {
                 units.Add(byte.Parse(d.ToString()));
             }
 
-            List<byte> data = new List<byte>();
+            var data = new List<byte>();
             for (byte i = 0; i < segments - lenght; i++)
             {
                 data.Add(0);
@@ -162,46 +116,12 @@ namespace Queue.Hub.Svetovod
                 data.Add(GetDigit(s));
             }
 
-            int crc = (int)data.Sum(x => x);
+            int crc = data.Sum(x => x);
             data.Add((byte)crc);
 
             return data.ToArray();
         }
 
         #endregion protocol
-
-        #region IDisposable
-
-        public void Dispose()
-        {
-            Dispose(true);
-
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                if (port != null)
-                {
-                    port.Dispose();
-                }
-            }
-
-            disposed = true;
-        }
-
-        ~SvetovodDisplayConnection()
-        {
-            Dispose(false);
-        }
-
-        #endregion IDisposable
     }
 }

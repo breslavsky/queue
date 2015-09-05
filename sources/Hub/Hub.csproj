@@ -115,6 +115,7 @@
     <Compile Include="Settings\TcpServiceConfig.cs" />
     <Compile Include="Settings\DisplayDriverConfig.cs" />
     <Compile Include="Settings\QualityDriverConfig.cs" />
+    <Compile Include="Svetovod\SvetovodConnection.cs" />
     <Compile Include="Svetovod\SvetovodDisplayDriver.cs" />
     <Compile Include="Svetovod\SvetovodQualityPanelDriver.cs" />
     <Compile Include="Svetovod\SvetovodQualityPanelConnection.cs" />
