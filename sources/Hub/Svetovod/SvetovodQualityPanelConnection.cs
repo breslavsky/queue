@@ -7,6 +7,7 @@ namespace Queue.Hub.Svetovod
 {
     public class SvetovodQualityPanelConnection : SvetovodConnection
     {
+        private const string NoAnswerErrorMessage = "Не удалось получить ответ от устройства";
         private readonly byte sysnum;
 
         public event EventHandler<byte> Accepted = delegate { };
@@ -40,10 +41,17 @@ namespace Queue.Hub.Svetovod
                         Accepted(this, received[9]);
                     }
                 }
+                else
+                {
+                    throw new QueueException(NoAnswerErrorMessage);
+                }
             }
             catch { }
 
-            stateTimer.Start();
+            if (stateTimer != null)
+            {
+                stateTimer.Start();
+            }
         }
 
         public void Enable()
@@ -75,10 +83,14 @@ namespace Queue.Hub.Svetovod
             if (receivedResetEvent.WaitOne(TimeSpan.FromSeconds(10)))
             {
                 var received = receivedBytes.ToArray();
-                if (received.Length != 8 || received[3] != 0x00)
+                if (value && (received.Length != 8 || received[3] != 0x00))
                 {
                     throw new QueueException("Не удалось активировать устройство");
                 }
+            }
+            else
+            {
+                throw new QueueException(NoAnswerErrorMessage);
             }
         }
 
@@ -86,6 +98,7 @@ namespace Queue.Hub.Svetovod
         {
             if (stateTimer != null)
             {
+                stateTimer.Elapsed -= stateTimer_Elapsed;
                 stateTimer.Stop();
                 stateTimer.Dispose();
                 stateTimer = null;

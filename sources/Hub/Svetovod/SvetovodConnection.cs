@@ -14,10 +14,10 @@ namespace Queue.Hub.Svetovod
 
         protected readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private bool disposed;
         private SerialPort port;
+        protected bool disposed;
 
-        protected readonly AutoResetEvent receivedResetEvent = new AutoResetEvent(false);
+        protected ManualResetEvent receivedResetEvent = new ManualResetEvent(false);
         protected readonly List<byte> receivedBytes = new List<byte>();
 
         public SvetovodConnection(string port)
@@ -31,8 +31,8 @@ namespace Queue.Hub.Svetovod
                 StopBits = StopBits.One
             };
 
-            this.port.DataReceived += ComPortDataReceived;
-            this.port.ErrorReceived += ComPort_ErrorReceived;
+            this.port.DataReceived += Port_DataReceived;
+            this.port.ErrorReceived += Port_ErrorReceived;
             this.port.Open();
         }
 
@@ -70,12 +70,12 @@ namespace Queue.Hub.Svetovod
             return (byte)(num >> 8);
         }
 
-        private void ComPort_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
+        private void Port_ErrorReceived(object sender, SerialErrorReceivedEventArgs e)
         {
             logger.Error(e.EventType);
         }
 
-        private void ComPortDataReceived(object sender, SerialDataReceivedEventArgs e)
+        private void Port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             Thread.Sleep(200);
 
@@ -127,13 +127,18 @@ namespace Queue.Hub.Svetovod
 
             if (disposing)
             {
+                OnDispose();
+
                 if (port != null)
                 {
+                    port.ErrorReceived -= Port_ErrorReceived;
+                    port.DataReceived -= Port_DataReceived;
                     port.Dispose();
                     port = null;
                 }
 
-                OnDispose();
+                receivedResetEvent.Dispose();
+                receivedResetEvent = null;
             }
 
             disposed = true;
@@ -141,7 +146,6 @@ namespace Queue.Hub.Svetovod
 
         protected virtual void OnDispose()
         {
-
         }
 
         ~SvetovodConnection()
