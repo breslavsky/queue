@@ -81,8 +81,8 @@ namespace Queue.Display
         {
             if (Keyboard.IsKeyDown(Key.LeftShift) && (e.Key == Key.Escape))
             {
-                IConfigurationManager configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-                LoginFormSettings loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
+                var configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+                var loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
                 loginFormSettings.IsRemember = false;
                 configuration.Save();
 

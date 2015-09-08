@@ -19,7 +19,7 @@ namespace Queue.UI.WinForms
         #region dependency
 
         [Dependency]
-        public IConfigurationManager Configuration { get; set; }
+        public ConfigurationManager Configuration { get; set; }
 
         [Dependency]
         public LoginFormSettings LoginFormSettings { get; set; }
@@ -37,7 +37,7 @@ namespace Queue.UI.WinForms
 
         #region fields
 
-        private IClientService<IServerTcpService> serverService;
+        private ClientService<IServerTcpService> serverService;
         private ChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private readonly UserRole userRole;

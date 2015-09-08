@@ -36,7 +36,7 @@ namespace Queue.Simulator
                         //{
                         //    ResetSettings();
 
-                        //    continue;
+                        // continue;
                         //}
                     }
 
@@ -54,7 +54,7 @@ namespace Queue.Simulator
 
         private static void ResetSettings()
         {
-            IConfigurationManager configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+            var configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
 
             configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey).Reset();
             configuration.GetSection<LoginSettings>(LoginSettings.SectionKey).Reset();

@@ -19,7 +19,7 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public IClientService<IServerTcpService> ServerService { get; set; }
+        public ClientService<IServerTcpService> ServerService { get; set; }
 
         [Dependency]
         public QueueAdministrator CurrentUser { get; set; }

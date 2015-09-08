@@ -23,7 +23,7 @@ namespace Queue.Database
 
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private IConfigurationManager configuration;
+        private ConfigurationManager configuration;
         private DatabaseSettingsProfiles profiles;
 
         private IUnityContainer container;
@@ -39,7 +39,7 @@ namespace Queue.Database
         {
             Text += string.Format(" ({0})", Assembly.GetEntryAssembly().GetName().Version);
 
-            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+            configuration = ServiceLocator.Current.GetInstance<ConfigurationManager>();
             profiles = configuration.GetSection<DatabaseSettingsProfiles>(SectionKey);
 
             container = ServiceLocator.Current.GetInstance<IUnityContainer>();

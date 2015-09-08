@@ -39,7 +39,7 @@ namespace Queue.Display.ViewModels
 
         public event EventHandler OnLogined;
 
-        private IConfigurationManager configuration;
+        private ConfigurationManager configuration;
         private DisplayLoginSettings loginSettings;
         private Language selectedLanguage;
 
@@ -139,7 +139,7 @@ namespace Queue.Display.ViewModels
 
         private void LoadSettings()
         {
-            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+            configuration = ServiceLocator.Current.GetInstance<ConfigurationManager>();
             loginSettings = configuration.GetSection<DisplayLoginSettings>(DisplayLoginSettings.SectionKey);
 
             Endpoint = loginSettings.Endpoint;

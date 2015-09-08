@@ -5,6 +5,7 @@ using NLog;
 using Queue.Common;
 using Queue.Hosts.Common;
 using Queue.Server;
+using Queue.Server.Settings;
 using System;
 using System.Globalization;
 using System.ServiceProcess;
@@ -19,7 +20,7 @@ namespace Queue.Hosts.Server.WinService
 
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
         private static UnityContainer container;
-        private static IConfigurationManager configuration;
+        private static ConfigurationManager configuration;
         private static ServerSettings settings;
         private ServerInstance server;
 

@@ -37,10 +37,10 @@ namespace Queue.Operator
         public QueueOperator CurrentUser { get; set; }
 
         [Dependency]
-        public IClientService<IServerTcpService> ServerService { get; set; }
+        public ClientService<IServerTcpService> ServerService { get; set; }
 
         [Dependency]
-        public IClientService<IHubQualityTcpService> HubQualityService { get; set; }
+        public ClientService<IHubQualityTcpService> HubQualityService { get; set; }
 
         #endregion dependency
 

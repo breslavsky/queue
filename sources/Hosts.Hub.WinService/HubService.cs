@@ -27,7 +27,7 @@ namespace Hosts.Hub.WinService
 
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
         private static UnityContainer container;
-        private static IConfigurationManager configuration;
+        private static ConfigurationManager configuration;
         private static HubSettings settings;
         private HubInstance hub;
 
@@ -48,10 +48,10 @@ namespace Hosts.Hub.WinService
                 ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
                 configuration = new ConfigurationManager(HostsConsts.HubApp, SpecialFolder.ApplicationData);
-                container.RegisterInstance<IConfigurationManager>(configuration);
+                container.RegisterInstance(configuration);
 
                 settings = configuration.GetSection<HubSettings>(HubSettings.SectionKey);
-                container.RegisterInstance<HubSettings>(settings);
+                container.RegisterInstance(settings);
 
                 var culture = settings.Language.GetCulture();
                 Thread.CurrentThread.CurrentCulture = culture;

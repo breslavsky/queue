@@ -4,6 +4,6 @@ namespace Queue.Services.Common
 {
     public class HubQualityEventArgs
     {
-        public int Rating;
+        public byte Rating;
     }
 }

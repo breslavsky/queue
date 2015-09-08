@@ -25,7 +25,7 @@ namespace Hosts.Hub.WinForms
 
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private readonly ConfigurationManager configurationManager;
+        private readonly ConfigurationManager configuration;
         private readonly ServiceManager serviceManager;
         private HubSettings settings;
         private HubInstance hub;
@@ -35,8 +35,8 @@ namespace Hosts.Hub.WinForms
         {
             InitializeComponent();
 
-            configurationManager = new ConfigurationManager(HostsConsts.HubApp, Environment.SpecialFolder.CommonApplicationData);
-            settings = configurationManager.GetSection<HubSettings>(HubSettings.SectionKey);
+            configuration = new ConfigurationManager(HostsConsts.HubApp, Environment.SpecialFolder.CommonApplicationData);
+            settings = configuration.GetSection<HubSettings>(HubSettings.SectionKey);
 
             string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.HubServiceExe);
             serviceManager = new ServiceManager(HostsConsts.HubServiceName, exePath);
@@ -95,7 +95,7 @@ namespace Hosts.Hub.WinForms
         {
             var container = new UnityContainer();
             container.RegisterInstance<IUnityContainer>(container);
-            container.RegisterInstance<IConfigurationManager>(configurationManager);
+            container.RegisterInstance<IConfigurationManager>(configuration);
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 

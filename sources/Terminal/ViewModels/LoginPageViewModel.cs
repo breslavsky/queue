@@ -39,7 +39,7 @@ namespace Queue.Terminal.ViewModels
         private ChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
         private Language selectedLanguage;
-        private IConfigurationManager configuration;
+        private ConfigurationManager configuration;
         private LoginSettings loginSettings;
         private LoginFormSettings loginFormSettings;
 
@@ -154,7 +154,7 @@ namespace Queue.Terminal.ViewModels
 
         private void LoadSettings()
         {
-            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+            configuration = ServiceLocator.Current.GetInstance<ConfigurationManager>();
             loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
             Endpoint = loginSettings.Endpoint;
             Password = loginSettings.Password;

@@ -23,13 +23,13 @@ namespace Queue.Administrator
         public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
-        public IClientService<IServerTcpService> ServerService { get; set; }
+        public ClientService<IServerTcpService> ServerService { get; set; }
 
         [Dependency]
         public AdministratorSettings Settings { get; set; }
 
         [Dependency]
-        public IConfigurationManager Configuration { get; set; }
+        public ConfigurationManager Configuration { get; set; }
 
         #endregion dependency
 

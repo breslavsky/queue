@@ -7,7 +7,7 @@ namespace Queue.Services.Hub
     {
         event EventHandler<IHubQualityDriverArgs> Accepted;
 
-        Dictionary<byte, int> Answers { get; private set; }
+        Dictionary<byte, byte> Answers { get; set; }
 
         void Enable(byte deviceId);
 

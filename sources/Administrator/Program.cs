@@ -18,11 +18,11 @@ namespace Queue.Administrator
         private const string AppName = "Queue.Administrator";
         private static AppOptions options;
         private static UnityContainer container;
-        private static IConfigurationManager configuration;
+        private static ConfigurationManager configuration;
         private static AdministratorSettings administratorSettings;
         private static LoginSettings loginSettings;
         private static LoginFormSettings loginFormSettings;
-        private static IClientService<IServerTcpService> serverService;
+        private static ClientService<IServerTcpService> serverService;
         private static QueueAdministrator currentUser;
 
         [STAThread]
@@ -35,16 +35,16 @@ namespace Queue.Administrator
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
             configuration = new ConfigurationManager(AppName, SpecialFolder.ApplicationData);
-            container.RegisterInstance<IConfigurationManager>(configuration);
+            container.RegisterInstance(configuration);
 
             administratorSettings = configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
-            container.RegisterInstance<AdministratorSettings>(administratorSettings);
+            container.RegisterInstance(administratorSettings);
 
             loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
-            container.RegisterInstance<LoginSettings>(loginSettings);
+            container.RegisterInstance(loginSettings);
 
             loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
-            container.RegisterInstance<LoginFormSettings>(loginFormSettings);
+            container.RegisterInstance(loginFormSettings);
 
             ParseOptions();
 
@@ -57,7 +57,7 @@ namespace Queue.Administrator
                 {
                     Guid sessionId = Guid.Parse(options.SessionId);
                     currentUser = channel.Service.OpenUserSession(sessionId).Result as QueueAdministrator;
-                    container.RegisterInstance<IClientService<IServerTcpService>>(serverService);
+                    container.RegisterInstance<ClientService<IServerTcpService>>(serverService);
                     container.RegisterInstance<User>(currentUser);
                     container.RegisterInstance<QueueAdministrator>(currentUser);
 
@@ -77,7 +77,7 @@ namespace Queue.Administrator
                         loginForm.Dispose();
 
                         serverService = new ClientService<IServerTcpService>(loginSettings.Endpoint, ServerServicesPaths.Server);
-                        container.RegisterInstance<IClientService<IServerTcpService>>(serverService);
+                        container.RegisterInstance<ClientService<IServerTcpService>>(serverService);
 
                         var mainForm = new AdministratorForm();
                         Application.Run(mainForm);

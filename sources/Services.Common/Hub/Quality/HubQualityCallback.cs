@@ -7,7 +7,7 @@ namespace Queue.Services.Common
     {
         public event EventHandler<HubQualityEventArgs> OnAccepted = delegate { };
 
-        public void Accepted(int rating)
+        public void Accepted(byte rating)
         {
             OnAccepted(this, new HubQualityEventArgs() { Rating = rating });
         }

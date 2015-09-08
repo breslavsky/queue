@@ -27,7 +27,7 @@ namespace Queue.Terminal
         private void RegisterTypes(IUnityContainer container)
         {
             container.RegisterInstance(container);
-            container.RegisterInstance<IConfigurationManager>(new ConfigurationManager(AppName, SpecialFolder.ApplicationData));
+            container.RegisterInstance(new ConfigurationManager(AppName, SpecialFolder.ApplicationData));
         }
     }
 }

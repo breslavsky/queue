@@ -22,14 +22,14 @@ namespace Queue.Hub.Svetovod
 
         #region properties
 
-        public Dictionary<byte, int> Answers { get; private set; }
+        public Dictionary<byte, byte> Answers { get; set; }
 
         #endregion properties
 
         public SvetovodQualityPanelDriver(SvetovodQualityPanelDriverConfig config)
         {
             this.config = config;
-            Answers = new Dictionary<byte, int>();
+            Answers = new Dictionary<byte, byte>();
         }
 
         public void Enable(byte deviceId)

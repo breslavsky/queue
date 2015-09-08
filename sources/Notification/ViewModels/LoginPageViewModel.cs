@@ -32,7 +32,7 @@ namespace Queue.Notification.ViewModels
 
         public event EventHandler OnConnected;
 
-        private IConfigurationManager configuration;
+        private ConfigurationManager configuration;
         private LoginSettings loginSettings;
         private LoginFormSettings loginFormSettings;
         private Language selectedLanguage;
@@ -111,7 +111,7 @@ namespace Queue.Notification.ViewModels
 
         private void LoadSettings()
         {
-            configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+            configuration = ServiceLocator.Current.GetInstance<ConfigurationManager>();
             loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
             Endpoint = loginSettings.Endpoint;
 

@@ -5,14 +5,7 @@ using System.ServiceModel;
 
 namespace Queue.Services.Contracts
 {
-    public interface IClientService<T> : IDisposable
-    {
-        ChannelManager<T> CreateChannelManager(Guid SessionId);
-
-        ChannelManager<T> CreateChannelManager();
-    }
-
-    public class ClientService<T> : IClientService<T>
+    public class ClientService<T> : IDisposable
     {
         public DuplexChannelBuilder<T> ChannelBuilder { get; set; }
 

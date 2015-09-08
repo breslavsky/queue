@@ -20,7 +20,7 @@ namespace Queue.Operator
         public QueueOperator CurrentUser { get; set; }
 
         [Dependency]
-        public IClientService<IServerTcpService> ServerService { get; set; }
+        public ClientService<IServerTcpService> ServerService { get; set; }
 
         #endregion dependency
 

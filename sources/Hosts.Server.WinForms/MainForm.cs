@@ -6,6 +6,7 @@ using NLog;
 using Queue.Common;
 using Queue.Hosts.Common;
 using Queue.Server;
+using Queue.Server.Settings;
 using System;
 using System.IO;
 using System.Reflection;
@@ -22,7 +23,7 @@ namespace Queue.Hosts.Server.WinForms
         private const string StartServiceButtonTitle = "Запустить службу";
         private const string StopServiceButtonTitle = "Остановить службу";
 
-        private readonly ConfigurationManager configurationManager;
+        private readonly ConfigurationManager configuration;
         private readonly ServerSettings settings;
         private readonly ServiceManager serviceManager;
         private ServerInstance server;
@@ -35,8 +36,8 @@ namespace Queue.Hosts.Server.WinForms
             string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.ServerServiceExe);
             serviceManager = new ServiceManager(HostsConsts.ServerServiceName, exePath);
 
-            configurationManager = new ConfigurationManager(HostsConsts.ServerApp, Environment.SpecialFolder.CommonApplicationData);
-            settings = configurationManager.GetSection<ServerSettings>(ServerSettings.SectionKey);
+            configuration = new ConfigurationManager(HostsConsts.ServerApp, Environment.SpecialFolder.CommonApplicationData);
+            settings = configuration.GetSection<ServerSettings>(ServerSettings.SectionKey);
 
             RegisterContainer();
 
@@ -49,7 +50,7 @@ namespace Queue.Hosts.Server.WinForms
         {
             var container = new UnityContainer();
             container.RegisterInstance<IUnityContainer>(container);
-            container.RegisterInstance<IConfigurationManager>(configurationManager);
+            container.RegisterInstance<IConfigurationManager>(configuration);
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 
@@ -137,7 +138,7 @@ namespace Queue.Hosts.Server.WinForms
             try
             {
                 editDatabaseSettingsControl.Save();
-                configurationManager.Save();
+                configuration.Save();
                 MessageBox.Show("Настройки сохранены");
             }
             catch (Exception ex)

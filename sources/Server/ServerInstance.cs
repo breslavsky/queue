@@ -42,7 +42,7 @@ namespace Queue.Server
 
         private void DatabaseConnect()
         {
-            Container.RegisterInstance<ISessionProvider>(new SessionProvider(new string[] { "Queue.Model" },
+            Container.RegisterInstance(new SessionProvider(new string[] { "Queue.Model" },
                 settings.Database, (fluently) =>
                 {
                     fluently.Cache(c => c
@@ -55,7 +55,7 @@ namespace Queue.Server
 
         private void CreateQueueInstance()
         {
-            Container.RegisterInstance<QueueInstance>(new QueueInstance());
+            Container.RegisterInstance(new QueueInstance());
         }
 
         private void RegisterDTOMapping()
