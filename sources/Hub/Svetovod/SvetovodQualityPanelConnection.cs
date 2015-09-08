@@ -81,5 +81,15 @@ namespace Queue.Hub.Svetovod
                 }
             }
         }
+
+        protected override void OnDispose()
+        {
+            if (stateTimer != null)
+            {
+                stateTimer.Stop();
+                stateTimer.Dispose();
+                stateTimer = null;
+            }
+        }
     }
 }

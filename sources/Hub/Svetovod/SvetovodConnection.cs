@@ -118,7 +118,7 @@ namespace Queue.Hub.Svetovod
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected void Dispose(bool disposing)
         {
             if (disposed)
             {
@@ -132,9 +132,16 @@ namespace Queue.Hub.Svetovod
                     port.Dispose();
                     port = null;
                 }
+
+                OnDispose();
             }
 
             disposed = true;
+        }
+
+        protected virtual void OnDispose()
+        {
+
         }
 
         ~SvetovodConnection()

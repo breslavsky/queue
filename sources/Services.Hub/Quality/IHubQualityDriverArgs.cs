@@ -2,6 +2,7 @@
 {
     public interface IHubQualityDriverArgs
     {
+        byte DeviceId { get; set; }
         int Rating { get; set; }
     }
 }

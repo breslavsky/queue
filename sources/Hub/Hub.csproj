@@ -122,6 +122,7 @@
     <Compile Include="Svetovod\SvetovodQualityPanelDriverConfig.cs" />
     <Compile Include="Svetovod\SvetovodDisplayDriverConfig.cs" />
     <Compile Include="Svetovod\SvetovodDisplayConnection.cs" />
+    <None Include="default.config" />
     <None Include="packages.config" />
     <None Include="Svetovod\doc.pdf" />
   </ItemGroup>

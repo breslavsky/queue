@@ -39,8 +39,8 @@ namespace Queue.Operator
         [Dependency]
         public IClientService<IServerTcpService> ServerService { get; set; }
 
-        //[Dependency]
-        //public IClientService<IHubQualityTcpService> HubQualityService { get; set; }
+        [Dependency]
+        public IClientService<IHubQualityTcpService> HubQualityService { get; set; }
 
         #endregion dependency
 
@@ -49,8 +49,10 @@ namespace Queue.Operator
         private const int PingInterval = 10000;
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private readonly ServerCallback callbackObject;
-        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly ServerCallback serverCallback;
+        private readonly HubQualityCallback qualityCallback;
+        private readonly ChannelManager<IServerTcpService> serverChannelManager;
+        private readonly ChannelManager<IHubQualityTcpService> qualityChannelManager;
         private readonly Timer pingTimer;
         private readonly TaskPool taskPool;
         private BindingList<ClientRequestAdditionalService> additionalServices;
@@ -93,7 +95,7 @@ namespace Queue.Operator
 
                             serviceTypeControl.Select<ServiceType>(clientRequest.ServiceType);
 
-                            using (var channel = channelManager.CreateChannel())
+                            using (var channel = serverChannelManager.CreateChannel())
                             {
                                 try
                                 {
@@ -111,7 +113,7 @@ namespace Queue.Operator
                             stateTextBlock.Text = Translater.Enum(clientRequest.State);
                             stateTextBlock.BackColor = ColorTranslator.FromHtml(clientRequest.Color);
 
-                            using (var channel = channelManager.CreateChannel())
+                            using (var channel = serverChannelManager.CreateChannel())
                             {
                                 try
                                 {
@@ -159,7 +161,7 @@ namespace Queue.Operator
 
                                 if (IsAutocall && currentClientRequestPlan.StartTime <= ServerDateTime.Now.TimeOfDay)
                                 {
-                                    using (var channel = channelManager.CreateChannel())
+                                    using (var channel = serverChannelManager.CreateChannel())
                                     {
                                         try
                                         {
@@ -258,7 +260,8 @@ namespace Queue.Operator
         {
             InitializeComponent();
 
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+            serverChannelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
+            qualityChannelManager = HubQualityService.CreateChannelManager(CurrentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
@@ -274,11 +277,14 @@ namespace Queue.Operator
 
             serviceTypeControl.Initialize<ServiceType>();
 
-            callbackObject = new ServerCallback();
-            callbackObject.OnCurrentClientRequestPlanUpdated += callbackObject_CurrentClientRequestPlanUpdated;
-            callbackObject.OnOperatorPlanMetricsUpdated += callbackObject_OnOperatorPlanMetricsUpdated;
+            serverCallback = new ServerCallback();
+            serverCallback.OnCurrentClientRequestPlanUpdated += serverCallback_OnCurrentClientRequestPlanUpdated;
+            serverCallback.OnOperatorPlanMetricsUpdated += serverCallback_OnOperatorPlanMetricsUpdated;
 
-            pingChannel = channelManager.CreateChannel(callbackObject);
+            qualityCallback = new HubQualityCallback();
+            qualityCallback.OnAccepted += qualityCallback_OnAccepted;
+
+            pingChannel = serverChannelManager.CreateChannel(serverCallback);
 
             pingTimer = new Timer();
             pingTimer.Elapsed += pingTimer_Elapsed;
@@ -304,15 +310,15 @@ namespace Queue.Operator
                 {
                     pingChannel.Dispose();
                 }
-                if (channelManager != null)
+                if (serverChannelManager != null)
                 {
-                    channelManager.Dispose();
+                    serverChannelManager.Dispose();
                 }
             }
             base.Dispose(disposing);
         }
 
-        private async void callbackObject_CurrentClientRequestPlanUpdated(object sender, ServerEventArgs e)
+        private async void serverCallback_OnCurrentClientRequestPlanUpdated(object sender, ServerEventArgs e)
         {
             await Task.Run(() =>
             {
@@ -320,7 +326,7 @@ namespace Queue.Operator
             });
         }
 
-        private async void callbackObject_OnOperatorPlanMetricsUpdated(object sender, ServerEventArgs e)
+        private async void serverCallback_OnOperatorPlanMetricsUpdated(object sender, ServerEventArgs e)
         {
             await Task.Run(() =>
             {
@@ -328,6 +334,14 @@ namespace Queue.Operator
                 {
                     standingLabel.Text = e.OperatorPlanMetrics.Standing.ToString();
                 }));
+            });
+        }
+
+        private async void qualityCallback_OnAccepted(object sender, HubQualityEventArgs e)
+        {
+            Task.Run(() =>
+            {
+                var ratting = e.Rating;
             });
         }
 
@@ -354,7 +368,7 @@ namespace Queue.Operator
                 case 1:
                     Width = MaximumSize.Width;
 
-                    using (var channel = channelManager.CreateChannel())
+                    using (var channel = serverChannelManager.CreateChannel())
                     {
                         try
                         {
@@ -436,7 +450,7 @@ namespace Queue.Operator
                     serverStateLabel.Image = Icons.offline16x16;
 
                     pingChannel.Dispose();
-                    pingChannel = channelManager.CreateChannel(callbackObject);
+                    pingChannel = serverChannelManager.CreateChannel(serverCallback);
                 }
                 finally
                 {
@@ -457,7 +471,7 @@ namespace Queue.Operator
                     {
                         clientRequest.Service = f.Service;
 
-                        using (var channel = channelManager.CreateChannel())
+                        using (var channel = serverChannelManager.CreateChannel())
                         {
                             try
                             {
@@ -494,7 +508,7 @@ namespace Queue.Operator
                 ClientRequest clientRequest = currentClientRequestPlan.ClientRequest;
                 clientRequest.ServiceStep = serviceStepControl.Selected<ServiceStep>();
 
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = serverChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -529,7 +543,7 @@ namespace Queue.Operator
                 ClientRequest clientRequest = currentClientRequestPlan.ClientRequest;
                 clientRequest.ServiceType = serviceTypeControl.Selected<ServiceType>();
 
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = serverChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -564,7 +578,7 @@ namespace Queue.Operator
                 ClientRequest clientRequest = currentClientRequestPlan.ClientRequest;
                 clientRequest.Subjects = (int)subjectsUpDown.Value;
 
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = serverChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -619,7 +633,7 @@ namespace Queue.Operator
 
                 bool completed = false;
 
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = serverChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -668,7 +682,7 @@ namespace Queue.Operator
 
         private async void absenceButton_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = serverChannelManager.CreateChannel())
             {
                 try
                 {
@@ -699,7 +713,7 @@ namespace Queue.Operator
 
         private async void recallingButton_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = serverChannelManager.CreateChannel())
             {
                 try
                 {
@@ -730,7 +744,7 @@ namespace Queue.Operator
 
         private async void renderingButton_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = serverChannelManager.CreateChannel())
             {
                 try
                 {
@@ -765,7 +779,7 @@ namespace Queue.Operator
 
         private async void postponeButton_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = serverChannelManager.CreateChannel())
             {
                 try
                 {
@@ -796,7 +810,7 @@ namespace Queue.Operator
 
         private async void renderedButton_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = serverChannelManager.CreateChannel())
             {
                 try
                 {
@@ -827,7 +841,7 @@ namespace Queue.Operator
 
         private async void returnButton_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = serverChannelManager.CreateChannel())
             {
                 try
                 {
@@ -924,7 +938,7 @@ namespace Queue.Operator
             {
                 var additionalService = additionalServices[currentRow.Index];
 
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = serverChannelManager.CreateChannel())
                 {
                     try
                     {

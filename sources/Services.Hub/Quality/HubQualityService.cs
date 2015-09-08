@@ -27,6 +27,7 @@ namespace Queue.Services.Hub
 
         protected readonly Logger logger = LogManager.GetCurrentClassLogger();
         protected IContextChannel channel;
+        protected Dictionary<byte, int> answers = new Dictionary<byte, int>();
 
         #endregion fields
 
@@ -61,15 +62,21 @@ namespace Queue.Services.Hub
             });
         }
 
-        public async Task Enable(byte deviceId)
+        public virtual async Task Enable(byte deviceId)
         {
             await Task.Run(() =>
             {
                 foreach (var d in Drivers)
                 {
                     d.Enable(deviceId);
+                    d.Accepted += d_Accepted;
                 }
             });
+        }
+
+        private void d_Accepted(object sender, IHubQualityDriverArgs e)
+        {
+            answers.Add(e.DeviceId, e.Rating);
         }
 
         public async Task Disable(byte deviceId)
@@ -79,7 +86,19 @@ namespace Queue.Services.Hub
                 foreach (var d in Drivers)
                 {
                     d.Disable(deviceId);
+                    d.Accepted -= d_Accepted;
                 }
+            });
+        }
+
+        public async Task<Dictionary<byte, int>> GetLastAnswers()
+        {
+            return await Task.Run(() =>
+            {
+                var result = new Dictionary<byte, int>(answers);
+                answers.Clear();
+                return result;
+                
             });
         }
 

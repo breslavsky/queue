@@ -27,5 +27,9 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [WebGet(UriTemplate = "/disable?deviceId={deviceId}", ResponseFormat = WebMessageFormat.Json)]
         Task Disable(byte deviceId);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/get-answers", ResponseFormat = WebMessageFormat.Json)]
+        Task<Dictionary<byte, int>> GetLastAnswers();
     }
 }

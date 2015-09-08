@@ -134,6 +134,19 @@ namespace Queue.Services.Hub
 
         #endregion channel
 
+        public override async Task Enable(byte deviceId)
+        {
+            await base.Enable(deviceId);
+            await Task.Run(() =>
+            {
+                foreach (var d in Drivers)
+                {
+                    d.Enable(deviceId);
+                    d.Accepted += driver_Accepted;
+                }
+            });
+        }
+
         private void driver_Accepted(object sender, IHubQualityDriverArgs e)
         {
             try

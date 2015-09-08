@@ -43,7 +43,7 @@ namespace Queue.Hub.Svetovod
 
         private void activeConnection_Accepted(object sender, byte ratting)
         {
-            Accepted(this, new HubQualityDriverArgs() { Rating = ratting });
+            Accepted(this, new HubQualityDriverArgs() { DeviceId = config.DeviceId, Rating = ratting });
         }
 
         public void Dispose()
