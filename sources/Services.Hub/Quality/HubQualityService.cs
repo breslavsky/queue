@@ -1,10 +1,8 @@
 ﻿using Microsoft.Practices.Unity;
 using NLog;
-using Queue.Services.Common;
 using Queue.Services.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -84,12 +82,18 @@ namespace Queue.Services.Hub
         {
             return await Task.Run(() =>
             {
+<<<<<<< HEAD
                 var answers = new Dictionary<byte, int>();
                 foreach (var d in Drivers)
                 {
                     answers.Union(d.Answers).ToDictionary(x => x.Key, x => x.Value);
                 }
                 return answers;
+=======
+                var result = new Dictionary<byte, int>(answers);
+                answers.Clear();
+                return result;
+>>>>>>> origin/master
             });
         }
 
