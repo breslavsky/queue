@@ -59,7 +59,7 @@ namespace Queue.Hub
                 displayDrivers.Add(driver);
             }
 
-            Container.RegisterInstance<IHubDisplayDriver[]>(displayDrivers.ToArray());
+            Container.RegisterInstance(displayDrivers.ToArray());
 
             foreach (DriverElementConfig d in settings.Drivers.Quality)
             {
@@ -75,7 +75,7 @@ namespace Queue.Hub
                 qualityDrivers.Add(driver);
             }
 
-            Container.RegisterInstance<IHubQualityDriver[]>(qualityDrivers.ToArray());
+            Container.RegisterInstance(qualityDrivers.ToArray());
         }
 
         private void LoadServices()

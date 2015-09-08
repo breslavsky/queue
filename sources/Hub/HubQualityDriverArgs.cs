@@ -5,6 +5,6 @@ namespace Queue.Hub
     public class HubQualityDriverArgs : IHubQualityDriverArgs
     {
         public byte DeviceId { get; set; }
-        public int Rating { get; set; }
+        public byte Rating { get; set; }
     }
 }
