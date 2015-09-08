@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace Queue.Hub.Svetovod
 {
@@ -12,20 +11,50 @@ namespace Queue.Hub.Svetovod
 
         public event EventHandler<byte> Accepted = delegate { };
 
+        private System.Timers.Timer stateTimer;
+
         public SvetovodQualityPanelConnection(string port, byte sysnum) :
             base(port)
         {
             this.sysnum = sysnum;
+
+            stateTimer = new System.Timers.Timer(200);
+            stateTimer.Elapsed += stateTimer_Elapsed;
+        }
+
+        private void stateTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            stateTimer.Stop();
+
+            try
+            {
+                receivedResetEvent.Reset();
+
+                WriteToPort(CreateHeader(sysnum, 0x60, 0xff, 0xff));
+
+                if (receivedResetEvent.WaitOne(TimeSpan.FromSeconds(10)))
+                {
+                    var received = receivedBytes.ToArray();
+                    if (received.Length == 10)
+                    {
+                        Accepted(this, received[9]);
+                    }
+                }
+            }
+            catch { }
+
+            stateTimer.Start();
         }
 
         public void Enable()
         {
             SetEnabled(true);
-            Listen();
+            stateTimer.Start();
         }
 
         public void Disable()
         {
+            stateTimer.Stop();
             SetEnabled(false);
         }
 
@@ -50,29 +79,6 @@ namespace Queue.Hub.Svetovod
                 {
                     throw new QueueException("Не удалось активировать устройство");
                 }
-            }
-        }
-
-        private void Listen()
-        {
-            while (true)
-            {
-                receivedResetEvent.Reset();
-
-                WriteToPort(CreateHeader(sysnum, 0x60, 0xff, 0xff));
-
-                if (receivedResetEvent.WaitOne(TimeSpan.FromSeconds(10)))
-                {
-                    var received = receivedBytes.ToArray();
-                    if (received.Length == 10)
-                    {
-                        Accepted(this, received[9]);
-
-                        break;
-                    }
-                }
-
-                Thread.Sleep(200);
             }
         }
     }
