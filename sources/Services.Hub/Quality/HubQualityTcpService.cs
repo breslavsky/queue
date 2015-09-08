@@ -16,10 +16,19 @@ namespace Queue.Services.Hub
                     IncludeExceptionDetailInFaults = true)]
     public class HubQualityTcpService : HubQualityService, IHubQualityTcpService
     {
+        public class Subscribtion
+        {
+            public HubQualityServiceSubscribtionArgs Args { get; set; }
+
+            public EventHandler EventHandler { get; set; }
+        }
+
         #region fields
 
-        private IHubQualityCallback eventsCallback;
-        private IDictionary<HubQualityServiceEventType, Subscribtion> subscriptions;
+        private readonly IHubQualityCallback eventsCallback;
+
+        private readonly IDictionary<HubQualityServiceEventType, Subscribtion> subscriptions =
+            new Dictionary<HubQualityServiceEventType, Subscribtion>();
 
         #endregion fields
 
@@ -35,9 +44,6 @@ namespace Queue.Services.Hub
                 logger.Debug("Не удалось получить канал обратного вызова");
             }
 
-            subscriptions = new Dictionary<HubQualityServiceEventType, Subscribtion>();
-
-            channel = OperationContext.Current.Channel;
             channel.Faulted += channel_Faulted;
             channel.Closing += channel_Closing;
 
@@ -162,13 +168,6 @@ namespace Queue.Services.Hub
                 logger.Error(exception);
                 UnSubscribe(HubQualityServiceEventType.Accepted);
             }
-        }
-
-        public class Subscribtion
-        {
-            public HubQualityServiceSubscribtionArgs Args { get; set; }
-
-            public EventHandler EventHandler { get; set; }
         }
     }
 }

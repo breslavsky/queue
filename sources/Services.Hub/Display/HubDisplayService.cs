@@ -14,7 +14,7 @@ namespace Queue.Services.Hub
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession,
                     ConcurrencyMode = ConcurrencyMode.Multiple,
                     IncludeExceptionDetailInFaults = true)]
-    public class HubDisplayService : IHubDisplayService
+    public class HubDisplayService : DependencyService, IHubDisplayService
     {
         #region dependency
 
@@ -31,6 +31,7 @@ namespace Queue.Services.Hub
         #endregion fields
 
         public HubDisplayService()
+            : base()
         {
             logger.Debug("Создан новый экземпляр службы");
 

@@ -14,7 +14,7 @@ namespace Queue.Services.Hub
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession,
                     ConcurrencyMode = ConcurrencyMode.Multiple,
                     IncludeExceptionDetailInFaults = true)]
-    public class HubDisplayTcpService : HubDisplayService, IHubDisplayTcpService
+    public sealed class HubDisplayTcpService : HubDisplayService, IHubDisplayTcpService
     {
     }
 }

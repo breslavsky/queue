@@ -7,7 +7,7 @@
     <ProjectGuid>{8EF18975-59B4-4084-9127-7ADFD12129A3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Queue</RootNamespace>
+    <RootNamespace>Queue.Server</RootNamespace>
     <AssemblyName>Queue.Server</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -107,8 +107,12 @@
   <ItemGroup>
     <Compile Include="ServerInstance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerSettings.cs" />
-    <Compile Include="UnityInstanceProvider.cs" />
+    <Compile Include="Settings\HttpServiceConfig.cs" />
+    <Compile Include="Settings\ProductLicenceConfig.cs" />
+    <Compile Include="Settings\ServerSettings.cs" />
+    <Compile Include="Settings\ServiceConfig.cs" />
+    <Compile Include="Settings\ServicesConfig.cs" />
+    <Compile Include="Settings\TcpServiceConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -1,6 +1,7 @@
 ﻿using Queue.Hub.Settings;
 using Queue.Services.Hub;
 using System;
+using System.Collections.Generic;
 
 namespace Queue.Hub.Svetovod
 {
@@ -19,9 +20,16 @@ namespace Queue.Hub.Svetovod
 
         #endregion fields
 
+        #region properties
+
+        public Dictionary<byte, int> Answers { get; private set; }
+
+        #endregion properties
+
         public SvetovodQualityPanelDriver(SvetovodQualityPanelDriverConfig config)
         {
             this.config = config;
+            Answers = new Dictionary<byte, int>();
         }
 
         public void Enable(byte deviceId)
@@ -43,6 +51,7 @@ namespace Queue.Hub.Svetovod
 
         private void activeConnection_Accepted(object sender, byte ratting)
         {
+            Answers[config.DeviceId] = ratting;
             Accepted(this, new HubQualityDriverArgs() { DeviceId = config.DeviceId, Rating = ratting });
         }
 

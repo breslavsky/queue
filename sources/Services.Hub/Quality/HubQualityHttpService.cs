@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Queue.Services.Hub
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession,
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall,
                     ConcurrencyMode = ConcurrencyMode.Multiple,
                     IncludeExceptionDetailInFaults = true)]
     public class HubQualityHttpService : HubQualityService, IHubQualityHttpService

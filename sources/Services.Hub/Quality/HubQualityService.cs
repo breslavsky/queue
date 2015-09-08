@@ -14,7 +14,7 @@ namespace Queue.Services.Hub
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession,
                     ConcurrencyMode = ConcurrencyMode.Multiple,
                     IncludeExceptionDetailInFaults = true)]
-    public class HubQualityService : IHubQualityService
+    public class HubQualityService : DependencyService, IHubQualityService
     {
         #region dependency
 
@@ -26,22 +26,18 @@ namespace Queue.Services.Hub
         #region fields
 
         protected readonly Logger logger = LogManager.GetCurrentClassLogger();
-        protected IContextChannel channel;
-        protected Dictionary<byte, int> answers = new Dictionary<byte, int>();
+        protected readonly IContextChannel channel;
 
         #endregion fields
 
         public HubQualityService()
+            : base()
         {
             logger.Debug("Создан новый экземпляр службы");
 
             channel = OperationContext.Current.Channel;
             channel.Faulted += channel_Faulted;
             channel.Closing += channel_Closing;
-
-#if DEBUG
-            Thread.Sleep(1000);
-#endif
         }
 
         public async Task<string> Echo(string message)
@@ -69,14 +65,8 @@ namespace Queue.Services.Hub
                 foreach (var d in Drivers)
                 {
                     d.Enable(deviceId);
-                    d.Accepted += d_Accepted;
                 }
             });
-        }
-
-        private void d_Accepted(object sender, IHubQualityDriverArgs e)
-        {
-            answers.Add(e.DeviceId, e.Rating);
         }
 
         public async Task Disable(byte deviceId)
@@ -86,19 +76,20 @@ namespace Queue.Services.Hub
                 foreach (var d in Drivers)
                 {
                     d.Disable(deviceId);
-                    d.Accepted -= d_Accepted;
                 }
             });
         }
 
-        public async Task<Dictionary<byte, int>> GetLastAnswers()
+        public async Task<Dictionary<byte, int>> GetAnswers()
         {
             return await Task.Run(() =>
             {
-                var result = new Dictionary<byte, int>(answers);
-                answers.Clear();
-                return result;
-                
+                var answers = new Dictionary<byte, int>();
+                foreach (var d in Drivers)
+                {
+                    answers.Union(d.Answers).ToDictionary(x => x.Key, x => x.Value);
+                }
+                return answers;
             });
         }
 

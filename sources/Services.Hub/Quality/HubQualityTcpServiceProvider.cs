@@ -21,9 +21,7 @@ namespace Queue.Services.Hub
 
         public object GetInstance(InstanceContext instanceContext)
         {
-            var instance = new HubQualityTcpService();
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(instance);
-            return instance;
+            return new HubQualityTcpService();
         }
 
         public void ReleaseInstance(InstanceContext instanceContext, object instance)

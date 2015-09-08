@@ -1,5 +1,7 @@
 ﻿using Junte.Configuration;
 using Junte.UI.WinForms;
+using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common;
 using Queue.Hosts.Common;
@@ -20,10 +22,10 @@ namespace Queue.Hosts.Server.WinForms
         private const string StartServiceButtonTitle = "Запустить службу";
         private const string StopServiceButtonTitle = "Остановить службу";
 
-        private ConfigurationManager configuration;
-        private ServerSettings settings;
+        private readonly ConfigurationManager configurationManager;
+        private readonly ServerSettings settings;
+        private readonly ServiceManager serviceManager;
         private ServerInstance server;
-        private ServiceManager serviceManager;
         private bool started;
 
         public MainForm()
@@ -32,17 +34,23 @@ namespace Queue.Hosts.Server.WinForms
 
             string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.ServerServiceExe);
             serviceManager = new ServiceManager(HostsConsts.ServerServiceName, exePath);
-            LoadConfiguration();
+
+            configurationManager = new ConfigurationManager(HostsConsts.ServerApp, Environment.SpecialFolder.CommonApplicationData);
+            settings = configurationManager.GetSection<ServerSettings>(ServerSettings.SectionKey);
+
+            RegisterContainer();
 
             editDatabaseSettingsControl.Settings = settings.Database;
             languageControl.Initialize<Language>();
             licenseTypeControl.Initialize<ProductLicenceType>();
         }
 
-        private void LoadConfiguration()
+        private void RegisterContainer()
         {
-            configuration = new ConfigurationManager(HostsConsts.ServerApp, Environment.SpecialFolder.CommonApplicationData);
-            settings = configuration.GetSection<ServerSettings>(ServerSettings.SectionKey);
+            var container = new UnityContainer();
+            container.RegisterInstance<IUnityContainer>(container);
+            container.RegisterInstance<IConfigurationManager>(configurationManager);
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -129,7 +137,7 @@ namespace Queue.Hosts.Server.WinForms
             try
             {
                 editDatabaseSettingsControl.Save();
-                configuration.Save();
+                configurationManager.Save();
                 MessageBox.Show("Настройки сохранены");
             }
             catch (Exception ex)

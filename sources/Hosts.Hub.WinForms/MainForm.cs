@@ -25,27 +25,27 @@ namespace Hosts.Hub.WinForms
 
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private ServiceManager serviceManager;
-        private ConfigurationManager configurationManager;
-        private HubInstance hub;
+        private readonly ConfigurationManager configurationManager;
+        private readonly ServiceManager serviceManager;
         private HubSettings settings;
+        private HubInstance hub;
         private bool started;
 
         public MainForm()
         {
             InitializeComponent();
 
+            configurationManager = new ConfigurationManager(HostsConsts.HubApp, Environment.SpecialFolder.CommonApplicationData);
+            settings = configurationManager.GetSection<HubSettings>(HubSettings.SectionKey);
+
             string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.HubServiceExe);
             serviceManager = new ServiceManager(HostsConsts.HubServiceName, exePath);
+
+            RegisterContainer();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            configurationManager = new ConfigurationManager(HostsConsts.HubApp, Environment.SpecialFolder.CommonApplicationData);
-            settings = configurationManager.GetSection<HubSettings>(HubSettings.SectionKey);
-
-            RegisterContainer();
-
             Text += string.Format(" ({0})", typeof(HubInstance).Assembly.GetName().Version);
 
             AdjustServiceState();

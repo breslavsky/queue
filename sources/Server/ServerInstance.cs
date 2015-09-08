@@ -5,9 +5,11 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NHibernate.Caches.SysCache2;
 using NLog;
+using Queue.Server.Settings;
 using Queue.Services.Contracts;
 using Queue.Services.Server;
 using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 
@@ -15,67 +17,90 @@ namespace Queue.Server
 {
     public sealed class ServerInstance : IDisposable
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        #region dependency
 
-        private ServiceHost tcpServiceHost;
-        private ServiceHost httpServiceHost;
+        [Dependency]
+        public IUnityContainer Container { get; set; }
+
+        #endregion dependency
+
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly IList<ServiceHost> hosts = new List<ServiceHost>();
+        private readonly ServerSettings settings;
         private bool disposed;
 
         public ServerInstance(ServerSettings settings)
         {
-            logger.Info("Creating.... [server: {0}; database: {1}]", settings.Database.Server, settings.Database.Name);
+            this.settings = settings;
+            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
-            UnityContainer container = new UnityContainer();
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
+            DatabaseConnect();
+            CreateQueueInstance();
+            RegisterDTOMapping();
+            CreateServices();
+        }
 
-            ISessionProvider sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, settings.Database, (fluently) =>
-            {
-                fluently.Cache(c => c
-                    .ProviderClass<SysCacheProvider>()
-                    .UseQueryCache()
-                    .UseSecondLevelCache()
-                    .UseMinimalPuts());
-            });
-            container.RegisterInstance<ISessionProvider>(sessionProvider);
+        private void DatabaseConnect()
+        {
+            Container.RegisterInstance<ISessionProvider>(new SessionProvider(new string[] { "Queue.Model" },
+                settings.Database, (fluently) =>
+                {
+                    fluently.Cache(c => c
+                        .ProviderClass<SysCacheProvider>()
+                        .UseQueryCache()
+                        .UseSecondLevelCache()
+                        .UseMinimalPuts());
+                }));
+        }
 
-            QueueInstance queueInstance = new QueueInstance();
-            container.RegisterInstance<IQueueInstance>(queueInstance);
+        private void CreateQueueInstance()
+        {
+            Container.RegisterInstance<QueueInstance>(new QueueInstance());
+        }
 
+        private void RegisterDTOMapping()
+        {
             Mapper.AddProfile(new FullDTOProfile());
+        }
 
-            ServicesConfig services = settings.Services;
-            TcpServiceConfig tcpService = services.TcpService;
-
-            Uri uri;
+        private void CreateServices()
+        {
+            var services = settings.Services;
+            var tcpService = services.TcpService;
 
             if (tcpService.Enabled)
             {
-                uri = new Uri(string.Format("{0}://{1}:{2}/", Schemes.NET_TCP, tcpService.Host, tcpService.Port));
-                logger.Info("TCP service host uri = ", uri);
+                {
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/", Schemes.NET_TCP, tcpService.Host, tcpService.Port));
+                    logger.Info("TCP service host uri = ", uri);
 
-                tcpServiceHost = new ServiceHost(typeof(ServerService), uri);
-                tcpServiceHost.AddServiceEndpoint(typeof(IServerTcpService), Bindings.NetTcpBinding, string.Empty);
-                tcpServiceHost.Description.Behaviors.Add(new ServiceMetadataBehavior());
+                    var host = new ServerTcpServiceHost();
+                    host.AddServiceEndpoint(typeof(IServerTcpService), Bindings.NetTcpBinding, uri);
+                    host.Description.Behaviors.Add(new ServiceMetadataBehavior());
 
-                //https://msdn.microsoft.com/en-us/library/dn178463(v=pandp.30).aspx#sec29
-
-                tcpServiceHost.AddServiceEndpoint(typeof(IMetadataExchange), MetadataExchangeBindings.CreateMexTcpBinding(), "mex");
+                    hosts.Add(host);
+                }
             }
 
             var httpService = services.HttpService;
 
             if (httpService.Enabled)
             {
-                uri = new Uri(string.Format("{0}://{1}:{2}/", Schemes.HTTP, httpService.Host, httpService.Port));
-                logger.Info("HTTP service host uri = ", uri);
-
-                httpServiceHost = new ServiceHost(typeof(ServerService), uri);
-                var serviceEndpoint = httpServiceHost.AddServiceEndpoint(typeof(IServerHttpService), Bindings.WebHttpBinding, string.Empty);
-                //serviceEndpoint.Behaviors.Add(new WebHttpBehavior());
-                httpServiceHost.Description.Behaviors.Add(new ServiceMetadataBehavior()
                 {
-                    HttpGetEnabled = true
-                });
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/", Schemes.HTTP, httpService.Host, httpService.Port));
+                    logger.Info("HTTP service host uri = ", uri);
+
+                    var host = new ServerHttpServiceHost();
+                    var endpoint = host.AddServiceEndpoint(typeof(IHubQualityHttpService), Bindings.WebHttpBinding, uri);
+                    endpoint.Behaviors.Add(new WebHttpBehavior());
+                    host.Description.Behaviors.Add(new ServiceMetadataBehavior()
+                    {
+                        HttpGetUrl = uri,
+                        HttpGetEnabled = true
+                    });
+
+                    hosts.Add(host);
+                }
             }
         }
 
@@ -83,31 +108,19 @@ namespace Queue.Server
         {
             logger.Info("Starting");
 
-            if (tcpServiceHost != null)
+            foreach (var h in hosts)
             {
-                logger.Info("TCP service host opening");
-                tcpServiceHost.Open();
-            }
-
-            if (httpServiceHost != null)
-            {
-                logger.Info("HTTP service host opening");
-                httpServiceHost.Open();
+                h.Open();
             }
         }
 
         public void Stop()
         {
-            if (tcpServiceHost != null)
-            {
-                logger.Info("TCP service host closing");
-                tcpServiceHost.Close();
-            }
+            logger.Info("Stoping");
 
-            if (httpServiceHost != null)
+            foreach (var h in hosts)
             {
-                logger.Info("HTTP service host closing");
-                httpServiceHost.Close();
+                h.Close();
             }
         }
 
@@ -128,17 +141,7 @@ namespace Queue.Server
 
             if (disposing)
             {
-                if (tcpServiceHost != null)
-                {
-                    tcpServiceHost.Close();
-                    tcpServiceHost = null;
-                }
-
-                if (httpServiceHost != null)
-                {
-                    httpServiceHost.Close();
-                    httpServiceHost = null;
-                }
+                hosts.Clear();
             }
 
             disposed = true;

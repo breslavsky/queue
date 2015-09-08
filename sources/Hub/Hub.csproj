@@ -101,7 +101,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HubQualityDriverArgs.cs" />
+    <Compile Include="Drivers\HubQualityDriverArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HubInstance.cs" />
     <Compile Include="Settings\HubSettings.cs" />

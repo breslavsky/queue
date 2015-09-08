@@ -26,10 +26,10 @@ namespace Queue.Hub
         #region fields
 
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private IList<ServiceHost> hosts = new List<ServiceHost>();
-        private IList<IHubQualityDriver> qualityDrivers = new List<IHubQualityDriver>();
-        private IList<IHubDisplayDriver> displayDrivers = new List<IHubDisplayDriver>();
-        private HubSettings settings;
+        private readonly IList<ServiceHost> hosts = new List<ServiceHost>();
+        private readonly IList<IHubQualityDriver> qualityDrivers = new List<IHubQualityDriver>();
+        private readonly IList<IHubDisplayDriver> displayDrivers = new List<IHubDisplayDriver>();
+        private readonly HubSettings settings;
         private bool disposed;
 
         #endregion fields
@@ -40,7 +40,7 @@ namespace Queue.Hub
             ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
             LoadDrivers();
-            LoadServices();
+            CreateServices();
         }
 
         private void LoadDrivers()
@@ -78,7 +78,7 @@ namespace Queue.Hub
             Container.RegisterInstance<IHubQualityDriver[]>(qualityDrivers.ToArray());
         }
 
-        private void LoadServices()
+        private void CreateServices()
         {
             var services = settings.Services;
             var tcpService = services.TcpService;
@@ -189,6 +189,7 @@ namespace Queue.Hub
 
             if (disposing)
             {
+                hosts.Clear();
             }
 
             disposed = true;

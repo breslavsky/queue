@@ -68,6 +68,15 @@
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NHibernate.4.0.3.4000\lib\net40\NHibernate.dll</HintPath>
@@ -115,9 +124,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOMapping.cs" />
-    <Compile Include="IQueueInstance.cs" />
+    <Compile Include="Server\ServerHttpService.cs" />
+    <Compile Include="Server\ServerTcpService.cs" />
+    <Compile Include="Server\ServerServiceTcpProvider.cs" />
+    <Compile Include="Server\ServerTcpServiceHost.cs" />
+    <Compile Include="Server\ServerHttpServiceHost.cs" />
+    <Compile Include="Server\ServerHttpServiceProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueueInstance.cs" />
+    <Compile Include="Server\QueueInstance.cs" />
     <Compile Include="QueuePlan\ClientRequestPlan.cs" />
     <Compile Include="QueuePlan\NotDistributedClientRequest.cs" />
     <Compile Include="QueuePlan\OperatorPlan.cs" />
@@ -126,27 +140,27 @@
     <Compile Include="QueuePlan\QueuePlanEventArgs.cs" />
     <Compile Include="QueuePlan\ServiceFreeTime.cs" />
     <Compile Include="QueuePlan\TimeInterval.cs" />
-    <Compile Include="ServerService\Clients.cs" />
-    <Compile Include="ServerService\ClientsRequests.cs" />
-    <Compile Include="ServerService\Config.cs" />
-    <Compile Include="ServerService\Metric.cs" />
-    <Compile Include="ServerService\OperatorInterruption.cs" />
-    <Compile Include="ServerService\Offices.cs" />
-    <Compile Include="ServerService\PINs.cs" />
-    <Compile Include="ServerService\QueuePlan.cs" />
-    <Compile Include="ServerService\Reports.cs" />
-    <Compile Include="ServerService\Schedule.cs" />
-    <Compile Include="ServerService\ServiceGroups.cs" />
-    <Compile Include="ServerService\ServiceRendering.cs" />
-    <Compile Include="ServerService\Services.cs" />
-    <Compile Include="ServerService\ServicesParameters.cs" />
-    <Compile Include="ServerService\ServiceStep.cs" />
-    <Compile Include="ServerService\Users.cs" />
-    <Compile Include="ServerService\Workplaces.cs" />
-    <Compile Include="ServerService.cs" />
-    <Compile Include="ServerService\AdditionalService.cs" />
-    <Compile Include="ServerService\ClientRequestAdditionalService.cs" />
-    <Compile Include="ServerService\ClientRequestParameter.cs" />
+    <Compile Include="Server\Controllers\Clients.cs" />
+    <Compile Include="Server\Controllers\ClientsRequests.cs" />
+    <Compile Include="Server\Controllers\Config.cs" />
+    <Compile Include="Server\Controllers\Metric.cs" />
+    <Compile Include="Server\Controllers\OperatorInterruption.cs" />
+    <Compile Include="Server\Controllers\Offices.cs" />
+    <Compile Include="Server\Controllers\PINs.cs" />
+    <Compile Include="Server\Controllers\QueuePlan.cs" />
+    <Compile Include="Server\Controllers\Reports.cs" />
+    <Compile Include="Server\Controllers\Schedule.cs" />
+    <Compile Include="Server\Controllers\ServiceGroups.cs" />
+    <Compile Include="Server\Controllers\ServiceRendering.cs" />
+    <Compile Include="Server\Controllers\Services.cs" />
+    <Compile Include="Server\Controllers\ServicesParameters.cs" />
+    <Compile Include="Server\Controllers\ServiceStep.cs" />
+    <Compile Include="Server\Controllers\Users.cs" />
+    <Compile Include="Server\Controllers\Workplaces.cs" />
+    <Compile Include="Server\ServerService.cs" />
+    <Compile Include="Server\Controllers\AdditionalService.cs" />
+    <Compile Include="Server\Controllers\ClientRequestAdditionalService.cs" />
+    <Compile Include="Server\Controllers\ClientRequestParameter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

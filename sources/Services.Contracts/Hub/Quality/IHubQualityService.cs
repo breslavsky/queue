@@ -30,6 +30,6 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [WebGet(UriTemplate = "/get-answers", ResponseFormat = WebMessageFormat.Json)]
-        Task<Dictionary<byte, int>> GetLastAnswers();
+        Task<Dictionary<byte, int>> GetAnswers();
     }
 }

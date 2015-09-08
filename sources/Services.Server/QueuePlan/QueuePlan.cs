@@ -1,6 +1,7 @@
 ﻿using Junte.Data.NHibernate;
 using Junte.Parallel;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using NHibernate.Criterion;
 using NLog;
 using Queue.Model;
@@ -25,6 +26,13 @@ namespace Queue.Services.Server
 
     public sealed class QueuePlan : Synchronized, IDisposable
     {
+        #region dependency
+
+        [Dependency]
+        public ISessionProvider SessionProvider { get; set; }
+
+        #endregion dependency
+
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private List<ClientRequest> clientRequests = new List<ClientRequest>();
@@ -43,6 +51,7 @@ namespace Queue.Services.Server
         public QueuePlan()
         {
             logger.Info("Создание экземпляра плана очереди");
+            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
             OperatorsPlans = new List<OperatorPlan>();
             NotDistributedClientRequests = new List<NotDistributedClientRequest>();
@@ -70,11 +79,6 @@ namespace Queue.Services.Server
         public List<string> Report { get; private set; }
 
         public int Version { get; private set; }
-
-        private ISessionProvider sessionProvider
-        {
-            get { return ServiceLocator.Current.GetInstance<ISessionProvider>(); }
-        }
 
         /// <summary>
         /// Запланировать новый запрос клиента
@@ -538,7 +542,7 @@ namespace Queue.Services.Server
             {
                 logger.Info("Загрузка параметров оказания услуги для раписания [{0}]", schedule);
 
-                using (var session = sessionProvider.OpenSession())
+                using (var session = SessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
                     serviceRenderings.Add(key, session.CreateCriteria<ServiceRendering>()
@@ -566,7 +570,7 @@ namespace Queue.Services.Server
             {
                 logger.Info("Загрузка перерывов оператора [{0}]", queueOperator);
 
-                using (var session = sessionProvider.OpenSession())
+                using (var session = SessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
                     operatorInterruptions.Add(queueOperator, session.CreateCriteria<OperatorInterruption>()
@@ -601,7 +605,7 @@ namespace Queue.Services.Server
             {
                 logger.Info("Загрузка расписания для услуги [{0}]", service);
 
-                using (var session = sessionProvider.OpenSession())
+                using (var session = SessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
                     Schedule schedule = session.CreateCriteria<ServiceExceptionSchedule>()
@@ -676,7 +680,7 @@ namespace Queue.Services.Server
 
             Flush(QueuePlanFlushMode.Full);
 
-            using (var session = sessionProvider.OpenSession())
+            using (var session = SessionProvider.OpenSession())
             using (var transaction = session.BeginTransaction())
             {
                 logger.Info("Загрузка операторов");
