@@ -2,17 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Timer = System.Timers.Timer; 
 
 namespace Queue.Hub.Svetovod
 {
+
+
     public class SvetovodQualityPanelConnection : SvetovodConnection
     {
         private const string NoAnswerErrorMessage = "Не удалось получить ответ от устройства";
         private readonly byte sysnum;
 
-        public event EventHandler<byte> Accepted = delegate { };
+        public event EventHandler<SvetovodQualityPanelConnectionArgs> Accepted = delegate { };
 
-        private System.Timers.Timer stateTimer;
+        private Timer stateTimer;
 
         public SvetovodQualityPanelConnection(string port, byte sysnum) :
             base(port)
@@ -38,8 +41,8 @@ namespace Queue.Hub.Svetovod
                     var received = receivedBytes.ToArray();
                     if (received.Length == 10)
                     {
-                        logger.Debug("Accepted: [{0}]", received[9]);
-                        Accepted(this, received[9]);
+                        logger.Debug("Accepted: [{0}] from [{1}]", received[9], sysnum);
+                        Accepted(this, new SvetovodQualityPanelConnectionArgs() { DeviceId = sysnum, Rating = received[9] });
                     }
                 }
                 else
@@ -57,27 +60,27 @@ namespace Queue.Hub.Svetovod
 
         public void Enable()
         {
-            logger.Debug("Enabling....");
+            logger.Debug("Enabling [{0}]...", sysnum);
 
             SetEnabled(true);
             stateTimer.Start();
 
-            logger.Debug("Enabled");
+            logger.Debug("Enabled [{0}]", sysnum);
         }
 
         public void Disable()
         {
-            logger.Debug("Disabling...");
+            logger.Debug("Disabling [{0}]....", sysnum);
 
             stateTimer.Stop();
             SetEnabled(false);
 
-            logger.Debug("Disabled");
+            logger.Debug("Disabled [{0}]", sysnum);
         }
 
         private void SetEnabled(bool value)
         {
-            var header = CreateHeader(2, 0, 0, 2);
+            var header = CreateHeader(sysnum, 0, 0, 2);
 
             var state = (byte)(value ? 10 : 0);
             var data = new List<byte>();
@@ -113,5 +116,12 @@ namespace Queue.Hub.Svetovod
                 stateTimer = null;
             }
         }
+    }
+
+    public class SvetovodQualityPanelConnectionArgs
+    {
+        public byte DeviceId { get; set; }
+
+        public byte Rating { get; set; }
     }
 }

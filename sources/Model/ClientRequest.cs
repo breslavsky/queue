@@ -73,6 +73,9 @@ namespace Queue.Model
         public virtual int Subjects { get; set; }
 
         [Property]
+        public virtual int Rating { get; set; }
+
+        [Property]
         public virtual TimeSpan ClientInterval { get; set; }
 
         [Property]

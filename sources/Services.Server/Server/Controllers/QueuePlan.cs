@@ -421,6 +421,18 @@ namespace Queue.Services.Server
                             throw new FaultException("Нельзя изменить запрос клиент находящийся в данном статусе");
                         }
 
+                        if (clientRequest.Rating != source.Rating)
+                        {
+                            clientRequest.Rating = source.Rating;
+
+                            session.Save(new ClientRequestEvent()
+                            {
+                                ClientRequest = clientRequest,
+                                Message = string.Format("[{0}] установлена оценка качества обслуживания [{1}] для запроса клиента [{2}]",
+                                    queueOperator, clientRequest.Rating, clientRequest)
+                            });
+                        }
+
                         if (clientRequest.Subjects != source.Subjects)
                         {
                             clientRequest.Subjects = source.Subjects;

@@ -1,4 +1,5 @@
-﻿using Queue.Hub.Settings;
+﻿using NLog;
+using Queue.Hub.Settings;
 using Queue.Services.Hub;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Queue.Hub.Svetovod
 
         #region fields
 
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
         private SvetovodQualityPanelConnection activeConnection;
         private SvetovodQualityPanelDriverConfig config;
 
@@ -38,9 +40,21 @@ namespace Queue.Hub.Svetovod
 
             if (config.DeviceId == 0 || config.DeviceId == deviceId)
             {
-                activeConnection = new SvetovodQualityPanelConnection(config.Port, deviceId);
-                activeConnection.Accepted += activeConnection_Accepted;
-                activeConnection.Enable();
+                SvetovodQualityPanelConnection connection = null;
+
+                try
+                {
+                    connection = new SvetovodQualityPanelConnection(config.Port, deviceId);
+                    connection.Enable();
+                    connection.Accepted += activeConnection_Accepted;
+                    activeConnection = connection;
+                }
+                catch (Exception e)
+                {   
+                    logger.Error(e);
+                    connection.Dispose();
+                    throw;
+                }
             }
         }
 
@@ -49,10 +63,10 @@ namespace Queue.Hub.Svetovod
             CloseActiveConnection();
         }
 
-        private void activeConnection_Accepted(object sender, byte ratting)
+        private void activeConnection_Accepted(object sender, SvetovodQualityPanelConnectionArgs args)
         {
-            Answers[config.DeviceId] = ratting;
-            Accepted(this, new HubQualityDriverArgs() { DeviceId = config.DeviceId, Rating = ratting });
+            Answers[args.DeviceId] = args.Rating;
+            Accepted(this, new HubQualityDriverArgs() { DeviceId = args.DeviceId, Rating = args.Rating });
         }
 
         public void Dispose()

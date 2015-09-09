@@ -47,6 +47,9 @@ namespace Queue.Services.DTO
         public int Subjects { get; set; }
 
         [DataMember]
+        public int Rating { get; set; }
+
+        [DataMember]
         public TimeSpan WaitingStartTime { get; set; }
 
         [DataMember]
