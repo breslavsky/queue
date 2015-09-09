@@ -38,6 +38,7 @@ namespace Queue.Hub.Svetovod
                     var received = receivedBytes.ToArray();
                     if (received.Length == 10)
                     {
+                        logger.Debug("Accepted: [{0}]", received[9]);
                         Accepted(this, received[9]);
                     }
                 }
@@ -56,14 +57,22 @@ namespace Queue.Hub.Svetovod
 
         public void Enable()
         {
+            logger.Debug("Enabling....");
+
             SetEnabled(true);
             stateTimer.Start();
+
+            logger.Debug("Enabled");
         }
 
         public void Disable()
         {
+            logger.Debug("Disabling...");
+
             stateTimer.Stop();
             SetEnabled(false);
+
+            logger.Debug("Disabled");
         }
 
         private void SetEnabled(bool value)
