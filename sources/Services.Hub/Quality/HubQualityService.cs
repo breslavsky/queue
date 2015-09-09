@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Queue.Services.Hub
@@ -87,7 +86,7 @@ namespace Queue.Services.Hub
                 var answers = new Dictionary<byte, byte>();
                 foreach (var d in Drivers)
                 {
-                    answers.Union(d.Answers).ToDictionary(x => x.Key, x => x.Value);
+                    answers = answers.Union(d.Answers).ToDictionary(x => x.Key, x => x.Value);
                 }
                 return answers;
             });
