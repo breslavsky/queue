@@ -2,6 +2,7 @@
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
+using Queue.Common.Settings;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -39,7 +40,7 @@ namespace Queue.UI.WinForms
                 return;
             }
 
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
+            ServiceLocator.Current.GetInstance<UnityContainer>().BuildUp(this);
         }
 
         private void LoginSettingsControl_Load(object sender, EventArgs e)

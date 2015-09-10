@@ -2,6 +2,6 @@
 {
     public enum HubQualityServiceEventType
     {
-        Accepted
+        RatingAccepted
     }
 }

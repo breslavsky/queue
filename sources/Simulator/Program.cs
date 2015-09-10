@@ -2,6 +2,7 @@
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
+using Queue.Common.Settings;
 using Queue.Model.Common;
 using Queue.UI.WinForms;
 using System;
@@ -48,18 +49,16 @@ namespace Queue.Simulator
         private static void RegisterContainer()
         {
             IUnityContainer container = new UnityContainer();
-            container.RegisterInstance<IConfigurationManager>(new ConfigurationManager(AppName, SpecialFolder.ApplicationData));
+            container.RegisterInstance(new ConfigurationManager(AppName, SpecialFolder.ApplicationData));
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 
         private static void ResetSettings()
         {
-            var configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+            //configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey).Reset();
+            //configuration.GetSection<LoginSettings>(LoginSettings.SectionKey).Reset();
 
-            configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey).Reset();
-            configuration.GetSection<LoginSettings>(LoginSettings.SectionKey).Reset();
-
-            configuration.Save();
+            //configuration.Save();
         }
     }
 }

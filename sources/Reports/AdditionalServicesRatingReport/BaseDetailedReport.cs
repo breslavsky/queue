@@ -1,5 +1,6 @@
 ﻿using Junte.Data.NHibernate;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Criterion.Lambda;
@@ -20,6 +21,13 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 {
     public abstract class BaseDetailedReport<T> where T : AdditionalServiceRating
     {
+        #region dependency
+
+        [Dependency]
+        public SessionProvider SessionProvider { get; set; }
+
+        #endregion dependency
+
         protected const int StartOperatorsStatisticsCol = 6;
 
         private Operator[] operators;
@@ -29,13 +37,11 @@ namespace Queue.Reports.AdditionalServicesRatingReport
         protected ICellStyle sumCellStyle;
         protected ICellStyle countCellStyle;
 
-        protected ISessionProvider SessionProvider
-        {
-            get { return ServiceLocator.Current.GetInstance<ISessionProvider>(); }
-        }
-
         protected BaseDetailedReport(AdditionalServicesRatingReportSettings settings)
         {
+            ServiceLocator.Current.GetInstance<UnityContainer>()
+                .BuildUp(this.GetType(), this);
+
             this.settings = settings;
         }
 

@@ -53,7 +53,8 @@ namespace Queue.Administrator
                 numberUpDown.Value = workplace.Number;
                 modificatorControl.Select<WorkplaceModificator>(workplace.Modificator);
                 commentTextBox.Text = workplace.Comment;
-                displayUpDown.Value = workplace.Display;
+                displayDeviceIdUpDown.Value = workplace.DisplayDeviceId;
+                qualityPanelDeviceIdUpDown.Value = workplace.QualityPanelDeviceId;
                 segmentsUpDown.Value = workplace.Segments;
             }
         }
@@ -156,9 +157,14 @@ namespace Queue.Administrator
             workplace.Comment = commentTextBox.Text;
         }
 
-        private void displayUpDown_Leave(object sender, EventArgs e)
+        private void displayDeviceIdUpDown_Leave(object sender, EventArgs e)
         {
-            workplace.Display = (byte)displayUpDown.Value;
+            workplace.DisplayDeviceId = (byte)displayDeviceIdUpDown.Value;
+        }
+
+        private void qualityPanelDeviceIdUpDown_Leave(object sender, EventArgs e)
+        {
+            workplace.QualityPanelDeviceId = (byte)qualityPanelDeviceIdUpDown.Value;
         }
 
         private void modificatorControl_Leave(object sender, EventArgs e)

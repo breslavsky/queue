@@ -51,7 +51,9 @@ namespace Queue.Services.Server
         public QueuePlan()
         {
             logger.Info("Создание экземпляра плана очереди");
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
+
+            ServiceLocator.Current.GetInstance<UnityContainer>()
+                .BuildUp(this);
 
             OperatorsPlans = new List<OperatorPlan>();
             NotDistributedClientRequests = new List<NotDistributedClientRequest>();

@@ -105,6 +105,11 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
+            if (designtime)
+            {
+                return;
+            }
+
             channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();

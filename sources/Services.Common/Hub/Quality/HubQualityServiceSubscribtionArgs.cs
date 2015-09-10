@@ -5,5 +5,6 @@ namespace Queue.Services.Common
 {
     public class HubQualityServiceSubscribtionArgs
     {
+        public byte DeviceId { get; set; }
     }
 }

@@ -19,15 +19,17 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.workplacesGridView = new System.Windows.Forms.DataGridView();
+            this.addWorkplaceButton = new System.Windows.Forms.Button();
             this.typeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.modificatorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.commentColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.displayColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.displayDeviceIdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.qualityPanelDeviceId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.segmentsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.addWorkplaceButton = new System.Windows.Forms.Button();
             this.mainTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.workplacesGridView)).BeginInit();
             this.SuspendLayout();
@@ -65,7 +67,8 @@
             this.numberColumn,
             this.modificatorColumn,
             this.commentColumn,
-            this.displayColumn,
+            this.displayDeviceIdColumn,
+            this.qualityPanelDeviceId,
             this.segmentsColumn});
             this.workplacesGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.workplacesGridView.Location = new System.Drawing.Point(0, 0);
@@ -79,6 +82,16 @@
             this.workplacesGridView.TabIndex = 0;
             this.workplacesGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.workplacesGridView_CellMouseDoubleClick);
             this.workplacesGridView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.workplacesGridView_UserDeletingRow);
+            // 
+            // addWorkplaceButton
+            // 
+            this.addWorkplaceButton.Location = new System.Drawing.Point(0, 412);
+            this.addWorkplaceButton.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.addWorkplaceButton.Name = "addWorkplaceButton";
+            this.addWorkplaceButton.Size = new System.Drawing.Size(75, 25);
+            this.addWorkplaceButton.TabIndex = 1;
+            this.addWorkplaceButton.Text = "Добавить";
+            this.addWorkplaceButton.Click += new System.EventHandler(this.addWorkplaceButton_Click);
             // 
             // typeColumn
             // 
@@ -117,33 +130,32 @@
             this.commentColumn.Name = "commentColumn";
             this.commentColumn.ReadOnly = true;
             // 
-            // displayColumn
+            // displayDeviceIdColumn
             // 
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.displayColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.displayColumn.HeaderText = "Номер табло";
-            this.displayColumn.Name = "displayColumn";
-            this.displayColumn.ReadOnly = true;
-            this.displayColumn.Width = 130;
+            this.displayDeviceIdColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.displayDeviceIdColumn.HeaderText = "Номер табло";
+            this.displayDeviceIdColumn.Name = "displayDeviceIdColumn";
+            this.displayDeviceIdColumn.ReadOnly = true;
+            this.displayDeviceIdColumn.Width = 130;
+            // 
+            // qualityPanelDeviceId
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.qualityPanelDeviceId.DefaultCellStyle = dataGridViewCellStyle4;
+            this.qualityPanelDeviceId.HeaderText = "Номер пульта";
+            this.qualityPanelDeviceId.Name = "qualityPanelDeviceId";
+            this.qualityPanelDeviceId.ReadOnly = true;
+            this.qualityPanelDeviceId.Width = 120;
             // 
             // segmentsColumn
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.segmentsColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.segmentsColumn.DefaultCellStyle = dataGridViewCellStyle5;
             this.segmentsColumn.HeaderText = "Кол-во сегментов";
             this.segmentsColumn.Name = "segmentsColumn";
             this.segmentsColumn.ReadOnly = true;
-            this.segmentsColumn.Width = 160;
-            // 
-            // addWorkplaceButton
-            // 
-            this.addWorkplaceButton.Location = new System.Drawing.Point(0, 412);
-            this.addWorkplaceButton.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.addWorkplaceButton.Name = "addWorkplaceButton";
-            this.addWorkplaceButton.Size = new System.Drawing.Size(75, 25);
-            this.addWorkplaceButton.TabIndex = 1;
-            this.addWorkplaceButton.Text = "Добавить";
-            this.addWorkplaceButton.Click += new System.EventHandler(this.addWorkplaceButton_Click);
+            this.segmentsColumn.Width = 140;
             // 
             // WorkplacesForm
             // 
@@ -173,7 +185,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn numberColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn modificatorColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn commentColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn displayColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn displayDeviceIdColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn qualityPanelDeviceId;
         private System.Windows.Forms.DataGridViewTextBoxColumn segmentsColumn;
     }
 }

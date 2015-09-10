@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 
-namespace Queue.Common
+namespace Queue.Common.Settings
 {
     public class LoginSettings : ConfigurationSection
     {

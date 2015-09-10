@@ -46,6 +46,11 @@ namespace Queue.UI.WinForms
         {
             InitializeComponent();
 
+            if (designtime)
+            {
+                return;
+            }
+
             channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();

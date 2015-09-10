@@ -18,7 +18,8 @@ namespace Queue.UI.WinForms
                 return;
             }
 
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this.GetType(), this);
+            ServiceLocator.Current.GetInstance<UnityContainer>()
+                .BuildUp(this.GetType(), this);
         }
     }
 }

@@ -70,7 +70,7 @@ namespace Queue.Notification
 
         private void RegisterServices()
         {
-            IUnityContainer container = ServiceLocator.Current.GetInstance<IUnityContainer>();
+            IUnityContainer container = ServiceLocator.Current.GetInstance<UnityContainer>();
 
             taskPool = new TaskPool();
             container.RegisterInstance(connectPage.Model.ChannelBuilder);
@@ -84,7 +84,7 @@ namespace Queue.Notification
         {
             if (Keyboard.IsKeyDown(Key.LeftShift) && e.Key == Key.Escape)
             {
-                var configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+                var configuration = ServiceLocator.Current.GetInstance<ConfigurationManager>();
                 var loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
                 loginFormSettings.IsRemember = false;
                 configuration.Save();

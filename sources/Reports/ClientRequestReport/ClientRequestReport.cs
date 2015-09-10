@@ -16,6 +16,7 @@ namespace Queue.Reports.ClientRequestReport
         private readonly Guid clientRequestId;
 
         public ClientRequestReport(Guid clientRequestId)
+            : base()
         {
             this.clientRequestId = clientRequestId;
         }

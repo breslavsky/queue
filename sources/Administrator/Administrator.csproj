@@ -236,6 +236,11 @@
     <Compile Include="CurrentUserForm.Designer.cs">
       <DependentUpon>CurrentUserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Settings\AdministratorSettings.cs" />
     <Compile Include="Offices\OfficeLoginForm.cs">
       <SubType>Form</SubType>
@@ -494,6 +499,10 @@
     <EmbeddedResource Include="OperatorInterruptions\OperatorInterruptionsForm.resx">
       <DependentUpon>OperatorInterruptionsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\AdditionalServiceRatingReportForm.resx">
       <DependentUpon>AdditionalServiceRatingReportForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -700,6 +709,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="background.png" />
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>

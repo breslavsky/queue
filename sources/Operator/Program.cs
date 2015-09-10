@@ -2,6 +2,7 @@
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
+using Queue.Common.Settings;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -19,7 +20,7 @@ namespace Queue.Operator
         private static AppOptions options;
         private static UnityContainer container;
         private static ConfigurationManager configuration;
-        private static OperatorSettings operatorSettings;
+        private static HubQualitySettings hubQualitySettings;
         private static LoginSettings loginSettings;
         private static LoginFormSettings loginFormSettings;
         private static ClientService<IServerTcpService> serverService;
@@ -38,8 +39,11 @@ namespace Queue.Operator
             configuration = new ConfigurationManager(AppName, SpecialFolder.ApplicationData);
             container.RegisterInstance(configuration);
 
-            operatorSettings = configuration.GetSection<OperatorSettings>(OperatorSettings.SectionKey);
-            container.RegisterInstance(operatorSettings);
+            hubQualitySettings = configuration.GetSection<HubQualitySettings>(HubQualitySettings.SectionKey);
+            container.RegisterInstance(hubQualitySettings);
+
+            hubQualityService = new ClientService<IHubQualityTcpService>(hubQualitySettings.Endpoint, HubServicesPaths.Quality);
+            container.RegisterInstance(hubQualityService);
 
             loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
             loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
@@ -106,19 +110,19 @@ namespace Queue.Operator
 
         private static void RegisterContainer()
         {
-            container.RegisterInstance<IConfigurationManager>(configuration);
-            container.RegisterInstance<LoginSettings>(loginSettings);
-            container.RegisterInstance<LoginFormSettings>(loginFormSettings);
+            container.RegisterInstance(configuration);
+            container.RegisterInstance(loginSettings);
+            container.RegisterInstance(loginFormSettings);
 
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 
         private static void ResetSettings()
         {
-            var configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+            var configuration = ServiceLocator.Current.GetInstance<ConfigurationManager>();
 
-            configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey).Reset();
-            configuration.GetSection<LoginSettings>(LoginSettings.SectionKey).Reset();
+            loginFormSettings.Reset();
+            loginSettings.Reset();
 
             configuration.Save();
         }

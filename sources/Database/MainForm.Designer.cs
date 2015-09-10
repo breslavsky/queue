@@ -35,12 +35,10 @@
             this.schemaUpdateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.constraintsUpdateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkPatchesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.installPatchesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.initDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.demoDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importDataMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.damaskImportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkPatchesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.installPatchesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logTextBox = new System.Windows.Forms.TextBox();
             this.topMenu.SuspendLayout();
             this.SuspendLayout();
@@ -101,27 +99,12 @@
             this.dataMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.initDataMenuItem,
             this.demoDataMenuItem,
-            this.importDataMenuItem,
             this.checkPatchesMenuItem,
             this.installPatchesMenuItem});
             this.dataMenu.Enabled = false;
             this.dataMenu.Name = "dataMenu";
             this.dataMenu.Size = new System.Drawing.Size(62, 20);
             this.dataMenu.Text = "Данные";
-            // 
-            // checkPatchesMenuItem
-            // 
-            this.checkPatchesMenuItem.Name = "checkPatchesMenuItem";
-            this.checkPatchesMenuItem.Size = new System.Drawing.Size(284, 22);
-            this.checkPatchesMenuItem.Text = "Проверка обновлений";
-            this.checkPatchesMenuItem.Click += new System.EventHandler(this.checkPatchesMenuItem_Click);
-            // 
-            // installPatchesMenuItem
-            // 
-            this.installPatchesMenuItem.Name = "installPatchesMenuItem";
-            this.installPatchesMenuItem.Size = new System.Drawing.Size(284, 22);
-            this.installPatchesMenuItem.Text = "Установка обновлений";
-            this.installPatchesMenuItem.Click += new System.EventHandler(this.installPatchesMenuItem_Click);
             // 
             // initDataMenuItem
             // 
@@ -137,20 +120,19 @@
             this.demoDataMenuItem.Text = "Загрузить демонстрационные данные";
             this.demoDataMenuItem.Click += new System.EventHandler(this.demoDataMenuItem_Click);
             // 
-            // importDataMenuItem
+            // checkPatchesMenuItem
             // 
-            this.importDataMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.damaskImportMenuItem});
-            this.importDataMenuItem.Name = "importDataMenuItem";
-            this.importDataMenuItem.Size = new System.Drawing.Size(284, 22);
-            this.importDataMenuItem.Text = "Импорт данных";
+            this.checkPatchesMenuItem.Name = "checkPatchesMenuItem";
+            this.checkPatchesMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.checkPatchesMenuItem.Text = "Проверка обновлений";
+            this.checkPatchesMenuItem.Click += new System.EventHandler(this.checkPatchesMenuItem_Click);
             // 
-            // damaskImportMenuItem
+            // installPatchesMenuItem
             // 
-            this.damaskImportMenuItem.Name = "damaskImportMenuItem";
-            this.damaskImportMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.damaskImportMenuItem.Text = "Импорт из СУО \"Дамаск\"";
-            this.damaskImportMenuItem.Click += new System.EventHandler(this.damaskImportMenuItem_Click);
+            this.installPatchesMenuItem.Name = "installPatchesMenuItem";
+            this.installPatchesMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.installPatchesMenuItem.Text = "Установка обновлений";
+            this.installPatchesMenuItem.Click += new System.EventHandler(this.installPatchesMenuItem_Click);
             // 
             // logTextBox
             // 
@@ -194,12 +176,10 @@
         private System.Windows.Forms.ToolStripMenuItem schemaUpdateMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dataMenu;
         private System.Windows.Forms.ToolStripMenuItem initDataMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importDataMenuItem;
         private System.Windows.Forms.ToolStripMenuItem constraintsUpdateMenuItem;
         private System.Windows.Forms.ToolStripMenuItem demoDataMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkPatchesMenuItem;
         private System.Windows.Forms.ToolStripMenuItem installPatchesMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem damaskImportMenuItem;
         private System.Windows.Forms.ToolStripMenuItem connectButton;
     }
 }

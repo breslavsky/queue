@@ -1,5 +1,6 @@
 ﻿using Junte.Data.NHibernate;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 
@@ -7,9 +8,17 @@ namespace Queue.Reports
 {
     public abstract class BaseReport
     {
-        protected ISessionProvider SessionProvider
+        #region dependency
+
+        [Dependency]
+        public SessionProvider SessionProvider { get; set; }
+
+        #endregion dependency
+
+        public BaseReport()
         {
-            get { return ServiceLocator.Current.GetInstance<ISessionProvider>(); }
+            ServiceLocator.Current.GetInstance<UnityContainer>()
+                .BuildUp(this.GetType(), this);
         }
 
         public abstract HSSFWorkbook Generate();

@@ -1,6 +1,7 @@
 ﻿using Junte.Data.NHibernate;
 using Junte.Translation;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Transform;
@@ -19,16 +20,21 @@ namespace Queue.Reports.ServiceRatingReport
 {
     public abstract class BaseDetailedReport<T>
     {
+        #region dependency
+
+        [Dependency]
+        public SessionProvider SessionProvider { get; set; }
+
+        #endregion dependency
+
         protected ServiceRatingReportSettings settings;
 
         public BaseDetailedReport(ServiceRatingReportSettings settings)
         {
-            this.settings = settings;
-        }
+            ServiceLocator.Current.GetInstance<UnityContainer>()
+                .BuildUp(this.GetType(), this);
 
-        protected ISessionProvider SessionProvider
-        {
-            get { return ServiceLocator.Current.GetInstance<ISessionProvider>(); }
+            this.settings = settings;
         }
 
         public HSSFWorkbook Generate()

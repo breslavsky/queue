@@ -17,7 +17,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Queue.Common.LoginSettings loginSettings1 = new Queue.Common.LoginSettings();
+            Queue.Common.Settings.LoginSettings loginSettings1 = new Queue.Common.Settings.LoginSettings();
             this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
             this.loginButton = new System.Windows.Forms.Button();
             this.SuspendLayout();

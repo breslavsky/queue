@@ -5,6 +5,7 @@ using Junte.WCF;
 using MahApps.Metro;
 using Microsoft.Practices.ServiceLocation;
 using Queue.Common;
+using Queue.Common.Settings;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.UI.WPF;

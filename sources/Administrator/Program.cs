@@ -3,6 +3,7 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Administrator.Settings;
 using Queue.Common;
+using Queue.Common.Settings;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -33,6 +34,7 @@ namespace Queue.Administrator
             Application.SetCompatibleTextRenderingDefault(false);
 
             container = new UnityContainer();
+            container.RegisterInstance(container);
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
             configuration = new ConfigurationManager(AppName, SpecialFolder.ApplicationData);
@@ -108,10 +110,8 @@ namespace Queue.Administrator
 
         private static void ResetSettings()
         {
-            var configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
-
-            configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey).Reset();
-            configuration.GetSection<LoginSettings>(LoginSettings.SectionKey).Reset();
+            loginFormSettings.Reset();
+            loginSettings.Reset();
 
             configuration.Save();
         }

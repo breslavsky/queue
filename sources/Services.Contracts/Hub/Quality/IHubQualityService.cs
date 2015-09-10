@@ -17,6 +17,10 @@ namespace Queue.Services.Contracts
         Task<string> Echo(string message);
 
         [OperationContract]
+        [WebGet(UriTemplate = "/heartbeat", ResponseFormat = WebMessageFormat.Json)]
+        Task Heartbeat();
+
+        [OperationContract]
         [WebGet(UriTemplate = "/get-drivers", ResponseFormat = WebMessageFormat.Json)]
         Task<string[]> GetDrivers();
 

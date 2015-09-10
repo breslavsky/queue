@@ -41,10 +41,10 @@ namespace Queue.Hosts.Server.WinService
                 ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
                 configuration = new ConfigurationManager(HostsConsts.ServerApp, SpecialFolder.ApplicationData);
-                container.RegisterInstance<IConfigurationManager>(configuration);
+                container.RegisterInstance(configuration);
 
                 settings = configuration.GetSection<ServerSettings>(ServerSettings.SectionKey);
-                container.RegisterInstance<ServerSettings>(settings);
+                container.RegisterInstance(settings);
 
                 var culture = settings.Language.GetCulture();
                 Thread.CurrentThread.CurrentCulture = culture;

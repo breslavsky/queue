@@ -16,7 +16,7 @@ namespace Queue.Services.Server
                     IncludeExceptionDetailInFaults = true)]
     public sealed class ServerTcpService : ServerService, IServerTcpService
     {
-        public class Subscribtion
+        private class Subscribtion
         {
             public ServerSubscribtionArgs Args { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using Junte.Data.NHibernate;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Transform;
@@ -18,22 +19,27 @@ namespace Queue.Reports.OperatorRatingReport
 {
     public abstract class BaseDetailedReport<T>
     {
+        #region dependency
+
+        [Dependency]
+        public SessionProvider SessionProvider { get; set; }
+
+        #endregion dependency
+
         protected OperatorRatingReportSettings settings;
 
         private Lazy<Operator[]> allOperators;
 
-        protected ISessionProvider SessionProvider
-        {
-            get { return ServiceLocator.Current.GetInstance<ISessionProvider>(); }
-        }
-
         public BaseDetailedReport(OperatorRatingReportSettings settings)
         {
+            ServiceLocator.Current.GetInstance<UnityContainer>()
+                .BuildUp(this.GetType(), this);
+
             this.settings = settings;
 
             allOperators = new Lazy<Operator[]>(() =>
             {
-                using (ISession session = SessionProvider.OpenSession())
+                using (var session = SessionProvider.OpenSession())
                 {
                     return session.QueryOver<Operator>()
                                     .List()

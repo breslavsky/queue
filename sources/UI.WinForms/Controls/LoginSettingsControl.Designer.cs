@@ -47,7 +47,7 @@
             // 
             // settingsBindingSource
             // 
-            this.settingsBindingSource.DataSource = typeof(Queue.Common.LoginSettings);
+            this.settingsBindingSource.DataSource = typeof(Queue.Common.Settings.LoginSettings);
             // 
             // loginGroupBox
             // 

@@ -31,8 +31,10 @@ namespace Queue.Server
 
         public ServerInstance(ServerSettings settings)
         {
+            ServiceLocator.Current.GetInstance<UnityContainer>()
+                .BuildUp(this);
+
             this.settings = settings;
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
             DatabaseConnect();
             CreateQueueInstance();

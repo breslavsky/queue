@@ -18,6 +18,13 @@ namespace Queue.Hub.Settings
             Language = CultureInfo.CurrentCulture.GetLanguage();
         }
 
+        [ConfigurationProperty("drivers")]
+        public DriversConfig Drivers
+        {
+            get { return (DriversConfig)this["drivers"]; }
+            set { this["drivers"] = value; }
+        }
+
         [ConfigurationProperty("language")]
         public Language Language
         {
@@ -32,16 +39,18 @@ namespace Queue.Hub.Settings
             set { this["services"] = value; }
         }
 
-        [ConfigurationProperty("drivers")]
-        public DriversConfig Drivers
-        {
-            get { return (DriversConfig)this["drivers"]; }
-            set { this["drivers"] = value; }
-        }
-
         public override bool IsReadOnly()
         {
             return false;
+        }
+
+        private DriversConfig GetDefaultDriversConfig()
+        {
+            return new DriversConfig()
+            {
+                Quality = new DriverCollection(),
+                Display = new DriverCollection()
+            };
         }
 
         private ServicesConfig GetDefaultServicesConfig()
@@ -60,15 +69,6 @@ namespace Queue.Hub.Settings
                     Host = "localhost",
                     Port = 4512
                 }
-            };
-        }
-
-        private DriversConfig GetDefaultDriversConfig()
-        {
-            return new DriversConfig()
-            {
-                Quality = new DriverCollection(),
-                Display = new DriverCollection()
             };
         }
     }

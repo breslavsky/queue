@@ -12,7 +12,8 @@ namespace Queue.Services.Common
     {
         public DependencyService()
         {
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this.GetType(), this);
+            ServiceLocator.Current.GetInstance<UnityContainer>()
+                .BuildUp(this.GetType(), this);
         }
     }
 }

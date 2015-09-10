@@ -3,6 +3,7 @@ using Junte.UI.WinForms;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
+using Queue.Common.Settings;
 using Queue.Hosts.Common;
 using Queue.Media;
 using Queue.Model.Common;
@@ -55,8 +56,8 @@ namespace Queue.Hosts.Media.WinForms
 
         private void RegisterContainer()
         {
-            IUnityContainer container = new UnityContainer();
-            container.RegisterInstance<IConfigurationManager>(configurationManager);
+            var container = new UnityContainer();
+            container.RegisterInstance(configurationManager);
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 

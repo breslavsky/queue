@@ -62,7 +62,7 @@ namespace UnitTest
             UnityContainer container = new UnityContainer();
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
             sessionProvider = new SessionProvider(new string[] { "Queue.Data.Model" }, settings);
-            container.RegisterInstance<ISessionProvider>(sessionProvider);
+            container.RegisterInstance<SessionProvider>(sessionProvider);
         }
 
         [TestMethod]

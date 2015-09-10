@@ -3,6 +3,7 @@ using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Common;
+using Queue.Common.Settings;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;

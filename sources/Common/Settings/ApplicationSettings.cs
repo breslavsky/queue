@@ -1,7 +1,7 @@
 ﻿using System.Configuration;
 using System.Globalization;
 
-namespace Queue.Common
+namespace Queue.Common.Settings
 {
     public class ApplicationSettings : ConfigurationSection
     {

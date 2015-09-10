@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Queue.Common.LoginSettings loginSettings2 = new Queue.Common.LoginSettings();
+            Queue.Common.Settings.LoginSettings loginSettings2 = new Queue.Common.Settings.LoginSettings();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.stopButton = new System.Windows.Forms.Button();
             this.serviceGroupBox = new System.Windows.Forms.GroupBox();

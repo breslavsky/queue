@@ -5,6 +5,7 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common;
+using Queue.Common.Settings;
 using Queue.Hosts.Common;
 using Queue.Model.Common;
 using Queue.Portal;
@@ -60,7 +61,7 @@ namespace Hosts.Portal.WinForms
         private void RegisterContainer()
         {
             var container = new UnityContainer();
-            container.RegisterInstance<IConfigurationManager>(configurationManager);
+            container.RegisterInstance(configurationManager);
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 

@@ -183,7 +183,8 @@ namespace Queue.Administrator
             row.Cells["numberColumn"].Value = workplace.Number;
             row.Cells["modificatorColumn"].Value = Translater.Enum(workplace.Modificator);
             row.Cells["commentColumn"].Value = workplace.Comment;
-            row.Cells["displayColumn"].Value = workplace.Display;
+            row.Cells["displayDeviceIdColumn"].Value = workplace.DisplayDeviceId;
+            row.Cells["qualityPanelDeviceId"].Value = workplace.QualityPanelDeviceId;
             row.Cells["segmentsColumn"].Value = workplace.Segments;
             row.Tag = workplace;
         }

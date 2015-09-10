@@ -153,12 +153,6 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DamaskForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DamaskForm.Designer.cs">
-      <DependentUpon>DamaskForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,9 +167,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Scheme.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="DamaskForm.resx">
-      <DependentUpon>DamaskForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -246,6 +237,8 @@
     <Content Include="Patches\010.sql" />
     <Content Include="Patches\011.sql" />
     <Content Include="Patches\012.sql" />
+    <Content Include="Patches\013.sql" />
+    <Content Include="Patches\014.sql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

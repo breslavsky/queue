@@ -11,7 +11,10 @@ namespace Queue.Services.DTO
         public string Comment { get; set; }
 
         [DataMember]
-        public byte Display { get; set; }
+        public byte DisplayDeviceId { get; set; }
+
+        [DataMember]
+        public byte QualityPanelDeviceId { get; set; }
 
         [DataMember]
         public WorkplaceModificator Modificator { get; set; }

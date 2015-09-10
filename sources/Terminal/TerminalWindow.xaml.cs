@@ -40,7 +40,7 @@ namespace Queue.Terminal
 
                 Content = rootObject;
 
-                ServiceLocator.Current.GetInstance<IUnityContainer>().RegisterInstance<IMainWindow>(this);
+                ServiceLocator.Current.GetInstance<UnityContainer>().RegisterInstance<IMainWindow>(this);
                 DataContext = new TerminalWindowViewModel();
 
                 ServiceLocator.Current.GetInstance<Navigator>().SetNavigationService(pageFrame.NavigationService);

@@ -94,7 +94,7 @@ namespace Queue.Terminal
 
         private async Task RegisterTypes()
         {
-            IUnityContainer container = ServiceLocator.Current.GetInstance<IUnityContainer>();
+            IUnityContainer container = ServiceLocator.Current.GetInstance<UnityContainer>();
 
             taskPool = new TaskPool();
             container.RegisterInstance(loginPage.Model.ChannelBuilder);
@@ -138,7 +138,7 @@ namespace Queue.Terminal
         {
             if (Keyboard.IsKeyDown(Key.LeftShift) && e.Key == Key.Escape)
             {
-                var configuration = ServiceLocator.Current.GetInstance<IConfigurationManager>();
+                var configuration = ServiceLocator.Current.GetInstance<ConfigurationManager>();
                 var loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
                 loginFormSettings.IsRemember = false;
                 configuration.Save();

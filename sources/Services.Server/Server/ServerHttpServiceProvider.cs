@@ -21,9 +21,7 @@ namespace Queue.Services.Server
 
         public object GetInstance(InstanceContext instanceContext)
         {
-            var instance = new ServerHttpService();
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(instance);
-            return instance;
+            return new ServerHttpService();
         }
 
         public void ReleaseInstance(InstanceContext instanceContext, object instance)

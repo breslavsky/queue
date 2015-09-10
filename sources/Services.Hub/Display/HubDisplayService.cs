@@ -44,6 +44,11 @@ namespace Queue.Services.Hub
 #endif
         }
 
+        public async Task Heartbeat()
+        {
+            await Task.Run(() => DateTime.Now);
+        }
+
         public async Task<string> Echo(string message)
         {
             return await Task.Run(() => message);

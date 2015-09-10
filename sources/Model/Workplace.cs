@@ -27,7 +27,10 @@ namespace Queue.Model
         public virtual string Comment { get; set; }
 
         [Property]
-        public virtual byte Display { get; set; }
+        public virtual byte DisplayDeviceId { get; set; }
+
+        [Property]
+        public virtual byte QualityPanelDeviceId { get; set; }
 
         [Property]
         public virtual byte Segments { get; set; }

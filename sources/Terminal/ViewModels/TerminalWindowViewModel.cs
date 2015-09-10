@@ -72,7 +72,7 @@ namespace Queue.Terminal.ViewModels
             request.PropertyChanged += model_PropertyChanged;
 
             screen = ServiceLocator.Current.GetInstance<IMainWindow>();
-            container = ServiceLocator.Current.GetInstance<IUnityContainer>();
+            container = ServiceLocator.Current.GetInstance<UnityContainer>();
             taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
             channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
             navigator = ServiceLocator.Current.GetInstance<Navigator>();

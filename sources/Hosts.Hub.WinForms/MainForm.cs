@@ -94,8 +94,8 @@ namespace Hosts.Hub.WinForms
         private void RegisterContainer()
         {
             var container = new UnityContainer();
-            container.RegisterInstance<IUnityContainer>(container);
-            container.RegisterInstance<IConfigurationManager>(configuration);
+            container.RegisterInstance(container);
+            container.RegisterInstance(configuration);
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 

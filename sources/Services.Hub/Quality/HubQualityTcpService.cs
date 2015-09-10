@@ -16,7 +16,7 @@ namespace Queue.Services.Hub
                     IncludeExceptionDetailInFaults = true)]
     public class HubQualityTcpService : HubQualityService, IHubQualityTcpService
     {
-        public class Subscribtion
+        private class Subscribtion
         {
             public HubQualityServiceSubscribtionArgs Args { get; set; }
 
@@ -69,7 +69,7 @@ namespace Queue.Services.Hub
 
                     switch (eventType)
                     {
-                        case HubQualityServiceEventType.Accepted:
+                        case HubQualityServiceEventType.RatingAccepted:
 
                             foreach (var d in Drivers)
                             {
@@ -92,7 +92,7 @@ namespace Queue.Services.Hub
 
                     switch (eventType)
                     {
-                        case HubQualityServiceEventType.Accepted:
+                        case HubQualityServiceEventType.RatingAccepted:
 
                             foreach (var d in Drivers)
                             {
@@ -166,7 +166,7 @@ namespace Queue.Services.Hub
             catch (Exception exception)
             {
                 logger.Error(exception);
-                UnSubscribe(HubQualityServiceEventType.Accepted);
+                UnSubscribe(HubQualityServiceEventType.RatingAccepted);
             }
         }
     }

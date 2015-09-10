@@ -37,7 +37,8 @@ namespace Queue.Hub
         public HubInstance(HubSettings settings)
         {
             this.settings = settings;
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
+            ServiceLocator.Current.GetInstance<UnityContainer>()
+                .BuildUp(this);
 
             LoadDrivers();
             CreateServices();

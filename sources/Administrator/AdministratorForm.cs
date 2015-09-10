@@ -53,6 +53,8 @@ namespace Queue.Administrator
         public AdministratorForm()
             : base()
         {
+            InitializeComponent();
+
             channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
@@ -62,10 +64,6 @@ namespace Queue.Administrator
 
             pingTimer = new Timer();
             pingTimer.Elapsed += pingTimer_Elapsed;
-
-            InitializeComponent();
-
-            Text = currentUserMenuItem.Text = CurrentUser.ToString();
 
             CheckPermissions();
         }
@@ -180,11 +178,14 @@ namespace Queue.Administrator
 
         private async void MainForm_Load(object sender, EventArgs eventArgs)
         {
+            Text = currentUserMenuItem.Text = CurrentUser.ToString();
+            Controls.OfType<MdiClient>().First().BackgroundImage = Properties.Resources.background;
+
             using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
-                    DefaultConfig config = await taskPool.AddTask(channel.Service.GetDefaultConfig());
+                    var config = await taskPool.AddTask(channel.Service.GetDefaultConfig());
                     Text += string.Format(" | {0}", config.QueueName);
 
                     pingTimer.Start();

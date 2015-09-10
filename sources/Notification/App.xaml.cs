@@ -12,6 +12,7 @@ namespace Queue.Notification
         private const string AppName = "Queue.Notification";
 
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private IUnityContainer container;
 
         public App()
         {
@@ -35,15 +36,15 @@ namespace Queue.Notification
 
         private void InitializeContainer()
         {
-            IUnityContainer container = new UnityContainer();
+            container = new UnityContainer();
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
-            RegisterTypes(container);
+            RegisterContainer();
         }
 
-        private void RegisterTypes(IUnityContainer container)
+        private void RegisterContainer()
         {
-            container.RegisterInstance<IUnityContainer>(container);
-            container.RegisterInstance<IConfigurationManager>(new ConfigurationManager(AppName, SpecialFolder.ApplicationData));
+            container.RegisterInstance(container);
+            container.RegisterInstance(new ConfigurationManager(AppName, SpecialFolder.ApplicationData));
         }
     }
 }

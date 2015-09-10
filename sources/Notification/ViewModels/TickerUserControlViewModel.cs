@@ -33,7 +33,7 @@ namespace Queue.Notification.ViewModels
 
         public TickerUserControlViewModel()
         {
-            ServiceLocator.Current.GetInstance<IUnityContainer>().RegisterInstance<ITicker>(this);
+            ServiceLocator.Current.GetInstance<UnityContainer>().RegisterInstance<ITicker>(this);
 
             translateTransform = new TranslateTransform();
             SetSpeed(DefaultSpeed);

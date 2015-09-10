@@ -9,28 +9,22 @@ namespace Queue.Server.Settings
     {
         public const string SectionKey = "server";
 
-        private const string DefaultSerialKey = "0000-0000-0000-0000-0000";
         private const string DefaultRegisterKey = "0000-0000-0000-0000-0000";
+        private const string DefaultSerialKey = "0000-0000-0000-0000-0000";
+
+        public ServerSettings()
+        {
+            Database = GetDefaultDatabaseSettings();
+            Services = GetDefaultServicesConfig();
+            Licence = GetDefaultLicenseConfig();
+            Language = CultureInfo.CurrentCulture.GetLanguage();
+        }
 
         [ConfigurationProperty("database")]
         public DatabaseSettings Database
         {
             get { return (DatabaseSettings)this["database"]; }
             set { this["database"] = value; }
-        }
-
-        [ConfigurationProperty("services")]
-        public ServicesConfig Services
-        {
-            get { return (ServicesConfig)this["services"]; }
-            set { this["services"] = value; }
-        }
-
-        [ConfigurationProperty("licence")]
-        public ProductLicenceConfig Licence
-        {
-            get { return (ProductLicenceConfig)this["licence"]; }
-            set { this["licence"] = value; }
         }
 
         [ConfigurationProperty("language")]
@@ -40,12 +34,18 @@ namespace Queue.Server.Settings
             set { this["language"] = value; }
         }
 
-        public ServerSettings()
+        [ConfigurationProperty("licence")]
+        public ProductLicenceConfig Licence
         {
-            Database = GetDefaultDatabaseSettings();
-            Services = GetDefaultServicesConfig();
-            Licence = GetDefaultLicenseConfig();
-            Language = CultureInfo.CurrentCulture.GetLanguage();
+            get { return (ProductLicenceConfig)this["licence"]; }
+            set { this["licence"] = value; }
+        }
+
+        [ConfigurationProperty("services")]
+        public ServicesConfig Services
+        {
+            get { return (ServicesConfig)this["services"]; }
+            set { this["services"] = value; }
         }
 
         public override bool IsReadOnly()
@@ -61,6 +61,16 @@ namespace Queue.Server.Settings
                 Name = "queue",
                 Type = DatabaseType.MsSql,
                 Integrated = true
+            };
+        }
+
+        private ProductLicenceConfig GetDefaultLicenseConfig()
+        {
+            return new ProductLicenceConfig()
+            {
+                LicenseType = ProductLicenceType.NonCommercial,
+                SerialKey = DefaultSerialKey,
+                RegisterKey = DefaultRegisterKey
             };
         }
 
@@ -80,16 +90,6 @@ namespace Queue.Server.Settings
                     Host = "localhost",
                     Port = 4505
                 }
-            };
-        }
-
-        private ProductLicenceConfig GetDefaultLicenseConfig()
-        {
-            return new ProductLicenceConfig()
-            {
-                LicenseType = ProductLicenceType.NonCommercial,
-                SerialKey = DefaultSerialKey,
-                RegisterKey = DefaultRegisterKey
             };
         }
     }

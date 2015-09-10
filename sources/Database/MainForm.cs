@@ -42,7 +42,7 @@ namespace Queue.Database
             configuration = ServiceLocator.Current.GetInstance<ConfigurationManager>();
             profiles = configuration.GetSection<DatabaseSettingsProfiles>(SectionKey);
 
-            container = ServiceLocator.Current.GetInstance<IUnityContainer>();
+            container = ServiceLocator.Current.GetInstance<UnityContainer>();
         }
 
         private void checkPatchesMenuItem_Click(object sender, EventArgs e)
@@ -72,11 +72,6 @@ namespace Queue.Database
                 form.ShowDialog();
                 configuration.Save();
             }
-        }
-
-        private void damaskImportMenuItem_Click(object sender, EventArgs e)
-        {
-            new DamaskForm().ShowDialog();
         }
 
         private void сonstraintsUpdateMenuItem_Click(object sender, EventArgs e)

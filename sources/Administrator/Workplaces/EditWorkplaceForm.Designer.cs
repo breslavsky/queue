@@ -21,16 +21,19 @@
             this.numberUpDown = new System.Windows.Forms.NumericUpDown();
             this.modificatorLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.displayLabel = new System.Windows.Forms.Label();
+            this.displayDeviceIdLabel = new System.Windows.Forms.Label();
             this.segmentsLabel = new System.Windows.Forms.Label();
             this.segmentsUpDown = new System.Windows.Forms.NumericUpDown();
-            this.displayUpDown = new System.Windows.Forms.NumericUpDown();
+            this.displayDeviceIdUpDown = new System.Windows.Forms.NumericUpDown();
             this.saveButton = new System.Windows.Forms.Button();
             this.typeControl = new Queue.UI.WinForms.EnumItemControl();
             this.modificatorControl = new Queue.UI.WinForms.EnumItemControl();
+            this.qualityPanelDeviceIdLabel = new System.Windows.Forms.Label();
+            this.qualityPanelDeviceIdUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numberUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.segmentsUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.displayUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.displayDeviceIdUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.qualityPanelDeviceIdUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // commentTextBox
@@ -86,18 +89,18 @@
             this.label1.Text = "Комментарий";
             this.label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // displayLabel
+            // displayDeviceIdLabel
             // 
-            this.displayLabel.Location = new System.Drawing.Point(10, 190);
-            this.displayLabel.Name = "displayLabel";
-            this.displayLabel.Size = new System.Drawing.Size(100, 20);
-            this.displayLabel.TabIndex = 10;
-            this.displayLabel.Text = "Номер табло";
-            this.displayLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.displayDeviceIdLabel.Location = new System.Drawing.Point(10, 190);
+            this.displayDeviceIdLabel.Name = "displayDeviceIdLabel";
+            this.displayDeviceIdLabel.Size = new System.Drawing.Size(100, 20);
+            this.displayDeviceIdLabel.TabIndex = 10;
+            this.displayDeviceIdLabel.Text = "Номер табло";
+            this.displayDeviceIdLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // segmentsLabel
             // 
-            this.segmentsLabel.Location = new System.Drawing.Point(10, 215);
+            this.segmentsLabel.Location = new System.Drawing.Point(10, 240);
             this.segmentsLabel.Name = "segmentsLabel";
             this.segmentsLabel.Size = new System.Drawing.Size(100, 20);
             this.segmentsLabel.TabIndex = 12;
@@ -106,7 +109,7 @@
             // 
             // segmentsUpDown
             // 
-            this.segmentsUpDown.Location = new System.Drawing.Point(115, 215);
+            this.segmentsUpDown.Location = new System.Drawing.Point(115, 240);
             this.segmentsUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -117,22 +120,22 @@
             this.segmentsUpDown.TabIndex = 6;
             this.segmentsUpDown.Leave += new System.EventHandler(this.segmentsUpDown_Leave);
             // 
-            // displayUpDown
+            // displayDeviceIdUpDown
             // 
-            this.displayUpDown.Location = new System.Drawing.Point(115, 190);
-            this.displayUpDown.Maximum = new decimal(new int[] {
+            this.displayDeviceIdUpDown.Location = new System.Drawing.Point(115, 190);
+            this.displayDeviceIdUpDown.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
-            this.displayUpDown.Name = "displayUpDown";
-            this.displayUpDown.Size = new System.Drawing.Size(60, 20);
-            this.displayUpDown.TabIndex = 5;
-            this.displayUpDown.Leave += new System.EventHandler(this.displayUpDown_Leave);
+            this.displayDeviceIdUpDown.Name = "displayDeviceIdUpDown";
+            this.displayDeviceIdUpDown.Size = new System.Drawing.Size(60, 20);
+            this.displayDeviceIdUpDown.TabIndex = 5;
+            this.displayDeviceIdUpDown.Leave += new System.EventHandler(this.displayDeviceIdUpDown_Leave);
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(180, 240);
+            this.saveButton.Location = new System.Drawing.Point(180, 270);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 7;
@@ -156,18 +159,42 @@
             this.modificatorControl.TabIndex = 3;
             this.modificatorControl.Leave += new System.EventHandler(this.modificatorControl_Leave);
             // 
+            // qualityPanelDeviceIdLabel
+            // 
+            this.qualityPanelDeviceIdLabel.Location = new System.Drawing.Point(10, 215);
+            this.qualityPanelDeviceIdLabel.Name = "qualityPanelDeviceIdLabel";
+            this.qualityPanelDeviceIdLabel.Size = new System.Drawing.Size(100, 20);
+            this.qualityPanelDeviceIdLabel.TabIndex = 13;
+            this.qualityPanelDeviceIdLabel.Text = "Номер пульта";
+            this.qualityPanelDeviceIdLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // qualityPanelDeviceIdUpDown
+            // 
+            this.qualityPanelDeviceIdUpDown.Location = new System.Drawing.Point(115, 215);
+            this.qualityPanelDeviceIdUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.qualityPanelDeviceIdUpDown.Name = "qualityPanelDeviceIdUpDown";
+            this.qualityPanelDeviceIdUpDown.Size = new System.Drawing.Size(60, 20);
+            this.qualityPanelDeviceIdUpDown.TabIndex = 14;
+            this.qualityPanelDeviceIdUpDown.Leave += new System.EventHandler(this.qualityPanelDeviceIdUpDown_Leave);
+            // 
             // EditWorkplaceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(264, 271);
+            this.ClientSize = new System.Drawing.Size(264, 301);
+            this.Controls.Add(this.qualityPanelDeviceIdUpDown);
+            this.Controls.Add(this.qualityPanelDeviceIdLabel);
             this.Controls.Add(this.modificatorControl);
             this.Controls.Add(this.typeControl);
             this.Controls.Add(this.saveButton);
-            this.Controls.Add(this.displayUpDown);
+            this.Controls.Add(this.displayDeviceIdUpDown);
             this.Controls.Add(this.segmentsUpDown);
             this.Controls.Add(this.segmentsLabel);
-            this.Controls.Add(this.displayLabel);
+            this.Controls.Add(this.displayDeviceIdLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.modificatorLabel);
             this.Controls.Add(this.numberUpDown);
@@ -181,7 +208,8 @@
             this.Load += new System.EventHandler(this.EditWorkplaceForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numberUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.segmentsUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.displayUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.displayDeviceIdUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.qualityPanelDeviceIdUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,12 +223,14 @@
         private System.Windows.Forms.NumericUpDown numberUpDown;
         private System.Windows.Forms.Label modificatorLabel;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label displayLabel;
+        private System.Windows.Forms.Label displayDeviceIdLabel;
         private System.Windows.Forms.Label segmentsLabel;
         private System.Windows.Forms.NumericUpDown segmentsUpDown;
-        private System.Windows.Forms.NumericUpDown displayUpDown;
+        private System.Windows.Forms.NumericUpDown displayDeviceIdUpDown;
         private System.Windows.Forms.Button saveButton;
         private UI.WinForms.EnumItemControl typeControl;
         private UI.WinForms.EnumItemControl modificatorControl;
+        private System.Windows.Forms.Label qualityPanelDeviceIdLabel;
+        private System.Windows.Forms.NumericUpDown qualityPanelDeviceIdUpDown;
     }
 }

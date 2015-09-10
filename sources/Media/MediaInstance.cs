@@ -1,5 +1,6 @@
 ﻿using Junte.WCF;
 using Queue.Common;
+using Queue.Common.Settings;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;

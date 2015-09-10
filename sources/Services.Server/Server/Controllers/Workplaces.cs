@@ -97,7 +97,8 @@ namespace Queue.Services.Server
                     workplace.Number = source.Number;
                     workplace.Modificator = source.Modificator;
                     workplace.Comment = source.Comment;
-                    workplace.Display = source.Display;
+                    workplace.DisplayDeviceId = source.DisplayDeviceId;
+                    workplace.QualityPanelDeviceId = source.QualityPanelDeviceId;
                     workplace.Segments = source.Segments;
 
                     var errors = workplace.Validate();

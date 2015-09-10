@@ -38,9 +38,9 @@
             this.reportsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serviceRatingReportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.operatorsRatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.additionalServiceReportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scheduleReportMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.exceptionScheduleReportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.additionalServiceReportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.currentUserMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -256,6 +256,13 @@
             this.operatorsRatingToolStripMenuItem.Text = "Рейтинг операторов";
             this.operatorsRatingToolStripMenuItem.Click += new System.EventHandler(this.operatorsRatingToolStripMenuItem_Click);
             // 
+            // additionalServiceReportMenuItem
+            // 
+            this.additionalServiceReportMenuItem.Name = "additionalServiceReportMenuItem";
+            this.additionalServiceReportMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.additionalServiceReportMenuItem.Text = "Рейтинг дополнительных услуг";
+            this.additionalServiceReportMenuItem.Click += new System.EventHandler(this.additionalServiceReportMenuItem_Click);
+            // 
             // scheduleReportMenu
             // 
             this.scheduleReportMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -270,13 +277,6 @@
             this.exceptionScheduleReportMenuItem.Size = new System.Drawing.Size(223, 22);
             this.exceptionScheduleReportMenuItem.Text = "Исключения в расписании";
             this.exceptionScheduleReportMenuItem.Click += new System.EventHandler(this.exceptionScheduleReportMenuItem_Click);
-            // 
-            // additionalServiceReportMenuItem
-            // 
-            this.additionalServiceReportMenuItem.Name = "additionalServiceReportMenuItem";
-            this.additionalServiceReportMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.additionalServiceReportMenuItem.Text = "Рейтинг дополнительных услуг";
-            this.additionalServiceReportMenuItem.Click += new System.EventHandler(this.additionalServiceReportMenuItem_Click);
             // 
             // toolStripTextBox1
             // 
@@ -333,6 +333,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(884, 412);
             this.Controls.Add(this.topMenu);
             this.Controls.Add(this.statusBar);
