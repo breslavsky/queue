@@ -3,6 +3,7 @@ using Junte.Translation;
 using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
+using Queue.Administrator.Settings;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;

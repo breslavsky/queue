@@ -2,6 +2,7 @@
 using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
+using Queue.Administrator.Settings;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;

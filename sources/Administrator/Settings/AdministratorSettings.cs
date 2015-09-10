@@ -1,8 +1,6 @@
-﻿using Queue.Common;
-using System.Configuration;
-using System.Globalization;
+﻿using System.Configuration;
 
-namespace Queue.Administrator
+namespace Queue.Administrator.Settings
 {
     public class AdministratorSettings : ConfigurationSection
     {

@@ -2,10 +2,9 @@
 using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using Queue.Administrator.Settings;
 using Queue.Services.Contracts;
-using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
 using System.Printing;

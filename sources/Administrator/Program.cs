@@ -1,6 +1,7 @@
 ﻿using Junte.Configuration;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using Queue.Administrator.Settings;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
@@ -57,7 +58,7 @@ namespace Queue.Administrator
                 {
                     Guid sessionId = Guid.Parse(options.SessionId);
                     currentUser = channel.Service.OpenUserSession(sessionId).Result as QueueAdministrator;
-                    container.RegisterInstance<ClientService<IServerTcpService>>(serverService);
+                    container.RegisterInstance(serverService);
                     container.RegisterInstance<User>(currentUser);
                     container.RegisterInstance<QueueAdministrator>(currentUser);
 
@@ -77,7 +78,7 @@ namespace Queue.Administrator
                         loginForm.Dispose();
 
                         serverService = new ClientService<IServerTcpService>(loginSettings.Endpoint, ServerServicesPaths.Server);
-                        container.RegisterInstance<ClientService<IServerTcpService>>(serverService);
+                        container.RegisterInstance(serverService);
 
                         var mainForm = new AdministratorForm();
                         Application.Run(mainForm);

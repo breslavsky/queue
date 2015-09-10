@@ -236,7 +236,7 @@
     <Compile Include="CurrentUserForm.Designer.cs">
       <DependentUpon>CurrentUserForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdministratorSettings.cs" />
+    <Compile Include="Settings\AdministratorSettings.cs" />
     <Compile Include="Offices\OfficeLoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -631,7 +631,6 @@
       <DependentUpon>EditServiceParameterOptionsForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -686,12 +685,12 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 и x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>Клиентский профиль .NET Framework 3.5 SP1</ProductName>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
