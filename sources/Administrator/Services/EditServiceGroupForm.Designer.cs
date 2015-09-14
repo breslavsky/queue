@@ -26,18 +26,21 @@
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.commentTextBox = new System.Windows.Forms.TextBox();
             this.layoutGroupBox = new System.Windows.Forms.GroupBox();
-            this.columnsUpDown = new System.Windows.Forms.NumericUpDown();
-            this.rowsUpDown = new System.Windows.Forms.NumericUpDown();
-            this.rowsLabel = new System.Windows.Forms.Label();
             this.columnsLabel = new System.Windows.Forms.Label();
+            this.columnsUpDown = new System.Windows.Forms.NumericUpDown();
+            this.rowsLabel = new System.Windows.Forms.Label();
+            this.rowsUpDown = new System.Windows.Forms.NumericUpDown();
+            this.fontSizeLabel = new System.Windows.Forms.Label();
+            this.fontSizeTrackBar = new System.Windows.Forms.TrackBar();
             this.layoutGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.columnsUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rowsUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fontSizeTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(325, 405);
+            this.saveButton.Location = new System.Drawing.Point(325, 485);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(80, 25);
             this.saveButton.TabIndex = 7;
@@ -139,6 +142,15 @@
             this.layoutGroupBox.TabStop = false;
             this.layoutGroupBox.Text = "Расположение услуг";
             // 
+            // columnsLabel
+            // 
+            this.columnsLabel.Location = new System.Drawing.Point(5, 25);
+            this.columnsLabel.Name = "columnsLabel";
+            this.columnsLabel.Size = new System.Drawing.Size(55, 13);
+            this.columnsLabel.TabIndex = 0;
+            this.columnsLabel.Text = "Колонок";
+            this.columnsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
             // columnsUpDown
             // 
             this.columnsUpDown.Location = new System.Drawing.Point(65, 20);
@@ -151,6 +163,15 @@
             this.columnsUpDown.Size = new System.Drawing.Size(50, 20);
             this.columnsUpDown.TabIndex = 5;
             this.columnsUpDown.Leave += new System.EventHandler(this.columnsUpDown_Leave);
+            // 
+            // rowsLabel
+            // 
+            this.rowsLabel.Location = new System.Drawing.Point(120, 25);
+            this.rowsLabel.Name = "rowsLabel";
+            this.rowsLabel.Size = new System.Drawing.Size(40, 13);
+            this.rowsLabel.TabIndex = 0;
+            this.rowsLabel.Text = "Строк";
+            this.rowsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // rowsUpDown
             // 
@@ -165,29 +186,34 @@
             this.rowsUpDown.TabIndex = 6;
             this.rowsUpDown.Leave += new System.EventHandler(this.rowsUpDown_Leave);
             // 
-            // rowsLabel
+            // fontSizeLabel
             // 
-            this.rowsLabel.Location = new System.Drawing.Point(120, 25);
-            this.rowsLabel.Name = "rowsLabel";
-            this.rowsLabel.Size = new System.Drawing.Size(40, 13);
-            this.rowsLabel.TabIndex = 0;
-            this.rowsLabel.Text = "Строк";
-            this.rowsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.fontSizeLabel.Location = new System.Drawing.Point(15, 425);
+            this.fontSizeLabel.Name = "fontSizeLabel";
+            this.fontSizeLabel.Size = new System.Drawing.Size(110, 45);
+            this.fontSizeLabel.TabIndex = 15;
+            this.fontSizeLabel.Text = "Размер шрифта %";
+            this.fontSizeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // columnsLabel
+            // fontSizeTrackBar
             // 
-            this.columnsLabel.Location = new System.Drawing.Point(5, 25);
-            this.columnsLabel.Name = "columnsLabel";
-            this.columnsLabel.Size = new System.Drawing.Size(55, 13);
-            this.columnsLabel.TabIndex = 0;
-            this.columnsLabel.Text = "Колонок";
-            this.columnsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.fontSizeTrackBar.LargeChange = 10;
+            this.fontSizeTrackBar.Location = new System.Drawing.Point(120, 425);
+            this.fontSizeTrackBar.Maximum = 300;
+            this.fontSizeTrackBar.Minimum = 10;
+            this.fontSizeTrackBar.Name = "fontSizeTrackBar";
+            this.fontSizeTrackBar.Size = new System.Drawing.Size(285, 45);
+            this.fontSizeTrackBar.TabIndex = 14;
+            this.fontSizeTrackBar.Value = 100;
+            this.fontSizeTrackBar.Leave += new System.EventHandler(this.fontSizeTrackBar_Leave);
             // 
             // EditServiceGroupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(414, 436);
+            this.ClientSize = new System.Drawing.Size(414, 516);
+            this.Controls.Add(this.fontSizeLabel);
+            this.Controls.Add(this.fontSizeTrackBar);
             this.Controls.Add(this.codeLabel);
             this.Controls.Add(this.codeTextBox);
             this.Controls.Add(this.colorButton);
@@ -211,6 +237,7 @@
             this.layoutGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.columnsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rowsUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fontSizeTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -233,5 +260,7 @@
         private System.Windows.Forms.NumericUpDown rowsUpDown;
         private System.Windows.Forms.Label rowsLabel;
         private System.Windows.Forms.Label columnsLabel;
+        private System.Windows.Forms.Label fontSizeLabel;
+        private System.Windows.Forms.TrackBar fontSizeTrackBar;
     }
 }

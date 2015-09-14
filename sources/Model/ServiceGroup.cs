@@ -1,5 +1,4 @@
-﻿using Junte.Data.Common;
-using Junte.Data.NHibernate;
+﻿using Junte.Data.NHibernate;
 using NHibernate.Mapping.Attributes;
 using NHibernate.Validator.Constraints;
 using System;
@@ -41,6 +40,9 @@ namespace Queue.Model
 
         [Property]
         public virtual string Color { get; set; }
+
+        [Property]
+        public virtual float FontSize { get; set; }
 
         [Property]
         public virtual byte[] Icon { get; set; }

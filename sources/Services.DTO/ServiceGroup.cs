@@ -5,11 +5,6 @@ namespace Queue.Services.DTO
     [DataContract]
     public class ServiceGroup : IdentifiedEntity
     {
-        public ServiceGroup()
-        {
-            FontSize = 10;
-        }
-
         [DataMember]
         public string Code { get; set; }
 

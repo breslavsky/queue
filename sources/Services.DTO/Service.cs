@@ -7,17 +7,6 @@ namespace Queue.Services.DTO
     [DataContract]
     public class Service : IdentifiedEntity
     {
-        public Service()
-        {
-            Code = "1.1";
-            Name = "Новая услуга";
-            MaxSubjects = 1;
-            MaxEarlyDays = 30;
-            FontSize = 10;
-            TimeIntervalRounding = TimeSpan.FromMinutes(5);
-            SortId = DateTime.Now.Ticks;
-        }
-
         [DataMember]
         public string Code { get; set; }
 

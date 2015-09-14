@@ -8,6 +8,9 @@
             <Component Id="cmpFD65F52CD5EC0B46A750F8EEFC3D4422" Directory="INSTALLFOLDER" Guid="0DBAED7D-859E-4EB8-B95F-B2543DA5D828">
                 <File Id="fil1F7E777B326B02F60B86F747002F8605" KeyPath="yes" Source="$(var.Administrator.TargetDir)\AutoMapper.dll" />
             </Component>
+          <Component Id="cmpC8984AFE33B34577A748753C4C3204C5" Directory="INSTALLFOLDER" Guid="7611AA9B-BE45-4BBA-B975-29164ABC965C">
+            <File Id="fil56231EBEFC884028841C1EF8A6F2C5BA" KeyPath="yes" Source="$(var.Administrator.TargetDir)\CommandLine.dll" />
+          </Component>
             <Component Id="cmpEEC7AC6B3009FA88C57EB2972A7A8F5B" Directory="INSTALLFOLDER" Guid="BC37862B-74ED-44F1-9C11-A15B19E37F19">
                 <File Id="fil4F01E53E158206D8C82AC24B4DFEE253" KeyPath="yes" Source="$(var.Administrator.TargetDir)\AutoMapper.Net4.dll" />
             </Component>

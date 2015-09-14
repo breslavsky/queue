@@ -33,6 +33,7 @@ namespace Queue.Administrator
         private readonly TaskPool taskPool;
         private ServiceGroup parentGroup;
         private ServiceGroup serviceGroup;
+        private const byte fontSizeConverter = 100;
 
         #endregion fields
 
@@ -68,6 +69,7 @@ namespace Queue.Administrator
                 descriptionTextBox.Text = serviceGroup.Description;
                 columnsUpDown.Value = serviceGroup.Columns;
                 rowsUpDown.Value = serviceGroup.Rows;
+                fontSizeTrackBar.Value = (int)(serviceGroup.FontSize * fontSizeConverter);
                 if (!string.IsNullOrWhiteSpace(serviceGroup.Color))
                 {
                     colorButton.BackColor = ColorTranslator.FromHtml(serviceGroup.Color);
@@ -178,7 +180,8 @@ namespace Queue.Administrator
                             Code = "0.0",
                             Name = "Новая группа услуг",
                             Columns = 2,
-                            Rows = 5
+                            Rows = 5,
+                            FontSize = 1
                         };
                     }
 
@@ -249,6 +252,11 @@ namespace Queue.Administrator
         private void rowsUpDown_Leave(object sender, EventArgs e)
         {
             serviceGroup.Rows = (int)rowsUpDown.Value;
+        }
+
+        private void fontSizeTrackBar_Leave(object sender, EventArgs e)
+        {
+            serviceGroup.FontSize = fontSizeTrackBar.Value / fontSizeConverter;
         }
 
         #endregion bindings

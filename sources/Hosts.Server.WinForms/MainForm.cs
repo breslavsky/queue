@@ -33,25 +33,21 @@ namespace Queue.Hosts.Server.WinForms
         {
             InitializeComponent();
 
+            var container = new UnityContainer();
+            container.RegisterInstance(container);
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
+
             string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.ServerServiceExe);
             serviceManager = new ServiceManager(HostsConsts.ServerServiceName, exePath);
 
             configuration = new ConfigurationManager(HostsConsts.ServerApp, Environment.SpecialFolder.CommonApplicationData);
-            settings = configuration.GetSection<ServerSettings>(ServerSettings.SectionKey);
+            container.RegisterInstance(configuration);
 
-            RegisterContainer();
+            settings = configuration.GetSection<ServerSettings>(ServerSettings.SectionKey);
 
             editDatabaseSettingsControl.Settings = settings.Database;
             languageControl.Initialize<Language>();
             licenseTypeControl.Initialize<ProductLicenceType>();
-        }
-
-        private void RegisterContainer()
-        {
-            var container = new UnityContainer();
-            container.RegisterInstance(container);
-            container.RegisterInstance(configuration);
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 
         private void MainForm_Load(object sender, EventArgs e)
