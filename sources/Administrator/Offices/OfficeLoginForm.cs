@@ -43,8 +43,6 @@ namespace Queue.Administrator
             private set
             {
                 office = value;
-
-                Settings.Endpoint = office.Endpoint;
             }
         }
 
@@ -92,7 +90,7 @@ namespace Queue.Administrator
 
         private async void loginButton_Click(object sender, EventArgs e)
         {
-            using (var serverService = new ServerService<IServerService>(Settings.Endpoint))
+            using (var serverService = new ServerService<IServerTcpService>(Settings.Endpoint, ServerServicesPaths.Server))
             using (var channelManager = serverService.CreateChannelManager())
             using (var channel = channelManager.CreateChannel())
             {

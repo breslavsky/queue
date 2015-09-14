@@ -26,9 +26,6 @@ namespace Queue.Administrator
         [Dependency]
         public ServerService<IServerTcpService> ServerService { get; set; }
 
-        [Dependency]
-        public LoginSettings LoginSettings { get; set; }
-
         #endregion dependency
 
         #region fields
@@ -120,7 +117,7 @@ namespace Queue.Administrator
                                 {
                                     try
                                     {
-                                        row.Tag = await taskPool.AddTask(channel.Service.EditOffice(office));
+                                        office = await taskPool.AddTask(channel.Service.EditOffice(office));
 
                                         UIHelper.Information("Вход успешно выполнен. Управление доступно.");
                                     }
@@ -159,7 +156,7 @@ namespace Queue.Administrator
                                         UseShellExecute = true,
                                         FileName = "Queue.Administrator.exe",
                                         Arguments = string.Format("--AutoLogin --Endpoint=\"{0}\" --SessionId={1}",
-                                            LoginSettings.Endpoint, administrator.SessionId),
+                                            office.Endpoint, administrator.SessionId),
                                         WorkingDirectory = Environment.CurrentDirectory
                                     });
                                 }

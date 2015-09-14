@@ -70,13 +70,14 @@ namespace Queue.Notification
 
         private void RegisterServices()
         {
-            IUnityContainer container = ServiceLocator.Current.GetInstance<UnityContainer>();
+            var container = ServiceLocator.Current.GetInstance<UnityContainer>();
 
             taskPool = new TaskPool();
             container.RegisterInstance(connectPage.Model.ChannelBuilder);
             container.RegisterInstance(taskPool);
 
-            channelManager = new ChannelManager<IServerTcpService>(container.Resolve<DuplexChannelBuilder<IServerTcpService>>());
+            var channelBuilder = container.Resolve<DuplexChannelBuilder<IServerTcpService>>();
+            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
             container.RegisterInstance(channelManager);
         }
 

@@ -10,23 +10,28 @@ using NLog;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Resources;
+using Queue.UI.WinForms;
 using System;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using LoginForm = Junte.UI.WinForms.NHibernate.LoginForm;
 
 namespace Queue.Database
 {
-    public partial class MainForm : RichForm
+    public partial class MainForm : DependencyForm
     {
-        private const string SectionKey = "profiles";
+        #region dependency
+
+        [Dependency]
+        public DatabaseSettingsProfiles Profiles { get; set; }
+
+        [Dependency]
+        public ConfigurationManager Configuration { get; set; }
+
+        #endregion dependency
 
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-
-        private ConfigurationManager configuration;
-        private DatabaseSettingsProfiles profiles;
-
-        private IUnityContainer container;
         private ISessionProvider sessionProvider;
 
         public MainForm()
@@ -38,11 +43,6 @@ namespace Queue.Database
         private void MainForm_Load(object sender, EventArgs e)
         {
             Text += string.Format(" ({0})", Assembly.GetEntryAssembly().GetName().Version);
-
-            configuration = ServiceLocator.Current.GetInstance<ConfigurationManager>();
-            profiles = configuration.GetSection<DatabaseSettingsProfiles>(SectionKey);
-
-            container = ServiceLocator.Current.GetInstance<UnityContainer>();
         }
 
         private void checkPatchesMenuItem_Click(object sender, EventArgs e)
@@ -67,10 +67,10 @@ namespace Queue.Database
 
         private void connectButton_Click(object sender, EventArgs eventArgs)
         {
-            using (LoginForm form = new LoginForm(profiles, DatabaseConnect))
+            using (var f = new LoginForm(Profiles, DatabaseConnect))
             {
-                form.ShowDialog();
-                configuration.Save();
+                f.ShowDialog();
+                Configuration.Save();
             }
         }
 
@@ -88,10 +88,10 @@ namespace Queue.Database
                     {
                         session.CreateSQLQuery(sql).ExecuteUpdate();
                     }
-                    catch (Exception exception)
+                    catch (Exception ex)
                     {
                         Log(sql);
-                        Log(exception.Message);
+                        Log(ex.Message);
                         return;
                     }
                 }
@@ -103,7 +103,6 @@ namespace Queue.Database
         private bool DatabaseConnect(DatabaseSettings s)
         {
             sessionProvider = new SessionProvider(new string[] { "Queue.Model" }, s);
-            container.RegisterInstance(sessionProvider);
 
             schemaMenu.Enabled = dataMenu.Enabled = true;
             connectButton.Enabled = false;
@@ -560,9 +559,9 @@ namespace Queue.Database
                             {
                                 session.CreateSQLQuery(sql).ExecuteUpdate();
                             }
-                            catch (Exception exception)
+                            catch (Exception ex)
                             {
-                                Log(exception.Message);
+                                Log(ex.Message);
                                 return;
                             }
                         }
@@ -605,9 +604,9 @@ namespace Queue.Database
                 sessionProvider.SchemaUpdate();
                 Log("Структура базы данных обновлена");
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                Log(exception.Message);
+                Log(ex.Message);
             }
         }
 
@@ -620,9 +619,9 @@ namespace Queue.Database
                 sessionProvider.SchemaValidate();
                 Log("Структура базы данных верна");
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                Log(exception.Message);
+                Log(ex.Message);
             }
         }
     }

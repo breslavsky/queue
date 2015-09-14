@@ -69,11 +69,11 @@ namespace Queue.Administrator
                 descriptionTextBox.Text = serviceGroup.Description;
                 columnsUpDown.Value = serviceGroup.Columns;
                 rowsUpDown.Value = serviceGroup.Rows;
-                fontSizeTrackBar.Value = (int)(serviceGroup.FontSize * fontSizeConverter);
                 if (!string.IsNullOrWhiteSpace(serviceGroup.Color))
                 {
                     colorButton.BackColor = ColorTranslator.FromHtml(serviceGroup.Color);
                 }
+                fontSizeTrackBar.Value = (int)(serviceGroup.FontSize * fontSizeConverter);
             }
         }
 
@@ -181,6 +181,7 @@ namespace Queue.Administrator
                             Name = "Новая группа услуг",
                             Columns = 2,
                             Rows = 5,
+                            Color = "FFFFFF",
                             FontSize = 1
                         };
                     }
@@ -256,7 +257,12 @@ namespace Queue.Administrator
 
         private void fontSizeTrackBar_Leave(object sender, EventArgs e)
         {
-            serviceGroup.FontSize = fontSizeTrackBar.Value / fontSizeConverter;
+            serviceGroup.FontSize = (float)fontSizeTrackBar.Value / fontSizeConverter;
+        }
+
+        private void fontSizeTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            fontSizeValueLabel.Text = fontSizeTrackBar.Value.ToString();
         }
 
         #endregion bindings

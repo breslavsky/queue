@@ -2,6 +2,7 @@
 using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
+using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
@@ -11,6 +12,7 @@ using System.ComponentModel;
 using System.ServiceModel;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
+using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
 {
@@ -31,6 +33,7 @@ namespace Queue.Administrator
         private readonly ChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private BindingList<OperatorInterruption> operatorInterruptions;
+        private readonly OperatorInterruptionFilter filter = new OperatorInterruptionFilter();
 
         #endregion fields
 
@@ -66,19 +69,7 @@ namespace Queue.Administrator
             base.Dispose(disposing);
         }
 
-        private void addButton_Click(object sender, EventArgs e)
-        {
-            using (var f = new EditOperatorInterruptionForm())
-            {
-                f.Saved += (s, eventArgs) =>
-                {
-                    operatorInterruptions.Add(f.OperatorInterruption);
-                    f.Close();
-                };
-
-                f.ShowDialog();
-            }
-        }
+        #region form events
 
         private void OperatorInterruptionsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -91,8 +82,35 @@ namespace Queue.Administrator
             {
                 try
                 {
+                    operatorControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(UserRole.Operator)));
+
+                    RefreshOperatorInterruptionsGridView();
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+            }
+        }
+
+        #endregion form events
+
+        private async void RefreshOperatorInterruptionsGridView()
+        {
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
                     operatorInterruptions = new BindingList<OperatorInterruption>(new List<OperatorInterruption>
-                        (await taskPool.AddTask(channel.Service.GetOperatorInterruptions())));
+                        (await taskPool.AddTask(channel.Service.GetOperatorInterruptions(filter))));
                     operatorInterruptionsBindingSource.DataSource = operatorInterruptions;
                 }
                 catch (OperationCanceledException) { }
@@ -171,6 +189,22 @@ namespace Queue.Administrator
             }
         }
 
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            using (var f = new EditOperatorInterruptionForm())
+            {
+                f.Saved += (s, eventArgs) =>
+                {
+                    operatorInterruptions.Add(f.OperatorInterruption);
+                    f.Close();
+                };
+
+                f.ShowDialog();
+            }
+        }
+
+        #region taskpool
+
         private void taskPool_OnAddTask(object sender, EventArgs e)
         {
             Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
@@ -179,6 +213,32 @@ namespace Queue.Administrator
         private void taskPool_OnRemoveTask(object sender, EventArgs e)
         {
             Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
+        #endregion taskpool
+
+        #region filter bindings
+
+        private void operatorCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            filter.IsOperator = operatorPanel.Enabled
+                = operatorCheckBox.Checked;
+        }
+
+        private void operatorControl_Leave(object sender, EventArgs e)
+        {
+            var selectedOperator = operatorControl.Selected<QueueOperator>();
+            if (selectedOperator != null)
+            {
+                filter.OperatorId = selectedOperator.Id;
+            }
+        }
+
+        #endregion filter bindings
+
+        private void filterButton_Click(object sender, EventArgs e)
+        {
+            RefreshOperatorInterruptionsGridView();
         }
     }
 }

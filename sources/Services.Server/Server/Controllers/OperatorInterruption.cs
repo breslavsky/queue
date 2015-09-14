@@ -13,7 +13,7 @@ namespace Queue.Services.Server
 {
     public partial class ServerService
     {
-        public async Task<DTO.OperatorInterruption[]> GetOperatorInterruptions()
+        public async Task<DTO.OperatorInterruption[]> GetOperatorInterruptions(DTO.OperatorInterruptionFilter filter)
         {
             return await Task.Run(() =>
             {
@@ -22,11 +22,15 @@ namespace Queue.Services.Server
                 using (var session = SessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    var interruptions = session.CreateCriteria<OperatorInterruption>()
-                        .AddOrder(Order.Asc("Operator"))
-                        .AddOrder(Order.Asc("Type"))
-                        .AddOrder(Order.Asc("DayOfWeek"))
-                        .List<OperatorInterruption>();
+                    var criteria = session.CreateCriteria<OperatorInterruption>()
+                        .AddOrder(Order.Asc("DayOfWeek"));
+
+                    if (filter.IsOperator)
+                    {
+                        criteria.Add(Restrictions.Eq("Operator.Id", filter.OperatorId));
+                    }
+
+                    var interruptions = criteria.List<OperatorInterruption>();
 
                     return Mapper.Map<IList<OperatorInterruption>, DTO.OperatorInterruption[]>(interruptions);
                 }

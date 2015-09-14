@@ -226,7 +226,7 @@ namespace Queue.Services.Contracts
         Task DeleteUser(Guid userId);
 
         [OperationContract]
-        Task<DTO.OperatorInterruption[]> GetOperatorInterruptions();
+        Task<DTO.OperatorInterruption[]> GetOperatorInterruptions(OperatorInterruptionFilter filter);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]

@@ -16,15 +16,10 @@ namespace Queue.Notification.ViewModels
     public class ClientRequestsControlViewModel : ObservableObject, IDisposable
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
-
         private const int DefaultClientRequestsLength = 6;
-
         private bool disposed = false;
-
         private TimeSpan ClientRequestTimeout;
-
         private object updateLock;
-
         private Grid clientRequestsGrid;
         private List<UIElement> controls;
         private List<ClientRequestWrap> requests;
@@ -119,7 +114,7 @@ namespace Queue.Notification.ViewModels
                 {
                     controls.Add(CreateTextBox(req.Request.Number.ToString(), 0, row));
 
-                    ClientRequestStateUserControl ctrl = new ClientRequestStateUserControl(req.Request);
+                    var ctrl = new ClientRequestStateUserControl(req.Request);
                     ctrl.SetValue(Grid.ColumnProperty, 2);
                     ctrl.SetValue(Grid.RowProperty, row);
                     controls.Add(ctrl);

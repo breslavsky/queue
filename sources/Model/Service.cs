@@ -43,6 +43,9 @@ namespace Queue.Model
         public virtual ClientRequestRegistrator EarlyRegistrator { get; set; }
 
         [Property]
+        public virtual string Color { get; set; }
+
+        [Property]
         public virtual float FontSize { get; set; }
 
         [Property]
@@ -62,6 +65,9 @@ namespace Queue.Model
 
         [Property]
         public virtual int MaxSubjects { get; set; }
+
+        [Property]
+        public virtual int MaxClientRecalls { get; set; }
 
         [NotNullNotEmpty(Message = "Название услуги не указано")]
         [Property(Length = 1000)]

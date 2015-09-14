@@ -428,7 +428,10 @@ namespace Queue.Operator
             pingQualityTimer.Dispose();
 
             pingServerChannel.Close();
-            pingQualityChannel.Close();
+            if (pingQualityChannel != null)
+            {
+                pingQualityChannel.Close();
+            }
 
             taskPool.Cancel();
         }

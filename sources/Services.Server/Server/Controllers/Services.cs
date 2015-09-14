@@ -149,6 +149,7 @@ namespace Queue.Services.Server
                     service.Link = source.Link;
                     service.MaxSubjects = source.MaxSubjects;
                     service.MaxEarlyDays = source.MaxEarlyDays;
+                    service.MaxClientRecalls = source.MaxClientRecalls;
                     service.IsPlanSubjects = source.IsPlanSubjects;
                     service.ClientRequire = source.ClientRequire;
                     service.ClientCallDelay = source.ClientCallDelay;
@@ -156,6 +157,7 @@ namespace Queue.Services.Server
                     service.IsUseType = source.IsUseType;
                     service.LiveRegistrator = source.LiveRegistrator;
                     service.EarlyRegistrator = source.EarlyRegistrator;
+                    service.Color = source.Color;
                     service.FontSize = source.FontSize;
 
                     if (source.ServiceGroup != null)
