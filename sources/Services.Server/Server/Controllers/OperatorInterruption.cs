@@ -24,6 +24,8 @@ namespace Queue.Services.Server
                 {
                     var interruptions = session.CreateCriteria<OperatorInterruption>()
                         .AddOrder(Order.Asc("Operator"))
+                        .AddOrder(Order.Asc("Type"))
+                        .AddOrder(Order.Asc("DayOfWeek"))
                         .List<OperatorInterruption>();
 
                     return Mapper.Map<IList<OperatorInterruption>, DTO.OperatorInterruption[]>(interruptions);

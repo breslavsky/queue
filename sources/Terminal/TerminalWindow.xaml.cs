@@ -6,7 +6,6 @@ using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.Terminal.ViewModels;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Types;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,10 +26,9 @@ namespace Queue.Terminal
         {
             try
             {
-                DependencyObject rootObject = GetTerminalPageContent();
+                var rootObject = GetTerminalPageContent();
 
-                Frame pageFrame = LogicalTreeHelper.FindLogicalNode(rootObject, PageFrameName) as Frame;
-
+                var pageFrame = LogicalTreeHelper.FindLogicalNode(rootObject, PageFrameName) as Frame;
                 if (pageFrame == null)
                 {
                     throw new ApplicationException("Элемент \"pageFrame\" не найден или тип элемента с данным именем не Frame");
@@ -40,7 +38,7 @@ namespace Queue.Terminal
 
                 Content = rootObject;
 
-                ServiceLocator.Current.GetInstance<UnityContainer>().RegisterInstance<IMainWindow>(this);
+                ServiceLocator.Current.GetInstance<UnityContainer>().RegisterInstance(this);
                 DataContext = new TerminalWindowViewModel();
 
                 ServiceLocator.Current.GetInstance<Navigator>().SetNavigationService(pageFrame.NavigationService);
@@ -57,7 +55,7 @@ namespace Queue.Terminal
         {
             try
             {
-                TerminalConfig config = ServiceLocator.Current.GetInstance<TerminalConfig>();
+                var config = ServiceLocator.Current.GetInstance<TerminalConfig>();
                 string template = string.IsNullOrEmpty(config.WindowTemplate) ? Templates.TerminalWindow : config.WindowTemplate;
                 return XamlReader.Parse(template) as DependencyObject;
             }

@@ -7,6 +7,7 @@
         Room,
         Box,
         Department,
-        Area
+        Area,
+        PayDesk
     }
 }

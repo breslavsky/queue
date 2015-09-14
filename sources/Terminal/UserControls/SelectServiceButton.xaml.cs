@@ -5,7 +5,7 @@ namespace Queue.Terminal.UserControls
 {
     public partial class SelectServiceButton : UserControl
     {
-        private const int MinFontSize = 5;
+        private const int MinFontSize = 10;
 
         public SelectServiceButton()
         {

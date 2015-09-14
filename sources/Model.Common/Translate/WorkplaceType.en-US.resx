@@ -129,6 +129,9 @@
   <data name="Department" xml:space="preserve">
     <value>Department</value>
   </data>
+  <data name="PayDesk" xml:space="preserve">
+    <value>Pay desk</value>
+  </data>
   <data name="Room" xml:space="preserve">
     <value>Room</value>
   </data>

@@ -73,7 +73,7 @@ namespace Queue.Services.Hub
             });
         }
 
-        public async Task Disable(byte deviceId)
+        public virtual async Task Disable(byte deviceId)
         {
             await Task.Run(() =>
             {

@@ -1,9 +1,6 @@
 ﻿using Queue.Common;
-using System;
 using System.Configuration;
 using System.Globalization;
-using System.Reflection;
-using System.Xml;
 
 namespace Queue.Hub.Settings
 {
@@ -57,15 +54,15 @@ namespace Queue.Hub.Settings
         {
             return new ServicesConfig()
             {
-                HttpService = new HttpServiceConfig()
-                {
-                    Enabled = false,
-                    Host = "localhost",
-                    Port = 4511
-                },
                 TcpService = new TcpServiceConfig()
                 {
                     Enabled = true,
+                    Host = "localhost",
+                    Port = 4511
+                },
+                HttpService = new HttpServiceConfig()
+                {
+                    Enabled = false,
                     Host = "localhost",
                     Port = 4512
                 }

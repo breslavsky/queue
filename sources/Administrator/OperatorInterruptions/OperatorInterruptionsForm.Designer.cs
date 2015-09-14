@@ -23,7 +23,7 @@
             this.operatorInterruptionsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.addAdditionalServiceButton = new System.Windows.Forms.Button();
             this.operatorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new Queue.UI.WinForms.DataGridViewTranslatableColumn();
             this.TargetDate = new Queue.UI.WinForms.DataGridViewTranslatableColumn();
             this.dayOfWeekColumn = new Queue.UI.WinForms.DataGridViewTranslatableColumn();
             this.startTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -112,6 +112,8 @@
             this.Type.HeaderText = "Тип";
             this.Type.Name = "Type";
             this.Type.ReadOnly = true;
+            this.Type.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Type.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // TargetDate
             // 
@@ -176,7 +178,7 @@
         private System.Windows.Forms.DataGridView operatorInterruptionsGridView;
         private System.Windows.Forms.BindingSource operatorInterruptionsBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn operatorColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
+        private UI.WinForms.DataGridViewTranslatableColumn Type;
         private UI.WinForms.DataGridViewTranslatableColumn TargetDate;
         private UI.WinForms.DataGridViewTranslatableColumn dayOfWeekColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn startTimeColumn;

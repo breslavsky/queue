@@ -1,6 +1,4 @@
-﻿using Microsoft.Practices.Unity;
-using NLog;
-using Queue.Services.Common;
+﻿using Queue.Services.Common;
 using Queue.Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -149,6 +147,19 @@ namespace Queue.Services.Hub
                 {
                     d.Enable(deviceId);
                     d.Accepted += driver_Accepted;
+                }
+            });
+        }
+
+        public override async Task Disable(byte deviceId)
+        {
+            await base.Enable(deviceId);
+            await Task.Run(() =>
+            {
+                foreach (var d in Drivers)
+                {
+                    d.Enable(deviceId);
+                    d.Accepted -= driver_Accepted;
                 }
             });
         }

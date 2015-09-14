@@ -5,7 +5,6 @@ using Microsoft.Practices.ServiceLocation;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
-using Queue.UI.WPF.Types;
 
 namespace Queue.Terminal.ViewModels
 {
@@ -14,7 +13,7 @@ namespace Queue.Terminal.ViewModels
         protected ClientRequestModel model;
         protected TaskPool taskPool;
         protected ChannelManager<IServerTcpService> channelManager;
-        protected IMainWindow screen;
+        protected TerminalWindow screen;
         protected TerminalConfig terminalConfig;
         protected Navigator navigator;
 
@@ -22,7 +21,7 @@ namespace Queue.Terminal.ViewModels
         {
             this.Model = ServiceLocator.Current.GetInstance<ClientRequestModel>();
             this.taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
-            this.screen = ServiceLocator.Current.GetInstance<IMainWindow>();
+            this.screen = ServiceLocator.Current.GetInstance<TerminalWindow>();
             this.navigator = ServiceLocator.Current.GetInstance<Navigator>();
             this.channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
             this.terminalConfig = ServiceLocator.Current.GetInstance<TerminalConfig>();

@@ -9,7 +9,6 @@ using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.Terminal.Enums;
 using Queue.UI.WPF.Enums;
-using Queue.UI.WPF.Types;
 using System;
 using System.Timers;
 using System.Windows.Input;
@@ -36,7 +35,7 @@ namespace Queue.Terminal.ViewModels
         private ChannelManager<IServerTcpService> channelManager;
         private Navigator navigator;
         private DefaultConfig defaultConfig;
-        private IMainWindow screen;
+        private TerminalWindow screen;
 
         public ClientRequestModel Model
         {
@@ -71,8 +70,11 @@ namespace Queue.Terminal.ViewModels
             Model = ServiceLocator.Current.GetInstance<ClientRequestModel>();
             request.PropertyChanged += model_PropertyChanged;
 
-            screen = ServiceLocator.Current.GetInstance<IMainWindow>();
+            screen = ServiceLocator.Current.GetInstance<TerminalWindow>();
             container = ServiceLocator.Current.GetInstance<UnityContainer>();
+
+            var x = container.Registrations;
+
             taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
             channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
             navigator = ServiceLocator.Current.GetInstance<Navigator>();

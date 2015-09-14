@@ -6,7 +6,6 @@ using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.Terminal.UserControls;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Types;
 using System;
 using System.ServiceModel;
 using System.Windows.Controls;
@@ -27,7 +26,7 @@ namespace Queue.Terminal.ViewModels
         private bool hasResults;
         private int currentPage;
 
-        private IMainWindow screen;
+        private TerminalWindow screen;
         private ChannelManager<IServerTcpService> channelManager;
         private Navigator navigator;
         private ClientRequestModel request;
@@ -61,7 +60,7 @@ namespace Queue.Terminal.ViewModels
             NextCommand = new RelayCommand(Next);
             PrevCommand = new RelayCommand(Prev);
 
-            screen = ServiceLocator.Current.GetInstance<IMainWindow>();
+            screen = ServiceLocator.Current.GetInstance<TerminalWindow>();
             channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
             navigator = ServiceLocator.Current.GetInstance<Navigator>();
             request = ServiceLocator.Current.GetInstance<ClientRequestModel>();

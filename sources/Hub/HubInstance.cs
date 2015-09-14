@@ -91,7 +91,7 @@ namespace Queue.Hub
                     var host = new HubQualityTcpServiceHost();
 
                     var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NET_TCP, tcpService.Host, tcpService.Port, HubServicesPaths.Quality));
-                    logger.Info("TCP service host uri = ", uri);
+                    logger.Info("TCP service host uri = {0}", uri);
 
                     host.AddServiceEndpoint(typeof(IHubQualityTcpService), Bindings.NetTcpBinding, uri);
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior());
@@ -103,7 +103,7 @@ namespace Queue.Hub
                     var host = new HubDisplayTcpServiceHost();
 
                     var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NET_TCP, tcpService.Host, tcpService.Port, HubServicesPaths.Display));
-                    logger.Info("TCP service host uri = ", uri);
+                    logger.Info("TCP service host uri = {0}", uri);
 
                     host.AddServiceEndpoint(typeof(IHubDisplayTcpService), Bindings.NetTcpBinding, uri);
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior());
@@ -120,7 +120,7 @@ namespace Queue.Hub
                     var host = new HubQualityHttpServiceHost();
 
                     var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.HTTP, httpService.Host, httpService.Port, HubServicesPaths.Quality));
-                    logger.Info("HTTP service host uri = ", uri);
+                    logger.Info("HTTP service host uri = {0}", uri);
 
                     var endpoint = host.AddServiceEndpoint(typeof(IHubQualityHttpService), Bindings.WebHttpBinding, uri);
                     endpoint.Behaviors.Add(new WebHttpBehavior());
@@ -138,7 +138,7 @@ namespace Queue.Hub
                     var host = new HubDisplayHttpServiceHost();
 
                     var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.HTTP, httpService.Host, httpService.Port, HubServicesPaths.Display));
-                    logger.Info("HTTP service host uri = ", uri);
+                    logger.Info("HTTP service host uri = {0}", uri);
 
                     var endpoint = host.AddServiceEndpoint(typeof(IHubDisplayHttpService), Bindings.WebHttpBinding, uri);
                     endpoint.Behaviors.Add(new WebHttpBehavior());

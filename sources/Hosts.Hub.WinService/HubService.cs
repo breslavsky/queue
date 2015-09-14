@@ -7,17 +7,9 @@ using Queue.Hosts.Common;
 using Queue.Hub;
 using Queue.Hub.Settings;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 using System.ServiceProcess;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using SpecialFolder = System.Environment.SpecialFolder;
 
 namespace Hosts.Hub.WinService
 {
@@ -47,7 +39,7 @@ namespace Hosts.Hub.WinService
                 container = new UnityContainer();
                 ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
-                configuration = new ConfigurationManager(HostsConsts.HubApp, SpecialFolder.ApplicationData);
+                configuration = new ConfigurationManager(HostsConsts.HubApp, Environment.SpecialFolder.CommonApplicationData);
                 container.RegisterInstance(configuration);
 
                 settings = configuration.GetSection<HubSettings>(HubSettings.SectionKey);
