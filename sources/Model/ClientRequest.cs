@@ -56,6 +56,9 @@ namespace Queue.Model
         public virtual float Productivity { get; set; }
 
         [Property]
+        public virtual int ClientRecalls { get; set; }
+
+        [Property]
         public virtual bool IsPriority { get; set; }
 
         [Property(Index = "RequestDateIndex")]

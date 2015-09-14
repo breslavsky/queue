@@ -53,13 +53,13 @@ namespace Queue.Administrator
             if (options.AutoLogin)
             {
                 serverService = new ServerService<IServerTcpService>(options.Endpoint, ServerServicesPaths.Server);
+                container.RegisterInstance(serverService);
 
                 var channelManager = serverService.CreateChannelManager();
                 using (var channel = channelManager.CreateChannel())
                 {
                     Guid sessionId = Guid.Parse(options.SessionId);
                     currentUser = channel.Service.OpenUserSession(sessionId).Result as QueueAdministrator;
-                    container.RegisterInstance(serverService);
                     container.RegisterInstance<User>(currentUser);
                     container.RegisterInstance<QueueAdministrator>(currentUser);
 
@@ -76,6 +76,7 @@ namespace Queue.Administrator
                         configuration.Save();
 
                         currentUser = loginForm.CurrentUser as QueueAdministrator;
+                        container.RegisterInstance<User>(currentUser);
                         container.RegisterInstance<QueueAdministrator>(currentUser);
 
                         loginForm.Dispose();

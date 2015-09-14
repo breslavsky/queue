@@ -41,6 +41,9 @@ namespace Queue.Services.DTO
         public float Productivity { get; set; }
 
         [DataMember]
+        public int ClientRecalls { get; set; }
+
+        [DataMember]
         public bool IsPriority { get; set; }
 
         [DataMember]

@@ -323,7 +323,7 @@ namespace Queue.Administrator
 
         private void operatorControl_Leave(object sender, EventArgs e)
         {
-            QueueOperator selectedOperator = operatorControl.Selected<QueueOperator>();
+            var selectedOperator = operatorControl.Selected<QueueOperator>();
             if (selectedOperator != null)
             {
                 filter.OperatorId = selectedOperator.Id;

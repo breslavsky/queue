@@ -18,7 +18,6 @@ using Color = System.Windows.Media.Color;
 using Path = System.IO.Path;
 using QIcons = Queue.UI.Common.Icons;
 using QueueOperator = Queue.Services.DTO.QueuePlan.Operator;
-using WindowState = Xceed.Wpf.Toolkit.WindowState;
 
 namespace Queue.Administrator
 {
@@ -222,28 +221,9 @@ namespace Queue.Administrator
                 var queueOperator = operatorPlan.Operator;
 
                 var dockPanel = new DockPanel();
-
-                var button = new Button()
-                {
-                    Height = 22,
-                    Width = 25,
-                    ToolTip = "Список запросов",
-                    Content = QIcons.clientRequests16x16.ToWpfImage()
-                };
-
-                var clientsRequestPlans = operatorPlan.ClientRequestPlans;
-
-                button.Click += (s, e) =>
-                {
-                    clientRequestsChildWindow.WindowState = WindowState.Open;
-                    clientRequestsDataGrid.ItemsSource = clientsRequestPlans;
-                };
-
-                dockPanel.Children.Add(button);
-
                 if (Options.HasFlag(QueueMonitorControlOptions.OperatorLogin))
                 {
-                    button = new Button()
+                    var button = new Button()
                     {
                         Height = 22,
                         Width = 25,
@@ -314,6 +294,8 @@ namespace Queue.Administrator
                     Stroke = Brushes.Silver,
                     StrokeDashArray = new DoubleCollection(new double[] { 2, 4 })
                 });
+
+                var clientsRequestPlans = operatorPlan.ClientRequestPlans;
 
                 foreach (var clientRequestPlan in clientsRequestPlans)
                 {

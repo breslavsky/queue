@@ -31,6 +31,7 @@
             this.rowsLabel = new System.Windows.Forms.Label();
             this.rowsUpDown = new System.Windows.Forms.NumericUpDown();
             this.fontSizeLabel = new System.Windows.Forms.Label();
+            this.fontSizeValueLabel = new System.Windows.Forms.Label();
             this.fontSizeTrackBar = new System.Windows.Forms.TrackBar();
             this.layoutGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.columnsUpDown)).BeginInit();
@@ -95,7 +96,7 @@
             // 
             this.colorButton.Location = new System.Drawing.Point(80, 35);
             this.colorButton.Name = "colorButton";
-            this.colorButton.Size = new System.Drawing.Size(30, 25);
+            this.colorButton.Size = new System.Drawing.Size(90, 25);
             this.colorButton.TabIndex = 1;
             this.colorButton.Click += new System.EventHandler(this.colorButton_Click);
             this.colorButton.Leave += new System.EventHandler(this.colorButton_Leave);
@@ -190,30 +191,39 @@
             // 
             this.fontSizeLabel.Location = new System.Drawing.Point(15, 425);
             this.fontSizeLabel.Name = "fontSizeLabel";
-            this.fontSizeLabel.Size = new System.Drawing.Size(110, 45);
+            this.fontSizeLabel.Size = new System.Drawing.Size(110, 25);
             this.fontSizeLabel.TabIndex = 15;
             this.fontSizeLabel.Text = "Размер шрифта %";
             this.fontSizeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
+            // fontSizeValueLabel
+            // 
+            this.fontSizeValueLabel.Location = new System.Drawing.Point(125, 450);
+            this.fontSizeValueLabel.Name = "fontSizeValueLabel";
+            this.fontSizeValueLabel.Size = new System.Drawing.Size(280, 20);
+            this.fontSizeValueLabel.TabIndex = 19;
+            this.fontSizeValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // fontSizeTrackBar
             // 
             this.fontSizeTrackBar.LargeChange = 10;
-            this.fontSizeTrackBar.Location = new System.Drawing.Point(120, 425);
+            this.fontSizeTrackBar.Location = new System.Drawing.Point(125, 425);
             this.fontSizeTrackBar.Maximum = 300;
             this.fontSizeTrackBar.Minimum = 10;
             this.fontSizeTrackBar.Name = "fontSizeTrackBar";
-            this.fontSizeTrackBar.Size = new System.Drawing.Size(285, 45);
-            this.fontSizeTrackBar.TabIndex = 14;
-            this.fontSizeTrackBar.Value = 100;
-            this.fontSizeTrackBar.Leave += new System.EventHandler(this.fontSizeTrackBar_Leave);
+            this.fontSizeTrackBar.Size = new System.Drawing.Size(280, 45);
+            this.fontSizeTrackBar.TabIndex = 18;
+            this.fontSizeTrackBar.Value = 10;
+            this.fontSizeTrackBar.ValueChanged += new System.EventHandler(this.fontSizeTrackBar_ValueChanged);
             // 
             // EditServiceGroupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(414, 516);
-            this.Controls.Add(this.fontSizeLabel);
+            this.Controls.Add(this.fontSizeValueLabel);
             this.Controls.Add(this.fontSizeTrackBar);
+            this.Controls.Add(this.fontSizeLabel);
             this.Controls.Add(this.codeLabel);
             this.Controls.Add(this.codeTextBox);
             this.Controls.Add(this.colorButton);
@@ -228,7 +238,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(430, 470);
+            this.MinimumSize = new System.Drawing.Size(400, 470);
             this.Name = "EditServiceGroupForm";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Редактирование группы услуг";
@@ -261,6 +271,7 @@
         private System.Windows.Forms.Label rowsLabel;
         private System.Windows.Forms.Label columnsLabel;
         private System.Windows.Forms.Label fontSizeLabel;
+        private System.Windows.Forms.Label fontSizeValueLabel;
         private System.Windows.Forms.TrackBar fontSizeTrackBar;
     }
 }

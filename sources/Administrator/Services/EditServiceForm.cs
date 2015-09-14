@@ -9,6 +9,7 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
+using System.Drawing;
 using System.ServiceModel;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
@@ -70,6 +71,10 @@ namespace Queue.Administrator
                 timeIntervalRoundingUpDown.Value = (int)service.TimeIntervalRounding.TotalMinutes;
                 liveRegistratorFlagsControl.Select<ClientRequestRegistrator>(service.LiveRegistrator);
                 earlyRegistratorFlagsControl.Select<ClientRequestRegistrator>(service.EarlyRegistrator);
+                if (!string.IsNullOrWhiteSpace(service.Color))
+                {
+                    colorButton.BackColor = ColorTranslator.FromHtml(service.Color);
+                }
                 fontSizeTrackBar.Value = (int)(service.FontSize * fontSizeConverter);
 
                 parametersTabPage.Parent =
@@ -160,9 +165,10 @@ namespace Queue.Administrator
                             Name = "Новая услуга",
                             LiveRegistrator = all,
                             EarlyRegistrator = all,
-                            FontSize = 1,
                             TimeIntervalRounding = TimeSpan.FromMinutes(5),
-                            MaxSubjects = 5
+                            MaxSubjects = 5,
+                            Color = "FFFFFF",
+                            FontSize = 1
                         };
                     }
 
@@ -338,9 +344,30 @@ namespace Queue.Administrator
             service.TimeIntervalRounding = TimeSpan.FromMinutes((double)timeIntervalRoundingUpDown.Value);
         }
 
+        private void colorButton_Click(object sender, EventArgs e)
+        {
+            using (var d = new ColorDialog())
+            {
+                if (d.ShowDialog() == DialogResult.OK)
+                {
+                    colorButton.BackColor = d.Color;
+                }
+            }
+        }
+
+        private void colorButton_Leave(object sender, EventArgs e)
+        {
+            service.Color = ColorTranslator.ToHtml(colorButton.BackColor);
+        }
+
         private void fontSizeTrackBar_Leave(object sender, EventArgs e)
         {
-            service.FontSize = fontSizeTrackBar.Value / fontSizeConverter;
+            service.FontSize = (float)fontSizeTrackBar.Value / fontSizeConverter;
+        }
+
+        private void fontSizeTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            fontSizeValueLabel.Text = fontSizeTrackBar.Value.ToString();
         }
 
         #endregion bindings

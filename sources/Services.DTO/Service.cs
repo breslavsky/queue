@@ -32,6 +32,9 @@ namespace Queue.Services.DTO
         public int MaxSubjects { get; set; }
 
         [DataMember]
+        public int MaxClientRecalls { get; set; }
+
+        [DataMember]
         public int MaxEarlyDays { get; set; }
 
         [DataMember]
@@ -54,6 +57,9 @@ namespace Queue.Services.DTO
 
         [DataMember]
         public ClientRequestRegistrator EarlyRegistrator { get; set; }
+
+        [DataMember]
+        public string Color { get; set; }
 
         [DataMember]
         public float FontSize { get; set; }

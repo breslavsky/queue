@@ -59,9 +59,9 @@ namespace Queue.UI.WinForms
             {
                 Connect();
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                UIHelper.Warning(exception.Message);
+                UIHelper.Warning(ex.Message);
             }
         }
 
@@ -99,13 +99,13 @@ namespace Queue.UI.WinForms
             catch (CommunicationObjectAbortedException) { }
             catch (ObjectDisposedException) { }
             catch (InvalidOperationException) { }
-            catch (FaultException exception)
+            catch (FaultException ex)
             {
-                UIHelper.Warning(exception.Reason.ToString());
+                UIHelper.Warning(ex.Reason.ToString());
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                UIHelper.Warning(exception.Message);
+                UIHelper.Warning(ex.Message);
             }
             finally
             {

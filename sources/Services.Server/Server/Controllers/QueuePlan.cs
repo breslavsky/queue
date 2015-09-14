@@ -177,6 +177,7 @@ namespace Queue.Services.Server
 
                     try
                     {
+                        var service = clientRequest.Service;
                         var client = clientRequest.Client;
 
                         string message;
@@ -203,13 +204,22 @@ namespace Queue.Services.Server
                                 switch (state)
                                 {
                                     case ClientRequestState.Absence:
-                                        message = string.Format("Клиент [{0}] не подошел к оператору [{1}]", client, queueOperator);
-                                        clientRequest.Absence();
+                                        if (clientRequest.ClientRecalls >= service.MaxClientRecalls)
+                                        {
+                                            message = string.Format("Клиент [{0}] не подошел к оператору [{1}]", client, queueOperator);
+                                            clientRequest.Absence();
+                                        }
+                                        else
+                                        {
+                                            message = string.Format("Клиент [{0}] не подошел к оператору [{1}] вызов откладывается", client, queueOperator);
+                                            clientRequest.Postpone(TimeSpan.FromMinutes(5));
+                                            clientRequest.ClientRecalls++;
+                                        }
                                         break;
 
                                     case ClientRequestState.Rendering:
                                         message = string.Format("Начало обслуживания клиента [{0}] у оператора [{1}]", client, queueOperator);
-                                        var schedule = todayQueuePlan.GetServiceSchedule(clientRequest.Service);
+                                        var schedule = todayQueuePlan.GetServiceSchedule(service);
                                         clientRequest.Rendering(schedule.LiveClientInterval);
                                         break;
 
