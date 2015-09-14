@@ -17,7 +17,7 @@ namespace Queue.Terminal.UserControls
             TextBlock tb = sender as TextBlock;
             FrameworkElement parent = (FrameworkElement)tb.Parent;
 
-            while (tb.ActualHeight > parent.ActualHeight & tb.FontSize > MinFontSize)
+            while (tb.ActualHeight > parent.ActualHeight && tb.FontSize > MinFontSize)
             {
                 tb.FontSize -= 1;
                 tb.UpdateLayout();

@@ -97,7 +97,7 @@ namespace Queue.Terminal.ViewModels
                     continue;
                 }
 
-                buttons.Add(CreateSelectServiceButton(group.Code, group.Name, group.Color, (s, a) => OnServiceGroupSelected(group)));
+                buttons.Add(CreateSelectServiceButton(group.Code, group.Name, group.Color, group.FontSize, (s, a) => OnServiceGroupSelected(group)));
             }
         }
 
@@ -114,7 +114,9 @@ namespace Queue.Terminal.ViewModels
                                                     service.Name,
                                                     service.ServiceGroup == null ?
                                                             DefaultServiceColor :
-                                                            service.ServiceGroup.Color, (s, a) => SetSelectedService(service)
+                                                            service.ServiceGroup.Color,
+                                                    service.FontSize,
+                                                    (s, a) => SetSelectedService(service)
                 ));
             }
         }
@@ -169,7 +171,7 @@ namespace Queue.Terminal.ViewModels
             }
         }
 
-        private SelectServiceButton CreateSelectServiceButton(string code, string name, string color, EventHandler onSelected)
+        private SelectServiceButton CreateSelectServiceButton(string code, string name, string color, float fontSize, EventHandler onSelected)
         {
             SelectServiceButton result = new SelectServiceButton();
 
@@ -177,6 +179,7 @@ namespace Queue.Terminal.ViewModels
             {
                 Code = code,
                 Name = name,
+                FontSize = fontSize,
                 ServiceBrush = color.GetBrushForColor()
             };
             model.OnServiceSelected += onSelected;

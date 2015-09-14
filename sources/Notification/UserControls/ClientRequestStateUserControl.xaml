@@ -15,7 +15,8 @@
                        FontSize="5"
                        FontWeight="Bold"
                        Foreground="{Binding StateBrush}"
-                       Text="{Binding State}" />
+                       Text="{Binding State}">
+            </TextBlock>
         </Border>
     </StackPanel>
 </UserControl>

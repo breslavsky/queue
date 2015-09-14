@@ -13,6 +13,7 @@ namespace Queue.Services.DTO
             Name = "Новая услуга";
             MaxSubjects = 1;
             MaxEarlyDays = 30;
+            FontSize = 10;
             TimeIntervalRounding = TimeSpan.FromMinutes(5);
             SortId = DateTime.Now.Ticks;
         }

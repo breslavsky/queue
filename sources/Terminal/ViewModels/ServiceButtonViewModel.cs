@@ -9,6 +9,7 @@ namespace Queue.Terminal.ViewModels
     {
         private string name;
         private string code;
+        private float fontSize;
         private SolidColorBrush serviceBrush;
 
         private Lazy<ICommand> selectServiceCommand;
@@ -21,6 +22,12 @@ namespace Queue.Terminal.ViewModels
         {
             get { return name; }
             set { SetProperty(ref name, value); }
+        }
+
+        public float FontSize
+        {
+            get { return fontSize; }
+            set { SetProperty(ref fontSize, value); }
         }
 
         public string Code
