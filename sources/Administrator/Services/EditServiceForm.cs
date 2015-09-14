@@ -35,7 +35,7 @@ namespace Queue.Administrator
 
         #region fields
 
-        private static const byte fontSizeConverter = 100;
+        private const byte fontSizeConverter = 100;
         private readonly ChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private readonly Guid serviceGroupId;
