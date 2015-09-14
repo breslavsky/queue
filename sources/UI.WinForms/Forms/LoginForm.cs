@@ -20,9 +20,6 @@ namespace Queue.UI.WinForms
         #region dependency
 
         [Dependency]
-        public ConfigurationManager Configuration { get; set; }
-
-        [Dependency]
         public LoginFormSettings LoginFormSettings { get; set; }
 
         [Dependency]
@@ -38,7 +35,7 @@ namespace Queue.UI.WinForms
 
         #region fields
 
-        private ClientService<IServerTcpService> serverService;
+        private ServerService<IServerTcpService> serverService;
         private ChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private readonly UserRole userRole;
@@ -99,7 +96,7 @@ namespace Queue.UI.WinForms
                 serverService.Dispose();
             }
 
-            serverService = new ClientService<IServerTcpService>(LoginSettings.Endpoint);
+            serverService = new ServerService<IServerTcpService>(LoginSettings.Endpoint);
 
             if (channelManager != null)
             {
@@ -123,7 +120,6 @@ namespace Queue.UI.WinForms
 
                     LoginFormSettings.Language = languageControl.Selected<Language>();
 
-                    Configuration.Save();
                     DialogResult = DialogResult.OK;
                 }
                 catch (OperationCanceledException) { }

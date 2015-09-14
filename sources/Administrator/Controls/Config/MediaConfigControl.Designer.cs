@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tickerGroupBox = new System.Windows.Forms.GroupBox();
             this.TickerLabel = new System.Windows.Forms.Label();
             this.tickerTextBox = new System.Windows.Forms.TextBox();
@@ -80,16 +80,15 @@
             // 
             // tickerSpeedLabel
             // 
-            this.tickerSpeedLabel.Location = new System.Drawing.Point(15, 85);
+            this.tickerSpeedLabel.Location = new System.Drawing.Point(15, 100);
             this.tickerSpeedLabel.Name = "tickerSpeedLabel";
-            this.tickerSpeedLabel.Size = new System.Drawing.Size(55, 30);
+            this.tickerSpeedLabel.Size = new System.Drawing.Size(55, 45);
             this.tickerSpeedLabel.TabIndex = 4;
             this.tickerSpeedLabel.Text = "Скорость";
             this.tickerSpeedLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // tickerSpeedTrackBar
             // 
-            this.tickerSpeedTrackBar.BackColor = System.Drawing.Color.White;
             this.tickerSpeedTrackBar.Location = new System.Drawing.Point(75, 100);
             this.tickerSpeedTrackBar.Minimum = 1;
             this.tickerSpeedTrackBar.Name = "tickerSpeedTrackBar";
@@ -129,14 +128,14 @@
             this.mediaConfigFilesGridView.AllowUserToAddRows = false;
             this.mediaConfigFilesGridView.AllowUserToResizeColumns = false;
             this.mediaConfigFilesGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mediaConfigFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mediaConfigFilesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.mediaConfigFilesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mediaConfigFilesGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nameColumn});

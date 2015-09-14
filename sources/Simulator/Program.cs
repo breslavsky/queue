@@ -14,8 +14,6 @@ namespace Queue.Simulator
 {
     internal static class Program
     {
-        private const string AppName = "Queue.Simulator";
-
         [STAThread]
         private static void Main()
         {
@@ -49,7 +47,7 @@ namespace Queue.Simulator
         private static void RegisterContainer()
         {
             IUnityContainer container = new UnityContainer();
-            container.RegisterInstance(new ConfigurationManager(AppName, SpecialFolder.ApplicationData));
+            container.RegisterInstance(new ConfigurationManager(Product.Simulator.AppName, SpecialFolder.ApplicationData));
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 

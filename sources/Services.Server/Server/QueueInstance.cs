@@ -21,7 +21,7 @@ namespace Queue.Services.Server
         #region dependency
 
         [Dependency]
-        public ISessionProvider SessionProvider { get; set; }
+        public SessionProvider SessionProvider { get; set; }
 
         #endregion dependency
 

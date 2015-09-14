@@ -3,7 +3,7 @@ using System;
 
 namespace Queue.Services.Common
 {
-    public class HubQualityCallback : IHubQualityCallback
+    public class HubQualityCallback : ICallback, IHubQualityCallback
     {
         public event EventHandler<HubQualityEventArgs> OnAccepted = delegate { };
 

@@ -74,7 +74,7 @@ namespace Queue.Reports.OperatorRatingReport
 
             ProjectionList projections = GetProjections();
 
-            using (ISession session = SessionProvider.OpenSession())
+            using (var session = SessionProvider.OpenSession())
             {
                 T[] data = session.CreateCriteria<ClientRequest>()
                        .Add(conjunction)

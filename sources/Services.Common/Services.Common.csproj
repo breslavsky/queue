@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyService.cs" />
+    <Compile Include="Hub\Quality\HubQualityCallback.cs" />
     <Compile Include="Server\IServerCallback.cs" />
     <Compile Include="Maps\MediaServiceMap.cs" />
     <Compile Include="Maps\PortalClientServiceMap.cs" />
@@ -70,8 +71,9 @@
     <Compile Include="Hub\Quality\HubQualityServiceEventType.cs" />
     <Compile Include="Hub\Quality\HubQualityServiceSubscribtionArgs.cs" />
     <Compile Include="Hub\Quality\IHubQualityCallback.cs" />
-    <Compile Include="Hub\Quality\HubQualityCallback.cs" />
+    <Compile Include="Callback.cs" />
     <Compile Include="Hub\Quality\HubQualityEventArgs.cs" />
+    <Compile Include="ICallback.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

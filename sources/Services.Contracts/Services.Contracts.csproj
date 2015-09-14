@@ -58,16 +58,17 @@
     <Compile Include="Portal\IPortalService.cs" />
     <Compile Include="IMediaService.cs" />
     <Compile Include="Portal\IPortalOperatorService.cs" />
-    <Compile Include="IServerTcpService.cs" />
+    <Compile Include="Server\IServerTcpService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IServerHttpService.cs" />
-    <Compile Include="IServerService.cs" />
-    <Compile Include="ClientService.cs" />
-    <Compile Include="ServerServicesPaths.cs" />
+    <Compile Include="Server\IServerHttpService.cs" />
+    <Compile Include="Server\IServerService.cs" />
+    <Compile Include="ServerService.cs" />
+    <Compile Include="Server\ServerServicesPaths.cs" />
     <Compile Include="Hub\Quality\IHubQualityHttpService.cs" />
     <Compile Include="Hub\Quality\IHubQualityService.cs" />
     <Compile Include="Hub\HubServicesPaths.cs" />
     <Compile Include="Hub\Quality\IHubQualityTcpService.cs" />
+    <Compile Include="HubService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

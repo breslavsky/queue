@@ -75,6 +75,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Translate\OperatorInterruptionType.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OperatorInterruptionType.resx</DependentUpon>
+    </Compile>
     <Compile Include="Translate\ServiceParameterType.Designer.cs">
       <DependentUpon>ServiceParameterType.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -134,7 +139,10 @@
       <LastGenOutput>ClientRequestType.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translate\OperatorInterruptionType.en-US.resx" />
-    <EmbeddedResource Include="Translate\OperatorInterruptionType.resx" />
+    <EmbeddedResource Include="Translate\OperatorInterruptionType.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OperatorInterruptionType.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Translate\ServiceParameterType.en-US.resx" />
     <EmbeddedResource Include="Translate\ServiceParameterType.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

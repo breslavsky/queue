@@ -29,12 +29,13 @@ namespace Queue.Administrator
         public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
-        public ClientService<IServerTcpService> ServerService { get; set; }
+        public ServerService<IServerTcpService> ServerService { get; set; }
 
         #endregion dependency
 
         #region fields
 
+        private static const byte fontSizeConverter = 100;
         private readonly ChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private readonly Guid serviceGroupId;
@@ -69,6 +70,7 @@ namespace Queue.Administrator
                 timeIntervalRoundingUpDown.Value = (int)service.TimeIntervalRounding.TotalMinutes;
                 liveRegistratorFlagsControl.Select<ClientRequestRegistrator>(service.LiveRegistrator);
                 earlyRegistratorFlagsControl.Select<ClientRequestRegistrator>(service.EarlyRegistrator);
+                fontSizeTrackBar.Value = (int)(service.FontSize * fontSizeConverter);
 
                 parametersTabPage.Parent =
                     exceptionScheduleTabPage.Parent =
@@ -158,6 +160,7 @@ namespace Queue.Administrator
                             Name = "Новая услуга",
                             LiveRegistrator = all,
                             EarlyRegistrator = all,
+                            FontSize = 1,
                             TimeIntervalRounding = TimeSpan.FromMinutes(5),
                             MaxSubjects = 5
                         };
@@ -333,6 +336,11 @@ namespace Queue.Administrator
         private void timeIntervalRoundingUpDown_Leave(object sender, EventArgs e)
         {
             service.TimeIntervalRounding = TimeSpan.FromMinutes((double)timeIntervalRoundingUpDown.Value);
+        }
+
+        private void fontSizeTrackBar_Leave(object sender, EventArgs e)
+        {
+            service.FontSize = fontSizeTrackBar.Value / fontSizeConverter;
         }
 
         #endregion bindings

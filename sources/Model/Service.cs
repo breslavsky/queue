@@ -43,6 +43,9 @@ namespace Queue.Model
         public virtual ClientRequestRegistrator EarlyRegistrator { get; set; }
 
         [Property]
+        public virtual float FontSize { get; set; }
+
+        [Property]
         public virtual bool IsActive { get; set; }
 
         [Property]

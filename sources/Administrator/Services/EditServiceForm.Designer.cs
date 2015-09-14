@@ -57,6 +57,9 @@
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.linkLabel = new System.Windows.Forms.Label();
             this.linkTextBox = new System.Windows.Forms.TextBox();
+            this.designPropertiesTabControl = new System.Windows.Forms.TabPage();
+            this.fontSizeLabel = new System.Windows.Forms.Label();
+            this.fontSizeTrackBar = new System.Windows.Forms.TrackBar();
             this.saveButton = new System.Windows.Forms.Button();
             this.serviceTabControl = new System.Windows.Forms.TabControl();
             this.stepsTabPage = new System.Windows.Forms.TabPage();
@@ -84,6 +87,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.maxSubjectsUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxEarlyDaysUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priorityUpDown)).BeginInit();
+            this.designPropertiesTabControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fontSizeTrackBar)).BeginInit();
             this.serviceTabControl.SuspendLayout();
             this.stepsTabPage.SuspendLayout();
             this.weekdayScheduleTabPage.SuspendLayout();
@@ -105,9 +110,12 @@
             // 
             // serviceParametersControl
             // 
+            this.serviceParametersControl.CurrentUser = null;
             this.serviceParametersControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serviceParametersControl.Location = new System.Drawing.Point(3, 3);
             this.serviceParametersControl.Name = "serviceParametersControl";
+            this.serviceParametersControl.ServerService = null;
+            this.serviceParametersControl.Service = null;
             this.serviceParametersControl.Size = new System.Drawing.Size(830, 450);
             this.serviceParametersControl.TabIndex = 0;
             // 
@@ -148,9 +156,11 @@
             // 
             // exceptionScheduleControl
             // 
+            this.exceptionScheduleControl.CurrentUser = null;
             this.exceptionScheduleControl.Location = new System.Drawing.Point(10, 65);
             this.exceptionScheduleControl.Name = "exceptionScheduleControl";
             this.exceptionScheduleControl.Schedule = null;
+            this.exceptionScheduleControl.ServerService = null;
             this.exceptionScheduleControl.Size = new System.Drawing.Size(790, 320);
             this.exceptionScheduleControl.TabIndex = 2;
             // 
@@ -169,6 +179,7 @@
             // 
             this.servicePropertiesTabControl.Controls.Add(this.commonPropertiesTabPage);
             this.servicePropertiesTabControl.Controls.Add(this.additionalPropertiesTabPage);
+            this.servicePropertiesTabControl.Controls.Add(this.designPropertiesTabControl);
             this.servicePropertiesTabControl.Location = new System.Drawing.Point(5, 5);
             this.servicePropertiesTabControl.Margin = new System.Windows.Forms.Padding(5);
             this.servicePropertiesTabControl.Multiline = true;
@@ -540,6 +551,38 @@
             this.linkTextBox.TabIndex = 9;
             this.linkTextBox.Leave += new System.EventHandler(this.linkTextBox_Leave);
             // 
+            // designPropertiesTabControl
+            // 
+            this.designPropertiesTabControl.Controls.Add(this.fontSizeLabel);
+            this.designPropertiesTabControl.Controls.Add(this.fontSizeTrackBar);
+            this.designPropertiesTabControl.Location = new System.Drawing.Point(4, 26);
+            this.designPropertiesTabControl.Name = "designPropertiesTabControl";
+            this.designPropertiesTabControl.Size = new System.Drawing.Size(817, 380);
+            this.designPropertiesTabControl.TabIndex = 2;
+            this.designPropertiesTabControl.Text = "Параметры дизайна";
+            this.designPropertiesTabControl.UseVisualStyleBackColor = true;
+            // 
+            // fontSizeLabel
+            // 
+            this.fontSizeLabel.Location = new System.Drawing.Point(5, 10);
+            this.fontSizeLabel.Name = "fontSizeLabel";
+            this.fontSizeLabel.Size = new System.Drawing.Size(110, 45);
+            this.fontSizeLabel.TabIndex = 13;
+            this.fontSizeLabel.Text = "Размер шрифта %";
+            this.fontSizeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // fontSizeTrackBar
+            // 
+            this.fontSizeTrackBar.LargeChange = 10;
+            this.fontSizeTrackBar.Location = new System.Drawing.Point(110, 10);
+            this.fontSizeTrackBar.Maximum = 300;
+            this.fontSizeTrackBar.Minimum = 10;
+            this.fontSizeTrackBar.Name = "fontSizeTrackBar";
+            this.fontSizeTrackBar.Size = new System.Drawing.Size(245, 45);
+            this.fontSizeTrackBar.TabIndex = 12;
+            this.fontSizeTrackBar.Value = 100;
+            this.fontSizeTrackBar.Leave += new System.EventHandler(this.fontSizeTrackBar_Leave);
+            // 
             // saveButton
             // 
             this.saveButton.Location = new System.Drawing.Point(745, 420);
@@ -579,9 +622,12 @@
             // 
             // serviceStepsControl
             // 
+            this.serviceStepsControl.CurrentUser = null;
             this.serviceStepsControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serviceStepsControl.Location = new System.Drawing.Point(3, 3);
             this.serviceStepsControl.Name = "serviceStepsControl";
+            this.serviceStepsControl.ServerService = null;
+            this.serviceStepsControl.Service = null;
             this.serviceStepsControl.Size = new System.Drawing.Size(830, 450);
             this.serviceStepsControl.TabIndex = 0;
             // 
@@ -655,9 +701,11 @@
             // 
             // weekdayScheduleControl
             // 
+            this.weekdayScheduleControl.CurrentUser = null;
             this.weekdayScheduleControl.Location = new System.Drawing.Point(5, 45);
             this.weekdayScheduleControl.Name = "weekdayScheduleControl";
             this.weekdayScheduleControl.Schedule = null;
+            this.weekdayScheduleControl.ServerService = null;
             this.weekdayScheduleControl.Size = new System.Drawing.Size(790, 320);
             this.weekdayScheduleControl.TabIndex = 0;
             // 
@@ -750,6 +798,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.maxSubjectsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxEarlyDaysUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.priorityUpDown)).EndInit();
+            this.designPropertiesTabControl.ResumeLayout(false);
+            this.designPropertiesTabControl.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fontSizeTrackBar)).EndInit();
             this.serviceTabControl.ResumeLayout(false);
             this.stepsTabPage.ResumeLayout(false);
             this.weekdayScheduleTabPage.ResumeLayout(false);
@@ -821,6 +872,9 @@
         private UI.WinForms.EnumFlagsControl earlyRegistratorFlagsControl;
         private UI.WinForms.EnumFlagsControl liveRegistratorFlagsControl;
         private System.Windows.Forms.CheckBox isUseTypeCheckBox;
+        private System.Windows.Forms.TabPage designPropertiesTabControl;
+        private System.Windows.Forms.Label fontSizeLabel;
+        private System.Windows.Forms.TrackBar fontSizeTrackBar;
 
     }
 }

@@ -19,7 +19,7 @@ namespace Queue.UI.WinForms
         public User CurrentUser { get; set; }
 
         [Dependency]
-        public ClientService<IServerTcpService> ServerService { get; set; }
+        public ServerService<IServerTcpService> ServerService { get; set; }
 
         #endregion dependency
 

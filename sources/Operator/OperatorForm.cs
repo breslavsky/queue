@@ -38,19 +38,25 @@ namespace Queue.Operator
         public QueueOperator CurrentOperator { get; set; }
 
         [Dependency]
-        public ClientService<IHubQualityTcpService> HubQualityService { get; set; }
+        public HubService<IHubQualityTcpService> HubQualityService { get; set; }
 
         [Dependency]
         public HubQualitySettings HubQualitySettings { get; set; }
 
         [Dependency]
-        public ClientService<IServerTcpService> ServerService { get; set; }
+        public ServerService<IServerTcpService> ServerService { get; set; }
 
         #endregion dependency
 
         #region fields
 
         private const int PingInterval = 10000;
+
+        private const int NoClient = 0;
+        private const int ClientWaiting = 1;
+        private const int ClientCalling = 2;
+        private const int ClientRendering = 3;
+
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly Timer pingQualityTimer;
@@ -63,9 +69,11 @@ namespace Queue.Operator
         private BindingList<ClientRequestAdditionalService> additionalServices;
         private ClientRequestPlan currentClientRequestPlan;
         private BindingList<ClientRequestParameter> parameters;
-        private Channel<IHubQualityTcpService> pingQualityChannel;
         private Channel<IServerTcpService> pingServerChannel;
+        private Channel<IHubQualityTcpService> pingQualityChannel;
         private byte qualityPanelDeviceId;
+        private bool qualityPanelEnabled;
+        private byte step;
 
         #endregion fields
 
@@ -146,15 +154,15 @@ namespace Queue.Operator
                             {
                                 case ClientRequestState.Waiting:
                                 case ClientRequestState.Postponed:
-                                    Step = 1;
+                                    Step = ClientWaiting;
                                     break;
 
                                 case ClientRequestState.Calling:
-                                    Step = 2;
+                                    Step = ClientCalling;
                                     break;
 
                                 case ClientRequestState.Rendering:
-                                    Step = 3;
+                                    Step = ClientRendering;
                                     break;
                             }
                         }
@@ -222,10 +230,17 @@ namespace Queue.Operator
             }
         }
 
-        private int Step
+        private byte Step
         {
             set
             {
+                if (value == step)
+                {
+                    return;
+                }
+
+                step = value;
+
                 step1Panel.Visible =
                     step2Panel.Visible =
                     step3Panel.Visible =
@@ -235,27 +250,54 @@ namespace Queue.Operator
                     serviceStepControl.Enabled =
                     clientRequestTabControl.Enabled = false;
 
-                switch (value)
+                if (HubQualitySettings.Enabled && qualityPanelEnabled)
                 {
-                    case 0:
+                    Invoke(new MethodInvoker(async () =>
+                    {
+                        using (var channel = qualityChannelManager.CreateChannel())
+                        {
+                            try
+                            {
+                                await taskPool.AddTask(channel.Service.Disable(qualityPanelDeviceId));
+                                qualityPanelEnabled = false;
+                            }
+                            catch (OperationCanceledException) { }
+                            catch (CommunicationObjectAbortedException) { }
+                            catch (ObjectDisposedException) { }
+                            catch (InvalidOperationException) { }
+                            catch (FaultException exception)
+                            {
+                                logger.Warn(exception.Reason);
+                            }
+                            catch (Exception ex)
+                            {
+                                logger.Error(ex);
+                            }
+                        }
+                    }));
+                }
+
+                switch (step)
+                {
+                    case NoClient:
                         break;
 
-                    case 1:
+                    case ClientWaiting:
                         step1Panel.Visible = true;
                         break;
 
-                    case 2:
+                    case ClientCalling:
                         step2Panel.Visible = true;
                         break;
 
-                    case 3:
+                    case ClientRendering:
                         step3Panel.Visible =
                         subjectsPanel.Enabled =
                             serviceTypeControl.Enabled =
                             serviceChangeLink.Enabled =
                             clientRequestTabControl.Enabled = true;
 
-                        if (HubQualitySettings.Enabled)
+                        if (HubQualitySettings.Enabled && !qualityPanelEnabled)
                         {
                             Invoke(new MethodInvoker(async () =>
                             {
@@ -264,14 +306,15 @@ namespace Queue.Operator
                                     try
                                     {
                                         await taskPool.AddTask(channel.Service.Enable(qualityPanelDeviceId));
+                                        qualityPanelEnabled = true;
                                     }
                                     catch (OperationCanceledException) { }
                                     catch (CommunicationObjectAbortedException) { }
                                     catch (ObjectDisposedException) { }
                                     catch (InvalidOperationException) { }
-                                    catch (FaultException ex)
+                                    catch (FaultException exception)
                                     {
-                                        logger.Warn(ex.Reason);
+                                        logger.Warn(exception.Reason);
                                     }
                                     catch (Exception ex)
                                     {
@@ -293,22 +336,20 @@ namespace Queue.Operator
         {
             InitializeComponent();
 
-            serverChannelManager = ServerService.CreateChannelManager(CurrentOperator.SessionId);
-            qualityChannelManager = HubQualityService.CreateChannelManager(CurrentOperator.SessionId);
-            taskPool = new TaskPool();
-            taskPool.OnAddTask += taskPool_OnAddTask;
-            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-
-            serviceTypeControl.Initialize<ServiceType>();
-
             serverCallback = new ServerCallback();
             serverCallback.OnCurrentClientRequestPlanUpdated += serverCallback_OnCurrentClientRequestPlanUpdated;
             serverCallback.OnOperatorPlanMetricsUpdated += serverCallback_OnOperatorPlanMetricsUpdated;
 
+            serverChannelManager = ServerService.CreateChannelManager(CurrentOperator.SessionId);
+
             qualityCallback = new HubQualityCallback();
             qualityCallback.OnAccepted += qualityCallback_OnAccepted;
 
-            pingServerChannel = serverChannelManager.CreateChannel(serverCallback);
+            qualityChannelManager = HubQualityService.CreateChannelManager();
+
+            taskPool = new TaskPool();
+            taskPool.OnAddTask += taskPool_OnAddTask;
+            taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
             pingServerTimer = new Timer();
             pingServerTimer.Elapsed += pingServerTimer_Elapsed;
@@ -344,6 +385,15 @@ namespace Queue.Operator
                     pingQualityTimer.Dispose();
                 }
 
+                if (serverChannelManager != null)
+                {
+                    serverChannelManager.Dispose();
+                }
+                if (qualityChannelManager != null)
+                {
+                    qualityChannelManager.Dispose();
+                }
+
                 #endregion timers
 
                 #region channels
@@ -375,12 +425,18 @@ namespace Queue.Operator
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             pingServerTimer.Stop();
-            taskPool.Cancel();
+            pingQualityTimer.Dispose();
+
             pingServerChannel.Close();
+            pingQualityChannel.Close();
+
+            taskPool.Cancel();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            serviceTypeControl.Initialize<ServiceType>();
+
             Step = 0;
 
             foreach (Control control in stepPanel.Controls)
@@ -402,50 +458,6 @@ namespace Queue.Operator
 
         #region timers
 
-        private void pingQualityTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            pingQualityTimer.Stop();
-            if (pingQualityTimer.Interval < PingInterval)
-            {
-                pingQualityTimer.Interval = PingInterval;
-            }
-
-            Invoke((MethodInvoker)async delegate
-            {
-                try
-                {
-                    qualityStateLabel.Image = Icons.connecting16x16;
-
-                    if (!pingQualityChannel.IsConnected)
-                    {
-                        pingQualityChannel.Service.Subscribe(HubQualityServiceEventType.RatingAccepted,
-                            new HubQualityServiceSubscribtionArgs { DeviceId = qualityPanelDeviceId });
-                    }
-
-                    await taskPool.AddTask(pingQualityChannel.Service.Heartbeat());
-
-                    qualityStateLabel.Image = Icons.online16x16;
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (Exception exception)
-                {
-                    logger.Warn(exception);
-
-                    qualityStateLabel.Image = Icons.offline16x16;
-
-                    pingQualityChannel.Dispose();
-                    pingQualityChannel = qualityChannelManager.CreateChannel(qualityCallback);
-                }
-                finally
-                {
-                    pingQualityTimer.Start();
-                }
-            });
-        }
-
         private void pingServerTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             pingServerTimer.Stop();
@@ -456,6 +468,11 @@ namespace Queue.Operator
 
             Invoke((MethodInvoker)async delegate
             {
+                if (pingServerChannel == null)
+                {
+                    pingServerChannel = serverChannelManager.CreateChannel(serverCallback);
+                }
+
                 try
                 {
                     serverStateLabel.Image = Icons.connecting16x16;
@@ -488,11 +505,60 @@ namespace Queue.Operator
                     serverStateLabel.Image = Icons.offline16x16;
 
                     pingServerChannel.Dispose();
-                    pingServerChannel = serverChannelManager.CreateChannel(serverCallback);
+                    pingServerChannel = null;
                 }
                 finally
                 {
                     pingServerTimer.Start();
+                }
+            });
+        }
+
+        private void pingQualityTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            pingQualityTimer.Stop();
+            if (pingQualityTimer.Interval < PingInterval)
+            {
+                pingQualityTimer.Interval = PingInterval;
+            }
+
+            Invoke((MethodInvoker)async delegate
+            {
+                if (pingQualityChannel == null)
+                {
+                    pingQualityChannel = qualityChannelManager.CreateChannel(qualityCallback);
+                }
+
+                try
+                {
+                    qualityStateLabel.Image = Icons.connecting16x16;
+
+                    if (!pingQualityChannel.IsConnected)
+                    {
+                        pingQualityChannel.Service.Subscribe(HubQualityServiceEventType.RatingAccepted,
+                            new HubQualityServiceSubscribtionArgs { DeviceId = qualityPanelDeviceId });
+                    }
+
+                    await taskPool.AddTask(pingQualityChannel.Service.Heartbeat());
+
+                    qualityStateLabel.Image = Icons.online16x16;
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (Exception exception)
+                {
+                    logger.Warn(exception);
+
+                    qualityStateLabel.Image = Icons.offline16x16;
+
+                    pingQualityChannel.Dispose();
+                    pingQualityChannel = null;
+                }
+                finally
+                {
+                    pingQualityTimer.Start();
                 }
             });
         }
@@ -655,7 +721,7 @@ namespace Queue.Operator
         {
             if (currentClientRequestPlan != null)
             {
-                ClientRequest clientRequest = currentClientRequestPlan.ClientRequest;
+                var clientRequest = currentClientRequestPlan.ClientRequest;
                 clientRequest.ServiceStep = serviceStepControl.Selected<ServiceStep>();
 
                 using (var channel = serverChannelManager.CreateChannel())

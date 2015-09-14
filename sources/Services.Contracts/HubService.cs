@@ -5,15 +5,15 @@ using System.ServiceModel;
 
 namespace Queue.Services.Contracts
 {
-    public class ClientService<T> : IDisposable
+    public class HubService<T> : IDisposable
     {
         public DuplexChannelBuilder<T> ChannelBuilder { get; set; }
 
-        public ClientService(string endpoint, string path = "")
+        public HubService(string endpoint, string path = "")
         {
             var builder = new UriBuilder(endpoint);
             builder.Path = path;
-            ChannelBuilder = new DuplexChannelBuilder<T>(new ServerCallback(),
+            ChannelBuilder = new DuplexChannelBuilder<T>(new HubQualityCallback(),
                 Bindings.NetTcpBinding, new EndpointAddress(builder.Uri));
         }
 

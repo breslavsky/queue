@@ -16,15 +16,14 @@ namespace Queue.Operator
 {
     internal static class Program
     {
-        private const string AppName = "Queue.Operator";
         private static AppOptions options;
         private static UnityContainer container;
         private static ConfigurationManager configuration;
         private static HubQualitySettings hubQualitySettings;
         private static LoginSettings loginSettings;
         private static LoginFormSettings loginFormSettings;
-        private static ClientService<IServerTcpService> serverService;
-        private static ClientService<IHubQualityTcpService> hubQualityService;
+        private static ServerService<IServerTcpService> serverService;
+        private static HubService<IHubQualityTcpService> hubQualityService;
         private static QueueOperator currentUser;
 
         [STAThread]
@@ -34,26 +33,29 @@ namespace Queue.Operator
             Application.SetCompatibleTextRenderingDefault(false);
 
             container = new UnityContainer();
+            container.RegisterInstance(container);
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
-            configuration = new ConfigurationManager(AppName, SpecialFolder.ApplicationData);
+            configuration = new ConfigurationManager(Product.Operator.AppName, SpecialFolder.ApplicationData);
             container.RegisterInstance(configuration);
+
+            loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
+            container.RegisterInstance(loginSettings);
+
+            loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
+            container.RegisterInstance(loginFormSettings);
 
             hubQualitySettings = configuration.GetSection<HubQualitySettings>(HubQualitySettings.SectionKey);
             container.RegisterInstance(hubQualitySettings);
 
-            hubQualityService = new ClientService<IHubQualityTcpService>(hubQualitySettings.Endpoint, HubServicesPaths.Quality);
+            hubQualityService = new HubService<IHubQualityTcpService>(hubQualitySettings.Endpoint, HubServicesPaths.Quality);
             container.RegisterInstance(hubQualityService);
 
-            loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
-            loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
-
-            RegisterContainer();
             ParseOptions();
 
             if (options.AutoLogin)
             {
-                serverService = new ClientService<IServerTcpService>(options.Endpoint, ServerServicesPaths.Server);
+                serverService = new ServerService<IServerTcpService>(options.Endpoint, ServerServicesPaths.Server);
 
                 var channelManager = serverService.CreateChannelManager();
                 using (var channel = channelManager.CreateChannel())
@@ -74,13 +76,15 @@ namespace Queue.Operator
                     var loginForm = new LoginForm(UserRole.Operator);
                     if (loginForm.ShowDialog() == DialogResult.OK)
                     {
+                        configuration.Save();
+
                         currentUser = loginForm.CurrentUser as QueueOperator;
                         container.RegisterInstance<QueueOperator>(currentUser);
 
                         loginForm.Dispose();
 
-                        serverService = new ClientService<IServerTcpService>(loginSettings.Endpoint, ServerServicesPaths.Server);
-                        container.RegisterInstance<ClientService<IServerTcpService>>(serverService);
+                        serverService = new ServerService<IServerTcpService>(loginSettings.Endpoint, ServerServicesPaths.Server);
+                        container.RegisterInstance<ServerService<IServerTcpService>>(serverService);
 
                         var mainForm = new OperatorForm();
                         Application.Run(mainForm);
@@ -106,15 +110,6 @@ namespace Queue.Operator
         {
             options = new AppOptions();
             CommandLine.Parser.Default.ParseArguments(Environment.GetCommandLineArgs(), options);
-        }
-
-        private static void RegisterContainer()
-        {
-            container.RegisterInstance(configuration);
-            container.RegisterInstance(loginSettings);
-            container.RegisterInstance(loginFormSettings);
-
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 
         private static void ResetSettings()

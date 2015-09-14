@@ -2,7 +2,7 @@
 
 namespace Queue.Services.Common
 {
-    public class ServerCallback : IServerCallback
+    public class ServerCallback : ICallback, IServerCallback
     {
         public event ServerEventHandler OnCallClient = delegate { };
 

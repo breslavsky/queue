@@ -24,7 +24,7 @@ namespace Queue.Administrator
         public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
-        public ClientService<IServerTcpService> ServerService { get; set; }
+        public ServerService<IServerTcpService> ServerService { get; set; }
 
         [Dependency]
         public LoginSettings LoginSettings { get; set; }

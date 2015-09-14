@@ -55,7 +55,7 @@ namespace Queue.Reports.ClientRequestReport
 
         private ReportData GetData()
         {
-            using (ISession session = SessionProvider.OpenSession())
+            using (var session = SessionProvider.OpenSession())
             {
                 ClientRequest clientRequest = session.Get<ClientRequest>(clientRequestId);
                 if (clientRequest == null)

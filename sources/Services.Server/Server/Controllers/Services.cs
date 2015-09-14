@@ -156,6 +156,7 @@ namespace Queue.Services.Server
                     service.IsUseType = source.IsUseType;
                     service.LiveRegistrator = source.LiveRegistrator;
                     service.EarlyRegistrator = source.EarlyRegistrator;
+                    service.FontSize = source.FontSize;
 
                     if (source.ServiceGroup != null)
                     {

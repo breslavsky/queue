@@ -159,7 +159,7 @@ namespace Queue.Reports.ServiceRatingReport
 
         protected ServiceGroupDto GetServicesHierarchy()
         {
-            using (ISession session = SessionProvider.OpenSession())
+            using (var session = SessionProvider.OpenSession())
             {
                 IList<ServiceDto> rootServices = new List<ServiceDto>();
                 IList<ServiceGroupDto> rootGroups = new List<ServiceGroupDto>();

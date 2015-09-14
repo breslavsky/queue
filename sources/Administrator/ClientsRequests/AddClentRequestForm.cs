@@ -29,7 +29,7 @@ namespace Queue.Administrator
         public AdministratorSettings Settings { get; set; }
 
         [Dependency]
-        public ClientService<IServerTcpService> ServerService { get; set; }
+        public ServerService<IServerTcpService> ServerService { get; set; }
 
         [Dependency]
         public QueueAdministrator CurrentUser { get; set; }

@@ -1,6 +1,7 @@
 ﻿using Junte.Configuration;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using Queue.Common;
 using System.Windows;
 using SpecialFolder = System.Environment.SpecialFolder;
 
@@ -8,8 +9,6 @@ namespace Queue.Display
 {
     public partial class App : Application
     {
-        private const string AppName = "Queue.Display";
-
         public App()
             : base()
         {
@@ -27,7 +26,7 @@ namespace Queue.Display
         private void RegisterTypes(IUnityContainer container)
         {
             container.RegisterInstance(container);
-            container.RegisterInstance(new ConfigurationManager(AppName, SpecialFolder.ApplicationData));
+            container.RegisterInstance(new ConfigurationManager(Product.Display.AppName, SpecialFolder.ApplicationData));
         }
     }
 }

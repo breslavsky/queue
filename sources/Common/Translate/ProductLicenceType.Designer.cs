@@ -22,14 +22,14 @@ namespace Queue.Common.Translate {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Language_short {
+    public class ProductLicenceType {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Language_short() {
+        internal ProductLicenceType() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Queue.Common.Translate {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Common.Translate.Language_short", typeof(Language_short).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Common.Translate.ProductLicenceType", typeof(ProductLicenceType).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,20 +61,20 @@ namespace Queue.Common.Translate {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на анг.
+        ///   Ищет локализованную строку, похожую на Commercial.
         /// </summary>
-        public static string en_US {
+        public static string Commercial {
             get {
-                return ResourceManager.GetString("en_US", resourceCulture);
+                return ResourceManager.GetString("Commercial", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на рус.
+        ///   Ищет локализованную строку, похожую на Non commercial.
         /// </summary>
-        public static string ru_RU {
+        public static string NonCommercial {
             get {
-                return ResourceManager.GetString("ru_RU", resourceCulture);
+                return ResourceManager.GetString("NonCommercial", resourceCulture);
             }
         }
     }

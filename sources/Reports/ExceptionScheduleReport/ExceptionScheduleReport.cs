@@ -29,7 +29,7 @@ namespace Queue.Reports.ExceptionScheduleReport
 
         private DefaultExceptionScheduleReportData[] GetDefaultExceptionScheduleData()
         {
-            using (ISession session = SessionProvider.OpenSession())
+            using (var session = SessionProvider.OpenSession())
             {
                 return session.QueryOver<DefaultExceptionSchedule>()
                     .Where(s => s.ScheduleDate >= fromDate)
@@ -42,7 +42,7 @@ namespace Queue.Reports.ExceptionScheduleReport
 
         private ServiceExceptionScheduleReportData[] GetServiceExceptionScheduleData()
         {
-            using (ISession session = SessionProvider.OpenSession())
+            using (var session = SessionProvider.OpenSession())
             {
                 return session.QueryOver<ServiceExceptionSchedule>()
                     .Where(s => s.ScheduleDate >= fromDate)

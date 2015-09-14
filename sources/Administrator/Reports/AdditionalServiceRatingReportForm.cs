@@ -25,7 +25,7 @@ namespace Queue.Administrator.Reports
         public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
-        public ClientService<IServerTcpService> ServerService { get; set; }
+        public ServerService<IServerTcpService> ServerService { get; set; }
 
         #endregion dependency
 

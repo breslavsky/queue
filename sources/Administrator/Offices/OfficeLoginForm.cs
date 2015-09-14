@@ -22,7 +22,7 @@ namespace Queue.Administrator
         public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
-        public ClientService<IServerTcpService> ServerService { get; set; }
+        public ServerService<IServerTcpService> ServerService { get; set; }
 
         #endregion dependency
 
@@ -92,7 +92,7 @@ namespace Queue.Administrator
 
         private async void loginButton_Click(object sender, EventArgs e)
         {
-            using (var serverService = new ClientService<IServerService>(Settings.Endpoint))
+            using (var serverService = new ServerService<IServerService>(Settings.Endpoint))
             using (var channelManager = serverService.CreateChannelManager())
             using (var channel = channelManager.CreateChannel())
             {

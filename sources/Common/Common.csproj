@@ -62,6 +62,7 @@
     <Compile Include="ServerTime.cs" />
     <Compile Include="TicksInterval.cs" />
     <Compile Include="Language.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="Translate\Language.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -72,22 +73,27 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Language_short.resx</DependentUpon>
     </Compile>
-    <Compile Include="Product.cs" />
+    <Compile Include="Translate\ProductLicenceType.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductLicenceType.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Translate\Language.en-US.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>Language.resx</DependentUpon>
+    <EmbeddedResource Include="Translate\ProductLicenceType.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductLicenceType.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Translate\Language_short.en-US.resx" />
+    <EmbeddedResource Include="Translate\Language_short.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Language_short.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translate\Language.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Language.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Translate\Language_short.en-US.resx" />
-    <EmbeddedResource Include="Translate\Language_short.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Language_short.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Translate\ProductLicenceType.en-US.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

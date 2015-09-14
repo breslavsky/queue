@@ -55,7 +55,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
                 throw new FaultException("Начальная дата не может быть больше чем конечная");
             }
 
-            using (ISession session = SessionProvider.OpenSession())
+            using (var session = SessionProvider.OpenSession())
             {
                 ClientRequestAdditionalService service = null;
                 ClientRequest request = null;

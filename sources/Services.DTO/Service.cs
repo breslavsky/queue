@@ -66,6 +66,9 @@ namespace Queue.Services.DTO
         public ClientRequestRegistrator EarlyRegistrator { get; set; }
 
         [DataMember]
+        public float FontSize { get; set; }
+
+        [DataMember]
         public long SortId { get; set; }
 
         [DataMember]

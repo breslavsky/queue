@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Queue.Common.Translate {
+namespace Queue.Model.Common.Translate {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Queue.Common.Translate {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Language_short {
+    public class OperatorInterruptionType {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Language_short() {
+        internal OperatorInterruptionType() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Queue.Common.Translate {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Common.Translate.Language_short", typeof(Language_short).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Queue.Model.Common.Translate.OperatorInterruptionType", typeof(OperatorInterruptionType).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,20 +61,20 @@ namespace Queue.Common.Translate {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на анг.
+        ///   Ищет локализованную строку, похожую на Целевая дата.
         /// </summary>
-        public static string en_US {
+        public static string TargetDate {
             get {
-                return ResourceManager.GetString("en_US", resourceCulture);
+                return ResourceManager.GetString("TargetDate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на рус.
+        ///   Ищет локализованную строку, похожую на День недели.
         /// </summary>
-        public static string ru_RU {
+        public static string Weekday {
             get {
-                return ResourceManager.GetString("ru_RU", resourceCulture);
+                return ResourceManager.GetString("Weekday", resourceCulture);
             }
         }
     }

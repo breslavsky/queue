@@ -20,6 +20,7 @@
 
         public struct Database
         {
+            public const string AppName = "Queue.Database";
             public const string Name = "Queue Database";
             public const string Description = "";
             public const string Build = "6";
@@ -29,6 +30,7 @@
 
         public struct Simulator
         {
+            public const string AppName = "Queue.Simulator";
             public const string Name = "Queue Simulator";
             public const string Description = "";
             public const string Build = "1";
@@ -38,6 +40,7 @@
 
         public struct Server
         {
+            public const string AppName = "Queue.Server";
             public const string Name = "Queue Server";
             public const string Description = "";
             public const string Build = "15";
@@ -47,6 +50,7 @@
 
         public struct Portal
         {
+            public const string AppName = "Queue.Portal";
             public const string Name = "Queue Portal";
             public const string Description = "";
             public const string Build = "7";
@@ -56,6 +60,7 @@
 
         public struct Metric
         {
+            public const string AppName = "Queue.Metric";
             public const string Name = "Queue Metric";
             public const string Description = "";
             public const string Build = "5";
@@ -65,6 +70,7 @@
 
         public struct Media
         {
+            public const string AppName = "Queue.Media";
             public const string Name = "Queue Media";
             public const string Description = "";
             public const string Build = "5";
@@ -74,6 +80,7 @@
 
         public struct Hub
         {
+            public const string AppName = "Queue.Hub";
             public const string Name = "Queue Hub";
             public const string Description = "";
             public const string Build = "3";
@@ -83,6 +90,7 @@
 
         public struct Administrator
         {
+            public const string AppName = "Queue.Administrator";
             public const string Name = "Queue Administrator";
             public const string Description = "";
             public const string Build = "14";
@@ -92,6 +100,7 @@
 
         public struct Operator
         {
+            public const string AppName = "Queue.Operator";
             public const string Name = "Queue Operator";
             public const string Description = "";
             public const string Build = "6";
@@ -101,6 +110,7 @@
 
         public struct Terminal
         {
+            public const string AppName = "Queue.Terminal";
             public const string Name = "Queue Terminal";
             public const string Description = "";
             public const string Build = "8";
@@ -110,6 +120,7 @@
 
         public struct Notification
         {
+            public const string AppName = "Queue.Notification";
             public const string Name = "Queue Notification";
             public const string Description = "";
             public const string Build = "1";
@@ -119,6 +130,7 @@
 
         public struct Display
         {
+            public const string AppName = "Queue.Display";
             public const string Name = "Queue Display";
             public const string Description = "";
             public const string Build = "1";
