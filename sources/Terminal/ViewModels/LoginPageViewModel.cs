@@ -164,7 +164,7 @@ namespace Queue.Terminal.ViewModels
             IsRemember = loginFormSettings.IsRemember;
             SelectedLanguage = loginFormSettings.Language;
 
-            if (!string.IsNullOrWhiteSpace(loginFormSettings.Accent))
+            if (!String.IsNullOrWhiteSpace(loginFormSettings.Accent))
             {
                 SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == loginFormSettings.Accent);
             }
@@ -177,9 +177,9 @@ namespace Queue.Terminal.ViewModels
             ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
             channelManager = new ChannelManager<IServerTcpService>(ChannelBuilder);
 
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (var channel = channelManager.CreateChannel())
             {
-                LoadingControl loading = owner.ShowLoading();
+                var loading = owner.ShowLoading();
                 try
                 {
                     Users = (await taskPool.AddTask(channel.Service.GetUserLinks(userRole))).Select(u => new UserComboBoxItem()
@@ -231,9 +231,9 @@ namespace Queue.Terminal.ViewModels
                 return;
             }
 
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (var channel = channelManager.CreateChannel())
             {
-                LoadingControl loading = owner.ShowLoading();
+                var loading = owner.ShowLoading();
 
                 try
                 {

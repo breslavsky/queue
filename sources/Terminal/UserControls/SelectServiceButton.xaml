@@ -22,15 +22,14 @@
             </Border>
 
             <TextBlock Margin="45,0,0,0"
-                           VerticalAlignment="Top"
-                           Loaded="TextBlock_Loaded"
-                           Text="{Binding Name}"
-                           TextWrapping="Wrap">
+                       VerticalAlignment="Top"
+                       Text="{Binding Name}"
+                       TextWrapping="Wrap">
                 <TextBlock.LayoutTransform>
-                    <ScaleTransform
-                    CenterX="0" CenterY="0"
-                    ScaleX="{Binding FontSize}"
-                    ScaleY="{Binding FontSize}" />
+                    <ScaleTransform CenterX="0"
+                                    CenterY="0"
+                                    ScaleX="{Binding FontSize}"
+                                    ScaleY="{Binding FontSize}" />
                 </TextBlock.LayoutTransform>
             </TextBlock>
         </Grid>

@@ -25,9 +25,11 @@ namespace Queue.Notification.Views
         {
             InitializeComponent();
 
-            ServiceLocator.Current.GetInstance<UnityContainer>().RegisterInstance<IMainWindow>(this);
+            var unityContainer = ServiceLocator.Current.GetInstance<UnityContainer>();
 
-            model = new HomePageViewModel();
+            unityContainer.RegisterInstance<IMainWindow>(this);
+
+            model = unityContainer.Resolve<HomePageViewModel>();
             model.RequestUpdated += model_CurrentClientRequestPlanUpdated;
             model.RequestsLengthChanged += model_ClientRequestsLengthChanged;
 
@@ -39,7 +41,7 @@ namespace Queue.Notification.Views
             Mouse.OverrideCursor = Cursors.None;
 
             tickerControl.Initialize(this);
-            this.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
+            Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
             Mouse.OverrideCursor = Cursors.None;
 
             model.Initialize(CreateVLCControl());
@@ -61,7 +63,7 @@ namespace Queue.Notification.Views
             {
                 InitVlcContext();
 
-                VlcControl vlcControl = new VlcControl()
+                var vlcControl = new VlcControl()
                 {
                     PlaybackMode = PlaybackModes.Loop
                 };
@@ -69,7 +71,7 @@ namespace Queue.Notification.Views
                 vlcControl.AudioProperties.IsMute = true;
                 videoGrid.Children.Add(vlcControl);
 
-                Image vlcImage = new Image();
+                var vlcImage = new Image();
                 vlcImage.SetBinding(Image.SourceProperty, new Binding("VideoSource")
                 {
                     Source = vlcControl
@@ -91,7 +93,6 @@ namespace Queue.Notification.Views
             VlcContext.LibVlcPluginsPath = CommonStrings.PLUGINS_PATH_DEFAULT_VALUE_AMD64;
             VlcContext.StartupOptions.IgnoreConfig = true;
             VlcContext.StartupOptions.AddOption("--no-video-title-show");
-
             VlcContext.StartupOptions.LogOptions.Verbosity = VlcLogVerbosities.Standard;
             VlcContext.Initialize();
         }

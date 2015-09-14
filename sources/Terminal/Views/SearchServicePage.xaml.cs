@@ -72,7 +72,7 @@ namespace Queue.Terminal.Views
 
         private void KeyboardVisibility(bool value)
         {
-            Visibility v = value ? Visibility.Visible : Visibility.Collapsed;
+            var v = value ? Visibility.Visible : Visibility.Collapsed;
             if (v != keyboard.Visibility)
             {
                 keyboard.Visibility = v;
@@ -81,7 +81,7 @@ namespace Queue.Terminal.Views
 
         private void ResultsVisibility(bool value)
         {
-            Visibility v = value ? Visibility.Visible : Visibility.Collapsed;
+            var v = value ? Visibility.Visible : Visibility.Collapsed;
             if (v != searchResults.Visibility)
             {
                 searchResults.Visibility = v;

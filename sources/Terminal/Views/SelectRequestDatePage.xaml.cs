@@ -1,4 +1,6 @@
-﻿using Queue.Common;
+﻿using Microsoft.Practices.Unity;
+using Queue.Common;
+using Queue.Services.DTO;
 using Queue.Terminal.ViewModels;
 using System;
 using System.Windows;
@@ -10,6 +12,9 @@ namespace Queue.Terminal.Views
 {
     public partial class SelectRequestDatePage : TerminalPage
     {
+        [Dependency]
+        public TerminalConfig TerminalConfig { get; set; }
+
         protected override Type ModelType { get { return typeof(SelectRequestDatePageViewModel); } }
 
         public SelectRequestDatePage()
@@ -29,19 +34,12 @@ namespace Queue.Terminal.Views
         private void TerminalPage_Loaded(object sender, RoutedEventArgs e)
         {
             earlyRequestDateCalendar.BlackoutDates.Clear();
-            DateTime end = ServerDateTime.Today;
-            if (terminalConfig.CurrentDayRecording)
+            var end = ServerDateTime.Today;
+            if (TerminalConfig.CurrentDayRecording)
             {
                 end = end.AddDays(-1);
             }
             earlyRequestDateCalendar.BlackoutDates.Add(new CalendarDateRange(DateTime.MinValue, end));
-
-            (DataContext as SelectRequestDatePageViewModel).Initialize();
-        }
-
-        private void TerminalPage_Unloaded(object sender, RoutedEventArgs e)
-        {
-            (DataContext as SelectRequestDatePageViewModel).Unloaded();
         }
     }
 }

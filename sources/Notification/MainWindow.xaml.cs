@@ -44,7 +44,7 @@ namespace Queue.Notification
 
         private LoginPage CreateConnectPage()
         {
-            LoginPage result = new LoginPage();
+            var result = new LoginPage();
 
             result.Model.OnConnected += OnConnected;
             return result;
@@ -58,7 +58,7 @@ namespace Queue.Notification
 
             Application.Current.MainWindow.KeyDown += MainWindow_KeyDown;
 
-            WinForms.Screen screen = WinForms.Screen.AllScreens.FirstOrDefault(s => !s.Primary);
+            var screen = WinForms.Screen.AllScreens.FirstOrDefault(s => !s.Primary);
             if (screen != null)
             {
                 Left = screen.WorkingArea.Left;

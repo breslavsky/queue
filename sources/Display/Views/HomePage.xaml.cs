@@ -1,5 +1,4 @@
-﻿using Queue.Display.ViewModels;
-using Queue.UI.WPF;
+﻿using Queue.UI.WPF;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,19 +18,12 @@ namespace Queue.Display.Views
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             Mouse.OverrideCursor = Cursors.None;
-
-            (DataContext as HomePageViewModel).Initialize();
-        }
-
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            (DataContext as HomePageViewModel).Dispose();
         }
 
         private void OnCommentTextBlockLoaded(object sender, RoutedEventArgs e)
         {
-            TextBlock tb = sender as TextBlock;
-            FrameworkElement parent = (FrameworkElement)tb.Parent;
+            var tb = sender as TextBlock;
+            var parent = tb.Parent as FrameworkElement;
 
             while (tb.ActualHeight > parent.ActualHeight & tb.FontSize > MinFontSize)
             {

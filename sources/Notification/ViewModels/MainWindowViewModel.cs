@@ -33,14 +33,14 @@ namespace Queue.Notification.ViewModels
 
         private void UpdateTitle()
         {
-            string appName = (string)LocalizeDictionary.Instance.GetLocalizedObject(typeof(MainWindowViewModel).Assembly.FullName,
+            var appName = (string)LocalizeDictionary.Instance.GetLocalizedObject(typeof(MainWindowViewModel).Assembly.FullName,
                                                                  "Strings",
                                                                  "AppName",
                                                                  LocalizeDictionary.Instance.Culture);
 
-            Version version = Assembly.GetEntryAssembly().GetName().Version;
+            var version = Assembly.GetEntryAssembly().GetName().Version;
 
-            Title = string.Format("{0} ({1})", appName, version);
+            Title = String.Format("{0} ({1})", appName, version);
         }
     }
 }

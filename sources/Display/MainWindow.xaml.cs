@@ -13,7 +13,6 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using WinForms = System.Windows.Forms;
 
 namespace Queue.Display
 {
@@ -37,7 +36,7 @@ namespace Queue.Display
 
         private LoginPage CreateLoginPage()
         {
-            LoginPage result = new LoginPage();
+            var result = new LoginPage();
             result.Model.OnLogined += OnLogined;
 
             return result;
@@ -54,7 +53,7 @@ namespace Queue.Display
 
             Application.Current.MainWindow.KeyDown += OnKeyDown;
 
-            WinForms.Screen screen = System.Windows.Forms.Screen.AllScreens.FirstOrDefault(s => !s.Primary);
+            var screen = System.Windows.Forms.Screen.AllScreens.FirstOrDefault(s => !s.Primary);
             if (screen != null)
             {
                 Left = screen.WorkingArea.Left;

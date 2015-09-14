@@ -60,7 +60,7 @@ namespace Queue.Terminal
 
         private LoginPage CreateLoginPage()
         {
-            LoginPage result = new LoginPage(UserRole.Administrator);
+            var result = new LoginPage(UserRole.Administrator);
             result.Model.OnLogined += OnLogined;
 
             return result;
@@ -96,8 +96,8 @@ namespace Queue.Terminal
         {
             var container = ServiceLocator.Current.GetInstance<UnityContainer>();
 
-            taskPool = new TaskPool();
             container.RegisterInstance(loginPage.Model.ChannelBuilder);
+            taskPool = new TaskPool();
             container.RegisterInstance(taskPool);
 
             channelManager = new ChannelManager<IServerTcpService>(container.Resolve<DuplexChannelBuilder<IServerTcpService>>());
@@ -114,7 +114,7 @@ namespace Queue.Terminal
 
         private async Task LoadConfigs(IUnityContainer container)
         {
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (var channel = channelManager.CreateChannel())
             {
                 try
                 {

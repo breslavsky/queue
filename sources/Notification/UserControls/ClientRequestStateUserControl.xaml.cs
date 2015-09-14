@@ -1,5 +1,6 @@
 ﻿using Junte.Translation;
 using Queue.Services.DTO;
+using System;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Drawing = System.Drawing;
@@ -19,7 +20,7 @@ namespace Queue.Notification.UserControls
             InitializeComponent();
 
             this.Workplace = request.Operator == null || request.Operator.Workplace == null ?
-                                                        string.Empty :
+                                                        String.Empty :
                                                         request.Operator.Workplace.ToString();
             this.State = Translater.Enum(request.State);
 

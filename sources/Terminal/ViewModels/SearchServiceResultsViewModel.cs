@@ -90,13 +90,13 @@ namespace Queue.Terminal.ViewModels
         private async void ShowResultPage(int pageNo)
         {
             HasPrev = pageNo > 0;
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (var channel = channelManager.CreateChannel())
             {
-                LoadingControl loading = screen.ShowLoading();
+                var loading = screen.ShowLoading();
 
                 try
                 {
-                    Service[] services = await channel.Service.FindServices(filter, pageNo * ResultsPerPage, ResultsPerPage);
+                    var services = await channel.Service.FindServices(filter, pageNo * ResultsPerPage, ResultsPerPage);
 
                     RenderServices(services);
                     HasNext = services.Length == ResultsPerPage;
@@ -133,9 +133,9 @@ namespace Queue.Terminal.ViewModels
             int row = 0;
             int col = 0;
 
-            foreach (Service service in services)
+            foreach (var service in services)
             {
-                SelectServiceButton button = CreateServiceButton(service.Code, service.Name,
+                var button = CreateServiceButton(service.Code, service.Name,
                     service.ServiceGroup == null ? DefaultServiceColor : service.ServiceGroup.Color, (s, a) =>
                 {
                     request.SelectedService = service;
@@ -164,7 +164,7 @@ namespace Queue.Terminal.ViewModels
 
         private SelectServiceButton CreateServiceButton(string code, string name, string color, EventHandler onSelected)
         {
-            ServiceButtonViewModel model = new ServiceButtonViewModel()
+            var model = new ServiceButtonViewModel()
             {
                 Code = code,
                 Name = name,

@@ -1,6 +1,11 @@
-﻿using Junte.Translation;
+﻿using Junte.Parallel;
+using Junte.Translation;
 using Junte.UI.WPF;
+using Junte.WCF;
+using Microsoft.Practices.Unity;
+using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.Terminal.Core;
 using System;
 using System.ServiceModel;
 using System.Windows;
@@ -16,6 +21,21 @@ namespace Queue.Terminal.ViewModels
 
         public ICommand PrevCommand { get; set; }
 
+        [Dependency]
+        public TerminalWindow Window { get; set; }
+
+        [Dependency]
+        public Navigator Navigator { get; set; }
+
+        [Dependency]
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        [Dependency]
+        public TaskPool TaskPool { get; set; }
+
+        [Dependency]
+        public TerminalConfig TerminalConfig { get; set; }
+
         public string Username
         {
             get { return username; }
@@ -30,53 +50,52 @@ namespace Queue.Terminal.ViewModels
 
         private async void Next()
         {
-            if (string.IsNullOrWhiteSpace(Username))
+            if (String.IsNullOrWhiteSpace(Username))
             {
-                screen.ShowWarning(Translater.Message("NoNameWarn"));
+                Window.ShowWarning(Translater.Message("NoNameWarn"));
                 return;
             }
 
-            if (Username == terminalConfig.PIN.ToString())
+            if (Username == TerminalConfig.PIN.ToString())
             {
                 Application.Current.Shutdown();
             }
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
-                var loading = screen.ShowLoading();
+                var loading = Window.ShowLoading();
 
                 try
                 {
                     await channel.Service.OpenUserSession(Model.CurrentAdministrator.SessionId);
 
-                    string[] words = Username.Split(' ');
+                    var words = Username.Split(' ');
+                    var surname = words[0];
 
-                    string surname = words[0];
-
-                    string name = string.Empty;
+                    var name = String.Empty;
                     if (words.Length > 1)
                     {
                         name = words[1];
                     }
 
-                    string patronymic = string.Empty;
+                    var patronymic = String.Empty;
                     if (words.Length > 2)
                     {
                         patronymic = words[2];
                     }
 
-                    Model.CurrentClient = await taskPool.AddTask(channel.Service.EditClient(new Client()
+                    Model.CurrentClient = await TaskPool.AddTask(channel.Service.EditClient(new Client()
                     {
                         Surname = surname,
                         Name = name,
                         Patronymic = patronymic
                     }));
 
-                    navigator.NextPage();
+                    Navigator.NextPage();
                 }
                 catch (FaultException exception)
                 {
-                    screen.ShowWarning(exception.Reason.ToString());
+                    Window.ShowWarning(exception.Reason.ToString());
                 }
                 catch (Exception exception)
                 {
@@ -92,7 +111,7 @@ namespace Queue.Terminal.ViewModels
         private void Prev()
         {
             Model.CurrentClient = null;
-            navigator.PrevPage();
+            Navigator.PrevPage();
         }
     }
 }

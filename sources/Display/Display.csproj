@@ -135,7 +135,6 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\HomePageViewModel.cs" />
-    <Compile Include="Types\ClientRequestWrapper.cs" />
     <Compile Include="Models\DisplayLoginSettings.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="Resources\Icons.xaml">

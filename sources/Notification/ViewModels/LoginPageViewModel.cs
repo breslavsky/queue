@@ -57,7 +57,7 @@ namespace Queue.Notification.ViewModels
             get { return selectedAccent; }
             set
             {
-                Tuple<AppTheme, Accent> theme = ThemeManager.DetectAppStyle(Application.Current);
+                var theme = ThemeManager.DetectAppStyle(Application.Current);
                 Accent accent = ThemeManager.GetAccent(value.Name);
                 ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
 

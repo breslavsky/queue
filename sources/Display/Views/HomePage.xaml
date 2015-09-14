@@ -3,12 +3,19 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
                     xmlns:ui_common="clr-namespace:Queue.UI.WPF;assembly=Queue.UI.WPF"
-                    Title="Терминал"
-                    Loaded="OnLoaded"
-                    Unloaded="OnUnloaded">
+                    Loaded="OnLoaded">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Border>
         <Grid>
             <Grid>

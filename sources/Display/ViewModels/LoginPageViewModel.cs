@@ -171,9 +171,9 @@ namespace Queue.Display.ViewModels
 
             IsConnected = false;
 
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (var channel = channelManager.CreateChannel())
             {
-                LoadingControl loading = owner.ShowLoading();
+                var loading = owner.ShowLoading();
 
                 try
                 {
@@ -214,9 +214,9 @@ namespace Queue.Display.ViewModels
                 return;
             }
 
-            LoadingControl loading = owner.ShowLoading();
+            var loading = owner.ShowLoading();
 
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
@@ -253,7 +253,7 @@ namespace Queue.Display.ViewModels
             loginSettings.Endpoint = Endpoint;
             loginSettings.WorkplaceId = SelectedWorkplace;
             loginSettings.IsRemember = IsRemember;
-            loginSettings.Accent = SelectedAccent == null ? string.Empty : SelectedAccent.Name;
+            loginSettings.Accent = SelectedAccent == null ? String.Empty : SelectedAccent.Name;
             loginSettings.Language = SelectedLanguage;
 
             configuration.Save();

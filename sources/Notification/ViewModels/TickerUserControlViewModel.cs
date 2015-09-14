@@ -11,7 +11,7 @@ namespace Queue.Notification.ViewModels
     public class TickerUserControlViewModel : ObservableObject, ITicker
     {
         private const double MillisecondsPerUnit = 15;
-        private int DefaultSpeed = 5;
+        private const int DefaultSpeed = 5;
 
         private string ticker;
         private bool inited = false;
@@ -81,7 +81,7 @@ namespace Queue.Notification.ViewModels
 
         private void AnimateMove()
         {
-            if (!string.IsNullOrWhiteSpace(newTicker))
+            if (!String.IsNullOrWhiteSpace(newTicker))
             {
                 Ticker = newTicker;
                 newTicker = string.Empty;
@@ -90,11 +90,11 @@ namespace Queue.Notification.ViewModels
             tickerItem.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
             tickerItem.Arrange(new Rect(tickerItem.DesiredSize));
 
-            double from = container.ActualWidth;
-            double to = -tickerItem.ActualWidth;
-            TimeSpan animationSpeed = TimeSpan.FromMilliseconds((from - to) * speed);
+            var from = container.ActualWidth;
+            var to = -tickerItem.ActualWidth;
+            var animationSpeed = TimeSpan.FromMilliseconds((from - to) * speed);
 
-            DoubleAnimation ani = new DoubleAnimation()
+            var ani = new DoubleAnimation()
             {
                 From = from,
                 To = to,

@@ -1,4 +1,5 @@
 ﻿using Junte.Parallel;
+using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
@@ -9,11 +10,13 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WPF.Enums;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
+using Drawing = System.Drawing;
 
 namespace Queue.Display.ViewModels
 {
@@ -65,6 +68,10 @@ namespace Queue.Display.ViewModels
             set { SetProperty(ref currentRequests, value); }
         }
 
+        public ICommand LoadedCommand { get; set; }
+
+        public ICommand UnloadedCommand { get; set; }
+
         public HomePageViewModel()
         {
             workplace = ServiceLocator.Current.GetInstance<Workplace>();
@@ -85,16 +92,24 @@ namespace Queue.Display.ViewModels
             pingTimer.Tick += PingElapsed;
 
             currentRequests = new ObservableCollection<ClientRequestWrapper>();
+
+            LoadedCommand = new RelayCommand(Loaded);
+            UnloadedCommand = new RelayCommand(Unloaded);
         }
 
-        public void Initialize()
+        private void Loaded()
         {
             pingTimer.Start();
         }
 
+        private void Unloaded()
+        {
+            Dispose();
+        }
+
         private void UpdateOperatorCurrentRequest(Operator op, ClientRequestPlan plan)
         {
-            ClientRequestWrapper wrapper = CurrentRequests.SingleOrDefault(w => w.Operator.Equals(op));
+            var wrapper = CurrentRequests.SingleOrDefault(w => w.Operator.Equals(op));
             if ((plan == null) && (wrapper == null))
             {
                 return;
@@ -165,10 +180,10 @@ namespace Queue.Display.ViewModels
 
         private async Task Subscribe()
         {
-            IList<KeyValuePair<Operator, ClientRequestPlan>> plans = (await pingChannel.Service.GetCurrentClientRequestPlans())
-                                                                 .Where(p => p.Key != null && p.Key.Workplace.Equals(workplace))
-                                                                 .ToList();
-            foreach (KeyValuePair<Operator, ClientRequestPlan> plan in plans)
+            var plans = (await pingChannel.Service.GetCurrentClientRequestPlans())
+                                                .Where(p => p.Key != null && p.Key.Workplace.Equals(workplace))
+                                                .ToList();
+            foreach (var plan in plans)
             {
                 UpdateOperatorCurrentRequest(plan.Key, plan.Value);
             }
@@ -211,6 +226,7 @@ namespace Queue.Display.ViewModels
             {
                 if (pingTimer != null)
                 {
+                    pingTimer.Tick -= PingElapsed;
                     pingTimer.Stop();
                 }
                 if (taskPool != null)
@@ -227,6 +243,49 @@ namespace Queue.Display.ViewModels
                 }
             }
             disposed = true;
+        }
+    }
+
+    public class ClientRequestWrapper : ObservableObject
+    {
+        private ClientRequest request;
+
+        private string state;
+        private Brush stateBrush;
+
+        public int Number { get; set; }
+
+        public Operator Operator { get; set; }
+
+        public string State
+        {
+            get { return state; }
+            set { SetProperty(ref state, value); }
+        }
+
+        public Brush StateBrush
+        {
+            get { return stateBrush; }
+            set { SetProperty(ref stateBrush, value); }
+        }
+
+        public ClientRequest Request
+        {
+            get { return request; }
+            set
+            {
+                request = value;
+                Update();
+            }
+        }
+
+        private void Update()
+        {
+            Number = request.Number;
+            State = Translater.Enum(request.State);
+
+            Drawing.Color c = Drawing.ColorTranslator.FromHtml(request.Color);
+            StateBrush = new SolidColorBrush(Color.FromRgb(c.R, c.G, c.B));
         }
     }
 }

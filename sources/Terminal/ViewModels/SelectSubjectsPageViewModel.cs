@@ -1,4 +1,6 @@
 ﻿using Junte.UI.WPF;
+using Microsoft.Practices.Unity;
+using Queue.Terminal.Core;
 using System.Windows.Input;
 
 namespace Queue.Terminal.ViewModels
@@ -8,14 +10,6 @@ namespace Queue.Terminal.ViewModels
         private bool canInc;
         private bool canDec;
 
-        public SelectSubjectsPageViewModel()
-        {
-            PrevCommand = new RelayCommand(Prev);
-            NextCommand = new RelayCommand(Next);
-            DecCommand = new RelayCommand(DecSubjectsCount);
-            IncCommand = new RelayCommand(IncSubjectsCount);
-        }
-
         public ICommand NextCommand { get; set; }
 
         public ICommand PrevCommand { get; set; }
@@ -23,6 +17,11 @@ namespace Queue.Terminal.ViewModels
         public ICommand DecCommand { get; set; }
 
         public ICommand IncCommand { get; set; }
+
+        public ICommand LoadedCommand { get; set; }
+
+        [Dependency]
+        public Navigator Navigator { get; set; }
 
         public bool CanInc
         {
@@ -36,7 +35,16 @@ namespace Queue.Terminal.ViewModels
             set { SetProperty(ref canDec, value); }
         }
 
-        public void Initialize()
+        public SelectSubjectsPageViewModel()
+        {
+            LoadedCommand = new RelayCommand(Loaded);
+            PrevCommand = new RelayCommand(Prev);
+            NextCommand = new RelayCommand(Next);
+            DecCommand = new RelayCommand(DecSubjectsCount);
+            IncCommand = new RelayCommand(IncSubjectsCount);
+        }
+
+        private void Loaded()
         {
             if (Model.Subjects == null)
             {
@@ -72,13 +80,13 @@ namespace Queue.Terminal.ViewModels
 
         private void Next()
         {
-            navigator.NextPage();
+            Navigator.NextPage();
         }
 
         private void Prev()
         {
             Model.Subjects = null;
-            navigator.PrevPage();
+            Navigator.PrevPage();
         }
     }
 }

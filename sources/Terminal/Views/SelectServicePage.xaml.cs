@@ -1,7 +1,6 @@
 ﻿using Queue.Terminal.Core;
 using Queue.Terminal.ViewModels;
 using System;
-using System.Windows;
 
 namespace Queue.Terminal.Views
 {
@@ -9,7 +8,6 @@ namespace Queue.Terminal.Views
     {
         protected override Type ModelType { get { return typeof(SelectServicePageViewModel); } }
 
-        private SelectServicePageViewModel viewModel;
         private ServicesPager pager;
 
         public SelectServicePage() :
@@ -17,7 +15,7 @@ namespace Queue.Terminal.Views
         {
             InitializeComponent();
 
-            viewModel = DataContext as SelectServicePageViewModel;
+            var viewModel = DataContext as SelectServicePageViewModel;
             viewModel.OnRenderServices += RenderServices;
 
             pager = new ServicesPager(this);
@@ -29,11 +27,6 @@ namespace Queue.Terminal.Views
         private void RenderServices(object sender, RenderServicesEventArgs args)
         {
             pager.UpdateServices(args.Services, args.Cols, args.Rows);
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            viewModel.Initialize();
         }
     }
 }

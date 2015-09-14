@@ -1,7 +1,7 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WPF;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common;
 using Queue.Model.Common;
@@ -9,7 +9,6 @@ using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Sounds;
-using Queue.UI.WPF;
 using Queue.UI.WPF.Enums;
 using Queue.UI.WPF.Types;
 using System;
@@ -31,17 +30,13 @@ namespace Queue.Notification.ViewModels
 
         private bool disposed = false;
 
-        private ITicker ticker;
-        private IMainWindow screen;
         private ServerState serverState;
         private DateTime currentDateTime;
         private string currentDateTimeText;
         public ClientRequest[] callingClientRequests;
 
-        private ChannelManager<IServerTcpService> channelManager;
         private Channel<IServerTcpService> callbackChannel;
         private ServerCallback callbackObject;
-        private TaskPool taskPool;
         private VlcControl vlcControl;
 
         private Timer pingTimer;
@@ -76,14 +71,21 @@ namespace Queue.Notification.ViewModels
 
         public event EventHandler<int> RequestsLengthChanged;
 
+        [Dependency]
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        [Dependency]
+        public TaskPool TaskPool { get; set; }
+
+        [Dependency]
+        public IMainWindow Window { get; set; }
+
+        [Dependency]
+        public ITicker Ticker { get; set; }
+
         public HomePageViewModel()
         {
             voiceLock = new object();
-
-            this.channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
-            this.taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
-            this.screen = ServiceLocator.Current.GetInstance<IMainWindow>();
-            this.ticker = ServiceLocator.Current.GetInstance<ITicker>();
 
             CallClientModel = new CallClientUserControlViewModel();
 
@@ -95,14 +97,14 @@ namespace Queue.Notification.ViewModels
         {
             this.vlcControl = vlcControl;
 
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
-                LoadingControl loading = screen.ShowLoading();
+                var loading = Window.ShowLoading();
 
                 try
                 {
-                    ReadMediaConfig(await taskPool.AddTask(channel.Service.GetMediaConfig()), await taskPool.AddTask(channel.Service.GetMediaConfigFiles()));
-                    ReadNotificationConfig(await taskPool.AddTask(channel.Service.GetNotificationConfig()));
+                    ReadMediaConfig(await TaskPool.AddTask(channel.Service.GetMediaConfig()), await TaskPool.AddTask(channel.Service.GetMediaConfigFiles()));
+                    ReadNotificationConfig(await TaskPool.AddTask(channel.Service.GetNotificationConfig()));
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -129,12 +131,12 @@ namespace Queue.Notification.ViewModels
         private void InitCallbackChannel()
         {
             callbackObject = CreateServerCallback();
-            callbackChannel = channelManager.CreateChannel(callbackObject);
+            callbackChannel = ChannelManager.CreateChannel(callbackObject);
         }
 
         private ServerCallback CreateServerCallback()
         {
-            ServerCallback result = new ServerCallback();
+            var result = new ServerCallback();
             result.OnClientRequestUpdated += OnClientRequestUpdated;
             result.OnCallClient += OnCallClient;
             result.OnConfigUpdated += OnConfigUpdated;
@@ -170,7 +172,7 @@ namespace Queue.Notification.ViewModels
                     Subscribe();
                 }
 
-                ServerDateTime.Sync(await taskPool.AddTask(callbackChannel.Service.GetDateTime()));
+                ServerDateTime.Sync(await TaskPool.AddTask(callbackChannel.Service.GetDateTime()));
 
                 ServerState = ServerState.Available;
             }
@@ -179,7 +181,7 @@ namespace Queue.Notification.ViewModels
                 ServerState = ServerState.Unavailable;
 
                 callbackChannel.Dispose();
-                callbackChannel = channelManager.CreateChannel(callbackObject);
+                callbackChannel = ChannelManager.CreateChannel(callbackObject);
             }
 
             pingTimer.Start();
@@ -260,9 +262,9 @@ namespace Queue.Notification.ViewModels
 
         private void UpdateTicker(MediaConfig config)
         {
-            ticker.SetTicker(config.Ticker);
-            ticker.SetSpeed(config.TickerSpeed);
-            ticker.Start();
+            Ticker.SetTicker(config.Ticker);
+            Ticker.SetSpeed(config.TickerSpeed);
+            Ticker.Start();
         }
 
         private void NotifyClientRequestUpdated(ClientRequest request)
@@ -286,14 +288,14 @@ namespace Queue.Notification.ViewModels
 
         private void PlayVoice(ClientRequest request)
         {
-            using (SoundPlayer soundPlayer = new SoundPlayer())
+            using (var soundPlayer = new SoundPlayer())
             {
                 soundPlayer.PlayStream(Tones.Notify);
                 soundPlayer.PlayStream(Words.Number);
 
                 soundPlayer.PlayNumber(request.Number);
 
-                Workplace workplace = request.Operator.Workplace;
+                var workplace = request.Operator.Workplace;
                 soundPlayer.PlayStream(Workplaces.ResourceManager.GetStream(workplace.Type.ToString()));
                 soundPlayer.PlayNumber(workplace.Number);
 

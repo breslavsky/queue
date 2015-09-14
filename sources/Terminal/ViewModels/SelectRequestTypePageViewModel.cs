@@ -1,10 +1,12 @@
-﻿using Junte.Translation;
+﻿using Junte.Parallel;
+using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
-using Queue.UI.WPF;
+using Queue.Terminal.Core;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -60,6 +62,18 @@ namespace Queue.Terminal.ViewModels
             set { SetProperty(ref allowEarly, value); }
         }
 
+        [Dependency]
+        public TerminalWindow Window { get; set; }
+
+        [Dependency]
+        public Navigator Navigator { get; set; }
+
+        [Dependency]
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        [Dependency]
+        public TaskPool TaskPool { get; set; }
+
         public SelectRequestTypePageViewModel()
         {
             SelectTypeCommand = new RelayCommand<ClientRequestType>(SelectType);
@@ -67,21 +81,21 @@ namespace Queue.Terminal.ViewModels
 
         private async void SelectType(ClientRequestType type)
         {
-            model.RequestType = type;
-            LoadingControl loading = screen.ShowLoading();
+            Model.RequestType = type;
+            var loading = Window.ShowLoading();
 
             try
             {
                 await Model.AdjustMaxSubjects();
-                navigator.NextPage();
+                Navigator.NextPage();
             }
             catch (FaultException exception)
             {
-                screen.ShowWarning(exception.Reason.ToString());
+                Window.ShowWarning(exception.Reason.ToString());
             }
             catch (Exception exception)
             {
-                screen.ShowWarning(exception.Message);
+                Window.ShowWarning(exception.Message);
             }
             finally
             {
@@ -96,10 +110,10 @@ namespace Queue.Terminal.ViewModels
 
         private async Task UpdateView()
         {
-            model.MaxSubjects = null;
+            Model.MaxSubjects = null;
 
-            Comment = model.SelectedService.Comment;
-            CommentRowHeight = new GridLength(string.IsNullOrEmpty(Comment) ? 10 : 50);
+            Comment = Model.SelectedService.Comment;
+            CommentRowHeight = new GridLength(String.IsNullOrEmpty(Comment) ? 10 : 50);
 
             await AdjustLive();
             AdjustEarly();
@@ -109,46 +123,45 @@ namespace Queue.Terminal.ViewModels
         {
             AllowLive = false;
 
-            if (model.SelectedService.LiveRegistrator.HasFlag(ClientRequestRegistrator.Terminal))
-            {
-                using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
-                {
-                    LoadingControl loading = screen.ShowLoading();
-
-                    try
-                    {
-                        LiveComment = string.Empty;
-
-                        var timeIntervals = (await taskPool.AddTask(channel.Service.GetServiceFreeTime(model.SelectedService.Id, ServerDateTime.Today, ClientRequestType.Live))).TimeIntervals;
-                        if (timeIntervals.Length > 0)
-                        {
-                            model.MaxSubjects = Math.Min(model.SelectedService.MaxSubjects, timeIntervals.Length);
-                            AllowLive = true;
-
-                            LiveComment = Translater.Message("AvailableCount", timeIntervals.Length);
-                        }
-                        else
-                        {
-                            LiveComment = Translater.Message("NoFreeTime");
-                        }
-                    }
-                    catch (FaultException exception)
-                    {
-                        LiveComment = exception.Reason.ToString();
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(null, exception.Message);
-                    }
-                    finally
-                    {
-                        loading.Hide();
-                    }
-                }
-            }
-            else
+            if (!Model.SelectedService.LiveRegistrator.HasFlag(ClientRequestRegistrator.Terminal))
             {
                 LiveComment = EarlyComment = Translater.Message("DisabledByAdmin");
+                return;
+            }
+
+            using (var channel = ChannelManager.CreateChannel())
+            {
+                var loading = Window.ShowLoading();
+
+                try
+                {
+                    LiveComment = string.Empty;
+
+                    var timeIntervals = (await TaskPool.AddTask(channel.Service.GetServiceFreeTime(Model.SelectedService.Id, ServerDateTime.Today, ClientRequestType.Live))).TimeIntervals;
+                    if (timeIntervals.Length > 0)
+                    {
+                        Model.MaxSubjects = Math.Min(Model.SelectedService.MaxSubjects, timeIntervals.Length);
+                        AllowLive = true;
+
+                        LiveComment = Translater.Message("AvailableCount", timeIntervals.Length);
+                    }
+                    else
+                    {
+                        LiveComment = Translater.Message("NoFreeTime");
+                    }
+                }
+                catch (FaultException exception)
+                {
+                    LiveComment = exception.Reason.ToString();
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(null, exception.Message);
+                }
+                finally
+                {
+                    loading.Hide();
+                }
             }
         }
 
@@ -156,7 +169,7 @@ namespace Queue.Terminal.ViewModels
         {
             AllowEarly = false;
 
-            if (model.SelectedService.EarlyRegistrator.HasFlag(ClientRequestRegistrator.Terminal))
+            if (Model.SelectedService.EarlyRegistrator.HasFlag(ClientRequestRegistrator.Terminal))
             {
                 EarlyComment = string.Empty;
                 AllowEarly = true;

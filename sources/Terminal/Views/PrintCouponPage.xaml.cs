@@ -1,6 +1,5 @@
 ﻿using Queue.Terminal.ViewModels;
 using System;
-using System.Windows;
 
 namespace Queue.Terminal.Views
 {
@@ -12,16 +11,6 @@ namespace Queue.Terminal.Views
             : base()
         {
             InitializeComponent();
-        }
-
-        private void TerminalPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            (DataContext as PrintCouponPageViewModel).Initialize();
-        }
-
-        private void TerminalPage_Unloaded(object sender, RoutedEventArgs e)
-        {
-            (DataContext as PrintCouponPageViewModel).Dispose();
         }
     }
 }

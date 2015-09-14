@@ -1,14 +1,18 @@
-﻿using Junte.Translation;
+﻿using Junte.Parallel;
+using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.Terminal.Core;
 using Queue.Terminal.UserControls;
 using Queue.UI.WPF;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.Windows.Input;
 
 namespace Queue.Terminal.ViewModels
 {
@@ -18,23 +22,45 @@ namespace Queue.Terminal.ViewModels
 
         public event EventHandler<RenderServicesEventArgs> OnRenderServices;
 
-        public void Initialize()
+        public ICommand LoadedCommand { get; set; }
+
+        [Dependency]
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        [Dependency]
+        public TerminalWindow Window { get; set; }
+
+        [Dependency]
+        public TaskPool TaskPool { get; set; }
+
+        [Dependency]
+        public TerminalConfig TerminalConfig { get; set; }
+
+        [Dependency]
+        public Navigator Navigator { get; set; }
+
+        public SelectServicePageViewModel()
+        {
+            LoadedCommand = new RelayCommand(Loaded);
+        }
+
+        private void Loaded()
         {
             LoadRootServiceGroups();
         }
 
         private async void LoadRootServiceGroups()
         {
-            List<SelectServiceButton> buttons = new List<SelectServiceButton>();
+            var buttons = new List<SelectServiceButton>();
 
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
-                LoadingControl loading = screen.ShowLoading();
+                var loading = Window.ShowLoading();
 
                 try
                 {
-                    AddGroupsToButtons(await taskPool.AddTask(channel.Service.GetRootServiceGroups()), buttons);
-                    AddServicesToButtons(await taskPool.AddTask(channel.Service.GetRootServices()), buttons);
+                    AddGroupsToButtons(await TaskPool.AddTask(channel.Service.GetRootServiceGroups()), buttons);
+                    AddServicesToButtons(await TaskPool.AddTask(channel.Service.GetRootServices()), buttons);
                 }
                 catch (FaultException exception)
                 {
@@ -50,21 +76,21 @@ namespace Queue.Terminal.ViewModels
                 }
             }
 
-            RenderServices(buttons, terminalConfig.Columns, terminalConfig.Rows);
+            RenderServices(buttons, TerminalConfig.Columns, TerminalConfig.Rows);
         }
 
         private async void LoadServiceGroup(Guid serviceGroupId, int cols, int rows)
         {
-            List<SelectServiceButton> buttons = new List<SelectServiceButton>();
+            var buttons = new List<SelectServiceButton>();
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
-                LoadingControl loading = screen.ShowLoading();
+                var loading = Window.ShowLoading();
 
                 try
                 {
-                    AddGroupsToButtons(await taskPool.AddTask(channel.Service.GetServiceGroups(serviceGroupId)), buttons);
-                    AddServicesToButtons(await taskPool.AddTask(channel.Service.GetServices(serviceGroupId)), buttons);
+                    AddGroupsToButtons(await TaskPool.AddTask(channel.Service.GetServiceGroups(serviceGroupId)), buttons);
+                    AddServicesToButtons(await TaskPool.AddTask(channel.Service.GetServices(serviceGroupId)), buttons);
                 }
                 catch (FaultException exception)
                 {
@@ -90,7 +116,7 @@ namespace Queue.Terminal.ViewModels
 
         private void AddGroupsToButtons(ServiceGroup[] groups, List<SelectServiceButton> buttons)
         {
-            foreach (ServiceGroup group in groups)
+            foreach (var group in groups)
             {
                 if (!group.IsActive)
                 {
@@ -103,7 +129,7 @@ namespace Queue.Terminal.ViewModels
 
         private void AddServicesToButtons(Service[] services, List<SelectServiceButton> buttons)
         {
-            foreach (Service service in services)
+            foreach (var service in services)
             {
                 if (!service.IsActive)
                 {
@@ -130,7 +156,7 @@ namespace Queue.Terminal.ViewModels
             bool earlyTerminal = service.EarlyRegistrator.HasFlag(ClientRequestRegistrator.Terminal);
             if ((!liveTerminal) && (!earlyTerminal))
             {
-                screen.ShowWarning(Translater.Message("ServiceNotAvailableOnTerminal"));
+                Window.ShowWarning(Translater.Message("ServiceNotAvailableOnTerminal"));
                 return;
             }
 
@@ -145,20 +171,20 @@ namespace Queue.Terminal.ViewModels
 
             if (Model.RequestType != null)
             {
-                LoadingControl loading = screen.ShowLoading();
+                var loading = Window.ShowLoading();
 
                 try
                 {
                     await Model.AdjustMaxSubjects();
-                    navigator.NextPage();
+                    Navigator.NextPage();
                 }
                 catch (FaultException exception)
                 {
-                    screen.ShowWarning(exception.Reason.ToString());
+                    Window.ShowWarning(exception.Reason.ToString());
                 }
                 catch (Exception exception)
                 {
-                    screen.ShowWarning(exception.Message);
+                    Window.ShowWarning(exception.Message);
                 }
                 finally
                 {
@@ -167,15 +193,13 @@ namespace Queue.Terminal.ViewModels
             }
             else
             {
-                navigator.NextPage();
+                Navigator.NextPage();
             }
         }
 
         private SelectServiceButton CreateSelectServiceButton(string code, string name, string color, float fontSize, EventHandler onSelected)
         {
-            SelectServiceButton result = new SelectServiceButton();
-
-            ServiceButtonViewModel model = new ServiceButtonViewModel()
+            var model = new ServiceButtonViewModel()
             {
                 Code = code,
                 Name = name,
@@ -184,6 +208,7 @@ namespace Queue.Terminal.ViewModels
             };
             model.OnServiceSelected += onSelected;
 
+            var result = new SelectServiceButton();
             result.DataContext = model;
             return result;
         }

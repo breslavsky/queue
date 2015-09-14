@@ -1,4 +1,4 @@
-﻿using Microsoft.Practices.ServiceLocation;
+﻿using Microsoft.Practices.Unity;
 using Queue.Terminal.Enums;
 using Queue.Terminal.Views;
 using System;
@@ -9,10 +9,6 @@ namespace Queue.Terminal.Core
 {
     public class Navigator
     {
-        private ClientRequestModel userRequest;
-        private PageType? currentPage;
-        private NavigationService navigationService;
-
         private static ClientRequestModelState[] Stages = new ClientRequestModelState[]
                                                                 {
                                                                     ClientRequestModelState.SetService,
@@ -23,12 +19,19 @@ namespace Queue.Terminal.Core
                                                                      ClientRequestModelState.Completed
                                                                 };
 
+        private PageType? currentPage;
+        private NavigationService navigationService;
         private List<ClientRequestModelState> history;
+
+        [Dependency]
+        public IUnityContainer UnityContainer { get; set; }
+
+        [Dependency]
+        public ClientRequestModel UserRequest { get; set; }
 
         public Navigator()
         {
             history = new List<ClientRequestModelState>();
-            userRequest = ServiceLocator.Current.GetInstance<ClientRequestModel>();
         }
 
         public void Start()
@@ -46,7 +49,7 @@ namespace Queue.Terminal.Core
         public void ResetState()
         {
             history.Clear();
-            userRequest.Reset();
+            UserRequest.Reset();
         }
 
         public void SetNavigationService(NavigationService service)
@@ -58,16 +61,16 @@ namespace Queue.Terminal.Core
         {
             if (page == PageType.SelectService)
             {
-                userRequest.Reset();
+                UserRequest.Reset();
             }
 
-            navigationService.Navigate(Activator.CreateInstance(GetPageType(page.Value)));
+            navigationService.Navigate(UnityContainer.Resolve(GetPageType(page.Value)));
             currentPage = page;
         }
 
         public void NextPage()
         {
-            ClientRequestModelState state = userRequest.GetCurrentState();
+            ClientRequestModelState state = UserRequest.GetCurrentState();
             CaptureState(state);
 
             if (!currentPage.HasValue)
@@ -130,7 +133,7 @@ namespace Queue.Terminal.Core
             }
             else
             {
-                ClientRequestModelState state = userRequest.GetCurrentState();
+                ClientRequestModelState state = UserRequest.GetCurrentState();
                 history.Remove(state);
 
                 ClientRequestModelState prevState = history.Count > 0 ?

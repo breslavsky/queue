@@ -152,7 +152,6 @@
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\TickerUserControlViewModel.cs" />
-    <Compile Include="Types\ClientRequestWrap.cs" />
     <Compile Include="Types\CustomAnimationTimer.cs" />
     <Compile Include="Types\ITicker.cs" />
     <Compile Include="Types\TaggedDoubleAnimation.cs" />

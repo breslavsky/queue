@@ -15,9 +15,9 @@ namespace Queue.Notification.ViewModels
 {
     public class ClientRequestsControlViewModel : ObservableObject, IDisposable
     {
-        private readonly Logger logger = LogManager.GetCurrentClassLogger();
-
         private const int DefaultClientRequestsLength = 6;
+
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private bool disposed = false;
 
@@ -57,7 +57,7 @@ namespace Queue.Notification.ViewModels
         {
             lock (updateLock)
             {
-                ClientRequestWrap wrap = requests.SingleOrDefault(r => r.Request.Equals(request));
+                var wrap = requests.SingleOrDefault(r => r.Request.Equals(request));
 
                 bool isImportantState = (request.State == ClientRequestState.Calling)
                     || (request.State == ClientRequestState.Absence);
@@ -99,7 +99,7 @@ namespace Queue.Notification.ViewModels
         {
             lock (updateLock)
             {
-                DateTime now = DateTime.Now;
+                var now = DateTime.Now;
                 if (requests.RemoveAll(r => r.Request.IsClosed && (now - r.Added) > ClientRequestTimeout) > 0)
                 {
                     UpdateCallingClientRequests();
@@ -113,13 +113,13 @@ namespace Queue.Notification.ViewModels
 
             int row = 1;
 
-            foreach (ClientRequestWrap req in requests)
+            foreach (var req in requests)
             {
                 try
                 {
                     controls.Add(CreateTextBox(req.Request.Number.ToString(), 0, row));
 
-                    ClientRequestStateUserControl ctrl = new ClientRequestStateUserControl(req.Request);
+                    var ctrl = new ClientRequestStateUserControl(req.Request);
                     ctrl.SetValue(Grid.ColumnProperty, 2);
                     ctrl.SetValue(Grid.RowProperty, row);
                     controls.Add(ctrl);
@@ -200,5 +200,12 @@ namespace Queue.Notification.ViewModels
         }
 
         #endregion IDisposable
+    }
+
+    public class ClientRequestWrap
+    {
+        public ClientRequest Request { get; set; }
+
+        public DateTime Added { get; set; }
     }
 }

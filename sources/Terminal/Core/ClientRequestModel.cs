@@ -117,11 +117,11 @@ namespace Queue.Terminal.Core
 
             if (RequestType == ClientRequestType.Live)
             {
-                ChannelManager<IServerTcpService> channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
-                TaskPool taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
-                using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+                var channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
+                var taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
+                using (var channel = channelManager.CreateChannel())
                 {
-                    TimeSpan[] timeIntervals = (await taskPool.AddTask(channel.Service.GetServiceFreeTime(SelectedService.Id, ServerDateTime.Today, ClientRequestType.Live))).TimeIntervals;
+                    var timeIntervals = (await taskPool.AddTask(channel.Service.GetServiceFreeTime(SelectedService.Id, ServerDateTime.Today, ClientRequestType.Live))).TimeIntervals;
                     if (timeIntervals.Length > 0)
                     {
                         MaxSubjects = Math.Min(SelectedService.MaxSubjects, timeIntervals.Length);

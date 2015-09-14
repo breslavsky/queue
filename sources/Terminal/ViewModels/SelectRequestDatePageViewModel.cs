@@ -1,10 +1,12 @@
-﻿using Junte.Translation;
+﻿using Junte.Parallel;
+using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
-using Queue.UI.WPF;
+using Queue.Terminal.Core;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,17 +23,13 @@ namespace Queue.Terminal.ViewModels
         private EarlyRequestHour selectedHour;
         private int? selectedMinute;
 
-        public SelectRequestDatePageViewModel()
-        {
-            PrevCommand = new RelayCommand(Prev);
-            NextCommand = new RelayCommand(Next);
-
-            model.PropertyChanged += model_PropertyChanged;
-        }
-
         public ICommand NextCommand { get; set; }
 
         public ICommand PrevCommand { get; set; }
+
+        public ICommand LoadedCommand { get; set; }
+
+        public ICommand UnloadedCommand { get; set; }
 
         public ObservableCollection<EarlyRequestHour> AvailableHours
         {
@@ -55,17 +53,42 @@ namespace Queue.Terminal.ViewModels
             set { SetProperty(ref selectedMinute, value); }
         }
 
-        public void Initialize()
+        [Dependency]
+        public TerminalConfig TerminalConfig { get; set; }
+
+        [Dependency]
+        public TerminalWindow Window { get; set; }
+
+        [Dependency]
+        public Navigator Navigator { get; set; }
+
+        [Dependency]
+        public TaskPool TaskPool { get; set; }
+
+        [Dependency]
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        public SelectRequestDatePageViewModel()
         {
-            if (model.SelectedDate == null)
+            LoadedCommand = new RelayCommand(Loaded);
+            UnloadedCommand = new RelayCommand(Unloaded);
+            PrevCommand = new RelayCommand(Prev);
+            NextCommand = new RelayCommand(Next);
+
+            Model.PropertyChanged += model_PropertyChanged;
+        }
+
+        private void Loaded()
+        {
+            if (Model.SelectedDate == null)
             {
-                DateTime date = DateTime.Now.Date;
-                if (!terminalConfig.CurrentDayRecording)
+                var date = DateTime.Now.Date;
+                if (!TerminalConfig.CurrentDayRecording)
                 {
                     date = date.AddDays(1);
                 }
 
-                model.SelectedDate = date;
+                Model.SelectedDate = date;
             }
 
             ReloadFreeTime();
@@ -73,25 +96,25 @@ namespace Queue.Terminal.ViewModels
 
         private void Next()
         {
-            if (!model.SelectedDate.HasValue)
+            if (!Model.SelectedDate.HasValue)
             {
-                screen.ShowWarning(Translater.Message("EarlyDateNotSelected"));
+                Window.ShowWarning(Translater.Message("EarlyDateNotSelected"));
                 return;
             }
 
-            model.SelectedTime = GetSelectedTime();
-            if (model.SelectedTime == TimeSpan.Zero)
+            Model.SelectedTime = GetSelectedTime();
+            if (Model.SelectedTime == TimeSpan.Zero)
             {
-                screen.ShowWarning(Translater.Message("EarlyTimeNotSelected"));
+                Window.ShowWarning(Translater.Message("EarlyTimeNotSelected"));
                 return;
             }
 
-            navigator.NextPage();
+            Navigator.NextPage();
         }
 
         private TimeSpan GetSelectedTime()
         {
-            TimeSpan requestTime = TimeSpan.Zero;
+            var requestTime = TimeSpan.Zero;
 
             if (SelectedHour != null)
             {
@@ -110,7 +133,7 @@ namespace Queue.Terminal.ViewModels
         {
             Model.SelectedDate = null;
             Model.SelectedTime = null;
-            navigator.PrevPage();
+            Navigator.PrevPage();
         }
 
         private void model_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -127,28 +150,28 @@ namespace Queue.Terminal.ViewModels
             SelectedHour = null;
             SelectedMinute = null;
 
-            if (model.SelectedService == null || !model.SelectedDate.HasValue)
+            if (Model.SelectedService == null || !Model.SelectedDate.HasValue)
             {
                 return;
             }
 
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
-                LoadingControl loading = screen.ShowLoading();
+                var loading = Window.ShowLoading();
 
                 try
                 {
-                    ServiceFreeTime freeTime = await taskPool.AddTask(channel.Service.GetServiceFreeTime(model.SelectedService.Id, model.SelectedDate.Value, ClientRequestType.Early));
-                    TimeSpan[] timeIntervals = freeTime.TimeIntervals;
+                    var freeTime = await TaskPool.AddTask(channel.Service.GetServiceFreeTime(Model.SelectedService.Id, Model.SelectedDate.Value, ClientRequestType.Early));
+                    var timeIntervals = freeTime.TimeIntervals;
 
                     if (timeIntervals.Length == 0)
                     {
                         return;
                     }
 
-                    foreach (TimeSpan timeInterval in timeIntervals)
+                    foreach (var timeInterval in timeIntervals)
                     {
-                        EarlyRequestHour hour = AvailableHours.SingleOrDefault(h => h.Hour == timeInterval.Hours);
+                        var hour = AvailableHours.SingleOrDefault(h => h.Hour == timeInterval.Hours);
                         if (hour == null)
                         {
                             hour = new EarlyRequestHour()
@@ -168,7 +191,7 @@ namespace Queue.Terminal.ViewModels
                 }
                 catch (FaultException exception)
                 {
-                    screen.ShowWarning(exception.Reason.ToString());
+                    Window.ShowWarning(exception.Reason.ToString());
                 }
                 catch (Exception exception)
                 {
@@ -183,7 +206,7 @@ namespace Queue.Terminal.ViewModels
 
         internal void Unloaded()
         {
-            model.PropertyChanged -= model_PropertyChanged;
+            Model.PropertyChanged -= model_PropertyChanged;
         }
 
         public class EarlyRequestHour
