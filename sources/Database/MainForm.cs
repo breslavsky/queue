@@ -1,9 +1,6 @@
 ﻿using Junte.Configuration;
 using Junte.Data.NHibernate;
-using Junte.UI.WinForms;
-using Junte.UI.WinForms.NHibernate;
 using Junte.UI.WinForms.NHibernate.Configuration;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NHibernate.Criterion;
 using NLog;
@@ -259,6 +256,9 @@ namespace Queue.Database
                             EarlyRegistrator = all,
                             TimeIntervalRounding = TimeSpan.FromMinutes(5),
                             MaxEarlyDays = 30,
+                            MaxClientRecalls = 2,
+                            Color = "0000FF",
+                            FontSize = 1,
                             ClientRequire = true,
                             MaxSubjects = 5,
                             SortId = i

@@ -107,24 +107,6 @@
       <Component Id="cmpA8E5C72AFC0EE8E7DFDC41FE8AD1AFF2" Directory="INSTALLFOLDER" Guid="05FFC73C-9B0D-47F6-8CD2-553352F2544A">
         <File Id="fil53801C0A31EE4867C20E4743F125FD98" KeyPath="yes" Source="$(var.Administrator.TargetDir)\TaskDialog.dll" />
       </Component>
-      <Component Id="cmpB5AC76F2952CC9DFFEAE55F2225097DA" Directory="INSTALLFOLDER" Guid="CD3FFA75-AF5A-4F8F-AF1E-1497E8E5F185">
-        <File Id="fil6AA069CB067F41A6BD8EE397FDA8959D" KeyPath="yes" Source="$(var.Administrator.TargetDir)\Xceed.Wpf.AvalonDock.dll" />
-      </Component>
-      <Component Id="cmp2A23BAA07F6AEF1BAC39F167324A8F3A" Directory="INSTALLFOLDER" Guid="93C94F82-55D8-454D-8DC8-62CF384E09FB">
-        <File Id="filBC3F4C1166E0142D06933250742EA7C2" KeyPath="yes" Source="$(var.Administrator.TargetDir)\Xceed.Wpf.AvalonDock.Themes.Aero.dll" />
-      </Component>
-      <Component Id="cmpD2BBFD2B0371F68A1185CC644A1BEA64" Directory="INSTALLFOLDER" Guid="C4DF16B2-2B54-4568-87B8-8D96BE7A06BF">
-        <File Id="fil4DFF05E2DF20649A72E2FB5FBC3CBA2E" KeyPath="yes" Source="$(var.Administrator.TargetDir)\Xceed.Wpf.AvalonDock.Themes.Metro.dll" />
-      </Component>
-      <Component Id="cmpFFB651FFCBD1B293A7B0FE113C056F8F" Directory="INSTALLFOLDER" Guid="0D30CE26-11D0-4732-ABF1-11111AAEB5CB">
-        <File Id="filEFDE58C5ABCFCB31E073211560F487D2" KeyPath="yes" Source="$(var.Administrator.TargetDir)\Xceed.Wpf.AvalonDock.Themes.VS2010.dll" />
-      </Component>
-      <Component Id="cmp2082E6F44E7442A2CF668AC1314841DE" Directory="INSTALLFOLDER" Guid="45319496-FB5B-461C-8E05-6F4FFA2A66DF">
-        <File Id="fil970A8461CFC3494D8628089C3DDA5992" KeyPath="yes" Source="$(var.Administrator.TargetDir)\Xceed.Wpf.DataGrid.dll" />
-      </Component>
-      <Component Id="cmpC85BD7478E073743A39F17DF06865203" Directory="INSTALLFOLDER" Guid="08D8C222-7BD0-48BD-997E-4E3C55A7A557">
-        <File Id="fil3DAD59899DDA1B0FCEDF95F84CB3C475" KeyPath="yes" Source="$(var.Administrator.TargetDir)\Xceed.Wpf.Toolkit.dll" />
-      </Component>
     </ComponentGroup>
   </Fragment>
 </Wix>
