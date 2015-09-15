@@ -5,6 +5,7 @@ using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows.Forms;
@@ -16,9 +17,11 @@ namespace Queue.UI.WinForms
         #region dependency
 
         [Dependency]
+        [Browsable(false)]
         public User CurrentUser { get; set; }
 
         [Dependency]
+        [Browsable(false)]
         public ServerService<IServerTcpService> ServerService { get; set; }
 
         #endregion dependency

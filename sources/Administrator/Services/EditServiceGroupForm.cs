@@ -128,7 +128,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    ServiceGroup = await taskPool.AddTask(channel.Service.EditServiceGroup(serviceGroup));
+                    serviceGroup = await taskPool.AddTask(channel.Service.EditServiceGroup(serviceGroup));
 
                     if (Saved != null)
                     {
@@ -181,7 +181,7 @@ namespace Queue.Administrator
                             Name = "Новая группа услуг",
                             Columns = 2,
                             Rows = 5,
-                            Color = "FFFFFF",
+                            Color = "#FFFFFF",
                             FontSize = 1
                         };
                     }

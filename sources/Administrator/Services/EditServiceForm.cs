@@ -64,6 +64,7 @@ namespace Queue.Administrator
                 linkTextBox.Text = service.Link;
                 maxSubjectsUpDown.Value = service.MaxSubjects;
                 maxEarlyDaysUpDown.Value = service.MaxEarlyDays;
+                maxClientRecallsUpDown.Value = service.MaxClientRecalls;
                 isUseTypeCheckBox.Checked = service.IsUseType;
                 isPlanSubjectsCheckBox.Checked = service.IsPlanSubjects;
                 clientCallDelayUpDown.Value = (int)service.ClientCallDelay.TotalSeconds;
@@ -167,7 +168,7 @@ namespace Queue.Administrator
                             EarlyRegistrator = all,
                             TimeIntervalRounding = TimeSpan.FromMinutes(5),
                             MaxSubjects = 5,
-                            Color = "FFFFFF",
+                            Color = "#FFFFFF",
                             FontSize = 1
                         };
                     }
@@ -197,7 +198,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    Service = await taskPool.AddTask(channel.Service.EditService(service));
+                    service = await taskPool.AddTask(channel.Service.EditService(service));
 
                     if (Saved != null)
                     {
@@ -322,6 +323,11 @@ namespace Queue.Administrator
         private void maxSubjectsUpDown_Leave(object sender, EventArgs e)
         {
             service.MaxSubjects = (int)maxSubjectsUpDown.Value;
+        }
+
+        private void maxClientRecallsUpDown_Leave(object sender, EventArgs e)
+        {
+            service.MaxClientRecalls = (int)maxClientRecallsUpDown.Value;
         }
 
         private void nameTextBox_Leave(object sender, EventArgs e)

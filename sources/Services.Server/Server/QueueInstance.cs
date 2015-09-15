@@ -39,6 +39,9 @@ namespace Queue.Services.Server
         {
             logger.Debug("Создание экземпляра очереди");
 
+            ServiceLocator.Current.GetInstance<UnityContainer>()
+                .BuildUp(this);
+
             TodayQueuePlan = new QueuePlan();
             TodayQueuePlan.Load(DateTime.Today);
 

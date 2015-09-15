@@ -66,6 +66,7 @@ namespace Queue.Operator
         private readonly ServerCallback serverCallback;
         private readonly ChannelManager<IServerTcpService> serverChannelManager;
         private readonly TaskPool taskPool;
+        private readonly TaskPool pingTaskPool;
         private BindingList<ClientRequestAdditionalService> additionalServices;
         private ClientRequestPlan currentClientRequestPlan;
         private BindingList<ClientRequestParameter> parameters;
@@ -73,7 +74,7 @@ namespace Queue.Operator
         private Channel<IHubQualityTcpService> pingQualityChannel;
         private byte qualityPanelDeviceId;
         private bool qualityPanelEnabled;
-        private byte step;
+        private byte step = byte.MaxValue;
 
         #endregion fields
 
@@ -351,6 +352,8 @@ namespace Queue.Operator
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
+            pingTaskPool = new TaskPool();
+
             pingServerTimer = new Timer();
             pingServerTimer.Elapsed += pingServerTimer_Elapsed;
 
@@ -372,6 +375,11 @@ namespace Queue.Operator
                 if (taskPool != null)
                 {
                     taskPool.Dispose();
+                }
+
+                if (pingTaskPool != null)
+                {
+                    pingTaskPool.Dispose();
                 }
 
                 #region timers
@@ -434,6 +442,7 @@ namespace Queue.Operator
             }
 
             taskPool.Cancel();
+            pingTaskPool.Cancel();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -486,13 +495,13 @@ namespace Queue.Operator
                             new ServerSubscribtionArgs { Operators = new DTO.Operator[] { CurrentOperator } });
                         pingServerChannel.Service.Subscribe(ServerServiceEventType.OperatorPlanMetricsUpdated,
                             new ServerSubscribtionArgs { Operators = new DTO.Operator[] { CurrentOperator } });
-                        CurrentClientRequestPlan = await taskPool.AddTask(pingServerChannel.Service.GetCurrentClientRequestPlan());
+                        CurrentClientRequestPlan = await pingTaskPool.AddTask(pingServerChannel.Service.GetCurrentClientRequestPlan());
                     }
 
-                    ServerDateTime.Sync(await taskPool.AddTask(pingServerChannel.Service.GetDateTime()));
+                    ServerDateTime.Sync(await pingTaskPool.AddTask(pingServerChannel.Service.GetDateTime()));
                     currentDateTimeLabel.Text = ServerDateTime.Now.ToLongTimeString();
 
-                    await taskPool.AddTask(pingServerChannel.Service.UserHeartbeat());
+                    await pingTaskPool.AddTask(pingServerChannel.Service.UserHeartbeat());
 
                     serverStateLabel.Image = Icons.online16x16;
                 }
@@ -512,7 +521,10 @@ namespace Queue.Operator
                 }
                 finally
                 {
-                    pingServerTimer.Start();
+                    if (!IsDisposed)
+                    {
+                        pingServerTimer.Start();
+                    }
                 }
             });
         }
@@ -542,7 +554,7 @@ namespace Queue.Operator
                             new HubQualityServiceSubscribtionArgs { DeviceId = qualityPanelDeviceId });
                     }
 
-                    await taskPool.AddTask(pingQualityChannel.Service.Heartbeat());
+                    await pingTaskPool.AddTask(pingQualityChannel.Service.Heartbeat());
 
                     qualityStateLabel.Image = Icons.online16x16;
                 }
@@ -561,7 +573,10 @@ namespace Queue.Operator
                 }
                 finally
                 {
-                    pingQualityTimer.Start();
+                    if (!IsDisposed)
+                    {
+                        pingQualityTimer.Start();
+                    }
                 }
             });
         }
@@ -822,6 +837,14 @@ namespace Queue.Operator
                         subjectsChangeButton.Enabled = true;
                     }
                 }
+            }
+        }
+
+        private void settingsButton_ButtonClick(object sender, EventArgs e)
+        {
+            using (var f = new SettingsForm())
+            {
+                f.ShowDialog();
             }
         }
 

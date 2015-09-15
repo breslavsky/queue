@@ -8,6 +8,7 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
+using System.ComponentModel;
 using System.ServiceModel;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
@@ -19,9 +20,11 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
+        [Browsable(false)]
         public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
+        [Browsable(false)]
         public ServerService<IServerTcpService> ServerService { get; set; }
 
         #endregion dependency

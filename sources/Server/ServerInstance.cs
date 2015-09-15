@@ -74,7 +74,7 @@ namespace Queue.Server
             {
                 {
                     var uri = new Uri(string.Format("{0}://{1}:{2}/", Schemes.NET_TCP, tcpService.Host, tcpService.Port));
-                    logger.Info("TCP service host uri = ", uri);
+                    logger.Info("TCP service host uri = {0}", uri);
 
                     var host = new ServerTcpServiceHost();
                     host.AddServiceEndpoint(typeof(IServerTcpService), Bindings.NetTcpBinding, uri);
@@ -90,7 +90,7 @@ namespace Queue.Server
             {
                 {
                     var uri = new Uri(string.Format("{0}://{1}:{2}/", Schemes.HTTP, httpService.Host, httpService.Port));
-                    logger.Info("HTTP service host uri = ", uri);
+                    logger.Info("HTTP service host uri = {0}", uri);
 
                     var host = new ServerHttpServiceHost();
                     var endpoint = host.AddServiceEndpoint(typeof(IHubQualityHttpService), Bindings.WebHttpBinding, uri);

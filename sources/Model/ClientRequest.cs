@@ -286,6 +286,7 @@ namespace Queue.Model
             switch (State)
             {
                 case ClientRequestState.Waiting:
+                case ClientRequestState.Calling:
                 case ClientRequestState.Postponed:
                 case ClientRequestState.Rendering:
                     State = ClientRequestState.Postponed;

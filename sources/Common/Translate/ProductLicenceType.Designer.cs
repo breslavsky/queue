@@ -61,7 +61,7 @@ namespace Queue.Common.Translate {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Commercial.
+        ///   Ищет локализованную строку, похожую на Коммерческая.
         /// </summary>
         public static string Commercial {
             get {
@@ -70,7 +70,7 @@ namespace Queue.Common.Translate {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Non commercial.
+        ///   Ищет локализованную строку, похожую на Не коммерческая.
         /// </summary>
         public static string NonCommercial {
             get {

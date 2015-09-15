@@ -80,10 +80,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Translate\ProductLicenceType.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ProductLicenceType.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Translate\ProductLicenceType.en-US.resx" />
     <EmbeddedResource Include="Translate\Language_short.en-US.resx" />
     <EmbeddedResource Include="Translate\Language_short.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -93,7 +90,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Language.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Translate\ProductLicenceType.en-US.resx" />
+    <EmbeddedResource Include="Translate\ProductLicenceType.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductLicenceType.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

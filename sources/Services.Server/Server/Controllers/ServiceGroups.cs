@@ -107,6 +107,7 @@ namespace Queue.Services.Server
                     serviceGroup.Columns = source.Columns;
                     serviceGroup.Rows = source.Rows;
                     serviceGroup.Color = source.Color;
+                    serviceGroup.FontSize = source.FontSize;
 
                     if (source.ParentGroup != null)
                     {

@@ -215,6 +215,7 @@
             this.fontSizeTrackBar.TabIndex = 18;
             this.fontSizeTrackBar.Value = 10;
             this.fontSizeTrackBar.ValueChanged += new System.EventHandler(this.fontSizeTrackBar_ValueChanged);
+            this.fontSizeTrackBar.Leave += new System.EventHandler(this.fontSizeTrackBar_Leave);
             // 
             // EditServiceGroupForm
             // 

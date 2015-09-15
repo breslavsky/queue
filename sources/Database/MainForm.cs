@@ -257,7 +257,7 @@ namespace Queue.Database
                             TimeIntervalRounding = TimeSpan.FromMinutes(5),
                             MaxEarlyDays = 30,
                             MaxClientRecalls = 2,
-                            Color = "0000FF",
+                            Color = "#0000FF",
                             FontSize = 1,
                             ClientRequire = true,
                             MaxSubjects = 5,
