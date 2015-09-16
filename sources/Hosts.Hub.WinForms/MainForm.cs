@@ -35,13 +35,17 @@ namespace Hosts.Hub.WinForms
         {
             InitializeComponent();
 
+            var container = new UnityContainer();
+            container.RegisterInstance(container);
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
+
             configuration = new ConfigurationManager(HostsConsts.HubApp, Environment.SpecialFolder.CommonApplicationData);
+            container.RegisterInstance(configuration);
+
             settings = configuration.GetSection<HubSettings>(HubSettings.SectionKey);
 
             string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.HubServiceExe);
             serviceManager = new ServiceManager(HostsConsts.HubServiceName, exePath);
-
-            RegisterContainer();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -89,14 +93,6 @@ namespace Hosts.Hub.WinForms
             }
 
             settingsTextBox.Text = JsonConvert.SerializeObject(export, Formatting.Indented);
-        }
-
-        private void RegisterContainer()
-        {
-            var container = new UnityContainer();
-            container.RegisterInstance(container);
-            container.RegisterInstance(configuration);
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 
         private void startButton_Click(object sender, EventArgs e)

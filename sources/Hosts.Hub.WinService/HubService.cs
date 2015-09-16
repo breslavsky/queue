@@ -37,6 +37,7 @@ namespace Hosts.Hub.WinService
             try
             {
                 container = new UnityContainer();
+                container.RegisterInstance(container);
                 ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
                 configuration = new ConfigurationManager(HostsConsts.HubApp, Environment.SpecialFolder.CommonApplicationData);
