@@ -1,9 +1,5 @@
-﻿using Queue.Common;
-using System;
+﻿using System;
 using System.Configuration;
-using System.Globalization;
-using System.Reflection;
-using System.Xml;
 
 namespace Queue.Hub.Settings
 {
@@ -14,10 +10,7 @@ namespace Queue.Hub.Settings
 
         public override ConfigurationElementCollectionType CollectionType
         {
-            get
-            {
-                return ConfigurationElementCollectionType.BasicMapAlternate;
-            }
+            get { return ConfigurationElementCollectionType.BasicMapAlternate; }
         }
 
         public void Add(DriverElementConfig element)
@@ -28,10 +21,7 @@ namespace Queue.Hub.Settings
 
         protected override string ElementName
         {
-            get
-            {
-                return PropertyName;
-            }
+            get { return PropertyName; }
         }
 
         protected override bool IsElementName(string elementName)
@@ -56,10 +46,7 @@ namespace Queue.Hub.Settings
 
         public DriverConfig this[int idx]
         {
-            get
-            {
-                return ((DriverElementConfig)BaseGet(idx)).Config;
-            }
+            get { return ((DriverElementConfig)BaseGet(idx)).Config; }
         }
     }
 }
