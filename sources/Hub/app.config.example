@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <section name="hub" type="Queue.Hub.Settings.HubSettings, Queue.Hub, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+  </configSections>
+  <hub language="ru_RU">
+    <services>
+      <tcpService enabled="true" host="localhost" port="4511" />
+      <httpService enabled="true" host="localhost" port="4512" />
+    </services>
+    <drivers>
+		<display>
+			<driver name="svetovodDisplay" 
+					enabled="true" 
+					assembly="Queue.Hub"
+					settings="Queue.Hub.Svetovod.SvetovodDisplayDriverConfig" 
+					type="Queue.Hub.Svetovod.SvetovodDisplayDriver"
+					port="COM2" 
+					deviceId="0" >
+				<connections>
+					<connection sysnum="0" type="segment" width="4" />
+					<connection sysnum="1" type="matrix" width="32" height="12"/>
+				</connections>
+			</driver>
+		</display>
+		<quality>
+			<driver name="svetovodQualityPanel" 
+					enabled="true" 
+					assembly="Queue.Hub"
+					settings="Queue.Hub.Svetovod.SvetovodQualityPanelDriverConfig" 
+					type="Queue.Hub.Svetovod.SvetovodQualityPanelDriver"
+					port="COM2" deviceId="0" />
+		</quality>
+    </drivers>
+  </hub>
+</configuration>

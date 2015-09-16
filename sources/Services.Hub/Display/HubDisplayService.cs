@@ -4,7 +4,6 @@ using Queue.Services.Common;
 using Queue.Services.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,13 +53,13 @@ namespace Queue.Services.Hub
             return await Task.Run(() => message);
         }
 
-        public async Task ShowNumber(byte deviceId, short number)
+        public async Task ShowText(byte deviceId, string text)
         {
             await Task.Run(() =>
             {
                 foreach (var d in Drivers)
                 {
-                    d.ShowNumber(deviceId, number);
+                    d.ShowText(deviceId, text);
                 }
             });
         }

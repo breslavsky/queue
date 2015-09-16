@@ -54,8 +54,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Junte.Configuration">
-      <HintPath>..\packages\Junte.Configuration.1.0.1.0\lib\net45\Junte.Configuration.dll</HintPath>
+    <Reference Include="Junte.Configuration, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Junte.Configuration.1.0.2.0\lib\net45\Junte.Configuration.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Junte.Parallel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -93,6 +94,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -114,15 +116,18 @@
     <Compile Include="Settings\ServiceConfig.cs" />
     <Compile Include="Settings\ServicesConfig.cs" />
     <Compile Include="Settings\TcpServiceConfig.cs" />
-    <Compile Include="Settings\DisplayDriverConfig.cs" />
-    <Compile Include="Settings\QualityDriverConfig.cs" />
+    <Compile Include="Svetovod\Display\ISvetovodDisplayConnection.cs" />
+    <Compile Include="Svetovod\Display\SvetovodDisplayConnectionCollection.cs" />
+    <Compile Include="Svetovod\Display\SvetovodDisplayConnectionConfig.cs" />
+    <Compile Include="Svetovod\Display\SvetovodDisplayType.cs" />
     <Compile Include="Svetovod\SvetovodConnection.cs" />
-    <Compile Include="Svetovod\SvetovodDisplayDriver.cs" />
-    <Compile Include="Svetovod\SvetovodQualityPanelDriver.cs" />
-    <Compile Include="Svetovod\SvetovodQualityPanelConnection.cs" />
-    <Compile Include="Svetovod\SvetovodQualityPanelDriverConfig.cs" />
-    <Compile Include="Svetovod\SvetovodDisplayDriverConfig.cs" />
-    <Compile Include="Svetovod\SvetovodDisplayConnection.cs" />
+    <Compile Include="Svetovod\Display\SvetovodDisplayDriver.cs" />
+    <Compile Include="Svetovod\Display\SvetovodMatrixDisplayConnection.cs" />
+    <Compile Include="Svetovod\Quality\SvetovodQualityPanelDriver.cs" />
+    <Compile Include="Svetovod\Quality\SvetovodQualityPanelConnection.cs" />
+    <Compile Include="Svetovod\Quality\SvetovodQualityPanelDriverConfig.cs" />
+    <Compile Include="Svetovod\Display\SvetovodDisplayDriverConfig.cs" />
+    <Compile Include="Svetovod\Display\SvetovodSegmentDisplayConnection.cs" />
     <None Include="default.config" />
     <None Include="packages.config" />
     <None Include="Svetovod\doc.pdf" />

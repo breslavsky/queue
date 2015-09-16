@@ -37,8 +37,9 @@
     <ApplicationIcon>hub.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Junte.Configuration">
-      <HintPath>..\packages\Junte.Configuration.1.0.1.0\lib\net45\Junte.Configuration.dll</HintPath>
+    <Reference Include="Junte.Configuration, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Junte.Configuration.1.0.2.0\lib\net45\Junte.Configuration.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Junte.Translation">
       <HintPath>..\packages\Junte.Translation.1.0.1.0\lib\net45\Junte.Translation.dll</HintPath>
