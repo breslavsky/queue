@@ -1,5 +1,4 @@
 ﻿using Junte.Data.NHibernate;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NHibernate.Criterion;
 using NLog;
@@ -8,10 +7,7 @@ using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Queue.Services.Server
@@ -86,7 +82,7 @@ namespace Queue.Services.Server
             if (currentUser is Administrator
                 && role.HasFlag(UserRole.Administrator))
             {
-                Administrator administrator = currentUser as Administrator;
+                var administrator = currentUser as Administrator;
                 if (permissions != null && !administrator.Permissions.HasFlag(permissions))
                 {
                     throw new FaultException("Недостаточно прав для доступа");
