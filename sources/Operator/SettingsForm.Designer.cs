@@ -46,7 +46,6 @@
             // 
             // hubSettingsUserControl
             // 
-            this.hubSettingsUserControl.HubQualitySettings = null;
             this.hubSettingsUserControl.Location = new System.Drawing.Point(5, 20);
             this.hubSettingsUserControl.Name = "hubSettingsUserControl";
             this.hubSettingsUserControl.Size = new System.Drawing.Size(280, 65);

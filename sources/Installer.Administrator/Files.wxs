@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Fragment>
-    <DirectoryRef Id="INSTALLFOLDER" />
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Directory Id="en_US" Name="en-US" />
+      <Directory Id="zh_CN" Name="zh-CN" />
+    </DirectoryRef>
   </Fragment>
   <Fragment>
 
@@ -123,6 +126,30 @@
       </Component>
       <Component Id="_6B55A27BA3B447AFA8178394246A4AAA" Directory="INSTALLFOLDER" Guid="6B55A27B-A3B4-47AF-A817-8394246A4AAA">
         <File Id="Queue_Operator_exe_config" KeyPath="yes" Source="$(var.Administrator.TargetDir)\Queue.Operator.exe.config" />
+      </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="Resources_en_US">
+      <Component Id="_C7168B866DE140F398297955A3FFAAC8" Directory="en_US" Guid="C7168B86-6DE1-40F3-9829-7955A3FFAAC8">
+        <File Id="en_US_Queue_Administrator_resources_dll" KeyPath="yes" Source="$(var.Administrator.TargetDir)\en-US\Queue.Administrator.resources.dll" />
+      </Component>
+      <Component Id="_89AFE4885C3F41A2A6ABBDD4B40A3204" Directory="en_US" Guid="89AFE488-5C3F-41A2-A6AB-BDD4B40A3204">
+        <File Id="en_US_Queue_Common_resources_dll" KeyPath="yes" Source="$(var.Administrator.TargetDir)\en-US\Queue.Common.resources.dll" />
+      </Component>
+      <Component Id="_C9B0DFAC8FC140ACA0971D578E45C6BA" Directory="en_US" Guid="C9B0DFAC-8FC1-40AC-A097-1D578E45C6BA">
+        <File Id="en_US_Queue_Model_Common_resources_dll" KeyPath="yes" Source="$(var.Administrator.TargetDir)\en-US\Queue.Model.Common.resources.dll" />
+      </Component>
+      <Component Id="_2CD3DBD2BE734676A0C63F499EE86153" Directory="en_US" Guid="2CD3DBD2-BE73-4676-A0C6-3F499EE86153">
+        <File Id="en_US_Queue_UI_WinForms_resources_dll" KeyPath="yes" Source="$(var.Administrator.TargetDir)\en-US\Queue.UI.WinForms.resources.dll" />
+      </Component>
+      <Component Id="_CB7F08B911F14B799572BBE5DC6498FE" Directory="en_US" Guid="CB7F08B9-11F1-4B79-9572-BBE5DC6498FE">
+        <File Id="en_US_Queue_UI_WPF_resources_dll" KeyPath="yes" Source="$(var.Administrator.TargetDir)\en-US\Queue.UI.WPF.resources.dll" />
+      </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="Resources_zh_CN">
+      <Component Id="_5D83502AB5494EFE97CEC21B51839CFA" Directory="zh_CN" Guid="5D83502A-B549-4EFE-97CE-C21B51839CFA">
+        <File Id="zh_CN_Queue_UI_WinForms_resources_dll" KeyPath="yes" Source="$(var.Administrator.TargetDir)\zh-CN\Queue.UI.WinForms.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>

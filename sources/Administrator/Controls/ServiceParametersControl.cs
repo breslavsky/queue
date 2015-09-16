@@ -19,10 +19,12 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
+        [ReadOnly(true)]
         [Browsable(false)]
         public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
+        [ReadOnly(true)]
         [Browsable(false)]
         public ServerService<IServerTcpService> ServerService { get; set; }
 

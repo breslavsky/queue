@@ -17,10 +17,12 @@ namespace Queue.UI.WinForms
         #region dependency
 
         [Dependency]
+        [ReadOnly(true)]
         [Browsable(false)]
         public User CurrentUser { get; set; }
 
         [Dependency]
+        [ReadOnly(true)]
         [Browsable(false)]
         public ServerService<IServerTcpService> ServerService { get; set; }
 
