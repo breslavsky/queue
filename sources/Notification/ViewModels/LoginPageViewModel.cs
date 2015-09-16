@@ -28,7 +28,7 @@ namespace Queue.Notification.ViewModels
         private AccentColorComboBoxItem selectedAccent;
 
         private TaskPool taskPool;
-        private ChannelManager<IServerTcpService> channelManager;
+        private DuplexChannelManager<IServerTcpService> channelManager;
 
         public event EventHandler OnConnected;
 
@@ -128,7 +128,7 @@ namespace Queue.Notification.ViewModels
         private void Connect()
         {
             ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
-            channelManager = new ChannelManager<IServerTcpService>(ChannelBuilder);
+            channelManager = new DuplexChannelManager<IServerTcpService>(ChannelBuilder);
 
             SaveSettings();
 

@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,7 +45,7 @@ namespace Queue.Operator
         public HubQualitySettings HubQualitySettings { get; set; }
 
         [Dependency]
-        public ServerService<IServerTcpService> ServerService { get; set; }
+        public ServerService ServerService { get; set; }
 
         #endregion dependency
 
@@ -62,9 +63,9 @@ namespace Queue.Operator
         private readonly Timer pingQualityTimer;
         private readonly Timer pingServerTimer;
         private readonly HubQualityCallback qualityCallback;
-        private readonly ChannelManager<IHubQualityTcpService> qualityChannelManager;
+        private readonly DuplexChannelManager<IHubQualityTcpService> qualityChannelManager;
         private readonly ServerCallback serverCallback;
-        private readonly ChannelManager<IServerTcpService> serverChannelManager;
+        private readonly DuplexChannelManager<IServerTcpService> serverChannelManager;
         private readonly TaskPool taskPool;
         private readonly TaskPool pingTaskPool;
         private BindingList<ClientRequestAdditionalService> additionalServices;
@@ -154,6 +155,7 @@ namespace Queue.Operator
                             switch (clientRequest.State)
                             {
                                 case ClientRequestState.Waiting:
+                                case ClientRequestState.Redirected:
                                 case ClientRequestState.Postponed:
                                     Step = ClientWaiting;
                                     break;
@@ -173,6 +175,7 @@ namespace Queue.Operator
                         switch (clientRequest.State)
                         {
                             case ClientRequestState.Waiting:
+                            case ClientRequestState.Redirected:
                             case ClientRequestState.Postponed:
 
                                 if (IsAutocall && currentClientRequestPlan.StartTime <= ServerDateTime.Now.TimeOfDay)
@@ -203,8 +206,9 @@ namespace Queue.Operator
                         subjectsUpDown.Value = 0;
                         clientTextBlock.Text = string.Empty;
                         serviceTextBlock.Text = string.Empty;
-                        serviceTypeControl.Empty();
-                        serviceStepControl.Empty();
+                        serviceTypeControl.Reset();
+                        serviceStepControl.Reset();
+                        redirectOperatorControl.Reset();
                         stateTextBlock.Text = string.Empty;
                         stateTextBlock.BackColor = Color.White;
                         parametersGridView.Rows.Clear();
@@ -253,29 +257,7 @@ namespace Queue.Operator
 
                 if (HubQualitySettings.Enabled && qualityPanelEnabled)
                 {
-                    Invoke(new MethodInvoker(async () =>
-                    {
-                        using (var channel = qualityChannelManager.CreateChannel())
-                        {
-                            try
-                            {
-                                await taskPool.AddTask(channel.Service.Disable(qualityPanelDeviceId));
-                                qualityPanelEnabled = false;
-                            }
-                            catch (OperationCanceledException) { }
-                            catch (CommunicationObjectAbortedException) { }
-                            catch (ObjectDisposedException) { }
-                            catch (InvalidOperationException) { }
-                            catch (FaultException exception)
-                            {
-                                logger.Warn(exception.Reason);
-                            }
-                            catch (Exception ex)
-                            {
-                                logger.Error(ex);
-                            }
-                        }
-                    }));
+                    Invoke(new MethodInvoker(QualityPanelDisable));
                 }
 
                 switch (step)
@@ -300,30 +282,10 @@ namespace Queue.Operator
 
                         if (HubQualitySettings.Enabled && !qualityPanelEnabled)
                         {
-                            Invoke(new MethodInvoker(async () =>
-                            {
-                                using (var channel = qualityChannelManager.CreateChannel())
-                                {
-                                    try
-                                    {
-                                        await taskPool.AddTask(channel.Service.Enable(qualityPanelDeviceId));
-                                        qualityPanelEnabled = true;
-                                    }
-                                    catch (OperationCanceledException) { }
-                                    catch (CommunicationObjectAbortedException) { }
-                                    catch (ObjectDisposedException) { }
-                                    catch (InvalidOperationException) { }
-                                    catch (FaultException exception)
-                                    {
-                                        logger.Warn(exception.Reason);
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        logger.Error(ex);
-                                    }
-                                }
-                            }));
+                            Invoke(new MethodInvoker(QualityPanelEnable));
                         }
+
+                        Invoke(new MethodInvoker(LoadRedirectOperators));
 
                         break;
                 }
@@ -445,7 +407,7 @@ namespace Queue.Operator
             pingTaskPool.Cancel();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private async void MainForm_Load(object sender, EventArgs e)
         {
             serviceTypeControl.Initialize<ServiceType>();
 
@@ -639,6 +601,77 @@ namespace Queue.Operator
         }
 
         #endregion callbacks
+
+        private async void LoadRedirectOperators()
+        {
+            using (var channel = serverChannelManager.CreateChannel())
+            {
+                try
+                {
+                    redirectOperatorControl.Initialize(await taskPool.AddTask(channel.Service.GetRedirectOperatorsLinks()));
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+            }
+        }
+
+        private async void QualityPanelEnable()
+        {
+            using (var channel = qualityChannelManager.CreateChannel())
+            {
+                try
+                {
+                    await taskPool.AddTask(channel.Service.Enable(qualityPanelDeviceId));
+                    qualityPanelEnabled = true;
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    logger.Warn(exception.Reason);
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex);
+                }
+            }
+        }
+
+        private async void QualityPanelDisable()
+        {
+            using (var channel = qualityChannelManager.CreateChannel())
+            {
+                try
+                {
+                    await taskPool.AddTask(channel.Service.Disable(qualityPanelDeviceId));
+                    qualityPanelEnabled = false;
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    logger.Warn(exception.Reason);
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex);
+                }
+            }
+        }
 
         private async void mainTabControl_Selecting(object sender, TabControlCancelEventArgs e)
         {
@@ -1114,6 +1147,46 @@ namespace Queue.Operator
                     digitalTimer.Reset();
                 }
             }
+        }
+
+        private async void targetOperatorControl_SelectedChanged(object sender, EventArgs e)
+        {
+            var redirectOperator = redirectOperatorControl.Selected<QueueOperator>();
+            if (redirectOperator != null)
+            {
+                using (var channel = serverChannelManager.CreateChannel())
+                {
+                    try
+                    {
+                        redirectOperatorControl.Enabled = false;
+
+                        await taskPool.AddTask(channel.Service.RedirectCurrentClientRequest(redirectOperator.Id));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                    finally
+                    {
+                        redirectOperatorControl.Enabled = true;
+
+                        digitalTimer.Reset();
+                    }
+                }
+            }
+        }
+
+        private void reloadRedirectOperator_Click(object sender, EventArgs e)
+        {
+            LoadRedirectOperators();
         }
 
         #endregion step 3

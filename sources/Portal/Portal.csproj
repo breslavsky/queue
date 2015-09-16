@@ -62,9 +62,9 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Junte.WCF, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Junte.WCF, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.WCF.1.0.2.0\lib\net45\Junte.WCF.dll</HintPath>
+      <HintPath>..\packages\Junte.WCF.1.0.3.0\lib\net45\Junte.WCF.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

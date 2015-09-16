@@ -58,8 +58,9 @@ namespace Queue.Services.Server
 
                 switch (clientRequest.State)
                 {
-                    case ClientRequestState.Postponed:
                     case ClientRequestState.Waiting:
+                    case ClientRequestState.Redirected:
+                    case ClientRequestState.Postponed:
                         startTime = clientRequest.RequestTime;
                         if (startTime < schedule.StartTime)
                         {

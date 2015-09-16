@@ -69,7 +69,7 @@ namespace Queue.Terminal.ViewModels
         public Navigator Navigator { get; set; }
 
         [Dependency]
-        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
         public TaskPool TaskPool { get; set; }

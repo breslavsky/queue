@@ -72,9 +72,6 @@
       <Component Id="_0DBAED7D859E4EB8B95FB2543DA5D828" Directory="INSTALLFOLDER" Guid="0DBAED7D-859E-4EB8-B95F-B2543DA5D828">
         <File Id="AutoMapper_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\AutoMapper.dll" />
       </Component>
-      <Component Id="_BC37862B74ED44F19C11A15B19E37F19" Directory="INSTALLFOLDER" Guid="BC37862B-74ED-44F1-9C11-A15B19E37F19">
-        <File Id="AutoMapper_Net4_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\AutoMapper.Net4.dll" />
-      </Component>
     </ComponentGroup>
 
     <ComponentGroup Id="UI">

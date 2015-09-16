@@ -8,6 +8,7 @@
         Rendering,
         Postponed,
         Rendered,
-        Canceled
+        Canceled,
+        Redirected
     }
 }

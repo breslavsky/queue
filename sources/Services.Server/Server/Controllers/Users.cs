@@ -170,6 +170,29 @@ namespace Queue.Services.Server
             });
         }
 
+        public async Task<DTO.IdentifiedEntityLink[]> GetRedirectOperatorsLinks()
+        {
+            return await Task.Run(() =>
+            {
+                CheckPermission(UserRole.Operator);
+
+                var queueOperator = (Operator)currentUser;
+
+                using (var session = SessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    var operators = session.CreateCriteria<Operator>()
+                        .AddOrder(Order.Asc("Surname"))
+                        .AddOrder(Order.Asc("Name"))
+                        .AddOrder(Order.Asc("Patronymic"))
+                        .Add(Restrictions.Not(Restrictions.Eq("Id", queueOperator.Id)))
+                        .Add(Restrictions.Gt("Heartbeat", DateTime.Now - TimeSpan.FromSeconds(User.GoneTimeout)))
+                        .List<IdentifiedEntity>();
+                    return Mapper.Map<IList<IdentifiedEntity>, DTO.IdentifiedEntityLink[]>(operators);
+                }
+            });
+        }
+
         public async Task<DTO.User> UserLogin(Guid userId, string password)
         {
             return await Task.Run(() =>
@@ -191,7 +214,10 @@ namespace Queue.Services.Server
 
                     var hasGone = user.HasGone;
 
-                    user.SessionId = Guid.NewGuid();
+                    if (user.HasLost)
+                    {
+                        user.SessionId = Guid.NewGuid();
+                    }
                     user.Heartbeat = DateTime.Now;
                     session.Save(user);
 

@@ -1,5 +1,4 @@
-﻿using Junte.Data.Common;
-using System;
+﻿using System;
 using System.ServiceModel;
 
 namespace Queue.Services.Contracts

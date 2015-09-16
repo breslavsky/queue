@@ -25,13 +25,13 @@ namespace Queue.Administrator
         [Dependency]
         [ReadOnly(true)]
         [Browsable(false)]
-        public ServerService<IServerTcpService> ServerService { get; set; }
+        public ServerService ServerService { get; set; }
 
         #endregion dependency
 
         #region fields
 
-        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private DefaultConfig config;
 

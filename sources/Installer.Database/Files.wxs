@@ -5,26 +5,11 @@
   </Fragment>
   <Fragment>
     <ComponentGroup Id="CoreFiles">
-      <Component Id="cmpFD65F52CD5EC0B46A750F8EEFC3D4422" Directory="INSTALLFOLDER" Guid="5E0CD27E-667B-4219-95D8-6827E747D034">
-        <File Id="fil1F7E777B326B02F60B86F747002F8605" KeyPath="yes" Source="$(var.Database.TargetDir)\AutoMapper.dll" />
-      </Component>
-      <Component Id="cmpEEC7AC6B3009FA88C57EB2972A7A8F5B" Directory="INSTALLFOLDER" Guid="453EE595-0F10-448C-9281-DD46BD8D1675">
-        <File Id="fil4F01E53E158206D8C82AC24B4DFEE253" KeyPath="yes" Source="$(var.Database.TargetDir)\AutoMapper.Net4.dll" />
-      </Component>
       <Component Id="cmp730E2FFFAB351C1FBB3C16D211F149E6" Directory="INSTALLFOLDER" Guid="F20C3FD2-D0B7-4496-8179-314147608AD1">
         <File Id="fil82F4EB518EA8CC3FD38BEB0C241522A6" KeyPath="yes" Source="$(var.Database.TargetDir)\FluentNHibernate.dll" />
       </Component>
-      <Component Id="cmp695F3B89FCD90C669B1958F6D20D523D" Directory="INSTALLFOLDER" Guid="8ABDB794-C6EE-41E7-89BB-4F87844E891D">
-        <File Id="filECAAB6E721DE437D50D73A1F554EB461" KeyPath="yes" Source="$(var.Database.TargetDir)\Icons.resx" />
-      </Component>
-      <Component Id="cmp352B68CBE9EBE02EAAF5E18B20685A67" Directory="INSTALLFOLDER" Guid="2B124939-227A-4781-89DC-9A320A3F26EB">
-        <File Id="filA63A4BC4A9B457FDF7E41EF87D6642AB" KeyPath="yes" Source="$(var.Database.TargetDir)\ICSharpCode.TextEditor.dll" />
-      </Component>
       <Component Id="cmpAD8551805C0E384D4FD6CD718C5E8381" Directory="INSTALLFOLDER" Guid="E9395D5D-E913-4537-8F5A-66CCFB053DDB">
         <File Id="fil1300C7FBD2C9D42B5651E43A08F7DA1E" KeyPath="yes" Source="$(var.Database.TargetDir)\Iesi.Collections.dll" />
-      </Component>
-      <Component Id="cmp0A57C036E7477C8B804C1F689B87C13B" Directory="INSTALLFOLDER" Guid="FA136BD0-59AA-454C-8B37-4F6506D3B162">
-        <File Id="fil49662034001F51D47047F3B3EB3856D0" KeyPath="yes" Source="$(var.Database.TargetDir)\Junte.Data.Common.dll" />
       </Component>
       <Component Id="cmp391ED0FC564C14BE2F75C7141F49032B" Directory="INSTALLFOLDER" Guid="AB938EC0-909A-4DAE-B1D2-EDF51CE2364B">
         <File Id="fil932D4827097051DB5496919693E3018A" KeyPath="yes" Source="$(var.Database.TargetDir)\Junte.Data.NHibernate.dll" />

@@ -1,7 +1,10 @@
 ﻿using Junte.WCF;
-using Queue.Services.Common;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Queue.Services.Contracts
 {
@@ -17,27 +20,19 @@ namespace Queue.Services.Contracts
                 Bindings.NetTcpBinding, new EndpointAddress(builder.Uri));
         }
 
-        public ChannelManager<T> CreateChannelManager(Guid SessionId)
+        public DuplexChannelManager<T> CreateChannelManager(Guid SessionId)
         {
-            return new ChannelManager<T>(ChannelBuilder, SessionId);
+            return new DuplexChannelManager<T>(ChannelBuilder, SessionId);
         }
 
-        public ChannelManager<T> CreateChannelManager()
+        public DuplexChannelManager<T> CreateChannelManager()
         {
-            return new ChannelManager<T>(ChannelBuilder);
+            return new DuplexChannelManager<T>(ChannelBuilder);
         }
 
         public void Dispose()
         {
             ChannelBuilder.Dispose();
-        }
-    }
-
-    public class HubQualityService : DuplexClientService<IHubQualityTcpService, HubQualityCallback>
-    {
-        public HubQualityService(string endpoint, string path)
-            : base(endpoint, path)
-        {
         }
     }
 }

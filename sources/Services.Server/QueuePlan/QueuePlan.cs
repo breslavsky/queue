@@ -131,6 +131,10 @@ namespace Queue.Services.Server
                     Predicate = new Predicate<ClientRequest>(r => r.State == ClientRequestState.Rendering)
                 },
                 new {
+                    Name = "Переданные",
+                    Predicate = new Predicate<ClientRequest>(r => r.State == ClientRequestState.Redirected)
+                },
+                new {
                     Name = "Отложенные",
                     Predicate = new Predicate<ClientRequest>(r => r.State == ClientRequestState.Postponed)
                 },

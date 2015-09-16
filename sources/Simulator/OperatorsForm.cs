@@ -18,7 +18,7 @@ namespace Queue.Simulator
     {
         private CancellationTokenSource cancellationTokenSource;
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
+        private DuplexChannelManager<IServerTcpService> channelManager;
         private User currentUser;
         private Random random;
         private TaskPool taskPool;
@@ -31,7 +31,7 @@ namespace Queue.Simulator
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = new DuplexChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
 
             random = new Random();

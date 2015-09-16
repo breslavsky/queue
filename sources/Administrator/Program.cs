@@ -24,7 +24,7 @@ namespace Queue.Administrator
         private static AdministratorSettings administratorSettings;
         private static LoginSettings loginSettings;
         private static LoginFormSettings loginFormSettings;
-        private static ServerService<IServerTcpService> serverService;
+        private static ServerService serverService;
         private static QueueAdministrator currentUser;
 
         [STAThread]
@@ -56,7 +56,7 @@ namespace Queue.Administrator
 
             if (options.AutoLogin)
             {
-                serverService = new ServerService<IServerTcpService>(options.Endpoint, ServerServicesPaths.Server);
+                serverService = new ServerService(options.Endpoint, ServerServicesPaths.Server);
                 container.RegisterInstance(serverService);
 
                 var channelManager = serverService.CreateChannelManager();
@@ -85,7 +85,7 @@ namespace Queue.Administrator
 
                         loginForm.Dispose();
 
-                        serverService = new ServerService<IServerTcpService>(loginSettings.Endpoint, ServerServicesPaths.Server);
+                        serverService = new ServerService(loginSettings.Endpoint, ServerServicesPaths.Server);
                         container.RegisterInstance(serverService);
 
                         var mainForm = new AdministratorForm();

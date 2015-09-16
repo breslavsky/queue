@@ -22,7 +22,7 @@ namespace Queue.Operator
         private static HubQualitySettings hubQualitySettings;
         private static LoginSettings loginSettings;
         private static LoginFormSettings loginFormSettings;
-        private static ServerService<IServerTcpService> serverService;
+        private static ServerService serverService;
         private static HubQualityService hubQualityService;
         private static QueueOperator currentUser;
 
@@ -55,7 +55,7 @@ namespace Queue.Operator
 
             if (options.AutoLogin)
             {
-                serverService = new ServerService<IServerTcpService>(options.Endpoint, ServerServicesPaths.Server);
+                serverService = new ServerService(options.Endpoint, ServerServicesPaths.Server);
 
                 var channelManager = serverService.CreateChannelManager();
                 using (var channel = channelManager.CreateChannel())
@@ -83,8 +83,8 @@ namespace Queue.Operator
 
                         loginForm.Dispose();
 
-                        serverService = new ServerService<IServerTcpService>(loginSettings.Endpoint, ServerServicesPaths.Server);
-                        container.RegisterInstance<ServerService<IServerTcpService>>(serverService);
+                        serverService = new ServerService(loginSettings.Endpoint, ServerServicesPaths.Server);
+                        container.RegisterInstance<ServerService>(serverService);
 
                         var mainForm = new OperatorForm();
                         Application.Run(mainForm);

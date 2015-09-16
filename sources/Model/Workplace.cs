@@ -3,6 +3,7 @@ using Junte.Translation;
 using NHibernate.Mapping.Attributes;
 using NHibernate.Validator.Constraints;
 using Queue.Model.Common;
+using System.Collections.Generic;
 
 namespace Queue.Model
 {
@@ -38,7 +39,18 @@ namespace Queue.Model
 
         public override string ToString()
         {
-            return string.Format("{0} {1}{2}", Translater.Enum(Type), Number, Translater.Enum(Modificator));
+            var chunks = new List<string>() { Translater.Enum(Type) };
+            if (Number > 0)
+            {
+                chunks.Add(Number.ToString());
+
+                var modificator = Translater.Enum(Modificator);
+                if (!string.IsNullOrEmpty(modificator))
+                {
+                    chunks.Add(modificator);
+                }
+            }
+            return string.Join(" ", chunks);
         }
     }
 }

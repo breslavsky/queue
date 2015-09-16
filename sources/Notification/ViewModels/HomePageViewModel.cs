@@ -72,7 +72,7 @@ namespace Queue.Notification.ViewModels
         public event EventHandler<int> RequestsLengthChanged;
 
         [Dependency]
-        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
         public TaskPool TaskPool { get; set; }

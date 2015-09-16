@@ -32,7 +32,7 @@ namespace Queue.Terminal.ViewModels
 
         private IUnityContainer container;
         private TaskPool taskPool;
-        private ChannelManager<IServerTcpService> channelManager;
+        private DuplexChannelManager<IServerTcpService> channelManager;
         private Navigator navigator;
         private DefaultConfig defaultConfig;
         private TerminalWindow screen;
@@ -76,7 +76,7 @@ namespace Queue.Terminal.ViewModels
             var x = container.Registrations;
 
             taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
-            channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
+            channelManager = ServiceLocator.Current.GetInstance<DuplexChannelManager<IServerTcpService>>();
             navigator = ServiceLocator.Current.GetInstance<Navigator>();
             defaultConfig = ServiceLocator.Current.GetInstance<DefaultConfig>();
 

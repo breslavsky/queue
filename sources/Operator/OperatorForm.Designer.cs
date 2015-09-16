@@ -18,14 +18,14 @@ namespace Queue.Operator
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OperatorForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.serverStateLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.qualityStateLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -43,6 +43,16 @@ namespace Queue.Operator
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.currentClientRequestTab = new System.Windows.Forms.TabPage();
             this.numberLabel = new System.Windows.Forms.Label();
+            this.step3Panel = new System.Windows.Forms.Panel();
+            this.reloadRedirectOperator = new System.Windows.Forms.Button();
+            this.renderedButton = new System.Windows.Forms.Button();
+            this.returnButton = new System.Windows.Forms.Button();
+            this.postponeButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.postponeMinutesUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.redirectOperatorControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.numberTextBlock = new System.Windows.Forms.Label();
             this.isPriorityCheckBox = new System.Windows.Forms.CheckBox();
             this.requestTimeLabel = new System.Windows.Forms.Label();
@@ -84,13 +94,6 @@ namespace Queue.Operator
             this.recallingButton = new System.Windows.Forms.Button();
             this.renderingButton = new System.Windows.Forms.Button();
             this.absenceButton = new System.Windows.Forms.Button();
-            this.step3Panel = new System.Windows.Forms.Panel();
-            this.postponeButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.returnButton = new System.Windows.Forms.Button();
-            this.postponeMinutesUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.renderedButton = new System.Windows.Forms.Button();
             this.clientRequestsTab = new System.Windows.Forms.TabPage();
             this.clientRequestsGridView = new System.Windows.Forms.DataGridView();
             this.numberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -104,6 +107,8 @@ namespace Queue.Operator
             this.panel1.SuspendLayout();
             this.mainTabControl.SuspendLayout();
             this.currentClientRequestTab.SuspendLayout();
+            this.step3Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).BeginInit();
             this.subjectsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).BeginInit();
             this.clientRequestTabControl.SuspendLayout();
@@ -116,8 +121,6 @@ namespace Queue.Operator
             this.stepPanel.SuspendLayout();
             this.step1Panel.SuspendLayout();
             this.step2Panel.SuspendLayout();
-            this.step3Panel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).BeginInit();
             this.clientRequestsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clientRequestsGridView)).BeginInit();
             this.SuspendLayout();
@@ -297,6 +300,118 @@ namespace Queue.Operator
             this.numberLabel.Size = new System.Drawing.Size(41, 13);
             this.numberLabel.TabIndex = 0;
             this.numberLabel.Text = "Номер";
+            // 
+            // step3Panel
+            // 
+            this.step3Panel.Controls.Add(this.reloadRedirectOperator);
+            this.step3Panel.Controls.Add(this.renderedButton);
+            this.step3Panel.Controls.Add(this.returnButton);
+            this.step3Panel.Controls.Add(this.postponeButton);
+            this.step3Panel.Controls.Add(this.label1);
+            this.step3Panel.Controls.Add(this.postponeMinutesUpDown);
+            this.step3Panel.Controls.Add(this.label2);
+            this.step3Panel.Controls.Add(this.label3);
+            this.step3Panel.Controls.Add(this.redirectOperatorControl);
+            this.step3Panel.Location = new System.Drawing.Point(0, 165);
+            this.step3Panel.Margin = new System.Windows.Forms.Padding(0);
+            this.step3Panel.Name = "step3Panel";
+            this.step3Panel.Size = new System.Drawing.Size(155, 210);
+            this.step3Panel.TabIndex = 0;
+            // 
+            // reloadRedirectOperator
+            // 
+            this.reloadRedirectOperator.Image = ((System.Drawing.Image)(resources.GetObject("reloadRedirectOperator.Image")));
+            this.reloadRedirectOperator.Location = new System.Drawing.Point(125, 185);
+            this.reloadRedirectOperator.Name = "reloadRedirectOperator";
+            this.reloadRedirectOperator.Size = new System.Drawing.Size(25, 23);
+            this.reloadRedirectOperator.TabIndex = 9;
+            this.reloadRedirectOperator.UseVisualStyleBackColor = true;
+            this.reloadRedirectOperator.Click += new System.EventHandler(this.reloadRedirectOperator_Click);
+            // 
+            // renderedButton
+            // 
+            this.renderedButton.Location = new System.Drawing.Point(0, 0);
+            this.renderedButton.Name = "renderedButton";
+            this.renderedButton.Size = new System.Drawing.Size(155, 40);
+            this.renderedButton.TabIndex = 3;
+            this.renderedButton.Text = "Закончить обслуживание";
+            this.renderedButton.Click += new System.EventHandler(this.renderedButton_Click);
+            // 
+            // returnButton
+            // 
+            this.returnButton.Location = new System.Drawing.Point(0, 45);
+            this.returnButton.Name = "returnButton";
+            this.returnButton.Size = new System.Drawing.Size(155, 40);
+            this.returnButton.TabIndex = 4;
+            this.returnButton.Text = "Вернуть в очередь";
+            this.returnButton.Click += new System.EventHandler(this.returnButton_Click);
+            // 
+            // postponeButton
+            // 
+            this.postponeButton.Location = new System.Drawing.Point(0, 90);
+            this.postponeButton.Name = "postponeButton";
+            this.postponeButton.Size = new System.Drawing.Size(155, 40);
+            this.postponeButton.TabIndex = 5;
+            this.postponeButton.Text = "Отложить вызов";
+            this.postponeButton.Click += new System.EventHandler(this.postponeButton_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(5, 140);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(56, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "На время";
+            // 
+            // postponeMinutesUpDown
+            // 
+            this.postponeMinutesUpDown.Location = new System.Drawing.Point(65, 135);
+            this.postponeMinutesUpDown.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.postponeMinutesUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.postponeMinutesUpDown.Name = "postponeMinutesUpDown";
+            this.postponeMinutesUpDown.Size = new System.Drawing.Size(50, 20);
+            this.postponeMinutesUpDown.TabIndex = 6;
+            this.postponeMinutesUpDown.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(115, 140);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(30, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "мин.";
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(5, 160);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(145, 20);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Передать оператору";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // redirectOperatorControl
+            // 
+            this.redirectOperatorControl.Location = new System.Drawing.Point(10, 185);
+            this.redirectOperatorControl.Name = "redirectOperatorControl";
+            this.redirectOperatorControl.Size = new System.Drawing.Size(115, 21);
+            this.redirectOperatorControl.TabIndex = 7;
+            this.redirectOperatorControl.UseResetButton = false;
+            this.redirectOperatorControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.targetOperatorControl_SelectedChanged);
             // 
             // numberTextBlock
             // 
@@ -527,14 +642,14 @@ namespace Queue.Operator
             this.parametersGridView.AllowUserToDeleteRows = false;
             this.parametersGridView.AllowUserToResizeRows = false;
             this.parametersGridView.AutoGenerateColumns = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle17.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.parametersGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
             this.parametersGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.parametersGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nameDataGridViewTextBoxColumn,
@@ -597,14 +712,14 @@ namespace Queue.Operator
             this.additionalServicesGridView.AllowUserToAddRows = false;
             this.additionalServicesGridView.AllowUserToResizeRows = false;
             this.additionalServicesGridView.AutoGenerateColumns = false;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.additionalServicesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle18.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.additionalServicesGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle18;
             this.additionalServicesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.additionalServicesGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.additionalServiceDataGridViewTextBoxColumn,
@@ -633,8 +748,8 @@ namespace Queue.Operator
             // quantityDataGridViewTextBoxColumn
             // 
             this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.quantityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.quantityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle19;
             this.quantityDataGridViewTextBoxColumn.FillWeight = 70F;
             this.quantityDataGridViewTextBoxColumn.HeaderText = "Кол-во";
             this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
@@ -644,10 +759,10 @@ namespace Queue.Operator
             // Sum
             // 
             this.Sum.DataPropertyName = "Sum";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "C2";
-            dataGridViewCellStyle4.NullValue = null;
-            this.Sum.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle20.Format = "C2";
+            dataGridViewCellStyle20.NullValue = null;
+            this.Sum.DefaultCellStyle = dataGridViewCellStyle20;
             this.Sum.HeaderText = "Сумма";
             this.Sum.Name = "Sum";
             this.Sum.ReadOnly = true;
@@ -659,8 +774,8 @@ namespace Queue.Operator
             // stepPanel
             // 
             this.stepPanel.Controls.Add(this.step1Panel);
-            this.stepPanel.Controls.Add(this.step2Panel);
             this.stepPanel.Controls.Add(this.step3Panel);
+            this.stepPanel.Controls.Add(this.step2Panel);
             this.stepPanel.Location = new System.Drawing.Point(330, 10);
             this.stepPanel.Margin = new System.Windows.Forms.Padding(0);
             this.stepPanel.Name = "stepPanel";
@@ -723,87 +838,6 @@ namespace Queue.Operator
             this.absenceButton.Text = "Клиент не подошел";
             this.absenceButton.Click += new System.EventHandler(this.absenceButton_Click);
             // 
-            // step3Panel
-            // 
-            this.step3Panel.Controls.Add(this.postponeButton);
-            this.step3Panel.Controls.Add(this.label1);
-            this.step3Panel.Controls.Add(this.returnButton);
-            this.step3Panel.Controls.Add(this.postponeMinutesUpDown);
-            this.step3Panel.Controls.Add(this.label2);
-            this.step3Panel.Controls.Add(this.renderedButton);
-            this.step3Panel.Location = new System.Drawing.Point(0, 170);
-            this.step3Panel.Margin = new System.Windows.Forms.Padding(0);
-            this.step3Panel.Name = "step3Panel";
-            this.step3Panel.Size = new System.Drawing.Size(155, 165);
-            this.step3Panel.TabIndex = 0;
-            // 
-            // postponeButton
-            // 
-            this.postponeButton.Location = new System.Drawing.Point(0, 90);
-            this.postponeButton.Name = "postponeButton";
-            this.postponeButton.Size = new System.Drawing.Size(155, 40);
-            this.postponeButton.TabIndex = 5;
-            this.postponeButton.Text = "Отложить вызов";
-            this.postponeButton.Click += new System.EventHandler(this.postponeButton_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(5, 140);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "На время";
-            // 
-            // returnButton
-            // 
-            this.returnButton.Location = new System.Drawing.Point(0, 45);
-            this.returnButton.Name = "returnButton";
-            this.returnButton.Size = new System.Drawing.Size(155, 40);
-            this.returnButton.TabIndex = 4;
-            this.returnButton.Text = "Вернуть в очередь";
-            this.returnButton.Click += new System.EventHandler(this.returnButton_Click);
-            // 
-            // postponeMinutesUpDown
-            // 
-            this.postponeMinutesUpDown.Location = new System.Drawing.Point(65, 135);
-            this.postponeMinutesUpDown.Maximum = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
-            this.postponeMinutesUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.postponeMinutesUpDown.Name = "postponeMinutesUpDown";
-            this.postponeMinutesUpDown.Size = new System.Drawing.Size(50, 20);
-            this.postponeMinutesUpDown.TabIndex = 6;
-            this.postponeMinutesUpDown.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(115, 140);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(30, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "мин.";
-            // 
-            // renderedButton
-            // 
-            this.renderedButton.Location = new System.Drawing.Point(0, 0);
-            this.renderedButton.Name = "renderedButton";
-            this.renderedButton.Size = new System.Drawing.Size(155, 40);
-            this.renderedButton.TabIndex = 3;
-            this.renderedButton.Text = "Закончить обслуживание";
-            this.renderedButton.Click += new System.EventHandler(this.renderedButton_Click);
-            // 
             // clientRequestsTab
             // 
             this.clientRequestsTab.Controls.Add(this.clientRequestsGridView);
@@ -820,15 +854,15 @@ namespace Queue.Operator
             this.clientRequestsGridView.AllowUserToDeleteRows = false;
             this.clientRequestsGridView.AllowUserToResizeColumns = false;
             this.clientRequestsGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.clientRequestsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle21.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle21.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.clientRequestsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle21;
             this.clientRequestsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.clientRequestsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.numberColumn,
@@ -851,8 +885,8 @@ namespace Queue.Operator
             // 
             // numberColumn
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.numberColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.numberColumn.DefaultCellStyle = dataGridViewCellStyle22;
             this.numberColumn.HeaderText = "Номер";
             this.numberColumn.Name = "numberColumn";
             this.numberColumn.ReadOnly = true;
@@ -861,8 +895,8 @@ namespace Queue.Operator
             // 
             // subjectsColumn
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.subjectsColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.subjectsColumn.DefaultCellStyle = dataGridViewCellStyle23;
             this.subjectsColumn.HeaderText = "Объектов";
             this.subjectsColumn.Name = "subjectsColumn";
             this.subjectsColumn.ReadOnly = true;
@@ -878,8 +912,8 @@ namespace Queue.Operator
             // 
             // timeIntervalColumn
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.timeIntervalColumn.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.timeIntervalColumn.DefaultCellStyle = dataGridViewCellStyle24;
             this.timeIntervalColumn.HeaderText = "Интервал (мин)";
             this.timeIntervalColumn.Name = "timeIntervalColumn";
             this.timeIntervalColumn.ReadOnly = true;
@@ -931,6 +965,9 @@ namespace Queue.Operator
             this.mainTabControl.ResumeLayout(false);
             this.currentClientRequestTab.ResumeLayout(false);
             this.currentClientRequestTab.PerformLayout();
+            this.step3Panel.ResumeLayout(false);
+            this.step3Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).EndInit();
             this.subjectsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).EndInit();
             this.clientRequestTabControl.ResumeLayout(false);
@@ -943,9 +980,6 @@ namespace Queue.Operator
             this.stepPanel.ResumeLayout(false);
             this.step1Panel.ResumeLayout(false);
             this.step2Panel.ResumeLayout(false);
-            this.step3Panel.ResumeLayout(false);
-            this.step3Panel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).EndInit();
             this.clientRequestsTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.clientRequestsGridView)).EndInit();
             this.ResumeLayout(false);
@@ -1029,6 +1063,9 @@ namespace Queue.Operator
         private System.Windows.Forms.ToolStripStatusLabel qualityStateLabel;
         private System.Windows.Forms.ToolStripStatusLabel ratingLabel;
         private System.Windows.Forms.ToolStripSplitButton settingsButton;
+        private IdentifiedEntityControl redirectOperatorControl;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button reloadRedirectOperator;
 
     }
 }

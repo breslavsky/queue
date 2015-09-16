@@ -29,7 +29,7 @@ namespace Queue.Administrator
         public AdministratorSettings Settings { get; set; }
 
         [Dependency]
-        public ServerService<IServerTcpService> ServerService { get; set; }
+        public ServerService ServerService { get; set; }
 
         [Dependency]
         public QueueAdministrator CurrentUser { get; set; }
@@ -44,7 +44,7 @@ namespace Queue.Administrator
 
         #region fields
 
-        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly Guid clientRequestId;
         private readonly TaskPool taskPool;
         private ClientRequest clientRequest;

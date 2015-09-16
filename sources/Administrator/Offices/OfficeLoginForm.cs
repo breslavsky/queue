@@ -22,13 +22,13 @@ namespace Queue.Administrator
         public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
-        public ServerService<IServerTcpService> ServerService { get; set; }
+        public ServerService ServerService { get; set; }
 
         #endregion dependency
 
         #region fields
 
-        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly Guid officeId;
         private readonly TaskPool taskPool;
         private Office office;
@@ -90,7 +90,7 @@ namespace Queue.Administrator
 
         private async void loginButton_Click(object sender, EventArgs e)
         {
-            using (var serverService = new ServerService<IServerTcpService>(Settings.Endpoint, ServerServicesPaths.Server))
+            using (var serverService = new ServerService(Settings.Endpoint, ServerServicesPaths.Server))
             using (var channelManager = serverService.CreateChannelManager())
             using (var channel = channelManager.CreateChannel())
             {

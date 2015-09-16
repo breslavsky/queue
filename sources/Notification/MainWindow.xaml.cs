@@ -25,7 +25,7 @@ namespace Queue.Notification
 
         private LoginPage connectPage;
         private TaskPool taskPool;
-        private ChannelManager<IServerTcpService> channelManager;
+        private DuplexChannelManager<IServerTcpService> channelManager;
 
         public MainWindow()
             : base()
@@ -76,7 +76,7 @@ namespace Queue.Notification
             container.RegisterInstance(taskPool);
 
             var channelBuilder = container.Resolve<DuplexChannelBuilder<IServerTcpService>>();
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new DuplexChannelManager<IServerTcpService>(channelBuilder);
             container.RegisterInstance(channelManager);
         }
 

@@ -24,13 +24,13 @@ namespace Queue.Administrator
         public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
-        public ServerService<IServerTcpService> ServerService { get; set; }
+        public ServerService ServerService { get; set; }
 
         #endregion dependency
 
         #region fields
 
-        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private BindingList<OperatorInterruption> operatorInterruptions;
         private readonly OperatorInterruptionFilter filter = new OperatorInterruptionFilter();
@@ -136,7 +136,7 @@ namespace Queue.Administrator
                 return;
             }
 
-            OperatorInterruption operatorInterruption = operatorInterruptions[currentRow.Index];
+            var operatorInterruption = operatorInterruptions[currentRow.Index];
 
             using (var f = new EditOperatorInterruptionForm(operatorInterruption.Id))
             {
@@ -161,9 +161,9 @@ namespace Queue.Administrator
             if (MessageBox.Show("Вы действительно хотите удалить перерыв оператора?",
                 "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                OperatorInterruption operatorInterruption = operatorInterruptions[currentRow.Index];
+                var operatorInterruption = operatorInterruptions[currentRow.Index];
 
-                using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+                using (var channel = channelManager.CreateChannel())
                 {
                     try
                     {

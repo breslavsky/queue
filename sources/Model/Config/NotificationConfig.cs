@@ -1,5 +1,4 @@
-﻿using Junte.Data.Common;
-using NHibernate.Mapping.Attributes;
+﻿using NHibernate.Mapping.Attributes;
 using NHibernate.Validator.Constraints;
 using Queue.Model.Common;
 using System.Collections.Generic;

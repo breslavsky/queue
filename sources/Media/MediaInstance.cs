@@ -19,7 +19,7 @@ namespace Queue.Media
         private MediaSettings mediaSettings;
         private LoginSettings serverConnection;
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
+        private DuplexChannelManager<IServerTcpService> channelManager;
         private Administrator user;
         private ServiceHost host;
 
@@ -59,7 +59,7 @@ namespace Queue.Media
                                                                            Bindings.NetTcpBinding,
                                                                            new EndpointAddress(serverConnection.Endpoint));
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new DuplexChannelManager<IServerTcpService>(channelBuilder);
 
             using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {

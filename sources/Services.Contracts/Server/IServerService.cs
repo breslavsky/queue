@@ -137,6 +137,9 @@ namespace Queue.Services.Contracts
         Task UpdateCurrentClientRequest(ClientRequestState state);
 
         [OperationContract]
+        Task RedirectCurrentClientRequest(Guid redirectOperatorId);
+
+        [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task PostponeCurrentClientRequest(TimeSpan postponeTime);
 
@@ -208,6 +211,9 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         Task<IdentifiedEntityLink[]> GetUserLinks(UserRole userRole);
+
+        [OperationContract]
+        Task<IdentifiedEntityLink[]> GetRedirectOperatorsLinks();
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]

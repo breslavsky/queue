@@ -117,7 +117,7 @@ namespace Queue.Terminal.Core
 
             if (RequestType == ClientRequestType.Live)
             {
-                var channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
+                var channelManager = ServiceLocator.Current.GetInstance<DuplexChannelManager<IServerTcpService>>();
                 var taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
                 using (var channel = channelManager.CreateChannel())
                 {

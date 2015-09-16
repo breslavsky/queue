@@ -28,7 +28,7 @@ namespace Queue.Terminal
 
         private LoginPage loginPage;
         private TaskPool taskPool;
-        private ChannelManager<IServerTcpService> channelManager;
+        private DuplexChannelManager<IServerTcpService> channelManager;
         private Navigator navigator;
 
         private DispatcherTimer resetTimer;
@@ -99,7 +99,7 @@ namespace Queue.Terminal
             taskPool = new TaskPool();
             container.RegisterInstance(taskPool);
 
-            channelManager = new ChannelManager<IServerTcpService>(container.Resolve<DuplexChannelBuilder<IServerTcpService>>());
+            channelManager = new DuplexChannelManager<IServerTcpService>(container.Resolve<DuplexChannelBuilder<IServerTcpService>>());
             container.RegisterInstance(channelManager);
             container.RegisterInstance(new ClientRequestModel()
             {

@@ -22,7 +22,7 @@ namespace Queue.Portal
         private ServiceHost clientServiceHost;
         private ServiceHost operatorServiceHost;
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
+        private DuplexChannelManager<IServerTcpService> channelManager;
         private LoginSettings serverConnection;
 
         public PortalInstance(PortalSettings portalSettings, LoginSettings serverConnection)
@@ -55,7 +55,7 @@ namespace Queue.Portal
                                                                            Bindings.NetTcpBinding,
                                                                            new EndpointAddress(serverConnection.Endpoint));
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new DuplexChannelManager<IServerTcpService>(channelBuilder);
 
             using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {

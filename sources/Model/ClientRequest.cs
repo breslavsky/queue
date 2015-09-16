@@ -1,5 +1,4 @@
-﻿using Junte.Data.Common;
-using Junte.Data.NHibernate;
+﻿using Junte.Data.NHibernate;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Mapping.Attributes;
@@ -111,7 +110,12 @@ namespace Queue.Model
 
         public virtual bool IsEditable
         {
-            get { return State == ClientRequestState.Waiting || State == ClientRequestState.Postponed; }
+            get
+            {
+                return State == ClientRequestState.Waiting
+                    || State == ClientRequestState.Redirected
+                    || State == ClientRequestState.Postponed;
+            }
         }
 
         public virtual bool IsRestorable
@@ -176,6 +180,12 @@ namespace Queue.Model
             State = ClientRequestState.Rendering;
         }
 
+        public virtual void Redirect(Operator targetOperator)
+        {
+            Operator = targetOperator;
+            State = ClientRequestState.Redirected;
+        }
+
         public virtual void Rendered()
         {
             RenderFinishTime = DateTime.Now.TimeOfDay;
@@ -230,6 +240,7 @@ namespace Queue.Model
             switch (State)
             {
                 case ClientRequestState.Waiting:
+                case ClientRequestState.Redirected:
                 case ClientRequestState.Postponed:
                     Close(ClientRequestState.Canceled);
                     break;
@@ -250,6 +261,7 @@ namespace Queue.Model
             {
                 case ClientRequestState.Waiting:
                 case ClientRequestState.Calling:
+                case ClientRequestState.Redirected:
                 case ClientRequestState.Postponed:
                 case ClientRequestState.Rendering:
                     State = state;
@@ -287,6 +299,7 @@ namespace Queue.Model
             {
                 case ClientRequestState.Waiting:
                 case ClientRequestState.Calling:
+                case ClientRequestState.Redirected:
                 case ClientRequestState.Postponed:
                 case ClientRequestState.Rendering:
                     State = ClientRequestState.Postponed;

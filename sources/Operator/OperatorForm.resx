@@ -160,6 +160,17 @@
         A8B3Pn4Z02c59AcAbOxxIINWPmE/Qw927IUPcHXHFBJAlxYg6g1IZDALc1HGTgAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="reloadRedirectOperator.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
+        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAArQuAAK0LgEihYlHAAAAGHRFWHRTb2Z0d2FyZQBBZG9i
+        ZSBGaXJld29ya3NPsx9OAAABA0lEQVQ4T6XTPQ4BURQFYD+Vnt5POYpJJrECW1DZik5lCaxBR0aCTiU2
+        YRki5DmHe+XMeKopvoy599wb5o1aCOGvLMum0Ir1XLRIGOzAGs4wimXop4BwCjk8IIglNMv5wg0CExmg
+        m10vMLZMV2d0eGhh2sAAFjCTzBzukHhNFxyBw7nU6vK5ASfL7L3uzTY8Td+bZexJrs2aN0bAzVcdiGHG
+        su+T8WLlBdV+gjX3wM18UA2p64PcWebgNV2QAI9oLrUZ8Ch5pFvgMA09811gAz27joEvD8P+MrmJzhQW
+        EAJNWMkA8bXm10/L+cKNQpgnwz8S/1CdWIaiRYfBFkxjvY9QewGufjinD4hDRQAAAABJRU5ErkJggg==
+</value>
+  </data>
   <metadata name="parametersBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>347, 17</value>
   </metadata>
