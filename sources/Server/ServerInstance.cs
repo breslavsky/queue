@@ -73,14 +73,27 @@ namespace Queue.Server
             if (tcpService.Enabled)
             {
                 {
-                    var uri = new Uri(string.Format("{0}://{1}:{2}/", Schemes.NET_TCP, tcpService.Host, tcpService.Port));
-                    logger.Info("TCP service host uri = {0}", uri);
+                    {
+                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServerServicesPaths.Server));
+                        logger.Info("TCP service host uri = {0}", uri);
 
-                    var host = new ServerTcpServiceHost();
-                    host.AddServiceEndpoint(typeof(IServerTcpService), Bindings.NetTcpBinding, uri);
-                    host.Description.Behaviors.Add(new ServiceMetadataBehavior());
+                        var host = new ServerTcpServiceHost();
+                        host.AddServiceEndpoint(typeof(IServerTcpService), Bindings.NetTcpBinding, uri);
+                        host.Description.Behaviors.Add(new ServiceMetadataBehavior());
 
-                    hosts.Add(host);
+                        hosts.Add(host);
+                    }
+
+                    {
+                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServerServicesPaths.Template));
+                        logger.Info("TCP service host uri = {0}", uri);
+
+                        var host = new ServerTemplateTcpServiceHost();
+                        host.AddServiceEndpoint(typeof(IServerTemplateTcpService), Bindings.NetTcpBinding, uri);
+                        host.Description.Behaviors.Add(new ServiceMetadataBehavior());
+
+                        hosts.Add(host);
+                    }
                 }
             }
 
@@ -89,11 +102,11 @@ namespace Queue.Server
             if (httpService.Enabled)
             {
                 {
-                    var uri = new Uri(string.Format("{0}://{1}:{2}/", Schemes.HTTP, httpService.Host, httpService.Port));
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServerServicesPaths.Template));
                     logger.Info("HTTP service host uri = {0}", uri);
 
-                    var host = new ServerHttpServiceHost();
-                    var endpoint = host.AddServiceEndpoint(typeof(IHubQualityHttpService), Bindings.WebHttpBinding, uri);
+                    var host = new ServerTemplateHttpServiceHost();
+                    var endpoint = host.AddServiceEndpoint(typeof(IServerTemplateHttpService), Bindings.WebHttpBinding, uri);
                     endpoint.Behaviors.Add(new WebHttpBehavior());
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                     {

@@ -20,6 +20,9 @@ namespace Queue.UI.WinForms
         #region dependency
 
         [Dependency]
+        public ApplicationSettings ApplicationSettings { get; set; }
+
+        [Dependency]
         public LoginFormSettings LoginFormSettings { get; set; }
 
         [Dependency]
@@ -63,7 +66,7 @@ namespace Queue.UI.WinForms
 
             loginFormSettingsBindingSource.DataSource = LoginFormSettings;
 
-            languageControl.Select(LoginFormSettings.Language);
+            languageControl.Select(ApplicationSettings.Language);
             AdjustSelectedLanguage();
 
             loginSettingsControl.UserRole = userRole;
@@ -118,7 +121,7 @@ namespace Queue.UI.WinForms
                         LoginSettings.Password = string.Empty;
                     }
 
-                    LoginFormSettings.Language = languageControl.Selected<Language>();
+                    ApplicationSettings.Language = languageControl.Selected<Language>();
 
                     DialogResult = DialogResult.OK;
                 }

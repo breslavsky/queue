@@ -5,15 +5,15 @@ using System.ServiceModel;
 
 namespace Queue.Services.Contracts
 {
-    public class HubService<T> : IDisposable
+    public class DuplexClientService<T, Callback> : IDisposable where Callback : new()
     {
         public DuplexChannelBuilder<T> ChannelBuilder { get; set; }
 
-        public HubService(string endpoint, string path = "")
+        public DuplexClientService(string endpoint, string path)
         {
             var builder = new UriBuilder(endpoint);
             builder.Path = path;
-            ChannelBuilder = new DuplexChannelBuilder<T>(new HubQualityCallback(),
+            ChannelBuilder = new DuplexChannelBuilder<T>(new Callback(),
                 Bindings.NetTcpBinding, new EndpointAddress(builder.Uri));
         }
 
@@ -30,6 +30,14 @@ namespace Queue.Services.Contracts
         public void Dispose()
         {
             ChannelBuilder.Dispose();
+        }
+    }
+
+    public class HubQualityService : DuplexClientService<IHubQualityTcpService, HubQualityCallback>
+    {
+        public HubQualityService(string endpoint, string path)
+            : base(endpoint, path)
+        {
         }
     }
 }

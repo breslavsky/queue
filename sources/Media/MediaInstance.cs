@@ -46,7 +46,7 @@ namespace Queue.Media
         {
             ServiceHost host = new MediaServiceHost(channelBuilder, user, mediaSettings.Folder, typeof(MediaService));
 
-            Uri uri = new Uri(string.Format("{0}://0.0.0.0:{1}/", Schemes.HTTP, mediaSettings.Port));
+            Uri uri = new Uri(string.Format("{0}://0.0.0.0:{1}/", Schemes.Http, mediaSettings.Port));
             ServiceEndpoint serviceEndpoint = host.AddServiceEndpoint(typeof(IMediaService), Bindings.WebHttpBinding, uri.ToString());
             serviceEndpoint.Behaviors.Add(new WebHttpBehavior());
 

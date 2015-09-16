@@ -10,10 +10,6 @@ namespace Queue.Services.Hub
 {
     internal class HubQualityHttpServiceProvider : IInstanceProvider, IContractBehavior
     {
-        public HubQualityHttpServiceProvider()
-        {
-        }
-
         public object GetInstance(InstanceContext instanceContext, Message message)
         {
             return GetInstance(instanceContext);

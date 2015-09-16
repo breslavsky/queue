@@ -90,7 +90,7 @@ namespace Queue.Hub
                     //quality
                     var host = new HubQualityTcpServiceHost();
 
-                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NET_TCP, tcpService.Host, tcpService.Port, HubServicesPaths.Quality));
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, HubServicesPaths.Quality));
                     logger.Info("TCP service host uri = {0}", uri);
 
                     host.AddServiceEndpoint(typeof(IHubQualityTcpService), Bindings.NetTcpBinding, uri);
@@ -102,7 +102,7 @@ namespace Queue.Hub
                     //display
                     var host = new HubDisplayTcpServiceHost();
 
-                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NET_TCP, tcpService.Host, tcpService.Port, HubServicesPaths.Display));
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, HubServicesPaths.Display));
                     logger.Info("TCP service host uri = {0}", uri);
 
                     host.AddServiceEndpoint(typeof(IHubDisplayTcpService), Bindings.NetTcpBinding, uri);
@@ -119,7 +119,7 @@ namespace Queue.Hub
                     //quality
                     var host = new HubQualityHttpServiceHost();
 
-                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.HTTP, httpService.Host, httpService.Port, HubServicesPaths.Quality));
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, HubServicesPaths.Quality));
                     logger.Info("HTTP service host uri = {0}", uri);
 
                     var endpoint = host.AddServiceEndpoint(typeof(IHubQualityHttpService), Bindings.WebHttpBinding, uri);
@@ -137,7 +137,7 @@ namespace Queue.Hub
                     //display
                     var host = new HubDisplayHttpServiceHost();
 
-                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.HTTP, httpService.Host, httpService.Port, HubServicesPaths.Display));
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, HubServicesPaths.Display));
                     logger.Info("HTTP service host uri = {0}", uri);
 
                     var endpoint = host.AddServiceEndpoint(typeof(IHubDisplayHttpService), Bindings.WebHttpBinding, uri);

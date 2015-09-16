@@ -69,7 +69,7 @@ namespace Queue.Portal
         {
             PortalServiceHost host = new PortalServiceHost(channelBuilder, user, typeof(PortalService));
 
-            Uri uri = new Uri(string.Format("{0}://0.0.0.0:{1}/", Schemes.HTTP, portalSettings.Port));
+            Uri uri = new Uri(string.Format("{0}://0.0.0.0:{1}/", Schemes.Http, portalSettings.Port));
             ServiceEndpoint serviceEndpoint = host.AddServiceEndpoint(typeof(IPortalService), Bindings.WebHttpBinding, uri.ToString());
             serviceEndpoint.Behaviors.Add(new WebHttpBehavior());
             return host;
@@ -79,7 +79,7 @@ namespace Queue.Portal
         {
             PortalOperatorServiceHost host = new PortalOperatorServiceHost(channelBuilder, user, typeof(PortalOperatorService));
 
-            Uri uri = new Uri(string.Format("{0}://0.0.0.0:{1}/operator", Schemes.HTTP, portalSettings.Port));
+            Uri uri = new Uri(string.Format("{0}://0.0.0.0:{1}/operator", Schemes.Http, portalSettings.Port));
             ServiceEndpoint serviceEndpoint = host.AddServiceEndpoint(typeof(IPortalOperatorService), Bindings.WebHttpBinding, uri);
             serviceEndpoint.Behaviors.Add(new WebHttpBehavior());
 
@@ -90,7 +90,7 @@ namespace Queue.Portal
         {
             ServiceHost host = new PortalClientServiceHost(channelBuilder, user, typeof(PortalClientService));
 
-            Uri uri = new Uri(string.Format("{0}://0.0.0.0:{1}/client", Schemes.HTTP, portalSettings.Port));
+            Uri uri = new Uri(string.Format("{0}://0.0.0.0:{1}/client", Schemes.Http, portalSettings.Port));
             ServiceEndpoint serviceEndpoint = host.AddServiceEndpoint(typeof(IPortalClientService), Bindings.WebHttpBinding, uri);
             serviceEndpoint.Behaviors.Add(new WebHttpBehavior());
 

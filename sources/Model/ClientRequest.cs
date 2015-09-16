@@ -4,6 +4,7 @@ using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Mapping.Attributes;
 using NHibernate.Validator.Constraints;
+using Queue.Common;
 using Queue.Model.Common;
 using System;
 using System.Collections.Generic;
@@ -137,7 +138,7 @@ namespace Queue.Model
         {
             if (!IsClosed)
             {
-                throw new JunteException("Запрос уже открыт");
+                throw new LogicException("Запрос уже открыт");
             }
 
             switch (State)
@@ -150,7 +151,7 @@ namespace Queue.Model
                     break;
 
                 default:
-                    throw new JunteException("Нельзя открыть запрос клиента находящегося в данном статусе");
+                    throw new LogicException("Нельзя открыть запрос клиента находящегося в данном статусе");
             }
         }
 
@@ -220,7 +221,7 @@ namespace Queue.Model
                     break;
 
                 default:
-                    throw new JunteException("Нельзя вернуть запрос клиента находящийся в данном статусе");
+                    throw new LogicException("Нельзя вернуть запрос клиента находящийся в данном статусе");
             }
         }
 
@@ -234,8 +235,7 @@ namespace Queue.Model
                     break;
 
                 default:
-                    //TODO: JunteException is bad!
-                    throw new JunteException("Нельзя отменить запрос клиента находящийся в данном статусе");
+                    throw new LogicException("Нельзя отменить запрос клиента находящийся в данном статусе");
             }
         }
 
@@ -243,7 +243,7 @@ namespace Queue.Model
         {
             if (IsClosed)
             {
-                throw new JunteException("Запрос уже закрыт");
+                throw new LogicException("Запрос уже закрыт");
             }
 
             switch (State)
@@ -257,7 +257,7 @@ namespace Queue.Model
                     break;
 
                 default:
-                    throw new JunteException("Нельзя закрыть запрос клиента находящегося в данном статусе");
+                    throw new LogicException("Нельзя закрыть запрос клиента находящегося в данном статусе");
             }
         }
 
@@ -272,7 +272,7 @@ namespace Queue.Model
                     break;
 
                 default:
-                    throw new JunteException("Нельзя восстановить запрос клиента находящегося в данном статусе");
+                    throw new LogicException("Нельзя восстановить запрос клиента находящегося в данном статусе");
             }
         }
 
@@ -280,7 +280,7 @@ namespace Queue.Model
         {
             if (IsClosed)
             {
-                throw new JunteException("Невозможно отложить закрытый запрос клиента");
+                throw new LogicException("Невозможно отложить закрытый запрос клиента");
             }
 
             switch (State)
@@ -295,7 +295,7 @@ namespace Queue.Model
                     break;
 
                 default:
-                    throw new JunteException("Нельзя откладывать запрос клиента находящийся в данном статусе");
+                    throw new LogicException("Нельзя откладывать запрос клиента находящийся в данном статусе");
             }
         }
 

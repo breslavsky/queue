@@ -23,7 +23,7 @@ namespace Queue.Operator
         private static LoginSettings loginSettings;
         private static LoginFormSettings loginFormSettings;
         private static ServerService<IServerTcpService> serverService;
-        private static HubService<IHubQualityTcpService> hubQualityService;
+        private static HubQualityService hubQualityService;
         private static QueueOperator currentUser;
 
         [STAThread]
@@ -48,7 +48,7 @@ namespace Queue.Operator
             hubQualitySettings = configuration.GetSection<HubQualitySettings>(HubQualitySettings.SectionKey);
             container.RegisterInstance(hubQualitySettings);
 
-            hubQualityService = new HubService<IHubQualityTcpService>(hubQualitySettings.Endpoint, HubServicesPaths.Quality);
+            hubQualityService = new HubQualityService(hubQualitySettings.Endpoint, HubServicesPaths.Quality);
             container.RegisterInstance(hubQualityService);
 
             ParseOptions();

@@ -5,7 +5,7 @@ namespace Queue.Common.Settings
 {
     public class LoginSettings : ConfigurationSection
     {
-        public const string SectionKey = "connection";
+        public const string SectionKey = "login";
 
         public LoginSettings()
         {

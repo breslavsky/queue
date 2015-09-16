@@ -37,7 +37,14 @@
     </Directory>
 
     <Feature Id="ProductFeature" Title="$(var.ProductName)" Level="1">
-      <ComponentGroupRef Id="CoreFiles" />
+
+      <ComponentGroupRef Id="Microsoft" />
+      <ComponentGroupRef Id="Logging" />
+      <ComponentGroupRef Id="Junte" />
+      <ComponentGroupRef Id="Queue" />
+      <ComponentGroupRef Id="Services" />
+      <ComponentGroupRef Id="UI" />
+      <ComponentGroupRef Id="Application" />
       <ComponentRef Id="ApplicationShortcut" />
     </Feature>
 

@@ -10,10 +10,6 @@ namespace Queue.Services.Hub
 {
     internal class HubDisplayTcpServiceProvider : IInstanceProvider, IContractBehavior
     {
-        public HubDisplayTcpServiceProvider()
-        {
-        }
-
         public object GetInstance(InstanceContext instanceContext, Message message)
         {
             return GetInstance(instanceContext);

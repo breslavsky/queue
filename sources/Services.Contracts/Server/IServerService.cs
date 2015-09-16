@@ -13,7 +13,6 @@ namespace Queue.Services.Contracts
     public interface IServerService
     {
         [OperationContract]
-        [WebGet(UriTemplate = "get-date-time", ResponseFormat = WebMessageFormat.Json)]
         Task<DateTime> GetDateTime();
 
         [OperationContract]
@@ -523,12 +522,10 @@ namespace Queue.Services.Contracts
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        [WebGet(UriTemplate = "/get-queue-plan-metric?year={year}&month={month}&day={day}&hour={hour}&minute={minute}&second={second}", ResponseFormat = WebMessageFormat.Json)]
         Task<QueuePlanMetric> GetQueuePlanMetric(int year, int month, int day, int hour, int minute, int second);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
-        [WebGet(UriTemplate = "/get-queue-plan-service-metric?year={year}&month={month}&day={day}&hour={hour}&minute={minute}&second={second}&serviceId={serviceId}", ResponseFormat = WebMessageFormat.Json)]
         Task<QueuePlanServiceMetric> GetQueuePlanServiceMetric(int year, int month, int day, int hour, int minute, int second, Guid serviceId);
     }
 }

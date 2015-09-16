@@ -65,8 +65,9 @@
       <HintPath>..\packages\Junte.Translation.1.0.1.0\lib\net45\Junte.Translation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Junte.WCF">
-      <HintPath>..\packages\Junte.WCF.1.0.1.0\lib\net45\Junte.WCF.dll</HintPath>
+    <Reference Include="Junte.WCF, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.WCF.1.0.2.0\lib\net45\Junte.WCF.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

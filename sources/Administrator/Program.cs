@@ -20,6 +20,7 @@ namespace Queue.Administrator
         private static AppOptions options;
         private static UnityContainer container;
         private static ConfigurationManager configuration;
+        private static ApplicationSettings applicationSettings;
         private static AdministratorSettings administratorSettings;
         private static LoginSettings loginSettings;
         private static LoginFormSettings loginFormSettings;
@@ -38,6 +39,9 @@ namespace Queue.Administrator
 
             configuration = new ConfigurationManager(Product.Administrator.AppName, SpecialFolder.ApplicationData);
             container.RegisterInstance(configuration);
+
+            applicationSettings = configuration.GetSection<ApplicationSettings>(ApplicationSettings.SectionKey);
+            container.RegisterInstance(applicationSettings);
 
             administratorSettings = configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
             container.RegisterInstance(administratorSettings);

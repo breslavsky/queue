@@ -9,7 +9,6 @@ using Queue.Common.Settings;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Models;
 using System;
 using System.Globalization;
 using System.Linq;

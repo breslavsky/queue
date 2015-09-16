@@ -38,7 +38,7 @@ namespace Queue.Operator
         public QueueOperator CurrentOperator { get; set; }
 
         [Dependency]
-        public HubService<IHubQualityTcpService> HubQualityService { get; set; }
+        public HubQualityService HubQualityService { get; set; }
 
         [Dependency]
         public HubQualitySettings HubQualitySettings { get; set; }

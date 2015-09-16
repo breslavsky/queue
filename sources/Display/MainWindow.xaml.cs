@@ -8,7 +8,6 @@ using Queue.Display.Views;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Models;
 using System;
 using System.Linq;
 using System.Windows;

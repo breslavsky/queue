@@ -9,7 +9,6 @@ using Queue.Notification.ViewModels;
 using Queue.Notification.Views;
 using Queue.Services.Contracts;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Models;
 using System;
 using System.Linq;
 using System.Windows;
