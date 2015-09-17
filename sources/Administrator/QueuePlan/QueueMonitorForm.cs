@@ -6,7 +6,6 @@ using NLog;
 using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Services.Contracts;
-using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
 using System.Diagnostics;
@@ -22,10 +21,10 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public LoginSettings LoginSettings { get; set; }
+        public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
-        public QueueAdministrator CurrentUser { get; set; }
+        public LoginSettings LoginSettings { get; set; }
 
         [Dependency]
         public ServerService ServerService { get; set; }
@@ -35,9 +34,10 @@ namespace Queue.Administrator
         #region fields
 
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-
         private readonly DuplexChannelManager<IServerTcpService> channelManager;
+        private readonly Timer reloadInterval;
         private readonly TaskPool taskPool;
+        private DateTime planDate;
 
         #endregion fields
 
@@ -52,26 +52,75 @@ namespace Queue.Administrator
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
-            queueMonitorControl.Options = QueueMonitorControlOptions.ClientRequestEdit
-                | QueueMonitorControlOptions.OperatorLogin;
+            reloadInterval = new Timer();
+            reloadInterval.Tick += reloadInterval_Tick;
 
             queueMonitorControl.OnOperatorLogin += queueMonitorControl_OperatorLogin;
             queueMonitorControl.OnClientRequestEdit += queueMonitorControl_ClientRequestEdit;
         }
 
-        private void taskPool_OnAddTask(object sender, EventArgs e)
+        private void reloadCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+            if (reloadCheckBox.Checked)
+            {
+                reloadInterval.Interval = (int)reloadIntervalUpDown.Value * 1000;
+                reloadInterval.Start();
+                reloadIntervalUpDown.Enabled = false;
+            }
+            else
+            {
+                reloadInterval.Stop();
+                reloadIntervalUpDown.Enabled = true;
+            }
         }
 
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        private async void loadButton_Click(object sender, EventArgs e)
         {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    loadButton.Enabled = false;
+
+                    queueMonitorControl.QueuePlan = await channel.Service.GetQueuePlan(planDate);
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+                finally
+                {
+                    loadButton.Enabled = true;
+                }
+            }
         }
 
-        private void QueueMonitorForm_Load(object sender, EventArgs e)
+        private void operatorOnlneCheckBox_Leave(object sender, EventArgs e)
         {
-            planDateTimePicker.Value = ServerDateTime.Today;
+            if (operatorOnlneCheckBox.Checked)
+            {
+                queueMonitorControl.Options |= QueueMonitorControlOptions.OperatorOnline;
+            }
+            else
+            {
+                queueMonitorControl.Options ^= QueueMonitorControlOptions.OperatorOnline;
+            }
+        }
+
+        private void queueMonitorControl_ClientRequestEdit(object sender, QueueMonitorEventArgs e)
+        {
+            using (var f = new EditClientRequestForm(e.ClientRequest.Id))
+            {
+                f.ShowDialog();
+            }
         }
 
         private async void queueMonitorControl_OperatorLogin(object sender, QueueMonitorEventArgs eventArgs)
@@ -106,66 +155,19 @@ namespace Queue.Administrator
             }
         }
 
-        private void queueMonitorControl_ClientRequestEdit(object sender, QueueMonitorEventArgs e)
+        private void QueueMonitorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            using (var f = new EditClientRequestForm(e.ClientRequest.Id))
-            {
-                f.ShowDialog();
-            }
+            taskPool.Dispose();
+            channelManager.Dispose();
+
+            reloadInterval.Stop();
+            reloadInterval.Dispose();
         }
 
-        private async void loadButton_Click(object sender, EventArgs e)
+        private void QueueMonitorForm_Load(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
-            {
-                try
-                {
-                    loadButton.Enabled = false;
-
-                    var planDate = planDateTimePicker.Value.Date;
-                    var queuePlan = await channel.Service.GetQueuePlan(planDate);
-
-                    var isToday = planDate == ServerDateTime.Today;
-
-                    if (isToday)
-                    {
-                        if (!queueMonitorControl.Options.HasFlag(QueueMonitorControlOptions.OperatorLogin))
-                        {
-                            queueMonitorControl.Options |= QueueMonitorControlOptions.OperatorLogin;
-                        }
-                    }
-                    else
-                    {
-                        if (queueMonitorControl.Options.HasFlag(QueueMonitorControlOptions.OperatorLogin))
-                        {
-                            queueMonitorControl.Options ^= QueueMonitorControlOptions.OperatorLogin;
-                        }
-                    }
-
-                    queueMonitorControl.QueuePlan = queuePlan;
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    loadButton.Enabled = true;
-                }
-            }
-        }
-
-        private void searchButton_Click(object sender, EventArgs e)
-        {
-            queueMonitorControl.Search((int)numberUpDown.Value);
+            planDate = ServerDateTime.Today;
+            planDateTimePicker.Value = planDate;
         }
 
         private async void refreshButton_Click(object sender, EventArgs e)
@@ -195,10 +197,53 @@ namespace Queue.Administrator
             }
         }
 
-        private void QueueMonitorForm_FormClosing(object sender, FormClosingEventArgs e)
+        private async void reloadInterval_Tick(object sender, EventArgs e)
         {
-            taskPool.Dispose();
-            channelManager.Dispose();
+            reloadInterval.Stop();
+
+            using (var channel = channelManager.CreateChannel())
+            {
+                try
+                {
+                    queueMonitorControl.QueuePlan = await channel.Service.GetQueuePlan(planDate);
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    logger.Warn(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    logger.Error(exception.Message);
+                }
+                finally
+                {
+                    reloadInterval.Start();
+                }
+            }
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            queueMonitorControl.Search((int)numberUpDown.Value);
+        }
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
+        private void planDateTimePicker_Leave(object sender, EventArgs e)
+        {
+            planDate = planDateTimePicker.Value;
         }
     }
 }

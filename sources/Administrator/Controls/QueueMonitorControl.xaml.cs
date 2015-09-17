@@ -220,31 +220,34 @@ namespace Queue.Administrator
             {
                 var queueOperator = operatorPlan.Operator;
 
-                var dockPanel = new DockPanel();
-                if (Options.HasFlag(QueueMonitorControlOptions.OperatorLogin))
+                if (Options.HasFlag(QueueMonitorControlOptions.OperatorOnline) && !queueOperator.Online)
                 {
-                    var button = new Button()
-                    {
-                        Height = 22,
-                        Width = 25,
-                        Margin = new Thickness(5, 0, 0, 0),
-                        ToolTip = "Управление очередью",
-                        Content = QIcons.operator16x16.ToWpfImage()
-                    };
-
-                    button.Click += (s, e) =>
-                    {
-                        if (OnOperatorLogin != null)
-                        {
-                            OnOperatorLogin(this, new QueueMonitorEventArgs()
-                            {
-                                Operator = queueOperator
-                            });
-                        }
-                    };
-
-                    dockPanel.Children.Add(button);
+                    continue;
                 }
+
+                var dockPanel = new DockPanel();
+
+                var button = new Button()
+                {
+                    Height = 22,
+                    Width = 25,
+                    Margin = new Thickness(5, 0, 0, 0),
+                    ToolTip = "Управление очередью",
+                    Content = QIcons.operator16x16.ToWpfImage()
+                };
+
+                button.Click += (s, e) =>
+                {
+                    if (OnOperatorLogin != null)
+                    {
+                        OnOperatorLogin(this, new QueueMonitorEventArgs()
+                        {
+                            Operator = queueOperator
+                        });
+                    }
+                };
+
+                dockPanel.Children.Add(button);
 
                 var border = new Border()
                 {
@@ -343,22 +346,17 @@ namespace Queue.Administrator
                     var block = CreateBlockBox(textBlock, width, BLOCK_BOX_HEIGHT, x1, currentBlockY, Color.FromRgb(color.R, color.G, color.B));
                     color = ColorTranslator.FromHtml(clientRequest.Color);
                     block.BorderBrush = new SolidColorBrush(Color.FromRgb(color.R, color.G, color.B));
-
-                    if (Options.HasFlag(QueueMonitorControlOptions.ClientRequestEdit))
+                    block.Cursor = Cursors.Hand;
+                    block.MouseDown += (s, e) =>
                     {
-                        block.Cursor = Cursors.Hand;
-
-                        block.MouseDown += (s, e) =>
+                        if (OnClientRequestEdit != null)
                         {
-                            if (OnClientRequestEdit != null)
+                            OnClientRequestEdit(this, new QueueMonitorEventArgs()
                             {
-                                OnClientRequestEdit(this, new QueueMonitorEventArgs()
-                                {
-                                    ClientRequest = clientRequest
-                                });
-                            }
-                        };
-                    }
+                                ClientRequest = clientRequest
+                            });
+                        }
+                    };
 
                     clientRequestsCanvas.Children.Add(block);
 
@@ -417,21 +415,18 @@ namespace Queue.Administrator
                 var color = ColorTranslator.FromHtml(clientRequest.Color);
                 block.BorderBrush = new SolidColorBrush(Color.FromRgb(color.R, color.G, color.B));
 
-                if (Options.HasFlag(QueueMonitorControlOptions.ClientRequestEdit))
-                {
-                    block.Cursor = Cursors.Hand;
+                block.Cursor = Cursors.Hand;
 
-                    block.MouseDown += (s, e) =>
+                block.MouseDown += (s, e) =>
+                {
+                    if (OnClientRequestEdit != null)
                     {
-                        if (OnClientRequestEdit != null)
+                        OnClientRequestEdit(this, new QueueMonitorEventArgs()
                         {
-                            OnClientRequestEdit(this, new QueueMonitorEventArgs()
-                            {
-                                ClientRequest = clientRequest
-                            });
-                        }
-                    };
-                }
+                            ClientRequest = clientRequest
+                        });
+                    }
+                };
 
                 clientRequestsCanvas.Children.Add(block);
 

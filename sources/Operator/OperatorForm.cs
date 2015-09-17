@@ -2,7 +2,6 @@
 using Junte.Translation;
 using Junte.UI.WinForms;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common;
@@ -16,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -395,6 +393,9 @@ namespace Queue.Operator
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             pingServerTimer.Stop();
+            pingServerTimer.Dispose();
+
+            pingQualityTimer.Stop();
             pingQualityTimer.Dispose();
 
             pingServerChannel.Close();
@@ -407,7 +408,7 @@ namespace Queue.Operator
             pingTaskPool.Cancel();
         }
 
-        private async void MainForm_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             serviceTypeControl.Initialize<ServiceType>();
 

@@ -6,7 +6,6 @@ namespace Queue.Administrator
     public enum QueueMonitorControlOptions
     {
         None = 0,
-        OperatorLogin = 1,
-        ClientRequestEdit = 2
+        OperatorOnline = 1
     }
 }
