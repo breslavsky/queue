@@ -40,7 +40,7 @@ namespace Queue.Display.ViewModels
 
             Version version = Assembly.GetEntryAssembly().GetName().Version;
 
-            Title = string.Format("{0} ({1})", appName, version);
+            Title = String.Format("{0} ({1})", appName, version);
         }
     }
 }

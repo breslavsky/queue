@@ -89,12 +89,13 @@ namespace Queue.Notification.ViewModels
 
             CallClientModel = new CallClientUserControlViewModel();
 
-            InitCallbackChannel();
             InitTimers();
         }
 
         public async void Initialize(VlcControl vlcControl)
         {
+            InitCallbackChannel();
+
             this.vlcControl = vlcControl;
 
             using (var channel = ChannelManager.CreateChannel())
@@ -323,11 +324,15 @@ namespace Queue.Notification.ViewModels
                     if (pingTimer != null)
                     {
                         pingTimer.Stop();
+                        pingTimer.Elapsed -= PingElapsed;
+                        pingTimer = null;
                     }
 
                     if (timeTimer != null)
                     {
                         timeTimer.Stop();
+                        timeTimer.Elapsed -= TimerElapsed;
+                        timeTimer = null;
                     }
 
                     if (callbackChannel != null)

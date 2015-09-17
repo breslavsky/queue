@@ -74,12 +74,12 @@ namespace Queue.Terminal.ViewModels
             UnloadedCommand = new RelayCommand(Unloaded);
             PrevCommand = new RelayCommand(Prev);
             NextCommand = new RelayCommand(Next);
-
-            Model.PropertyChanged += model_PropertyChanged;
         }
 
         private void Loaded()
         {
+            Model.PropertyChanged += model_PropertyChanged;
+
             if (Model.SelectedDate == null)
             {
                 var date = DateTime.Now.Date;

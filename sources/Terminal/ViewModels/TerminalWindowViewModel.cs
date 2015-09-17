@@ -73,8 +73,6 @@ namespace Queue.Terminal.ViewModels
             screen = ServiceLocator.Current.GetInstance<TerminalWindow>();
             container = ServiceLocator.Current.GetInstance<UnityContainer>();
 
-            var x = container.Registrations;
-
             taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
             channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
             navigator = ServiceLocator.Current.GetInstance<Navigator>();

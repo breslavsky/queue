@@ -16,7 +16,7 @@ namespace Queue.Terminal.ViewModels
 
         public ICommand SelectServiceCommand { get { return this.selectServiceCommand.Value; } }
 
-        public event EventHandler OnServiceSelected;
+        public event EventHandler OnServiceSelected = delegate { };
 
         public string Name
         {
@@ -44,13 +44,7 @@ namespace Queue.Terminal.ViewModels
 
         public ServiceButtonViewModel()
         {
-            selectServiceCommand = new Lazy<ICommand>(() => new RelayCommand(() =>
-            {
-                if (OnServiceSelected != null)
-                {
-                    OnServiceSelected(this, null);
-                }
-            }));
+            selectServiceCommand = new Lazy<ICommand>(() => new RelayCommand(() => OnServiceSelected(this, null)));
         }
     }
 }

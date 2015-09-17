@@ -137,7 +137,7 @@ namespace Queue.Notification.ViewModels
                 clientRequestsGrid.RowDefinitions.Add(new RowDefinition());
             }
 
-            foreach (UIElement c in controls)
+            foreach (var c in controls)
             {
                 clientRequestsGrid.Children.Add(c);
             }
@@ -145,7 +145,7 @@ namespace Queue.Notification.ViewModels
 
         private void ClearState()
         {
-            foreach (UIElement c in controls)
+            foreach (var c in controls)
             {
                 clientRequestsGrid.Children.Remove(c);
             }
@@ -156,7 +156,7 @@ namespace Queue.Notification.ViewModels
 
         private TextBlock CreateTextBox(string text, int col, int row, string color = null)
         {
-            TextBlock result = new TextBlock()
+            var result = new TextBlock()
             {
                 Text = text
             };

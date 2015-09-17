@@ -135,12 +135,11 @@ namespace Queue.Terminal.ViewModels
 
             foreach (var service in services)
             {
-                var button = CreateServiceButton(service.Code, service.Name,
-                    service.ServiceGroup == null ? DefaultServiceColor : service.ServiceGroup.Color, (s, a) =>
-                {
-                    request.SelectedService = service;
-                    navigator.NextPage();
-                });
+                var button = CreateServiceButton(service, (s, a) =>
+                                                            {
+                                                                request.SelectedService = service;
+                                                                navigator.NextPage();
+                                                            });
 
                 if (col >= ResultsColCount)
                 {
@@ -162,12 +161,17 @@ namespace Queue.Terminal.ViewModels
             }
         }
 
-        private SelectServiceButton CreateServiceButton(string code, string name, string color, EventHandler onSelected)
+        private SelectServiceButton CreateServiceButton(Service service, EventHandler onSelected)
         {
+            var color = service.ServiceGroup == null ?
+                                    DefaultServiceColor :
+                                    service.ServiceGroup.Color;
+
             var model = new ServiceButtonViewModel()
             {
-                Code = code,
-                Name = name,
+                Code = service.Code,
+                Name = service.Name,
+                FontSize = service.FontSize,
                 ServiceBrush = color.GetBrushForColor()
             };
             model.OnServiceSelected += onSelected;
