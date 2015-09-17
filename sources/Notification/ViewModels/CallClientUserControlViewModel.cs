@@ -1,5 +1,4 @@
-﻿using Junte.Translation;
-using Junte.UI.WPF;
+﻿using Junte.UI.WPF;
 using Queue.Services.DTO;
 
 namespace Queue.Notification.ViewModels
@@ -8,8 +7,7 @@ namespace Queue.Notification.ViewModels
     {
         private bool active;
         private int number;
-        private string workplaceType;
-        private int workplaceNumber;
+        private string workplaceTitle;
 
         public bool Active
         {
@@ -23,24 +21,16 @@ namespace Queue.Notification.ViewModels
             set { SetProperty(ref number, value); }
         }
 
-        public string WorkplaceType
+        public string WorkplaceTitle
         {
-            get { return workplaceType; }
-            set { SetProperty(ref workplaceType, value); }
-        }
-
-        public int WorkplaceNumber
-        {
-            get { return workplaceNumber; }
-            set { SetProperty(ref workplaceNumber, value); }
+            get { return workplaceTitle; }
+            set { SetProperty(ref workplaceTitle, value); }
         }
 
         public void ShowMessage(ClientRequest request)
         {
             Number = request.Number;
-            Workplace workplace = request.Operator.Workplace;
-            WorkplaceType = Translater.Enum(workplace.Type);
-            WorkplaceNumber = workplace.Number;
+            WorkplaceTitle = request.Operator.Workplace.ToString();
 
             Active = true;
         }

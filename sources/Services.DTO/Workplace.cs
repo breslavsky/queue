@@ -1,5 +1,6 @@
 ﻿using Junte.Translation;
 using Queue.Model.Common;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -37,12 +38,12 @@ namespace Queue.Services.DTO
                 chunks.Add(Number.ToString());
 
                 var modificator = Translater.Enum(Modificator);
-                if (!string.IsNullOrEmpty(modificator))
+                if (!String.IsNullOrEmpty(modificator))
                 {
                     chunks.Add(modificator);
                 }
             }
-            return string.Join(" ", chunks);
+            return String.Join(" ", chunks);
         }
     }
 }

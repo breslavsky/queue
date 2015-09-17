@@ -9,13 +9,6 @@
 
     <StackPanel>
         <TextBlock HorizontalAlignment="Center" Text="{Binding Number}" />
-        <TextBlock>
-            <TextBlock.Text>
-                <MultiBinding StringFormat="{}{0} {1}">
-                    <Binding Path="WorkplaceType" />
-                    <Binding Path="WorkplaceNumber" />
-                </MultiBinding>
-            </TextBlock.Text>
-        </TextBlock>
+        <TextBlock HorizontalAlignment="Center" Text="{Binding WorkplaceTitle}" />
     </StackPanel>
 </UserControl>
