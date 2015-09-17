@@ -108,7 +108,6 @@ namespace Queue.Services.Server
                     }
 
                     session.Save(workplace);
-                    transaction.Commit();
 
                     var todayQueuePlan = QueueInstance.TodayQueuePlan;
                     using (var locker = todayQueuePlan.WriteLock())
