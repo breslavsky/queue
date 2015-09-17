@@ -10,10 +10,6 @@ namespace Queue.Services.Server
 {
     internal class ServerHttpServiceProvider : IInstanceProvider, IContractBehavior
     {
-        public ServerHttpServiceProvider()
-        {
-        }
-
         public object GetInstance(InstanceContext instanceContext, Message message)
         {
             return GetInstance(instanceContext);

@@ -53,7 +53,7 @@ namespace Queue.UI.WinForms
             comboBox.Enabled = false;
         }
 
-        public void Empty()
+        public void Reset()
         {
             comboBox.SelectedItem = null;
         }

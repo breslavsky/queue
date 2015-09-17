@@ -20,14 +20,14 @@ namespace Queue.Administrator
         public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
-        public ServerService<IServerTcpService> ServerService { get; set; }
+        public ServerService ServerService { get; set; }
 
         #endregion dependency
 
         #region fields
 
         private const byte PageSize = 50;
-        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private int startIndex = 0;
         private TaskPool taskPool;
 

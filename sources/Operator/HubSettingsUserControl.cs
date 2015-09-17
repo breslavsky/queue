@@ -19,6 +19,7 @@ namespace Queue.Operator
         #region dependency
 
         [Dependency]
+        [ReadOnly(true)]
         [Browsable(false)]
         public HubQualitySettings HubQualitySettings { get; set; }
 

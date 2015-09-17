@@ -21,19 +21,21 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
+        [ReadOnly(true)]
         [Browsable(false)]
         public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
+        [ReadOnly(true)]
         [Browsable(false)]
-        public ServerService<IServerTcpService> ServerService { get; set; }
+        public ServerService ServerService { get; set; }
 
         #endregion dependency
 
         #region fields
 
         private const string HighligtingStyle = "XML";
-        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private CouponConfig config;
 

@@ -10,12 +10,6 @@
       <Component Id="cmpFD65F52CD5EC0B46A750F8EEFC3D4422" Directory="INSTALLFOLDER" Guid="61863352-4B46-43BF-A9B9-E6A42FD4B86A">
         <File Id="fil1F7E777B326B02F60B86F747002F8605" KeyPath="yes" Source="$(var.Notification.TargetDir)\AutoMapper.dll" />
       </Component>
-      <Component Id="cmpEEC7AC6B3009FA88C57EB2972A7A8F5B" Directory="INSTALLFOLDER" Guid="7B9C94AB-7006-4147-B2CE-D51B5A1F67BB">
-        <File Id="fil4F01E53E158206D8C82AC24B4DFEE253" KeyPath="yes" Source="$(var.Notification.TargetDir)\AutoMapper.Net4.dll" />
-      </Component>
-      <Component Id="cmp695F3B89FCD90C669B1958F6D20D523D" Directory="INSTALLFOLDER" Guid="84106865-7BDC-4153-B45C-36A9E7A3D0C7">
-        <File Id="filECAAB6E721DE437D50D73A1F554EB461" KeyPath="yes" Source="$(var.Notification.TargetDir)\Icons.resx" />
-      </Component>
       <Component Id="cmpE5057827B5BBC477B00E24D8BF130BCF" Directory="INSTALLFOLDER" Guid="BD1366E7-F4B3-40C1-BCDE-5E6038393472">
         <File Id="fil1DB5A7054C250ED33EF11E0741091DAF" KeyPath="yes" Source="$(var.Notification.TargetDir)\Junte.Configuration.dll" />
       </Component>

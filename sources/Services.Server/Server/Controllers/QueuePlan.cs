@@ -185,6 +185,7 @@ namespace Queue.Services.Server
                         switch (clientRequest.State)
                         {
                             case ClientRequestState.Waiting:
+                            case ClientRequestState.Redirected:
                             case ClientRequestState.Postponed:
                                 switch (state)
                                 {
@@ -296,7 +297,7 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task PostponeCurrentClientRequest(TimeSpan postponeTime)
+        public async Task RedirectCurrentClientRequest(Guid redirectOperatorId)
         {
             await Task.Run(() =>
             {
@@ -309,27 +310,34 @@ namespace Queue.Services.Server
 
                     try
                     {
-                        ClientRequest clientRequest;
+                        var clientRequest = session.Merge(QueueInstance.TodayQueuePlan
+                            .GetOperatorPlan(queueOperator).CurrentClientRequestPlan.ClientRequest);
 
-                        var todayQueuePlan = QueueInstance.TodayQueuePlan;
-                        using (var locker = todayQueuePlan.ReadLock())
+                        var targetOperator = session.Get<Operator>(redirectOperatorId);
+                        if (targetOperator == null)
                         {
-                            clientRequest = session.Merge(todayQueuePlan.GetOperatorPlan(queueOperator)
-                                .CurrentClientRequestPlan.ClientRequest);
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(redirectOperatorId),
+                                string.Format("Оператор для передачи [{0}] не найден", redirectOperatorId));
                         }
 
-                        clientRequest.Postpone(postponeTime);
+                        if (targetOperator.Equals(queueOperator))
+                        {
+                            throw new FaultException("Не возможно передать запрос самому себе");
+                        }
+
+                        clientRequest.Redirect(targetOperator);
                         clientRequest.Version++;
                         session.Save(clientRequest);
 
                         var queueEvent = new ClientRequestEvent()
                         {
                             ClientRequest = clientRequest,
-                            Message = string.Format("Запрос клиента был отложен оператором {0} на {1} мин.", queueOperator, postponeTime.TotalMinutes)
+                            Message = string.Format("Запрос клиента передан к оператору {0}", targetOperator)
                         };
 
                         session.Save(queueEvent);
 
+                        var todayQueuePlan = QueueInstance.TodayQueuePlan;
                         using (var locker = todayQueuePlan.WriteLock())
                         {
                             transaction.Commit();
@@ -397,6 +405,59 @@ namespace Queue.Services.Server
             });
         }
 
+        public async Task PostponeCurrentClientRequest(TimeSpan postponeTime)
+        {
+            await Task.Run(() =>
+            {
+                CheckPermission(UserRole.Operator);
+
+                using (var session = SessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    var queueOperator = (Operator)currentUser;
+
+                    try
+                    {
+                        ClientRequest clientRequest;
+
+                        var todayQueuePlan = QueueInstance.TodayQueuePlan;
+                        using (var locker = todayQueuePlan.ReadLock())
+                        {
+                            clientRequest = session.Merge(todayQueuePlan.GetOperatorPlan(queueOperator)
+                                .CurrentClientRequestPlan.ClientRequest);
+                        }
+
+                        clientRequest.Postpone(postponeTime);
+                        clientRequest.Version++;
+                        session.Save(clientRequest);
+
+                        var queueEvent = new ClientRequestEvent()
+                        {
+                            ClientRequest = clientRequest,
+                            Message = string.Format("Запрос клиента был отложен оператором {0} на {1} мин.", queueOperator, postponeTime.TotalMinutes)
+                        };
+
+                        session.Save(queueEvent);
+
+                        using (var locker = todayQueuePlan.WriteLock())
+                        {
+                            transaction.Commit();
+
+                            todayQueuePlan.Put(clientRequest);
+                            todayQueuePlan.Build(DateTime.Now.TimeOfDay);
+                        }
+
+                        QueueInstance.ClientRequestUpdated(clientRequest);
+                        QueueInstance.Event(queueEvent);
+                    }
+                    catch (Exception exception)
+                    {
+                        throw new FaultException(exception.Message);
+                    }
+                }
+            });
+        }
+
         public async Task<DTO.ClientRequest> EditCurrentClientRequest(DTO.ClientRequest source)
         {
             return await Task.Run(() =>
@@ -415,7 +476,7 @@ namespace Queue.Services.Server
                         var todayQueuePlan = QueueInstance.TodayQueuePlan;
                         using (var locker = todayQueuePlan.ReadLock())
                         {
-                            ClientRequestPlan clientRequestPlan = todayQueuePlan.GetOperatorPlan(queueOperator)
+                            var clientRequestPlan = todayQueuePlan.GetOperatorPlan(queueOperator)
                                 .CurrentClientRequestPlan;
                             if (clientRequestPlan == null)
                             {
@@ -459,7 +520,7 @@ namespace Queue.Services.Server
                         {
                             Guid serviceId = source.Service.Id;
 
-                            Service service = session.Get<Service>(serviceId);
+                            var service = session.Get<Service>(serviceId);
                             if (service == null)
                             {
                                 throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId),

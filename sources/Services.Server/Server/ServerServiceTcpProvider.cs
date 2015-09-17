@@ -10,10 +10,6 @@ namespace Queue.Services.Server
 {
     internal class ServerTcpServiceProvider : IInstanceProvider, IContractBehavior
     {
-        public ServerTcpServiceProvider()
-        {
-        }
-
         public object GetInstance(InstanceContext instanceContext, Message message)
         {
             return GetInstance(instanceContext);

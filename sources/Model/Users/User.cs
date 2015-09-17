@@ -12,9 +12,9 @@ namespace Queue.Model
     [Cache(Usage = CacheUsage.ReadWrite)]
     public class User : IdentifiedEntity
     {
+        public const int LostTimeout = 3600;
         public const int GoneTimeout = 60;
-
-        private const int HeartbitTimeout = 20;
+        public const int HeartbitTimeout = 20;
 
         public User()
         {
@@ -65,6 +65,11 @@ namespace Queue.Model
         public virtual bool HasGone
         {
             get { return Heartbeat < DateTime.Now - TimeSpan.FromSeconds(GoneTimeout); }
+        }
+
+        public virtual bool HasLost
+        {
+            get { return Heartbeat < DateTime.Now - TimeSpan.FromSeconds(LostTimeout); }
         }
 
         #endregion properties

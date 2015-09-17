@@ -25,7 +25,7 @@ namespace Queue.Display.ViewModels
     {
         private bool disposed;
         private readonly TaskPool taskPool;
-        private ChannelManager<IServerTcpService> channelManager;
+        private DuplexChannelManager<IServerTcpService> channelManager;
         private AccentColorComboBoxItem selectedAccent;
         private bool isConnected;
 
@@ -167,7 +167,7 @@ namespace Queue.Display.ViewModels
                 channelManager.Dispose();
             }
 
-            channelManager = new ChannelManager<IServerTcpService>(ChannelBuilder);
+            channelManager = new DuplexChannelManager<IServerTcpService>(ChannelBuilder);
 
             IsConnected = false;
 

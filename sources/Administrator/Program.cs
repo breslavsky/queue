@@ -20,10 +20,11 @@ namespace Queue.Administrator
         private static AppOptions options;
         private static UnityContainer container;
         private static ConfigurationManager configuration;
+        private static ApplicationSettings applicationSettings;
         private static AdministratorSettings administratorSettings;
         private static LoginSettings loginSettings;
         private static LoginFormSettings loginFormSettings;
-        private static ServerService<IServerTcpService> serverService;
+        private static ServerService serverService;
         private static QueueAdministrator currentUser;
 
         [STAThread]
@@ -39,6 +40,9 @@ namespace Queue.Administrator
             configuration = new ConfigurationManager(Product.Administrator.AppName, SpecialFolder.ApplicationData);
             container.RegisterInstance(configuration);
 
+            applicationSettings = configuration.GetSection<ApplicationSettings>(ApplicationSettings.SectionKey);
+            container.RegisterInstance(applicationSettings);
+
             administratorSettings = configuration.GetSection<AdministratorSettings>(AdministratorSettings.SectionKey);
             container.RegisterInstance(administratorSettings);
 
@@ -52,7 +56,7 @@ namespace Queue.Administrator
 
             if (options.AutoLogin)
             {
-                serverService = new ServerService<IServerTcpService>(options.Endpoint, ServerServicesPaths.Server);
+                serverService = new ServerService(options.Endpoint, ServerServicesPaths.Server);
                 container.RegisterInstance(serverService);
 
                 var channelManager = serverService.CreateChannelManager();
@@ -81,7 +85,7 @@ namespace Queue.Administrator
 
                         loginForm.Dispose();
 
-                        serverService = new ServerService<IServerTcpService>(loginSettings.Endpoint, ServerServicesPaths.Server);
+                        serverService = new ServerService(loginSettings.Endpoint, ServerServicesPaths.Server);
                         container.RegisterInstance(serverService);
 
                         var mainForm = new AdministratorForm();

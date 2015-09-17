@@ -21,7 +21,7 @@ namespace Queue.Services.Portal
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        protected readonly ChannelManager<IServerTcpService> channelManager;
+        protected readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly User currentUser;
         protected readonly IncomingWebRequestContext request;
         protected readonly OutgoingWebResponseContext response;
@@ -31,7 +31,7 @@ namespace Queue.Services.Portal
             this.channelBuilder = channelBuilder;
             this.currentUser = currentUser;
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
+            channelManager = new DuplexChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
 
             request = WebOperationContext.Current.IncomingRequest;
             response = WebOperationContext.Current.OutgoingResponse;

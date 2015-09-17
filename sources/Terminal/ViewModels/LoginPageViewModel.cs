@@ -12,7 +12,6 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Views;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -37,7 +36,7 @@ namespace Queue.Terminal.ViewModels
         private List<UserComboBoxItem> users;
         private UserRole userRole;
 
-        private ChannelManager<IServerTcpService> channelManager;
+        private DuplexChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
         private Language selectedLanguage;
         private ConfigurationManager configuration;
@@ -175,7 +174,7 @@ namespace Queue.Terminal.ViewModels
         public async void Connect()
         {
             ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
-            channelManager = new ChannelManager<IServerTcpService>(ChannelBuilder);
+            channelManager = new DuplexChannelManager<IServerTcpService>(ChannelBuilder);
 
             using (var channel = channelManager.CreateChannel())
             {

@@ -129,6 +129,9 @@
   <data name="Postponed" xml:space="preserve">
     <value>Postponed</value>
   </data>
+  <data name="Redirected" xml:space="preserve">
+    <value>Redirected</value>
+  </data>
   <data name="Rendered" xml:space="preserve">
     <value>Rendered</value>
   </data>

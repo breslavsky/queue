@@ -129,6 +129,9 @@
   <data name="Postponed" xml:space="preserve">
     <value>Отложен</value>
   </data>
+  <data name="Redirected" xml:space="preserve">
+    <value>Перенаправлен</value>
+  </data>
   <data name="Rendered" xml:space="preserve">
     <value>Обслужен</value>
   </data>

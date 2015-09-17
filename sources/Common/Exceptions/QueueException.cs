@@ -15,6 +15,11 @@ namespace Queue.Common
         {
         }
 
+        public QueueException(string message, params object[] args) :
+            base(String.Format(message, args))
+        {
+        }
+
         public QueueException(string message, Exception inner)
             : base(message, inner)
         {

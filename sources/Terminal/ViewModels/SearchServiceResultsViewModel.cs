@@ -27,7 +27,7 @@ namespace Queue.Terminal.ViewModels
         private int currentPage;
 
         private TerminalWindow screen;
-        private ChannelManager<IServerTcpService> channelManager;
+        private DuplexChannelManager<IServerTcpService> channelManager;
         private Navigator navigator;
         private ClientRequestModel request;
 
@@ -61,7 +61,7 @@ namespace Queue.Terminal.ViewModels
             PrevCommand = new RelayCommand(Prev);
 
             screen = ServiceLocator.Current.GetInstance<TerminalWindow>();
-            channelManager = ServiceLocator.Current.GetInstance<ChannelManager<IServerTcpService>>();
+            channelManager = ServiceLocator.Current.GetInstance<DuplexChannelManager<IServerTcpService>>();
             navigator = ServiceLocator.Current.GetInstance<Navigator>();
             request = ServiceLocator.Current.GetInstance<ClientRequestModel>();
         }

@@ -17,12 +17,14 @@ namespace Queue.UI.WinForms
         #region dependency
 
         [Dependency]
+        [ReadOnly(true)]
         [Browsable(false)]
         public User CurrentUser { get; set; }
 
         [Dependency]
+        [ReadOnly(true)]
         [Browsable(false)]
-        public ServerService<IServerTcpService> ServerService { get; set; }
+        public ServerService ServerService { get; set; }
 
         #endregion dependency
 
@@ -34,7 +36,7 @@ namespace Queue.UI.WinForms
 
         #region fields
 
-        private readonly ChannelManager<IServerTcpService> channelManager;
+        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
 
         #endregion fields

@@ -21,13 +21,13 @@ namespace Queue.Administrator
         public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
-        public ServerService<IServerTcpService> ServerService { get; set; }
+        public ServerService ServerService { get; set; }
 
         #endregion dependency
 
         #region fields
 
-        private ChannelManager<IServerTcpService> channelManager;
+        private DuplexChannelManager<IServerTcpService> channelManager;
         private TaskPool taskPool;
 
         #endregion fields

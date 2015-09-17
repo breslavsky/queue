@@ -32,16 +32,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Junte.Data.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Junte.WCF, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Junte.Data.Common.1.1.0.0\lib\net45\Junte.Data.Common.dll</HintPath>
+      <HintPath>..\packages\Junte.WCF.1.0.3.0\lib\net45\Junte.WCF.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.WCF">
-      <HintPath>..\packages\Junte.WCF.1.0.1.0\lib\net45\Junte.WCF.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog, Version=3.2.1.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NLog.3.2.1\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.1.1\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

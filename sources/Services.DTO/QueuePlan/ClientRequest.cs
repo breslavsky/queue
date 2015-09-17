@@ -83,6 +83,9 @@ namespace Queue.Services.DTO
 
                             case ClientRequestState.Rendering:
                                 return "LightBlue";
+
+                            case ClientRequestState.Redirected:
+                                return "Blue";
                         }
                     }
 

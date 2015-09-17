@@ -66,7 +66,7 @@ namespace Queue.Terminal.ViewModels
         public TaskPool TaskPool { get; set; }
 
         [Dependency]
-        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         public SelectRequestDatePageViewModel()
         {

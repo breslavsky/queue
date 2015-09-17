@@ -25,7 +25,7 @@ namespace Queue.Terminal.ViewModels
         public ICommand LoadedCommand { get; set; }
 
         [Dependency]
-        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
         public TerminalWindow Window { get; set; }

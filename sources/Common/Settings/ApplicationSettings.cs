@@ -5,6 +5,8 @@ namespace Queue.Common.Settings
 {
     public class ApplicationSettings : ConfigurationSection
     {
+        public const string SectionKey = "application";
+
         public ApplicationSettings()
         {
             Language = CultureInfo.CurrentCulture.GetLanguage();

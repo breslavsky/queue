@@ -25,9 +25,6 @@
       <Component Id="cmpFD65F52CD5EC0B46A750F8EEFC3D4422" Guid="89D73591-1375-48D3-8A77-C571D337CF80">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\AutoMapper.dll" />
       </Component>
-      <Component Id="cmpEEC7AC6B3009FA88C57EB2972A7A8F5B" Guid="50E3CFC5-CEBD-4D36-BBC5-1F9597DF0860">
-        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\AutoMapper.Net4.dll" />
-      </Component>
       <Component Id="cmp730E2FFFAB351C1FBB3C16D211F149E6" Guid="98462FFA-6E8C-4EE4-A84B-B2C27CC45641">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\FluentNHibernate.dll" />
       </Component>
@@ -36,9 +33,6 @@
       </Component>
       <Component Id="cmpAD8551805C0E384D4FD6CD718C5E8381" Guid="FCFBF43F-1B12-490B-B2A2-6E5BC9CE60D2">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Iesi.Collections.dll" />
-      </Component>
-      <Component Id="cmp0A57C036E7477C8B804C1F689B87C13B" Guid="8FDADD5B-0DEC-4FEF-B1B4-8C5A1ACE285E">
-        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Junte.Data.Common.dll" />
       </Component>
       <Component Id="cmp391ED0FC564C14BE2F75C7141F49032B"  Guid="AF46FACE-E168-4DA5-9814-C5CDB490A3E4">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\Junte.Data.NHibernate.dll" />

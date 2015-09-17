@@ -41,6 +41,15 @@ namespace Queue.Hub.Svetovod
             port.Write(bytes, 0, bytes.Length);
         }
 
+        protected void WriteToPort(byte[] header, byte[] body)
+        {
+            var data = new byte[header.Length + body.Length];
+            header.CopyTo(data, 0);
+            body.CopyTo(data, header.Length);
+
+            port.Write(data, 0, data.Length);
+        }
+
         protected static byte[] CreateHeader(byte sysnum, byte com1, byte com2, byte com3)
         {
             var header = new List<byte>();
@@ -58,6 +67,15 @@ namespace Queue.Hub.Svetovod
             header.Add(crcl);
 
             return header.ToArray();
+        }
+
+        protected static byte[] CreateBody(byte[] data)
+        {
+            var result = new byte[data.Length + 1];
+            data.CopyTo(result, 0);
+            result[result.Length - 1] = (byte)data.Sum(i => i);
+
+            return result;
         }
 
         private static byte Low(int num)

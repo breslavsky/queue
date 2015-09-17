@@ -19,7 +19,7 @@ namespace Queue.Media
         private MediaSettings mediaSettings;
         private LoginSettings serverConnection;
         private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private ChannelManager<IServerTcpService> channelManager;
+        private DuplexChannelManager<IServerTcpService> channelManager;
         private Administrator user;
         private ServiceHost host;
 
@@ -46,7 +46,7 @@ namespace Queue.Media
         {
             ServiceHost host = new MediaServiceHost(channelBuilder, user, mediaSettings.Folder, typeof(MediaService));
 
-            Uri uri = new Uri(string.Format("{0}://0.0.0.0:{1}/", Schemes.HTTP, mediaSettings.Port));
+            Uri uri = new Uri(string.Format("{0}://0.0.0.0:{1}/", Schemes.Http, mediaSettings.Port));
             ServiceEndpoint serviceEndpoint = host.AddServiceEndpoint(typeof(IMediaService), Bindings.WebHttpBinding, uri.ToString());
             serviceEndpoint.Behaviors.Add(new WebHttpBehavior());
 
@@ -59,7 +59,7 @@ namespace Queue.Media
                                                                            Bindings.NetTcpBinding,
                                                                            new EndpointAddress(serverConnection.Endpoint));
 
-            channelManager = new ChannelManager<IServerTcpService>(channelBuilder);
+            channelManager = new DuplexChannelManager<IServerTcpService>(channelBuilder);
 
             using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
             {

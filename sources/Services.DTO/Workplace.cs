@@ -1,6 +1,6 @@
 ﻿using Junte.Translation;
 using Queue.Model.Common;
-using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Queue.Services.DTO
@@ -31,7 +31,18 @@ namespace Queue.Services.DTO
 
         public override string ToString()
         {
-            return String.Format("{0} {1}{2}", Translater.Enum(Type), Number, Translater.Enum(Modificator)).Trim();
+            var chunks = new List<string>() { Translater.Enum(Type) };
+            if (Number > 0)
+            {
+                chunks.Add(Number.ToString());
+
+                var modificator = Translater.Enum(Modificator);
+                if (!string.IsNullOrEmpty(modificator))
+                {
+                    chunks.Add(modificator);
+                }
+            }
+            return string.Join(" ", chunks);
         }
     }
 }
