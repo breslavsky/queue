@@ -17,12 +17,12 @@
             <ColumnDefinition Width="5" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0"
+        <!--<TextBlock Grid.Column="0"
                    Margin="0,0,5,0"
                    Text="{lex:Loc Client}"
                    TextDecorations="Underline" />
         <TextBlock Grid.Column="2"
                    Text="{lex:Loc Workplace}"
-                   TextDecorations="Underline" />
+                   TextDecorations="Underline" />-->
     </Grid>
 </UserControl>

@@ -7,14 +7,14 @@
              d:DesignWidth="300"
              mc:Ignorable="d">
     <StackPanel>
-        <TextBlock Text="{Binding Workplace}" />
+        <TextBlock Text="{Binding Workplace}" FontSize="16" />
         <Border HorizontalAlignment="Right"
-                Background="#FFDEDEDE"
+                Background="{Binding StateBrush}"
                 CornerRadius="1.5">
             <TextBlock Margin="0.5"
                        FontSize="5"
                        FontWeight="Bold"
-                       Foreground="{Binding StateBrush}"
+                       Foreground="#000000"
                        Text="{Binding State}">
             </TextBlock>
         </Border>

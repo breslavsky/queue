@@ -158,7 +158,8 @@ namespace Queue.Notification.ViewModels
         {
             var result = new TextBlock()
             {
-                Text = text
+                Text = text,
+                FontSize = 20
             };
 
             if (color != null)

@@ -110,6 +110,14 @@ namespace Queue.Services.Server
                     session.Save(workplace);
                     transaction.Commit();
 
+                    var todayQueuePlan = QueueInstance.TodayQueuePlan;
+                    using (var locker = todayQueuePlan.WriteLock())
+                    {
+                        transaction.Commit();
+
+                        todayQueuePlan.Put(workplace);
+                    }
+
                     return Mapper.Map<Workplace, DTO.Workplace>(workplace);
                 }
             });

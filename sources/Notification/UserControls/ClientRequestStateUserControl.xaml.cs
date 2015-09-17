@@ -19,12 +19,11 @@ namespace Queue.Notification.UserControls
         {
             InitializeComponent();
 
-            this.Workplace = request.Operator == null || request.Operator.Workplace == null ?
-                                                        String.Empty :
-                                                        request.Operator.Workplace.ToString();
-            this.State = Translater.Enum(request.State);
+            Workplace = request.Operator != null && request.Operator.Workplace != null ?
+                request.Operator.Workplace.ToString() : String.Empty;
+            State = Translater.Enum(request.State);
 
-            Drawing.Color c = Drawing.ColorTranslator.FromHtml(request.Color);
+            var c = Drawing.ColorTranslator.FromHtml(request.Color);
             StateBrush = new SolidColorBrush(Color.FromRgb(c.R, c.G, c.B));
 
             DataContext = this;
