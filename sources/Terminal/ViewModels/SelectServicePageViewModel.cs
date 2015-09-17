@@ -7,6 +7,7 @@ using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
+using Queue.Terminal.Extensions;
 using Queue.Terminal.UserControls;
 using Queue.UI.WPF;
 using System;
@@ -18,8 +19,6 @@ namespace Queue.Terminal.ViewModels
 {
     public class SelectServicePageViewModel : PageViewModel
     {
-        private const string DefaultServiceColor = "Blue";
-
         public event EventHandler<RenderServicesEventArgs> OnRenderServices;
 
         public ICommand LoadedCommand { get; set; }
@@ -138,9 +137,7 @@ namespace Queue.Terminal.ViewModels
 
                 buttons.Add(CreateSelectServiceButton(service.Code,
                                                     service.Name,
-                                                    service.ServiceGroup == null ?
-                                                            DefaultServiceColor :
-                                                            service.ServiceGroup.Color,
+                                                    service.GetColor(),
                                                     service.FontSize,
                                                     (s, a) => SetSelectedService(service)
                 ));

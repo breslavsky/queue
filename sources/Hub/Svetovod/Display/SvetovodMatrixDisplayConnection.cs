@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
 
@@ -13,9 +14,27 @@ namespace Queue.Hub.Svetovod
 
         public void ShowText(byte sysnum, string text, int width, int height)
         {
+            text = GetPreparedText(text, width);
             var body = CreateBody(GetTextBytes(text, width, height));
             var header = CreateHeader(sysnum, 0x00, 0x00, (byte)(body.Length - 1));
             WriteToPort(header, body);
+        }
+
+        private string GetPreparedText(string text, int width)
+        {
+            var places = width / 8;
+            if (text.Length == places)
+            {
+                return text;
+            }
+            else if (text.Length > places)
+            {
+                return text.Substring(0, places);
+            }
+            else
+            {
+                return new String(' ', places - text.Length) + text;
+            }
         }
 
         private byte[] GetTextBytes(string text, int width, int height)

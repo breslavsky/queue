@@ -4,6 +4,7 @@ using Microsoft.Practices.ServiceLocation;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
+using Queue.Terminal.Extensions;
 using Queue.Terminal.UserControls;
 using Queue.UI.WPF;
 using System;
@@ -18,7 +19,6 @@ namespace Queue.Terminal.ViewModels
         private const int ResultsColCount = 2;
         private const int ResultsRowCount = 3;
         private const int ResultsPerPage = ResultsColCount * ResultsRowCount;
-        private const string DefaultServiceColor = "Blue";
 
         private Grid resultsGrid;
         private bool hasNext;
@@ -163,16 +163,12 @@ namespace Queue.Terminal.ViewModels
 
         private SelectServiceButton CreateServiceButton(Service service, EventHandler onSelected)
         {
-            var color = service.ServiceGroup == null ?
-                                    DefaultServiceColor :
-                                    service.ServiceGroup.Color;
-
             var model = new ServiceButtonViewModel()
             {
                 Code = service.Code,
                 Name = service.Name,
                 FontSize = service.FontSize,
-                ServiceBrush = color.GetBrushForColor()
+                ServiceBrush = service.GetColor().GetBrushForColor()
             };
             model.OnServiceSelected += onSelected;
 

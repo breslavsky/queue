@@ -130,6 +130,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\ClientRequestTypeConverter.cs" />
     <Compile Include="Converters\RequestDateTimeConverter.cs" />
+    <Compile Include="Core\Extensions\ServiceExtensions.cs" />
     <Compile Include="Enums\ClientRequestModelState.cs" />
     <Compile Include="Translate\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
