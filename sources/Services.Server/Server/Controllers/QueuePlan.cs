@@ -541,7 +541,7 @@ namespace Queue.Services.Server
                                 });
                             }
                         }
-                        else
+                        else if (clientRequest.Service != null)
                         {
                             clientRequest.Service = null;
                         }
@@ -570,7 +570,7 @@ namespace Queue.Services.Server
                                 });
                             }
                         }
-                        else
+                        else if (clientRequest.ServiceStep != null)
                         {
                             clientRequest.ServiceStep = null;
 
