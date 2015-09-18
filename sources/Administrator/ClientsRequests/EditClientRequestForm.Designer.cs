@@ -37,15 +37,11 @@
             this.stateLabel = new System.Windows.Forms.Label();
             this.numberLabel = new System.Windows.Forms.Label();
             this.parametersGridView = new System.Windows.Forms.DataGridView();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.parametersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.requestDateLabel = new System.Windows.Forms.Label();
             this.clientLabel = new System.Windows.Forms.Label();
             this.serviceLabel = new System.Windows.Forms.Label();
             this.eventsGridView = new System.Windows.Forms.DataGridView();
-            this.createDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.messageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.eventsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.operatorLabel = new System.Windows.Forms.Label();
             this.serviceChangeLink = new System.Windows.Forms.LinkLabel();
@@ -79,6 +75,10 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.additionalServicesGridView = new System.Windows.Forms.DataGridView();
+            this.createDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.messageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.additionalServiceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Sum = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -140,25 +140,8 @@
             this.parametersGridView.Name = "parametersGridView";
             this.parametersGridView.ReadOnly = true;
             this.parametersGridView.RowHeadersVisible = false;
-            this.parametersGridView.Size = new System.Drawing.Size(537, 305);
+            this.parametersGridView.Size = new System.Drawing.Size(542, 305);
             this.parametersGridView.TabIndex = 0;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.FillWeight = 120F;
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Наименование";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nameDataGridViewTextBoxColumn.Width = 120;
-            // 
-            // valueDataGridViewTextBoxColumn
-            // 
-            this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
-            this.valueDataGridViewTextBoxColumn.HeaderText = "Значение";
-            this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
-            this.valueDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // parametersBindingSource
             // 
@@ -218,21 +201,6 @@
             this.eventsGridView.RowHeadersVisible = false;
             this.eventsGridView.Size = new System.Drawing.Size(542, 305);
             this.eventsGridView.TabIndex = 0;
-            // 
-            // createDateDataGridViewTextBoxColumn
-            // 
-            this.createDateDataGridViewTextBoxColumn.DataPropertyName = "CreateDate";
-            this.createDateDataGridViewTextBoxColumn.HeaderText = "Дата";
-            this.createDateDataGridViewTextBoxColumn.Name = "createDateDataGridViewTextBoxColumn";
-            this.createDateDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // messageDataGridViewTextBoxColumn
-            // 
-            this.messageDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.messageDataGridViewTextBoxColumn.DataPropertyName = "Message";
-            this.messageDataGridViewTextBoxColumn.HeaderText = "Сообщение";
-            this.messageDataGridViewTextBoxColumn.Name = "messageDataGridViewTextBoxColumn";
-            this.messageDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // eventsBindingSource
             // 
@@ -539,7 +507,7 @@
             this.tabPage2.Controls.Add(this.parametersGridView);
             this.tabPage2.Location = new System.Drawing.Point(4, 26);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(537, 305);
+            this.tabPage2.Size = new System.Drawing.Size(542, 305);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Параметры";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -549,7 +517,7 @@
             this.tabPage3.Controls.Add(this.additionalServicesGridView);
             this.tabPage3.Location = new System.Drawing.Point(4, 26);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(537, 305);
+            this.tabPage3.Size = new System.Drawing.Size(542, 305);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Дополнительные услуги";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -580,8 +548,44 @@
             this.additionalServicesGridView.Name = "additionalServicesGridView";
             this.additionalServicesGridView.ReadOnly = true;
             this.additionalServicesGridView.RowHeadersVisible = false;
-            this.additionalServicesGridView.Size = new System.Drawing.Size(537, 305);
+            this.additionalServicesGridView.Size = new System.Drawing.Size(542, 305);
             this.additionalServicesGridView.TabIndex = 1;
+            // 
+            // createDateDataGridViewTextBoxColumn
+            // 
+            this.createDateDataGridViewTextBoxColumn.DataPropertyName = "CreateDate";
+            this.createDateDataGridViewTextBoxColumn.HeaderText = "Дата";
+            this.createDateDataGridViewTextBoxColumn.Name = "createDateDataGridViewTextBoxColumn";
+            this.createDateDataGridViewTextBoxColumn.ReadOnly = true;
+            this.createDateDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // messageDataGridViewTextBoxColumn
+            // 
+            this.messageDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.messageDataGridViewTextBoxColumn.DataPropertyName = "Message";
+            this.messageDataGridViewTextBoxColumn.HeaderText = "Сообщение";
+            this.messageDataGridViewTextBoxColumn.Name = "messageDataGridViewTextBoxColumn";
+            this.messageDataGridViewTextBoxColumn.ReadOnly = true;
+            this.messageDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.FillWeight = 120F;
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Наименование";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.nameDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.nameDataGridViewTextBoxColumn.Width = 120;
+            // 
+            // valueDataGridViewTextBoxColumn
+            // 
+            this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
+            this.valueDataGridViewTextBoxColumn.HeaderText = "Значение";
+            this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
+            this.valueDataGridViewTextBoxColumn.ReadOnly = true;
+            this.valueDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // additionalServiceDataGridViewTextBoxColumn
             // 
@@ -590,6 +594,7 @@
             this.additionalServiceDataGridViewTextBoxColumn.HeaderText = "Дополнительная услуга";
             this.additionalServiceDataGridViewTextBoxColumn.Name = "additionalServiceDataGridViewTextBoxColumn";
             this.additionalServiceDataGridViewTextBoxColumn.ReadOnly = true;
+            this.additionalServiceDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // quantityDataGridViewTextBoxColumn
             // 
@@ -600,6 +605,7 @@
             this.quantityDataGridViewTextBoxColumn.HeaderText = "Кол-во";
             this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
             this.quantityDataGridViewTextBoxColumn.ReadOnly = true;
+            this.quantityDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.quantityDataGridViewTextBoxColumn.Width = 70;
             // 
             // Sum
@@ -612,6 +618,7 @@
             this.Sum.HeaderText = "Сумма";
             this.Sum.Name = "Sum";
             this.Sum.ReadOnly = true;
+            this.Sum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // EditClientRequestForm
             // 
@@ -683,10 +690,6 @@
         private System.Windows.Forms.DateTimePicker requestDatePicker;
         private UI.WinForms.TimePicker requestTimePicker;
         private System.Windows.Forms.BindingSource eventsBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn createDateDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn messageDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource parametersBindingSource;
         private System.Windows.Forms.BindingSource additionalServicesBindingSource;
         private System.Windows.Forms.TabControl clientRequestTabControl;
@@ -694,6 +697,10 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.DataGridView additionalServicesGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn createDateDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn messageDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn additionalServiceDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn quantityDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sum;
