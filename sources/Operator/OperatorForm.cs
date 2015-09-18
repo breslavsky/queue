@@ -918,9 +918,7 @@ namespace Queue.Operator
                     try
                     {
                         callClientButton.Enabled = false;
-
                         await taskPool.AddTask(channel.Service.UpdateCurrentClientRequest(ClientRequestState.Calling));
-
                         completed = true;
                     }
                     catch (OperationCanceledException) { }
