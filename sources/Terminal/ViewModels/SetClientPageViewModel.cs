@@ -52,7 +52,7 @@ namespace Queue.Terminal.ViewModels
         {
             if (String.IsNullOrWhiteSpace(Username))
             {
-                Window.ShowWarning(Translater.Message("NoNameWarn"));
+                Window.Warning(Translater.Message("NoNameWarn"));
                 return;
             }
 
@@ -95,7 +95,7 @@ namespace Queue.Terminal.ViewModels
                 }
                 catch (FaultException exception)
                 {
-                    Window.ShowWarning(exception.Reason.ToString());
+                    Window.Warning(exception.Reason.ToString());
                 }
                 catch (Exception exception)
                 {

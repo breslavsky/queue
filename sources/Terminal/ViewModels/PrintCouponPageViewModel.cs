@@ -76,7 +76,7 @@ namespace Queue.Terminal.ViewModels
                 }
                 catch (FaultException exception)
                 {
-                    warn = Window.ShowWarning(exception.Reason, () => Navigator.NextPage());
+                    warn = Window.Warning(exception.Reason, () => Navigator.NextPage());
                 }
                 catch (Exception exception)
                 {

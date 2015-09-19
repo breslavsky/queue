@@ -91,11 +91,11 @@ namespace Queue.Terminal.ViewModels
             }
             catch (FaultException exception)
             {
-                Window.ShowWarning(exception.Reason.ToString());
+                Window.Warning(exception.Reason.ToString());
             }
             catch (Exception exception)
             {
-                Window.ShowWarning(exception.Message);
+                Window.Warning(exception.Message);
             }
             finally
             {

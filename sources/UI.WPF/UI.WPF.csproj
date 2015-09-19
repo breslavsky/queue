@@ -99,6 +99,7 @@
       <DependentUpon>LoadingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\ServerState.cs" />
+    <Compile Include="ITemplateManager.cs" />
     <Compile Include="LoginFormSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Strings.Designer.cs">
@@ -106,6 +107,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="TemplateManager.cs" />
     <Compile Include="Types\AccentColorComboBoxItem.cs" />
     <Compile Include="ViewModels\KeyboardControlViewModel.cs" />
     <Compile Include="IMainWindow.cs" />

@@ -19,5 +19,8 @@
     <controls:MetroWindow.GlowBrush>
         <SolidColorBrush Color="{DynamicResource AccentColor}" />
     </controls:MetroWindow.GlowBrush>
-    <Frame x:Name="content" NavigationUIVisibility="Hidden" />
+
+    <Grid x:Name="mainGrid">
+        <Frame x:Name="content" NavigationUIVisibility="Hidden" />
+    </Grid>
 </controls:MetroWindow>

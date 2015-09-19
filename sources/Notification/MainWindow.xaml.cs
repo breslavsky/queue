@@ -9,23 +9,26 @@ using Queue.Notification.ViewModels;
 using Queue.Notification.Views;
 using Queue.Services.Contracts;
 using Queue.UI.WPF;
+using Queue.UI.WPF.Types;
 using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using WinForms = System.Windows.Forms;
 
 namespace Queue.Notification
 {
-    public partial class MainWindow : MetroWindow
+    public partial class MainWindow : MetroWindow, IMainWindow
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private bool disposed = false;
 
         private LoginPage connectPage;
-        private TaskPool taskPool;
-        private DuplexChannelManager<IServerTcpService> channelManager;
+
+        private LoadingControl loading;
+        private UserControl activeMessageBox;
 
         public MainWindow()
             : base()
@@ -53,7 +56,7 @@ namespace Queue.Notification
         {
             RegisterServices();
 
-            content.NavigationService.Navigate(new HomePage());
+            content.NavigationService.Navigate(new MainPage());
 
             Application.Current.MainWindow.KeyDown += MainWindow_KeyDown;
 
@@ -71,13 +74,12 @@ namespace Queue.Notification
         {
             var container = ServiceLocator.Current.GetInstance<UnityContainer>();
 
-            taskPool = new TaskPool();
-            container.RegisterInstance(connectPage.Model.ChannelBuilder);
-            container.RegisterInstance(taskPool);
-
-            var channelBuilder = container.Resolve<DuplexChannelBuilder<IServerTcpService>>();
-            channelManager = new DuplexChannelManager<IServerTcpService>(channelBuilder);
-            container.RegisterInstance(channelManager);
+            container.RegisterInstance<IMainWindow>(this);
+            container.RegisterInstance(new ServerService(connectPage.Model.Endpoint, ServerServicesPaths.Server));
+            container.RegisterInstance(new ServerTemplateService(connectPage.Model.Endpoint, ServerServicesPaths.Template));
+            container.RegisterType<DuplexChannelManager<IServerTcpService>>(new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager()));
+            container.RegisterType<ChannelManager<IServerTemplateTcpService>>(new InjectionFactory(c => c.Resolve<ServerTemplateService>().CreateChannelManager()));
+            container.RegisterType<TaskPool>();
         }
 
         private void MainWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -95,13 +97,103 @@ namespace Queue.Notification
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            if (taskPool != null)
-            {
-                taskPool.Cancel();
-            }
-
             Dispose();
         }
+
+        #region IMainWindow
+
+        public LoadingControl ShowLoading()
+        {
+            if (loading != null)
+            {
+                return loading;
+            }
+
+            Invoke(() =>
+            {
+                var control = new LoadingControl();
+                AttachControl(control);
+                loading = control;
+            });
+
+            return loading;
+        }
+
+        public void HideLoading()
+        {
+            if (loading == null)
+            {
+                return;
+            }
+
+            DetachControl(loading);
+
+            loading = null;
+        }
+
+        private void HideActiveMessageBox()
+        {
+            if (activeMessageBox != null)
+            {
+                HideMessageBox(activeMessageBox);
+            }
+        }
+
+        public NoticeControl Notice(object message, Action callback = null)
+        {
+            return ShowMessageBox(() => new NoticeControl(message.ToString(), callback));
+        }
+
+        public WarningControl Warning(object message, Action callback = null)
+        {
+            return ShowMessageBox(() => new WarningControl(message.ToString(), callback));
+        }
+
+        public T ShowMessageBox<T>(Func<T> ctor) where T : UserControl
+        {
+            HideActiveMessageBox();
+
+            T box = null;
+            Invoke(() =>
+            {
+                box = ctor();
+                AttachControl(box);
+            });
+
+            activeMessageBox = box;
+
+            return box;
+        }
+
+        public void HideMessageBox(UserControl control)
+        {
+            DetachControl(control);
+            activeMessageBox = null;
+        }
+
+        public void AttachControl(UserControl control)
+        {
+            Invoke(() => mainGrid.Children.Add(control));
+        }
+
+        public void DetachControl(UserControl control)
+        {
+            Invoke(() => mainGrid.Children.Remove(control));
+        }
+
+        public void Invoke(Action action)
+        {
+            if (Dispatcher.CheckAccess())
+            {
+                action();
+            }
+            else
+            {
+                Dispatcher.Invoke(action);
+            }
+        }
+
+        #endregion IMainWindow
 
         #region IDisposable
 
@@ -117,14 +209,6 @@ namespace Queue.Notification
             {
                 if (disposing)
                 {
-                    if (taskPool != null)
-                    {
-                        taskPool.Dispose();
-                    }
-                    if (channelManager != null)
-                    {
-                        channelManager.Dispose();
-                    }
                 }
                 disposed = true;
             }

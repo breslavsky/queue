@@ -153,7 +153,7 @@ namespace Queue.Terminal.ViewModels
             bool earlyTerminal = service.EarlyRegistrator.HasFlag(ClientRequestRegistrator.Terminal);
             if ((!liveTerminal) && (!earlyTerminal))
             {
-                Window.ShowWarning(Translater.Message("ServiceNotAvailableOnTerminal"));
+                Window.Warning(Translater.Message("ServiceNotAvailableOnTerminal"));
                 return;
             }
 
@@ -177,11 +177,11 @@ namespace Queue.Terminal.ViewModels
                 }
                 catch (FaultException exception)
                 {
-                    Window.ShowWarning(exception.Reason.ToString());
+                    Window.Warning(exception.Reason.ToString());
                 }
                 catch (Exception exception)
                 {
-                    Window.ShowWarning(exception.Message);
+                    Window.Warning(exception.Message);
                 }
                 finally
                 {

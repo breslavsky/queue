@@ -1,5 +1,4 @@
 ﻿using Junte.Configuration;
-using Junte.Parallel;
 using Junte.UI.WPF;
 using Junte.WCF;
 using MahApps.Metro;
@@ -13,6 +12,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -27,10 +27,7 @@ namespace Queue.Notification.ViewModels
         private string endpoint;
         private AccentColorComboBoxItem selectedAccent;
 
-        private TaskPool taskPool;
-        private DuplexChannelManager<IServerTcpService> channelManager;
-
-        public event EventHandler OnConnected;
+        public event EventHandler OnConnected = delegate { };
 
         private ConfigurationManager configuration;
         private LoginSettings loginSettings;
@@ -92,7 +89,6 @@ namespace Queue.Notification.ViewModels
             this.owner = owner;
 
             AccentColors = ThemeManager.Accents.Select(a => new AccentColorComboBoxItem(a.Name, a.Resources["AccentColorBrush"] as Brush)).ToArray();
-            taskPool = new TaskPool();
 
             ConnectCommand = new RelayCommand(Connect);
             LoadedCommand = new RelayCommand(Loaded);
@@ -119,23 +115,44 @@ namespace Queue.Notification.ViewModels
             IsRemember = loginFormSettings.IsRemember;
             SelectedLanguage = loginFormSettings.Language;
 
-            if (!string.IsNullOrWhiteSpace(loginFormSettings.Accent))
+            if (!String.IsNullOrWhiteSpace(loginFormSettings.Accent))
             {
                 SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == loginFormSettings.Accent);
             }
         }
 
-        private void Connect()
+        private async void Connect()
         {
-            ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
-            channelManager = new DuplexChannelManager<IServerTcpService>(ChannelBuilder);
+            if (!(await ConnectionValid()))
+            {
+                return;
+            }
 
             SaveSettings();
+            OnConnected(this, null);
+        }
 
-            if (OnConnected != null)
+        private async Task<bool> ConnectionValid()
+        {
+            try
             {
-                OnConnected(this, null);
+                using (var channelManager = new DuplexChannelManager<IServerTcpService>(
+                                                new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(),
+                                                                                            Bindings.NetTcpBinding,
+                                                                                            new EndpointAddress(Endpoint))))
+                using (var channel = channelManager.CreateChannel())
+                {
+                    var date = await channel.Service.GetDateTime();
+                }
+
+                return true;
             }
+            catch (Exception e)
+            {
+                UIHelper.Error(null, "Не удалось подключиться к серверу", e);
+            }
+
+            return false;
         }
 
         private void SaveSettings()
@@ -155,15 +172,6 @@ namespace Queue.Notification.ViewModels
 
         public void Dispose()
         {
-            if (taskPool != null)
-            {
-                taskPool.Dispose();
-            }
-
-            if (channelManager != null)
-            {
-                channelManager.Dispose();
-            }
         }
     }
 }

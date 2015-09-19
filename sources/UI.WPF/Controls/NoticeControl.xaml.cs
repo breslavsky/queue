@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Practices.ServiceLocation;
+using Queue.UI.WPF.Types;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -6,53 +8,24 @@ namespace Queue.UI.WPF
 {
     public partial class NoticeControl : UserControl
     {
-        private Action onClose;
+        private readonly Action onClose;
 
-        public NoticeControl()
+        public NoticeControl(object message, Action onClose)
         {
             InitializeComponent();
-        }
 
-        public void Show(object message)
-        {
-            Show(message, null);
-        }
-
-        public NoticeControl Show(object message, Action onClose)
-        {
             noticeTextBlock.Text = message.ToString();
             this.onClose = onClose;
-            Visibility = Visibility.Visible;
-
-            foreach (FrameworkElement child in ((Panel)Parent).Children)
-            {
-                if (!child.Equals(this))
-                {
-                    child.Blur();
-                }
-            }
-
-            hideButton.Focus();
-
-            return this;
         }
 
         public void Hide()
         {
-            Visibility = Visibility.Hidden;
-
-            foreach (FrameworkElement child in ((Panel)Parent).Children)
-            {
-                if (!child.Equals(this))
-                {
-                    child.UnBlur();
-                }
-            }
-
             if (onClose != null)
             {
                 onClose();
             }
+
+            ServiceLocator.Current.GetInstance<IMainWindow>().HideMessageBox(this);
         }
 
         private void hideButton_Click(object sender, RoutedEventArgs e)

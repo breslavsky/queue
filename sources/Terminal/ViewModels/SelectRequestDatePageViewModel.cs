@@ -98,14 +98,14 @@ namespace Queue.Terminal.ViewModels
         {
             if (!Model.SelectedDate.HasValue)
             {
-                Window.ShowWarning(Translater.Message("EarlyDateNotSelected"));
+                Window.Warning(Translater.Message("EarlyDateNotSelected"));
                 return;
             }
 
             Model.SelectedTime = GetSelectedTime();
             if (Model.SelectedTime == TimeSpan.Zero)
             {
-                Window.ShowWarning(Translater.Message("EarlyTimeNotSelected"));
+                Window.Warning(Translater.Message("EarlyTimeNotSelected"));
                 return;
             }
 
@@ -191,7 +191,7 @@ namespace Queue.Terminal.ViewModels
                 }
                 catch (FaultException exception)
                 {
-                    Window.ShowWarning(exception.Reason.ToString());
+                    Window.Warning(exception.Reason.ToString());
                 }
                 catch (Exception exception)
                 {

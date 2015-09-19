@@ -21,7 +21,7 @@ using Vlc.DotNet.Wpf;
 
 namespace Queue.Notification.ViewModels
 {
-    public class HomePageViewModel : ObservableObject, IDisposable
+    public class MainPageViewModel : ObservableObject, IDisposable
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -36,7 +36,9 @@ namespace Queue.Notification.ViewModels
         public ClientRequest[] callingClientRequests;
 
         private Channel<IServerTcpService> callbackChannel;
+
         private ServerCallback callbackObject;
+
         private VlcControl vlcControl;
 
         private Timer pingTimer;
@@ -72,6 +74,9 @@ namespace Queue.Notification.ViewModels
         public event EventHandler<int> RequestsLengthChanged;
 
         [Dependency]
+        public ServerService ServerService { get; set; }
+
+        [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
@@ -83,7 +88,7 @@ namespace Queue.Notification.ViewModels
         [Dependency]
         public ITicker Ticker { get; set; }
 
-        public HomePageViewModel()
+        public MainPageViewModel()
         {
             voiceLock = new object();
 
@@ -94,6 +99,8 @@ namespace Queue.Notification.ViewModels
 
         public async void Initialize(VlcControl vlcControl)
         {
+            ServerService.CreateChannelManager();
+
             InitCallbackChannel();
 
             this.vlcControl = vlcControl;
@@ -101,10 +108,10 @@ namespace Queue.Notification.ViewModels
             using (var channel = ChannelManager.CreateChannel())
             {
                 var loading = Window.ShowLoading();
-
                 try
                 {
-                    ReadMediaConfig(await TaskPool.AddTask(channel.Service.GetMediaConfig()), await TaskPool.AddTask(channel.Service.GetMediaConfigFiles()));
+                    ReadMediaConfig(await TaskPool.AddTask(channel.Service.GetMediaConfig()),
+                                    await TaskPool.AddTask(channel.Service.GetMediaConfigFiles()));
                     ReadNotificationConfig(await TaskPool.AddTask(channel.Service.GetNotificationConfig()));
                 }
                 catch (OperationCanceledException) { }
@@ -252,7 +259,7 @@ namespace Queue.Notification.ViewModels
                 return;
             }
 
-            foreach (MediaConfigFile file in mediaFiles)
+            foreach (var file in mediaFiles)
             {
                 vlcControl.Medias.Add(new LocationMedia(string.Format(MediaFileUriPattern, config.ServiceUrl, file.Id)));
             }
@@ -270,7 +277,7 @@ namespace Queue.Notification.ViewModels
 
         private void NotifyClientRequestUpdated(ClientRequest request)
         {
-            if ((request != null) && (RequestUpdated != null))
+            if (request != null && RequestUpdated != null)
             {
                 RequestUpdated(this, request);
             }
@@ -338,6 +345,14 @@ namespace Queue.Notification.ViewModels
                     if (callbackChannel != null)
                     {
                         callbackChannel.Dispose();
+                        callbackChannel = null;
+                    }
+
+                    if (TaskPool != null)
+                    {
+                        TaskPool.Cancel();
+                        TaskPool.Dispose();
+                        TaskPool = null;
                     }
                 }
             }
@@ -345,7 +360,7 @@ namespace Queue.Notification.ViewModels
             disposed = true;
         }
 
-        ~HomePageViewModel()
+        ~MainPageViewModel()
         {
             Dispose(false);
         }

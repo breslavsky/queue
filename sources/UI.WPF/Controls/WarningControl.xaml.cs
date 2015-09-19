@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Practices.ServiceLocation;
+using Queue.UI.WPF.Types;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -8,46 +10,22 @@ namespace Queue.UI.WPF
     {
         private Action closed;
 
-        public WarningControl()
+        public WarningControl(string message, Action closed)
         {
             InitializeComponent();
-        }
 
-        public WarningControl Show(string message, Action closed)
-        {
             warningTextBlock.Text = message;
             this.closed = closed;
-            Visibility = Visibility.Visible;
-
-            foreach (FrameworkElement child in ((Panel)Parent).Children)
-            {
-                if (!child.Equals(this))
-                {
-                    child.Blur();
-                }
-            }
-
-            hideButton.Focus();
-
-            return this;
         }
 
-        public void Hide(bool noAction = false)
+        public void Hide()
         {
-            Visibility = Visibility.Hidden;
-
-            foreach (FrameworkElement child in ((Panel)Parent).Children)
-            {
-                if (!child.Equals(this))
-                {
-                    child.UnBlur();
-                }
-            }
-
-            if (!noAction && (closed != null))
+            if (closed != null)
             {
                 closed();
             }
+
+            ServiceLocator.Current.GetInstance<IMainWindow>().HideMessageBox(this);
         }
 
         private void hideButton_Click(object sender, RoutedEventArgs e)
