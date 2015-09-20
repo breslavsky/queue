@@ -136,7 +136,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="templates\common\default\coupon.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

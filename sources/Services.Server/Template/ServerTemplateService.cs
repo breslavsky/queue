@@ -49,7 +49,7 @@ namespace Queue.Services.Server
             return await Task.Run(() => message);
         }
 
-        public Stream GetTemplate(string app, string theme, string template)
+        protected Stream ReadTemplate(string app, string theme, string template)
         {
             string contentPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "templates");
             string file = Path.Combine(contentPath, app, theme, template);

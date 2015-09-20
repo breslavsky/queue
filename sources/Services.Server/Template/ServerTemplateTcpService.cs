@@ -21,8 +21,7 @@ namespace Queue.Services.Server
         {
             return await Task.Run(() =>
             {
-                var stream = base.GetTemplate(app, theme, template);
-                using (StreamReader reader = new StreamReader(stream))
+                using (var reader = new StreamReader(base.ReadTemplate(app, theme, template)))
                 {
                     return reader.ReadToEnd();
                 }
