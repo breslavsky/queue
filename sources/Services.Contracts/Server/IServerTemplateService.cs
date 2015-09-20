@@ -20,9 +20,5 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [WebGet(UriTemplate = "/heartbeat", ResponseFormat = WebMessageFormat.Json)]
         Task Heartbeat();
-
-        [OperationContract]
-        [WebGet(UriTemplate = "/{app}/{theme}/{template}")]
-        Stream GetTemplate(string app, string theme, string template);
     }
 }

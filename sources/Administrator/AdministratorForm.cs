@@ -31,6 +31,9 @@ namespace Queue.Administrator
         [Dependency]
         public ServerService ServerService { get; set; }
 
+        [Dependency]
+        public ServerTemplateService ServerTemplateService { get; set; }
+
         #endregion dependency
 
         #region fields
@@ -198,6 +201,13 @@ namespace Queue.Administrator
                 {
                     UIHelper.Warning(exception.Message);
                 }
+            }
+
+            var cm = ServerTemplateService.CreateChannelManager();
+            using (var c = cm.CreateChannel())
+            {
+                var coupon = await c.Service.GetTemplate("common", "default", "coupon.xaml");
+                var l = coupon.Length;
             }
         }
 

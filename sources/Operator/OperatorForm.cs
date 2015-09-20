@@ -40,7 +40,7 @@ namespace Queue.Operator
         public HubQualityService HubQualityService { get; set; }
 
         [Dependency]
-        public HubQualitySettings HubQualitySettings { get; set; }
+        public HubSettings HubQualitySettings { get; set; }
 
         [Dependency]
         public ServerService ServerService { get; set; }

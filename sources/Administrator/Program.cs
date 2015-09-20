@@ -25,6 +25,7 @@ namespace Queue.Administrator
         private static LoginSettings loginSettings;
         private static LoginFormSettings loginFormSettings;
         private static ServerService serverService;
+        private static ServerTemplateService serverTemplateService;
         private static QueueAdministrator currentUser;
 
         [STAThread]
@@ -85,8 +86,13 @@ namespace Queue.Administrator
 
                         loginForm.Dispose();
 
-                        serverService = new ServerService(loginSettings.Endpoint, ServerServicesPaths.Server);
+                        var endpoint = loginSettings.Endpoint;
+
+                        serverService = new ServerService(endpoint, ServerServicesPaths.Server);
                         container.RegisterInstance(serverService);
+
+                        serverTemplateService = new ServerTemplateService(endpoint, ServerServicesPaths.Template);
+                        container.RegisterInstance(serverTemplateService);
 
                         var mainForm = new AdministratorForm();
                         Application.Run(mainForm);

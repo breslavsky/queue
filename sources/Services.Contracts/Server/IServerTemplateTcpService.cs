@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Queue.Services.Contracts
 {
-    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IServerCallback))]
+    [ServiceContract(SessionMode = SessionMode.Required)]
     public interface IServerTemplateTcpService : IServerTemplateService
     {
+        [OperationContract]
+        Task<string> GetTemplate(string app, string theme, string template);
     }
 }
