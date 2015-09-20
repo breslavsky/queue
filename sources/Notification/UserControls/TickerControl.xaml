@@ -1,12 +1,20 @@
-﻿<UserControl x:Class="Queue.Notification.UserControls.TickerUserControl"
+﻿<UserControl x:Class="Queue.Notification.UserControls.TickerControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             Unloaded="UserControl_Unloaded"
              d:DesignHeight="100"
              d:DesignWidth="300"
              mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Canvas HorizontalAlignment="Stretch">
         <Canvas.Background>
             <SolidColorBrush Opacity="0.5" Color="White" />

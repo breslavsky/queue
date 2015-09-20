@@ -1,6 +1,4 @@
 ﻿using Junte.UI.WinForms;
-using Microsoft.Practices.ServiceLocation;
-using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Model.Common;
@@ -12,13 +10,23 @@ using System.Windows.Forms;
 
 namespace Queue.UI.WinForms
 {
-    public partial class LoginSettingsControl : DependencyUserControl
+    public partial class LoginSettingsControl : UserControl
     {
+        private LoginSettings settings;
+
         #region properties
 
         public UserRole UserRole { get; set; }
 
-        public LoginSettings Settings { get; set; }
+        public LoginSettings Settings
+        {
+            get { return settings; }
+            set
+            {
+                settings = value;
+                settingsBindingSource.DataSource = value;
+            }
+        }
 
         #endregion properties
 
@@ -34,18 +42,6 @@ namespace Queue.UI.WinForms
             InitializeComponent();
 
             Settings = new LoginSettings();
-
-            if (designtime)
-            {
-                return;
-            }
-
-            ServiceLocator.Current.GetInstance<UnityContainer>().BuildUp(this);
-        }
-
-        private void LoginSettingsControl_Load(object sender, EventArgs e)
-        {
-            settingsBindingSource.DataSource = Settings;
         }
 
         private void connectButton_Click(object sender, EventArgs e)

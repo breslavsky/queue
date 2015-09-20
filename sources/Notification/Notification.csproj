@@ -141,6 +141,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AutoRecoverCallbackChannel.cs" />
+    <Compile Include="UserControls\VideoControl.xaml.cs">
+      <DependentUpon>VideoControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\VideoControlViewModel.cs" />
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -149,22 +154,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\CallClientUserControlViewModel.cs" />
+    <Compile Include="ViewModels\CallClientControlViewModel.cs" />
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\TickerUserControlViewModel.cs" />
+    <Compile Include="ViewModels\TickerControlViewModel.cs" />
     <Compile Include="Types\CustomAnimationTimer.cs" />
-    <Compile Include="Types\ITicker.cs" />
     <Compile Include="Types\TaggedDoubleAnimation.cs" />
-    <Compile Include="UserControls\CallClientUserControl.xaml.cs">
-      <DependentUpon>CallClientUserControl.xaml</DependentUpon>
+    <Compile Include="UserControls\CallClientControl.xaml.cs">
+      <DependentUpon>CallClientControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ClientRequestStateUserControl.xaml.cs">
-      <DependentUpon>ClientRequestStateUserControl.xaml</DependentUpon>
+    <Compile Include="UserControls\ClientRequestStateControl.xaml.cs">
+      <DependentUpon>ClientRequestStateControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\TickerUserControl.xaml.cs">
-      <DependentUpon>TickerUserControl.xaml</DependentUpon>
+    <Compile Include="UserControls\TickerControl.xaml.cs">
+      <DependentUpon>TickerControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="UserControls\VideoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -173,7 +181,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\CallClientUserControl.xaml">
+    <Page Include="UserControls\CallClientControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -202,11 +210,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\ClientRequestStateUserControl.xaml">
+    <Page Include="UserControls\ClientRequestStateControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\TickerUserControl.xaml">
+    <Page Include="UserControls\TickerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

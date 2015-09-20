@@ -119,7 +119,7 @@ namespace Queue.Notification.ViewModels
                 {
                     controls.Add(CreateTextBox(req.Request.Number.ToString(), 0, row));
 
-                    var ctrl = new ClientRequestStateUserControl(req.Request);
+                    var ctrl = new ClientRequestStateControl(req.Request);
                     ctrl.SetValue(Grid.ColumnProperty, 2);
                     ctrl.SetValue(Grid.RowProperty, row);
                     controls.Add(ctrl);

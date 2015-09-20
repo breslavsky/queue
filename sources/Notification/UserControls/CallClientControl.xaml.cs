@@ -2,9 +2,9 @@
 
 namespace Queue.Notification.UserControls
 {
-    public partial class CallClientUserControl : UserControl
+    public partial class CallClientControl : UserControl
     {
-        public CallClientUserControl()
+        public CallClientControl()
         {
             InitializeComponent();
         }

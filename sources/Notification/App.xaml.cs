@@ -11,8 +11,6 @@ namespace Queue.Notification
     public partial class App : Application
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private UnityContainer container;
-        private ConfigurationManager configuration;
 
         public App()
         {
@@ -36,12 +34,11 @@ namespace Queue.Notification
 
         private void InitializeContainer()
         {
-            container = new UnityContainer();
+            var container = new UnityContainer();
             container.RegisterInstance(container);
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
-            configuration = new ConfigurationManager(Product.Notification.AppName, SpecialFolder.ApplicationData);
-            container.RegisterInstance(configuration);
+            container.RegisterInstance(new ConfigurationManager(Product.Notification.AppName, SpecialFolder.ApplicationData));
         }
     }
 }

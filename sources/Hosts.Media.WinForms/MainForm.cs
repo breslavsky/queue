@@ -2,7 +2,6 @@
 using Junte.UI.WinForms;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
-using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Hosts.Common;
 using Queue.Media;
@@ -46,6 +45,7 @@ namespace Queue.Hosts.Media.WinForms
 
             loginSettings = configurationManager.GetSection<LoginSettings>(LoginSettings.SectionKey);
             loginSettingsControl.UserRole = UserRole.Administrator;
+            loginSettingsControl.Settings = loginSettings;
 
             Text += string.Format(" ({0})", typeof(MediaInstance).Assembly.GetName().Version);
 

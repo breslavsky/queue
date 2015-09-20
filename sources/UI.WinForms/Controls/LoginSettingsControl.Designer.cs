@@ -146,8 +146,7 @@
             this.Controls.Add(this.loginGroupBox);
             this.Controls.Add(this.connectionGroupBox);
             this.Name = "LoginSettingsControl";
-            this.Size = new System.Drawing.Size(330, 170);
-            this.Load += new System.EventHandler(this.LoginSettingsControl_Load);
+            this.Size = new System.Drawing.Size(330, 170);            
             ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
             this.loginGroupBox.ResumeLayout(false);
             this.loginGroupBox.PerformLayout();

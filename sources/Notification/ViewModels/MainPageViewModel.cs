@@ -3,21 +3,17 @@ using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using NLog;
-using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Sounds;
-using Queue.UI.WPF.Enums;
 using Queue.UI.WPF.Types;
 using System;
 using System.Media;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using System.Timers;
-using Vlc.DotNet.Core.Medias;
-using Vlc.DotNet.Wpf;
+using System.Windows.Input;
 
 namespace Queue.Notification.ViewModels
 {
@@ -25,56 +21,22 @@ namespace Queue.Notification.ViewModels
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private const int PingInterval = 10000;
-        private const string MediaFileUriPattern = "{0}/media-config/files/{1}/load";
-
         private bool disposed = false;
-
-        private ServerState serverState;
-        private DateTime currentDateTime;
-        private string currentDateTimeText;
-        public ClientRequest[] callingClientRequests;
-
-        private Channel<IServerTcpService> callbackChannel;
-
-        private ServerCallback callbackObject;
-
-        private VlcControl vlcControl;
-
-        private Timer pingTimer;
-        private Timer timeTimer;
         private object voiceLock;
 
-        public ServerState ServerState
-        {
-            get { return serverState; }
-            set { SetProperty(ref serverState, value); }
-        }
+        public ClientRequest[] callingClientRequests;
 
-        public DateTime CurrentDateTime
-        {
-            get { return currentDateTime; }
-            set
-            {
-                SetProperty(ref currentDateTime, value);
-                CurrentDateTimeText = value.ToString("dd MMMM yyyy (dddd) HH:mm:ss");
-            }
-        }
+        private AutoRecoverCallbackChannel channel;
 
-        public string CurrentDateTimeText
-        {
-            get { return currentDateTimeText; }
-            set { SetProperty(ref currentDateTimeText, value); }
-        }
+        public CallClientControlViewModel CallClientModel { get; set; }
 
-        public CallClientUserControlViewModel CallClientModel { get; set; }
+        public event EventHandler<ClientRequest> RequestUpdated = delegate { };
 
-        public event EventHandler<ClientRequest> RequestUpdated;
+        public event EventHandler<int> RequestsLengthChanged = delegate { };
 
-        public event EventHandler<int> RequestsLengthChanged;
+        public ICommand LoadedCommand { get; set; }
 
-        [Dependency]
-        public ServerService ServerService { get; set; }
+        public ICommand UnloadedCommand { get; set; }
 
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
@@ -85,33 +47,30 @@ namespace Queue.Notification.ViewModels
         [Dependency]
         public IMainWindow Window { get; set; }
 
-        [Dependency]
-        public ITicker Ticker { get; set; }
-
         public MainPageViewModel()
         {
             voiceLock = new object();
 
-            CallClientModel = new CallClientUserControlViewModel();
+            LoadedCommand = new RelayCommand(Loaded);
+            UnloadedCommand = new RelayCommand(Unloaded);
 
-            InitTimers();
+            CallClientModel = new CallClientControlViewModel();
         }
 
-        public async void Initialize(VlcControl vlcControl)
+        private async void Loaded()
         {
-            ServerService.CreateChannelManager();
+            await ReadConfigs();
 
-            InitCallbackChannel();
+            channel = new AutoRecoverCallbackChannel(CreateServerCallback(), Subscribe);
+        }
 
-            this.vlcControl = vlcControl;
-
+        private async Task ReadConfigs()
+        {
             using (var channel = ChannelManager.CreateChannel())
             {
                 var loading = Window.ShowLoading();
                 try
                 {
-                    ReadMediaConfig(await TaskPool.AddTask(channel.Service.GetMediaConfig()),
-                                    await TaskPool.AddTask(channel.Service.GetMediaConfigFiles()));
                     ReadNotificationConfig(await TaskPool.AddTask(channel.Service.GetNotificationConfig()));
                 }
                 catch (OperationCanceledException) { }
@@ -131,15 +90,6 @@ namespace Queue.Notification.ViewModels
                     loading.Hide();
                 }
             }
-
-            pingTimer.Start();
-            timeTimer.Start();
-        }
-
-        private void InitCallbackChannel()
-        {
-            callbackObject = CreateServerCallback();
-            callbackChannel = ChannelManager.CreateChannel(callbackObject);
         }
 
         private ServerCallback CreateServerCallback()
@@ -152,52 +102,14 @@ namespace Queue.Notification.ViewModels
             return result;
         }
 
-        private void InitTimers()
+        private void Subscribe(IServerTcpService service)
         {
-            pingTimer = new Timer();
-            pingTimer.Interval = 1000;
-            pingTimer.Elapsed += PingElapsed;
-
-            timeTimer = new Timer();
-            timeTimer.Interval = 1000;
-            timeTimer.Elapsed += TimerElapsed;
-        }
-
-        private async void PingElapsed(object sender, EventArgs e)
-        {
-            pingTimer.Stop();
-            if (pingTimer.Interval < PingInterval)
+            service.Subscribe(ServerServiceEventType.ClientRequestUpdated);
+            service.Subscribe(ServerServiceEventType.CallClient);
+            service.Subscribe(ServerServiceEventType.ConfigUpdated, new ServerSubscribtionArgs()
             {
-                pingTimer.Interval = PingInterval;
-            }
-
-            try
-            {
-                ServerState = ServerState.Request;
-
-                if (!callbackChannel.IsConnected)
-                {
-                    Subscribe();
-                }
-
-                ServerDateTime.Sync(await TaskPool.AddTask(callbackChannel.Service.GetDateTime()));
-
-                ServerState = ServerState.Available;
-            }
-            catch
-            {
-                ServerState = ServerState.Unavailable;
-
-                callbackChannel.Dispose();
-                callbackChannel = ChannelManager.CreateChannel(callbackObject);
-            }
-
-            pingTimer.Start();
-        }
-
-        private void TimerElapsed(object sender, EventArgs e)
-        {
-            CurrentDateTime = ServerDateTime.Now;
+                ConfigTypes = new[] { ConfigType.Notification }
+            });
         }
 
         private void OnConfigUpdated(object sender, ServerEventArgs e)
@@ -206,10 +118,6 @@ namespace Queue.Notification.ViewModels
             {
                 case ConfigType.Notification:
                     ReadNotificationConfig(e.Config as NotificationConfig);
-                    break;
-
-                case ConfigType.Media:
-                    UpdateTicker(e.Config as MediaConfig);
                     break;
             }
         }
@@ -228,56 +136,14 @@ namespace Queue.Notification.ViewModels
             });
         }
 
-        private void Subscribe()
-        {
-            callbackChannel.Service.Subscribe(ServerServiceEventType.ClientRequestUpdated);
-            callbackChannel.Service.Subscribe(ServerServiceEventType.CallClient);
-            callbackChannel.Service.Subscribe(ServerServiceEventType.ConfigUpdated, new ServerSubscribtionArgs()
-            {
-                ConfigTypes = new ConfigType[]
-                {
-                    ConfigType.Media,
-                    ConfigType.Notification
-                }
-            });
-        }
-
         private void ReadNotificationConfig(NotificationConfig notificationConfig)
         {
-            if (RequestsLengthChanged != null)
-            {
-                RequestsLengthChanged(this, notificationConfig.ClientRequestsLength);
-            }
-        }
-
-        private void ReadMediaConfig(MediaConfig config, MediaConfigFile[] mediaFiles)
-        {
-            UpdateTicker(config);
-
-            if (vlcControl == null)
-            {
-                return;
-            }
-
-            foreach (var file in mediaFiles)
-            {
-                vlcControl.Medias.Add(new LocationMedia(string.Format(MediaFileUriPattern, config.ServiceUrl, file.Id)));
-            }
-
-            vlcControl.Stop();
-            vlcControl.Play();
-        }
-
-        private void UpdateTicker(MediaConfig config)
-        {
-            Ticker.SetTicker(config.Ticker);
-            Ticker.SetSpeed(config.TickerSpeed);
-            Ticker.Start();
+            RequestsLengthChanged(this, notificationConfig.ClientRequestsLength);
         }
 
         private void NotifyClientRequestUpdated(ClientRequest request)
         {
-            if (request != null && RequestUpdated != null)
+            if (request != null)
             {
                 RequestUpdated(this, request);
             }
@@ -314,6 +180,11 @@ namespace Queue.Notification.ViewModels
             }
         }
 
+        private void Unloaded()
+        {
+            Dispose();
+        }
+
         #region IDisposable
 
         public void Dispose()
@@ -324,36 +195,23 @@ namespace Queue.Notification.ViewModels
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (disposed)
             {
-                if (disposing)
+                return;
+            }
+            if (disposing)
+            {
+                if (channel != null)
                 {
-                    if (pingTimer != null)
-                    {
-                        pingTimer.Stop();
-                        pingTimer.Elapsed -= PingElapsed;
-                        pingTimer = null;
-                    }
+                    channel.Dispose();
+                    channel = null;
+                }
 
-                    if (timeTimer != null)
-                    {
-                        timeTimer.Stop();
-                        timeTimer.Elapsed -= TimerElapsed;
-                        timeTimer = null;
-                    }
-
-                    if (callbackChannel != null)
-                    {
-                        callbackChannel.Dispose();
-                        callbackChannel = null;
-                    }
-
-                    if (TaskPool != null)
-                    {
-                        TaskPool.Cancel();
-                        TaskPool.Dispose();
-                        TaskPool = null;
-                    }
+                if (TaskPool != null)
+                {
+                    TaskPool.Cancel();
+                    TaskPool.Dispose();
+                    TaskPool = null;
                 }
             }
 

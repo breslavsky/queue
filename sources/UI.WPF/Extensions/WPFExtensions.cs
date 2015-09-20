@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
@@ -23,7 +25,7 @@ namespace Queue.UI.WPF
 
             for (int i = 0; i < childCount; i++)
             {
-                DependencyObject dependencyObject = VisualTreeHelper.GetChild(d, i);
+                var dependencyObject = VisualTreeHelper.GetChild(d, i);
 
                 if (dependencyObject is TChild)
                 {
@@ -117,6 +119,15 @@ namespace Queue.UI.WPF
 
             window.UseNoneWindowStyle = true;
             window.TitlebarHeight = 0;
+        }
+
+        public static void SetXamlLanguage(CultureInfo culture)
+        {
+            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
+                           new FrameworkPropertyMetadata(
+                               XmlLanguage.GetLanguage(culture.IetfLanguageTag)
+                           )
+            );
         }
     }
 }

@@ -7,7 +7,7 @@ using Drawing = System.Drawing;
 
 namespace Queue.Notification.UserControls
 {
-    public partial class ClientRequestStateUserControl : UserControl
+    public partial class ClientRequestStateControl : UserControl
     {
         public string Workplace { get; set; }
 
@@ -15,7 +15,7 @@ namespace Queue.Notification.UserControls
 
         public Brush StateBrush { get; set; }
 
-        public ClientRequestStateUserControl(ClientRequest request)
+        public ClientRequestStateControl(ClientRequest request)
         {
             InitializeComponent();
 
