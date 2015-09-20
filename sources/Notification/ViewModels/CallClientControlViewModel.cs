@@ -1,10 +1,18 @@
 ﻿using Junte.UI.WPF;
+using Microsoft.Practices.Unity;
+using Queue.Model.Common;
 using Queue.Services.DTO;
+using Queue.Sounds;
+using System.Media;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Queue.Notification.ViewModels
 {
     public class CallClientControlViewModel : ObservableObject
     {
+        private object callLock = new object();
+
         private bool active;
         private int number;
         private string workplaceTitle;
@@ -27,6 +35,57 @@ namespace Queue.Notification.ViewModels
             set { SetProperty(ref workplaceTitle, value); }
         }
 
+        public ICommand LoadedCommand { get; set; }
+
+        public ICommand UnloadedCommand { get; set; }
+
+        [Dependency]
+        public ClientRequestsStateListener ClientRequestsStateListener { get; set; }
+
+        public CallClientControlViewModel()
+        {
+            LoadedCommand = new RelayCommand(Loaded);
+            UnloadedCommand = new RelayCommand(Unloaded);
+        }
+
+        private void Loaded()
+        {
+            ClientRequestsStateListener.CallClient += OnCallClient;
+        }
+
+        private void OnCallClient(object sender, ClientRequest request)
+        {
+            Task.Run(() =>
+            {
+                lock (callLock)
+                {
+                    ShowMessage(request);
+                    PlayVoice(request);
+                    CloseMessage();
+                }
+            });
+        }
+
+        private void PlayVoice(ClientRequest request)
+        {
+            using (var soundPlayer = new SoundPlayer())
+            {
+                soundPlayer.PlayStream(Tones.Notify);
+                soundPlayer.PlayStream(Words.Number);
+
+                soundPlayer.PlayNumber(request.Number);
+
+                var workplace = request.Operator.Workplace;
+                soundPlayer.PlayStream(Workplaces.ResourceManager.GetStream(workplace.Type.ToString()));
+                soundPlayer.PlayNumber(workplace.Number);
+
+                if (workplace.Modificator != WorkplaceModificator.None)
+                {
+                    soundPlayer.PlayStream(Workplaces.ResourceManager.GetStream(workplace.Modificator.ToString()));
+                }
+            }
+        }
+
         public void ShowMessage(ClientRequest request)
         {
             Number = request.Number;
@@ -38,6 +97,11 @@ namespace Queue.Notification.ViewModels
         public void CloseMessage()
         {
             Active = false;
+        }
+
+        private void Unloaded()
+        {
+            ClientRequestsStateListener.CallClient -= OnCallClient;
         }
     }
 }

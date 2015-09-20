@@ -141,7 +141,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AutoRecoverCallbackChannel.cs" />
+    <Compile Include="Utils\AutoRecoverCallbackChannel.cs" />
+    <Compile Include="Utils\ClientRequestsStateListener.cs" />
     <Compile Include="UserControls\VideoControl.xaml.cs">
       <DependentUpon>VideoControl.xaml</DependentUpon>
     </Compile>
@@ -158,8 +159,6 @@
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\TickerControlViewModel.cs" />
-    <Compile Include="Types\CustomAnimationTimer.cs" />
-    <Compile Include="Types\TaggedDoubleAnimation.cs" />
     <Compile Include="UserControls\CallClientControl.xaml.cs">
       <DependentUpon>CallClientControl.xaml</DependentUpon>
     </Compile>
@@ -198,7 +197,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\ClientRequestsControlViewModel.cs" />
-    <Compile Include="Types\SoundPlayerExtensions.cs" />
+    <Compile Include="Utils\SoundPlayerExtensions.cs" />
     <Compile Include="UserControls\ClientRequestsControl.xaml.cs">
       <DependentUpon>ClientRequestsControl.xaml</DependentUpon>
     </Compile>
@@ -223,7 +222,6 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

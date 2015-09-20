@@ -1,14 +1,19 @@
-﻿using Junte.UI.WPF;
+﻿using Junte.Parallel;
+using Junte.UI.WPF;
+using Junte.WCF;
+using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Model.Common;
-using Queue.Notification.UserControls;
+using Queue.Services.Common;
+using Queue.Services.Contracts;
 using Queue.Services.DTO;
-using Queue.UI.WPF;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
+using System.ServiceModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace Queue.Notification.ViewModels
@@ -23,24 +28,41 @@ namespace Queue.Notification.ViewModels
 
         private TimeSpan ClientRequestTimeout;
 
-        private object updateLock;
+        private object updateLock = new object();
 
-        private Grid clientRequestsGrid;
-        private List<UIElement> controls;
-        private List<ClientRequestWrap> requests;
         private DispatcherTimer timer;
 
-        public int ClientRequestsLength { get; set; }
+        private int ClientRequestsLength;
+        private AutoRecoverCallbackChannel channel;
+
+        [Dependency]
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        [Dependency]
+        public TaskPool TaskPool { get; set; }
+
+        [Dependency]
+        public ClientRequestsStateListener ClientRequestsStateListener { get; set; }
+
+        public ICommand LoadedCommand { get; set; }
+
+        public ICommand UnloadedCommand { get; set; }
+
+        public ObservableCollection<ClientRequestWrap> Requests { get; set; }
 
         public ClientRequestsControlViewModel()
         {
+            ServiceLocator.Current.GetInstance<UnityContainer>().BuildUp(this);
+
+            LoadedCommand = new RelayCommand(Loaded);
+            UnloadedCommand = new RelayCommand(Unloaded);
+
             ClientRequestTimeout = TimeSpan.FromMinutes(20);
             ClientRequestsLength = DefaultClientRequestsLength;
 
-            updateLock = new object();
+            ClientRequestsStateListener.ClientRequestUpdated += ClientRequestUpdated;
 
-            controls = new List<UIElement>();
-            requests = new List<ClientRequestWrap>();
+            Requests = new ObservableCollection<ClientRequestWrap>();
 
             timer = new DispatcherTimer(DispatcherPriority.Background);
             timer.Interval = TimeSpan.FromMinutes(1);
@@ -48,19 +70,80 @@ namespace Queue.Notification.ViewModels
             timer.Start();
         }
 
-        public void SetClientRequestsGrid(Grid clientRequestsGrid)
+        private async void Loaded()
         {
-            this.clientRequestsGrid = clientRequestsGrid;
+            await ReadConfig();
+
+            channel = new AutoRecoverCallbackChannel(CreateServerCallback(), Subscribe);
         }
 
-        public void AddToClientRequests(ClientRequest request)
+        private async Task ReadConfig()
+        {
+            using (var channel = ChannelManager.CreateChannel())
+            {
+                try
+                {
+                    AdjustConfig(await TaskPool.AddTask(channel.Service.GetNotificationConfig()));
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(null, exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(null, exception.Message);
+                }
+            }
+        }
+
+        private void AdjustConfig(NotificationConfig config)
+        {
+            ClientRequestsLength = config.ClientRequestsLength;
+        }
+
+        private ServerCallback CreateServerCallback()
+        {
+            var result = new ServerCallback();
+            result.OnConfigUpdated += OnConfigUpdated;
+
+            return result;
+        }
+
+        private void OnConfigUpdated(object sender, ServerEventArgs e)
+        {
+            switch (e.Config.Type)
+            {
+                case ConfigType.Notification:
+                    AdjustConfig(e.Config as NotificationConfig);
+                    break;
+            }
+        }
+
+        private void Subscribe(IServerTcpService service)
+        {
+            service.Subscribe(ServerServiceEventType.ConfigUpdated, new ServerSubscribtionArgs()
+            {
+                ConfigTypes = new[] { ConfigType.Notification }
+            });
+        }
+
+        private void ClientRequestUpdated(object sender, ClientRequest e)
+        {
+            AdjustClientRequests(e);
+        }
+
+        public void AdjustClientRequests(ClientRequest request)
         {
             lock (updateLock)
             {
-                var wrap = requests.SingleOrDefault(r => r.Request.Equals(request));
+                var wrap = Requests.SingleOrDefault(r => r.Request.Equals(request));
 
                 bool isImportantState = (request.State == ClientRequestState.Calling)
-                    || (request.State == ClientRequestState.Absence);
+                                    || (request.State == ClientRequestState.Absence);
 
                 if (!isImportantState && (wrap == null))
                 {
@@ -71,10 +154,10 @@ namespace Queue.Notification.ViewModels
                 {
                     if (wrap != null)
                     {
-                        requests.Remove(wrap);
+                        Requests.Remove(wrap);
                     }
 
-                    requests.Insert(0, new ClientRequestWrap()
+                    Requests.Insert(0, new ClientRequestWrap()
                     {
                         Request = request,
                         Added = DateTime.Now
@@ -86,12 +169,15 @@ namespace Queue.Notification.ViewModels
                     wrap.Added = DateTime.Now;
                 }
 
-                if (requests.Count > ClientRequestsLength)
-                {
-                    requests.RemoveRange(ClientRequestsLength, requests.Count - ClientRequestsLength);
-                }
+                AdjustRequestsLength();
+            }
+        }
 
-                clientRequestsGrid.Dispatcher.Invoke(UpdateCallingClientRequests);
+        private void AdjustRequestsLength()
+        {
+            while (Requests.Count > ClientRequestsLength)
+            {
+                Requests.RemoveAt(Requests.Count - 1);
             }
         }
 
@@ -100,76 +186,17 @@ namespace Queue.Notification.ViewModels
             lock (updateLock)
             {
                 var now = DateTime.Now;
-                if (requests.RemoveAll(r => r.Request.IsClosed && (now - r.Added) > ClientRequestTimeout) > 0)
+
+                foreach (var item in Requests.Where(r => r.Request.IsClosed && (now - r.Added) > ClientRequestTimeout).ToArray())
                 {
-                    UpdateCallingClientRequests();
+                    Requests.Remove(item);
                 }
             }
         }
 
-        private void UpdateCallingClientRequests()
+        private void Unloaded()
         {
-            ClearState();
-
-            int row = 1;
-
-            foreach (var req in requests)
-            {
-                try
-                {
-                    controls.Add(CreateTextBox(req.Request.Number.ToString(), 0, row));
-
-                    var ctrl = new ClientRequestStateControl(req.Request);
-                    ctrl.SetValue(Grid.ColumnProperty, 2);
-                    ctrl.SetValue(Grid.RowProperty, row);
-                    controls.Add(ctrl);
-
-                    row++;
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e);
-                }
-            }
-
-            for (int i = 0; i < row; i++)
-            {
-                clientRequestsGrid.RowDefinitions.Add(new RowDefinition());
-            }
-
-            foreach (var c in controls)
-            {
-                clientRequestsGrid.Children.Add(c);
-            }
-        }
-
-        private void ClearState()
-        {
-            foreach (var c in controls)
-            {
-                clientRequestsGrid.Children.Remove(c);
-            }
-            controls.Clear();
-
-            clientRequestsGrid.RowDefinitions.Clear();
-        }
-
-        private TextBlock CreateTextBox(string text, int col, int row, string color = null)
-        {
-            var result = new TextBlock()
-            {
-                Text = text,
-                FontSize = 20
-            };
-
-            if (color != null)
-            {
-                result.Foreground = color.GetBrushForColor();
-            }
-
-            result.SetValue(Grid.ColumnProperty, col);
-            result.SetValue(Grid.RowProperty, row);
-            return result;
+            Dispose();
         }
 
         #region IDisposable
@@ -203,9 +230,15 @@ namespace Queue.Notification.ViewModels
         #endregion IDisposable
     }
 
-    public class ClientRequestWrap
+    public class ClientRequestWrap : ObservableObject
     {
-        public ClientRequest Request { get; set; }
+        private ClientRequest request;
+
+        public ClientRequest Request
+        {
+            get { return request; }
+            set { SetProperty(ref request, value); }
+        }
 
         public DateTime Added { get; set; }
     }

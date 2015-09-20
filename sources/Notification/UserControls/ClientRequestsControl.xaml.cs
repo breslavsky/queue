@@ -1,27 +1,20 @@
-﻿using Queue.Notification.ViewModels;
+﻿using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
+using Queue.Notification.ViewModels;
+using System.ComponentModel;
 using System.Windows.Controls;
 
 namespace Queue.Notification.UserControls
 {
     public partial class ClientRequestsControl : UserControl
     {
-        public ClientRequestsControlViewModel Model { get; private set; }
-
         public ClientRequestsControl()
         {
             InitializeComponent();
 
-            Model = new ClientRequestsControlViewModel();
-            Model.SetClientRequestsGrid(clientRequestsGrid);
-
-            DataContext = Model;
-        }
-
-        private void UserControl_Unloaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (Model != null)
+            if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                Model.Dispose();
+                DataContext = ServiceLocator.Current.GetInstance<UnityContainer>().Resolve<ClientRequestsControlViewModel>();
             }
         }
     }

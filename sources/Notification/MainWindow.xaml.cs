@@ -77,9 +77,13 @@ namespace Queue.Notification
             container.RegisterInstance<IMainWindow>(this);
             container.RegisterInstance(new ServerService(connectPage.Model.Endpoint, ServerServicesPaths.Server));
             container.RegisterInstance(new ServerTemplateService(connectPage.Model.Endpoint, ServerServicesPaths.Template));
+
             container.RegisterType<DuplexChannelManager<IServerTcpService>>(new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager()));
             container.RegisterType<ChannelManager<IServerTemplateTcpService>>(new InjectionFactory(c => c.Resolve<ServerTemplateService>().CreateChannelManager()));
             container.RegisterType<TaskPool>();
+
+            container.RegisterInstance<ClientRequestsStateListener>(new ClientRequestsStateListener());
+            container.RegisterInstance<ITemplateManager>(container.Resolve<TemplateManager>());
         }
 
         private void MainWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
