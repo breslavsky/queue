@@ -7,7 +7,7 @@ using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Terminal.Core;
-using Queue.UI.WPF.Types;
+using Queue.UI.WPF;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;

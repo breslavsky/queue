@@ -4,6 +4,7 @@ using Junte.UI.WPF;
 using Junte.WCF;
 using MahApps.Metro;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Display.Models;
 using Queue.Services.Common;
@@ -113,9 +114,14 @@ namespace Queue.Display.ViewModels
 
         public ICommand UnloadedCommand { get; set; }
 
+        [Dependency]
+        public IMainWindow Window { get; set; }
+
         public LoginPageViewModel(RichPage owner)
         {
             this.owner = owner;
+
+            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
             AccentColors = ThemeManager.Accents.Select(a => new AccentColorComboBoxItem(a.Name, a.Resources["AccentColorBrush"] as Brush)).ToArray();
 
@@ -173,7 +179,7 @@ namespace Queue.Display.ViewModels
 
             using (var channel = channelManager.CreateChannel())
             {
-                var loading = owner.ShowLoading();
+                var loading = Window.ShowLoading();
 
                 try
                 {
@@ -214,7 +220,7 @@ namespace Queue.Display.ViewModels
                 return;
             }
 
-            var loading = owner.ShowLoading();
+            var loading = Window.ShowLoading();
 
             using (var channel = channelManager.CreateChannel())
             {

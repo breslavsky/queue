@@ -1,4 +1,5 @@
 ﻿using Junte.Parallel;
+using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
@@ -14,7 +15,9 @@ using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
+using Drawing = System.Drawing;
 
 namespace Queue.Notification.ViewModels
 {
@@ -52,7 +55,7 @@ namespace Queue.Notification.ViewModels
 
         public ClientRequestsControlViewModel()
         {
-            ServiceLocator.Current.GetInstance<UnityContainer>().BuildUp(this);
+            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
             LoadedCommand = new RelayCommand(Loaded);
             UnloadedCommand = new RelayCommand(Unloaded);
@@ -233,13 +236,40 @@ namespace Queue.Notification.ViewModels
     public class ClientRequestWrap : ObservableObject
     {
         private ClientRequest request;
+        private string state;
+        private Brush brush;
 
         public ClientRequest Request
         {
             get { return request; }
-            set { SetProperty(ref request, value); }
+            set
+            {
+                SetProperty(ref request, null);
+                SetProperty(ref request, value);
+                Adjust();
+            }
+        }
+
+        public string State
+        {
+            get { return state; }
+            set { SetProperty(ref state, value); }
+        }
+
+        public Brush StateBrush
+        {
+            get { return brush; }
+            set { SetProperty(ref brush, value); }
         }
 
         public DateTime Added { get; set; }
+
+        private void Adjust()
+        {
+            State = Translater.Enum(request.State);
+
+            var c = Drawing.ColorTranslator.FromHtml(request.Color);
+            StateBrush = new SolidColorBrush(Color.FromRgb(c.R, c.G, c.B));
+        }
     }
 }

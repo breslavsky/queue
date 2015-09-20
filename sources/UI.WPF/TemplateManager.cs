@@ -5,7 +5,6 @@ using Queue.Common;
 using Queue.Services.Contracts;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Markup;
@@ -25,7 +24,7 @@ namespace Queue.UI.WPF
         {
             this.app = app;
 
-            ServiceLocator.Current.GetInstance<UnityContainer>().BuildUp(this);
+            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
         }
 
         public DependencyObject GetTemplate(string template, string theme = "default")
@@ -33,11 +32,9 @@ namespace Queue.UI.WPF
             var data = GetTemplateFromCache(template, theme);
             if (data == null)
             {
-                //data = File.ReadAllText(@"D:\templates\main_page.xml");
-
                 using (var channel = ChannelManager.CreateChannel())
                 {
-                    data = new StreamReader(channel.Service.GetTemplate(app, theme, template)).ReadToEnd();
+                    data = channel.Service.GetTemplate(app, theme, template).GetAwaiter().GetResult();
                 }
             }
 

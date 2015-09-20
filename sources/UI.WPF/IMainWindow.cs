@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 
-namespace Queue.UI.WPF.Types
+namespace Queue.UI.WPF
 {
     public interface IMainWindow
     {

@@ -13,7 +13,7 @@ namespace Queue.Notification.Views
         {
             InitializeComponent();
 
-            Content = ServiceLocator.Current.GetInstance<ITemplateManager>().GetTemplate("main_page");
+            Content = ServiceLocator.Current.GetInstance<ITemplateManager>().GetTemplate("MainPage.xaml");
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

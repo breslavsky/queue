@@ -8,7 +8,6 @@
                       Height="480"
                       IgnoreTaskbarOnMaximize="True"
                       Loaded="OnLoaded"
-                      Unloaded="OnUnloaded"
                       WindowStartupLocation="CenterScreen">
     <ui_common:RichWindow.Background>
         <LinearGradientBrush ColorInterpolationMode="ScRgbLinearInterpolation" SpreadMethod="Reflect" StartPoint="1,1" EndPoint="1,0">

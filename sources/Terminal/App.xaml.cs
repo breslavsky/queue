@@ -9,8 +9,6 @@ namespace Queue.Terminal
 {
     public partial class App : Application
     {
-        private UnityContainer container;
-
         public App()
             : base()
         {
@@ -19,8 +17,8 @@ namespace Queue.Terminal
 
         private void App_Startup(object sender, StartupEventArgs e)
         {
-            container = new UnityContainer();
-            container.RegisterInstance(container);
+            var container = new UnityContainer();
+            container.RegisterInstance<IUnityContainer>(container);
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
             container.RegisterInstance(new ConfigurationManager(Product.Terminal.AppName, SpecialFolder.ApplicationData));

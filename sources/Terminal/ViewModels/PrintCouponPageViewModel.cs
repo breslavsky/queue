@@ -9,7 +9,6 @@ using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.UI.Common;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Types;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;

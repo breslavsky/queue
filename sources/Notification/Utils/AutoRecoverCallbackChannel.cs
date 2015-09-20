@@ -29,7 +29,7 @@ namespace Queue.Notification
 
         public AutoRecoverCallbackChannel(ServerCallback callback, Action<IServerTcpService> subscribeFunc)
         {
-            ServiceLocator.Current.GetInstance<UnityContainer>().BuildUp(this);
+            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
             this.callback = callback;
             this.subscribeFunc = subscribeFunc;

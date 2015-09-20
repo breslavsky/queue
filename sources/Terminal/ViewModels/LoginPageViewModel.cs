@@ -13,7 +13,6 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Views;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Types;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

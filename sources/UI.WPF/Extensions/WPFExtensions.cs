@@ -1,5 +1,4 @@
-﻿using MahApps.Metro.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Globalization;
@@ -104,21 +103,6 @@ namespace Queue.UI.WPF
             var parent = targetControl.Parent as Panel;
             parent.Children.Remove(targetControl);
             parent.Children.Add(targetControl);
-        }
-
-        public static void FullScreenWindow(this MetroWindow window)
-        {
-            window.WindowState = WindowState.Maximized;
-            window.WindowStyle = WindowStyle.None;
-            window.ResizeMode = ResizeMode.NoResize;
-
-            window.ShowCloseButton = false;
-            window.ShowMaxRestoreButton = false;
-            window.ShowMinButton = false;
-            window.ShowTitleBar = false;
-
-            window.UseNoneWindowStyle = true;
-            window.TitlebarHeight = 0;
         }
 
         public static void SetXamlLanguage(CultureInfo culture)

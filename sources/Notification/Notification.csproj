@@ -162,9 +162,6 @@
     <Compile Include="UserControls\CallClientControl.xaml.cs">
       <DependentUpon>CallClientControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ClientRequestStateControl.xaml.cs">
-      <DependentUpon>ClientRequestStateControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\TickerControl.xaml.cs">
       <DependentUpon>TickerControl.xaml</DependentUpon>
     </Compile>
@@ -208,10 +205,6 @@
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\ClientRequestStateControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\TickerControl.xaml">
       <SubType>Designer</SubType>

@@ -11,7 +11,7 @@ namespace Queue.UI.WPF.Controls
         {
             InitializeComponent();
 
-            DataContext = ServiceLocator.Current.GetInstance<UnityContainer>()
+            DataContext = ServiceLocator.Current.GetInstance<IUnityContainer>()
                                             .Resolve<ConnectionStatusControlViewModel>();
         }
     }

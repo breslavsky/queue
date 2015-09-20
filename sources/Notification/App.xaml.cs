@@ -35,7 +35,7 @@ namespace Queue.Notification
         private void InitializeContainer()
         {
             var container = new UnityContainer();
-            container.RegisterInstance(container);
+            container.RegisterInstance<IUnityContainer>(container);
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
             container.RegisterInstance(new ConfigurationManager(Product.Notification.AppName, SpecialFolder.ApplicationData));

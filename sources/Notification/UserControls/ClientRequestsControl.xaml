@@ -19,12 +19,12 @@
             <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <ItemsControl Margin="5"
+    <ItemsControl Margin="1"
                   HorizontalAlignment="Stretch"
                   ItemsSource="{Binding Requests}">
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <Grid HorizontalAlignment="Stretch" Background="Red">
+                <Grid HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="10" />
@@ -41,10 +41,19 @@
                             <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_arrow_right}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Label Grid.Column="2"
-                           HorizontalAlignment="Right"
-                           Content="{Binding Request.Operator.Workplace}"
-                           Padding="1" />
+                    <StackPanel Grid.Column="2">
+                        <Border>
+                            <TextBlock FontSize="8" Text="{Binding Request.Operator.Workplace}" />
+                        </Border>
+
+                        <Border Background="{Binding StateBrush}" CornerRadius="1.5">
+                            <TextBlock Margin="0.5"
+                                       FontSize="3"
+                                       FontWeight="Bold"
+                                       Foreground="Black"
+                                       Text="{Binding State}" />
+                        </Border>
+                    </StackPanel>
                 </Grid>
             </DataTemplate>
         </ItemsControl.ItemTemplate>

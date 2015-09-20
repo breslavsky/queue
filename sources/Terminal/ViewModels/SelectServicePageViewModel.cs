@@ -10,9 +10,10 @@ using Queue.Terminal.Core;
 using Queue.Terminal.Extensions;
 using Queue.Terminal.UserControls;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Types;
+
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel;
 using System.Windows.Input;
 
@@ -116,26 +117,16 @@ namespace Queue.Terminal.ViewModels
 
         private void AddGroupsToButtons(ServiceGroup[] groups, List<SelectServiceButton> buttons)
         {
-            foreach (var group in groups)
+            foreach (var group in groups.Where(g => g.IsActive))
             {
-                if (!group.IsActive)
-                {
-                    continue;
-                }
-
                 buttons.Add(CreateSelectServiceButton(group.Code, group.Name, group.Color, group.FontSize, (s, a) => OnServiceGroupSelected(group)));
             }
         }
 
         private void AddServicesToButtons(Service[] services, List<SelectServiceButton> buttons)
         {
-            foreach (var service in services)
+            foreach (var service in services.Where(s => s.IsActive))
             {
-                if (!service.IsActive)
-                {
-                    continue;
-                }
-
                 buttons.Add(CreateSelectServiceButton(service.Code,
                                                     service.Name,
                                                     service.GetColor(),

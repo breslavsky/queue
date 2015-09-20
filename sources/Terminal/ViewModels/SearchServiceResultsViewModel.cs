@@ -1,12 +1,12 @@
 ﻿using Junte.UI.WPF;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.Terminal.Extensions;
 using Queue.Terminal.UserControls;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Types;
 using System;
 using System.ServiceModel;
 using System.Windows.Controls;
@@ -50,12 +50,16 @@ namespace Queue.Terminal.ViewModels
 
         public ICommand PrevCommand { get; set; }
 
+        [Dependency]
         public IMainWindow Window { get; set; }
 
+        [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
+        [Dependency]
         public Navigator Navigator { get; set; }
 
+        [Dependency]
         public ClientRequestModel Request { get; set; }
 
         public SearchServiceResultsViewModel()

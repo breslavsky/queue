@@ -54,7 +54,7 @@ namespace Queue.Notification.ViewModels
         public TickerControlViewModel(TickerControl control)
         {
             this.control = control;
-            ServiceLocator.Current.GetInstance<UnityContainer>().BuildUp(this);
+            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
             LoadedCommand = new RelayCommand(Loaded);
             UnloadedCommand = new RelayCommand(Unloaded);

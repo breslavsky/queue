@@ -8,7 +8,6 @@ using Queue.Notification.ViewModels;
 using Queue.Notification.Views;
 using Queue.Services.Contracts;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Types;
 using System;
 using System.Linq;
 using System.Windows;
@@ -23,8 +22,6 @@ namespace Queue.Notification
         private const string AppName = "Notification";
 
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
-
-        private bool disposed = false;
 
         private LoginPage connectPage;
 
@@ -67,12 +64,12 @@ namespace Queue.Notification
                 Top = screen.WorkingArea.Top;
             }
 
-            this.FullScreenWindow();
+            MakeFullScreen();
         }
 
         private void RegisterServices()
         {
-            var container = ServiceLocator.Current.GetInstance<UnityContainer>();
+            var container = ServiceLocator.Current.GetInstance<IUnityContainer>();
 
             container.RegisterInstance<IMainWindow>(this);
             container.RegisterInstance(new ServerService(connectPage.Model.Endpoint, ServerServicesPaths.Server));
@@ -96,36 +93,5 @@ namespace Queue.Notification
                 Application.Current.Shutdown();
             }
         }
-
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            Dispose();
-        }
-
-        #region IDisposable
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                }
-                disposed = true;
-            }
-        }
-
-        ~MainWindow()
-        {
-            Dispose(false);
-        }
-
-        #endregion IDisposable
     }
 }

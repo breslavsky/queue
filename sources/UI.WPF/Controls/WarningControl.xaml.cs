@@ -1,5 +1,4 @@
 ﻿using Microsoft.Practices.ServiceLocation;
-using Queue.UI.WPF.Types;
 using System;
 using System.Windows;
 using System.Windows.Controls;

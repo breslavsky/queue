@@ -1,6 +1,6 @@
 ﻿using MahApps.Metro.Controls;
-using Queue.UI.WPF.Types;
 using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Queue.UI.WPF
@@ -106,5 +106,20 @@ namespace Queue.UI.WPF
         }
 
         #endregion IMainWindow
+
+        public void MakeFullScreen()
+        {
+            WindowState = WindowState.Maximized;
+            WindowStyle = WindowStyle.None;
+            ResizeMode = ResizeMode.NoResize;
+
+            ShowCloseButton = false;
+            ShowMaxRestoreButton = false;
+            ShowMinButton = false;
+            ShowTitleBar = false;
+
+            UseNoneWindowStyle = true;
+            TitlebarHeight = 0;
+        }
     }
 }

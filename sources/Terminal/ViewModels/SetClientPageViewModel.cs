@@ -6,7 +6,7 @@ using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
-using Queue.UI.WPF.Types;
+using Queue.UI.WPF;
 using System;
 using System.ServiceModel;
 using System.Windows;

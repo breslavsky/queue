@@ -11,7 +11,6 @@ using Queue.Terminal.Core;
 using Queue.Terminal.ViewModels;
 using Queue.Terminal.Views;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Types;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -46,6 +45,8 @@ namespace Queue.Terminal
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            ServiceLocator.Current.GetInstance<IUnityContainer>().RegisterInstance<IMainWindow>(this);
+
             loginPage = CreateLoginPage();
             content.NavigationService.Navigate(loginPage);
         }
@@ -75,7 +76,7 @@ namespace Queue.Terminal
             content.NavigationService.Navigate(new TerminalWindow());
 
             CreateResetTimer();
-            this.FullScreenWindow();
+            this.MakeFullScreen();
         }
 
         private void CreateResetTimer()
@@ -108,8 +109,6 @@ namespace Queue.Terminal
             {
                 CurrentAdministrator = (Administrator)loginPage.Model.User
             });
-
-            container.RegisterInstance<IMainWindow>(this);
 
             navigator = container.Resolve<Navigator>();
             container.RegisterInstance(navigator);

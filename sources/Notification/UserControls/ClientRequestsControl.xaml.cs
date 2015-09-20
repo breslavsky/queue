@@ -14,7 +14,7 @@ namespace Queue.Notification.UserControls
 
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                DataContext = ServiceLocator.Current.GetInstance<UnityContainer>().Resolve<ClientRequestsControlViewModel>();
+                DataContext = ServiceLocator.Current.GetInstance<IUnityContainer>().Resolve<ClientRequestsControlViewModel>();
             }
         }
     }

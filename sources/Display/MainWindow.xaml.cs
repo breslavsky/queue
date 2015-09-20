@@ -1,6 +1,5 @@
 ﻿using Junte.Configuration;
 using Junte.WCF;
-using MahApps.Metro.Controls;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Display.ViewModels;
@@ -11,13 +10,16 @@ using Queue.UI.WPF;
 using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Queue.Display
 {
-    public partial class MainWindow : MetroWindow
+    public partial class MainWindow : RichWindow
     {
         private LoginPage loginPage;
+
+        protected override Panel RootElement { get { return mainGrid; } }
 
         public MainWindow()
             : base()
@@ -29,6 +31,9 @@ namespace Queue.Display
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            ServiceLocator.Current.GetInstance<IUnityContainer>()
+                                    .RegisterInstance<IMainWindow>(this);
+
             loginPage = CreateLoginPage();
             content.NavigationService.Navigate(loginPage);
         }
@@ -43,7 +48,7 @@ namespace Queue.Display
 
         private void OnLogined(object sender, EventArgs e)
         {
-            InitializeContainer();
+            RegisterTypes();
 
             content.NavigationService.Navigate(new HomePage()
             {
@@ -59,18 +64,13 @@ namespace Queue.Display
                 Top = screen.WorkingArea.Top;
             }
 
-            this.FullScreenWindow();
+            this.MakeFullScreen();
         }
 
-        private void InitializeContainer()
+        private void RegisterTypes()
         {
-            IUnityContainer container = new UnityContainer();
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
-            RegisterTypes(container);
-        }
+            var container = ServiceLocator.Current.GetInstance<IUnityContainer>();
 
-        private void RegisterTypes(IUnityContainer container)
-        {
             container.RegisterInstance<DuplexChannelBuilder<IServerTcpService>>(loginPage.Model.ChannelBuilder);
             container.RegisterInstance<Workplace>(loginPage.Model.Workplace);
         }
