@@ -21,7 +21,7 @@ namespace Queue.Operator
         [Dependency]
         [ReadOnly(true)]
         [Browsable(false)]
-        public HubQualitySettings HubQualitySettings { get; set; }
+        public HubSettings HubQualitySettings { get; set; }
 
         #endregion dependency
 

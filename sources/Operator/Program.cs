@@ -19,7 +19,7 @@ namespace Queue.Operator
         private static AppOptions options;
         private static UnityContainer container;
         private static ConfigurationManager configuration;
-        private static HubQualitySettings hubQualitySettings;
+        private static HubSettings hubSettings;
         private static LoginSettings loginSettings;
         private static LoginFormSettings loginFormSettings;
         private static ServerService serverService;
@@ -45,10 +45,10 @@ namespace Queue.Operator
             loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
             container.RegisterInstance(loginFormSettings);
 
-            hubQualitySettings = configuration.GetSection<HubQualitySettings>(HubQualitySettings.SectionKey);
-            container.RegisterInstance(hubQualitySettings);
+            hubSettings = configuration.GetSection<HubSettings>(HubSettings.SectionKey);
+            container.RegisterInstance(hubSettings);
 
-            hubQualityService = new HubQualityService(hubQualitySettings.Endpoint, HubServicesPaths.Quality);
+            hubQualityService = new HubQualityService(hubSettings.Endpoint, HubServicesPaths.Quality);
             container.RegisterInstance(hubQualityService);
 
             ParseOptions();

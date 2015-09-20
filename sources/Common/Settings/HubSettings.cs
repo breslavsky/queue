@@ -4,11 +4,11 @@ using System.Globalization;
 
 namespace Queue.Common.Settings
 {
-    public class HubQualitySettings : ConfigurationSection
+    public class HubSettings : ConfigurationSection
     {
-        public const string SectionKey = "hubQuality";
+        public const string SectionKey = "hub";
 
-        public HubQualitySettings()
+        public HubSettings()
         {
             Endpoint = "net.tcp://localhost:4511/";
         }
