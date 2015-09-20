@@ -7,6 +7,7 @@ using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Terminal.Core;
+using Queue.UI.WPF.Types;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -63,7 +64,7 @@ namespace Queue.Terminal.ViewModels
         }
 
         [Dependency]
-        public TerminalWindow Window { get; set; }
+        public IMainWindow Window { get; set; }
 
         [Dependency]
         public Navigator Navigator { get; set; }

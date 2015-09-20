@@ -1,6 +1,5 @@
 ﻿using Junte.UI.WPF;
 using Microsoft.Practices.ServiceLocation;
-using Microsoft.Practices.Unity;
 using Queue.Resources;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
@@ -38,7 +37,6 @@ namespace Queue.Terminal
 
                 Content = rootObject;
 
-                ServiceLocator.Current.GetInstance<UnityContainer>().RegisterInstance(this);
                 DataContext = new TerminalWindowViewModel();
 
                 ServiceLocator.Current.GetInstance<Navigator>().SetNavigationService(pageFrame.NavigationService);

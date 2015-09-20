@@ -1,4 +1,6 @@
-﻿using Queue.Terminal.ViewModels;
+﻿using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
+using Queue.Terminal.ViewModels;
 using System.ComponentModel;
 using System.Windows.Controls;
 
@@ -14,7 +16,7 @@ namespace Queue.Terminal.UserControls
 
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                model = new SearchServiceResultsViewModel();
+                model = ServiceLocator.Current.GetInstance<UnityContainer>().Resolve<SearchServiceResultsViewModel>();
                 model.Initialize(servicesGrid);
                 DataContext = model;
             }

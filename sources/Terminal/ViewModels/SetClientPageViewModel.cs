@@ -6,6 +6,7 @@ using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
+using Queue.UI.WPF.Types;
 using System;
 using System.ServiceModel;
 using System.Windows;
@@ -22,7 +23,7 @@ namespace Queue.Terminal.ViewModels
         public ICommand PrevCommand { get; set; }
 
         [Dependency]
-        public TerminalWindow Window { get; set; }
+        public IMainWindow Window { get; set; }
 
         [Dependency]
         public Navigator Navigator { get; set; }

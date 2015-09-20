@@ -1,4 +1,4 @@
-﻿<controls:MetroWindow x:Class="Queue.Terminal.MainWindow"
+﻿<ui_common:RichWindow x:Class="Queue.Terminal.MainWindow"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -10,15 +10,17 @@
                       Loaded="OnLoaded"
                       Unloaded="OnUnloaded"
                       WindowStartupLocation="CenterScreen">
-    <controls:MetroWindow.Background>
+    <ui_common:RichWindow.Background>
         <LinearGradientBrush ColorInterpolationMode="ScRgbLinearInterpolation" SpreadMethod="Reflect" StartPoint="1,1" EndPoint="1,0">
             <GradientStop Offset="0" Color="{DynamicResource AccentColor}" />
             <GradientStop Offset="1" Color="#FFFFFFFF" />
         </LinearGradientBrush>
-    </controls:MetroWindow.Background>
-    <controls:MetroWindow.GlowBrush>
+    </ui_common:RichWindow.Background>
+    <ui_common:RichWindow.GlowBrush>
         <SolidColorBrush Color="{DynamicResource AccentColor}" />
-    </controls:MetroWindow.GlowBrush>
+    </ui_common:RichWindow.GlowBrush>
 
-    <Frame x:Name="content" NavigationUIVisibility="Hidden" />
-</controls:MetroWindow>
+    <Grid x:Name="mainGrid">
+        <Frame x:Name="content" NavigationUIVisibility="Hidden" />
+    </Grid>
+</ui_common:RichWindow>

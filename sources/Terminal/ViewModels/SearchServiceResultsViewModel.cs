@@ -1,12 +1,12 @@
 ﻿using Junte.UI.WPF;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.Terminal.Extensions;
 using Queue.Terminal.UserControls;
 using Queue.UI.WPF;
+using Queue.UI.WPF.Types;
 using System;
 using System.ServiceModel;
 using System.Windows.Controls;
@@ -25,11 +25,6 @@ namespace Queue.Terminal.ViewModels
         private bool hasPrev;
         private bool hasResults;
         private int currentPage;
-
-        private TerminalWindow screen;
-        private DuplexChannelManager<IServerTcpService> channelManager;
-        private Navigator navigator;
-        private ClientRequestModel request;
 
         private string filter;
 
@@ -55,15 +50,18 @@ namespace Queue.Terminal.ViewModels
 
         public ICommand PrevCommand { get; set; }
 
+        public IMainWindow Window { get; set; }
+
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        public Navigator Navigator { get; set; }
+
+        public ClientRequestModel Request { get; set; }
+
         public SearchServiceResultsViewModel()
         {
             NextCommand = new RelayCommand(Next);
             PrevCommand = new RelayCommand(Prev);
-
-            screen = ServiceLocator.Current.GetInstance<TerminalWindow>();
-            channelManager = ServiceLocator.Current.GetInstance<DuplexChannelManager<IServerTcpService>>();
-            navigator = ServiceLocator.Current.GetInstance<Navigator>();
-            request = ServiceLocator.Current.GetInstance<ClientRequestModel>();
         }
 
         public void Initialize(Grid resultsGrid)
@@ -90,9 +88,9 @@ namespace Queue.Terminal.ViewModels
         private async void ShowResultPage(int pageNo)
         {
             HasPrev = pageNo > 0;
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
-                var loading = screen.ShowLoading();
+                var loading = Window.ShowLoading();
 
                 try
                 {
@@ -137,8 +135,8 @@ namespace Queue.Terminal.ViewModels
             {
                 var button = CreateServiceButton(service, (s, a) =>
                                                             {
-                                                                request.SelectedService = service;
-                                                                navigator.NextPage();
+                                                                Request.SelectedService = service;
+                                                                Navigator.NextPage();
                                                             });
 
                 if (col >= ResultsColCount)

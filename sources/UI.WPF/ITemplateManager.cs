@@ -1,7 +1,9 @@
-﻿namespace Queue.UI.WPF
+﻿using System.Windows;
+
+namespace Queue.UI.WPF
 {
     public interface ITemplateManager
     {
-        string GetTemplate(string template, string theme = "default");
+        DependencyObject GetTemplate(string template, string theme = "default");
     }
 }

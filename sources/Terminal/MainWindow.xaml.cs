@@ -2,7 +2,6 @@
 using Junte.Parallel;
 using Junte.UI.WPF;
 using Junte.WCF;
-using MahApps.Metro.Controls;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Model.Common;
@@ -12,16 +11,18 @@ using Queue.Terminal.Core;
 using Queue.Terminal.ViewModels;
 using Queue.Terminal.Views;
 using Queue.UI.WPF;
+using Queue.UI.WPF.Types;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace Queue.Terminal
 {
-    public partial class MainWindow : MetroWindow, IDisposable
+    public partial class MainWindow : RichWindow, IDisposable
     {
         private const double ActivityWaitTime = 120;
         private bool disposed = false;
@@ -32,6 +33,8 @@ namespace Queue.Terminal
         private Navigator navigator;
 
         private DispatcherTimer resetTimer;
+
+        protected override Panel RootElement { get { return mainGrid; } }
 
         public MainWindow()
             : base()
@@ -105,6 +108,8 @@ namespace Queue.Terminal
             {
                 CurrentAdministrator = (Administrator)loginPage.Model.User
             });
+
+            container.RegisterInstance<IMainWindow>(this);
 
             navigator = container.Resolve<Navigator>();
             container.RegisterInstance(navigator);

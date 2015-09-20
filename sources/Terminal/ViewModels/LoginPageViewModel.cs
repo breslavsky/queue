@@ -4,6 +4,7 @@ using Junte.UI.WPF;
 using Junte.WCF;
 using MahApps.Metro;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Model.Common;
@@ -12,6 +13,7 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Views;
 using Queue.UI.WPF;
+using Queue.UI.WPF.Types;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -46,6 +48,9 @@ namespace Queue.Terminal.ViewModels
         public event EventHandler OnLogined;
 
         public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
+
+        [Dependency]
+        public IMainWindow Window { get; set; }
 
         #region UIProperties
 
@@ -134,6 +139,8 @@ namespace Queue.Terminal.ViewModels
 
             AccentColors = ThemeManager.Accents.Select(a => new AccentColorComboBoxItem(a.Name, a.Resources["AccentColorBrush"] as Brush)).ToArray();
 
+            ServiceLocator.Current.GetInstance<UnityContainer>().BuildUp(this);
+
             taskPool = new TaskPool();
 
             ConnectCommand = new RelayCommand(Connect);
@@ -178,7 +185,7 @@ namespace Queue.Terminal.ViewModels
 
             using (var channel = channelManager.CreateChannel())
             {
-                var loading = owner.ShowLoading();
+                var loading = Window.ShowLoading();
                 try
                 {
                     Users = (await taskPool.AddTask(channel.Service.GetUserLinks(userRole))).Select(u => new UserComboBoxItem()
@@ -232,7 +239,7 @@ namespace Queue.Terminal.ViewModels
 
             using (var channel = channelManager.CreateChannel())
             {
-                var loading = owner.ShowLoading();
+                var loading = Window.ShowLoading();
 
                 try
                 {
@@ -293,6 +300,13 @@ namespace Queue.Terminal.ViewModels
             {
                 channelManager.Dispose();
             }
+        }
+
+        public class UserComboBoxItem
+        {
+            public Guid Id { get; set; }
+
+            public string Name { get; set; }
         }
     }
 }

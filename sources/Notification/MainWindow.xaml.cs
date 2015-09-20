@@ -1,7 +1,6 @@
 ﻿using Junte.Configuration;
 using Junte.Parallel;
 using Junte.WCF;
-using MahApps.Metro.Controls;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
@@ -19,16 +18,17 @@ using WinForms = System.Windows.Forms;
 
 namespace Queue.Notification
 {
-    public partial class MainWindow : MetroWindow, IMainWindow
+    public partial class MainWindow : RichWindow
     {
+        private const string AppName = "Notification";
+
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private bool disposed = false;
 
         private LoginPage connectPage;
 
-        private LoadingControl loading;
-        private UserControl activeMessageBox;
+        protected override Panel RootElement { get { return mainGrid; } }
 
         public MainWindow()
             : base()
@@ -77,13 +77,11 @@ namespace Queue.Notification
             container.RegisterInstance<IMainWindow>(this);
             container.RegisterInstance(new ServerService(connectPage.Model.Endpoint, ServerServicesPaths.Server));
             container.RegisterInstance(new ServerTemplateService(connectPage.Model.Endpoint, ServerServicesPaths.Template));
-
             container.RegisterType<DuplexChannelManager<IServerTcpService>>(new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager()));
             container.RegisterType<ChannelManager<IServerTemplateTcpService>>(new InjectionFactory(c => c.Resolve<ServerTemplateService>().CreateChannelManager()));
             container.RegisterType<TaskPool>();
-
             container.RegisterInstance<ClientRequestsStateListener>(new ClientRequestsStateListener());
-            container.RegisterInstance<ITemplateManager>(container.Resolve<TemplateManager>());
+            container.RegisterInstance<ITemplateManager>(new TemplateManager(AppName));
         }
 
         private void MainWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -103,101 +101,6 @@ namespace Queue.Notification
         {
             Dispose();
         }
-
-        #region IMainWindow
-
-        public LoadingControl ShowLoading()
-        {
-            if (loading != null)
-            {
-                return loading;
-            }
-
-            Invoke(() =>
-            {
-                var control = new LoadingControl();
-                AttachControl(control);
-                loading = control;
-            });
-
-            return loading;
-        }
-
-        public void HideLoading()
-        {
-            if (loading == null)
-            {
-                return;
-            }
-
-            DetachControl(loading);
-
-            loading = null;
-        }
-
-        private void HideActiveMessageBox()
-        {
-            if (activeMessageBox != null)
-            {
-                HideMessageBox(activeMessageBox);
-            }
-        }
-
-        public NoticeControl Notice(object message, Action callback = null)
-        {
-            return ShowMessageBox(() => new NoticeControl(message.ToString(), callback));
-        }
-
-        public WarningControl Warning(object message, Action callback = null)
-        {
-            return ShowMessageBox(() => new WarningControl(message.ToString(), callback));
-        }
-
-        public T ShowMessageBox<T>(Func<T> ctor) where T : UserControl
-        {
-            HideActiveMessageBox();
-
-            T box = null;
-            Invoke(() =>
-            {
-                box = ctor();
-                AttachControl(box);
-            });
-
-            activeMessageBox = box;
-
-            return box;
-        }
-
-        public void HideMessageBox(UserControl control)
-        {
-            DetachControl(control);
-            activeMessageBox = null;
-        }
-
-        public void AttachControl(UserControl control)
-        {
-            Invoke(() => mainGrid.Children.Add(control));
-        }
-
-        public void DetachControl(UserControl control)
-        {
-            Invoke(() => mainGrid.Children.Remove(control));
-        }
-
-        public void Invoke(Action action)
-        {
-            if (Dispatcher.CheckAccess())
-            {
-                action();
-            }
-            else
-            {
-                Dispatcher.Invoke(action);
-            }
-        }
-
-        #endregion IMainWindow
 
         #region IDisposable
 

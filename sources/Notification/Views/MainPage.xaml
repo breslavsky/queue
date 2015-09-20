@@ -11,7 +11,7 @@
                     xmlns:ui_common="clr-namespace:Queue.UI.WPF;assembly=Queue.UI.WPF"
                     Loaded="OnLoaded">
 
-    <Grid>
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition />
@@ -55,5 +55,5 @@
         </Grid>
 
         <notificationControls:TickerControl Grid.Row="2" />
-    </Grid>
+    </Grid>-->
 </ui_common:RichPage>

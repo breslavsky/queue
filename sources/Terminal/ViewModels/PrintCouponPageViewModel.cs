@@ -9,6 +9,7 @@ using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.UI.Common;
 using Queue.UI.WPF;
+using Queue.UI.WPF.Types;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
@@ -36,7 +37,7 @@ namespace Queue.Terminal.ViewModels
         public ICommand UnloadedCommand { get; set; }
 
         [Dependency]
-        public TerminalWindow Window { get; set; }
+        public IMainWindow Window { get; set; }
 
         [Dependency]
         public Navigator Navigator { get; set; }
@@ -76,7 +77,7 @@ namespace Queue.Terminal.ViewModels
                 }
                 catch (FaultException exception)
                 {
-                    warn = Window.Warning(exception.Reason, () => Navigator.NextPage());
+                    warn = Window.Warning(exception.Reason, () => Navigator.Reset());
                 }
                 catch (Exception exception)
                 {
@@ -101,10 +102,12 @@ namespace Queue.Terminal.ViewModels
             timer.Stop();
             if (warn != null)
             {
-                warn.Hide(true);
+                warn.Hide();
             }
-
-            Navigator.Reset();
+            else
+            {
+                Navigator.Reset();
+            }
         }
 
         private async Task<ClientRequest> AddClientRequest(Channel<IServerTcpService> channel)

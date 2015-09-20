@@ -1,4 +1,5 @@
-﻿using Queue.UI.WPF;
+﻿using Microsoft.Practices.ServiceLocation;
+using Queue.UI.WPF;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -11,6 +12,8 @@ namespace Queue.Notification.Views
             : base()
         {
             InitializeComponent();
+
+            Content = ServiceLocator.Current.GetInstance<ITemplateManager>().GetTemplate("main_page");
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

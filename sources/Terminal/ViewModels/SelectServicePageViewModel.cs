@@ -10,6 +10,7 @@ using Queue.Terminal.Core;
 using Queue.Terminal.Extensions;
 using Queue.Terminal.UserControls;
 using Queue.UI.WPF;
+using Queue.UI.WPF.Types;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
@@ -27,7 +28,7 @@ namespace Queue.Terminal.ViewModels
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
-        public TerminalWindow Window { get; set; }
+        public IMainWindow Window { get; set; }
 
         [Dependency]
         public TaskPool TaskPool { get; set; }
