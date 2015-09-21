@@ -4,7 +4,6 @@ using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
-using Queue.Common;
 using Queue.Notification.ViewModels;
 using Queue.Notification.Views;
 using Queue.Services.Contracts;
@@ -77,7 +76,7 @@ namespace Queue.Notification
             container.RegisterType<ChannelManager<IServerTemplateTcpService>>(new InjectionFactory(c => c.Resolve<ServerTemplateService>().CreateChannelManager()));
             container.RegisterType<TaskPool>();
             container.RegisterInstance<ClientRequestsListener>(new ClientRequestsListener());
-            container.RegisterInstance<ITemplateManager>(new TemplateManager(Product.Notification.AppName));
+            container.RegisterInstance<ITemplateManager>(new TemplateManager("notification", ServiceLocator.Current.GetInstance<AppSettings>().Theme));
         }
 
         private void MainWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -85,7 +84,7 @@ namespace Queue.Notification
             if (Keyboard.IsKeyDown(Key.LeftShift) && e.Key == Key.Escape)
             {
                 var configuration = ServiceLocator.Current.GetInstance<ConfigurationManager>();
-                var loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
+                var loginFormSettings = configuration.GetSection<AppSettings>(AppSettings.SectionKey);
                 loginFormSettings.IsRemember = false;
                 configuration.Save();
 

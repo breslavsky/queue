@@ -141,6 +141,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppSettings.cs" />
     <Compile Include="Utils\AutoRecoverCallbackChannel.cs" />
     <Compile Include="Utils\ClientRequestsListener.cs" />
     <Compile Include="UserControls\VideoControl.xaml.cs">

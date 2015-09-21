@@ -1,11 +1,23 @@
 ﻿using Queue.Common;
 using System.Configuration;
 
-namespace Queue.UI.WPF
+namespace Queue.Notification
 {
     public class AppSettings : ConfigurationSection
     {
-        public const string SectionKey = "loginForm";
+        public const string SectionKey = "notificationSettings";
+
+        public AppSettings()
+        {
+            Theme = "default";
+        }
+
+        [ConfigurationProperty("theme")]
+        public string Theme
+        {
+            get { return (string)this["theme"]; }
+            set { this["theme"] = value; }
+        }
 
         [ConfigurationProperty("isRemember")]
         public bool IsRemember

@@ -5,7 +5,6 @@ using Queue.Common;
 using Queue.Services.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Markup;
 
@@ -14,35 +13,26 @@ namespace Queue.UI.WPF
     public class TemplateManager : ITemplateManager
     {
         private readonly string app;
+        private readonly string theme;
 
         [Dependency]
         public ChannelManager<IServerTemplateTcpService> ChannelManager { get; set; }
 
-        private List<TemplateInfo> cache = new List<TemplateInfo>();
+        private Dictionary<string, string> cache = new Dictionary<string, string>();
 
-        public TemplateManager(string app)
+        public TemplateManager(string app, string theme = "default")
         {
             this.app = app;
+            this.theme = theme;
 
             ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
         }
 
-        public DependencyObject GetTemplate(string template, string theme = "default")
+        public DependencyObject GetTemplate(string template)
         {
-            var content = GetTemplateFromCache(template, theme);
-            if (content == null)
-            {
-                using (var channel = ChannelManager.CreateChannel())
-                {
-                    content = channel.Service.GetTemplate(app, theme, template).GetAwaiter().GetResult();
-                    cache.Add(new TemplateInfo()
-                                {
-                                    Content = content,
-                                    Template = template,
-                                    Theme = theme
-                                });
-                }
-            }
+            string content = cache.ContainsKey(template) ?
+                cache[template] :
+                DownloadTemplate(template);
 
             try
             {
@@ -54,17 +44,14 @@ namespace Queue.UI.WPF
             }
         }
 
-        private string GetTemplateFromCache(string template, string theme)
+        private string DownloadTemplate(string template)
         {
-            var result = cache.FirstOrDefault(i => i.Template == template && i.Theme == theme);
-            return result == null ? null : result.Template;
-        }
-
-        private class TemplateInfo
-        {
-            public string Theme;
-            public string Template;
-            public string Content;
+            using (var channel = ChannelManager.CreateChannel())
+            {
+                var content = channel.Service.GetTemplate(app, theme, template).GetAwaiter().GetResult();
+                cache.Add(template, content);
+                return content;
+            }
         }
     }
 }

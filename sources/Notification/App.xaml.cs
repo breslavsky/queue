@@ -39,6 +39,8 @@ namespace Queue.Notification
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
             container.RegisterInstance(new ConfigurationManager(Product.Notification.AppName, SpecialFolder.ApplicationData));
+            container.RegisterType<AppSettings>(new InjectionFactory(c => c.Resolve<ConfigurationManager>()
+                                                                .GetSection<AppSettings>(AppSettings.SectionKey)));
         }
     }
 }

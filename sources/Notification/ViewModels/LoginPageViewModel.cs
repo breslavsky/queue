@@ -31,7 +31,7 @@ namespace Queue.Notification.ViewModels
 
         private ConfigurationManager configuration;
         private LoginSettings loginSettings;
-        private LoginFormSettings loginFormSettings;
+        private AppSettings appSettings;
         private Language selectedLanguage;
 
         public bool IsRemember
@@ -106,13 +106,13 @@ namespace Queue.Notification.ViewModels
             loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
             Endpoint = loginSettings.Endpoint;
 
-            loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
-            IsRemember = loginFormSettings.IsRemember;
-            SelectedLanguage = loginFormSettings.Language;
+            appSettings = configuration.GetSection<AppSettings>(AppSettings.SectionKey);
+            IsRemember = appSettings.IsRemember;
+            SelectedLanguage = appSettings.Language;
 
-            if (!String.IsNullOrWhiteSpace(loginFormSettings.Accent))
+            if (!String.IsNullOrWhiteSpace(appSettings.Accent))
             {
-                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == loginFormSettings.Accent);
+                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == appSettings.Accent);
             }
         }
 
@@ -153,9 +153,9 @@ namespace Queue.Notification.ViewModels
         private void SaveSettings()
         {
             loginSettings.Endpoint = Endpoint;
-            loginFormSettings.IsRemember = IsRemember;
-            loginFormSettings.Accent = SelectedAccent == null ? string.Empty : SelectedAccent.Name;
-            loginFormSettings.Language = SelectedLanguage;
+            appSettings.IsRemember = IsRemember;
+            appSettings.Accent = SelectedAccent == null ? string.Empty : SelectedAccent.Name;
+            appSettings.Language = SelectedLanguage;
 
             configuration.Save();
         }

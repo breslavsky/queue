@@ -42,7 +42,7 @@ namespace Queue.Terminal.ViewModels
         private Language selectedLanguage;
         private ConfigurationManager configuration;
         private LoginSettings loginSettings;
-        private LoginFormSettings loginFormSettings;
+        private AppSettings loginFormSettings;
 
         public event EventHandler OnLogined;
 
@@ -165,7 +165,7 @@ namespace Queue.Terminal.ViewModels
             Endpoint = loginSettings.Endpoint;
             Password = loginSettings.Password;
 
-            loginFormSettings = configuration.GetSection<LoginFormSettings>(LoginFormSettings.SectionKey);
+            loginFormSettings = configuration.GetSection<AppSettings>(AppSettings.SectionKey);
             IsRemember = loginFormSettings.IsRemember;
             SelectedLanguage = loginFormSettings.Language;
 
