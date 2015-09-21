@@ -249,6 +249,13 @@ namespace Queue.Administrator
         {
             earlyDatePicker.MinDate = earlyDatePicker.Value = ServerDateTime.Today;
             LoadServiceGroup(servicesTreeView.Nodes);
+
+            //var cm = ServerTemplateService.CreateChannelManager();
+            //using (var c = cm.CreateChannel())
+            //{
+            //    var coupon = await c.Service.GetTemplate("common", "default", "coupon.xaml");
+            //    var l = coupon.Length;
+            //}
         }
 
         private void clearCurrentClientButton_Click(object sender, EventArgs e)
