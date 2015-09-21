@@ -60,7 +60,7 @@ namespace Queue.Notification.ViewModels
             {
                 try
                 {
-                    Update(await TaskPool.AddTask(channel.Service.GetMediaConfig()),
+                    ApplyConfig(await TaskPool.AddTask(channel.Service.GetMediaConfig()),
                             await TaskPool.AddTask(channel.Service.GetMediaConfigFiles()));
                 }
                 catch (OperationCanceledException) { }
@@ -78,7 +78,7 @@ namespace Queue.Notification.ViewModels
             }
         }
 
-        private void Update(MediaConfig config, MediaConfigFile[] mediaFiles)
+        private void ApplyConfig(MediaConfig config, MediaConfigFile[] mediaFiles)
         {
             foreach (var file in mediaFiles)
             {

@@ -12,7 +12,7 @@ namespace Queue.Notification.Views
         {
             InitializeComponent();
 
-            Model = new LoginPageViewModel(this);
+            Model = new LoginPageViewModel();
 
             DataContext = Model;
         }

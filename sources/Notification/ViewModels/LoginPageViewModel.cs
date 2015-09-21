@@ -20,10 +20,10 @@ using WPFLocalizeExtension.Engine;
 
 namespace Queue.Notification.ViewModels
 {
-    public class LoginPageViewModel : ObservableObject, IDisposable
+    public class LoginPageViewModel : ObservableObject
     {
-        private RichPage owner;
         private bool isRemember;
+
         private string endpoint;
         private AccentColorComboBoxItem selectedAccent;
 
@@ -54,7 +54,7 @@ namespace Queue.Notification.ViewModels
             set
             {
                 var theme = ThemeManager.DetectAppStyle(Application.Current);
-                Accent accent = ThemeManager.GetAccent(value.Name);
+                var accent = ThemeManager.GetAccent(value.Name);
                 ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
 
                 SetProperty(ref selectedAccent, value);
@@ -64,8 +64,6 @@ namespace Queue.Notification.ViewModels
         public ICommand ConnectCommand { get; set; }
 
         public ICommand LoadedCommand { get; set; }
-
-        public ICommand UnloadedCommand { get; set; }
 
         public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
 
@@ -84,15 +82,12 @@ namespace Queue.Notification.ViewModels
             }
         }
 
-        public LoginPageViewModel(RichPage owner)
+        public LoginPageViewModel()
         {
-            this.owner = owner;
-
             AccentColors = ThemeManager.Accents.Select(a => new AccentColorComboBoxItem(a.Name, a.Resources["AccentColorBrush"] as Brush)).ToArray();
 
             ConnectCommand = new RelayCommand(Connect);
             LoadedCommand = new RelayCommand(Loaded);
-            UnloadedCommand = new RelayCommand(Unloaded);
         }
 
         private void Loaded()
@@ -163,15 +158,6 @@ namespace Queue.Notification.ViewModels
             loginFormSettings.Language = SelectedLanguage;
 
             configuration.Save();
-        }
-
-        private void Unloaded()
-        {
-            Dispose();
-        }
-
-        public void Dispose()
-        {
         }
     }
 }

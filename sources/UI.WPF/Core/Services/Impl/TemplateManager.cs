@@ -29,22 +29,28 @@ namespace Queue.UI.WPF
 
         public DependencyObject GetTemplate(string template, string theme = "default")
         {
-            var data = GetTemplateFromCache(template, theme);
-            if (data == null)
+            var content = GetTemplateFromCache(template, theme);
+            if (content == null)
             {
                 using (var channel = ChannelManager.CreateChannel())
                 {
-                    data = channel.Service.GetTemplate(app, theme, template).GetAwaiter().GetResult();
+                    content = channel.Service.GetTemplate(app, theme, template).GetAwaiter().GetResult();
+                    cache.Add(new TemplateInfo()
+                                {
+                                    Content = content,
+                                    Template = template,
+                                    Theme = theme
+                                });
                 }
             }
 
             try
             {
-                return XamlReader.Parse(data) as DependencyObject;
+                return XamlReader.Parse(content) as DependencyObject;
             }
             catch (Exception e)
             {
-                throw new QueueException("Невалидная разметка в шаблоне", e);
+                throw new QueueException(String.Format("Невалидная разметка в шаблоне [template: {0}; theme: {1}]", template, theme), e);
             }
         }
 

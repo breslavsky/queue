@@ -10,7 +10,6 @@
              lex:ResxLocalizationProvider.DefaultAssembly="Queue.Notification"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d">
-
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadedCommand}" />

@@ -77,7 +77,7 @@ namespace Queue.Notification.ViewModels
             {
                 try
                 {
-                    Update(await TaskPool.AddTask(channel.Service.GetMediaConfig()));
+                    ApplyConfig(await TaskPool.AddTask(channel.Service.GetMediaConfig()));
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -115,12 +115,12 @@ namespace Queue.Notification.ViewModels
             switch (e.Config.Type)
             {
                 case ConfigType.Media:
-                    Update(e.Config as MediaConfig);
+                    ApplyConfig(e.Config as MediaConfig);
                     break;
             }
         }
 
-        private void Update(MediaConfig config)
+        private void ApplyConfig(MediaConfig config)
         {
             SetTicker(config.Ticker);
             SetSpeed(config.TickerSpeed);

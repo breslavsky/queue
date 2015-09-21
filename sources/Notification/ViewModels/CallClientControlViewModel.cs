@@ -40,7 +40,7 @@ namespace Queue.Notification.ViewModels
         public ICommand UnloadedCommand { get; set; }
 
         [Dependency]
-        public ClientRequestsStateListener ClientRequestsStateListener { get; set; }
+        public ClientRequestsListener ClientRequestsListener { get; set; }
 
         public CallClientControlViewModel()
         {
@@ -50,7 +50,7 @@ namespace Queue.Notification.ViewModels
 
         private void Loaded()
         {
-            ClientRequestsStateListener.CallClient += OnCallClient;
+            ClientRequestsListener.CallClient += OnCallClient;
         }
 
         private void OnCallClient(object sender, ClientRequest request)
@@ -101,7 +101,7 @@ namespace Queue.Notification.ViewModels
 
         private void Unloaded()
         {
-            ClientRequestsStateListener.CallClient -= OnCallClient;
+            ClientRequestsListener.CallClient -= OnCallClient;
         }
     }
 }

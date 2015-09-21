@@ -4,6 +4,7 @@ using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
+using Queue.Common;
 using Queue.Notification.ViewModels;
 using Queue.Notification.Views;
 using Queue.Services.Contracts;
@@ -19,8 +20,6 @@ namespace Queue.Notification
 {
     public partial class MainWindow : RichWindow
     {
-        private const string AppName = "Notification";
-
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private LoginPage connectPage;
@@ -77,8 +76,8 @@ namespace Queue.Notification
             container.RegisterType<DuplexChannelManager<IServerTcpService>>(new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager()));
             container.RegisterType<ChannelManager<IServerTemplateTcpService>>(new InjectionFactory(c => c.Resolve<ServerTemplateService>().CreateChannelManager()));
             container.RegisterType<TaskPool>();
-            container.RegisterInstance<ClientRequestsStateListener>(new ClientRequestsStateListener());
-            container.RegisterInstance<ITemplateManager>(new TemplateManager(AppName));
+            container.RegisterInstance<ClientRequestsListener>(new ClientRequestsListener());
+            container.RegisterInstance<ITemplateManager>(new TemplateManager(Product.Notification.AppName));
         }
 
         private void MainWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

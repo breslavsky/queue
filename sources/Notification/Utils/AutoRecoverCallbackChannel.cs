@@ -65,7 +65,7 @@ namespace Queue.Notification
 
         private void Reconnect()
         {
-            channel.Dispose();
+            CloseChannel();
             CreateChannel();
         }
 
@@ -73,6 +73,17 @@ namespace Queue.Notification
         {
             channel = ChannelManager.CreateChannel(callback);
             subscribeFunc(channel.Service);
+        }
+
+        private void CloseChannel()
+        {
+            if (channel == null)
+            {
+                return;
+            }
+
+            channel.Dispose();
+            channel = null;
         }
 
         #region IDisposable
@@ -89,29 +100,29 @@ namespace Queue.Notification
             {
                 return;
             }
-            if (disposing)
+
+            try
             {
-                if (timer != null)
+                if (disposing)
                 {
-                    timer.Stop();
-                    timer.Elapsed -= PingElapsed;
-                    timer = null;
-                }
+                    if (timer != null)
+                    {
+                        timer.Stop();
+                        timer.Elapsed -= PingElapsed;
+                        timer = null;
+                    }
 
-                if (channel != null)
-                {
-                    channel.Dispose();
-                    channel = null;
-                }
+                    CloseChannel();
 
-                if (TaskPool != null)
-                {
-                    TaskPool.Cancel();
-                    TaskPool.Dispose();
-                    TaskPool = null;
+                    if (TaskPool != null)
+                    {
+                        TaskPool.Cancel();
+                        TaskPool.Dispose();
+                        TaskPool = null;
+                    }
                 }
             }
-
+            catch { }
             disposed = true;
         }
 

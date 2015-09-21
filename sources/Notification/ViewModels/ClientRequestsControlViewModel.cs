@@ -45,7 +45,7 @@ namespace Queue.Notification.ViewModels
         public TaskPool TaskPool { get; set; }
 
         [Dependency]
-        public ClientRequestsStateListener ClientRequestsStateListener { get; set; }
+        public ClientRequestsListener ClientRequestsListener { get; set; }
 
         public ICommand LoadedCommand { get; set; }
 
@@ -63,7 +63,7 @@ namespace Queue.Notification.ViewModels
             ClientRequestTimeout = TimeSpan.FromMinutes(20);
             ClientRequestsLength = DefaultClientRequestsLength;
 
-            ClientRequestsStateListener.ClientRequestUpdated += ClientRequestUpdated;
+            ClientRequestsListener.ClientRequestUpdated += ClientRequestUpdated;
 
             Requests = new ObservableCollection<ClientRequestWrap>();
 
@@ -217,10 +217,16 @@ namespace Queue.Notification.ViewModels
                 return;
             }
 
-            if (disposing)
+            try
             {
-                timer.Stop();
+                if (disposing)
+                {
+                    timer.Stop();
+                    timer.Tick -= timer_Tick;
+                    timer = null;
+                }
             }
+            catch { }
 
             disposed = true;
         }

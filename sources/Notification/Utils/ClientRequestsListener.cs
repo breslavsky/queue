@@ -7,7 +7,7 @@ using System;
 
 namespace Queue.Notification
 {
-    public class ClientRequestsStateListener : IDisposable
+    public class ClientRequestsListener : IDisposable
     {
         private AutoRecoverCallbackChannel channel;
 
@@ -20,7 +20,7 @@ namespace Queue.Notification
 
         private bool disposed;
 
-        public ClientRequestsStateListener()
+        public ClientRequestsListener()
         {
             channel = new AutoRecoverCallbackChannel(CreateServerCallback(), Subscribe);
         }
@@ -82,7 +82,7 @@ namespace Queue.Notification
             disposed = true;
         }
 
-        ~ClientRequestsStateListener()
+        ~ClientRequestsListener()
         {
             Dispose(false);
         }
