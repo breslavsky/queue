@@ -25,9 +25,6 @@ namespace Queue.Services.DTO
         public int Number { get; set; }
 
         [DataMember]
-        public byte Segments { get; set; }
-
-        [DataMember]
         public WorkplaceType Type { get; set; }
 
         public override string ToString()

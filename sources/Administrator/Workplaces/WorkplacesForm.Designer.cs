@@ -19,7 +19,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.workplacesGridView = new System.Windows.Forms.DataGridView();
             this.addWorkplaceButton = new System.Windows.Forms.Button();
@@ -29,7 +28,6 @@
             this.commentColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.displayDeviceIdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.qualityPanelDeviceId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.segmentsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.workplacesGridView)).BeginInit();
             this.SuspendLayout();
@@ -68,8 +66,7 @@
             this.modificatorColumn,
             this.commentColumn,
             this.displayDeviceIdColumn,
-            this.qualityPanelDeviceId,
-            this.segmentsColumn});
+            this.qualityPanelDeviceId});
             this.workplacesGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.workplacesGridView.Location = new System.Drawing.Point(0, 0);
             this.workplacesGridView.Margin = new System.Windows.Forms.Padding(0);
@@ -148,15 +145,6 @@
             this.qualityPanelDeviceId.ReadOnly = true;
             this.qualityPanelDeviceId.Width = 120;
             // 
-            // segmentsColumn
-            // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.segmentsColumn.DefaultCellStyle = dataGridViewCellStyle5;
-            this.segmentsColumn.HeaderText = "Кол-во сегментов";
-            this.segmentsColumn.Name = "segmentsColumn";
-            this.segmentsColumn.ReadOnly = true;
-            this.segmentsColumn.Width = 140;
-            // 
             // WorkplacesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -187,6 +175,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn commentColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn displayDeviceIdColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn qualityPanelDeviceId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn segmentsColumn;
     }
 }

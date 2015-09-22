@@ -85,7 +85,7 @@
             this.operatorControl.Name = "operatorControl";
             this.operatorControl.Size = new System.Drawing.Size(154, 21);
             this.operatorControl.TabIndex = 10;
-            this.operatorControl.UseResetButton = false;
+            this.operatorControl.UseResetButton = true;
             this.operatorControl.Leave += new System.EventHandler(this.operatorControl_Leave);
             // 
             // startTimePicker

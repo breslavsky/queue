@@ -55,7 +55,6 @@ namespace Queue.Administrator
                 commentTextBox.Text = workplace.Comment;
                 displayDeviceIdUpDown.Value = workplace.DisplayDeviceId;
                 qualityPanelDeviceIdUpDown.Value = workplace.QualityPanelDeviceId;
-                segmentsUpDown.Value = workplace.Segments;
             }
         }
 
@@ -175,11 +174,6 @@ namespace Queue.Administrator
         private void numberUpDown_Leave(object sender, EventArgs e)
         {
             workplace.Number = (int)numberUpDown.Value;
-        }
-
-        private void segmentsUpDown_Leave(object sender, EventArgs e)
-        {
-            workplace.Segments = (byte)segmentsUpDown.Value;
         }
 
         private void typeControl_Leave(object sender, EventArgs e)

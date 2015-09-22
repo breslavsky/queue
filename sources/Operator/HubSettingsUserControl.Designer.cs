@@ -35,7 +35,7 @@
             // 
             // endpointLabel
             // 
-            this.endpointLabel.Location = new System.Drawing.Point(5, 30);
+            this.endpointLabel.Location = new System.Drawing.Point(5, 25);
             this.endpointLabel.Name = "endpointLabel";
             this.endpointLabel.Size = new System.Drawing.Size(95, 25);
             this.endpointLabel.TabIndex = 5;
@@ -44,7 +44,7 @@
             // 
             // endpointTextBox
             // 
-            this.endpointTextBox.Location = new System.Drawing.Point(100, 35);
+            this.endpointTextBox.Location = new System.Drawing.Point(100, 30);
             this.endpointTextBox.Name = "endpointTextBox";
             this.endpointTextBox.Size = new System.Drawing.Size(175, 20);
             this.endpointTextBox.TabIndex = 4;
@@ -69,7 +69,7 @@
             this.Controls.Add(this.endpointTextBox);
             this.Controls.Add(this.enabledCheckBox);
             this.Name = "HubSettingsUserControl";
-            this.Size = new System.Drawing.Size(280, 65);
+            this.Size = new System.Drawing.Size(280, 55);
             this.Load += new System.EventHandler(this.HubSettingsUserControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

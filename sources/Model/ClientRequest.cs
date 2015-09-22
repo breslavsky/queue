@@ -79,6 +79,9 @@ namespace Queue.Model
         public virtual int Rating { get; set; }
 
         [Property]
+        public virtual string Comment { get; set; }
+
+        [Property]
         public virtual TimeSpan ClientInterval { get; set; }
 
         [Property]

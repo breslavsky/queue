@@ -53,6 +53,9 @@ namespace Queue.Services.DTO
         public int Rating { get; set; }
 
         [DataMember]
+        public string Comment { get; set; }
+
+        [DataMember]
         public TimeSpan WaitingStartTime { get; set; }
 
         [DataMember]

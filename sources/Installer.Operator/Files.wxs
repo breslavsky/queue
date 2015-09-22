@@ -8,109 +8,109 @@
   </Fragment>
   <Fragment>
 
-    <ComponentGroup Id="Microsoft">
-      <Component Id="_FC1E669C0CE84071B94CC0E85F53E152" Directory="INSTALLFOLDER" Guid="FC1E669C-0CE8-4071-B94C-C0E85F53E152">
-        <File Id="Microsoft_Practices_ServiceLocation_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Microsoft.Practices.ServiceLocation.dll" />
+    <ComponentGroup Id="Microsoft" Directory="INSTALLFOLDER">
+      <Component Id="_FC1E669C0CE84071B94CC0E85F53E152" Guid="FC1E669C-0CE8-4071-B94C-C0E85F53E152">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Microsoft.Practices.ServiceLocation.dll" />
       </Component>
-      <Component Id="_47FB0036F25D4A439F73FD12BA4D9AE3" Directory="INSTALLFOLDER" Guid="47FB0036-F25D-4A43-9F73-FD12BA4D9AE3">
-        <File Id="Microsoft_Practices_Unity_Configuration_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Microsoft.Practices.Unity.Configuration.dll" />
+      <Component Id="_47FB0036F25D4A439F73FD12BA4D9AE3" Guid="47FB0036-F25D-4A43-9F73-FD12BA4D9AE3">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Microsoft.Practices.Unity.Configuration.dll" />
       </Component>
-      <Component Id="_D5C82E9C56044FC2BA8E04DB16CC7B2F" Directory="INSTALLFOLDER" Guid="D5C82E9C-5604-4FC2-BA8E-04DB16CC7B2F">
-        <File Id="Microsoft_Practices_Unity_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Microsoft.Practices.Unity.dll" />
+      <Component Id="_D5C82E9C56044FC2BA8E04DB16CC7B2F" Guid="D5C82E9C-5604-4FC2-BA8E-04DB16CC7B2F">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Microsoft.Practices.Unity.dll" />
       </Component>
-      <Component Id="_F1DD98F568F144C1836ABB0E1E09D327" Directory="INSTALLFOLDER" Guid="F1DD98F5-68F1-44C1-836A-BB0E1E09D327">
-        <File Id="Microsoft_Practices_Unity_RegistrationByConvention_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Microsoft.Practices.Unity.RegistrationByConvention.dll" />
+      <Component Id="_F1DD98F568F144C1836ABB0E1E09D327" Guid="F1DD98F5-68F1-44C1-836A-BB0E1E09D327">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Microsoft.Practices.Unity.RegistrationByConvention.dll" />
       </Component>
-      <Component Id="_F276A583F23C4031AF2F0D9F856C04BA" Directory="INSTALLFOLDER" Guid="F276A583-F23C-4031-AF2F-0D9F856C04BA">
-        <File Id="Microsoft_WindowsAPICodePack_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Microsoft.WindowsAPICodePack.dll" />
-      </Component>
-    </ComponentGroup>
-
-    <ComponentGroup Id="Logging">
-      <Component Id="_34CF75DB884A481BA25F5305A4F4B32A" Directory="INSTALLFOLDER" Guid="34CF75DB-884A-481B-A25F-5305A4F4B32A">
-        <File Id="NLog_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\NLog.dll" />
+      <Component Id="_F276A583F23C4031AF2F0D9F856C04BA" Guid="F276A583-F23C-4031-AF2F-0D9F856C04BA">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Microsoft.WindowsAPICodePack.dll" />
       </Component>
     </ComponentGroup>
 
-    <ComponentGroup Id="Junte">
-      <Component Id="_CAFD36800D7F4A66921E8DF09E5AFAD0" Directory="INSTALLFOLDER" Guid="CAFD3680-0D7F-4A66-921E-8DF09E5AFAD0">
-        <File Id="Junte_Configuration_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Junte.Configuration.dll" />
-      </Component>
-      <Component Id="_746C14E44D334B6994C2AE573C40CF3F" Directory="INSTALLFOLDER" Guid="746C14E4-4D33-4B69-94C2-AE573C40CF3F">
-        <File Id="Junte_Translation_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Junte.Translation.dll" />
-      </Component>
-      <Component Id="_71E19828DBE04A748504D44AD8BDEA02" Directory="INSTALLFOLDER" Guid="71E19828-DBE0-4A74-8504-D44AD8BDEA02">
-        <File Id="Junte.WCF.dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Junte.WCF.dll" />
-      </Component>
-      <Component Id="_BCA661BD98FC4399AA8AAE7F067E7E31" Directory="INSTALLFOLDER" Guid="BCA661BD-98FC-4399-AA8A-AE7F067E7E31">
-        <File Id="Junte_Parallel_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Junte.Parallel.dll" />
-      </Component>
-      <Component Id="_5ECD461EBCE8479B84FACA96D53E71B7" Directory="INSTALLFOLDER" Guid="5ECD461E-BCE8-479B-84FA-CA96D53E71B7">
-        <File Id="Junte_UI_WinForms_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Junte.UI.WinForms.dll" />
+    <ComponentGroup Id="Logging" Directory="INSTALLFOLDER">
+      <Component Id="_34CF75DB884A481BA25F5305A4F4B32A" Guid="34CF75DB-884A-481B-A25F-5305A4F4B32A">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\NLog.dll" />
       </Component>
     </ComponentGroup>
 
-    <ComponentGroup Id="Queue">
-      <Component Id="_63E8ECE5E2AD43B8A1028F43A453B518" Directory="INSTALLFOLDER" Guid="63E8ECE5-E2AD-43B8-A102-8F43A453B518">
-        <File Id="Queue_Common_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.Common.dll" />
-      </Component>
-      <Component Id="_D7860FC4DEBF48359A2291E272857BEB" Directory="INSTALLFOLDER" Guid="D7860FC4-DEBF-4835-9A22-91E272857BEB">
-        <File Id="Queue_Model_Common" KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.Model.Common.dll" />
+    <ComponentGroup Id="Data" Directory="INSTALLFOLDER">
+      <Component Id="_0DBAED7D859E4EB8B95FB2543DA5D828" Guid="0DBAED7D-859E-4EB8-B95F-B2543DA5D828">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\AutoMapper.dll" />
       </Component>
     </ComponentGroup>
 
-    <ComponentGroup Id="Services">
-      <Component Id="_2D2C68B5472D4897A17FD4DA1BCDA21A" Directory="INSTALLFOLDER" Guid="2D2C68B5-472D-4897-A17F-D4DA1BCDA21A">
-        <File Id="Queue_Services_Common_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.Services.Common.dll" />
+    <ComponentGroup Id="Junte" Directory="INSTALLFOLDER">
+      <Component Id="_CAFD36800D7F4A66921E8DF09E5AFAD0" Guid="CAFD3680-0D7F-4A66-921E-8DF09E5AFAD0">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Junte.Configuration.dll" />
       </Component>
-      <Component Id="_3E09CA3201544065B4EDDE5BF457A3AC" Directory="INSTALLFOLDER" Guid="3E09CA32-0154-4065-B4ED-DE5BF457A3AC">
-        <File Id="Queue_Services_Contracts_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.Services.Contracts.dll" />
+      <Component Id="_746C14E44D334B6994C2AE573C40CF3F" Guid="746C14E4-4D33-4B69-94C2-AE573C40CF3F">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Junte.Translation.dll" />
       </Component>
-      <Component Id="_57C9DC3AE7F84EB6B1AAE16A271E032A" Directory="INSTALLFOLDER" Guid="57C9DC3A-E7F8-4EB6-B1AA-E16A271E032A">
-        <File Id="Queue_Services_DTO_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.Services.DTO.dll" />
+      <Component Id="_71E19828DBE04A748504D44AD8BDEA02" Guid="71E19828-DBE0-4A74-8504-D44AD8BDEA02">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Junte.WCF.dll" />
       </Component>
-      <Component Id="_0DBAED7D859E4EB8B95FB2543DA5D828" Directory="INSTALLFOLDER" Guid="0DBAED7D-859E-4EB8-B95F-B2543DA5D828">
-        <File Id="AutoMapper_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\AutoMapper.dll" />
+      <Component Id="_BCA661BD98FC4399AA8AAE7F067E7E31" Guid="BCA661BD-98FC-4399-AA8A-AE7F067E7E31">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Junte.Parallel.dll" />
       </Component>
-    </ComponentGroup>
-
-    <ComponentGroup Id="UI">
-      <Component Id="_1DF3C97A0A2D43A9B8B046FB965DFB19" Directory="INSTALLFOLDER" Guid="1DF3C97A-0A2D-43A9-B8B0-46FB965DFB19">
-        <File Id="Queue_UI_Common_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.UI.Common.dll" />
-      </Component>
-      <Component Id="_AEBDBAEE52344F79809ACF24DD7837FC" Directory="INSTALLFOLDER" Guid="AEBDBAEE-5234-4F79-809A-CF24DD7837FC">
-        <File Id="Queue_UI_WinForms_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.UI.WinForms.dll" />
+      <Component Id="_5ECD461EBCE8479B84FACA96D53E71B7" Guid="5ECD461E-BCE8-479B-84FA-CA96D53E71B7">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Junte.UI.WinForms.dll" />
       </Component>
     </ComponentGroup>
 
-    <ComponentGroup Id="Application">
-      <Component Id="_7611AA9BBE454BBAB97529164ABC965C" Directory="INSTALLFOLDER" Guid="7611AA9B-BE45-4BBA-B975-29164ABC965C">
-        <File Id="CommandLine_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\CommandLine.dll" />
+    <ComponentGroup Id="Queue" Directory="INSTALLFOLDER">
+      <Component Id="_63E8ECE5E2AD43B8A1028F43A453B518" Guid="63E8ECE5-E2AD-43B8-A102-8F43A453B518">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.Common.dll" />
       </Component>
-
-      <Component Id="_C4179C3A70C64DA898D2A8E9119C8A08" Directory="INSTALLFOLDER" Guid="C4179C3A-70C6-4DA8-98D2-A8E9119C8A08">
-        <File Id="Queue_Operator_exe" KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.Operator.exe" />
+      <Component Id="_D7860FC4DEBF48359A2291E272857BEB" Guid="D7860FC4-DEBF-4835-9A22-91E272857BEB">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.Model.Common.dll" />
       </Component>
-      <Component Id="_6B55A27BA3B447AFA8178394246A4AAA" Directory="INSTALLFOLDER" Guid="6B55A27B-A3B4-47AF-A817-8394246A4AAA">
-        <File Id="Queue_Operator_exe_config" KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.Operator.exe.config" />
+      <Component Id="_2D2C68B5472D4897A17FD4DA1BCDA21A" Guid="2D2C68B5-472D-4897-A17F-D4DA1BCDA21A">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.Services.Common.dll" />
       </Component>
-    </ComponentGroup>
-
-    <ComponentGroup Id="Resources_en_US">
-      <Component Id="_89AFE4885C3F41A2A6ABBDD4B40A3204" Directory="en_US" Guid="89AFE488-5C3F-41A2-A6AB-BDD4B40A3204">
-        <File Id="en_US_Queue_Common_resources_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\en-US\Queue.Common.resources.dll" />
+      <Component Id="_3E09CA3201544065B4EDDE5BF457A3AC" Guid="3E09CA32-0154-4065-B4ED-DE5BF457A3AC">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.Services.Contracts.dll" />
       </Component>
-      <Component Id="_C9B0DFAC8FC140ACA0971D578E45C6BA" Directory="en_US" Guid="C9B0DFAC-8FC1-40AC-A097-1D578E45C6BA">
-        <File Id="en_US_Queue_Model_Common_resources_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\en-US\Queue.Model.Common.resources.dll" />
-      </Component>
-      <Component Id="_2CD3DBD2BE734676A0C63F499EE86153" Directory="en_US" Guid="2CD3DBD2-BE73-4676-A0C6-3F499EE86153">
-        <File Id="en_US_Queue_UI_WinForms_resources_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\en-US\Queue.UI.WinForms.resources.dll" />
+      <Component Id="_57C9DC3AE7F84EB6B1AAE16A271E032A" Guid="57C9DC3A-E7F8-4EB6-B1AA-E16A271E032A">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.Services.DTO.dll" />
       </Component>
     </ComponentGroup>
 
-    <ComponentGroup Id="Resources_zh_CN">
-      <Component Id="_5D83502AB5494EFE97CEC21B51839CFA" Directory="zh_CN" Guid="5D83502A-B549-4EFE-97CE-C21B51839CFA">
-        <File Id="zh_CN_Queue_UI_WinForms_resources_dll" KeyPath="yes" Source="$(var.Operator.TargetDir)\zh-CN\Queue.UI.WinForms.resources.dll" />
+    <ComponentGroup Id="UI" Directory="INSTALLFOLDER">
+      <Component Id="_1DF3C97A0A2D43A9B8B046FB965DFB19" Guid="1DF3C97A-0A2D-43A9-B8B0-46FB965DFB19">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.UI.Common.dll" />
+      </Component>
+      <Component Id="_AEBDBAEE52344F79809ACF24DD7837FC" Guid="AEBDBAEE-5234-4F79-809A-CF24DD7837FC">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.UI.WinForms.dll" />
+      </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="Application" Directory="INSTALLFOLDER">
+      <Component Id="_7611AA9BBE454BBAB97529164ABC965C" Guid="7611AA9B-BE45-4BBA-B975-29164ABC965C">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\CommandLine.dll" />
+      </Component>
+
+      <Component Id="_C4179C3A70C64DA898D2A8E9119C8A08" Guid="C4179C3A-70C6-4DA8-98D2-A8E9119C8A08">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.Operator.exe" />
+      </Component>
+      <Component Id="_6B55A27BA3B447AFA8178394246A4AAA" Guid="6B55A27B-A3B4-47AF-A817-8394246A4AAA">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\Queue.Operator.exe.config" />
+      </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="Resources_en_US" Directory="en_US">
+      <Component Id="_89AFE4885C3F41A2A6ABBDD4B40A3204" Guid="89AFE488-5C3F-41A2-A6AB-BDD4B40A3204">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\en-US\Queue.Common.resources.dll" />
+      </Component>
+      <Component Id="_C9B0DFAC8FC140ACA0971D578E45C6BA" Guid="C9B0DFAC-8FC1-40AC-A097-1D578E45C6BA">
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\en-US\Queue.Model.Common.resources.dll" />
+      </Component>
+      <Component Id="_2CD3DBD2BE734676A0C63F499EE86153" Guid="2CD3DBD2-BE73-4676-A0C6-3F499EE86153">
+        <File Id="Queue_UI_WinForms_resources_dll_en_US" KeyPath="yes" Source="$(var.Operator.TargetDir)\en-US\Queue.UI.WinForms.resources.dll" />
+      </Component>
+    </ComponentGroup>
+
+    <ComponentGroup Id="Resources_zh_CN" Directory="zh_CN">
+      <Component Id="_5D83502AB5494EFE97CEC21B51839CFA" Guid="5D83502A-B549-4EFE-97CE-C21B51839CFA">
+        <File Id="Queue_UI_WinForms_resources_dll_zh_CN" KeyPath="yes" Source="$(var.Operator.TargetDir)\zh-CN\Queue.UI.WinForms.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>

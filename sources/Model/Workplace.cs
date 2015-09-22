@@ -32,9 +32,6 @@ namespace Queue.Model
         [Property]
         public virtual byte QualityPanelDeviceId { get; set; }
 
-        [Property]
-        public virtual byte Segments { get; set; }
-
         #endregion properties
 
         public override string ToString()

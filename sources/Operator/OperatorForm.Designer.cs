@@ -20,12 +20,12 @@ namespace Queue.Operator
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OperatorForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.serverStateLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.qualityStateLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -67,23 +67,30 @@ namespace Queue.Operator
             this.clientRequestTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.parametersGridView = new System.Windows.Forms.DataGridView();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.parametersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.addAdditionalServiceButton = new System.Windows.Forms.Button();
             this.additionalServicesGridView = new System.Windows.Forms.DataGridView();
+            this.additionalServiceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.additionalServicesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.stepPanel = new System.Windows.Forms.Panel();
             this.step1Panel = new System.Windows.Forms.Panel();
             this.callClientButton = new System.Windows.Forms.Button();
             this.step3Panel = new System.Windows.Forms.Panel();
-            this.reloadRedirectOperator = new System.Windows.Forms.Button();
             this.renderedButton = new System.Windows.Forms.Button();
             this.returnButton = new System.Windows.Forms.Button();
+            this.postponeGroupBox = new System.Windows.Forms.GroupBox();
             this.postponeButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.postponeMinutesUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
+            this.redirectGroupBox = new System.Windows.Forms.GroupBox();
             this.redirectOperatorControl = new Queue.UI.WinForms.IdentifiedEntityControl();
+            this.reloadRedirectOperator = new System.Windows.Forms.Button();
             this.step2Panel = new System.Windows.Forms.Panel();
             this.recallingButton = new System.Windows.Forms.Button();
             this.renderingButton = new System.Windows.Forms.Button();
@@ -97,13 +104,9 @@ namespace Queue.Operator
             this.clientColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serviceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.postponeGroupBox = new System.Windows.Forms.GroupBox();
-            this.redirectGroupBox = new System.Windows.Forms.GroupBox();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.additionalServiceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.commentTextBox = new System.Windows.Forms.TextBox();
+            this.commentLabel = new System.Windows.Forms.Label();
+            this.commentSaveLink = new System.Windows.Forms.LinkLabel();
             this.statusBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.mainTabControl.SuspendLayout();
@@ -120,12 +123,12 @@ namespace Queue.Operator
             this.stepPanel.SuspendLayout();
             this.step1Panel.SuspendLayout();
             this.step3Panel.SuspendLayout();
+            this.postponeGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).BeginInit();
+            this.redirectGroupBox.SuspendLayout();
             this.step2Panel.SuspendLayout();
             this.clientRequestsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clientRequestsGridView)).BeginInit();
-            this.postponeGroupBox.SuspendLayout();
-            this.redirectGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusBar
@@ -266,6 +269,9 @@ namespace Queue.Operator
             // 
             // currentClientRequestTab
             // 
+            this.currentClientRequestTab.Controls.Add(this.commentSaveLink);
+            this.currentClientRequestTab.Controls.Add(this.commentLabel);
+            this.currentClientRequestTab.Controls.Add(this.commentTextBox);
             this.currentClientRequestTab.Controls.Add(this.numberLabel);
             this.currentClientRequestTab.Controls.Add(this.numberTextBlock);
             this.currentClientRequestTab.Controls.Add(this.isPriorityCheckBox);
@@ -297,12 +303,12 @@ namespace Queue.Operator
             // 
             // numberLabel
             // 
-            this.numberLabel.AutoSize = true;
-            this.numberLabel.Location = new System.Drawing.Point(5, 20);
+            this.numberLabel.Location = new System.Drawing.Point(5, 15);
             this.numberLabel.Name = "numberLabel";
-            this.numberLabel.Size = new System.Drawing.Size(41, 13);
+            this.numberLabel.Size = new System.Drawing.Size(115, 20);
             this.numberLabel.TabIndex = 0;
             this.numberLabel.Text = "Номер";
+            this.numberLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // numberTextBlock
             // 
@@ -327,12 +333,12 @@ namespace Queue.Operator
             // 
             // requestTimeLabel
             // 
-            this.requestTimeLabel.AutoSize = true;
-            this.requestTimeLabel.Location = new System.Drawing.Point(5, 51);
+            this.requestTimeLabel.Location = new System.Drawing.Point(5, 45);
             this.requestTimeLabel.Name = "requestTimeLabel";
-            this.requestTimeLabel.Size = new System.Drawing.Size(85, 13);
+            this.requestTimeLabel.Size = new System.Drawing.Size(115, 20);
             this.requestTimeLabel.TabIndex = 0;
             this.requestTimeLabel.Text = "Время запроса";
+            this.requestTimeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // requestTimeTextBlock
             // 
@@ -356,12 +362,12 @@ namespace Queue.Operator
             // 
             // subjectsLabel
             // 
-            this.subjectsLabel.AutoSize = true;
-            this.subjectsLabel.Location = new System.Drawing.Point(5, 79);
+            this.subjectsLabel.Location = new System.Drawing.Point(5, 75);
             this.subjectsLabel.Name = "subjectsLabel";
-            this.subjectsLabel.Size = new System.Drawing.Size(57, 13);
+            this.subjectsLabel.Size = new System.Drawing.Size(110, 20);
             this.subjectsLabel.TabIndex = 2;
             this.subjectsLabel.Text = "Объектов";
+            this.subjectsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // subjectsPanel
             // 
@@ -396,12 +402,12 @@ namespace Queue.Operator
             // 
             // clientLabel
             // 
-            this.clientLabel.AutoSize = true;
-            this.clientLabel.Location = new System.Drawing.Point(5, 110);
+            this.clientLabel.Location = new System.Drawing.Point(5, 105);
             this.clientLabel.Name = "clientLabel";
-            this.clientLabel.Size = new System.Drawing.Size(43, 13);
+            this.clientLabel.Size = new System.Drawing.Size(115, 20);
             this.clientLabel.TabIndex = 0;
             this.clientLabel.Text = "Клиент";
+            this.clientLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // clientTextBlock
             // 
@@ -415,12 +421,12 @@ namespace Queue.Operator
             // 
             // serviceLabel
             // 
-            this.serviceLabel.AutoSize = true;
-            this.serviceLabel.Location = new System.Drawing.Point(5, 175);
+            this.serviceLabel.Location = new System.Drawing.Point(5, 135);
             this.serviceLabel.Name = "serviceLabel";
-            this.serviceLabel.Size = new System.Drawing.Size(100, 13);
+            this.serviceLabel.Size = new System.Drawing.Size(115, 55);
             this.serviceLabel.TabIndex = 0;
             this.serviceLabel.Text = "Выбранная услуга";
+            this.serviceLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // serviceTextBlock
             // 
@@ -445,12 +451,12 @@ namespace Queue.Operator
             // 
             // servceTypeLabel
             // 
-            this.servceTypeLabel.AutoSize = true;
-            this.servceTypeLabel.Location = new System.Drawing.Point(5, 209);
+            this.servceTypeLabel.Location = new System.Drawing.Point(5, 210);
             this.servceTypeLabel.Name = "servceTypeLabel";
-            this.servceTypeLabel.Size = new System.Drawing.Size(62, 13);
+            this.servceTypeLabel.Size = new System.Drawing.Size(115, 20);
             this.servceTypeLabel.TabIndex = 0;
             this.servceTypeLabel.Text = "Тип услуги";
+            this.servceTypeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // serviceTypeControl
             // 
@@ -462,12 +468,12 @@ namespace Queue.Operator
             // 
             // serviceStepLabel
             // 
-            this.serviceStepLabel.AutoSize = true;
             this.serviceStepLabel.Location = new System.Drawing.Point(5, 240);
             this.serviceStepLabel.Name = "serviceStepLabel";
-            this.serviceStepLabel.Size = new System.Drawing.Size(67, 13);
+            this.serviceStepLabel.Size = new System.Drawing.Size(115, 20);
             this.serviceStepLabel.TabIndex = 6;
             this.serviceStepLabel.Text = "Этап услуги";
+            this.serviceStepLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // serviceStepControl
             // 
@@ -480,12 +486,12 @@ namespace Queue.Operator
             // 
             // stateLabel
             // 
-            this.stateLabel.AutoSize = true;
-            this.stateLabel.Location = new System.Drawing.Point(5, 275);
+            this.stateLabel.Location = new System.Drawing.Point(5, 270);
             this.stateLabel.Name = "stateLabel";
-            this.stateLabel.Size = new System.Drawing.Size(108, 13);
+            this.stateLabel.Size = new System.Drawing.Size(115, 20);
             this.stateLabel.TabIndex = 0;
             this.stateLabel.Text = "Текущее состояние";
+            this.stateLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // stateTextBlock
             // 
@@ -509,11 +515,11 @@ namespace Queue.Operator
             // 
             this.clientRequestTabControl.Controls.Add(this.tabPage1);
             this.clientRequestTabControl.Controls.Add(this.tabPage2);
-            this.clientRequestTabControl.Location = new System.Drawing.Point(5, 315);
+            this.clientRequestTabControl.Location = new System.Drawing.Point(5, 355);
             this.clientRequestTabControl.Name = "clientRequestTabControl";
             this.clientRequestTabControl.Padding = new System.Drawing.Point(5, 5);
             this.clientRequestTabControl.SelectedIndex = 0;
-            this.clientRequestTabControl.Size = new System.Drawing.Size(485, 160);
+            this.clientRequestTabControl.Size = new System.Drawing.Size(485, 120);
             this.clientRequestTabControl.TabIndex = 11;
             // 
             // tabPage1
@@ -522,7 +528,7 @@ namespace Queue.Operator
             this.tabPage1.Location = new System.Drawing.Point(4, 26);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(477, 130);
+            this.tabPage1.Size = new System.Drawing.Size(477, 90);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Параметры услуги";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -554,6 +560,25 @@ namespace Queue.Operator
             this.parametersGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.parametersGridView.Size = new System.Drawing.Size(465, 120);
             this.parametersGridView.TabIndex = 0;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.FillWeight = 150F;
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Название";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.nameDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.nameDataGridViewTextBoxColumn.Width = 150;
+            // 
+            // valueDataGridViewTextBoxColumn
+            // 
+            this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
+            this.valueDataGridViewTextBoxColumn.HeaderText = "Значение";
+            this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
+            this.valueDataGridViewTextBoxColumn.ReadOnly = true;
+            this.valueDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // parametersBindingSource
             // 
@@ -611,6 +636,39 @@ namespace Queue.Operator
             this.additionalServicesGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.additionalServicesGridView_CellMouseDoubleClick);
             this.additionalServicesGridView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.additionalServicesGridView_UserDeletingRow);
             // 
+            // additionalServiceDataGridViewTextBoxColumn
+            // 
+            this.additionalServiceDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.additionalServiceDataGridViewTextBoxColumn.DataPropertyName = "AdditionalService";
+            this.additionalServiceDataGridViewTextBoxColumn.HeaderText = "Дополнительная услуга";
+            this.additionalServiceDataGridViewTextBoxColumn.Name = "additionalServiceDataGridViewTextBoxColumn";
+            this.additionalServiceDataGridViewTextBoxColumn.ReadOnly = true;
+            this.additionalServiceDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // quantityDataGridViewTextBoxColumn
+            // 
+            this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.quantityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            this.quantityDataGridViewTextBoxColumn.FillWeight = 70F;
+            this.quantityDataGridViewTextBoxColumn.HeaderText = "Кол-во";
+            this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
+            this.quantityDataGridViewTextBoxColumn.ReadOnly = true;
+            this.quantityDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.quantityDataGridViewTextBoxColumn.Width = 70;
+            // 
+            // Sum
+            // 
+            this.Sum.DataPropertyName = "Sum";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "C2";
+            dataGridViewCellStyle4.NullValue = null;
+            this.Sum.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Sum.HeaderText = "Сумма";
+            this.Sum.Name = "Sum";
+            this.Sum.ReadOnly = true;
+            this.Sum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // additionalServicesBindingSource
             // 
             this.additionalServicesBindingSource.DataSource = typeof(Queue.Services.DTO.ClientRequestAdditionalService);
@@ -656,16 +714,6 @@ namespace Queue.Operator
             this.step3Panel.Size = new System.Drawing.Size(155, 210);
             this.step3Panel.TabIndex = 0;
             // 
-            // reloadRedirectOperator
-            // 
-            this.reloadRedirectOperator.Image = ((System.Drawing.Image)(resources.GetObject("reloadRedirectOperator.Image")));
-            this.reloadRedirectOperator.Location = new System.Drawing.Point(127, 14);
-            this.reloadRedirectOperator.Name = "reloadRedirectOperator";
-            this.reloadRedirectOperator.Size = new System.Drawing.Size(24, 22);
-            this.reloadRedirectOperator.TabIndex = 9;
-            this.reloadRedirectOperator.UseVisualStyleBackColor = true;
-            this.reloadRedirectOperator.Click += new System.EventHandler(this.reloadRedirectOperator_Click);
-            // 
             // renderedButton
             // 
             this.renderedButton.Location = new System.Drawing.Point(0, 0);
@@ -683,6 +731,18 @@ namespace Queue.Operator
             this.returnButton.TabIndex = 4;
             this.returnButton.Text = "Вернуть в очередь";
             this.returnButton.Click += new System.EventHandler(this.returnButton_Click);
+            // 
+            // postponeGroupBox
+            // 
+            this.postponeGroupBox.Controls.Add(this.postponeButton);
+            this.postponeGroupBox.Controls.Add(this.label1);
+            this.postponeGroupBox.Controls.Add(this.postponeMinutesUpDown);
+            this.postponeGroupBox.Controls.Add(this.label2);
+            this.postponeGroupBox.Location = new System.Drawing.Point(0, 80);
+            this.postponeGroupBox.Name = "postponeGroupBox";
+            this.postponeGroupBox.Size = new System.Drawing.Size(155, 80);
+            this.postponeGroupBox.TabIndex = 10;
+            this.postponeGroupBox.TabStop = false;
             // 
             // postponeButton
             // 
@@ -733,6 +793,17 @@ namespace Queue.Operator
             this.label2.TabIndex = 0;
             this.label2.Text = "мин.";
             // 
+            // redirectGroupBox
+            // 
+            this.redirectGroupBox.Controls.Add(this.redirectOperatorControl);
+            this.redirectGroupBox.Controls.Add(this.reloadRedirectOperator);
+            this.redirectGroupBox.Location = new System.Drawing.Point(0, 165);
+            this.redirectGroupBox.Name = "redirectGroupBox";
+            this.redirectGroupBox.Size = new System.Drawing.Size(155, 45);
+            this.redirectGroupBox.TabIndex = 1;
+            this.redirectGroupBox.TabStop = false;
+            this.redirectGroupBox.Text = "Передать оператору";
+            // 
             // redirectOperatorControl
             // 
             this.redirectOperatorControl.Location = new System.Drawing.Point(5, 15);
@@ -741,6 +812,16 @@ namespace Queue.Operator
             this.redirectOperatorControl.TabIndex = 7;
             this.redirectOperatorControl.UseResetButton = false;
             this.redirectOperatorControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.targetOperatorControl_SelectedChanged);
+            // 
+            // reloadRedirectOperator
+            // 
+            this.reloadRedirectOperator.Image = ((System.Drawing.Image)(resources.GetObject("reloadRedirectOperator.Image")));
+            this.reloadRedirectOperator.Location = new System.Drawing.Point(127, 14);
+            this.reloadRedirectOperator.Name = "reloadRedirectOperator";
+            this.reloadRedirectOperator.Size = new System.Drawing.Size(24, 22);
+            this.reloadRedirectOperator.TabIndex = 9;
+            this.reloadRedirectOperator.UseVisualStyleBackColor = true;
+            this.reloadRedirectOperator.Click += new System.EventHandler(this.reloadRedirectOperator_Click);
             // 
             // step2Panel
             // 
@@ -886,80 +967,33 @@ namespace Queue.Operator
             this.stateColumn.ReadOnly = true;
             this.stateColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // postponeGroupBox
+            // commentTextBox
             // 
-            this.postponeGroupBox.Controls.Add(this.postponeButton);
-            this.postponeGroupBox.Controls.Add(this.label1);
-            this.postponeGroupBox.Controls.Add(this.postponeMinutesUpDown);
-            this.postponeGroupBox.Controls.Add(this.label2);
-            this.postponeGroupBox.Location = new System.Drawing.Point(0, 80);
-            this.postponeGroupBox.Name = "postponeGroupBox";
-            this.postponeGroupBox.Size = new System.Drawing.Size(155, 80);
-            this.postponeGroupBox.TabIndex = 10;
-            this.postponeGroupBox.TabStop = false;
+            this.commentTextBox.Location = new System.Drawing.Point(120, 295);
+            this.commentTextBox.Multiline = true;
+            this.commentTextBox.Name = "commentTextBox";
+            this.commentTextBox.Size = new System.Drawing.Size(200, 40);
+            this.commentTextBox.TabIndex = 12;
             // 
-            // redirectGroupBox
+            // commentLabel
             // 
-            this.redirectGroupBox.Controls.Add(this.redirectOperatorControl);
-            this.redirectGroupBox.Controls.Add(this.reloadRedirectOperator);
-            this.redirectGroupBox.Location = new System.Drawing.Point(0, 165);
-            this.redirectGroupBox.Name = "redirectGroupBox";
-            this.redirectGroupBox.Size = new System.Drawing.Size(155, 45);
-            this.redirectGroupBox.TabIndex = 1;
-            this.redirectGroupBox.TabStop = false;
-            this.redirectGroupBox.Text = "Передать оператору";
+            this.commentLabel.Location = new System.Drawing.Point(5, 295);
+            this.commentLabel.Name = "commentLabel";
+            this.commentLabel.Size = new System.Drawing.Size(115, 40);
+            this.commentLabel.TabIndex = 13;
+            this.commentLabel.Text = "Комментарий";
+            this.commentLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // nameDataGridViewTextBoxColumn
+            // commentSaveLink
             // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.FillWeight = 150F;
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Название";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.nameDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.nameDataGridViewTextBoxColumn.Width = 150;
-            // 
-            // valueDataGridViewTextBoxColumn
-            // 
-            this.valueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.valueDataGridViewTextBoxColumn.DataPropertyName = "Value";
-            this.valueDataGridViewTextBoxColumn.HeaderText = "Значение";
-            this.valueDataGridViewTextBoxColumn.Name = "valueDataGridViewTextBoxColumn";
-            this.valueDataGridViewTextBoxColumn.ReadOnly = true;
-            this.valueDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // additionalServiceDataGridViewTextBoxColumn
-            // 
-            this.additionalServiceDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.additionalServiceDataGridViewTextBoxColumn.DataPropertyName = "AdditionalService";
-            this.additionalServiceDataGridViewTextBoxColumn.HeaderText = "Дополнительная услуга";
-            this.additionalServiceDataGridViewTextBoxColumn.Name = "additionalServiceDataGridViewTextBoxColumn";
-            this.additionalServiceDataGridViewTextBoxColumn.ReadOnly = true;
-            this.additionalServiceDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // quantityDataGridViewTextBoxColumn
-            // 
-            this.quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.quantityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
-            this.quantityDataGridViewTextBoxColumn.FillWeight = 70F;
-            this.quantityDataGridViewTextBoxColumn.HeaderText = "Кол-во";
-            this.quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
-            this.quantityDataGridViewTextBoxColumn.ReadOnly = true;
-            this.quantityDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.quantityDataGridViewTextBoxColumn.Width = 70;
-            // 
-            // Sum
-            // 
-            this.Sum.DataPropertyName = "Sum";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "C2";
-            dataGridViewCellStyle4.NullValue = null;
-            this.Sum.DefaultCellStyle = dataGridViewCellStyle4;
-            this.Sum.HeaderText = "Сумма";
-            this.Sum.Name = "Sum";
-            this.Sum.ReadOnly = true;
-            this.Sum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.commentSaveLink.AutoSize = true;
+            this.commentSaveLink.Location = new System.Drawing.Point(260, 340);
+            this.commentSaveLink.Name = "commentSaveLink";
+            this.commentSaveLink.Size = new System.Drawing.Size(65, 13);
+            this.commentSaveLink.TabIndex = 14;
+            this.commentSaveLink.TabStop = true;
+            this.commentSaveLink.Text = "[сохранить]";
+            this.commentSaveLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.commentSaveLink_LinkClicked);
             // 
             // OperatorForm
             // 
@@ -994,13 +1028,13 @@ namespace Queue.Operator
             this.stepPanel.ResumeLayout(false);
             this.step1Panel.ResumeLayout(false);
             this.step3Panel.ResumeLayout(false);
+            this.postponeGroupBox.ResumeLayout(false);
+            this.postponeGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).EndInit();
+            this.redirectGroupBox.ResumeLayout(false);
             this.step2Panel.ResumeLayout(false);
             this.clientRequestsTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.clientRequestsGridView)).EndInit();
-            this.postponeGroupBox.ResumeLayout(false);
-            this.postponeGroupBox.PerformLayout();
-            this.redirectGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1086,6 +1120,9 @@ namespace Queue.Operator
         private System.Windows.Forms.DataGridViewTextBoxColumn additionalServiceDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn quantityDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sum;
+        private System.Windows.Forms.Label commentLabel;
+        private System.Windows.Forms.TextBox commentTextBox;
+        private System.Windows.Forms.LinkLabel commentSaveLink;
 
     }
 }

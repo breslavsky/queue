@@ -128,6 +128,8 @@ namespace Queue.Operator
                             stateTextBlock.Text = Translater.Enum(clientRequest.State);
                             stateTextBlock.BackColor = ColorTranslator.FromHtml(clientRequest.Color);
 
+                            commentTextBox.Text = clientRequest.Comment;
+
                             using (var channel = serverChannelManager.CreateChannel())
                             {
                                 try
@@ -209,10 +211,12 @@ namespace Queue.Operator
                         redirectOperatorControl.Reset();
                         stateTextBlock.Text = string.Empty;
                         stateTextBlock.BackColor = Color.White;
+                        commentTextBox.Text = string.Empty;
                         parametersGridView.Rows.Clear();
                         additionalServicesGridView.Rows.Clear();
 
                         versionLabel.Text = string.Empty;
+                        ratingLabel.Text = string.Empty;
 
                         Step = 0;
                     }
@@ -249,6 +253,8 @@ namespace Queue.Operator
                     step3Panel.Visible =
                     subjectsPanel.Enabled =
                     serviceChangeLink.Enabled =
+                    commentTextBox.Enabled =
+                    commentSaveLink.Enabled =
                     serviceTypeControl.Enabled =
                     serviceStepControl.Enabled =
                     clientRequestTabControl.Enabled = false;
@@ -276,6 +282,8 @@ namespace Queue.Operator
                         subjectsPanel.Enabled =
                             serviceTypeControl.Enabled =
                             serviceChangeLink.Enabled =
+                            commentTextBox.Enabled =
+                            commentSaveLink.Enabled =
                             clientRequestTabControl.Enabled = true;
 
                         if (HubQualitySettings.Enabled && !qualityPanelEnabled)
@@ -869,6 +877,41 @@ namespace Queue.Operator
                     finally
                     {
                         subjectsChangeButton.Enabled = true;
+                    }
+                }
+            }
+        }
+
+        private async void commentSaveLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (currentClientRequestPlan != null)
+            {
+                var clientRequest = currentClientRequestPlan.ClientRequest;
+                clientRequest.Comment = commentTextBox.Text;
+
+                using (var channel = serverChannelManager.CreateChannel())
+                {
+                    try
+                    {
+                        commentSaveLink.Enabled = false;
+
+                        await taskPool.AddTask(channel.Service.EditCurrentClientRequest(clientRequest));
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                    finally
+                    {
+                        commentSaveLink.Enabled = true;
                     }
                 }
             }

@@ -15,7 +15,7 @@ namespace Queue.Notification.UserControls
 
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                Content = ServiceLocator.Current.GetInstance<ITemplateManager>().GetTemplate("ClientRequestsControl.xaml");
+                Content = ServiceLocator.Current.GetInstance<ITemplateManager>().GetTemplate("client-requests.xaml");
                 DataContext = ServiceLocator.Current.GetInstance<IUnityContainer>().Resolve<ClientRequestsControlViewModel>();
             }
         }

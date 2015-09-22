@@ -37,7 +37,16 @@
     </Directory>
 
     <Feature Id="ProductFeature" Title="$(var.ProductName)" Level="1">
-      <ComponentGroupRef Id="CoreFiles" />
+
+      <ComponentGroupRef Id="Microsoft" />
+      <ComponentGroupRef Id="Logging" />
+      <ComponentGroupRef Id="Data" />
+      <ComponentGroupRef Id="NHibernate" />
+      <ComponentGroupRef Id="Junte" />
+      <ComponentGroupRef Id="Queue" />
+      <ComponentGroupRef Id="Templates" />
+      <ComponentGroupRef Id="Application" />
+
       <ComponentRef Id="ApplicationShortcut" />
     </Feature>
 

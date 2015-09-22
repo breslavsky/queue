@@ -585,7 +585,9 @@
     <EmbeddedResource Include="Translate\EditServiceParameterTextForm.en-US.resx" />
     <EmbeddedResource Include="Translate\EditServiceRenderingForm.en-US.resx" />
     <EmbeddedResource Include="Translate\EditServiceStepForm.en-US.resx" />
-    <EmbeddedResource Include="Translate\EditWorkplaceForm.en-US.resx" />
+    <EmbeddedResource Include="Translate\EditWorkplaceForm.en-US.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Translate\OfficesForm.en-US.resx" />
     <EmbeddedResource Include="Translate\QueueMonitorForm.en-US.resx" />
     <EmbeddedResource Include="Translate\ServicesForm.en-US.resx" />

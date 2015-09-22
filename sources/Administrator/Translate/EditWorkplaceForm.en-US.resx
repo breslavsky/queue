@@ -132,9 +132,6 @@
   <data name="saveButton.Text" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="segmentsLabel.Text" xml:space="preserve">
-    <value>Segments</value>
-  </data>
   <data name="Text" xml:space="preserve">
     <value>Edit workplace</value>
   </data>

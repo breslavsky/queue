@@ -135,10 +135,6 @@ namespace Queue.Services.Server
                     Predicate = new Predicate<ClientRequest>(r => r.State == ClientRequestState.Redirected)
                 },
                 new {
-                    Name = "Отложенные",
-                    Predicate = new Predicate<ClientRequest>(r => r.State == ClientRequestState.Postponed)
-                },
-                new {
                     Name = "Предварительная запись с определенными операторами",
                     Predicate = new Predicate<ClientRequest>(r => r.Type == ClientRequestType.Early && r.Operator != null)
                 },
@@ -580,8 +576,10 @@ namespace Queue.Services.Server
                 using (var transaction = session.BeginTransaction())
                 {
                     operatorInterruptions.Add(queueOperator, session.CreateCriteria<OperatorInterruption>()
-                         .Add(Restrictions.Eq("Operator", queueOperator))
-                         .Add(new Disjunction()
+                        .Add(new Disjunction()
+                            .Add(Restrictions.IsNull("Operator"))
+                            .Add(Restrictions.Eq("Operator", queueOperator)))
+                        .Add(new Disjunction()
                             .Add(new Conjunction()
                                 .Add(Restrictions.Eq("Type", OperatorInterruptionType.Weekday))
                                 .Add(Restrictions.Eq("DayOfWeek", PlanDate.DayOfWeek)))

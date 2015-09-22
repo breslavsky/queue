@@ -185,7 +185,6 @@ namespace Queue.Administrator
             row.Cells["commentColumn"].Value = workplace.Comment;
             row.Cells["displayDeviceIdColumn"].Value = workplace.DisplayDeviceId;
             row.Cells["qualityPanelDeviceId"].Value = workplace.QualityPanelDeviceId;
-            row.Cells["segmentsColumn"].Value = workplace.Segments;
             row.Tag = workplace;
         }
     }

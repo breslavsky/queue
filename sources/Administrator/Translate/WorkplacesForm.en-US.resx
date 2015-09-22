@@ -138,7 +138,4 @@
   <data name="numberColumn.HeaderText" xml:space="preserve">
     <value>Number</value>
   </data>
-  <data name="segmentsColumn.HeaderText" xml:space="preserve">
-    <value>Segments</value>
-  </data>
 </root>

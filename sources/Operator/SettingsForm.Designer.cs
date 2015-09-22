@@ -36,7 +36,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(220, 100);
+            this.saveButton.Location = new System.Drawing.Point(220, 95);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 1;
@@ -48,7 +48,7 @@
             // 
             this.hubSettingsUserControl.Location = new System.Drawing.Point(5, 20);
             this.hubSettingsUserControl.Name = "hubSettingsUserControl";
-            this.hubSettingsUserControl.Size = new System.Drawing.Size(280, 65);
+            this.hubSettingsUserControl.Size = new System.Drawing.Size(280, 60);
             this.hubSettingsUserControl.TabIndex = 0;
             // 
             // hubQualityGroupBox
@@ -56,7 +56,7 @@
             this.hubQualityGroupBox.Controls.Add(this.hubSettingsUserControl);
             this.hubQualityGroupBox.Location = new System.Drawing.Point(5, 5);
             this.hubQualityGroupBox.Name = "hubQualityGroupBox";
-            this.hubQualityGroupBox.Size = new System.Drawing.Size(290, 90);
+            this.hubQualityGroupBox.Size = new System.Drawing.Size(290, 85);
             this.hubQualityGroupBox.TabIndex = 2;
             this.hubQualityGroupBox.TabStop = false;
             this.hubQualityGroupBox.Text = "Служба качества";
@@ -65,7 +65,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(299, 131);
+            this.ClientSize = new System.Drawing.Size(299, 121);
             this.Controls.Add(this.hubQualityGroupBox);
             this.Controls.Add(this.saveButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;

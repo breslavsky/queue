@@ -129,7 +129,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="templates\notification\default\MainPage.xaml">
+    <None Include="templates\notification\default\main-page.xaml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -141,8 +141,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="templates\notification\default\ClientRequestsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <None Include="templates\notification\default\client-requests.xaml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

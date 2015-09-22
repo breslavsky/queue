@@ -29,7 +29,7 @@ namespace Queue.Services.Server
                     var serviceRenderings = session.CreateCriteria<ServiceRendering>()
                         .Add(Restrictions.Eq("Schedule", schedule))
                         .AddOrder(Order.Asc("ServiceStep"))
-                        .AddOrder(Order.Desc("Priority"))
+                        .AddOrder(Order.Asc("Operator"))
                         .List<ServiceRendering>();
                     return Mapper.Map<IList<ServiceRendering>, DTO.ServiceRendering[]>(serviceRenderings);
                 }

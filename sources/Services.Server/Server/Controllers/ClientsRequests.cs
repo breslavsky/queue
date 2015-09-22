@@ -733,6 +733,8 @@ namespace Queue.Services.Server
                         });
                     }
 
+                    clientRequest.Comment = source.Comment;
+
                     var error = clientRequest.Validate().FirstOrDefault();
                     if (error != null)
                     {

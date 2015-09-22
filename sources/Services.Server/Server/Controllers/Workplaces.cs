@@ -99,7 +99,6 @@ namespace Queue.Services.Server
                     workplace.Comment = source.Comment;
                     workplace.DisplayDeviceId = source.DisplayDeviceId;
                     workplace.QualityPanelDeviceId = source.QualityPanelDeviceId;
-                    workplace.Segments = source.Segments;
 
                     var errors = workplace.Validate();
                     if (errors.Length > 0)

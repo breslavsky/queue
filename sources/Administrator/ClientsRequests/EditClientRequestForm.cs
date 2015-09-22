@@ -106,6 +106,9 @@ namespace Queue.Administrator
 
                     operatorControl.Select(clientRequest.Operator);
 
+                    commentTextBox.Text = clientRequest.Comment;
+                    ratingUpDown.Value = clientRequest.Rating;
+
                     using (var channel = channelManager.CreateChannel())
                     {
                         try
@@ -374,6 +377,11 @@ namespace Queue.Administrator
         private void typeControl_Leave(object sender, EventArgs e)
         {
             clientRequest.Type = typeControl.Selected<ClientRequestType>();
+        }
+
+        private void commentTextBox_Leave(object sender, EventArgs e)
+        {
+            clientRequest.Comment = commentTextBox.Text;
         }
 
         #endregion bindings

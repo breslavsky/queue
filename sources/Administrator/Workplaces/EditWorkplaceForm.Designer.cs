@@ -22,8 +22,6 @@
             this.modificatorLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.displayDeviceIdLabel = new System.Windows.Forms.Label();
-            this.segmentsLabel = new System.Windows.Forms.Label();
-            this.segmentsUpDown = new System.Windows.Forms.NumericUpDown();
             this.displayDeviceIdUpDown = new System.Windows.Forms.NumericUpDown();
             this.saveButton = new System.Windows.Forms.Button();
             this.typeControl = new Queue.UI.WinForms.EnumItemControl();
@@ -31,7 +29,6 @@
             this.qualityPanelDeviceIdLabel = new System.Windows.Forms.Label();
             this.qualityPanelDeviceIdUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numberUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.segmentsUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.displayDeviceIdUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.qualityPanelDeviceIdUpDown)).BeginInit();
             this.SuspendLayout();
@@ -103,28 +100,6 @@
             this.displayDeviceIdLabel.Text = "Номер табло";
             this.displayDeviceIdLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // segmentsLabel
-            // 
-            this.segmentsLabel.Location = new System.Drawing.Point(10, 240);
-            this.segmentsLabel.Name = "segmentsLabel";
-            this.segmentsLabel.Size = new System.Drawing.Size(100, 20);
-            this.segmentsLabel.TabIndex = 12;
-            this.segmentsLabel.Text = "Кол-во сегментов";
-            this.segmentsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // segmentsUpDown
-            // 
-            this.segmentsUpDown.Location = new System.Drawing.Point(115, 240);
-            this.segmentsUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.segmentsUpDown.Name = "segmentsUpDown";
-            this.segmentsUpDown.Size = new System.Drawing.Size(60, 20);
-            this.segmentsUpDown.TabIndex = 6;
-            this.segmentsUpDown.Leave += new System.EventHandler(this.segmentsUpDown_Leave);
-            // 
             // displayDeviceIdUpDown
             // 
             this.displayDeviceIdUpDown.Location = new System.Drawing.Point(115, 190);
@@ -140,7 +115,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(180, 270);
+            this.saveButton.Location = new System.Drawing.Point(180, 245);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 7;
@@ -190,15 +165,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(264, 301);
+            this.ClientSize = new System.Drawing.Size(264, 276);
             this.Controls.Add(this.qualityPanelDeviceIdUpDown);
             this.Controls.Add(this.qualityPanelDeviceIdLabel);
             this.Controls.Add(this.modificatorControl);
             this.Controls.Add(this.typeControl);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.displayDeviceIdUpDown);
-            this.Controls.Add(this.segmentsUpDown);
-            this.Controls.Add(this.segmentsLabel);
             this.Controls.Add(this.displayDeviceIdLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.modificatorLabel);
@@ -212,7 +185,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditWorkplaceForm_FormClosing);
             this.Load += new System.EventHandler(this.EditWorkplaceForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numberUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.segmentsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.displayDeviceIdUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.qualityPanelDeviceIdUpDown)).EndInit();
             this.ResumeLayout(false);
@@ -229,8 +201,6 @@
         private System.Windows.Forms.Label modificatorLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label displayDeviceIdLabel;
-        private System.Windows.Forms.Label segmentsLabel;
-        private System.Windows.Forms.NumericUpDown segmentsUpDown;
         private System.Windows.Forms.NumericUpDown displayDeviceIdUpDown;
         private System.Windows.Forms.Button saveButton;
         private UI.WinForms.EnumItemControl typeControl;
