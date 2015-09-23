@@ -7,6 +7,7 @@ using Queue.Common;
 using Queue.Hosts.Common;
 using Queue.Server;
 using Queue.Server.Settings;
+using Queue.Services.Server.Settings;
 using System;
 using System.IO;
 using System.Reflection;
@@ -25,6 +26,7 @@ namespace Queue.Hosts.Server.WinForms
 
         private readonly ConfigurationManager configuration;
         private readonly ServerSettings settings;
+        private readonly TemplateServiceSettings templateServiceSettings;
         private readonly ServiceManager serviceManager;
         private ServerInstance server;
         private bool started;
@@ -41,6 +43,12 @@ namespace Queue.Hosts.Server.WinForms
             serviceManager = new ServiceManager(HostsConsts.ServerServiceName, exePath);
 
             configuration = new ConfigurationManager(HostsConsts.ServerApp, Environment.SpecialFolder.CommonApplicationData);
+            container.RegisterInstance(configuration);
+
+            var commonApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            logger.Info(commonApplicationData);
+
+            templateServiceSettings = configuration.GetSection<TemplateServiceSettings>(TemplateServiceSettings.SectionKey);
             container.RegisterInstance(configuration);
 
             settings = configuration.GetSection<ServerSettings>(ServerSettings.SectionKey);

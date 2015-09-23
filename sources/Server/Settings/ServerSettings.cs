@@ -14,9 +14,36 @@ namespace Queue.Server.Settings
 
         public ServerSettings()
         {
-            Database = GetDefaultDatabaseSettings();
-            Services = GetDefaultServicesConfig();
-            Licence = GetDefaultLicenseConfig();
+            Database = new DatabaseSettings()
+            {
+                Server = "localhost",
+                Name = "queue",
+                Type = DatabaseType.MsSql,
+                Integrated = true
+            };
+
+            Services = new ServicesConfig()
+            {
+                HttpService = new HttpServiceConfig()
+                {
+                    Enabled = false,
+                    Host = "localhost",
+                    Port = 4506
+                },
+                TcpService = new TcpServiceConfig()
+                {
+                    Enabled = true,
+                    Host = "localhost",
+                    Port = 4505
+                }
+            };
+
+            Licence = new ProductLicenceConfig()
+            {
+                LicenseType = ProductLicenceType.NonCommercial,
+                SerialKey = DefaultSerialKey,
+                RegisterKey = DefaultRegisterKey
+            };
             Language = CultureInfo.CurrentCulture.GetLanguage();
         }
 
@@ -51,46 +78,6 @@ namespace Queue.Server.Settings
         public override bool IsReadOnly()
         {
             return false;
-        }
-
-        private DatabaseSettings GetDefaultDatabaseSettings()
-        {
-            return new DatabaseSettings()
-            {
-                Server = "localhost",
-                Name = "queue",
-                Type = DatabaseType.MsSql,
-                Integrated = true
-            };
-        }
-
-        private ProductLicenceConfig GetDefaultLicenseConfig()
-        {
-            return new ProductLicenceConfig()
-            {
-                LicenseType = ProductLicenceType.NonCommercial,
-                SerialKey = DefaultSerialKey,
-                RegisterKey = DefaultRegisterKey
-            };
-        }
-
-        private ServicesConfig GetDefaultServicesConfig()
-        {
-            return new ServicesConfig()
-            {
-                HttpService = new HttpServiceConfig()
-                {
-                    Enabled = false,
-                    Host = "localhost",
-                    Port = 4506
-                },
-                TcpService = new TcpServiceConfig()
-                {
-                    Enabled = true,
-                    Host = "localhost",
-                    Port = 4505
-                }
-            };
         }
     }
 }

@@ -115,6 +115,10 @@
       <Project>{8ef18975-59b4-4084-9127-7adfd12129a3}</Project>
       <Name>Server</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Services.Server\Services.Server.csproj">
+      <Project>{7092d42d-17d1-432c-950c-ff848fa149a7}</Project>
+      <Name>Services.Server</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

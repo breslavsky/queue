@@ -150,6 +150,10 @@
       <Project>{8ef18975-59b4-4084-9127-7adfd12129a3}</Project>
       <Name>Server</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Services.Server\Services.Server.csproj">
+      <Project>{7092d42d-17d1-432c-950c-ff848fa149a7}</Project>
+      <Name>Services.Server</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UI.Common\UI.Common.csproj">
       <Project>{dfb572df-6412-460f-ba17-9c3fedf6fd12}</Project>
       <Name>UI.Common</Name>

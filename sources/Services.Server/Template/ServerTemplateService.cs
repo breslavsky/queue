@@ -2,6 +2,7 @@
 using NLog;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Server.Settings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,10 +19,18 @@ namespace Queue.Services.Server
                     IncludeExceptionDetailInFaults = true)]
     public class ServerTemplateService : DependencyService, IServerTemplateService
     {
+        #region dependency
+
+        [Dependency]
+        public TemplateServiceSettings Settings { get; set; }
+
+        #endregion dependency
+
         #region fields
 
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private IContextChannel channel;
+        private readonly IContextChannel channel;
+        private readonly string templatesFolder;
 
         #endregion fields
 
@@ -34,9 +43,11 @@ namespace Queue.Services.Server
             channel.Faulted += channel_Faulted;
             channel.Closing += channel_Closing;
 
-#if DEBUG
-            Thread.Sleep(1000);
-#endif
+            var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
+            templatesFolder = !string.IsNullOrWhiteSpace(Settings.Folder)
+                ? Settings.Folder
+                : Path.Combine(currentDirectory, "templates");
         }
 
         public async Task Heartbeat()
@@ -51,9 +62,7 @@ namespace Queue.Services.Server
 
         protected Stream ReadTemplate(string app, string theme, string template)
         {
-            string contentPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "templates");
-            string file = Path.Combine(contentPath, app, theme, template);
-            return File.Open(file, FileMode.Open);
+            return File.Open(Path.Combine(templatesFolder, app, theme, template), FileMode.Open);
         }
 
         #region channel

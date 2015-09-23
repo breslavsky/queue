@@ -10,21 +10,21 @@ namespace Queue.Server.Settings
 {
     public class ProductLicenceConfig : ConfigurationElement
     {
-        [ConfigurationProperty("licenseType", IsRequired = true)]
+        [ConfigurationProperty("licenseType")]
         public ProductLicenceType LicenseType
         {
             get { return (ProductLicenceType)this["licenseType"]; }
             set { this["licenseType"] = value; }
         }
 
-        [ConfigurationProperty("serialKey", IsRequired = true)]
+        [ConfigurationProperty("serialKey")]
         public string SerialKey
         {
             get { return (string)this["serialKey"]; }
             set { this["serialKey"] = value; }
         }
 
-        [ConfigurationProperty("registerKey", IsRequired = true)]
+        [ConfigurationProperty("registerKey")]
         public string RegisterKey
         {
             get { return (string)this["registerKey"]; }

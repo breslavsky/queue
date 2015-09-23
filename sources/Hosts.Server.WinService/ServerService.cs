@@ -6,6 +6,7 @@ using Queue.Common;
 using Queue.Hosts.Common;
 using Queue.Server;
 using Queue.Server.Settings;
+using Queue.Services.Server.Settings;
 using System;
 using System.Globalization;
 using System.ServiceProcess;
@@ -22,6 +23,7 @@ namespace Queue.Hosts.Server.WinService
         private static UnityContainer container;
         private static ConfigurationManager configuration;
         private static ServerSettings settings;
+        private static TemplateServiceSettings templateServiceSettings;
         private ServerInstance server;
 
         #endregion fields
@@ -46,6 +48,9 @@ namespace Queue.Hosts.Server.WinService
 
                 settings = configuration.GetSection<ServerSettings>(ServerSettings.SectionKey);
                 container.RegisterInstance(settings);
+
+                templateServiceSettings = configuration.GetSection<TemplateServiceSettings>(TemplateServiceSettings.SectionKey);
+                container.RegisterInstance(configuration);
 
                 var culture = settings.Language.GetCulture();
                 Thread.CurrentThread.CurrentCulture = culture;

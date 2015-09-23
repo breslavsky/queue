@@ -101,6 +101,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
@@ -159,6 +160,7 @@
     <Compile Include="Template\ServerTemplateHttpServiceHost.cs" />
     <Compile Include="Template\ServerTemplateHttpServiceProvider.cs" />
     <Compile Include="Template\ServerTemplateService.cs" />
+    <Compile Include="Template\TemplateServiceSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

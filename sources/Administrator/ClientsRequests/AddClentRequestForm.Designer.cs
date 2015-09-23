@@ -262,10 +262,10 @@
             this.couponAutoPrintCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.couponAutoPrintCheckBox.Checked = true;
             this.couponAutoPrintCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.couponAutoPrintCheckBox.Location = new System.Drawing.Point(100, 560);
+            this.couponAutoPrintCheckBox.Location = new System.Drawing.Point(5, 560);
             this.couponAutoPrintCheckBox.Margin = new System.Windows.Forms.Padding(5);
             this.couponAutoPrintCheckBox.Name = "couponAutoPrintCheckBox";
-            this.couponAutoPrintCheckBox.Size = new System.Drawing.Size(180, 30);
+            this.couponAutoPrintCheckBox.Size = new System.Drawing.Size(270, 30);
             this.couponAutoPrintCheckBox.TabIndex = 14;
             this.couponAutoPrintCheckBox.Text = "Автоматическая печать";
             this.couponAutoPrintCheckBox.UseVisualStyleBackColor = true;

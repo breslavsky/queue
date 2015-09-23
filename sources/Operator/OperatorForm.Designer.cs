@@ -42,6 +42,9 @@ namespace Queue.Operator
             this.logoutButton = new System.Windows.Forms.Button();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.currentClientRequestTab = new System.Windows.Forms.TabPage();
+            this.commentSaveLink = new System.Windows.Forms.LinkLabel();
+            this.commentLabel = new System.Windows.Forms.Label();
+            this.commentTextBox = new System.Windows.Forms.TextBox();
             this.numberLabel = new System.Windows.Forms.Label();
             this.numberTextBlock = new System.Windows.Forms.Label();
             this.isPriorityCheckBox = new System.Windows.Forms.CheckBox();
@@ -104,9 +107,6 @@ namespace Queue.Operator
             this.clientColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serviceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stateColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.commentTextBox = new System.Windows.Forms.TextBox();
-            this.commentLabel = new System.Windows.Forms.Label();
-            this.commentSaveLink = new System.Windows.Forms.LinkLabel();
             this.statusBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.mainTabControl.SuspendLayout();
@@ -209,7 +209,6 @@ namespace Queue.Operator
             // 
             this.settingsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.settingsButton.DropDownButtonWidth = 0;
-            this.settingsButton.Image = ((System.Drawing.Image)(resources.GetObject("settingsButton.Image")));
             this.settingsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.settingsButton.Name = "settingsButton";
             this.settingsButton.Size = new System.Drawing.Size(72, 20);
@@ -300,6 +299,34 @@ namespace Queue.Operator
             this.currentClientRequestTab.TabIndex = 0;
             this.currentClientRequestTab.Text = "Текущий запрос клиента";
             this.currentClientRequestTab.UseVisualStyleBackColor = true;
+            // 
+            // commentSaveLink
+            // 
+            this.commentSaveLink.AutoSize = true;
+            this.commentSaveLink.Location = new System.Drawing.Point(260, 340);
+            this.commentSaveLink.Name = "commentSaveLink";
+            this.commentSaveLink.Size = new System.Drawing.Size(65, 13);
+            this.commentSaveLink.TabIndex = 14;
+            this.commentSaveLink.TabStop = true;
+            this.commentSaveLink.Text = "[сохранить]";
+            this.commentSaveLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.commentSaveLink_LinkClicked);
+            // 
+            // commentLabel
+            // 
+            this.commentLabel.Location = new System.Drawing.Point(5, 295);
+            this.commentLabel.Name = "commentLabel";
+            this.commentLabel.Size = new System.Drawing.Size(115, 40);
+            this.commentLabel.TabIndex = 13;
+            this.commentLabel.Text = "Комментарий";
+            this.commentLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // commentTextBox
+            // 
+            this.commentTextBox.Location = new System.Drawing.Point(120, 295);
+            this.commentTextBox.Multiline = true;
+            this.commentTextBox.Name = "commentTextBox";
+            this.commentTextBox.Size = new System.Drawing.Size(200, 40);
+            this.commentTextBox.TabIndex = 12;
             // 
             // numberLabel
             // 
@@ -591,7 +618,7 @@ namespace Queue.Operator
             this.tabPage2.Location = new System.Drawing.Point(4, 26);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(477, 130);
+            this.tabPage2.Size = new System.Drawing.Size(477, 90);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Дополнительные услуги";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -966,34 +993,6 @@ namespace Queue.Operator
             this.stateColumn.Name = "stateColumn";
             this.stateColumn.ReadOnly = true;
             this.stateColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // commentTextBox
-            // 
-            this.commentTextBox.Location = new System.Drawing.Point(120, 295);
-            this.commentTextBox.Multiline = true;
-            this.commentTextBox.Name = "commentTextBox";
-            this.commentTextBox.Size = new System.Drawing.Size(200, 40);
-            this.commentTextBox.TabIndex = 12;
-            // 
-            // commentLabel
-            // 
-            this.commentLabel.Location = new System.Drawing.Point(5, 295);
-            this.commentLabel.Name = "commentLabel";
-            this.commentLabel.Size = new System.Drawing.Size(115, 40);
-            this.commentLabel.TabIndex = 13;
-            this.commentLabel.Text = "Комментарий";
-            this.commentLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // commentSaveLink
-            // 
-            this.commentSaveLink.AutoSize = true;
-            this.commentSaveLink.Location = new System.Drawing.Point(260, 340);
-            this.commentSaveLink.Name = "commentSaveLink";
-            this.commentSaveLink.Size = new System.Drawing.Size(65, 13);
-            this.commentSaveLink.TabIndex = 14;
-            this.commentSaveLink.TabStop = true;
-            this.commentSaveLink.Text = "[сохранить]";
-            this.commentSaveLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.commentSaveLink_LinkClicked);
             // 
             // OperatorForm
             // 
