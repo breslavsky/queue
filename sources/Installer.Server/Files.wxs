@@ -62,6 +62,9 @@
       <Component Id="_0DBAED7D859E4EB8B95FB2543DA5D828" Guid="0DBAED7D-859E-4EB8-B95F-B2543DA5D828">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\AutoMapper.dll" />
       </Component>
+      <Component Id="_3A0A4C4256E24D9FBCD97572D44B7557" Guid="3A0A4C4256E24D9FBCD97572D44B7557">
+        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\NPOI.dll" />
+      </Component>
     </ComponentGroup>
 
     <ComponentGroup Id="Junte" Directory="INSTALLFOLDER">
