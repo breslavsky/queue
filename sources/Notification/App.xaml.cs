@@ -3,6 +3,7 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common;
+using Queue.Common.Settings;
 using System.Windows;
 using SpecialFolder = System.Environment.SpecialFolder;
 
@@ -41,6 +42,8 @@ namespace Queue.Notification
             container.RegisterInstance(new ConfigurationManager(Product.Notification.AppName, SpecialFolder.ApplicationData));
             container.RegisterType<AppSettings>(new InjectionFactory(c => c.Resolve<ConfigurationManager>()
                                                                 .GetSection<AppSettings>(AppSettings.SectionKey)));
+            container.RegisterType<HubSettings>(new InjectionFactory(c => c.Resolve<ConfigurationManager>()
+                                                                .GetSection<HubSettings>(HubSettings.SectionKey)));
         }
     }
 }

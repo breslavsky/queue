@@ -1,6 +1,7 @@
 ﻿using Junte.UI.WPF;
 using Microsoft.Practices.Unity;
 using Queue.Model.Common;
+using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Sounds;
 using System.Media;
@@ -41,6 +42,9 @@ namespace Queue.Notification.ViewModels
 
         [Dependency]
         public ClientRequestsListener ClientRequestsListener { get; set; }
+
+        [Dependency]
+        public HubDisplayService HubQualityService { get; set; }
 
         public CallClientControlViewModel()
         {

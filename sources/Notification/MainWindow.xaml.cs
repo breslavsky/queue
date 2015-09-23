@@ -4,6 +4,7 @@ using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
+using Queue.Common.Settings;
 using Queue.Notification.ViewModels;
 using Queue.Notification.Views;
 using Queue.Services.Contracts;
@@ -77,6 +78,7 @@ namespace Queue.Notification
             container.RegisterType<TaskPool>();
             container.RegisterInstance<ClientRequestsListener>(new ClientRequestsListener());
             container.RegisterInstance<ITemplateManager>(new TemplateManager("notification", ServiceLocator.Current.GetInstance<AppSettings>().Theme));
+            container.RegisterInstance(new HubDisplayService(ServiceLocator.Current.GetInstance<HubSettings>().Endpoint, HubServicesPaths.Display));
         }
 
         private void MainWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

@@ -52,6 +52,7 @@
     <Compile Include="Hub\Display\IHubDisplayHttpService.cs" />
     <Compile Include="Hub\Display\IHubDisplayService.cs" />
     <Compile Include="Hub\Display\IHubDisplayTcpService.cs" />
+    <Compile Include="Hub\HubDisplayService.cs" />
     <Compile Include="Hub\Quality\IHubQualityHttpService.cs" />
     <Compile Include="Hub\Quality\IHubQualityService.cs" />
     <Compile Include="Hub\Quality\IHubQualityTcpService.cs" />
