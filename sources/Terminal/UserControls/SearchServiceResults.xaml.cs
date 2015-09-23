@@ -16,7 +16,7 @@ namespace Queue.Terminal.UserControls
 
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                model = ServiceLocator.Current.GetInstance<UnityContainer>().Resolve<SearchServiceResultsViewModel>();
+                model = ServiceLocator.Current.GetInstance<IUnityContainer>().Resolve<SearchServiceResultsViewModel>();
                 model.Initialize(servicesGrid);
                 DataContext = model;
             }

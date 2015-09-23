@@ -1,7 +1,6 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WPF;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Services.Contracts;
@@ -30,13 +29,7 @@ namespace Queue.Terminal.ViewModels
         private ServerState serverState;
         private string title;
 
-        private IUnityContainer container;
-        private TaskPool taskPool;
-        private DuplexChannelManager<IServerTcpService> channelManager;
-        private Navigator navigator;
-        private DefaultConfig defaultConfig;
-        private TerminalWindow screen;
-
+        [Dependency]
         public ClientRequestModel Model
         {
             get { return request; }
@@ -65,29 +58,32 @@ namespace Queue.Terminal.ViewModels
 
         public ICommand SearchServiceCommand { get; set; }
 
+        [Dependency]
+        public TaskPool TaskPool { get; set; }
+
+        [Dependency]
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        [Dependency]
+        public Navigator Navigator { get; set; }
+
+        [Dependency]
+        public DefaultConfig DefaultConfig { get; set; }
+
         public TerminalWindowViewModel()
         {
-            Model = ServiceLocator.Current.GetInstance<ClientRequestModel>();
-            request.PropertyChanged += model_PropertyChanged;
-
-            screen = ServiceLocator.Current.GetInstance<TerminalWindow>();
-            container = ServiceLocator.Current.GetInstance<UnityContainer>();
-
-            taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
-            channelManager = ServiceLocator.Current.GetInstance<DuplexChannelManager<IServerTcpService>>();
-            navigator = ServiceLocator.Current.GetInstance<Navigator>();
-            defaultConfig = ServiceLocator.Current.GetInstance<DefaultConfig>();
-
             HomeCommand = new RelayCommand(Home);
             SearchServiceCommand = new RelayCommand(SearchService);
         }
 
         public void Initialize()
         {
+            request.PropertyChanged += model_PropertyChanged;
+
             UpdateTitle();
             StartTimers();
 
-            navigator.Start();
+            Navigator.Start();
         }
 
         private void StartTimers()
@@ -104,13 +100,13 @@ namespace Queue.Terminal.ViewModels
 
         private void Home()
         {
-            navigator.Reset();
+            Navigator.Reset();
         }
 
         private void SearchService()
         {
-            navigator.ResetState();
-            navigator.SetCurrentPage(PageType.SearchService);
+            Navigator.ResetState();
+            Navigator.SetCurrentPage(PageType.SearchService);
         }
 
         private void model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -125,7 +121,7 @@ namespace Queue.Terminal.ViewModels
 
         private void UpdateTitle()
         {
-            Title = Model.SelectedService == null ? defaultConfig.QueueName : Model.SelectedService.ToString();
+            Title = Model.SelectedService == null ? DefaultConfig.QueueName : Model.SelectedService.ToString();
         }
 
         private async void PingElapsed(object sender, ElapsedEventArgs e)
@@ -137,12 +133,12 @@ namespace Queue.Terminal.ViewModels
                 pingTimer.Interval = PingInterval;
             }
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
                     ServerState = ServerState.Request;
-                    ServerDateTime.Sync(await taskPool.AddTask(channel.Service.GetDateTime()));
+                    ServerDateTime.Sync(await TaskPool.AddTask(channel.Service.GetDateTime()));
                     ServerState = ServerState.Available;
                 }
                 catch

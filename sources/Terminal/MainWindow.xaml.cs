@@ -97,7 +97,7 @@ namespace Queue.Terminal
 
         private async Task RegisterTypes()
         {
-            var container = ServiceLocator.Current.GetInstance<UnityContainer>();
+            var container = ServiceLocator.Current.GetInstance<IUnityContainer>();
 
             container.RegisterInstance(loginPage.Model.ChannelBuilder);
             taskPool = new TaskPool();

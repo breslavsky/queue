@@ -3,6 +3,7 @@ using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using Queue.Common;
 using Queue.Model.Common;
 using Queue.Notification.UserControls;
 using Queue.Services.Common;
@@ -64,11 +65,18 @@ namespace Queue.Notification.ViewModels
 
         private async void Loaded()
         {
-            control.TickerItem.RenderTransform = translateTransform;
+            try
+            {
+                control.TickerItem.RenderTransform = translateTransform;
 
-            await ReadConfig();
+                await ReadConfig();
 
-            channel = new AutoRecoverCallbackChannel(CreateServerCallback(), Subscribe);
+                channel = new AutoRecoverCallbackChannel(CreateServerCallback(), Subscribe);
+            }
+            catch (Exception ex)
+            {
+                UIHelper.Warning(null, String.Format("Ошибка инициализации бегущей строки: {0}", ex.Message));
+            }
         }
 
         private async Task ReadConfig()
@@ -85,11 +93,11 @@ namespace Queue.Notification.ViewModels
                 catch (InvalidOperationException) { }
                 catch (FaultException exception)
                 {
-                    UIHelper.Warning(null, exception.Reason.ToString());
+                    throw new QueueException(exception.Reason.ToString());
                 }
                 catch (Exception exception)
                 {
-                    UIHelper.Warning(null, exception.Message);
+                    throw new QueueException(exception.Message);
                 }
             }
         }

@@ -138,7 +138,7 @@ namespace Queue.Terminal.ViewModels
 
             AccentColors = ThemeManager.Accents.Select(a => new AccentColorComboBoxItem(a.Name, a.Resources["AccentColorBrush"] as Brush)).ToArray();
 
-            ServiceLocator.Current.GetInstance<UnityContainer>().BuildUp(this);
+            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
             taskPool = new TaskPool();
 

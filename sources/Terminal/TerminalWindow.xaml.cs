@@ -1,5 +1,7 @@
 ﻿using Junte.UI.WPF;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
+using Queue.Common;
 using Queue.Resources;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
@@ -16,6 +18,12 @@ namespace Queue.Terminal
     {
         private const string PageFrameName = "pageFrame";
 
+        [Dependency]
+        public IUnityContainer UnityContainer { get; set; }
+
+        [Dependency]
+        public Navigator Navigator { get; set; }
+
         public TerminalWindow()
         {
             InitializeComponent();
@@ -30,16 +38,18 @@ namespace Queue.Terminal
                 var pageFrame = LogicalTreeHelper.FindLogicalNode(rootObject, PageFrameName) as Frame;
                 if (pageFrame == null)
                 {
-                    throw new ApplicationException("Элемент \"pageFrame\" не найден или тип элемента с данным именем не Frame");
+                    throw new QueueException("Элемент \"pageFrame\" не найден или тип элемента с данным именем не Frame");
                 }
 
                 pageFrame.Navigated += (s, args) => pageFrame.NavigationService.RemoveBackEntry();
 
                 Content = rootObject;
 
-                DataContext = new TerminalWindowViewModel();
+                ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
-                ServiceLocator.Current.GetInstance<Navigator>().SetNavigationService(pageFrame.NavigationService);
+                DataContext = UnityContainer.Resolve<TerminalWindowViewModel>();
+
+                Navigator.SetNavigationService(pageFrame.NavigationService);
 
                 (DataContext as TerminalWindowViewModel).Initialize();
             }
@@ -54,7 +64,7 @@ namespace Queue.Terminal
             try
             {
                 var config = ServiceLocator.Current.GetInstance<TerminalConfig>();
-                string template = string.IsNullOrEmpty(config.WindowTemplate) ? Templates.TerminalWindow : config.WindowTemplate;
+                string template = String.IsNullOrEmpty(config.WindowTemplate) ? Templates.TerminalWindow : config.WindowTemplate;
                 return XamlReader.Parse(template) as DependencyObject;
             }
             catch (Exception e)

@@ -3,6 +3,7 @@ using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using Queue.Common;
 using Queue.Notification.UserControls;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -50,8 +51,15 @@ namespace Queue.Notification.ViewModels
 
         private async void Loaded()
         {
-            vlcControl = CreateVLCControl();
-            await ReadConfig();
+            try
+            {
+                vlcControl = CreateVLCControl();
+                await ReadConfig();
+            }
+            catch (Exception ex)
+            {
+                UIHelper.Warning(null, String.Format("Ошибка инициализации видеоплеера: {0}", ex.Message));
+            }
         }
 
         private async Task ReadConfig()
@@ -61,7 +69,7 @@ namespace Queue.Notification.ViewModels
                 try
                 {
                     ApplyConfig(await TaskPool.AddTask(channel.Service.GetMediaConfig()),
-                            await TaskPool.AddTask(channel.Service.GetMediaConfigFiles()));
+                                await TaskPool.AddTask(channel.Service.GetMediaConfigFiles()));
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -69,11 +77,11 @@ namespace Queue.Notification.ViewModels
                 catch (InvalidOperationException) { }
                 catch (FaultException exception)
                 {
-                    UIHelper.Warning(null, exception.Reason.ToString());
+                    throw new QueueException(exception.Reason.ToString());
                 }
                 catch (Exception exception)
                 {
-                    UIHelper.Warning(null, exception.Message);
+                    throw new QueueException(exception.Message);
                 }
             }
         }
@@ -91,7 +99,6 @@ namespace Queue.Notification.ViewModels
 
         private VlcControl CreateVLCControl()
         {
-            VlcControl vlc = null;
             try
             {
                 InitializeContextIfNeed();
@@ -110,14 +117,12 @@ namespace Queue.Notification.ViewModels
                     Source = vlcControl
                 });
                 control.mainGrid.Children.Add(vlcImage);
-                vlc = vlcControl;
+                return vlcControl;
             }
-            catch (Exception ex)
+            catch
             {
-                UIHelper.Warning(null, String.Format("Ошибка при инициализации плеера VLC: {0}", ex.Message));
+                throw new QueueException("Не удалось создать компонент для отображения видео. Возможно не установлен VLC плеер");
             }
-
-            return vlc;
         }
 
         private void InitializeContextIfNeed()
