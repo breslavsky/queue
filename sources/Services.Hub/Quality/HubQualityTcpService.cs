@@ -158,7 +158,7 @@ namespace Queue.Services.Hub
             {
                 foreach (var d in Drivers)
                 {
-                    d.Enable(deviceId);
+                    d.Disable(deviceId);
                     d.Accepted -= driver_Accepted;
                 }
             });

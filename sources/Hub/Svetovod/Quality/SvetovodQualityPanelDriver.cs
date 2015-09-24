@@ -40,19 +40,16 @@ namespace Queue.Hub.Svetovod
 
             if (config.DeviceId == 0 || config.DeviceId == deviceId)
             {
-                SvetovodQualityPanelConnection connection = null;
-
                 try
                 {
-                    connection = new SvetovodQualityPanelConnection(config.Port, deviceId);
+                    var connection = new SvetovodQualityPanelConnection(config.Port, deviceId);
                     connection.Enable();
                     connection.Accepted += activeConnection_Accepted;
                     activeConnection = connection;
                 }
                 catch (Exception e)
-                {   
+                {
                     logger.Error(e);
-                    connection.Dispose();
                     throw;
                 }
             }

@@ -312,7 +312,6 @@ namespace Queue.Operator
             serverChannelManager = ServerService.CreateChannelManager(CurrentOperator.SessionId);
 
             qualityCallback = new HubQualityCallback();
-            qualityCallback.OnAccepted += qualityCallback_OnAccepted;
 
             qualityChannelManager = HubQualityService.CreateChannelManager();
 
@@ -572,6 +571,9 @@ namespace Queue.Operator
                         try
                         {
                             await taskPool.AddTask(channel.Service.EditCurrentClientRequest(clientRequest));
+
+                            qualityCallback.OnAccepted -= qualityCallback_OnAccepted;
+                            qualityPanelEnabled = false;
                         }
                         catch (OperationCanceledException) { }
                         catch (CommunicationObjectAbortedException) { }
@@ -641,6 +643,8 @@ namespace Queue.Operator
                 try
                 {
                     await taskPool.AddTask(channel.Service.Enable(qualityPanelDeviceId));
+
+                    qualityCallback.OnAccepted += qualityCallback_OnAccepted;
                     qualityPanelEnabled = true;
                 }
                 catch (OperationCanceledException) { }
@@ -665,6 +669,8 @@ namespace Queue.Operator
                 try
                 {
                     await taskPool.AddTask(channel.Service.Disable(qualityPanelDeviceId));
+
+                    qualityCallback.OnAccepted -= qualityCallback_OnAccepted;
                     qualityPanelEnabled = false;
                 }
                 catch (OperationCanceledException) { }

@@ -67,6 +67,8 @@
             this.serviceTypeTextBlock = new System.Windows.Forms.Label();
             this.serviceStepLabel = new System.Windows.Forms.Label();
             this.editPanel = new System.Windows.Forms.Panel();
+            this.commentLabel = new System.Windows.Forms.Label();
+            this.commentTextBox = new System.Windows.Forms.TextBox();
             this.requestDatePicker = new System.Windows.Forms.DateTimePicker();
             this.requestTimePicker = new Queue.UI.WinForms.TimePicker();
             this.typeControl = new Queue.UI.WinForms.EnumItemControl();
@@ -82,8 +84,6 @@
             this.additionalServiceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.quantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Sum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.commentLabel = new System.Windows.Forms.Label();
-            this.commentTextBox = new System.Windows.Forms.TextBox();
             this.ratingLabel = new System.Windows.Forms.Label();
             this.ratingUpDown = new System.Windows.Forms.NumericUpDown();
             this.qualityQroupBox = new System.Windows.Forms.GroupBox();
@@ -147,7 +147,7 @@
             this.parametersGridView.Name = "parametersGridView";
             this.parametersGridView.ReadOnly = true;
             this.parametersGridView.RowHeadersVisible = false;
-            this.parametersGridView.Size = new System.Drawing.Size(542, 305);
+            this.parametersGridView.Size = new System.Drawing.Size(542, 300);
             this.parametersGridView.TabIndex = 0;
             // 
             // nameDataGridViewTextBoxColumn
@@ -468,6 +468,24 @@
             this.editPanel.TabIndex = 16;
             this.editPanel.EnabledChanged += new System.EventHandler(this.editPanel_EnabledChanged);
             // 
+            // commentLabel
+            // 
+            this.commentLabel.Location = new System.Drawing.Point(5, 310);
+            this.commentLabel.Name = "commentLabel";
+            this.commentLabel.Size = new System.Drawing.Size(105, 40);
+            this.commentLabel.TabIndex = 16;
+            this.commentLabel.Text = "Комментарий";
+            this.commentLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // commentTextBox
+            // 
+            this.commentTextBox.Location = new System.Drawing.Point(115, 310);
+            this.commentTextBox.Multiline = true;
+            this.commentTextBox.Name = "commentTextBox";
+            this.commentTextBox.Size = new System.Drawing.Size(205, 40);
+            this.commentTextBox.TabIndex = 15;
+            this.commentTextBox.Leave += new System.EventHandler(this.commentTextBox_Leave);
+            // 
             // requestDatePicker
             // 
             this.requestDatePicker.Location = new System.Drawing.Point(115, 30);
@@ -552,7 +570,7 @@
             this.tabPage2.Controls.Add(this.parametersGridView);
             this.tabPage2.Location = new System.Drawing.Point(4, 26);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(542, 305);
+            this.tabPage2.Size = new System.Drawing.Size(542, 300);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Параметры";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -562,7 +580,7 @@
             this.tabPage3.Controls.Add(this.additionalServicesGridView);
             this.tabPage3.Location = new System.Drawing.Point(4, 26);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(542, 305);
+            this.tabPage3.Size = new System.Drawing.Size(542, 300);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Дополнительные услуги";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -593,7 +611,7 @@
             this.additionalServicesGridView.Name = "additionalServicesGridView";
             this.additionalServicesGridView.ReadOnly = true;
             this.additionalServicesGridView.RowHeadersVisible = false;
-            this.additionalServicesGridView.Size = new System.Drawing.Size(542, 305);
+            this.additionalServicesGridView.Size = new System.Drawing.Size(542, 300);
             this.additionalServicesGridView.TabIndex = 1;
             // 
             // additionalServiceDataGridViewTextBoxColumn
@@ -629,24 +647,6 @@
             this.Sum.ReadOnly = true;
             this.Sum.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // commentLabel
-            // 
-            this.commentLabel.Location = new System.Drawing.Point(5, 310);
-            this.commentLabel.Name = "commentLabel";
-            this.commentLabel.Size = new System.Drawing.Size(105, 40);
-            this.commentLabel.TabIndex = 16;
-            this.commentLabel.Text = "Комментарий";
-            this.commentLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // commentTextBox
-            // 
-            this.commentTextBox.Location = new System.Drawing.Point(115, 310);
-            this.commentTextBox.Multiline = true;
-            this.commentTextBox.Name = "commentTextBox";
-            this.commentTextBox.Size = new System.Drawing.Size(205, 40);
-            this.commentTextBox.TabIndex = 15;
-            this.commentTextBox.Leave += new System.EventHandler(this.commentTextBox_Leave);
-            // 
             // ratingLabel
             // 
             this.ratingLabel.Location = new System.Drawing.Point(10, 20);
@@ -658,15 +658,15 @@
             // 
             // ratingUpDown
             // 
-            this.ratingUpDown.Location = new System.Drawing.Point(75, 25);
+            this.ratingUpDown.Enabled = false;
+            this.ratingUpDown.Location = new System.Drawing.Point(65, 25);
             this.ratingUpDown.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             0});
             this.ratingUpDown.Name = "ratingUpDown";
-            this.ratingUpDown.ReadOnly = true;
-            this.ratingUpDown.Size = new System.Drawing.Size(60, 20);
+            this.ratingUpDown.Size = new System.Drawing.Size(45, 20);
             this.ratingUpDown.TabIndex = 17;
             // 
             // qualityQroupBox
