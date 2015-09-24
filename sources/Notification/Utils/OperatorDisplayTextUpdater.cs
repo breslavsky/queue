@@ -79,7 +79,7 @@ namespace Queue.Notification.Utils
 
         private void ClearDisplayTextIfNeed(ClientRequest request)
         {
-            if (!HubSettings.Enabled || request.State != ClientRequestState.Rendered)
+            if (!HubSettings.Enabled || !NeedClearText(request))
             {
                 return;
             }
@@ -95,6 +95,12 @@ namespace Queue.Notification.Utils
             {
                 logger.Error(e);
             }
+        }
+
+        private bool NeedClearText(ClientRequest request)
+        {
+            return request.State == ClientRequestState.Rendered ||
+                    request.State == ClientRequestState.Canceled;
         }
 
         #region IDisposable
