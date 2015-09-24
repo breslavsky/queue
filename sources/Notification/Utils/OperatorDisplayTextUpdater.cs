@@ -31,6 +31,8 @@ namespace Queue.Notification.Utils
         {
             ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
+            logger.Debug("endpoint: {0}; enabled: {1}", HubSettings.Endpoint, HubSettings.Enabled);
+
             ClientRequestsListener.CallClient += OnCallClient;
             ClientRequestsListener.ClientRequestUpdated += OnClientRequestUpdated;
         }
@@ -66,6 +68,8 @@ namespace Queue.Notification.Utils
 
             try
             {
+                logger.Debug("show text [device: {0}; text: {1}]", request.Operator.Workplace.DisplayDeviceId, request.Number);
+
                 using (var channel = HubDisplayChannelManager.CreateChannel())
                 {
                     channel.Service.ShowText(request.Operator.Workplace.DisplayDeviceId, request.Number.ToString());
@@ -86,6 +90,8 @@ namespace Queue.Notification.Utils
 
             try
             {
+                logger.Debug("clear text [device: {0}]", request.Operator.Workplace.DisplayDeviceId);
+
                 using (var channel = HubDisplayChannelManager.CreateChannel())
                 {
                     channel.Service.ClearText(request.Operator.Workplace.DisplayDeviceId);
