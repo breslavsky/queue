@@ -1,4 +1,5 @@
-﻿using Queue.Common;
+﻿using NLog;
+using Queue.Common;
 using Queue.Services.Hub;
 using System;
 using System.Linq;
@@ -7,6 +8,8 @@ namespace Queue.Hub.Svetovod
 {
     public class SvetovodDisplayDriver : IHubDisplayDriver, IDisposable
     {
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         #region fields
 
         private bool disposed;
@@ -22,6 +25,8 @@ namespace Queue.Hub.Svetovod
 
         public void ShowText(byte deviceId, string text)
         {
+            logger.Debug("show text [device: {0}; text: {1}]", deviceId, text);
+
             CloseActiveConnection();
 
             if (config.DeviceId != 0 && config.DeviceId != deviceId)
@@ -47,6 +52,8 @@ namespace Queue.Hub.Svetovod
 
         public void ClearText(byte deviceId)
         {
+            logger.Debug("clear text [device: {0}]", deviceId);
+
             CloseActiveConnection();
 
             if (config.DeviceId != 0 && config.DeviceId != deviceId)
