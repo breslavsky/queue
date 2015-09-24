@@ -32,6 +32,11 @@ namespace Queue.Terminal.ViewModels
 
         private void Search()
         {
+            if (String.IsNullOrEmpty(Filter))
+            {
+                return;
+            }
+
             searcher.Search(Filter);
             OnSearch(this, null);
         }

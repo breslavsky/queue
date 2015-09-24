@@ -5,6 +5,7 @@ using Microsoft.Practices.Unity;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using System;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace Queue.Notification
@@ -37,8 +38,6 @@ namespace Queue.Notification
             timer = new Timer();
             timer.Interval = 1000;
             timer.Elapsed += PingElapsed;
-
-            CreateChannel();
             timer.Start();
         }
 
@@ -51,6 +50,20 @@ namespace Queue.Notification
                 timer.Interval = PingInterval;
             }
 
+            if (channel == null)
+            {
+                CreateChannel();
+            }
+            else
+            {
+                await Ping();
+            }
+
+            timer.Start();
+        }
+
+        private async Task Ping()
+        {
             try
             {
                 await TaskPool.AddTask(channel.Service.GetDateTime());
@@ -59,8 +72,6 @@ namespace Queue.Notification
             {
                 Reconnect();
             }
-
-            timer.Start();
         }
 
         private void Reconnect()
@@ -71,8 +82,14 @@ namespace Queue.Notification
 
         private void CreateChannel()
         {
-            channel = ChannelManager.CreateChannel(callback);
-            subscribeFunc(channel.Service);
+            try
+            {
+                var c = ChannelManager.CreateChannel(callback);
+                subscribeFunc(c.Service);
+
+                channel = c;
+            }
+            catch { }
         }
 
         private void CloseChannel()
@@ -82,8 +99,13 @@ namespace Queue.Notification
                 return;
             }
 
-            channel.Dispose();
-            channel = null;
+            try
+            {
+                channel.Close();
+                channel.Dispose();
+                channel = null;
+            }
+            catch { }
         }
 
         #region IDisposable

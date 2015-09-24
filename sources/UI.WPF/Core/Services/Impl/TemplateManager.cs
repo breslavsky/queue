@@ -46,11 +46,18 @@ namespace Queue.UI.WPF
 
         private string DownloadTemplate(string template)
         {
-            using (var channel = ChannelManager.CreateChannel())
+            try
             {
-                var content = channel.Service.GetTemplate(app, theme, template).GetAwaiter().GetResult();
-                cache.Add(template, content);
-                return content;
+                using (var channel = ChannelManager.CreateChannel())
+                {
+                    var content = channel.Service.GetTemplate(app, theme, template).GetAwaiter().GetResult();
+                    cache.Add(template, content);
+                    return content;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new QueueException("Не удалось получить шаблон с сервера: " + e.Message);
             }
         }
     }

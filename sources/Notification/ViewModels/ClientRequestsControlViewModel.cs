@@ -5,6 +5,7 @@ using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
+using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
@@ -75,9 +76,16 @@ namespace Queue.Notification.ViewModels
 
         private async void Loaded()
         {
-            await ReadConfig();
+            try
+            {
+                await ReadConfig();
 
-            channel = new AutoRecoverCallbackChannel(CreateServerCallback(), Subscribe);
+                channel = new AutoRecoverCallbackChannel(CreateServerCallback(), Subscribe);
+            }
+            catch (Exception e)
+            {
+                UIHelper.Warning(null, e.Message);
+            }
         }
 
         private async Task ReadConfig()
@@ -94,11 +102,11 @@ namespace Queue.Notification.ViewModels
                 catch (InvalidOperationException) { }
                 catch (FaultException exception)
                 {
-                    UIHelper.Warning(null, exception.Reason.ToString());
+                    throw new QueueException(exception.Reason.ToString());
                 }
                 catch (Exception exception)
                 {
-                    UIHelper.Warning(null, exception.Message);
+                    throw new QueueException(exception.Message);
                 }
             }
         }
