@@ -107,6 +107,7 @@ namespace Queue.Hub
 
                     host.AddServiceEndpoint(typeof(IHubDisplayTcpService), Bindings.NetTcpBinding, uri);
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior());
+
                     hosts.Add(host);
                 }
             }

@@ -26,6 +26,9 @@
       <Component Id="_F276A583F23C4031AF2F0D9F856C04BA" Guid="F276A583-F23C-4031-AF2F-0D9F856C04BA">
         <File KeyPath="yes" Source="$(var.Administrator.TargetDir)\Microsoft.WindowsAPICodePack.dll" />
       </Component>
+      <Component Id="_385EF2C74243415694993428188E0C02" Guid="385EF2C7-4243-4156-9499-3428188E0C02">
+        <File KeyPath="yes" Source="$(var.Administrator.TargetDir)\System.Net.Http.Formatting.dll" />
+      </Component>
     </ComponentGroup>
 
     <ComponentGroup Id="Logging" Directory="INSTALLFOLDER">

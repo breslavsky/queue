@@ -11,9 +11,6 @@
       <Component Id="cmpFD65F52CD5EC0B46A750F8EEFC3D4422" Directory="INSTALLFOLDER" Guid="F223F6E2-05A3-4A65-B340-996BEB4F9DC3">
         <File Id="fil1F7E777B326B02F60B86F747002F8605" KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\AutoMapper.dll" />
       </Component>
-      <Component Id="cmpEEC7AC6B3009FA88C57EB2972A7A8F5B" Directory="INSTALLFOLDER" Guid="81AECB23-8EAC-4C23-AB47-7212F0DD3305">
-        <File Id="fil4F01E53E158206D8C82AC24B4DFEE253" KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\AutoMapper.Net4.dll" />
-      </Component>
       <Component Id="cmp695F3B89FCD90C669B1958F6D20D523D" Directory="INSTALLFOLDER" Guid="7FD6E47E-9CC6-4CC3-80E5-46BCE1BCC758">
         <File Id="filECAAB6E721DE437D50D73A1F554EB461" KeyPath="yes" Source="$(var.Hosts.Media.WinForms.TargetDir)\Icons.resx" />
       </Component>
