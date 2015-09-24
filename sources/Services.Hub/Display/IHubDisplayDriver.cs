@@ -3,5 +3,7 @@
     public interface IHubDisplayDriver : IHubDriver
     {
         void ShowText(byte deviceId, string text);
+
+        void ClearText(byte deviceId);
     }
 }

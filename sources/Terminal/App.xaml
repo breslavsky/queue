@@ -1,9 +1,10 @@
-﻿<Application x:Class="Queue.Terminal.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-             StartupUri="MainWindow.xaml">
-    <Application.Resources>
+﻿<ui_common:RichApplication x:Class="Queue.Terminal.App"
+                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                           xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+                           xmlns:ui_common="clr-namespace:Queue.UI.WPF;assembly=Queue.UI.WPF"
+                           StartupUri="MainWindow.xaml">
+    <ui_common:RichApplication.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
@@ -49,5 +50,5 @@
                 <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource AccentColorBrush}" />
             </Style>
         </ResourceDictionary>
-    </Application.Resources>
-</Application>
+    </ui_common:RichApplication.Resources>
+</ui_common:RichApplication>

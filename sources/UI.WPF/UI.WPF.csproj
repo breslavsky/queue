@@ -105,6 +105,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\RichApplication.cs" />
     <Compile Include="Core\RichWindow.cs" />
     <Compile Include="Controls\ConnectionStatusControl.xaml.cs">
       <DependentUpon>ConnectionStatusControl.xaml</DependentUpon>

@@ -22,5 +22,9 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [WebGet(UriTemplate = "/show-text?deviceId={deviceId}&text={text}", ResponseFormat = WebMessageFormat.Json)]
         Task ShowText(byte deviceId, string text);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/clear-text?deviceId={deviceId}", ResponseFormat = WebMessageFormat.Json)]
+        Task ClearText(byte deviceId);
     }
 }

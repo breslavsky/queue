@@ -1,7 +1,6 @@
 ﻿using Junte.UI.WPF;
 using Microsoft.Practices.Unity;
 using Queue.Model.Common;
-using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Sounds;
 using System.Media;
@@ -43,9 +42,6 @@ namespace Queue.Notification.ViewModels
         [Dependency]
         public ClientRequestsListener ClientRequestsListener { get; set; }
 
-        [Dependency]
-        public HubDisplayService HubQualityService { get; set; }
-
         public CallClientControlViewModel()
         {
             LoadedCommand = new RelayCommand(Loaded);
@@ -63,11 +59,16 @@ namespace Queue.Notification.ViewModels
             {
                 lock (callLock)
                 {
-                    ShowMessage(request);
-                    PlayVoice(request);
-                    CloseMessage();
+                    Notify(request);
                 }
             });
+        }
+
+        private void Notify(ClientRequest request)
+        {
+            ShowMessage(request);
+            PlayVoice(request);
+            CloseMessage();
         }
 
         private void PlayVoice(ClientRequest request)

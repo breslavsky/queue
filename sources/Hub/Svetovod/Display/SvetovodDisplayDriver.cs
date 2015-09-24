@@ -30,10 +30,6 @@ namespace Queue.Hub.Svetovod
             }
 
             var conf = GetDeviceConfig(deviceId);
-            if (config == null)
-            {
-                throw new QueueException("Не найдена конфигурация для устройства [id: {0}]", deviceId);
-            }
 
             switch (conf.Type)
             {
@@ -43,6 +39,31 @@ namespace Queue.Hub.Svetovod
 
                 case SvetovodDisplayType.Matrix:
                     ShowTextOnMatrixDisplay(deviceId, text, conf);
+                    break;
+            }
+
+            CloseActiveConnection();
+        }
+
+        public void ClearText(byte deviceId)
+        {
+            CloseActiveConnection();
+
+            if (config.DeviceId != 0 && config.DeviceId != deviceId)
+            {
+                return;
+            }
+
+            var conf = GetDeviceConfig(deviceId);
+
+            switch (conf.Type)
+            {
+                case SvetovodDisplayType.Segment:
+                    ClearTextOnSegmentDisplay(deviceId);
+                    break;
+
+                case SvetovodDisplayType.Matrix:
+                    ClearTextOnMatrixDisplay(deviceId, conf);
                     break;
             }
 
@@ -60,6 +81,12 @@ namespace Queue.Hub.Svetovod
                 conf = connections.Where(c => c.Sysnum == 0)
                                         .FirstOrDefault();
             }
+
+            if (conf == null)
+            {
+                throw new QueueException("Не найдена конфигурация для устройства [id: {0}]", deviceId);
+            }
+
             return conf;
         }
 
@@ -77,10 +104,26 @@ namespace Queue.Hub.Svetovod
             activeConnection = connection;
         }
 
+        private void ClearTextOnSegmentDisplay(byte sysnum)
+        {
+            var connection = new SvetovodSegmentDisplayConnection(config.Port);
+            connection.ClearNumber(sysnum);
+
+            activeConnection = connection;
+        }
+
         private void ShowTextOnMatrixDisplay(byte sysnum, string text, SvetovodDisplayConnectionConfig conf)
         {
             var connection = new SvetovodMatrixDisplayConnection(config.Port);
             connection.ShowText(sysnum, text, conf.Width, conf.Height);
+
+            activeConnection = connection;
+        }
+
+        private void ClearTextOnMatrixDisplay(byte sysnum, SvetovodDisplayConnectionConfig conf)
+        {
+            var connection = new SvetovodMatrixDisplayConnection(config.Port);
+            connection.ShowText(sysnum, " ", conf.Width, conf.Height);
 
             activeConnection = connection;
         }

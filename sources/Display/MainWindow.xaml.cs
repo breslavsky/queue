@@ -15,7 +15,7 @@ using System.Windows.Input;
 
 namespace Queue.Display
 {
-    public partial class MainWindow : RichWindow
+    public partial class MainWindow : RichWindow, IMainWindow
     {
         private LoginPage loginPage;
 
@@ -26,14 +26,13 @@ namespace Queue.Display
         {
             InitializeComponent();
 
+            ServiceLocator.Current.GetInstance<IUnityContainer>().RegisterInstance<IMainWindow>(this);
+
             DataContext = new MainWindowViewModel();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            ServiceLocator.Current.GetInstance<IUnityContainer>()
-                                    .RegisterInstance<IMainWindow>(this);
-
             loginPage = CreateLoginPage();
             content.NavigationService.Navigate(loginPage);
         }
@@ -86,6 +85,11 @@ namespace Queue.Display
 
                 Application.Current.Shutdown();
             }
+        }
+
+        public void Navigate(Page page)
+        {
+            content.NavigationService.Navigate(page);
         }
     }
 }

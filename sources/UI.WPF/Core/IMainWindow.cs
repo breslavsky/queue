@@ -22,5 +22,9 @@ namespace Queue.UI.WPF
         void AttachControl(UserControl control);
 
         void DetachControl(UserControl control);
+
+        void MakeFullScreen();
+
+        void Navigate(Page page);
     }
 }

@@ -147,6 +147,7 @@
     <Compile Include="UserControls\VideoControl.xaml.cs">
       <DependentUpon>VideoControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\OperatorDisplayTextUpdater.cs" />
     <Compile Include="ViewModels\VideoControlViewModel.cs" />
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>

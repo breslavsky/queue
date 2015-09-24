@@ -114,5 +114,10 @@ namespace Queue.Hub.Svetovod
         }
 
         #endregion protocol
+
+        public void ClearNumber(byte sysnum)
+        {
+            //TODO
+        }
     }
 }

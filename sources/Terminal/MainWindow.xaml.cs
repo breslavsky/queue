@@ -21,7 +21,7 @@ using System.Windows.Threading;
 
 namespace Queue.Terminal
 {
-    public partial class MainWindow : RichWindow, IDisposable
+    public partial class MainWindow : RichWindow, IMainWindow, IDisposable
     {
         private const double ActivityWaitTime = 120;
         private bool disposed = false;
@@ -154,6 +154,11 @@ namespace Queue.Terminal
         {
             navigator.Reset();
             resetTimer.Stop();
+        }
+
+        public void Navigate(Page page)
+        {
+            content.NavigationService.Navigate(page);
         }
 
         #region IDisposable

@@ -2,13 +2,21 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                       xmlns:ui_common="clr-namespace:Queue.UI.WPF;assembly=Queue.UI.WPF"
                       Title="{Binding Title}"
                       Width="640"
                       Height="480"
                       IgnoreTaskbarOnMaximize="True"
-                      Loaded="OnLoaded"
                       WindowStartupLocation="CenterScreen">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <ui_common:RichWindow.Background>
         <LinearGradientBrush ColorInterpolationMode="ScRgbLinearInterpolation" SpreadMethod="Reflect" StartPoint="1,1" EndPoint="1,0">
             <GradientStop Offset="0" Color="{DynamicResource AccentColor}" />

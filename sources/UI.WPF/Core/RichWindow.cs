@@ -5,7 +5,7 @@ using System.Windows.Controls;
 
 namespace Queue.UI.WPF
 {
-    public abstract class RichWindow : MetroWindow, IMainWindow
+    public abstract class RichWindow : MetroWindow
     {
         protected abstract Panel RootElement { get; }
 

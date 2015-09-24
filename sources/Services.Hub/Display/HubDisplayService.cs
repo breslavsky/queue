@@ -64,6 +64,17 @@ namespace Queue.Services.Hub
             });
         }
 
+        public async Task ClearText(byte deviceId)
+        {
+            await Task.Run(() =>
+            {
+                foreach (var d in Drivers)
+                {
+                    d.ClearText(deviceId);
+                }
+            });
+        }
+
         public async Task<string[]> GetDrivers()
         {
             return await Task.Run(() =>
