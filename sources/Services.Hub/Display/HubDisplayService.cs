@@ -5,7 +5,6 @@ using Queue.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Queue.Services.Hub
@@ -37,10 +36,6 @@ namespace Queue.Services.Hub
             channel = OperationContext.Current.Channel;
             channel.Faulted += channel_Faulted;
             channel.Closing += channel_Closing;
-
-#if DEBUG
-            Thread.Sleep(1000);
-#endif
         }
 
         public async Task Heartbeat()

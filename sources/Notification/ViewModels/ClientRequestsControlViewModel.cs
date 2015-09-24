@@ -10,6 +10,7 @@ using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WPF;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -47,6 +48,9 @@ namespace Queue.Notification.ViewModels
 
         [Dependency]
         public ClientRequestsListener ClientRequestsListener { get; set; }
+
+        [Dependency]
+        public IMainWindow Window { get; set; }
 
         public ICommand LoadedCommand { get; set; }
 
@@ -151,36 +155,39 @@ namespace Queue.Notification.ViewModels
         {
             lock (updateLock)
             {
-                var wrap = Requests.SingleOrDefault(r => r.Request.Equals(request));
+                Window.Invoke(() =>
+                   {
+                       var wrap = Requests.SingleOrDefault(r => r.Request.Equals(request));
 
-                bool isImportantState = (request.State == ClientRequestState.Calling)
-                                    || (request.State == ClientRequestState.Absence);
+                       bool isImportantState = (request.State == ClientRequestState.Calling) ||
+                                               (request.State == ClientRequestState.Absence);
 
-                if (!isImportantState && (wrap == null))
-                {
-                    return;
-                }
+                       if (!isImportantState && (wrap == null))
+                       {
+                           return;
+                       }
 
-                if (isImportantState)
-                {
-                    if (wrap != null)
-                    {
-                        Requests.Remove(wrap);
-                    }
+                       if (isImportantState)
+                       {
+                           if (wrap != null)
+                           {
+                               Requests.Remove(wrap);
+                           }
 
-                    Requests.Insert(0, new ClientRequestWrap()
-                    {
-                        Request = request,
-                        Added = DateTime.Now
-                    });
-                }
-                else
-                {
-                    wrap.Request = request;
-                    wrap.Added = DateTime.Now;
-                }
+                           Requests.Insert(0, new ClientRequestWrap()
+                           {
+                               Request = request,
+                               Added = DateTime.Now
+                           });
+                       }
+                       else
+                       {
+                           wrap.Request = request;
+                           wrap.Added = DateTime.Now;
+                       }
 
-                AdjustRequestsLength();
+                       AdjustRequestsLength();
+                   });
             }
         }
 

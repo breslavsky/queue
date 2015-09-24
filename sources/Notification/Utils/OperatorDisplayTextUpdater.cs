@@ -7,7 +7,6 @@ using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
-using System.Threading.Tasks;
 
 namespace Queue.Notification.Utils
 {
@@ -15,7 +14,6 @@ namespace Queue.Notification.Utils
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        private object displayLock = new object();
         private bool disposed;
 
         [Dependency]
@@ -39,27 +37,15 @@ namespace Queue.Notification.Utils
 
         private void OnCallClient(object sender, ClientRequest request)
         {
-            Task.Run(() =>
-            {
-                lock (displayLock)
-                {
-                    ShowDisplayText(request);
-                }
-            });
+            ShowDisplayText(request);
         }
 
         private void OnClientRequestUpdated(object sender, ClientRequest request)
         {
-            Task.Run(() =>
-            {
-                lock (displayLock)
-                {
-                    ClearDisplayTextIfNeed(request);
-                }
-            });
+            ClearDisplayTextIfNeed(request);
         }
 
-        private void ShowDisplayText(ClientRequest request)
+        private async void ShowDisplayText(ClientRequest request)
         {
             if (!HubSettings.Enabled)
             {
@@ -72,7 +58,7 @@ namespace Queue.Notification.Utils
 
                 using (var channel = HubDisplayChannelManager.CreateChannel())
                 {
-                    channel.Service.ShowText(request.Operator.Workplace.DisplayDeviceId, request.Number.ToString());
+                    await channel.Service.ShowText(request.Operator.Workplace.DisplayDeviceId, request.Number.ToString());
                 }
             }
             catch (Exception e)
@@ -81,7 +67,7 @@ namespace Queue.Notification.Utils
             }
         }
 
-        private void ClearDisplayTextIfNeed(ClientRequest request)
+        private async void ClearDisplayTextIfNeed(ClientRequest request)
         {
             if (!HubSettings.Enabled || !NeedClearText(request))
             {
@@ -94,7 +80,7 @@ namespace Queue.Notification.Utils
 
                 using (var channel = HubDisplayChannelManager.CreateChannel())
                 {
-                    channel.Service.ClearText(request.Operator.Workplace.DisplayDeviceId);
+                    await channel.Service.ClearText(request.Operator.Workplace.DisplayDeviceId);
                 }
             }
             catch (Exception e)
