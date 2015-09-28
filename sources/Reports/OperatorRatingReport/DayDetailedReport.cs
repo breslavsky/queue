@@ -82,7 +82,7 @@ namespace Queue.Reports.OperatorRatingReport
 
             foreach (var rating in data.Ratings)
             {
-                IRow row = worksheet.CreateRow(rowIndex++);
+                var row = worksheet.CreateRow(rowIndex++);
                 WriteBoldCell(row, 4, c => c.SetCellValue(rating.Operator.ToString()));
                 RenderRating(row, rating);
             }

@@ -139,6 +139,8 @@ namespace Queue.Reports.ServiceRatingReport
 
                 .Add(Projections.Sum("Subjects"), "SubjectsTotal")
                 .Add(Projections.Avg("Rating"), "RatingAvg")
+                .Add(Projections.Min("Rating"), "RatingMin")
+                .Add(Projections.Max("Rating"), "RatingMax")
 
                 .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("Type", ClientRequestType.Live),
                     Projections.Property("Subjects"), Projections.Constant(0, NHibernateUtil.Int32))), "SubjectsLive")
@@ -162,8 +164,8 @@ namespace Queue.Reports.ServiceRatingReport
         {
             using (var session = SessionProvider.OpenSession())
             {
-                IList<ServiceDto> rootServices = new List<ServiceDto>();
-                IList<ServiceGroupDto> rootGroups = new List<ServiceGroupDto>();
+                var rootServices = new List<ServiceDto>();
+                var rootGroups = new List<ServiceGroupDto>();
 
                 if (settings.Services.Length == 0)
                 {
@@ -172,9 +174,9 @@ namespace Queue.Reports.ServiceRatingReport
                 }
                 else
                 {
-                    foreach (Guid serviceId in settings.Services)
+                    foreach (var serviceId in settings.Services)
                     {
-                        Service service = session.Get<Service>(serviceId);
+                        var service = session.Get<Service>(serviceId);
                         if (service == null)
                         {
                             continue;
@@ -232,11 +234,17 @@ namespace Queue.Reports.ServiceRatingReport
             cell.SetCellValue(rating.SubjectsLive);
             cell = row.CreateCell(16);
             cell.SetCellValue(rating.SubjectsEarly);
+            cell = row.CreateCell(17);
+            cell.SetCellValue(rating.RatingMin);
+            cell = row.CreateCell(18);
+            cell.SetCellValue(rating.RatingMax);
+            cell = row.CreateCell(19);
+            cell.SetCellValue(Math.Round(rating.RatingAvg * 100) / 100);
         }
 
         protected void WriteBoldCell(IRow row, int cellIndex, Action<ICell> setValue)
         {
-            ICell cell = row.CreateCell(cellIndex);
+            var cell = row.CreateCell(cellIndex);
             setValue(cell);
             cell.CellStyle = CreateCellBoldStyle(row.Sheet.Workbook);
         }
@@ -251,7 +259,7 @@ namespace Queue.Reports.ServiceRatingReport
             {
                 cell.CellStyle = CreateCellBoldStyle(worksheet.Workbook);
 
-                foreach (ServiceType serviceType in Enum.GetValues(typeof(ServiceType)))
+                foreach (var serviceType in Enum.GetValues(typeof(ServiceType)))
                 {
                     row = worksheet.CreateRow(rowIndex++);
                     cell = row.CreateCell(4);
@@ -272,12 +280,12 @@ namespace Queue.Reports.ServiceRatingReport
         {
             WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(group.Name));
 
-            foreach (ServiceGroupDto subGroup in group.ServicesGroups)
+            foreach (var subGroup in group.ServicesGroups)
             {
                 WriteServiceGroupData(worksheet, ratings, subGroup, ref rowIndex);
             }
 
-            foreach (ServiceDto service in group.Services)
+            foreach (var service in group.Services)
             {
                 WriteServiceData(worksheet, ratings, service, ref rowIndex);
             }
@@ -285,12 +293,12 @@ namespace Queue.Reports.ServiceRatingReport
 
         protected void WriteServicesRatings(ISheet worksheet, ServiceRating[] ratings, ServiceGroupDto root, ref int rowIndex)
         {
-            foreach (ServiceGroupDto subGroup in root.ServicesGroups)
+            foreach (var subGroup in root.ServicesGroups)
             {
                 WriteServiceGroupData(worksheet, ratings, subGroup, ref rowIndex);
             }
 
-            foreach (ServiceDto service in root.Services)
+            foreach (var service in root.Services)
             {
                 WriteServiceData(worksheet, ratings, service, ref rowIndex);
             }
@@ -298,13 +306,12 @@ namespace Queue.Reports.ServiceRatingReport
 
         private void AddServiceToRoot(ISession session, Service service, IList<ServiceGroupDto> rootGroups)
         {
-            ServiceGroup current = service.ServiceGroup;
+            var current = service.ServiceGroup;
             ServiceGroupDto group = null;
-
-            //TODO: no no!
+            
             while (true)
             {
-                ServiceGroupDto _group = FindServiceGroup(rootGroups, current.Id);
+                var _group = FindServiceGroup(rootGroups, current.Id);
 
                 if (_group != null)
                 {
@@ -326,7 +333,7 @@ namespace Queue.Reports.ServiceRatingReport
                 }
                 else
                 {
-                    ServiceGroupDto tmp = new ServiceGroupDto(current);
+                    var tmp = new ServiceGroupDto(current);
                     tmp.ServicesGroups.Add(group);
                     group = tmp;
                 }
@@ -345,14 +352,14 @@ namespace Queue.Reports.ServiceRatingReport
 
         private ServiceGroupDto FindServiceGroup(IList<ServiceGroupDto> groups, Guid id)
         {
-            foreach (ServiceGroupDto group in groups)
+            foreach (var group in groups)
             {
                 if (group.Id == id)
                 {
                     return group;
                 }
 
-                ServiceGroupDto result = FindServiceGroup(group.ServicesGroups, id);
+                var result = FindServiceGroup(group.ServicesGroups, id);
                 if (result != null)
                 {
                     return result;
@@ -362,7 +369,7 @@ namespace Queue.Reports.ServiceRatingReport
             return null;
         }
 
-        private IList<ServiceDto> GetGroupServices(ISession session, ServiceGroup group)
+        private List<ServiceDto> GetGroupServices(ISession session, ServiceGroup group)
         {
             return session.QueryOver<Service>()
                      .Where(s => s.ServiceGroup == group)
@@ -372,15 +379,15 @@ namespace Queue.Reports.ServiceRatingReport
                      .ToList();
         }
 
-        private IList<ServiceGroupDto> GetServicesGroups(ISession session, ServiceGroup parent = null)
+        private List<ServiceGroupDto> GetServicesGroups(ISession session, ServiceGroup parent = null)
         {
-            IList<ServiceGroup> groups = session.QueryOver<ServiceGroup>()
+            var groups = session.QueryOver<ServiceGroup>()
                                                 .Where(g => g.ParentGroup == parent)
                                                 .OrderBy(g => g.SortId).Asc
                                                 .List();
 
-            IList<ServiceGroupDto> result = new List<ServiceGroupDto>();
-            foreach (ServiceGroup group in groups)
+           var result = new List<ServiceGroupDto>();
+            foreach (var group in groups)
             {
                 result.Add(new ServiceGroupDto()
                 {

@@ -59,29 +59,29 @@ namespace Queue.Reports.OperatorRatingReport
                 throw new FaultException("Начальная дата не может быть больше чем конечная");
             }
 
-            var conjunction = Expression.Conjunction();
+            var conjunction = Restrictions.Conjunction();
             if (settings.Operators.Length > 0)
             {
-                conjunction.Add(Expression.In("Operator.Id", settings.Operators));
+                conjunction.Add(Restrictions.In("Operator.Id", settings.Operators));
             }
             else
             {
-                conjunction.Add(Expression.IsNotNull("Operator.Id"));
+                conjunction.Add(Restrictions.IsNotNull("Operator.Id"));
             }
 
-            conjunction.Add(Expression.Ge("RequestDate", startDate));
-            conjunction.Add(Expression.Le("RequestDate", finishDate));
+            conjunction.Add(Restrictions.Ge("RequestDate", startDate));
+            conjunction.Add(Restrictions.Le("RequestDate", finishDate));
 
             var projections = GetProjections();
 
             using (var session = SessionProvider.OpenSession())
             {
                 T[] data = session.CreateCriteria<ClientRequest>()
-                       .Add(conjunction)
-                       .SetProjection(projections)
-                       .SetResultTransformer(Transformers.AliasToBean(typeof(T)))
-                       .List<T>()
-                       .ToArray();
+                                   .Add(conjunction)
+                                   .SetProjection(projections)
+                                   .SetResultTransformer(Transformers.AliasToBean(typeof(T)))
+                                   .List<T>()
+                                   .ToArray();
 
                 if (data.Length == 0)
                 {
@@ -95,8 +95,8 @@ namespace Queue.Reports.OperatorRatingReport
                 var boldCellStyle = CreateCellBoldStyle(workbook);
                 var rowIndex = worksheet.LastRowNum + 1;
 
-                IRow row = worksheet.GetRow(0);
-                ICell cell = row.CreateCell(0);
+                var row = worksheet.GetRow(0);
+                var cell = row.CreateCell(0);
                 cell.SetCellValue(string.Format("Период с {0} по {1}", startDate.ToShortDateString(), finishDate.ToShortDateString()));
                 cell.CellStyle = boldCellStyle;
 
@@ -154,6 +154,8 @@ namespace Queue.Reports.OperatorRatingReport
 
                 .Add(Projections.Sum("Subjects"), "SubjectsTotal")
                 .Add(Projections.Avg("Rating"), "RatingAvg")
+                .Add(Projections.Min("Rating"), "RatingMin")
+                .Add(Projections.Max("Rating"), "RatingMax")
 
                 .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("Type", ClientRequestType.Live),
                     Projections.Property("Subjects"), Projections.Constant(0, NHibernateUtil.Int32))), "SubjectsLive")
@@ -184,7 +186,7 @@ namespace Queue.Reports.OperatorRatingReport
 
         protected void RenderRating(IRow row, OperatorRating rating)
         {
-            ICell cell = row.CreateCell(5);
+            var cell = row.CreateCell(5);
             cell.SetCellValue(rating.Total);
             cell = row.CreateCell(6);
             cell.SetCellValue(rating.Live);
@@ -208,6 +210,12 @@ namespace Queue.Reports.OperatorRatingReport
             cell.SetCellValue(rating.SubjectsLive);
             cell = row.CreateCell(16);
             cell.SetCellValue(rating.SubjectsEarly);
+            cell = row.CreateCell(17);
+            cell.SetCellValue(rating.RatingMin);
+            cell = row.CreateCell(18);
+            cell.SetCellValue(rating.RatingMax);
+            cell = row.CreateCell(19);
+            cell.SetCellValue(Math.Round(rating.RatingAvg * 100) / 100);
         }
 
         internal OperatorRating[] GetOperatorsRatings(OperatorRating[] input)

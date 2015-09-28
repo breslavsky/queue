@@ -21,31 +21,31 @@ namespace Queue.Reports.ServiceRatingReport
             worksheet.SetColumnHidden(2, true);
             worksheet.SetColumnHidden(3, true);
 
-            YearReportDataItem[] items = data.GroupBy(y => y.Year)
-                                                .Select(y => new YearReportDataItem()
+           var items = data.GroupBy(y => y.Year)
+                            .Select(y => new YearReportDataItem()
+                            {
+                                Year = y.Key,
+                                Months = y.GroupBy(m => m.Month)
+                                                .Select(m => new MonthReportDataItem()
                                                 {
-                                                    Year = y.Key,
-                                                    Months = y.GroupBy(m => m.Month)
-                                                                    .Select(m => new MonthReportDataItem()
-                                                                    {
-                                                                        Month = m.Key,
-                                                                        Ratings = m.ToArray()
-                                                                    })
-                                                                    .OrderBy(m => m.Month)
-                                                                    .ToArray()
+                                                    Month = m.Key,
+                                                    Ratings = m.ToArray()
                                                 })
-                                                .OrderBy(y => y.Year)
-                                                .ToArray();
+                                                .OrderBy(m => m.Month)
+                                                .ToArray()
+                            })
+                            .OrderBy(y => y.Year)
+                            .ToArray();
 
-            int rowIndex = worksheet.LastRowNum + 1;
+            var rowIndex = worksheet.LastRowNum + 1;
 
-            ServiceGroupDto root = GetServicesHierarchy();
+            var root = GetServicesHierarchy();
 
-            foreach (YearReportDataItem item in items)
+            foreach (var item in items)
             {
                 WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(item.Year));
 
-                foreach (MonthReportDataItem month in item.Months)
+                foreach (var month in item.Months)
                 {
                     WriteBoldCell(worksheet.CreateRow(rowIndex++), 1, c => c.SetCellValue(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month.Month)));
                     WriteServicesRatings(worksheet, month.Ratings, root, ref  rowIndex);

@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
-using ClientRequestAdditionalServiceQuery = NHibernate.IQueryOver<Queue.Model.ClientRequestAdditionalService, Queue.Model.ClientRequestAdditionalService>;
 
 namespace Queue.Reports.AdditionalServicesRatingReport
 {
@@ -47,8 +46,8 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
         public HSSFWorkbook Generate()
         {
-            DateTime startDate = GetStartDate();
-            DateTime finishDate = GetFinishDate();
+            var startDate = GetStartDate();
+            var finishDate = GetFinishDate();
 
             if (startDate > finishDate)
             {
@@ -61,18 +60,18 @@ namespace Queue.Reports.AdditionalServicesRatingReport
                 ClientRequest request = null;
                 AdditionalService additionalService = null;
 
-                ClientRequestAdditionalServiceQuery query = session.QueryOver(() => service)
-                                                                    .JoinAlias(() => service.ClientRequest, () => request)
-                                                                    .JoinAlias(() => service.AdditionalService, () => additionalService)
-                                                                    .Where(Restrictions.On(() => request.RequestDate).IsBetween(startDate).And(finishDate))
-                                                                    .Where(Restrictions.On(() => request.State).IsIn(new[] { ClientRequestState.Rendered }));
+                var query = session.QueryOver(() => service)
+                                .JoinAlias(() => service.ClientRequest, () => request)
+                                .JoinAlias(() => service.AdditionalService, () => additionalService)
+                                .Where(Restrictions.On(() => request.RequestDate).IsBetween(startDate).And(finishDate))
+                                .Where(Restrictions.On(() => request.State).IsIn(new[] { ClientRequestState.Rendered }));
 
                 if (settings.Services.Length > 0)
                 {
                     query.Where(Restrictions.On(() => additionalService.Id).IsIn(settings.Services));
                 }
 
-                IList<T> results = query.SelectList(CreateProjections)
+              var results = query.SelectList(CreateProjections)
                                         .TransformUsing(Transformers.AliasToBean<T>())
                                         .Where(Restrictions.Gt(Projections.Count<T>(f => f.Quantity), 0))
                                         .List<T>();
@@ -82,14 +81,14 @@ namespace Queue.Reports.AdditionalServicesRatingReport
                     throw new FaultException("Пустой отчет");
                 }
 
-                HSSFWorkbook workbook = new HSSFWorkbook(new MemoryStream(Templates.AdditionalServiceRating));
-                ISheet worksheet = workbook.GetSheetAt(0);
+                var workbook = new HSSFWorkbook(new MemoryStream(Templates.AdditionalServiceRating));
+                var worksheet = workbook.GetSheetAt(0);
                 worksheet.CreateFreezePane(6, 2);
 
                 CreateCellStyles(worksheet);
 
-                IRow row = worksheet.GetRow(0);
-                ICell cell = row.CreateCell(0);
+                var row = worksheet.GetRow(0);
+                var cell = row.CreateCell(0);
                 cell.SetCellValue(string.Format("Период с {0} по {1}", startDate.ToShortDateString(), finishDate.ToShortDateString()));
                 cell.CellStyle = boldCellStyle;
 
@@ -103,7 +102,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
         private void CreateCellStyles(ISheet worksheet)
         {
             boldCellStyle = worksheet.Workbook.CreateCellStyle();
-            IFont font = worksheet.Workbook.CreateFont();
+            var font = worksheet.Workbook.CreateFont();
             font.Boldweight = 1000;
             boldCellStyle.SetFont(font);
 
@@ -147,7 +146,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
         private AdditionalService[] InternalGetAdditionalServices(ISession session)
         {
-            IQueryOver<AdditionalService, AdditionalService> query = session.QueryOver<AdditionalService>();
+          var query = session.QueryOver<AdditionalService>();
             if (settings.Services.Length > 0)
             {
                 query.Where(s => s.Id.IsIn(settings.Services));
@@ -160,18 +159,18 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
         private void WriteOperatorsHeader(ISheet worksheet, ISession session)
         {
-            IRow nameRow = worksheet.GetRow(0);
-            IRow statRow = worksheet.GetRow(1);
-            IRow formulaRow = worksheet.GetRow(2);
-            ICellStyle statStyle = statRow.GetCell(4).CellStyle;
+            var nameRow = worksheet.GetRow(0);
+            var statRow = worksheet.GetRow(1);
+            var formulaRow = worksheet.GetRow(2);
+            var statStyle = statRow.GetCell(4).CellStyle;
 
-            IFont font = worksheet.Workbook.CreateFont();
+            var font = worksheet.Workbook.CreateFont();
             font.Boldweight = 1000;
 
             int col = StartOperatorsStatisticsCol;
-            foreach (Operator oper in GetOperators(session))
+            foreach (var oper in GetOperators(session))
             {
-                ICell cell = nameRow.CreateCell(col);
+                var cell = nameRow.CreateCell(col);
                 cell.SetCellValue(oper.ToString());
                 cell.CellStyle.SetFont(font);
                 cell.CellStyle.Alignment = HorizontalAlignment.Center;
@@ -199,21 +198,21 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
         protected void RenderServiceRating(IRow row, AdditionalService service, AdditionalServiceRating[] ratings)
         {
-            Single totalCount = 0;
+            float totalCount = 0;
             int col = StartOperatorsStatisticsCol;
 
-            foreach (Operator oper in operators)
+            foreach (var oper in operators)
             {
-                AdditionalServiceRating rating = ratings.SingleOrDefault(r => r.Operator.Equals(oper) && r.Service.Equals(service));
+                var rating = ratings.SingleOrDefault(r => r.Operator.Equals(oper) && r.Service.Equals(service));
                 if (rating != null)
                 {
                     totalCount += rating.Quantity;
                 }
 
-                ICell cntCol = row.CreateCell(col);
+                var cntCol = row.CreateCell(col);
                 cntCol.CellStyle = countCellStyle;
 
-                ICell sumCol = row.CreateCell(col + 1);
+                var sumCol = row.CreateCell(col + 1);
                 sumCol.CellStyle = sumCellStyle;
 
                 if (rating != null)
@@ -225,7 +224,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
                 col += 2;
             }
 
-            ICell cell = row.CreateCell(4);
+            var cell = row.CreateCell(4);
             cell.CellStyle = countCellStyle;
             cell.SetCellValue(totalCount);
 
@@ -236,16 +235,16 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
         protected void WriteBoldCell(IRow row, int cellIndex, Action<ICell> setValue)
         {
-            ICell cell = row.CreateCell(cellIndex);
+            var cell = row.CreateCell(cellIndex);
             setValue(cell);
             cell.CellStyle = CreateCellBoldStyle(row.Sheet.Workbook);
         }
 
         protected ICellStyle CreateCellBoldStyle(IWorkbook workBook)
         {
-            ICellStyle style = workBook.CreateCellStyle();
+            var style = workBook.CreateCellStyle();
 
-            IFont font = workBook.CreateFont();
+            var font = workBook.CreateFont();
             font.Boldweight = 1000;
             style.SetFont(font);
 

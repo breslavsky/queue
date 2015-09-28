@@ -21,7 +21,7 @@ namespace Queue.Reports.ServiceRatingReport
             worksheet.SetColumnHidden(2, true);
             worksheet.SetColumnHidden(3, true);
 
-            ReportDataItem[] items = data.GroupBy(y => y.Year)
+            var items = data.GroupBy(y => y.Year)
                                            .Select(y => new ReportDataItem()
                                            {
                                                Year = y.Key,
@@ -30,11 +30,10 @@ namespace Queue.Reports.ServiceRatingReport
                                            .OrderBy(y => y.Year)
                                            .ToArray();
 
-            int rowIndex = worksheet.LastRowNum + 1;
+            var rowIndex = worksheet.LastRowNum + 1;
+            var root = GetServicesHierarchy();
 
-            ServiceGroupDto root = GetServicesHierarchy();
-
-            foreach (ReportDataItem item in items)
+            foreach (var item in items)
             {
                 WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(item.Year));
                 WriteServicesRatings(worksheet, item.Ratings, root, ref  rowIndex);

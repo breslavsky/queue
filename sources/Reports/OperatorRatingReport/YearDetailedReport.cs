@@ -21,23 +21,23 @@ namespace Queue.Reports.OperatorRatingReport
             worksheet.SetColumnHidden(2, true);
             worksheet.SetColumnHidden(3, true);
 
-            ReportDataItem[] items = data.GroupBy(y => y.Year)
-                                            .Select(y => new ReportDataItem()
-                                                            {
-                                                                Year = y.Key,
-                                                                Ratings = GetOperatorsRatings(y.ToArray())
-                                                            })
-                                            .OrderBy(y => y.Year)
-                                            .ToArray();
+           var items = data.GroupBy(y => y.Year)
+                            .Select(y => new ReportDataItem()
+                                            {
+                                                Year = y.Key,
+                                                Ratings = GetOperatorsRatings(y.ToArray())
+                                            })
+                            .OrderBy(y => y.Year)
+                            .ToArray();
 
             int rowIndex = worksheet.LastRowNum + 1;
-            foreach (ReportDataItem item in items)
+            foreach (var item in items)
             {
                 WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(item.Year));
 
-                foreach (OperatorRating rating in item.Ratings)
+                foreach (var rating in item.Ratings)
                 {
-                    IRow row = worksheet.CreateRow(rowIndex++);
+                    var row = worksheet.CreateRow(rowIndex++);
                     WriteBoldCell(row, 4, c => c.SetCellValue(rating.Operator.ToString()));
                     RenderRating(row, rating);
                 }
