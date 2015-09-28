@@ -18,23 +18,23 @@ namespace Queue.Reports.ServiceRatingReport
 
         protected override void RenderData(ISheet worksheet, ServiceDayRating[] data)
         {
-            YearReportDataItem[] items = GetItems(data);
+            var items = GetItems(data);
 
             worksheet.SetColumnHidden(3, true);
 
-            ServiceGroupDto root = GetServicesHierarchy();
+            var root = GetServicesHierarchy();
 
             int rowIndex = worksheet.LastRowNum + 1;
-            foreach (YearReportDataItem year in items)
+            foreach (var year in items)
             {
                 WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(year.Year));
 
-                foreach (MonthReportDataItem month in year.Months)
+                foreach (var month in year.Months)
                 {
                     WriteBoldCell(worksheet.CreateRow(rowIndex++), 1, c =>
                             c.SetCellValue(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month.Month)));
 
-                    foreach (DayReportDataItem day in month.Days)
+                    foreach (var day in month.Days)
                     {
                         WriteBoldCell(worksheet.CreateRow(rowIndex++), 2, c => c.SetCellValue(day.Day));
                         WriteServicesRatings(worksheet, day.Ratings, root, ref  rowIndex);

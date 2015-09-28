@@ -51,15 +51,15 @@ namespace Queue.Reports.OperatorRatingReport
 
         public HSSFWorkbook Generate()
         {
-            DateTime startDate = GetStartDate();
-            DateTime finishDate = GetFinishDate();
+            var startDate = GetStartDate();
+            var finishDate = GetFinishDate();
 
             if (startDate > finishDate)
             {
                 throw new FaultException("Начальная дата не может быть больше чем конечная");
             }
 
-            Conjunction conjunction = Expression.Conjunction();
+            var conjunction = Expression.Conjunction();
             if (settings.Operators.Length > 0)
             {
                 conjunction.Add(Expression.In("Operator.Id", settings.Operators));
@@ -72,7 +72,7 @@ namespace Queue.Reports.OperatorRatingReport
             conjunction.Add(Expression.Ge("RequestDate", startDate));
             conjunction.Add(Expression.Le("RequestDate", finishDate));
 
-            ProjectionList projections = GetProjections();
+            var projections = GetProjections();
 
             using (var session = SessionProvider.OpenSession())
             {
@@ -88,18 +88,15 @@ namespace Queue.Reports.OperatorRatingReport
                     throw new FaultException("Пустой отчет");
                 }
 
-                HSSFWorkbook workbook = new HSSFWorkbook(new MemoryStream(Templates.OperatorRating));
-                ISheet worksheet = workbook.GetSheetAt(0);
+                var workbook = new HSSFWorkbook(new MemoryStream(Templates.OperatorRating));
+                var worksheet = workbook.GetSheetAt(0);
 
-                IDataFormat format = workbook.CreateDataFormat();
-                ICellStyle boldCellStyle = CreateCellBoldStyle(workbook);
+                var format = workbook.CreateDataFormat();
+                var boldCellStyle = CreateCellBoldStyle(workbook);
+                var rowIndex = worksheet.LastRowNum + 1;
 
-                IRow row;
-                ICell cell;
-                int rowIndex = worksheet.LastRowNum + 1;
-
-                row = worksheet.GetRow(0);
-                cell = row.CreateCell(0);
+                IRow row = worksheet.GetRow(0);
+                ICell cell = row.CreateCell(0);
                 cell.SetCellValue(string.Format("Период с {0} по {1}", startDate.ToShortDateString(), finishDate.ToShortDateString()));
                 cell.CellStyle = boldCellStyle;
 
@@ -119,7 +116,7 @@ namespace Queue.Reports.OperatorRatingReport
 
         protected ProjectionList GetCommonProjections()
         {
-            ProjectionList projections = Projections.ProjectionList();
+            var projections = Projections.ProjectionList();
 
             projections
                 .Add(Projections.GroupProperty("Operator"))
@@ -156,6 +153,7 @@ namespace Queue.Reports.OperatorRatingReport
                     Projections.Constant(TimeSpan.Zero, NHibernateUtil.TimeSpan))), "WaitingTime")
 
                 .Add(Projections.Sum("Subjects"), "SubjectsTotal")
+                .Add(Projections.Avg("Rating"), "RatingAvg")
 
                 .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("Type", ClientRequestType.Live),
                     Projections.Property("Subjects"), Projections.Constant(0, NHibernateUtil.Int32))), "SubjectsLive")
@@ -168,16 +166,16 @@ namespace Queue.Reports.OperatorRatingReport
 
         protected void WriteBoldCell(IRow row, int cellIndex, Action<ICell> setValue)
         {
-            ICell cell = row.CreateCell(cellIndex);
+            var cell = row.CreateCell(cellIndex);
             setValue(cell);
             cell.CellStyle = CreateCellBoldStyle(row.Sheet.Workbook);
         }
 
         protected ICellStyle CreateCellBoldStyle(IWorkbook workBook)
         {
-            ICellStyle boldCellStyle = workBook.CreateCellStyle();
+            var boldCellStyle = workBook.CreateCellStyle();
 
-            IFont font = workBook.CreateFont();
+            var font = workBook.CreateFont();
             font.Boldweight = 1000;
             boldCellStyle.SetFont(font);
 
@@ -214,11 +212,11 @@ namespace Queue.Reports.OperatorRatingReport
 
         internal OperatorRating[] GetOperatorsRatings(OperatorRating[] input)
         {
-            List<OperatorRating> result = new List<OperatorRating>();
+            var result = new List<OperatorRating>();
 
-            foreach (Operator op in allOperators.Value)
+            foreach (var op in allOperators.Value)
             {
-                OperatorRating rating = input.SingleOrDefault(o => o.Operator.Equals(op));
+                var rating = input.SingleOrDefault(o => o.Operator.Equals(op));
                 if (rating == null)
                 {
                     rating = new OperatorRating()

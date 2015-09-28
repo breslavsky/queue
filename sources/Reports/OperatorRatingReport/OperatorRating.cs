@@ -30,5 +30,7 @@ namespace Queue.Reports.OperatorRatingReport
         public int SubjectsLive { get; set; }
 
         public int SubjectsEarly { get; set; }
+
+        public double RatingAvg { get; set; }
     }
 }

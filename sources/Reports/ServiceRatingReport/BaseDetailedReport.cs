@@ -39,15 +39,15 @@ namespace Queue.Reports.ServiceRatingReport
 
         public HSSFWorkbook Generate()
         {
-            DateTime startDate = GetStartDate();
-            DateTime finishDate = GetFinishDate();
+            var startDate = GetStartDate();
+            var finishDate = GetFinishDate();
 
             if (startDate > finishDate)
             {
                 throw new FaultException("Начальная дата не может быть больше чем конечная");
             }
 
-            Conjunction conjunction = Expression.Conjunction();
+            var conjunction = Expression.Conjunction();
             if (settings.Services.Length > 0)
             {
                 conjunction.Add(Expression.In("Service.Id", settings.Services));
@@ -138,6 +138,7 @@ namespace Queue.Reports.ServiceRatingReport
                     Projections.Constant(TimeSpan.Zero, NHibernateUtil.TimeSpan))), "WaitingTime")
 
                 .Add(Projections.Sum("Subjects"), "SubjectsTotal")
+                .Add(Projections.Avg("Rating"), "RatingAvg")
 
                 .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("Type", ClientRequestType.Live),
                     Projections.Property("Subjects"), Projections.Constant(0, NHibernateUtil.Int32))), "SubjectsLive")
