@@ -220,8 +220,6 @@ namespace Queue.Services.Server
                                 requestTime = planTime;
                             }
 
-                            Report.Add(string.Format("Определено расписание для услуги [{0}]", schedule));
-
                             var operatorPlanMetrics = potentialOperatorsPlans
                                 .Select(p => new
                                 {
@@ -496,7 +494,7 @@ namespace Queue.Services.Server
 
             if (PlanDate != DateTime.Today)
             {
-                int maxRequests = (int)((schedule.EarlyFinishTime - schedule.EarlyStartTime).Ticks / clientInterval.Ticks) * potentialOperatorsPlans.Count; ;
+                int maxRequests = (int)((schedule.EarlyFinishTime - schedule.EarlyStartTime).Ticks / clientInterval.Ticks) * potentialOperatorsPlans.Count;
                 report.Add(string.Format("Максимальное кол-во запросов {0}", maxRequests));
 
                 int maxEarlyClientRequests = maxRequests * schedule.EarlyReservation / 100;
@@ -538,7 +536,7 @@ namespace Queue.Services.Server
         /// </summary>
         public ServiceRendering[] GetServiceRenderings(Schedule schedule, ServiceStep serviceStep, ServiceRenderingMode serviceRenderingMode)
         {
-            ServiceRenderingKey key = new ServiceRenderingKey(schedule, serviceStep, serviceRenderingMode);
+            var key = new ServiceRenderingKey(schedule, serviceStep, serviceRenderingMode);
 
             if (!serviceRenderings.ContainsKey(key))
             {
