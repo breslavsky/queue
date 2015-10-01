@@ -42,9 +42,6 @@ namespace Queue.Services.DTO
             [DataMember]
             public bool IsEditable { get; set; }
 
-            [DataMember]
-            public bool IsRestorable { get; set; }
-
             public virtual string Color
             {
                 get

@@ -137,7 +137,10 @@ namespace Queue.Services.Contracts
         Task UpdateCurrentClientRequest(ClientRequestState state);
 
         [OperationContract]
-        Task RedirectCurrentClientRequest(Guid redirectOperatorId);
+        Task RedirectToOperatorCurrentClientRequest(Guid redirectOperatorId);
+
+        [OperationContract]
+        Task CallClientByRequestNumber(int number);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]

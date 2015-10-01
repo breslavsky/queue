@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Junte.Translation;
+using NHibernate.Criterion;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -106,15 +107,17 @@ namespace Queue.Services.Server
             {
                 CheckPermission(UserRole.Operator);
 
-                var queueOperator = (Operator)currentUser;
-
                 using (var session = SessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
+                    var queueOperator = (Operator)currentUser;
+
+                    ClientRequest clientRequest;
+
                     try
                     {
                         var todayQueuePlan = QueueInstance.TodayQueuePlan;
-                        using (var locker = todayQueuePlan.WriteLock())
+                        using (var locker = todayQueuePlan.ReadLock())
                         {
                             var currentClientRequestPlan = todayQueuePlan.GetOperatorPlan(queueOperator)
                                 .CurrentClientRequestPlan;
@@ -123,23 +126,27 @@ namespace Queue.Services.Server
                                 throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(queueOperator.GetId()), string.Format("Текущий запрос клиента не найден у оператора [{0}]", queueOperator));
                             }
 
-                            var clientRequest = session.Merge(currentClientRequestPlan.ClientRequest);
-                            clientRequest.CallingLastTime = DateTime.Now.TimeOfDay;
-                            session.Save(clientRequest);
+                            clientRequest = session.Merge(currentClientRequestPlan.ClientRequest);
+                        }
 
-                            var queueEvent = new ClientRequestEvent()
-                            {
-                                ClientRequest = clientRequest,
-                                Message = string.Format("Оператор [{0}] вызывает клиента", clientRequest.Operator)
-                            };
-                            session.Save(queueEvent);
+                        clientRequest.CallingLastTime = DateTime.Now.TimeOfDay;
+                        session.Save(clientRequest);
 
+                        var queueEvent = new ClientRequestEvent()
+                        {
+                            ClientRequest = clientRequest,
+                            Message = string.Format("Оператор [{0}] вызывает клиента", clientRequest.Operator)
+                        };
+                        session.Save(queueEvent);
+
+                        using (var locker = todayQueuePlan.WriteLock())
+                        {
                             transaction.Commit();
 
                             todayQueuePlan.Put(clientRequest);
-
-                            QueueInstance.CallClient(clientRequest);
                         }
+
+                        QueueInstance.CallClient(clientRequest);
                     }
                     catch (Exception exception)
                     {
@@ -235,24 +242,21 @@ namespace Queue.Services.Server
                                 {
                                     case ClientRequestState.Rendered:
 
-                                        if (clientRequest.Service.IsUseType
-                                            && clientRequest.ServiceType == ServiceType.None)
+                                        if (!clientRequest.NextStep(session))
                                         {
-                                            throw new Exception("Укажите тип услуги перед окончанием обслуживания");
-                                        }
+                                            if (clientRequest.Service.IsUseType
+                                                && clientRequest.ServiceType == ServiceType.None)
+                                            {
+                                                throw new Exception("Укажите тип услуги перед окончанием обслуживания");
+                                            }
 
-                                        using (var locker = todayQueuePlan.ReadLock())
+                                            clientRequest.Rendered();
+                                            message = string.Format("Завершено обслуживание клиента [{0}] у оператора [{1}] с производительностью {2:00.00}%",
+                                                client, queueOperator, clientRequest.Productivity);
+                                        }
+                                        else
                                         {
-                                            if (!clientRequest.NextStep(session))
-                                            {
-                                                clientRequest.Rendered();
-                                                message = string.Format("Завершено обслуживание клиента [{0}] у оператора [{1}] с производительностью {2:00.00}%",
-                                                    client, queueOperator, clientRequest.Productivity);
-                                            }
-                                            else
-                                            {
-                                                message = string.Format("Запросу установлен следующий этап оказания услуги [{0}]", clientRequest.ServiceStep);
-                                            }
+                                            message = string.Format("Запросу установлен следующий этап оказания услуги [{0}]", clientRequest.ServiceStep);
                                         }
 
                                         break;
@@ -297,7 +301,7 @@ namespace Queue.Services.Server
             });
         }
 
-        public async Task RedirectCurrentClientRequest(Guid redirectOperatorId)
+        public async Task RedirectToOperatorCurrentClientRequest(Guid redirectOperatorId)
         {
             await Task.Run(() =>
             {
@@ -348,6 +352,160 @@ namespace Queue.Services.Server
 
                         QueueInstance.ClientRequestUpdated(clientRequest);
                         QueueInstance.Event(queueEvent);
+                    }
+                    catch (Exception exception)
+                    {
+                        throw new FaultException(exception.Message);
+                    }
+                }
+            });
+        }
+
+        public async Task CallClientByRequestNumber(int number)
+        {
+            await Task.Run(() =>
+            {
+                CheckPermission(UserRole.Operator);
+
+                using (var session = SessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    var queueOperator = (Operator)currentUser;
+
+                    try
+                    {
+                        var events = new List<ClientRequestEvent>();
+
+                        ClientRequest currentClientRequest = null;
+
+                        var currentClientRequestPlan = QueueInstance.TodayQueuePlan
+                            .GetOperatorPlan(queueOperator).CurrentClientRequestPlan;
+
+                        if (currentClientRequestPlan != null)
+                        {
+                            currentClientRequest = session.Merge(currentClientRequestPlan.ClientRequest);
+                            switch (currentClientRequest.State)
+                            {
+                                case ClientRequestState.Calling:
+
+                                    currentClientRequest.Return();
+
+                                    currentClientRequest.Version++;
+                                    session.Save(currentClientRequest);
+                                    {
+                                        var queueEvent = new ClientRequestEvent()
+                                        {
+                                            ClientRequest = currentClientRequest,
+                                            Message = string.Format("Запрос клиента возвращен в очередь {0}", queueOperator)
+                                        };
+                                        session.Save(queueEvent);
+                                        events.Add(queueEvent);
+                                    }
+
+                                    break;
+
+                                case ClientRequestState.Rendering:
+
+                                    if (!currentClientRequest.NextStep(session))
+                                    {
+                                        if (currentClientRequest.Service.IsUseType
+                                            && currentClientRequest.ServiceType == ServiceType.None)
+                                        {
+                                            throw new Exception("Укажите тип услуги перед окончанием обслуживания");
+                                        }
+
+                                        currentClientRequest.Rendered();
+
+                                        currentClientRequest.Version++;
+                                        session.Save(currentClientRequest);
+                                        {
+                                            var queueEvent = new ClientRequestEvent()
+                                            {
+                                                ClientRequest = currentClientRequest,
+                                                Message = string.Format("Завершено обслуживание клиента [{0}] у оператора [{1}] с производительностью {2:00.00}%",
+                                                    currentClientRequest.Client, queueOperator, currentClientRequest.Productivity)
+                                            };
+                                            session.Save(queueEvent);
+                                            events.Add(queueEvent);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var queueEvent = new ClientRequestEvent()
+                                        {
+                                            ClientRequest = currentClientRequest,
+                                            Message = string.Format("Запросу установлен следующий этап оказания услуги [{0}]", currentClientRequest.ServiceStep)
+                                        };
+                                        session.Save(queueEvent);
+                                        events.Add(queueEvent);
+                                    }
+
+                                    break;
+                            }
+                        }
+
+                        var clientRequest = session.CreateCriteria<ClientRequest>()
+                            .Add(Restrictions.Eq("RequestDate", DateTime.Today))
+                            .Add(Restrictions.Eq("Number", number))
+                            .UniqueResult<ClientRequest>();
+                        if (clientRequest == null)
+                        {
+                            throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(number),
+                                string.Format("Запрос клиента [{0}] не найден", number));
+                        }
+
+                        if (clientRequest.IsClosed)
+                        {
+                            clientRequest.Restore();
+                            {
+                                var queueEvent = new ClientRequestEvent()
+                                {
+                                    ClientRequest = currentClientRequest,
+                                    Message = string.Format("Запрос клиента [{0}] восстановлен", clientRequest)
+                                };
+                                session.Save(queueEvent);
+                                events.Add(queueEvent);
+                            }
+                        }
+
+                        clientRequest.Calling(queueOperator);
+
+                        {
+                            var queueEvent = new ClientRequestEvent()
+                            {
+                                ClientRequest = clientRequest,
+                                Message = string.Format("Запрос клиента вызван по номеру к оператору {0}", queueOperator)
+                            };
+
+                            session.Save(queueEvent);
+                            QueueInstance.Event(queueEvent);
+                        }
+
+                        clientRequest.Version++;
+                        session.Save(clientRequest);
+
+                        var todayQueuePlan = QueueInstance.TodayQueuePlan;
+                        using (var locker = todayQueuePlan.WriteLock())
+                        {
+                            transaction.Commit();
+
+                            if (currentClientRequest != null)
+                            {
+                                todayQueuePlan.Put(currentClientRequest);
+                                QueueInstance.ClientRequestUpdated(currentClientRequest);
+                            }
+
+                            todayQueuePlan.AddClientRequest(clientRequest);
+                            todayQueuePlan.Build(DateTime.Now.TimeOfDay);
+
+                            QueueInstance.ClientRequestUpdated(clientRequest);
+                            QueueInstance.CallClient(clientRequest);
+                        }
+
+                        foreach (var e in events)
+                        {
+                            QueueInstance.Event(e);
+                        }
                     }
                     catch (Exception exception)
                     {

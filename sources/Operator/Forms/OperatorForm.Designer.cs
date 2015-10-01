@@ -42,9 +42,10 @@ namespace Queue.Operator
             this.logoutButton = new System.Windows.Forms.Button();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.currentClientRequestTab = new System.Windows.Forms.TabPage();
-            this.commentSaveLink = new System.Windows.Forms.LinkLabel();
-            this.commentLabel = new System.Windows.Forms.Label();
-            this.commentTextBox = new System.Windows.Forms.TextBox();
+            this.actionsMenu = new System.Windows.Forms.MenuStrip();
+            this.additionalMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.callClientByRequestNumberMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.redirectToOperatorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.numberLabel = new System.Windows.Forms.Label();
             this.numberTextBlock = new System.Windows.Forms.Label();
             this.isPriorityCheckBox = new System.Windows.Forms.CheckBox();
@@ -66,6 +67,9 @@ namespace Queue.Operator
             this.serviceStepControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.stateLabel = new System.Windows.Forms.Label();
             this.stateTextBlock = new System.Windows.Forms.Label();
+            this.commentLabel = new System.Windows.Forms.Label();
+            this.commentTextBox = new System.Windows.Forms.TextBox();
+            this.commentSaveLink = new System.Windows.Forms.LinkLabel();
             this.digitalTimer = new Queue.UI.WinForms.DigitalTimer();
             this.clientRequestTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -83,6 +87,10 @@ namespace Queue.Operator
             this.stepPanel = new System.Windows.Forms.Panel();
             this.step1Panel = new System.Windows.Forms.Panel();
             this.callClientButton = new System.Windows.Forms.Button();
+            this.step2Panel = new System.Windows.Forms.Panel();
+            this.recallingButton = new System.Windows.Forms.Button();
+            this.renderingButton = new System.Windows.Forms.Button();
+            this.absenceButton = new System.Windows.Forms.Button();
             this.step3Panel = new System.Windows.Forms.Panel();
             this.renderedButton = new System.Windows.Forms.Button();
             this.returnButton = new System.Windows.Forms.Button();
@@ -91,13 +99,6 @@ namespace Queue.Operator
             this.label1 = new System.Windows.Forms.Label();
             this.postponeMinutesUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.redirectGroupBox = new System.Windows.Forms.GroupBox();
-            this.redirectOperatorControl = new Queue.UI.WinForms.IdentifiedEntityControl();
-            this.reloadRedirectOperator = new System.Windows.Forms.Button();
-            this.step2Panel = new System.Windows.Forms.Panel();
-            this.recallingButton = new System.Windows.Forms.Button();
-            this.renderingButton = new System.Windows.Forms.Button();
-            this.absenceButton = new System.Windows.Forms.Button();
             this.clientRequestsTab = new System.Windows.Forms.TabPage();
             this.clientRequestsGridView = new System.Windows.Forms.DataGridView();
             this.numberColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -111,6 +112,7 @@ namespace Queue.Operator
             this.panel1.SuspendLayout();
             this.mainTabControl.SuspendLayout();
             this.currentClientRequestTab.SuspendLayout();
+            this.actionsMenu.SuspendLayout();
             this.subjectsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).BeginInit();
             this.clientRequestTabControl.SuspendLayout();
@@ -122,11 +124,10 @@ namespace Queue.Operator
             ((System.ComponentModel.ISupportInitialize)(this.additionalServicesBindingSource)).BeginInit();
             this.stepPanel.SuspendLayout();
             this.step1Panel.SuspendLayout();
+            this.step2Panel.SuspendLayout();
             this.step3Panel.SuspendLayout();
             this.postponeGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).BeginInit();
-            this.redirectGroupBox.SuspendLayout();
-            this.step2Panel.SuspendLayout();
             this.clientRequestsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clientRequestsGridView)).BeginInit();
             this.SuspendLayout();
@@ -268,9 +269,7 @@ namespace Queue.Operator
             // 
             // currentClientRequestTab
             // 
-            this.currentClientRequestTab.Controls.Add(this.commentSaveLink);
-            this.currentClientRequestTab.Controls.Add(this.commentLabel);
-            this.currentClientRequestTab.Controls.Add(this.commentTextBox);
+            this.currentClientRequestTab.Controls.Add(this.actionsMenu);
             this.currentClientRequestTab.Controls.Add(this.numberLabel);
             this.currentClientRequestTab.Controls.Add(this.numberTextBlock);
             this.currentClientRequestTab.Controls.Add(this.isPriorityCheckBox);
@@ -290,6 +289,9 @@ namespace Queue.Operator
             this.currentClientRequestTab.Controls.Add(this.serviceStepControl);
             this.currentClientRequestTab.Controls.Add(this.stateLabel);
             this.currentClientRequestTab.Controls.Add(this.stateTextBlock);
+            this.currentClientRequestTab.Controls.Add(this.commentLabel);
+            this.currentClientRequestTab.Controls.Add(this.commentTextBox);
+            this.currentClientRequestTab.Controls.Add(this.commentSaveLink);
             this.currentClientRequestTab.Controls.Add(this.digitalTimer);
             this.currentClientRequestTab.Controls.Add(this.clientRequestTabControl);
             this.currentClientRequestTab.Controls.Add(this.stepPanel);
@@ -300,33 +302,41 @@ namespace Queue.Operator
             this.currentClientRequestTab.Text = "Текущий запрос клиента";
             this.currentClientRequestTab.UseVisualStyleBackColor = true;
             // 
-            // commentSaveLink
+            // actionsMenu
             // 
-            this.commentSaveLink.AutoSize = true;
-            this.commentSaveLink.Location = new System.Drawing.Point(260, 340);
-            this.commentSaveLink.Name = "commentSaveLink";
-            this.commentSaveLink.Size = new System.Drawing.Size(65, 13);
-            this.commentSaveLink.TabIndex = 14;
-            this.commentSaveLink.TabStop = true;
-            this.commentSaveLink.Text = "[сохранить]";
-            this.commentSaveLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.commentSaveLink_LinkClicked);
+            this.actionsMenu.Dock = System.Windows.Forms.DockStyle.None;
+            this.actionsMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
+            this.actionsMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.additionalMenu});
+            this.actionsMenu.Location = new System.Drawing.Point(330, 5);
+            this.actionsMenu.Name = "actionsMenu";
+            this.actionsMenu.Size = new System.Drawing.Size(135, 24);
+            this.actionsMenu.TabIndex = 15;
+            this.actionsMenu.Text = "menuStrip1";
             // 
-            // commentLabel
+            // additionalMenu
             // 
-            this.commentLabel.Location = new System.Drawing.Point(5, 295);
-            this.commentLabel.Name = "commentLabel";
-            this.commentLabel.Size = new System.Drawing.Size(115, 40);
-            this.commentLabel.TabIndex = 13;
-            this.commentLabel.Text = "Комментарий";
-            this.commentLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.additionalMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.callClientByRequestNumberMenuItem,
+            this.redirectToOperatorMenuItem});
+            this.additionalMenu.Image = ((System.Drawing.Image)(resources.GetObject("additionalMenu.Image")));
+            this.additionalMenu.Name = "additionalMenu";
+            this.additionalMenu.Size = new System.Drawing.Size(123, 20);
+            this.additionalMenu.Text = "Дополнительно";
             // 
-            // commentTextBox
+            // callClientByRequestNumberMenuItem
             // 
-            this.commentTextBox.Location = new System.Drawing.Point(120, 295);
-            this.commentTextBox.Multiline = true;
-            this.commentTextBox.Name = "commentTextBox";
-            this.commentTextBox.Size = new System.Drawing.Size(200, 40);
-            this.commentTextBox.TabIndex = 12;
+            this.callClientByRequestNumberMenuItem.Name = "callClientByRequestNumberMenuItem";
+            this.callClientByRequestNumberMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.callClientByRequestNumberMenuItem.Text = "Вызвать но номеру";
+            this.callClientByRequestNumberMenuItem.Click += new System.EventHandler(this.callClientByRequestNumberMenuItem_Click);
+            // 
+            // redirectToOperatorMenuItem
+            // 
+            this.redirectToOperatorMenuItem.Name = "redirectToOperatorMenuItem";
+            this.redirectToOperatorMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.redirectToOperatorMenuItem.Text = "Передать оператору";
+            this.redirectToOperatorMenuItem.Click += new System.EventHandler(this.redirectToOperatorMenuItem_Click);
             // 
             // numberLabel
             // 
@@ -530,6 +540,34 @@ namespace Queue.Operator
             this.stateTextBlock.Size = new System.Drawing.Size(135, 20);
             this.stateTextBlock.TabIndex = 0;
             // 
+            // commentLabel
+            // 
+            this.commentLabel.Location = new System.Drawing.Point(5, 295);
+            this.commentLabel.Name = "commentLabel";
+            this.commentLabel.Size = new System.Drawing.Size(115, 40);
+            this.commentLabel.TabIndex = 13;
+            this.commentLabel.Text = "Комментарий";
+            this.commentLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // commentTextBox
+            // 
+            this.commentTextBox.Location = new System.Drawing.Point(120, 295);
+            this.commentTextBox.Multiline = true;
+            this.commentTextBox.Name = "commentTextBox";
+            this.commentTextBox.Size = new System.Drawing.Size(200, 40);
+            this.commentTextBox.TabIndex = 12;
+            // 
+            // commentSaveLink
+            // 
+            this.commentSaveLink.AutoSize = true;
+            this.commentSaveLink.Location = new System.Drawing.Point(260, 340);
+            this.commentSaveLink.Name = "commentSaveLink";
+            this.commentSaveLink.Size = new System.Drawing.Size(65, 13);
+            this.commentSaveLink.TabIndex = 14;
+            this.commentSaveLink.TabStop = true;
+            this.commentSaveLink.Text = "[сохранить]";
+            this.commentSaveLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.commentSaveLink_LinkClicked);
+            // 
             // digitalTimer
             // 
             this.digitalTimer.Location = new System.Drawing.Point(260, 270);
@@ -579,13 +617,14 @@ namespace Queue.Operator
             this.nameDataGridViewTextBoxColumn,
             this.valueDataGridViewTextBoxColumn});
             this.parametersGridView.DataSource = this.parametersBindingSource;
-            this.parametersGridView.Location = new System.Drawing.Point(5, 5);
+            this.parametersGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.parametersGridView.Location = new System.Drawing.Point(3, 3);
             this.parametersGridView.MultiSelect = false;
             this.parametersGridView.Name = "parametersGridView";
             this.parametersGridView.ReadOnly = true;
             this.parametersGridView.RowHeadersVisible = false;
             this.parametersGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.parametersGridView.Size = new System.Drawing.Size(465, 120);
+            this.parametersGridView.Size = new System.Drawing.Size(471, 84);
             this.parametersGridView.TabIndex = 0;
             // 
             // nameDataGridViewTextBoxColumn
@@ -652,13 +691,14 @@ namespace Queue.Operator
             this.quantityDataGridViewTextBoxColumn,
             this.Sum});
             this.additionalServicesGridView.DataSource = this.additionalServicesBindingSource;
-            this.additionalServicesGridView.Location = new System.Drawing.Point(5, 5);
+            this.additionalServicesGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.additionalServicesGridView.Location = new System.Drawing.Point(3, 3);
             this.additionalServicesGridView.MultiSelect = false;
             this.additionalServicesGridView.Name = "additionalServicesGridView";
             this.additionalServicesGridView.ReadOnly = true;
             this.additionalServicesGridView.RowHeadersVisible = false;
             this.additionalServicesGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.additionalServicesGridView.Size = new System.Drawing.Size(465, 90);
+            this.additionalServicesGridView.Size = new System.Drawing.Size(471, 84);
             this.additionalServicesGridView.TabIndex = 12;
             this.additionalServicesGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.additionalServicesGridView_CellMouseDoubleClick);
             this.additionalServicesGridView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.additionalServicesGridView_UserDeletingRow);
@@ -703,9 +743,9 @@ namespace Queue.Operator
             // stepPanel
             // 
             this.stepPanel.Controls.Add(this.step1Panel);
-            this.stepPanel.Controls.Add(this.step3Panel);
             this.stepPanel.Controls.Add(this.step2Panel);
-            this.stepPanel.Location = new System.Drawing.Point(330, 10);
+            this.stepPanel.Controls.Add(this.step3Panel);
+            this.stepPanel.Location = new System.Drawing.Point(330, 35);
             this.stepPanel.Margin = new System.Windows.Forms.Padding(0);
             this.stepPanel.Name = "stepPanel";
             this.stepPanel.Size = new System.Drawing.Size(155, 335);
@@ -729,12 +769,49 @@ namespace Queue.Operator
             this.callClientButton.Text = "Вызвать клиента";
             this.callClientButton.Click += new System.EventHandler(this.callClientButton_Click);
             // 
+            // step2Panel
+            // 
+            this.step2Panel.Controls.Add(this.recallingButton);
+            this.step2Panel.Controls.Add(this.renderingButton);
+            this.step2Panel.Controls.Add(this.absenceButton);
+            this.step2Panel.Location = new System.Drawing.Point(0, 0);
+            this.step2Panel.Margin = new System.Windows.Forms.Padding(0);
+            this.step2Panel.Name = "step2Panel";
+            this.step2Panel.Size = new System.Drawing.Size(155, 165);
+            this.step2Panel.TabIndex = 0;
+            // 
+            // recallingButton
+            // 
+            this.recallingButton.Location = new System.Drawing.Point(0, 0);
+            this.recallingButton.Name = "recallingButton";
+            this.recallingButton.Size = new System.Drawing.Size(155, 51);
+            this.recallingButton.TabIndex = 0;
+            this.recallingButton.Text = "Повторный вызов";
+            this.recallingButton.Click += new System.EventHandler(this.recallingButton_Click);
+            // 
+            // renderingButton
+            // 
+            this.renderingButton.Location = new System.Drawing.Point(0, 55);
+            this.renderingButton.Name = "renderingButton";
+            this.renderingButton.Size = new System.Drawing.Size(155, 51);
+            this.renderingButton.TabIndex = 0;
+            this.renderingButton.Text = "Начать обслуживание";
+            this.renderingButton.Click += new System.EventHandler(this.renderingButton_Click);
+            // 
+            // absenceButton
+            // 
+            this.absenceButton.Location = new System.Drawing.Point(0, 110);
+            this.absenceButton.Name = "absenceButton";
+            this.absenceButton.Size = new System.Drawing.Size(155, 51);
+            this.absenceButton.TabIndex = 0;
+            this.absenceButton.Text = "Клиент не подошел";
+            this.absenceButton.Click += new System.EventHandler(this.absenceButton_Click);
+            // 
             // step3Panel
             // 
             this.step3Panel.Controls.Add(this.renderedButton);
             this.step3Panel.Controls.Add(this.returnButton);
             this.step3Panel.Controls.Add(this.postponeGroupBox);
-            this.step3Panel.Controls.Add(this.redirectGroupBox);
             this.step3Panel.Location = new System.Drawing.Point(0, 165);
             this.step3Panel.Margin = new System.Windows.Forms.Padding(0);
             this.step3Panel.Name = "step3Panel";
@@ -773,7 +850,7 @@ namespace Queue.Operator
             // 
             // postponeButton
             // 
-            this.postponeButton.Location = new System.Drawing.Point(5, 10);
+            this.postponeButton.Location = new System.Drawing.Point(5, 35);
             this.postponeButton.Name = "postponeButton";
             this.postponeButton.Size = new System.Drawing.Size(145, 40);
             this.postponeButton.TabIndex = 5;
@@ -782,16 +859,16 @@ namespace Queue.Operator
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(2, 57);
+            this.label1.Location = new System.Drawing.Point(5, 10);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 13);
+            this.label1.Size = new System.Drawing.Size(56, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "На время";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // postponeMinutesUpDown
             // 
-            this.postponeMinutesUpDown.Location = new System.Drawing.Point(65, 55);
+            this.postponeMinutesUpDown.Location = new System.Drawing.Point(65, 13);
             this.postponeMinutesUpDown.Maximum = new decimal(new int[] {
             200,
             0,
@@ -813,80 +890,12 @@ namespace Queue.Operator
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(115, 57);
+            this.label2.Location = new System.Drawing.Point(115, 10);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(30, 13);
+            this.label2.Size = new System.Drawing.Size(30, 20);
             this.label2.TabIndex = 0;
             this.label2.Text = "мин.";
-            // 
-            // redirectGroupBox
-            // 
-            this.redirectGroupBox.Controls.Add(this.redirectOperatorControl);
-            this.redirectGroupBox.Controls.Add(this.reloadRedirectOperator);
-            this.redirectGroupBox.Location = new System.Drawing.Point(0, 165);
-            this.redirectGroupBox.Name = "redirectGroupBox";
-            this.redirectGroupBox.Size = new System.Drawing.Size(155, 45);
-            this.redirectGroupBox.TabIndex = 1;
-            this.redirectGroupBox.TabStop = false;
-            this.redirectGroupBox.Text = "Передать оператору";
-            // 
-            // redirectOperatorControl
-            // 
-            this.redirectOperatorControl.Location = new System.Drawing.Point(5, 15);
-            this.redirectOperatorControl.Name = "redirectOperatorControl";
-            this.redirectOperatorControl.Size = new System.Drawing.Size(120, 21);
-            this.redirectOperatorControl.TabIndex = 7;
-            this.redirectOperatorControl.UseResetButton = false;
-            this.redirectOperatorControl.SelectedChanged += new System.EventHandler<System.EventArgs>(this.targetOperatorControl_SelectedChanged);
-            // 
-            // reloadRedirectOperator
-            // 
-            this.reloadRedirectOperator.Image = ((System.Drawing.Image)(resources.GetObject("reloadRedirectOperator.Image")));
-            this.reloadRedirectOperator.Location = new System.Drawing.Point(127, 14);
-            this.reloadRedirectOperator.Name = "reloadRedirectOperator";
-            this.reloadRedirectOperator.Size = new System.Drawing.Size(24, 22);
-            this.reloadRedirectOperator.TabIndex = 9;
-            this.reloadRedirectOperator.UseVisualStyleBackColor = true;
-            this.reloadRedirectOperator.Click += new System.EventHandler(this.reloadRedirectOperator_Click);
-            // 
-            // step2Panel
-            // 
-            this.step2Panel.Controls.Add(this.recallingButton);
-            this.step2Panel.Controls.Add(this.renderingButton);
-            this.step2Panel.Controls.Add(this.absenceButton);
-            this.step2Panel.Location = new System.Drawing.Point(155, 0);
-            this.step2Panel.Margin = new System.Windows.Forms.Padding(0);
-            this.step2Panel.Name = "step2Panel";
-            this.step2Panel.Size = new System.Drawing.Size(155, 165);
-            this.step2Panel.TabIndex = 0;
-            // 
-            // recallingButton
-            // 
-            this.recallingButton.Location = new System.Drawing.Point(0, 0);
-            this.recallingButton.Name = "recallingButton";
-            this.recallingButton.Size = new System.Drawing.Size(155, 51);
-            this.recallingButton.TabIndex = 0;
-            this.recallingButton.Text = "Повторный вызов";
-            this.recallingButton.Click += new System.EventHandler(this.recallingButton_Click);
-            // 
-            // renderingButton
-            // 
-            this.renderingButton.Location = new System.Drawing.Point(0, 55);
-            this.renderingButton.Name = "renderingButton";
-            this.renderingButton.Size = new System.Drawing.Size(155, 51);
-            this.renderingButton.TabIndex = 0;
-            this.renderingButton.Text = "Начать обслуживание";
-            this.renderingButton.Click += new System.EventHandler(this.renderingButton_Click);
-            // 
-            // absenceButton
-            // 
-            this.absenceButton.Location = new System.Drawing.Point(0, 110);
-            this.absenceButton.Name = "absenceButton";
-            this.absenceButton.Size = new System.Drawing.Size(155, 51);
-            this.absenceButton.TabIndex = 0;
-            this.absenceButton.Text = "Клиент не подошел";
-            this.absenceButton.Click += new System.EventHandler(this.absenceButton_Click);
+            this.label2.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // clientRequestsTab
             // 
@@ -1002,6 +1011,7 @@ namespace Queue.Operator
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.statusBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.actionsMenu;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(840, 610);
             this.MinimumSize = new System.Drawing.Size(540, 610);
@@ -1015,6 +1025,8 @@ namespace Queue.Operator
             this.mainTabControl.ResumeLayout(false);
             this.currentClientRequestTab.ResumeLayout(false);
             this.currentClientRequestTab.PerformLayout();
+            this.actionsMenu.ResumeLayout(false);
+            this.actionsMenu.PerformLayout();
             this.subjectsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).EndInit();
             this.clientRequestTabControl.ResumeLayout(false);
@@ -1026,12 +1038,10 @@ namespace Queue.Operator
             ((System.ComponentModel.ISupportInitialize)(this.additionalServicesBindingSource)).EndInit();
             this.stepPanel.ResumeLayout(false);
             this.step1Panel.ResumeLayout(false);
+            this.step2Panel.ResumeLayout(false);
             this.step3Panel.ResumeLayout(false);
             this.postponeGroupBox.ResumeLayout(false);
-            this.postponeGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.postponeMinutesUpDown)).EndInit();
-            this.redirectGroupBox.ResumeLayout(false);
-            this.step2Panel.ResumeLayout(false);
             this.clientRequestsTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.clientRequestsGridView)).EndInit();
             this.ResumeLayout(false);
@@ -1110,9 +1120,6 @@ namespace Queue.Operator
         private System.Windows.Forms.ToolStripStatusLabel qualityStateLabel;
         private System.Windows.Forms.ToolStripStatusLabel ratingLabel;
         private System.Windows.Forms.ToolStripSplitButton settingsButton;
-        private IdentifiedEntityControl redirectOperatorControl;
-        private System.Windows.Forms.Button reloadRedirectOperator;
-        private System.Windows.Forms.GroupBox redirectGroupBox;
         private System.Windows.Forms.GroupBox postponeGroupBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn;
@@ -1122,6 +1129,10 @@ namespace Queue.Operator
         private System.Windows.Forms.Label commentLabel;
         private System.Windows.Forms.TextBox commentTextBox;
         private System.Windows.Forms.LinkLabel commentSaveLink;
+        private System.Windows.Forms.MenuStrip actionsMenu;
+        private System.Windows.Forms.ToolStripMenuItem additionalMenu;
+        private System.Windows.Forms.ToolStripMenuItem callClientByRequestNumberMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem redirectToOperatorMenuItem;
 
     }
 }

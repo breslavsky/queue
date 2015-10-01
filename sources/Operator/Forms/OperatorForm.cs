@@ -208,7 +208,6 @@ namespace Queue.Operator
                         serviceTextBlock.Text = string.Empty;
                         serviceTypeControl.Reset();
                         serviceStepControl.Reset();
-                        redirectOperatorControl.Reset();
                         stateTextBlock.Text = string.Empty;
                         stateTextBlock.BackColor = Color.White;
                         commentTextBox.Text = string.Empty;
@@ -257,7 +256,8 @@ namespace Queue.Operator
                     commentSaveLink.Enabled =
                     serviceTypeControl.Enabled =
                     serviceStepControl.Enabled =
-                    clientRequestTabControl.Enabled = false;
+                    clientRequestTabControl.Enabled =
+                    redirectToOperatorMenuItem.Enabled = false;
 
                 if (HubQualitySettings.Enabled && qualityPanelEnabled)
                 {
@@ -284,14 +284,13 @@ namespace Queue.Operator
                             serviceChangeLink.Enabled =
                             commentTextBox.Enabled =
                             commentSaveLink.Enabled =
-                            clientRequestTabControl.Enabled = true;
+                            clientRequestTabControl.Enabled =
+                            redirectToOperatorMenuItem.Enabled = true;
 
                         if (HubQualitySettings.Enabled && !qualityPanelEnabled)
                         {
                             Invoke(new MethodInvoker(QualityPanelEnable));
                         }
-
-                        Invoke(new MethodInvoker(LoadRedirectOperators));
 
                         break;
                 }
@@ -405,7 +404,11 @@ namespace Queue.Operator
             pingQualityTimer.Stop();
             pingQualityTimer.Dispose();
 
-            pingServerChannel.Close();
+            if (pingServerChannel != null)
+            {
+                pingServerChannel.Close();
+            }
+
             if (pingQualityChannel != null)
             {
                 pingQualityChannel.Close();
@@ -612,29 +615,6 @@ namespace Queue.Operator
         }
 
         #endregion callbacks
-
-        private async void LoadRedirectOperators()
-        {
-            using (var channel = serverChannelManager.CreateChannel())
-            {
-                try
-                {
-                    redirectOperatorControl.Initialize(await taskPool.AddTask(channel.Service.GetRedirectOperatorsLinks()));
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-            }
-        }
 
         private async void QualityPanelEnable()
         {
@@ -945,6 +925,26 @@ namespace Queue.Operator
 
         #endregion task pool
 
+        #region actions
+
+        private void callClientByRequestNumberMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var f = new CallClientByRequestNumberForm())
+            {
+                f.ShowDialog();
+            }
+        }
+
+        private void redirectToOperatorMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var f = new RedirectToOperatorForm())
+            {
+                f.ShowDialog();
+            }
+        }
+
+        #endregion actions
+
         #region step 1
 
         private async void callClientButton_Click(object sender, EventArgs e)
@@ -1197,46 +1197,6 @@ namespace Queue.Operator
             }
         }
 
-        private async void targetOperatorControl_SelectedChanged(object sender, EventArgs e)
-        {
-            var redirectOperator = redirectOperatorControl.Selected<QueueOperator>();
-            if (redirectOperator != null)
-            {
-                using (var channel = serverChannelManager.CreateChannel())
-                {
-                    try
-                    {
-                        redirectOperatorControl.Enabled = false;
-
-                        await taskPool.AddTask(channel.Service.RedirectCurrentClientRequest(redirectOperator.Id));
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
-                    finally
-                    {
-                        redirectOperatorControl.Enabled = true;
-
-                        digitalTimer.Reset();
-                    }
-                }
-            }
-        }
-
-        private void reloadRedirectOperator_Click(object sender, EventArgs e)
-        {
-            LoadRedirectOperators();
-        }
-
         #endregion step 3
 
         #region buttons
@@ -1278,7 +1238,7 @@ namespace Queue.Operator
                 return;
             }
 
-            ClientRequestAdditionalService additionalService = additionalServices[currentRow.Index];
+            var additionalService = additionalServices[currentRow.Index];
 
             using (var f = new EditClientRequestAdditionalServiceForm(null, additionalService.Id))
             {

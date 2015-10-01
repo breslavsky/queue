@@ -121,15 +121,6 @@ namespace Queue.Model
             }
         }
 
-        public virtual bool IsRestorable
-        {
-            get
-            {
-                return State == ClientRequestState.Absence
-                    || State == ClientRequestState.Canceled;
-            }
-        }
-
         public bool InWorking
         {
             get
@@ -192,9 +183,7 @@ namespace Queue.Model
         public virtual void Rendered()
         {
             RenderFinishTime = DateTime.Now.TimeOfDay;
-
             Productivity = (float)ClientInterval.Ticks / (RenderFinishTime - RenderStartTime).Ticks * 100;
-
             Close(ClientRequestState.Rendered);
         }
 

@@ -24,33 +24,27 @@
             <DataTemplate>
                 <Grid HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="15" />
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Label Content="{Binding Request.Number}" Padding="1" />
+                    <TextBlock FontSize="10" Text="{Binding Request.Number}" />
                     <Rectangle Grid.Column="1"
-                               Width="5"
-                               Height="5"
-                               HorizontalAlignment="Center"
+                               Width="8"
+                               Height="8"
                                VerticalAlignment="Center">
                         <Rectangle.Fill>
                             <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_arrow_right}" />
                         </Rectangle.Fill>
                     </Rectangle>
                     <StackPanel Grid.Column="2">
-                        <Border>
-                            <TextBlock FontSize="8" Text="{Binding Request.Operator.Workplace}" />
-                        </Border>
-
-                        <Border Background="{Binding StateBrush}" CornerRadius="1.5">
-                            <TextBlock Margin="0.5"
-                                       FontSize="3"
-                                       FontWeight="Bold"
-                                       Foreground="Black"
-                                       Text="{Binding State}" />
-                        </Border>
+                        <TextBlock FontSize="6" Text="{Binding Request.Operator.Workplace}" />
+                        <TextBlock Background="{Binding StateBrush}"
+                                   FontSize="2"
+                                   FontWeight="Bold"
+                                   Foreground="Black"
+                                   Text="{Binding State}" />
                     </StackPanel>
                 </Grid>
             </DataTemplate>

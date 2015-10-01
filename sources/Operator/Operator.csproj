@@ -142,16 +142,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppOptions.cs" />
-    <Compile Include="EditClientRequestAdditionalServiceForm.cs">
+    <Compile Include="Forms\EditClientRequestAdditionalServiceForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditClientRequestAdditionalServiceForm.Designer.cs">
+    <Compile Include="Forms\EditClientRequestAdditionalServiceForm.Designer.cs">
       <DependentUpon>EditClientRequestAdditionalServiceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="HubSettingsUserControl.cs">
+    <Compile Include="Forms\RedirectToOperatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RedirectToOperatorForm.Designer.cs">
+      <DependentUpon>RedirectToOperatorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\HubSettingsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="HubSettingsUserControl.Designer.cs">
+    <Compile Include="Controls\HubSettingsUserControl.Designer.cs">
       <DependentUpon>HubSettingsUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -159,16 +165,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SettingsForm.cs">
+    <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsForm.Designer.cs">
+    <Compile Include="Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OperatorForm.cs">
+    <Compile Include="Forms\OperatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OperatorForm.Designer.cs">
+    <Compile Include="Forms\OperatorForm.Designer.cs">
       <DependentUpon>OperatorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs">
@@ -176,20 +182,32 @@
       </SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="EditClientRequestAdditionalServiceForm.resx">
+    <Compile Include="Forms\CallClientByRequestNumberForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CallClientByRequestNumberForm.Designer.cs">
+      <DependentUpon>CallClientByRequestNumberForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Forms\CallClientByRequestNumberForm.resx">
+      <DependentUpon>CallClientByRequestNumberForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditClientRequestAdditionalServiceForm.resx">
       <DependentUpon>EditClientRequestAdditionalServiceForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="HubSettingsUserControl.resx">
+    <EmbeddedResource Include="Controls\HubSettingsUserControl.resx">
       <DependentUpon>HubSettingsUserControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OperatorForm.resx">
+    <EmbeddedResource Include="Forms\OperatorForm.resx">
       <DependentUpon>OperatorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForm.resx">
+    <EmbeddedResource Include="Forms\RedirectToOperatorForm.resx">
+      <DependentUpon>RedirectToOperatorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
