@@ -101,12 +101,12 @@
       <Component Id="_05FFC73C9B0D47F68CD2553352F2544A" Guid="05FFC73C-9B0D-47F6-8CD2-553352F2544A">
         <File KeyPath="yes" Source="$(var.Administrator.TargetDir)\TaskDialog.dll" />
       </Component>
-      <Component Id="_1E1380810A924C24AE22A3DE06F9C20D" Guid="1E138081-0A92-4C24-AE22-A3DE06F9C20D">
+      <!--<Component Id="_1E1380810A924C24AE22A3DE06F9C20D" Guid="1E138081-0A92-4C24-AE22-A3DE06F9C20D">
         <File KeyPath="yes" Source="$(var.Administrator.TargetDir)\MahApps.Metro.dll" />
       </Component>
       <Component Id="_8284788F32A64580B1C2199BCF56D188" Guid="8284788F-32A6-4580-B1C2-199BCF56D188">
         <File KeyPath="yes" Source="$(var.Administrator.TargetDir)\System.Windows.Interactivity.dll" />
-      </Component>
+      </Component>-->
     </ComponentGroup>
 
     <ComponentGroup Id="Application" Directory="INSTALLFOLDER">
@@ -140,7 +140,7 @@
         <File KeyPath="yes" Source="$(var.Administrator.TargetDir)\en-US\Queue.Model.Common.resources.dll" />
       </Component>
       <Component Id="_2CD3DBD2BE734676A0C63F499EE86153" Guid="2CD3DBD2-BE73-4676-A0C6-3F499EE86153">
-        <File Id="Queue_UI_WinForms_resources_dll_en_US" KeyPath="yes" Source="$(var.Administrator.TargetDir)\en-US\Queue.UI.WinForms.resources.dll" />
+        <File KeyPath="yes" Source="$(var.Administrator.TargetDir)\en-US\Queue.UI.WinForms.resources.dll" />
       </Component>
       <Component Id="_CB7F08B911F14B799572BBE5DC6498FE" Guid="CB7F08B9-11F1-4B79-9572-BBE5DC6498FE">
         <File KeyPath="yes" Source="$(var.Administrator.TargetDir)\en-US\Queue.UI.WPF.resources.dll" />

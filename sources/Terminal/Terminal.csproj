@@ -304,6 +304,10 @@
       <Project>{dfb572df-6412-460f-ba17-9c3fedf6fd12}</Project>
       <Name>UI.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UI.WinForms\UI.WinForms.csproj">
+      <Project>{23b4c880-5f87-4e9d-b310-6dc25ea170b5}</Project>
+      <Name>UI.WinForms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UI.WPF\UI.WPF.csproj">
       <Project>{a927dc6b-87b0-412a-bec0-faa03f4f3f28}</Project>
       <Name>UI.WPF</Name>
