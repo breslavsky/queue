@@ -3,6 +3,7 @@ using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
+using NLog;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -10,7 +11,6 @@ using Queue.Terminal.Core;
 using Queue.Terminal.Extensions;
 using Queue.Terminal.UserControls;
 using Queue.UI.WPF;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +21,8 @@ namespace Queue.Terminal.ViewModels
 {
     public class SelectServicePageViewModel : PageViewModel
     {
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         public event EventHandler<RenderServicesEventArgs> OnRenderServices;
 
         public ICommand LoadedCommand { get; set; }
@@ -138,12 +140,14 @@ namespace Queue.Terminal.ViewModels
 
         private async void SetSelectedService(Service service)
         {
+            logger.Debug("выбрана услуга [{0}]", service);
+
             Model.RequestType = null;
             Model.SelectedService = service;
 
             bool liveTerminal = service.LiveRegistrator.HasFlag(ClientRequestRegistrator.Terminal);
             bool earlyTerminal = service.EarlyRegistrator.HasFlag(ClientRequestRegistrator.Terminal);
-            if ((!liveTerminal) && (!earlyTerminal))
+            if (!liveTerminal && !earlyTerminal)
             {
                 Window.Warning(Translater.Message("ServiceNotAvailableOnTerminal"));
                 return;

@@ -3,6 +3,7 @@ using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using NLog;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
@@ -20,6 +21,8 @@ namespace Queue.Terminal.ViewModels
 {
     public class PrintCouponPageViewModel : PageViewModel, IDisposable
     {
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         private bool disposed;
         private DispatcherTimer timer;
         private bool success;
@@ -140,6 +143,7 @@ namespace Queue.Terminal.ViewModels
 
         private async Task PrintCoupon(Channel<IServerTcpService> channel, ClientRequest clientRequest)
         {
+            logger.Debug("печать талона [client: {0}; service: {1}]", clientRequest.Client, clientRequest.Service);
             var data = await TaskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
             var template = ServiceLocator.Current.GetInstance<CouponConfig>().Template;
             XPSUtils.PrintXaml(template, data);

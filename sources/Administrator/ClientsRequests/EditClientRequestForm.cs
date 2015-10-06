@@ -144,7 +144,9 @@ namespace Queue.Administrator
                     clientEditLink.Enabled = clientRequest.Client != null;
                     editPanel.Enabled = clientRequest.IsEditable;
 
-                    restoreMenuItem.Enabled = clientRequest.IsClosed;
+                    //TODO - isrestorable
+                    restoreMenuItem.Enabled = clientRequest.IsClosed || clientRequest.State == ClientRequestState.Absence;
+                    //restoreMenuItem.Enabled = clientRequest.IsClosed;
                 }));
             }
         }

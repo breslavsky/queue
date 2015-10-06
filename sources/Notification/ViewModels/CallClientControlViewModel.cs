@@ -1,8 +1,10 @@
 ﻿using Junte.UI.WPF;
 using Microsoft.Practices.Unity;
+using NLog;
 using Queue.Model.Common;
 using Queue.Services.DTO;
 using Queue.Sounds;
+using System;
 using System.Media;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -11,6 +13,7 @@ namespace Queue.Notification.ViewModels
 {
     public class CallClientControlViewModel : ObservableObject
     {
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
         private object callLock = new object();
 
         private bool active;
@@ -66,13 +69,22 @@ namespace Queue.Notification.ViewModels
 
         private void Notify(ClientRequest request)
         {
-            ShowMessage(request);
-            PlayVoice(request);
-            CloseMessage();
+            try
+            {
+                logger.Debug("оповещение о новом запросе клиента [{0}]", request);
+                ShowMessage(request);
+                PlayVoice(request);
+                CloseMessage();
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+            }
         }
 
         private void PlayVoice(ClientRequest request)
         {
+            logger.Debug("звуковое оповещение...");
             using (var soundPlayer = new SoundPlayer())
             {
                 soundPlayer.PlayStream(Tones.Notify);

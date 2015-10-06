@@ -178,7 +178,7 @@ namespace Queue.Operator
                             case ClientRequestState.Redirected:
                             case ClientRequestState.Postponed:
 
-                                if (IsAutocall && currentClientRequestPlan.StartTime <= ServerDateTime.Now.TimeOfDay)
+                                if (currentClientRequestPlan.StartTime <= ServerDateTime.Now.TimeOfDay)
                                 {
                                     using (var channel = serverChannelManager.CreateChannel())
                                     {
@@ -220,19 +220,6 @@ namespace Queue.Operator
                         Step = 0;
                     }
                 }));
-            }
-        }
-
-        private bool IsAutocall
-        {
-            get
-            {
-                return isAutocallCheckBox.Checked;
-            }
-
-            set
-            {
-                isAutocallCheckBox.Checked = value;
             }
         }
 

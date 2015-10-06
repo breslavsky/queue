@@ -38,7 +38,6 @@ namespace Queue.Operator
             this.ratingLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.settingsButton = new System.Windows.Forms.ToolStripSplitButton();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.isAutocallCheckBox = new System.Windows.Forms.CheckBox();
             this.logoutButton = new System.Windows.Forms.Button();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.currentClientRequestTab = new System.Windows.Forms.TabPage();
@@ -218,7 +217,6 @@ namespace Queue.Operator
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.isAutocallCheckBox);
             this.panel1.Controls.Add(this.logoutButton);
             this.panel1.Controls.Add(this.mainTabControl);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -227,18 +225,6 @@ namespace Queue.Operator
             this.panel1.Padding = new System.Windows.Forms.Padding(10, 30, 10, 10);
             this.panel1.Size = new System.Drawing.Size(524, 550);
             this.panel1.TabIndex = 0;
-            // 
-            // isAutocallCheckBox
-            // 
-            this.isAutocallCheckBox.AutoSize = true;
-            this.isAutocallCheckBox.Checked = true;
-            this.isAutocallCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.isAutocallCheckBox.Location = new System.Drawing.Point(10, 5);
-            this.isAutocallCheckBox.Name = "isAutocallCheckBox";
-            this.isAutocallCheckBox.Size = new System.Drawing.Size(145, 17);
-            this.isAutocallCheckBox.TabIndex = 2;
-            this.isAutocallCheckBox.Text = "Автоматический вызов";
-            this.isAutocallCheckBox.UseVisualStyleBackColor = true;
             // 
             // logoutButton
             // 
@@ -1021,7 +1007,6 @@ namespace Queue.Operator
             this.statusBar.ResumeLayout(false);
             this.statusBar.PerformLayout();
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.mainTabControl.ResumeLayout(false);
             this.currentClientRequestTab.ResumeLayout(false);
             this.currentClientRequestTab.PerformLayout();
@@ -1098,7 +1083,6 @@ namespace Queue.Operator
         private System.Windows.Forms.ToolStripStatusLabel separator2;
         private System.Windows.Forms.Button subjectsChangeButton;
         private System.Windows.Forms.Panel subjectsPanel;
-        private System.Windows.Forms.CheckBox isAutocallCheckBox;
         private System.Windows.Forms.Label serviceStepLabel;
         private System.Windows.Forms.Button logoutButton;
         private IdentifiedEntityControl serviceStepControl;
