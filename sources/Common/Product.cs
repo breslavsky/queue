@@ -93,7 +93,7 @@
             public const string AppName = "Queue.Administrator";
             public const string Name = "Queue Administrator";
             public const string Description = "";
-            public const string Build = "4";
+            public const string Build = "5";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "06C4B3D8-20FF-4D84-B14D-30A8BA06CDE6";
         }
@@ -103,7 +103,7 @@
             public const string AppName = "Queue.Operator";
             public const string Name = "Queue Operator";
             public const string Description = "";
-            public const string Build = "3";
+            public const string Build = "4";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "1B26F703-3003-47F7-9204-4A11361F75F5";
         }
@@ -113,7 +113,7 @@
             public const string AppName = "Queue.Terminal";
             public const string Name = "Queue Terminal";
             public const string Description = "";
-            public const string Build = "2";
+            public const string Build = "3";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "940AE5A5-2825-4F85-A62C-66A97D9E4C06";
         }
@@ -123,7 +123,7 @@
             public const string AppName = "Queue.Notification";
             public const string Name = "Queue Notification";
             public const string Description = "";
-            public const string Build = "4";
+            public const string Build = "5";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "FEB87B29-F2BA-45D7-989D-8C8610088FAB";
         }
