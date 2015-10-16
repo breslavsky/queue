@@ -113,7 +113,7 @@
             public const string AppName = "Queue.Terminal";
             public const string Name = "Queue Terminal";
             public const string Description = "";
-            public const string Build = "3";
+            public const string Build = "4";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "940AE5A5-2825-4F85-A62C-66A97D9E4C06";
         }

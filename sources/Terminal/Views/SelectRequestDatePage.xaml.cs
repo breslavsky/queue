@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Services.DTO;
+using Queue.Terminal.Core;
 using Queue.Terminal.ViewModels;
 using System;
 using System.Windows;
@@ -14,6 +15,9 @@ namespace Queue.Terminal.Views
     {
         [Dependency]
         public TerminalConfig TerminalConfig { get; set; }
+
+        [Dependency]
+        public ClientRequestModel Model { get; set; }
 
         protected override Type ModelType { get { return typeof(SelectRequestDatePageViewModel); } }
 
@@ -39,7 +43,14 @@ namespace Queue.Terminal.Views
             {
                 end = end.AddDays(-1);
             }
+
             earlyRequestDateCalendar.BlackoutDates.Add(new CalendarDateRange(DateTime.MinValue, end));
+
+            if (Model.SelectedService != null)
+            {
+                var range = new CalendarDateRange(ServerDateTime.Today.AddDays(Model.SelectedService.MaxEarlyDays + 1), DateTime.MaxValue);
+                earlyRequestDateCalendar.BlackoutDates.Add(range);
+            }
         }
     }
 }
