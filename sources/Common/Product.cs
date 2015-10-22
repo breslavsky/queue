@@ -103,7 +103,7 @@
             public const string AppName = "Queue.Operator";
             public const string Name = "Queue Operator";
             public const string Description = "";
-            public const string Build = "4";
+            public const string Build = "5";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "1B26F703-3003-47F7-9204-4A11361F75F5";
         }

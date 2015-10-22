@@ -947,15 +947,14 @@ namespace Queue.Operator
                     return;
                 }
 
-                bool completed = false;
-
                 using (var channel = serverChannelManager.CreateChannel())
                 {
                     try
                     {
                         callClientButton.Enabled = false;
+
                         await taskPool.AddTask(channel.Service.UpdateCurrentClientRequest(ClientRequestState.Calling));
-                        completed = true;
+                        await taskPool.AddTask(channel.Service.CallCurrentClient());
                     }
                     catch (OperationCanceledException) { }
                     catch (CommunicationObjectAbortedException) { }
@@ -971,20 +970,7 @@ namespace Queue.Operator
                     }
                     finally
                     {
-                        if (completed)
-                        {
-                            digitalTimer.Reset();
-
-                            Task.Run(() =>
-                            {
-                                Thread.Sleep(2000);
-                                Invoke(new MethodInvoker(() => callClientButton.Enabled = true));
-                            });
-                        }
-                        else
-                        {
-                            callClientButton.Enabled = true;
-                        }
+                        callClientButton.Enabled = true;
                     }
                 }
             }
