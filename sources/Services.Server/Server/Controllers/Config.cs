@@ -258,8 +258,6 @@ namespace Queue.Services.Server
                         throw new SystemException();
                     }
 
-                    сonfig.Header = source.Header;
-                    сonfig.Footer = source.Footer;
                     сonfig.CurrentDayRecording = source.CurrentDayRecording;
 
                     var errors = сonfig.Validate();
@@ -464,7 +462,6 @@ namespace Queue.Services.Server
 
                     сonfig.PIN = source.PIN;
                     сonfig.CurrentDayRecording = source.CurrentDayRecording;
-                    сonfig.WindowTemplate = source.WindowTemplate;
                     сonfig.Columns = source.Columns;
                     сonfig.Rows = source.Rows;
 

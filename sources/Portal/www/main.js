@@ -25,8 +25,6 @@ globals.prototype = {
     },
     set PortalConfig(config) {
         this.portalConfig = config;
-        $("header").append(config.Header);
-        $("footer").append(config.Footer);
     },
     get PortalConfig() {
         return this.portalConfig;

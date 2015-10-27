@@ -13,8 +13,6 @@ namespace Queue.Model
             Type = ConfigType.Terminal;
         }
 
-        private const int WindowTemplateLength = 1024 * 1024;
-
         #region properties
 
         [Property]
@@ -22,9 +20,6 @@ namespace Queue.Model
 
         [Property]
         public virtual bool CurrentDayRecording { get; set; }
-
-        [Property(Length = WindowTemplateLength)]
-        public virtual string WindowTemplate { get; set; }
 
         [Range(Min = 1, Max = 10, Message = "Количество колонок должно быть от 1 до 10")]
         [Property]

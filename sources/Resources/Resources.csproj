@@ -55,12 +55,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TerminalWindow.xml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Templates.Designer.cs">
       <AutoGen>True</AutoGen>

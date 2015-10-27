@@ -50,8 +50,6 @@ namespace Queue.Administrator
                 config = value;
                 if (config != null)
                 {
-                    headerTextBox.Text = config.Header;
-                    footerTextBox.Text = config.Footer;
                     currentDayRecordingCheckBox.Checked = config.CurrentDayRecording;
                 }
             }
@@ -75,40 +73,6 @@ namespace Queue.Administrator
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-        }
-
-        private void footerTextBox_Click(object sender, EventArgs e)
-        {
-            using (var f = new HtmlEditorForm())
-            {
-                f.HTML = footerTextBox.Text;
-                if (f.ShowDialog() == DialogResult.OK)
-                {
-                    footerTextBox.Text = f.HTML;
-                }
-            }
-        }
-
-        private void footerTextBox_Leave(object sender, EventArgs e)
-        {
-            config.Footer = footerTextBox.Text;
-        }
-
-        private void headerTextBox_Click(object sender, EventArgs e)
-        {
-            using (var f = new HtmlEditorForm())
-            {
-                f.HTML = headerTextBox.Text;
-                if (f.ShowDialog() == DialogResult.OK)
-                {
-                    headerTextBox.Text = f.HTML;
-                }
-            }
-        }
-
-        private void headerTextBox_Leave(object sender, EventArgs e)
-        {
-            config.Header = headerTextBox.Text;
         }
 
         private async void PortalConfigControl_Load(object sender, EventArgs e)

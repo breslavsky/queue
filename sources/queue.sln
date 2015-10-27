@@ -133,6 +133,11 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer.Hub", "Installer.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hosts.Hub.WinForms", "Hosts.Hub.WinForms\Hosts.Hub.WinForms.csproj", "{00ABDF24-8A02-46A7-99BE-C3F642C2D80C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".develop", ".develop", "{EA68E3F9-BAE0-48CB-B0F6-08AB8A89554A}"
+	ProjectSection(SolutionItems) = preProject
+		tasks.txt = tasks.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

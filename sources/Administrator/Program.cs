@@ -1,4 +1,5 @@
 ﻿using Junte.Configuration;
+using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Administrator.Settings;
@@ -68,6 +69,9 @@ namespace Queue.Administrator
                     container.RegisterInstance<User>(currentUser);
                     container.RegisterInstance<QueueAdministrator>(currentUser);
 
+                    container.RegisterType<DuplexChannelManager<IServerTcpService>>
+                        (new InjectionFactory(c => serverService.CreateChannelManager(sessionId)));
+
                     Application.Run(new AdministratorForm());
                 }
             }
@@ -90,6 +94,9 @@ namespace Queue.Administrator
 
                         serverService = new ServerService(endpoint, ServerServicesPaths.Server);
                         container.RegisterInstance(serverService);
+
+                        container.RegisterType<DuplexChannelManager<IServerTcpService>>
+                            (new InjectionFactory(c => serverService.CreateChannelManager(currentUser.SessionId)));
 
                         serverTemplateService = new ServerTemplateService(endpoint, ServerServicesPaths.Template);
                         container.RegisterInstance(serverTemplateService);

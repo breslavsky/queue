@@ -362,8 +362,6 @@ namespace Queue.Database
                 {
                     portalConfig = new PortalConfig()
                     {
-                        Header = Templates.PortalHeader,
-                        Footer = Templates.PortalFooter,
                         CurrentDayRecording = true
                     };
                     session.Save(portalConfig);
@@ -395,8 +393,7 @@ namespace Queue.Database
                         PIN = 1001,
                         CurrentDayRecording = true,
                         Columns = 2,
-                        Rows = 5,
-                        WindowTemplate = Templates.TerminalWindow
+                        Rows = 5
                     };
                     session.Save(terminalConfig);
                 }

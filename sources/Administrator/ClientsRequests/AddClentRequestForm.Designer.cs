@@ -150,9 +150,9 @@
             // 
             // earlyRadioButton
             // 
-            this.earlyRadioButton.Location = new System.Drawing.Point(122, 285);
+            this.earlyRadioButton.Location = new System.Drawing.Point(140, 275);
             this.earlyRadioButton.Name = "earlyRadioButton";
-            this.earlyRadioButton.Size = new System.Drawing.Size(148, 20);
+            this.earlyRadioButton.Size = new System.Drawing.Size(130, 30);
             this.earlyRadioButton.TabIndex = 9;
             this.earlyRadioButton.Text = "Предварительная запись";
             this.earlyRadioButton.CheckedChanged += new System.EventHandler(this.earlyRadioButton_CheckedChanged);
@@ -160,9 +160,9 @@
             // liveRadioButton
             // 
             this.liveRadioButton.Checked = true;
-            this.liveRadioButton.Location = new System.Drawing.Point(15, 285);
+            this.liveRadioButton.Location = new System.Drawing.Point(15, 275);
             this.liveRadioButton.Name = "liveRadioButton";
-            this.liveRadioButton.Size = new System.Drawing.Size(105, 20);
+            this.liveRadioButton.Size = new System.Drawing.Size(120, 30);
             this.liveRadioButton.TabIndex = 8;
             this.liveRadioButton.TabStop = true;
             this.liveRadioButton.Text = "Живая очередь";
@@ -313,7 +313,7 @@
             // 
             // subjectsLabel
             // 
-            this.subjectsLabel.Location = new System.Drawing.Point(15, 260);
+            this.subjectsLabel.Location = new System.Drawing.Point(15, 255);
             this.subjectsLabel.Name = "subjectsLabel";
             this.subjectsLabel.Size = new System.Drawing.Size(65, 13);
             this.subjectsLabel.TabIndex = 0;
@@ -323,7 +323,7 @@
             // 
             // subjectsUpDown
             // 
-            this.subjectsUpDown.Location = new System.Drawing.Point(85, 255);
+            this.subjectsUpDown.Location = new System.Drawing.Point(85, 250);
             this.subjectsUpDown.Maximum = new decimal(new int[] {
             30,
             0,

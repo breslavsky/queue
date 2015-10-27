@@ -228,13 +228,14 @@ namespace Queue.Services.Server
                                     IsOnline = p.OperatorPlan.Operator.Online,
                                     Availability = p.OperatorPlan.CurrentClientRequestPlan == null || !p.OperatorPlan.CurrentClientRequestPlan.ClientRequest.InWorking,
                                     Priority = p.Priority,
-                                    Workload = p.OperatorPlan.Metrics.Workload
+                                    DayWorkload = p.OperatorPlan.Metrics.DailyWorkload,
+                                    PlaningWorkload = p.OperatorPlan.Metrics.PlaningWorkload
                                 })
                                 .OrderBy(m => m.NearTimeInterval)
                                 .ThenByDescending(m => m.IsOnline)
                                 .ThenByDescending(m => m.Availability)
                                 .ThenByDescending(m => m.Priority)
-                                .ThenBy(m => m.Workload)
+                                .ThenBy(m => conditionClientRequest.Type == ClientRequestType.Live ? m.DayWorkload : m.PlaningWorkload)
                                 .ToList();
 
                             Report.Add("Расчет метрик операторов");
@@ -243,8 +244,8 @@ namespace Queue.Services.Server
                             {
                                 m.OperatorPlan.Metrics.Standing++;
 
-                                Report.Add(string.Format("{0} {1}, ближайший интервал времени: {2:hh\\:mm\\:ss}, доступность: {3}, приоритет: {4}, нагрузка: {5:hh\\:mm\\:ss}",
-                                    m.OperatorPlan, m.IsOnline ? "в сети" : "не в сети", m.NearTimeInterval, m.Availability ? "свободен" : "занят", m.Priority, m.Workload));
+                                Report.Add(string.Format("{0} {1}, ближайший интервал времени: {2:hh\\:mm\\:ss}, доступность: {3}, приоритет: {4}, дневная нагрузка: {5:hh\\:mm\\:ss}, планируемая нагрузка: {6:hh\\:mm\\:ss}",
+                                    m.OperatorPlan, m.IsOnline ? "в сети" : "не в сети", m.NearTimeInterval, m.Availability ? "свободен" : "занят", m.Priority, m.DayWorkload, m.PlaningWorkload));
                             }
 
                             targetOperatorPlan = operatorPlanMetrics.Select(m => m.OperatorPlan).First();

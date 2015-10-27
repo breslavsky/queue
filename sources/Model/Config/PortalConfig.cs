@@ -17,12 +17,6 @@ namespace Queue.Model
 
         #region properties
 
-        [Property(Length = HeaderLength)]
-        public virtual string Header { get; set; }
-
-        [Property(Length = FooterLength)]
-        public virtual string Footer { get; set; }
-
         [Property]
         public virtual bool CurrentDayRecording { get; set; }
 

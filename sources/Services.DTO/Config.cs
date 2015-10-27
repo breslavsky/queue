@@ -75,12 +75,6 @@ namespace Queue.Services.DTO
     public class PortalConfig : Config
     {
         [DataMember]
-        public string Header { get; set; }
-
-        [DataMember]
-        public string Footer { get; set; }
-
-        [DataMember]
         public bool CurrentDayRecording { get; set; }
     }
 
@@ -117,9 +111,6 @@ namespace Queue.Services.DTO
 
         [DataMember]
         public bool CurrentDayRecording { get; set; }
-
-        [DataMember]
-        public string WindowTemplate { get; set; }
 
         [DataMember]
         public int Columns { get; set; }

@@ -423,10 +423,10 @@ namespace Queue.Administrator
                     }
                 }
 
-                if (earlyRadioButton.Checked && earlyDatePicker != null)
-                {
-                    var selectedDate = earlyDatePicker.Value;
+                var selectedDate = earlyDatePicker.Value;
 
+                if (earlyRadioButton.Checked && selectedDate != null)
+                {
                     if (selectedService.EarlyRegistrator.HasFlag(ClientRequestRegistrator.Manager))
                     {
                         using (var channel = channelManager.CreateChannel())
@@ -564,6 +564,10 @@ namespace Queue.Administrator
         {
             var selectedNode = servicesTreeView.SelectedNode;
             selectedService = selectedNode != null && selectedNode.Tag is Service ? (Service)selectedNode.Tag : null;
+            if (selectedService != null)
+            {
+                earlyDatePicker.MaxDate = ServerDateTime.Today.AddDays(selectedService.MaxEarlyDays);
+            }
 
             LoadFreeTime();
         }

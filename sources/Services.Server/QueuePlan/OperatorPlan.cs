@@ -96,7 +96,7 @@ namespace Queue.Services.Server
             }
             else if (clientRequest.State == ClientRequestState.Rendered)
             {
-                Metrics.Workload = Metrics.Workload.Add(clientRequest.RenderFinishTime - clientRequest.RenderStartTime);
+                Metrics.DailyWorkload = Metrics.DailyWorkload.Add(clientRequest.RenderFinishTime - clientRequest.RenderStartTime);
             }
         }
 
@@ -157,7 +157,7 @@ namespace Queue.Services.Server
                         var interval = new TimeInterval(c.StartTime, c.FinishTime);
                         clientRequestIntervals.Add(interval);
 
-                        Metrics.Capacity += interval.Duration;
+                        Metrics.PlaningWorkload += interval.Duration;
                     }
                     break;
 

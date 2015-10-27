@@ -33,13 +33,15 @@ namespace Queue.Administrator
         [Dependency]
         public ServerTemplateService ServerTemplateService { get; set; }
 
+        [Dependency]
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+
         #endregion dependency
 
         #region fields
 
         private const int PingInterval = 10000;
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly Timer pingTimer;
         private readonly TaskPool taskPool;
         private Channel<IServerTcpService> pingChannel;
@@ -57,12 +59,11 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
-            pingChannel = channelManager.CreateChannel();
+            pingChannel = ChannelManager.CreateChannel();
 
             pingTimer = new Timer();
             pingTimer.Elapsed += pingTimer_Elapsed;
@@ -90,9 +91,9 @@ namespace Queue.Administrator
                 {
                     pingChannel.Dispose();
                 }
-                if (channelManager != null)
+                if (ChannelManager != null)
                 {
-                    channelManager.Dispose();
+                    ChannelManager.Dispose();
                 }
             }
             base.Dispose(disposing);
@@ -183,7 +184,7 @@ namespace Queue.Administrator
             Text = currentUserMenuItem.Text = CurrentUser.ToString();
             Controls.OfType<MdiClient>().First().BackgroundImage = Properties.Resources.background;
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -251,7 +252,7 @@ namespace Queue.Administrator
                         serverStateLabel.Image = QIcons.offline16x16;
 
                         pingChannel.Dispose();
-                        pingChannel = channelManager.CreateChannel();
+                        pingChannel = ChannelManager.CreateChannel();
                     }
                     finally
                     {

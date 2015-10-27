@@ -56,9 +56,6 @@ namespace Queue.Administrator
                     currentDayRecordingCheckBox.Checked = config.CurrentDayRecording;
                     columnsUpDown.Value = config.Columns;
                     rowsUpDown.Value = config.Rows;
-
-                    windowTemplateEditor.Text = config.WindowTemplate;
-                    windowTemplateEditor.SetHighlighting(HighligtingStyle);
                 }
             }
         }
@@ -142,11 +139,6 @@ namespace Queue.Administrator
             Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
-        private void templateLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            windowTemplateEditor.Text = Templates.TerminalWindow;
-        }
-
         private async void TerminalConfigControl_Load(object sender, EventArgs e)
         {
             if (designtime)
@@ -173,11 +165,6 @@ namespace Queue.Administrator
                     UIHelper.Warning(exception.Message);
                 }
             }
-        }
-
-        private void windowTemplateEditor_Leave(object sender, EventArgs e)
-        {
-            config.WindowTemplate = windowTemplateEditor.Text;
         }
     }
 }
