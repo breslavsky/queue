@@ -32,6 +32,18 @@
   </Fragment>
 
   <Fragment>
+    <DirectoryRef Id="TEMPLATES">
+      <Directory Id="TERMINAL" Name="terminal" />
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="TERMINAL">
+      <Directory Id="TERMINAL_DEFAULT" Name="default" />
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
     <Property Id="SERVICE_NAME" Value="JunteQueueServer" />
 
     <ComponentGroup Id="Microsoft" Directory="INSTALLFOLDER">
@@ -163,6 +175,9 @@
       </Component>
       <Component Id="_C4BF923CADCB49EF8B376CFAB0FC711B" Directory="NOTIFICATION_DEFAULT" Guid="C4BF923C-ADCB-49EF-8B37-6CFAB0FC711B">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\templates\notification\default\main-page.xaml" />
+      </Component>
+      <Component Id="_C4BF923CADCB49EF8B376CFAB0FC711B" Directory="TERMINAL_DEFAULT" Guid="C4BF923C-ADCB-49EF-8B37-6CFAB0FC711B">
+        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\templates\terminal\default\main-page.xaml" />
       </Component>
     </ComponentGroup>
 

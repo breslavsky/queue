@@ -64,9 +64,7 @@ namespace Queue.Terminal
             try
             {
                 var config = ServiceLocator.Current.GetInstance<TerminalConfig>();
-                //TODO: REFACTOR TO TEMPLATE
-                //string template = String.IsNullOrEmpty(config.WindowTemplate) ? Templates.TerminalWindow : config.WindowTemplate;
-                string template = string.Empty;
+                string template = Templates.TerminalWindow;
                 return XamlReader.Parse(template) as DependencyObject;
             }
             catch (Exception e)

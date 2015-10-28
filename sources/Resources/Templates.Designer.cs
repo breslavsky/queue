@@ -78,5 +78,23 @@ namespace Queue.Resources {
                 return ResourceManager.GetString("ClientRequestCoupon", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;Border xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        ///        xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        ///        xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+        ///        xmlns:lex=&quot;http://wpflocalizeextension.codeplex.com&quot;
+        ///        lex:ResxLocalizationProvider.DefaultAssembly=&quot;Queue.Terminal&quot;
+        ///        lex:ResxLocalizationProvider.DefaultDictionary=&quot;Strings&quot;
+        ///        xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;&gt;
+        ///  &lt;Grid&gt;
+        ///    &lt;Grid&gt;
+        ///      &lt;Gri [остаток строки не уместился]&quot;;.
+        /// </summary>
+        public static string TerminalWindow {
+            get {
+                return ResourceManager.GetString("TerminalWindow", resourceCulture);
+            }
+        }
     }
 }
