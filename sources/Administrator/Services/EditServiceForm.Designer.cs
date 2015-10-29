@@ -116,11 +116,9 @@
             // 
             // serviceParametersControl
             // 
-            this.serviceParametersControl.CurrentUser = null;
             this.serviceParametersControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serviceParametersControl.Location = new System.Drawing.Point(3, 3);
             this.serviceParametersControl.Name = "serviceParametersControl";
-            this.serviceParametersControl.ServerService = null;
             this.serviceParametersControl.Service = null;
             this.serviceParametersControl.Size = new System.Drawing.Size(830, 450);
             this.serviceParametersControl.TabIndex = 0;
@@ -162,11 +160,9 @@
             // 
             // exceptionScheduleControl
             // 
-            this.exceptionScheduleControl.CurrentUser = null;
             this.exceptionScheduleControl.Location = new System.Drawing.Point(10, 65);
             this.exceptionScheduleControl.Name = "exceptionScheduleControl";
             this.exceptionScheduleControl.Schedule = null;
-            this.exceptionScheduleControl.ServerService = null;
             this.exceptionScheduleControl.Size = new System.Drawing.Size(790, 320);
             this.exceptionScheduleControl.TabIndex = 2;
             // 
@@ -659,11 +655,11 @@
             // 
             // serviceStepsControl
             // 
-            this.serviceStepsControl.CurrentUser = null;
+
             this.serviceStepsControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serviceStepsControl.Location = new System.Drawing.Point(3, 3);
             this.serviceStepsControl.Name = "serviceStepsControl";
-            this.serviceStepsControl.ServerService = null;
+
             this.serviceStepsControl.Service = null;
             this.serviceStepsControl.Size = new System.Drawing.Size(830, 450);
             this.serviceStepsControl.TabIndex = 0;
@@ -738,11 +734,9 @@
             // 
             // weekdayScheduleControl
             // 
-            this.weekdayScheduleControl.CurrentUser = null;
             this.weekdayScheduleControl.Location = new System.Drawing.Point(5, 45);
             this.weekdayScheduleControl.Name = "weekdayScheduleControl";
             this.weekdayScheduleControl.Schedule = null;
-            this.weekdayScheduleControl.ServerService = null;
             this.weekdayScheduleControl.Size = new System.Drawing.Size(790, 320);
             this.weekdayScheduleControl.TabIndex = 0;
             // 

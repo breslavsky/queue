@@ -18,17 +18,13 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public QueueAdministrator CurrentUser { get; set; }
-
-        [Dependency]
-        public ServerService ServerService { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
         #region fields
 
-        private DuplexChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
+        private readonly TaskPool taskPool;
 
         #endregion fields
 
@@ -36,8 +32,6 @@ namespace Queue.Administrator
             : base()
         {
             InitializeComponent();
-
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
@@ -56,9 +50,9 @@ namespace Queue.Administrator
                 {
                     taskPool.Dispose();
                 }
-                if (channelManager != null)
+                if (ChannelManager != null)
                 {
-                    channelManager.Dispose();
+                    ChannelManager.Dispose();
                 }
             }
             base.Dispose(disposing);
@@ -82,7 +76,7 @@ namespace Queue.Administrator
 
         private async void exceptionScheduleCheckBox_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 if (exceptionScheduleCheckBox.Checked)
                 {
@@ -151,7 +145,7 @@ namespace Queue.Administrator
         {
             var scheduleDate = exceptionScheduleDatePicker.Value;
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -189,7 +183,7 @@ namespace Queue.Administrator
         {
             var dayOfWeek = (DayOfWeek)int.Parse(weekdayTabControl.SelectedTab.Tag.ToString());
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {

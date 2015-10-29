@@ -4,6 +4,8 @@ namespace Queue.Portal
 {
     public class PortalSettings : ConfigurationSection
     {
+        public const string SectionKey = "portal";
+
         public PortalSettings()
         {
             Port = 9090;

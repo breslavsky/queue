@@ -22,16 +22,12 @@ namespace Queue.Administrator.Reports
         #region dependency
 
         [Dependency]
-        public QueueAdministrator CurrentUser { get; set; }
-
-        [Dependency]
-        public ServerService ServerService { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
         #region fields
 
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
 
         #endregion fields
@@ -39,8 +35,6 @@ namespace Queue.Administrator.Reports
         public OperatorRatingReportForm()
         {
             InitializeComponent();
-
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
@@ -56,7 +50,7 @@ namespace Queue.Administrator.Reports
 
         private async void createReportButton_Click(object sender, EventArgs e)
         {
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -150,7 +144,7 @@ namespace Queue.Administrator.Reports
 
         private async void LoadOperators()
         {
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = ChannelManager.CreateChannel())
             {
                 try
                 {

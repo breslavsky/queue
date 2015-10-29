@@ -22,16 +22,13 @@ namespace Queue.Administrator
         public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
-        public ServerService ServerService { get; set; }
-
-        [Dependency]
         public AdministratorSettings Settings { get; set; }
 
         [Dependency]
         public ConfigurationManager Configuration { get; set; }
 
         [Dependency]
-        private DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 

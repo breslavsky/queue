@@ -1,7 +1,10 @@
 ﻿using Junte.WCF;
+using Microsoft.Practices.Unity;
 using NLog;
+using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.Services.Portal.Settings;
 using System;
 using System.IO;
 using System.Net;
@@ -9,6 +12,7 @@ using System.Reflection;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Threading.Tasks;
+using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Services.Portal
 {
@@ -16,30 +20,26 @@ namespace Queue.Services.Portal
                     ConcurrencyMode = ConcurrencyMode.Multiple,
                     IncludeExceptionDetailInFaults = true,
                     UseSynchronizationContext = false)]
-    public partial class PortalService : IPortalService
+    public class PortalService : DependencyService, IPortalService
     {
-        private readonly Logger logger = LogManager.GetCurrentClassLogger();
+        #region dependency
 
-        private readonly DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        protected readonly DuplexChannelManager<IServerTcpService> channelManager;
-        private readonly User currentUser;
+        [Dependency]
+        public PortalServiceSettings Settings { get; set; }
+
+        [Dependency]
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        #endregion dependency
+
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
         protected readonly IncomingWebRequestContext request;
         protected readonly OutgoingWebResponseContext response;
 
-        public PortalService(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        public PortalService()
         {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-
-            channelManager = new DuplexChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
-
             request = WebOperationContext.Current.IncomingRequest;
             response = WebOperationContext.Current.OutgoingResponse;
-        }
-
-        public Stream ClientAccessPolicy()
-        {
-            return GetContent("clientaccesspolicy.xml");
         }
 
         public Stream Favicon()
@@ -49,7 +49,7 @@ namespace Queue.Services.Portal
 
         public async Task<Service[]> FindServices(string query)
         {
-            using (var channel = channelBuilder.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -64,12 +64,7 @@ namespace Queue.Services.Portal
 
         public Stream GetContent(string path)
         {
-#if DEBUG
-            string webClientPath = "\\git\\queue\\sources\\Portal\\www";
-#else
-            string webClientPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "www");
-#endif
-            string file = Path.Combine(webClientPath, path);
+            string file = Path.Combine(Settings.ContentFolder, path);
 
             response.ContentType = ContentType.GetType(Path.GetExtension(file));
             return File.Open(file, FileMode.Open);
@@ -77,7 +72,7 @@ namespace Queue.Services.Portal
 
         public async Task<DefaultConfig> GetDefaultConfig()
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -92,7 +87,7 @@ namespace Queue.Services.Portal
 
         public async Task<PortalConfig> GetPortalConfig()
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -107,7 +102,7 @@ namespace Queue.Services.Portal
 
         public async Task<QueuePlanMetric> GetQueuePlanMetric(int year, int month, int day, int hour, int minute, int second)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -122,7 +117,7 @@ namespace Queue.Services.Portal
 
         public async Task<QueuePlanServiceMetric> GetQueuePlanServiceMetric(int year, int month, int day, int hours, int minute, int second, string serviceId)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {

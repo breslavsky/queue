@@ -19,10 +19,6 @@ namespace Queue.Services.Contracts
         Stream Favicon();
 
         [OperationContract]
-        [WebGet(UriTemplate = PortalServiceMap.ClientAccessPolicy)]
-        Stream ClientAccessPolicy();
-
-        [OperationContract]
         [WebGet(UriTemplate = PortalServiceMap.GetContent)]
         Stream GetContent(string path);
 

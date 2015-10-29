@@ -1,4 +1,5 @@
 ﻿using Junte.Configuration;
+using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
@@ -51,23 +52,33 @@ namespace Queue.Operator
             hubQualityService = new HubQualityService(hubSettings.Endpoint, HubServicesPaths.Quality);
             container.RegisterInstance(hubQualityService);
 
+            container.RegisterType<DuplexChannelManager<IHubQualityTcpService>>
+                (new InjectionFactory(c => hubQualityService.CreateChannelManager()));
+
             ParseOptions();
 
             if (options.AutoLogin)
             {
                 serverService = new ServerService(options.Endpoint, ServerServicesPaths.Server);
 
-                var channelManager = serverService.CreateChannelManager();
+                Guid sessionId;
+
+                using (var channelManager = serverService.CreateChannelManager())
                 using (var channel = channelManager.CreateChannel())
                 {
-                    Guid sessionId = Guid.Parse(options.SessionId);
+                    sessionId = Guid.Parse(options.SessionId);
                     currentUser = channel.Service.OpenUserSession(sessionId).Result as QueueOperator;
-                    container.RegisterInstance(serverService);
-                    container.RegisterInstance<User>(currentUser);
-                    container.RegisterInstance<QueueOperator>(currentUser);
-
-                    Application.Run(new OperatorForm());
                 }
+
+                container.RegisterInstance(serverService);
+
+                container.RegisterType<DuplexChannelManager<IServerTcpService>>
+                    (new InjectionFactory(c => serverService.CreateChannelManager(sessionId)));
+
+                container.RegisterInstance<User>(currentUser);
+                container.RegisterInstance<QueueOperator>(currentUser);
+
+                Application.Run(new OperatorForm());
             }
             else
             {
@@ -85,6 +96,9 @@ namespace Queue.Operator
 
                         serverService = new ServerService(loginSettings.Endpoint, ServerServicesPaths.Server);
                         container.RegisterInstance<ServerService>(serverService);
+
+                        container.RegisterType<DuplexChannelManager<IServerTcpService>>
+                            (new InjectionFactory(c => serverService.CreateChannelManager(currentUser.SessionId)));
 
                         var mainForm = new OperatorForm();
                         Application.Run(mainForm);

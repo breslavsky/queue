@@ -16,7 +16,6 @@
         public const string PortalApp = "Queue.Portal";
         public const string PortalServiceName = "JunteQueuePortal";
         public const string PortalServiceExe = "Queue.Hosts.Portal.WinService.exe";
-        public const string PortalSettingsSectionKey = "portal";
 
         #endregion portal
 

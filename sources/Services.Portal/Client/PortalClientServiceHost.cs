@@ -8,12 +8,12 @@ namespace Queue.Services.Portal
 {
     public sealed class PortalClientServiceHost : ServiceHost
     {
-        public PortalClientServiceHost(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser, Type serviceType, params Uri[] baseAddresses)
-            : base(serviceType, baseAddresses)
+        public PortalClientServiceHost(params Uri[] baseAddresses)
+            : base(typeof(PortalClientService), baseAddresses)
         {
             foreach (var d in this.ImplementedContracts.Values)
             {
-                d.Behaviors.Add(new PortalClientServiceProvider(channelBuilder, currentUser));
+                d.Behaviors.Add(new PortalClientServiceProvider());
             }
         }
     }

@@ -59,21 +59,24 @@ namespace Queue.Administrator
             if (options.AutoLogin)
             {
                 serverService = new ServerService(options.Endpoint, ServerServicesPaths.Server);
-                container.RegisterInstance(serverService);
 
-                var channelManager = serverService.CreateChannelManager();
+                Guid sessionId;
+
+                using (var channelManager = serverService.CreateChannelManager())
                 using (var channel = channelManager.CreateChannel())
                 {
-                    Guid sessionId = Guid.Parse(options.SessionId);
+                    sessionId = Guid.Parse(options.SessionId);
                     currentUser = channel.Service.OpenUserSession(sessionId).Result as QueueAdministrator;
-                    container.RegisterInstance<User>(currentUser);
-                    container.RegisterInstance<QueueAdministrator>(currentUser);
-
-                    container.RegisterType<DuplexChannelManager<IServerTcpService>>
-                        (new InjectionFactory(c => serverService.CreateChannelManager(sessionId)));
-
-                    Application.Run(new AdministratorForm());
                 }
+
+                container.RegisterInstance<User>(currentUser);
+                container.RegisterInstance<QueueAdministrator>(currentUser);
+
+                container.RegisterInstance(serverService);
+                container.RegisterType<DuplexChannelManager<IServerTcpService>>
+                    (new InjectionFactory(c => serverService.CreateChannelManager(sessionId)));
+
+                Application.Run(new AdministratorForm());
             }
             else
             {

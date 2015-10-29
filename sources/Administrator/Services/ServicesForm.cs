@@ -19,16 +19,12 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public QueueAdministrator CurrentUser { get; set; }
-
-        [Dependency]
-        public ServerService ServerService { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
         #region fields
 
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
 
         #endregion fields
@@ -37,8 +33,6 @@ namespace Queue.Administrator
             : base()
         {
             InitializeComponent();
-
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
@@ -62,7 +56,7 @@ namespace Queue.Administrator
 
         private async void loadServiceGroup(TreeNodeCollection nodes, ServiceGroup serviceGroup = null)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -270,7 +264,7 @@ namespace Queue.Administrator
                 if (MessageBox.Show(string.Format("Вы действительно хотите удалить [{0}] ?", selectedServiceGroup),
                     "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    using (var channel = channelManager.CreateChannel())
+                    using (var channel = ChannelManager.CreateChannel())
                     {
                         try
                         {
@@ -311,7 +305,7 @@ namespace Queue.Administrator
                 if (MessageBox.Show(string.Format("Вы действительно хотите удалить [{0}] ?", selectedService),
                     "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    using (var channel = channelManager.CreateChannel())
+                    using (var channel = ChannelManager.CreateChannel())
                     {
                         try
                         {
@@ -347,7 +341,7 @@ namespace Queue.Administrator
             var selectedNode = servicesTreeView.SelectedNode;
             if (selectedNode != null)
             {
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = ChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -409,7 +403,7 @@ namespace Queue.Administrator
             var selectedNode = servicesTreeView.SelectedNode;
             if (selectedNode != null)
             {
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = ChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -470,7 +464,7 @@ namespace Queue.Administrator
         {
             var checkedNode = e.Node;
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -576,7 +570,7 @@ namespace Queue.Administrator
 
                         if (typeof(ServiceGroup).IsInstanceOfType(hoveringNode.Tag))
                         {
-                            using (var channel = channelManager.CreateChannel())
+                            using (var channel = ChannelManager.CreateChannel())
                             {
                                 try
                                 {
@@ -604,7 +598,7 @@ namespace Queue.Administrator
                     }
                     else
                     {
-                        using (var channel = channelManager.CreateChannel())
+                        using (var channel = ChannelManager.CreateChannel())
                         {
                             try
                             {
@@ -636,7 +630,7 @@ namespace Queue.Administrator
 
                         if (typeof(ServiceGroup).IsInstanceOfType(hoveringNode.Tag))
                         {
-                            using (var channel = channelManager.CreateChannel())
+                            using (var channel = ChannelManager.CreateChannel())
                             {
                                 try
                                 {
@@ -751,9 +745,9 @@ namespace Queue.Administrator
                 {
                     taskPool.Dispose();
                 }
-                if (channelManager != null)
+                if (ChannelManager != null)
                 {
-                    channelManager.Dispose();
+                    ChannelManager.Dispose();
                 }
             }
             base.Dispose(disposing);

@@ -21,20 +21,17 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public QueueAdministrator CurrentUser { get; set; }
+        public LoginSettings Settings { get; set; }
 
         [Dependency]
-        public LoginSettings LoginSettings { get; set; }
-
-        [Dependency]
-        public ServerService ServerService { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
         #region fields
 
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
+
         private readonly Timer reloadInterval;
         private readonly TaskPool taskPool;
         private DateTime planDate;
@@ -45,8 +42,6 @@ namespace Queue.Administrator
             : base()
         {
             InitializeComponent();
-
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
@@ -76,7 +71,7 @@ namespace Queue.Administrator
 
         private async void loadButton_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -125,7 +120,7 @@ namespace Queue.Administrator
 
         private async void queueMonitorControl_OperatorLogin(object sender, QueueMonitorEventArgs eventArgs)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -136,7 +131,7 @@ namespace Queue.Administrator
                         UseShellExecute = true,
                         FileName = "Queue.Operator.exe",
                         Arguments = string.Format("--AutoLogin --Endpoint=\"{0}\" --SessionId={1}",
-                            LoginSettings.Endpoint, queueOperator.SessionId),
+                            Settings.Endpoint, queueOperator.SessionId),
                         WorkingDirectory = Environment.CurrentDirectory
                     });
                 }
@@ -158,7 +153,7 @@ namespace Queue.Administrator
         private void QueueMonitorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Dispose();
-            channelManager.Dispose();
+            ChannelManager.Dispose();
 
             reloadInterval.Stop();
             reloadInterval.Dispose();
@@ -175,7 +170,7 @@ namespace Queue.Administrator
             if (MessageBox.Show("Перезагрузить текущий план очереди? В этом случае будет произведено полное обновление информации из базы данных. Продолжительность данной операции зависит от количества запросов клиентов.",
                 "Подтвердите операцию", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = ChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -201,7 +196,7 @@ namespace Queue.Administrator
         {
             reloadInterval.Stop();
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {

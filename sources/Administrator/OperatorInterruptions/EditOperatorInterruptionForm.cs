@@ -19,10 +19,7 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public QueueAdministrator CurrentUser { get; set; }
-
-        [Dependency]
-        public ServerService ServerService { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
@@ -34,7 +31,6 @@ namespace Queue.Administrator
 
         #region fields
 
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly Guid operatorInterruptionId;
         private readonly TaskPool taskPool;
         private OperatorInterruption operatorInterruption;
@@ -70,8 +66,6 @@ namespace Queue.Administrator
             this.operatorInterruptionId = operatorInterruptionId.HasValue ?
                 operatorInterruptionId.Value : Guid.Empty;
 
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
-
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
@@ -102,9 +96,9 @@ namespace Queue.Administrator
             {
                 taskPool.Dispose();
             }
-            if (channelManager != null)
+            if (ChannelManager != null)
             {
-                channelManager.Dispose();
+                ChannelManager.Dispose();
             }
         }
 
@@ -113,7 +107,7 @@ namespace Queue.Administrator
             typeControl.Initialize<OperatorInterruptionType>();
             dayOfWeekControl.Initialize<DayOfWeek>();
 
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -165,7 +159,7 @@ namespace Queue.Administrator
 
         private async void saveButton_Click(object sender, EventArgs e)
         {
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = ChannelManager.CreateChannel())
             {
                 try
                 {

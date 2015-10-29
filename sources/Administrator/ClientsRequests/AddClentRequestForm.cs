@@ -29,16 +29,12 @@ namespace Queue.Administrator
         public AdministratorSettings Settings { get; set; }
 
         [Dependency]
-        public ServerService ServerService { get; set; }
-
-        [Dependency]
-        public QueueAdministrator CurrentUser { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
         #region fields
 
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private Client currentClient;
         private string[] freeTimeReport;
@@ -87,8 +83,6 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
-
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
@@ -118,9 +112,9 @@ namespace Queue.Administrator
                 {
                     taskPool.Dispose();
                 }
-                if (channelManager != null)
+                if (ChannelManager != null)
                 {
-                    channelManager.Dispose();
+                    ChannelManager.Dispose();
                 }
             }
             base.Dispose(disposing);
@@ -128,7 +122,7 @@ namespace Queue.Administrator
 
         private async void addButton_Click(object clickSender, EventArgs eventArg)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -269,7 +263,7 @@ namespace Queue.Administrator
 
             if (!string.IsNullOrWhiteSpace(mobile))
             {
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = ChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -311,7 +305,7 @@ namespace Queue.Administrator
 
             if (!string.IsNullOrWhiteSpace(surname))
             {
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = ChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -381,7 +375,7 @@ namespace Queue.Administrator
                 {
                     if (selectedService.LiveRegistrator.HasFlag(ClientRequestRegistrator.Manager))
                     {
-                        using (var channel = channelManager.CreateChannel())
+                        using (var channel = ChannelManager.CreateChannel())
                         {
                             try
                             {
@@ -429,7 +423,7 @@ namespace Queue.Administrator
                 {
                     if (selectedService.EarlyRegistrator.HasFlag(ClientRequestRegistrator.Manager))
                     {
-                        using (var channel = channelManager.CreateChannel())
+                        using (var channel = ChannelManager.CreateChannel())
                         {
                             try
                             {
@@ -490,7 +484,7 @@ namespace Queue.Administrator
 
         private async void LoadServiceGroup(TreeNodeCollection nodes, ServiceGroup serviceGroup = null)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {

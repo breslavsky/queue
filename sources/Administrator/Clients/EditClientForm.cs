@@ -17,10 +17,7 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public QueueAdministrator CurrentUser { get; set; }
-
-        [Dependency]
-        public ServerService ServerService { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
@@ -32,7 +29,6 @@ namespace Queue.Administrator
 
         #region fields
 
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly Guid clientId;
         private readonly TaskPool taskPool;
         private Client client;
@@ -46,8 +42,6 @@ namespace Queue.Administrator
 
             this.clientId = clientId.HasValue
                 ? clientId.Value : Guid.Empty;
-
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
@@ -75,7 +69,7 @@ namespace Queue.Administrator
             {
                 Enabled = false;
 
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = ChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -109,7 +103,7 @@ namespace Queue.Administrator
         private void EditClientRequestForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Dispose();
-            channelManager.Dispose();
+            ChannelManager.Dispose();
         }
 
         private async void passwordButton_Click(object sender, EventArgs e)
@@ -118,7 +112,7 @@ namespace Queue.Administrator
             {
                 if (f.ShowDialog() == DialogResult.OK)
                 {
-                    using (var channel = channelManager.CreateChannel())
+                    using (var channel = ChannelManager.CreateChannel())
                     {
                         try
                         {
@@ -149,7 +143,7 @@ namespace Queue.Administrator
 
         private async void saveButton_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {

@@ -28,12 +28,6 @@ namespace Queue.Administrator
         public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
-        public ServerService ServerService { get; set; }
-
-        [Dependency]
-        public ServerTemplateService ServerTemplateService { get; set; }
-
-        [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency

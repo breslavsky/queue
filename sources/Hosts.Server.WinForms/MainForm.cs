@@ -49,20 +49,20 @@ namespace Queue.Hosts.Server.WinForms
             logger.Info(commonApplicationData);
 
             templateServiceSettings = configuration.GetSection<TemplateServiceSettings>(TemplateServiceSettings.SectionKey);
-            container.RegisterInstance(configuration);
+            container.RegisterInstance(templateServiceSettings);
 
             settings = configuration.GetSection<ServerSettings>(ServerSettings.SectionKey);
+            container.RegisterInstance(settings);
 
             editDatabaseSettingsControl.Settings = settings.Database;
             languageControl.Initialize<Language>();
+            languageControl.Select<Language>(settings.Language);
             licenseTypeControl.Initialize<ProductLicenceType>();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             Text += string.Format(" ({0})", typeof(ServerInstance).Assembly.GetName().Version);
-
-            languageControl.Select<Language>(settings.Language);
 
             AdjustServiceSettings();
             AdjustServiceState();

@@ -29,10 +29,7 @@ namespace Queue.Administrator
         public AdministratorSettings Settings { get; set; }
 
         [Dependency]
-        public ServerService ServerService { get; set; }
-
-        [Dependency]
-        public QueueAdministrator CurrentUser { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
@@ -44,7 +41,6 @@ namespace Queue.Administrator
 
         #region fields
 
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly Guid clientRequestId;
         private readonly TaskPool taskPool;
         private ClientRequest clientRequest;
@@ -57,8 +53,6 @@ namespace Queue.Administrator
             InitializeComponent();
 
             this.clientRequestId = clientRequestId;
-
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
@@ -109,7 +103,7 @@ namespace Queue.Administrator
                     commentTextBox.Text = clientRequest.Comment;
                     ratingUpDown.Value = clientRequest.Rating;
 
-                    using (var channel = channelManager.CreateChannel())
+                    using (var channel = ChannelManager.CreateChannel())
                     {
                         try
                         {
@@ -154,14 +148,14 @@ namespace Queue.Administrator
         private void EditClientRequestForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Dispose();
-            channelManager.Dispose();
+            ChannelManager.Dispose();
         }
 
         private async void EditClientRequestForm_Load(object sender, EventArgs e)
         {
             Enabled = false;
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -195,7 +189,7 @@ namespace Queue.Administrator
 
         private async void cancelMenuItem_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -224,7 +218,7 @@ namespace Queue.Administrator
 
         private async void couponMenuItem_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -255,7 +249,7 @@ namespace Queue.Administrator
 
         private async void reportMenuItem_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -291,7 +285,7 @@ namespace Queue.Administrator
 
         private async void restoreMenuItem_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -390,7 +384,7 @@ namespace Queue.Administrator
 
         private async void saveButton_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {

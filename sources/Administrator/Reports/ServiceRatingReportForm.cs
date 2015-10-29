@@ -24,16 +24,12 @@ namespace Queue.Administrator.Reports
         #region dependency
 
         [Dependency]
-        public QueueAdministrator CurrentUser { get; set; }
-
-        [Dependency]
-        public ServerService ServerService { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
         #region fields
 
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
 
         #endregion fields
@@ -42,8 +38,6 @@ namespace Queue.Administrator.Reports
             : base()
         {
             InitializeComponent();
-
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
@@ -69,9 +63,9 @@ namespace Queue.Administrator.Reports
                 {
                     taskPool.Dispose();
                 }
-                if (channelManager != null)
+                if (ChannelManager != null)
                 {
-                    channelManager.Dispose();
+                    ChannelManager.Dispose();
                 }
             }
             base.Dispose(disposing);
@@ -92,7 +86,7 @@ namespace Queue.Administrator.Reports
 
         private async void createReportButton_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -216,7 +210,7 @@ namespace Queue.Administrator.Reports
 
         private async void LoadServiceGroup(TreeNodeCollection nodes)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -365,7 +359,7 @@ namespace Queue.Administrator.Reports
             {
                 var result = new List<Guid>();
 
-                using (var channel = form.channelManager.CreateChannel())
+                using (var channel = form.ChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -384,7 +378,7 @@ namespace Queue.Administrator.Reports
                     return;
                 }
 
-                using (var channel = form.channelManager.CreateChannel())
+                using (var channel = form.ChannelManager.CreateChannel())
                 {
                     try
                     {

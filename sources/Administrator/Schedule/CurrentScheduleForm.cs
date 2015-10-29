@@ -19,16 +19,12 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public QueueAdministrator CurrentUser { get; set; }
-
-        [Dependency]
-        public ServerService ServerService { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
         #region filelds
 
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private Service selectedService;
 
@@ -38,8 +34,6 @@ namespace Queue.Administrator
             : base()
         {
             InitializeComponent();
-
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
@@ -55,7 +49,7 @@ namespace Queue.Administrator
         {
             if (selectedService != null)
             {
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = ChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -108,7 +102,7 @@ namespace Queue.Administrator
             {
                 currentSchedulePanel.Enabled = true;
 
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = ChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -144,7 +138,7 @@ namespace Queue.Administrator
         private void ServicesForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Dispose();
-            channelManager.Dispose();
+            ChannelManager.Dispose();
         }
 
         private void taskPool_OnAddTask(object sender, EventArgs e)

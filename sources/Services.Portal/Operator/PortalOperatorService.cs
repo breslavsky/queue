@@ -13,8 +13,8 @@ namespace Queue.Services.Portal
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        public PortalOperatorService(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser)
-            : base(channelBuilder, currentUser)
+        public PortalOperatorService()
+            : base()
         {
         }
 

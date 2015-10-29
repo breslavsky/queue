@@ -9,6 +9,7 @@ using Queue.Common.Settings;
 using Queue.Hosts.Common;
 using Queue.Model.Common;
 using Queue.Portal;
+using Queue.Services.Portal.Settings;
 using System;
 using System.IO;
 using System.Reflection;
@@ -25,44 +26,53 @@ namespace Hosts.Portal.WinForms
         private const string StartServiceButtonTitle = "Запустить службу";
         private const string StopServiceButtonTitle = "Остановить службу";
 
-        private ConfigurationManager configurationManager;
-        private PortalSettings settings;
+        private ConfigurationManager configuration;
         private bool started;
         private PortalInstance portal;
         private ServiceManager serviceManager;
+        private PortalSettings settings;
         private LoginSettings loginSettings;
+        private PortalServiceSettings portalServiceSettings;
 
         public MainForm()
         {
             InitializeComponent();
 
+            var container = new UnityContainer();
+            container.RegisterInstance(container);
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
+
             string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.PortalServiceExe);
             serviceManager = new ServiceManager(HostsConsts.PortalServiceName, exePath);
+
+            configuration = new ConfigurationManager(HostsConsts.PortalApp, Environment.SpecialFolder.CommonApplicationData);
+            container.RegisterInstance(configuration);
+
+            settings = configuration.GetSection<PortalSettings>(PortalSettings.SectionKey);
+            container.RegisterInstance(settings);
+
+            portalSettingsBindingSource.DataSource = settings;
+
+            loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
+            container.RegisterInstance(loginSettings);
+
+            loginSettingsControl.Settings = loginSettings;
+
+            portalServiceSettings = configuration.GetSection<PortalServiceSettings>(PortalServiceSettings.SectionKey);
+            container.RegisterInstance(portalServiceSettings);
+
+            portalServiceSettingsBindingSource.DataSource = portalServiceSettings;
+
+            loginSettingsControl.UserRole = UserRole.Administrator;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            configurationManager = new ConfigurationManager(HostsConsts.PortalApp, Environment.SpecialFolder.CommonApplicationData);
-            settings = configurationManager.GetSection<PortalSettings>(HostsConsts.PortalSettingsSectionKey);
-            portalSettingsBindingSource.DataSource = settings;
-
-            RegisterContainer();
-
-            loginSettings = configurationManager.GetSection<LoginSettings>(LoginSettings.SectionKey);
-            loginSettingsControl.UserRole = UserRole.Administrator;
-
             Text += string.Format(" ({0})", typeof(PortalInstance).Assembly.GetName().Version);
 
             AdjustServiceState();
 
             serviceStateTimer.Start();
-        }
-
-        private void RegisterContainer()
-        {
-            var container = new UnityContainer();
-            container.RegisterInstance(configurationManager);
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 
         private void AdjustServiceState()
@@ -92,7 +102,7 @@ namespace Hosts.Portal.WinForms
         {
             try
             {
-                configurationManager.Save();
+                configuration.Save();
                 MessageBox.Show("Настройки сохранены");
             }
             catch (Exception ex)
@@ -103,44 +113,25 @@ namespace Hosts.Portal.WinForms
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            StartPortal();
-        }
-
-        private async void StartPortal()
-        {
             try
             {
-                StopPortal();
-
                 startButton.Enabled = false;
 
                 portal = new PortalInstance(settings, loginSettings);
-                await portal.Start();
+                portal.Start();
 
                 startButton.Enabled = false;
                 stopButton.Enabled = true;
                 started = true;
             }
-            catch (Exception e)
-            {
-                startButton.Enabled = true;
-                UIHelper.Error(e);
-            }
-        }
-
-        private void stopButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                StopPortal();
-            }
             catch (Exception ex)
             {
+                startButton.Enabled = true;
                 UIHelper.Error(ex);
             }
         }
 
-        private void StopPortal()
+        private void stopButton_Click(object sender, EventArgs e)
         {
             if (portal == null)
             {
@@ -207,19 +198,13 @@ namespace Hosts.Portal.WinForms
             AdjustServiceState();
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void selectContentFolderButton_Click(object sender, EventArgs e)
         {
-            if ((started) && (!UIHelper.Question("Портал запущен. В случае выхода из программы он будет остановлен. Продолжить?")))
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                e.Cancel = true;
-                return;
+                portalServiceSettings.ContentFolder = folderBrowserDialog.SelectedPath;
+                portalServiceSettingsBindingSource.ResetBindings(false);
             }
-
-            try
-            {
-                StopPortal();
-            }
-            catch { }
         }
     }
 }

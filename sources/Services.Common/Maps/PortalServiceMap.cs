@@ -5,7 +5,6 @@
         public const string Index = "/";
         public const string Favicon = "/favicon.ico";
         public const string GetContent = "/content/{*path}";
-        public const string ClientAccessPolicy = "clientaccesspolicy.xml";
         public const string GetDefaultConfig = "/config/default";
         public const string GetPortalConfig = "/config/portal";
         public const string FindServices = "/find-services?query={query}";

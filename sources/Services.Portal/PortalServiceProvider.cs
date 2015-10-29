@@ -10,13 +10,8 @@ namespace Queue.Services.Portal
 {
     internal class PortalServiceProvider : IInstanceProvider, IContractBehavior
     {
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private Administrator currentUser;
-
-        public PortalServiceProvider(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser)
+        public PortalServiceProvider()
         {
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
         }
 
         public object GetInstance(InstanceContext instanceContext, Message message)
@@ -26,7 +21,7 @@ namespace Queue.Services.Portal
 
         public object GetInstance(InstanceContext instanceContext)
         {
-            return new PortalService(channelBuilder, currentUser);
+            return new PortalService();
         }
 
         public void ReleaseInstance(InstanceContext instanceContext, object instance)

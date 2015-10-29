@@ -21,10 +21,7 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public QueueAdministrator CurrentUser { get; set; }
-
-        [Dependency]
-        public ServerService ServerService { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
@@ -33,7 +30,6 @@ namespace Queue.Administrator
         private const string LoginColumn = "loginColumn";
         private const string ManageColumn = "manageColumn";
 
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
 
         #endregion fields
@@ -42,8 +38,6 @@ namespace Queue.Administrator
             : base()
         {
             InitializeComponent();
-
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
@@ -62,9 +56,9 @@ namespace Queue.Administrator
                 {
                     taskPool.Dispose();
                 }
-                if (channelManager != null)
+                if (ChannelManager != null)
                 {
-                    channelManager.Dispose();
+                    ChannelManager.Dispose();
                 }
             }
             base.Dispose(disposing);
@@ -113,7 +107,7 @@ namespace Queue.Administrator
                                 office.Endpoint = f.Settings.Endpoint;
                                 office.SessionId = f.SessionId;
 
-                                using (var channel = channelManager.CreateChannel())
+                                using (var channel = ChannelManager.CreateChannel())
                                 {
                                     try
                                     {
@@ -190,7 +184,7 @@ namespace Queue.Administrator
 
         private async void OfficesForm_Load(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -245,7 +239,7 @@ namespace Queue.Administrator
             {
                 Office office = e.Row.Tag as Office;
 
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = ChannelManager.CreateChannel())
                 {
                     try
                     {

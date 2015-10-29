@@ -30,14 +30,14 @@ namespace Queue.Services.Portal
         private Client currentClient;
         private Guid sessionId;
 
-        public PortalClientService(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser)
-            : base(channelBuilder, currentUser)
+        public PortalClientService()
+            : base()
         {
             try
             {
                 sessionId = Guid.Parse(request.Headers[ExtendHttpHeaders.Session]);
 
-                using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+                using (var channel = ChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -59,7 +59,7 @@ namespace Queue.Services.Portal
         {
             checkLogin();
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -81,7 +81,7 @@ namespace Queue.Services.Portal
         {
             checkLogin();
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -104,7 +104,7 @@ namespace Queue.Services.Portal
 
         public async Task<bool> CheckPIN(string email, string PIN)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -122,7 +122,7 @@ namespace Queue.Services.Portal
         {
             checkLogin();
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -150,7 +150,7 @@ namespace Queue.Services.Portal
 
         public async Task<Stream> GetRequestCoupon(string requestId)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 string xpsFile = string.Empty;
 
@@ -172,7 +172,7 @@ namespace Queue.Services.Portal
         {
             checkLogin();
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -191,7 +191,7 @@ namespace Queue.Services.Portal
 
         public async Task<ServiceGroup[]> GetRootServiceGroups()
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 return await channel.Service.GetRootServiceGroups();
             }
@@ -199,7 +199,7 @@ namespace Queue.Services.Portal
 
         public async Task<Service[]> GetRootServices()
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 return await channel.Service.GetRootServices();
             }
@@ -207,7 +207,7 @@ namespace Queue.Services.Portal
 
         public async Task<ServiceFreeTime> GetServiceFreeTime(string planDate, string queueType, string serviceId)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -237,7 +237,7 @@ namespace Queue.Services.Portal
 
         public async Task<ServiceGroup[]> GetServiceGroups(string serviceGroupId)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 return await channel.Service.GetServiceGroups(Guid.Parse(serviceGroupId));
             }
@@ -245,7 +245,7 @@ namespace Queue.Services.Portal
 
         public async Task<Service[]> GetServices(string serviceGroupId)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 return await channel.Service.GetServices(Guid.Parse(serviceGroupId));
             }
@@ -258,7 +258,7 @@ namespace Queue.Services.Portal
 
         public async Task<Client> Login(string email, string password)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -273,7 +273,7 @@ namespace Queue.Services.Portal
 
         public async Task<Client> Register(string email, string PIN, string surname, string name, string patronymic, string mobile)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -297,7 +297,7 @@ namespace Queue.Services.Portal
 
         public async Task<bool> RestorePassword(string email)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -313,7 +313,7 @@ namespace Queue.Services.Portal
 
         public async Task<bool> SendPINToEmail(string email)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -352,7 +352,7 @@ namespace Queue.Services.Portal
                     return new MemoryStream(Encoding.UTF8.GetBytes("Переадресация..."));
                 };
 
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = ChannelManager.CreateChannel())
                 {
                     try
                     {

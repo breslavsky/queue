@@ -20,18 +20,12 @@ namespace Queue.Administrator
         [Dependency]
         [ReadOnly(true)]
         [Browsable(false)]
-        public QueueAdministrator CurrentUser { get; set; }
-
-        [Dependency]
-        [ReadOnly(true)]
-        [Browsable(false)]
-        public ServerService ServerService { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
         #region fields
 
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private PortalConfig config;
 
@@ -68,8 +62,6 @@ namespace Queue.Administrator
                 return;
             }
 
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
-
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
@@ -82,7 +74,7 @@ namespace Queue.Administrator
                 return;
             }
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -110,7 +102,7 @@ namespace Queue.Administrator
 
         private async void saveButton_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {

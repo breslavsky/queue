@@ -21,18 +21,12 @@ namespace Queue.Administrator
         [Dependency]
         [ReadOnly(true)]
         [Browsable(false)]
-        public QueueAdministrator CurrentUser { get; set; }
-
-        [Dependency]
-        [ReadOnly(true)]
-        [Browsable(false)]
-        public ServerService ServerService { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
         #region fields
 
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private Service service;
 
@@ -55,7 +49,7 @@ namespace Queue.Administrator
                 {
                     Invoke(new MethodInvoker(async () =>
                     {
-                        using (var channel = channelManager.CreateChannel())
+                        using (var channel = ChannelManager.CreateChannel())
                         {
                             try
                             {
@@ -94,8 +88,6 @@ namespace Queue.Administrator
             {
                 return;
             }
-
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
@@ -232,7 +224,7 @@ namespace Queue.Administrator
             {
                 ServiceParameter parameter = e.Row.Tag as ServiceParameter;
 
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = ChannelManager.CreateChannel())
                 {
                     try
                     {

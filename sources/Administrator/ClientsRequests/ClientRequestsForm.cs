@@ -21,17 +21,13 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public QueueAdministrator CurrentUser { get; set; }
-
-        [Dependency]
-        public ServerService ServerService { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
         #region fields
 
         private const byte PageSize = 50;
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
 
         private readonly ClientRequestFilter filter = new ClientRequestFilter()
         {
@@ -47,8 +43,6 @@ namespace Queue.Administrator
             : base()
         {
             InitializeComponent();
-
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
@@ -69,9 +63,9 @@ namespace Queue.Administrator
                 {
                     taskPool.Dispose();
                 }
-                if (channelManager != null)
+                if (ChannelManager != null)
                 {
-                    channelManager.Dispose();
+                    ChannelManager.Dispose();
                 }
             }
             base.Dispose(disposing);
@@ -86,7 +80,7 @@ namespace Queue.Administrator
         {
             requestDatePicker.Value = DateTime.Today;
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -137,7 +131,7 @@ namespace Queue.Administrator
             {
                 ClientRequest clientRequest = e.Row.Tag as ClientRequest;
 
-                using (var channel = channelManager.CreateChannel())
+                using (var channel = ChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -166,7 +160,7 @@ namespace Queue.Administrator
 
         private async void RefreshClienRequestsGridView()
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {

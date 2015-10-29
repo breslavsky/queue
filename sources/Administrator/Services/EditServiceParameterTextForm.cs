@@ -17,10 +17,7 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public QueueAdministrator CurrentUser { get; set; }
-
-        [Dependency]
-        public ServerService ServerService { get; set; }
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
@@ -32,7 +29,6 @@ namespace Queue.Administrator
 
         #region fields
 
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
         private readonly Guid serviceId;
         private readonly Guid serviceParameterTextId;
@@ -69,8 +65,6 @@ namespace Queue.Administrator
             this.serviceParameterTextId = serviceParameterTextId.HasValue
                 ? serviceParameterTextId.Value : Guid.Empty;
 
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
-
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
@@ -89,14 +83,14 @@ namespace Queue.Administrator
         private void EditServiceParameterTextForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Dispose();
-            channelManager.Dispose();
+            ChannelManager.Dispose();
         }
 
         private async void EditServiceParameterTextForm_Load(object sender, EventArgs e)
         {
             Enabled = false;
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -134,7 +128,7 @@ namespace Queue.Administrator
 
         private async void saveButton_Click(object sender, EventArgs e)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {

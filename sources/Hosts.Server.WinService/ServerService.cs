@@ -50,7 +50,7 @@ namespace Queue.Hosts.Server.WinService
                 container.RegisterInstance(settings);
 
                 templateServiceSettings = configuration.GetSection<TemplateServiceSettings>(TemplateServiceSettings.SectionKey);
-                container.RegisterInstance(configuration);
+                container.RegisterInstance(templateServiceSettings);
 
                 var culture = settings.Language.GetCulture();
                 Thread.CurrentThread.CurrentCulture = culture;

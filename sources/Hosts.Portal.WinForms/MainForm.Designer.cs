@@ -38,6 +38,9 @@
             this.installServiseButton = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
             this.settingsGroupBox = new System.Windows.Forms.GroupBox();
+            this.contentFolderGroupBox = new System.Windows.Forms.GroupBox();
+            this.contentFolderTextBox = new System.Windows.Forms.TextBox();
+            this.selectContentFolderButton = new System.Windows.Forms.Button();
             this.loginSettingsControl = new Queue.UI.WinForms.LoginSettingsControl();
             this.serverGroupBox = new System.Windows.Forms.GroupBox();
             this.portLabel = new System.Windows.Forms.Label();
@@ -46,13 +49,17 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.serviceStateTimer = new System.Windows.Forms.Timer(this.components);
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.portalServiceSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.serviceGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).BeginInit();
             this.settingsGroupBox.SuspendLayout();
+            this.contentFolderGroupBox.SuspendLayout();
             this.serverGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.portalSettingsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.portalServiceSettingsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // stopButton
@@ -121,6 +128,7 @@
             // 
             // settingsGroupBox
             // 
+            this.settingsGroupBox.Controls.Add(this.contentFolderGroupBox);
             this.settingsGroupBox.Controls.Add(this.loginSettingsControl);
             this.settingsGroupBox.Controls.Add(this.serverGroupBox);
             this.settingsGroupBox.Controls.Add(this.saveButton);
@@ -130,6 +138,35 @@
             this.settingsGroupBox.TabIndex = 16;
             this.settingsGroupBox.TabStop = false;
             this.settingsGroupBox.Text = "Настройки";
+            // 
+            // contentFolderGroupBox
+            // 
+            this.contentFolderGroupBox.Controls.Add(this.contentFolderTextBox);
+            this.contentFolderGroupBox.Controls.Add(this.selectContentFolderButton);
+            this.contentFolderGroupBox.Location = new System.Drawing.Point(205, 195);
+            this.contentFolderGroupBox.Name = "contentFolderGroupBox";
+            this.contentFolderGroupBox.Size = new System.Drawing.Size(195, 45);
+            this.contentFolderGroupBox.TabIndex = 19;
+            this.contentFolderGroupBox.TabStop = false;
+            this.contentFolderGroupBox.Text = "Папка контента";
+            // 
+            // contentFolderTextBox
+            // 
+            this.contentFolderTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.portalServiceSettingsBindingSource, "ContentFolder", true));
+            this.contentFolderTextBox.Location = new System.Drawing.Point(6, 18);
+            this.contentFolderTextBox.Name = "contentFolderTextBox";
+            this.contentFolderTextBox.ReadOnly = true;
+            this.contentFolderTextBox.Size = new System.Drawing.Size(144, 20);
+            this.contentFolderTextBox.TabIndex = 12;
+            // 
+            // selectContentFolderButton
+            // 
+            this.selectContentFolderButton.Location = new System.Drawing.Point(155, 15);
+            this.selectContentFolderButton.Name = "selectContentFolderButton";
+            this.selectContentFolderButton.Size = new System.Drawing.Size(35, 25);
+            this.selectContentFolderButton.TabIndex = 13;
+            this.selectContentFolderButton.Text = "...";
+            this.selectContentFolderButton.Click += new System.EventHandler(this.selectContentFolderButton_Click);
             // 
             // loginSettingsControl
             // 
@@ -215,6 +252,10 @@
             this.logoPictureBox.TabIndex = 18;
             this.logoPictureBox.TabStop = false;
             // 
+            // portalServiceSettingsBindingSource
+            // 
+            this.portalServiceSettingsBindingSource.DataSource = typeof(Queue.Services.Portal.Settings.PortalServiceSettings);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -230,15 +271,17 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Портал";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.serviceGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.serviceStatePicture)).EndInit();
             this.settingsGroupBox.ResumeLayout(false);
+            this.contentFolderGroupBox.ResumeLayout(false);
+            this.contentFolderGroupBox.PerformLayout();
             this.serverGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.portUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.portalSettingsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.portalServiceSettingsBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -260,6 +303,11 @@
         private System.Windows.Forms.Timer serviceStateTimer;
         private System.Windows.Forms.PictureBox logoPictureBox;
         private Queue.UI.WinForms.LoginSettingsControl loginSettingsControl;
+        private System.Windows.Forms.GroupBox contentFolderGroupBox;
+        private System.Windows.Forms.TextBox contentFolderTextBox;
+        private System.Windows.Forms.Button selectContentFolderButton;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private System.Windows.Forms.BindingSource portalServiceSettingsBindingSource;
     }
 }
 
