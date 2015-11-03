@@ -1,10 +1,45 @@
-﻿<!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+﻿<!doctype html>
+<html>
 <head>
+    <title>Оператор очереди</title>
+
+    <link rel="import" href="http://localhost:4506/cors/" type="application/xml">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+    <script src="/content/components/webcomponentsjs/webcomponents.js"></script>
+    <script src="/content/js/jquery.min.js"></script>
+
+    <link rel="import" href="/content/components/polymer/polymer.html">
+    <link rel="import" href="/content/components/paper-input/paper-input.html">
+    <link rel="import" href="/content/components/paper-button/paper-button.html">
+    <link rel="import" href="/content/components/paper-styles/paper-styles.html">
+    <link rel="import" href="/content/components/paper-toolbar/paper-toolbar.html">
+    <link rel="import" href="/content/components/iron-icons/iron-icons.html">
+    <link rel="import" href="/content/components/paper-icon-button/paper-icon-button.html">
+
+    <link rel="import" href="/content/elements/common-style.html">
+    <link rel="import" href="/content/elements/login-page.html">
 
 </head>
-<body>
-    <p>test!</p>
+<body fullbleed vertical layout>
+    <dom-module id="main-document-element">
+
+        <template>
+            <login-page />
+        </template>
+        <script>
+            HTMLImports.whenReady(function () {
+                Polymer({
+                    is: 'main-document-element',
+
+                });
+            });
+        </script>
+    </dom-module>
+
+    <main-document-element></main-document-element>
 </body>
 </html>

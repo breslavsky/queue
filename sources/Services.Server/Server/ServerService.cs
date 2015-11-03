@@ -8,6 +8,7 @@ using Queue.Services.Common;
 using Queue.Services.Contracts;
 using System;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Threading.Tasks;
 
 namespace Queue.Services.Server

@@ -12,7 +12,10 @@ namespace Queue.Services.DTO
         public int LastPosition { get; set; }
 
         [DataMember]
-        public TimeSpan Workload { get; set; }
+        public TimeSpan DailyWorkload { get; set; }
+
+        [DataMember]
+        public TimeSpan PlaningWorkload { get; set; }
 
         [DataMember]
         public int Standing { get; set; }

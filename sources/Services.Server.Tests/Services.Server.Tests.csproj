@@ -66,6 +66,9 @@
       <HintPath>..\packages\NHibernate.Validator.1.3.2.4000\lib\Net35\NHibernate.Validator.Specific.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -82,6 +85,12 @@
   <ItemGroup>
     <Compile Include="QueuePlanTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\ServerServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="ServerServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
@@ -99,7 +108,572 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="GenericTest1.GenericTest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.AddDefaultExceptionScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.AddEarlyClientRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.AdditionalService.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.AddLiveClientRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.AddServiceExceptionScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.AddServiceWeekdayScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.Administrator.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.CallClientByRequestNumberResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.CallCurrentClientResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.CancelClientRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ChangeClientPasswordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ChangeUserPasswordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.CheckPINResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.Client.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ClientLoginResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ClientRequest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ClientRequestAdditionalService.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ClientRequestCoupon.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ClientRequestEvent.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ClientRequestParameter.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ClientRequestPlan.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ClientRestorePasswordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.CouponConfig.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DefaultConfig.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DeleteAdditionalServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DeleteClientRequestAdditionalServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DeleteClientRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DeleteClientResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DeleteMediaConfigFileResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DeleteOfficeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DeleteOperatorInterruptionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DeleteScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DeleteServiceGroupResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DeleteServiceParameterResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DeleteServiceRenderingResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DeleteServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DeleteServiceStepResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DeleteUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DeleteWorkplaceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.DesignConfig.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditAdditionalServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditAdministratorResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditClientRequestAdditionalServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditClientRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditClientResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditCouponConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditCurrentClientRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditDefaultConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditDesignConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditMediaConfigFileResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditMediaConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditNotificationConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditOfficeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditOperatorInterruptionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditOperatorResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditPortalConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditServiceGroupResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditServiceParameterNumberResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditServiceParameterOptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditServiceParameterTextResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditServiceRenderingResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditServiceStepResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditSMTPConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditTerminalConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.EditWorkplaceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.FindClientRequestsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.FindClientsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.FindServicesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetAdditinalServicesRatingReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetAdditionalServiceLinksResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetAdditionalServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetAdditionalServicesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetClientByIdentityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetClientRequestAdditionalServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetClientRequestAdditionalServicesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetClientRequestCouponResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetClientRequestEventsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetClientRequestParametersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetClientRequestReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetClientRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetClientResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetCouponConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetCurrentClientRequestPlanResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetCurrentClientRequestPlansResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetDateTimeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetDefaultConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetDefaultExceptionScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetDefaultWeekdayScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetDesignConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetExceptionScheduleReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetMediaConfigFileResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetMediaConfigFilesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetMediaConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetNotificationConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetOfficeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetOfficesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetOperatorClientRequestPlansResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetOperatorInterruptionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetOperatorInterruptionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetOperatorRatingReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetPortalConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetQueuePlanMetricResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetQueuePlanResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetQueuePlanServiceMetricResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetRedirectOperatorsLinksResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetRootServiceGroupsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetRootServicesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServiceExceptionScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServiceFreeTimeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServiceGroupResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServiceGroupsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServiceLinksResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServiceParameterResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServiceParametersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServiceRatingReportResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServiceRenderingResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServiceRenderingsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServicesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServiceStepLinksResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServiceStepResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServiceStepsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetServiceWeekdayScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetSMTPConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetTerminalConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetUserLinksResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetUserResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetUsersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetWorkplaceOperatorsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetWorkplaceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetWorkplacesLinksResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.GetWorkplacesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.IdentifiedEntityLink.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.MediaConfig.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.MediaConfigFile.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.MoveServiceGroupResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.MoveServiceGroupToRootResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.MoveServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.NotificationConfig.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.Office.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.OpenClientSessionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.OpenUserSessionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.Operator.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.OperatorInterruption.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.PortalConfig.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.PostponeClientRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.PostponeCurrentClientRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.QueuePlan.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.QueuePlanMetric.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.QueuePlanServiceMetric.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.RedirectToOperatorCurrentClientRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.RefreshTodayQueuePlanResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.RestoreClientRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ReturnCurrentClientRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.Schedule.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.SendPINToEmailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.Service.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ServiceDownResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ServiceFreeTime.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ServiceGroup.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ServiceGroupDownResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ServiceGroupUpResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ServiceParameter.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ServiceParameterNumber.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ServiceParameterOptions.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ServiceParameterText.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ServiceRendering.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ServiceStep.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ServiceStepDownResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ServiceStepUpResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.ServiceUpResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.SMTPConfig.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.TerminalConfig.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.UpdateCurrentClientRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.User.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.UserHeartbeatResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.UserLoginResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\Queue.Services.Server.Tests.ServerServiceReference.Workplace.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServerServiceReference\ServerHttpService.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ServerServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServerServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServerServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\ServerServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
