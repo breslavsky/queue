@@ -73,7 +73,6 @@
     <Compile Include="Hub\HubQualityService.cs" />
     <Compile Include="Server\ServerTemplateService.cs" />
     <Compile Include="ClientService.cs" />
-    <Compile Include="Server\IServerCorsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

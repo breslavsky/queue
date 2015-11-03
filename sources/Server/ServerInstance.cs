@@ -109,25 +109,11 @@ namespace Queue.Server
                         logger.Info("HTTP service host uri = {0}", uri);
 
                         var endpoint = host.AddServiceEndpoint(typeof(IServerHttpService), Bindings.BasicHttpBinding, uri);
-                        //endpoint.EndpointBehaviors.Add(new CORSEnablingBehavior());
                         host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                         {
                             HttpGetUrl = uri,
                             HttpGetEnabled = true
                         });
-
-                        hosts.Add(host);
-                    }
-
-                    {
-                        var host = new ServerCorsServiceHost();
-
-                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServerServicesPaths.Cors));
-                        logger.Info("HTTP service host uri = {0}", uri);
-
-                        var endpoint = host.AddServiceEndpoint(typeof(IServerCorsService), Bindings.WebHttpBinding, uri);
-                        //endpoint.EndpointBehaviors.Add(new CORSEnablingBehavior());
-                        endpoint.EndpointBehaviors.Add(new WebHttpBehavior());
 
                         hosts.Add(host);
                     }

@@ -157,9 +157,6 @@
     <Compile Include="Server\Controllers\AdditionalService.cs" />
     <Compile Include="Server\Controllers\ClientRequestAdditionalService.cs" />
     <Compile Include="Server\Controllers\ClientRequestParameter.cs" />
-    <Compile Include="Server\ServerCorsService.cs" />
-    <Compile Include="Server\ServerCorsServiceHost.cs" />
-    <Compile Include="Server\ServerCorsServiceProvider.cs" />
     <Compile Include="Template\ServerTemplateTcpServiceProvider.cs" />
     <Compile Include="Template\ServerTemplateTcpService.cs" />
     <Compile Include="Template\ServerTemplateTcpServiceHost.cs" />

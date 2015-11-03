@@ -9,7 +9,6 @@ namespace Queue.Services.Contracts
     public class ServerServicesPaths
     {
         public const string Server = "";
-        public const string Cors = "cors";
         public const string Template = "template";
     }
 }
