@@ -1,6 +1,6 @@
 ﻿namespace Queue.Simulator
 {
-    partial class MainForm
+    partial class SimulatorForm
     {
         /// <summary>
         /// Требуется переменная конструктора.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimulatorForm));
             this.topMenu = new System.Windows.Forms.MenuStrip();
             this.clientRequestsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.opeatorsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,7 +83,6 @@
             this.Name = "MainForm";
             this.Text = "Симулятор";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.topMenu.ResumeLayout(false);
             this.topMenu.PerformLayout();

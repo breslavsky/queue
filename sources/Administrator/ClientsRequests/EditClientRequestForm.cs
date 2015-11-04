@@ -31,6 +31,9 @@ namespace Queue.Administrator
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
+        [Dependency]
+        public ChannelManager<IServerUserTcpService> ServerUserChannelManager { get; set; }
+
         #endregion dependency
 
         #region events
@@ -155,28 +158,31 @@ namespace Queue.Administrator
         {
             Enabled = false;
 
-            using (var channel = ChannelManager.CreateChannel())
+            try
             {
-                try
+                using (var channel = ServerUserChannelManager.CreateChannel())
                 {
                     operatorControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(UserRole.Operator)));
+                }
 
+                using (var channel = ChannelManager.CreateChannel())
+                {
                     ClientRequest = await taskPool.AddTask(channel.Service.GetClientRequest(clientRequestId));
+                }
 
-                    Enabled = true;
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
+                Enabled = true;
+            }
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
+            {
+                UIHelper.Warning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
             }
         }
 

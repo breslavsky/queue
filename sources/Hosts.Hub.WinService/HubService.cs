@@ -11,7 +11,7 @@ using System.Globalization;
 using System.ServiceProcess;
 using System.Threading;
 
-namespace Hosts.Hub.WinService
+namespace Queue.Hosts.Hub.WinService
 {
     public partial class HubService : ServiceBase
     {

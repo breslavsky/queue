@@ -30,6 +30,9 @@ namespace Queue.Administrator
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
+        [Dependency]
+        public ChannelManager<IServerUserTcpService> ServerUserChannelManager { get; set; }
+
         #endregion dependency
 
         #region fields
@@ -103,30 +106,30 @@ namespace Queue.Administrator
             {
                 if (f.ShowDialog() == DialogResult.OK)
                 {
-                    using (var channel = ChannelManager.CreateChannel())
+                    try
                     {
-                        try
-                        {
-                            passwordButton.Enabled = false;
+                        passwordButton.Enabled = false;
 
+                        using (var channel = ServerUserChannelManager.CreateChannel())
+                        {
                             await taskPool.AddTask(channel.Service.ChangeUserPassword(CurrentUser.Id, f.Password));
                         }
-                        catch (OperationCanceledException) { }
-                        catch (CommunicationObjectAbortedException) { }
-                        catch (ObjectDisposedException) { }
-                        catch (InvalidOperationException) { }
-                        catch (FaultException exception)
-                        {
-                            UIHelper.Warning(exception.Reason.ToString());
-                        }
-                        catch (Exception exception)
-                        {
-                            UIHelper.Warning(exception.Message);
-                        }
-                        finally
-                        {
-                            passwordButton.Enabled = true;
-                        }
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                    finally
+                    {
+                        passwordButton.Enabled = true;
                     }
                 }
             }

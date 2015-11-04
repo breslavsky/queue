@@ -136,9 +136,9 @@ namespace Queue.Administrator
 
                         if (office.SessionId != Guid.Empty)
                         {
-                            var officeChannelManager = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(),
-                                Bindings.NetTcpBinding, new EndpointAddress(office.Endpoint));
+                            var officeServerUserService = new ServerUserService(office.Endpoint);
 
+                            using (var officeChannelManager = officeServerUserService.CreateChannelManager())
                             using (var officeChannel = officeChannelManager.CreateChannel())
                             {
                                 try

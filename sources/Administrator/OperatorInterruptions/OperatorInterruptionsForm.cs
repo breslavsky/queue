@@ -23,6 +23,9 @@ namespace Queue.Administrator
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
+        [Dependency]
+        public ChannelManager<IServerUserTcpService> ServerUserChannelManager { get; set; }
+
         #endregion dependency
 
         #region fields
@@ -72,7 +75,7 @@ namespace Queue.Administrator
 
         private async void OperatorInterruptionsForm_Load(object sender, EventArgs e)
         {
-            using (var channel = ChannelManager.CreateChannel())
+            using (var channel = ServerUserChannelManager.CreateChannel())
             {
                 try
                 {

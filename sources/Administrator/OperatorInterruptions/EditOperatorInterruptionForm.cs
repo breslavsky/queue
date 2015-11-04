@@ -21,6 +21,9 @@ namespace Queue.Administrator
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
+        [Dependency]
+        public ChannelManager<IServerUserTcpService> ServerUserChannelManager { get; set; }
+
         #endregion dependency
 
         #region events
@@ -107,43 +110,46 @@ namespace Queue.Administrator
             typeControl.Initialize<OperatorInterruptionType>();
             dayOfWeekControl.Initialize<DayOfWeek>();
 
-            using (Channel<IServerTcpService> channel = ChannelManager.CreateChannel())
+            try
             {
-                try
+                Enabled = false;
+
+                using (var channel = ServerUserChannelManager.CreateChannel())
                 {
-                    Enabled = false;
-
                     operatorControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(UserRole.Operator)));
+                }
 
-                    if (operatorInterruptionId != Guid.Empty)
+                if (operatorInterruptionId != Guid.Empty)
+                {
+                    using (var channel = ChannelManager.CreateChannel())
                     {
                         OperatorInterruption = await taskPool.AddTask(channel.Service.GetOperatorInterruption(operatorInterruptionId));
                     }
-                    else
+                }
+                else
+                {
+                    OperatorInterruption = new OperatorInterruption()
                     {
-                        OperatorInterruption = new OperatorInterruption()
-                        {
-                            StartTime = new TimeSpan(12, 0, 0),
-                            FinishTime = new TimeSpan(13, 0, 0)
-                        };
-                    }
+                        StartTime = new TimeSpan(12, 0, 0),
+                        FinishTime = new TimeSpan(13, 0, 0)
+                    };
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    Enabled = true;
-                }
+            }
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
+            {
+                UIHelper.Warning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
+            }
+            finally
+            {
+                Enabled = true;
             }
         }
 

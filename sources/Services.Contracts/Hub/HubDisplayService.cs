@@ -2,8 +2,8 @@
 {
     public class HubDisplayService : ClientService<IHubDisplayTcpService>
     {
-        public HubDisplayService(string endpoint, string path)
-            : base(endpoint, path)
+        public HubDisplayService(string endpoint)
+            : base(endpoint, HubServicesPaths.Display)
         {
         }
     }

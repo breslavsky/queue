@@ -1,4 +1,4 @@
-﻿namespace Hosts.Hub.WinService
+﻿namespace Queue.Hosts.Hub.WinService
 {
     partial class HubService
     {

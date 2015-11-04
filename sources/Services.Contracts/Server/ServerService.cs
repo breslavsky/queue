@@ -7,8 +7,8 @@ namespace Queue.Services.Contracts
 {
     public class ServerService : DuplexClientService<IServerTcpService, ServerCallback>
     {
-        public ServerService(string endpoint, string path)
-            : base(endpoint, path)
+        public ServerService(string endpoint)
+            : base(endpoint, ServerServicesPaths.Server)
         {
         }
     }

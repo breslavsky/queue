@@ -38,8 +38,8 @@ namespace Queue.UI.WinForms
 
         #region fields
 
-        private ServerService serverService;
-        private DuplexChannelManager<IServerTcpService> channelManager;
+        private ServerUserService serverUserService;
+        private ChannelManager<IServerUserTcpService> channelManager;
         private readonly TaskPool taskPool;
         private readonly UserRole userRole;
 
@@ -94,21 +94,21 @@ namespace Queue.UI.WinForms
 
         private async void Login()
         {
-            if (serverService != null)
+            if (serverUserService != null)
             {
-                serverService.Dispose();
+                serverUserService.Dispose();
             }
 
-            serverService = new ServerService(LoginSettings.Endpoint, ServerServicesPaths.Server);
+            serverUserService = new ServerUserService(LoginSettings.Endpoint);
 
             if (channelManager != null)
             {
                 channelManager.Dispose();
             }
 
-            channelManager = serverService.CreateChannelManager();
+            channelManager = serverUserService.CreateChannelManager();
 
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (var channel = channelManager.CreateChannel())
             {
                 try
                 {
@@ -153,9 +153,9 @@ namespace Queue.UI.WinForms
         {
             taskPool.Dispose();
 
-            if (serverService != null)
+            if (serverUserService != null)
             {
-                serverService.Dispose();
+                serverUserService.Dispose();
             }
 
             if (channelManager != null)

@@ -84,8 +84,8 @@ namespace Queue.Administrator
 
         private async void loginButton_Click(object sender, EventArgs e)
         {
-            using (var serverService = new ServerService(Settings.Endpoint, ServerServicesPaths.Server))
-            using (var channelManager = serverService.CreateChannelManager())
+            using (var serverUserService = new ServerUserService(Settings.Endpoint))
+            using (var channelManager = serverUserService.CreateChannelManager())
             using (var channel = channelManager.CreateChannel())
             {
                 try

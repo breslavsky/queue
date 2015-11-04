@@ -4,7 +4,6 @@
   <Fragment>
     <DirectoryRef Id="INSTALLFOLDER">
       <Directory Id="en_US" Name="en-US" />
-      <Directory Id="zh_CN" Name="zh-CN" />
     </DirectoryRef>
   </Fragment>
 
@@ -144,12 +143,6 @@
       </Component>
       <Component Id="_CB7F08B911F14B799572BBE5DC6498FE" Guid="CB7F08B9-11F1-4B79-9572-BBE5DC6498FE">
         <File KeyPath="yes" Source="$(var.Administrator.TargetDir)\en-US\Queue.UI.WPF.resources.dll" />
-      </Component>
-    </ComponentGroup>
-
-    <ComponentGroup Id="Resources_zh_CN" Directory="zh_CN">
-      <Component Id="_5D83502AB5494EFE97CEC21B51839CFA" Guid="5D83502A-B549-4EFE-97CE-C21B51839CFA">
-        <File Id="Queue_UI_WinForms_resources_dll_zh_CN" KeyPath="yes" Source="$(var.Administrator.TargetDir)\zh-CN\Queue.UI.WinForms.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>

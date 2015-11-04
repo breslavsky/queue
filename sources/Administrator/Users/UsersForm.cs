@@ -18,7 +18,7 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerUserTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 

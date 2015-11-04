@@ -372,7 +372,7 @@ namespace Queue.Database
                 {
                     mediaConfig = new MediaConfig()
                     {
-                        ServiceUrl = "http://queue:4506/",
+                        ServiceUrl = "http://queue:4507/",
                         Ticker = "Добро пожаловать! Вы для нас очень важны!",
                         TickerSpeed = 5
                     };

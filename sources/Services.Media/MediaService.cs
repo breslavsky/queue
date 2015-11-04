@@ -1,7 +1,9 @@
 ﻿using Junte.WCF;
+using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.Services.Media.Settings;
 using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Web;
@@ -14,22 +16,20 @@ namespace Queue.Services.Media
         UseSynchronizationContext = false)]
     public partial class MediaService : IMediaService
     {
+        #region dependency
+
+        [Dependency]
+        public MediaServiceSettings Settings { get; set; }
+
+        #endregion dependency
+
         private const int BufferLength = 1024 * 1024;
 
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        public MediaService(DuplexChannelBuilder<IServerTcpService> channelBuilder, Administrator currentUser, string folder)
+        public MediaService()
         {
-            ChannelBuilder = channelBuilder;
-            CurrentAdministrator = currentUser;
-            Folder = folder;
         }
-
-        protected DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
-
-        protected Administrator CurrentAdministrator { get; private set; }
-
-        protected string Folder { get; private set; }
 
         public virtual string Index()
         {
@@ -38,7 +38,7 @@ namespace Queue.Services.Media
 
         public void UploadMediaConfigFile(string mediaConfigFileId, Stream data)
         {
-            var file = string.Format("{0}/{1}", Folder, mediaConfigFileId);
+            var file = string.Format("{0}/{1}", Settings.MediaFolder, mediaConfigFileId);
 
             using (var fileStream = File.Open(file, FileMode.Create))
             {
@@ -56,7 +56,7 @@ namespace Queue.Services.Media
         public Stream LoadMediaConfigFile(string mediaConfigFileId)
         {
             WebOperationContext.Current.OutgoingResponse.ContentType = "video/wmv";
-            var file = string.Format("{0}/{1}", Folder, mediaConfigFileId);
+            var file = string.Format("{0}/{1}", Settings.MediaFolder, mediaConfigFileId);
             return File.OpenRead(file);
         }
     }

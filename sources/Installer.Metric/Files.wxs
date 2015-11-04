@@ -1,117 +1,106 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Fragment>
-    <DirectoryRef Id="INSTALLFOLDER">
-      <Directory Id="dir7CB7E03714D9D7C1BF30BD3C91566568" Name="en-US" />
-      <Directory Id="dir8C5E37FA87D1897FFB78337F53EB198C" Name="zh-CN" />
-    </DirectoryRef>
+    <DirectoryRef Id="INSTALLFOLDER" />
   </Fragment>
   <Fragment>
-    <ComponentGroup Id="CoreFiles">
-      <Component Id="cmpFD65F52CD5EC0B46A750F8EEFC3D4422" Directory="INSTALLFOLDER" Guid="438AE0A1-52BF-427D-A3E6-E2F643575607">
-        <File Id="fil1F7E777B326B02F60B86F747002F8605" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\AutoMapper.dll" />
+
+    <ComponentGroup Id="Microsoft" Directory="INSTALLFOLDER">
+      <Component Id="_FC1E669C0CE84071B94CC0E85F53E152" Guid="FC1E669C-0CE8-4071-B94C-C0E85F53E152">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Microsoft.Practices.ServiceLocation.dll" />
       </Component>
-      <Component Id="cmp730E2FFFAB351C1FBB3C16D211F149E6" Directory="INSTALLFOLDER" Guid="20C96B5E-E1A1-4391-8BD2-C2FF874913EF">
-        <File Id="fil82F4EB518EA8CC3FD38BEB0C241522A6" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\FluentNHibernate.dll" />
+      <Component Id="_47FB0036F25D4A439F73FD12BA4D9AE3" Guid="47FB0036-F25D-4A43-9F73-FD12BA4D9AE3">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Microsoft.Practices.Unity.Configuration.dll" />
       </Component>
-      <Component Id="cmp695F3B89FCD90C669B1958F6D20D523D" Directory="INSTALLFOLDER" Guid="B05FE446-B2AA-44D7-944D-C0D7E5B1B1EC">
-        <File Id="filECAAB6E721DE437D50D73A1F554EB461" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Icons.resx" />
+      <Component Id="_D5C82E9C56044FC2BA8E04DB16CC7B2F" Guid="D5C82E9C-5604-4FC2-BA8E-04DB16CC7B2F">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Microsoft.Practices.Unity.dll" />
       </Component>
-      <Component Id="cmp352B68CBE9EBE02EAAF5E18B20685A67" Directory="INSTALLFOLDER" Guid="C8C8BFD5-73A7-4C94-9CBD-38A6EC21C336">
-        <File Id="filA63A4BC4A9B457FDF7E41EF87D6642AB" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\ICSharpCode.TextEditor.dll" />
+      <Component Id="_F1DD98F568F144C1836ABB0E1E09D327" Guid="F1DD98F5-68F1-44C1-836A-BB0E1E09D327">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Microsoft.Practices.Unity.RegistrationByConvention.dll" />
       </Component>
-      <Component Id="cmpAD8551805C0E384D4FD6CD718C5E8381" Directory="INSTALLFOLDER" Guid="FB697888-61A9-4646-BB7B-E6C0B512479F">
-        <File Id="fil1300C7FBD2C9D42B5651E43A08F7DA1E" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Iesi.Collections.dll" />
+      <Component Id="_F276A583F23C4031AF2F0D9F856C04BA" Guid="F276A583-F23C-4031-AF2F-0D9F856C04BA">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.dll" />
       </Component>
-      <Component Id="cmpE5057827B5BBC477B00E24D8BF130BCF" Directory="INSTALLFOLDER" Guid="AAA9C87E-14F2-4714-BB98-0F68EF4F55EE">
-        <File Id="fil1DB5A7054C250ED33EF11E0741091DAF" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Junte.Configuration.dll" />
+    </ComponentGroup>
+
+    <ComponentGroup Id="Logging" Directory="INSTALLFOLDER">
+      <Component Id="_34CF75DB884A481BA25F5305A4F4B32A" Guid="34CF75DB-884A-481B-A25F-5305A4F4B32A">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\NLog.dll" />
       </Component>
-      <Component Id="cmp0A57C036E7477C8B804C1F689B87C13B" Directory="INSTALLFOLDER" Guid="2508526F-D467-4E10-A3A3-FB47E41930F3">
-        <File Id="fil49662034001F51D47047F3B3EB3856D0" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Junte.Data.Common.dll" />
+    </ComponentGroup>
+
+    <ComponentGroup Id="NHibernate" Directory="INSTALLFOLDER">
+      <Component Id="_FCFBF43F1B12490BB2A26E5BC9CE60D2" Guid="FCFBF43F-1B12-490B-B2A2-6E5BC9CE60D2">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Iesi.Collections.dll" />
       </Component>
-      <Component Id="cmp391ED0FC564C14BE2F75C7141F49032B" Directory="INSTALLFOLDER" Guid="A3B35A41-62C4-4C7C-ADB3-6317B03FAF76">
-        <File Id="fil932D4827097051DB5496919693E3018A" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Junte.Data.NHibernate.dll" />
+      <Component Id="_3471E772E9814A1FB73ED81BF8D1E284" Guid="3471E772-E981-4A1F-B73E-D81BF8D1E284">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\NHibernate.dll" />
       </Component>
-      <Component Id="cmp1C85ADA07BCD53B5D8BB1FE5C3936C6A" Directory="INSTALLFOLDER" Guid="4464B157-8F6F-46A3-992E-7BC84F30D7ED">
-        <File Id="fil8E9A644516DAC03C44DBCE6A6701788F" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Junte.Parallel.dll" />
+      <Component Id="_98462FFA6E8C4EE4A84BB2C27CC45641" Guid="98462FFA-6E8C-4EE4-A84B-B2C27CC45641">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\FluentNHibernate.dll" />
       </Component>
-      <Component Id="cmpA0E52F1E392B1546B38AC8B5DF074237" Directory="INSTALLFOLDER" Guid="5DF0A5C9-9B93-4396-81D6-AFE57B63E0CD">
-        <File Id="filB435E9D49D0084A9B4FB363A3679323A" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Junte.Translation.dll" />
+      <Component Id="_726AF3B0DB95462190428FB70BDAB73E" Guid="726AF3B0-DB95-4621-9042-8FB70BDAB73E">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\NHibernate.Mapping.Attributes.dll" />
       </Component>
-      <Component Id="cmp96AB944A74A73C7899AC9EBB5BFD5292" Directory="INSTALLFOLDER" Guid="CED5E1A2-667B-49E5-9ED3-CF242ACCFAC6">
-        <File Id="filF67A86BDA1D3A3AED997B22C92DB408A" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Junte.UI.WinForms.dll" />
+      <Component Id="_CB26CF093C9342639D2A0B1AD0E14976" Guid="CB26CF09-3C93-4263-9D2A-0B1AD0E14976">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\NHibernate.Validator.dll" />
       </Component>
-      <Component Id="cmp0B7A799FDA415DC5BB15E17BA3EC7CEF" Directory="INSTALLFOLDER" Guid="A76EDCB2-51D4-4DA8-87F7-82D862CD1038">
-        <File Id="fil91980D27D0CD6E0DE104A02CB3EDFBE3" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Junte.UI.WinForms.NHibernate.dll" />
+    </ComponentGroup>
+
+    <ComponentGroup Id="Junte" Directory="INSTALLFOLDER">
+      <Component Id="_CAFD36800D7F4A66921E8DF09E5AFAD0" Guid="CAFD3680-0D7F-4A66-921E-8DF09E5AFAD0">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Junte.Configuration.dll" />
       </Component>
-      <Component Id="cmp08EF7A5CA33078308765DCC79D7A64D7" Directory="INSTALLFOLDER" Guid="271DB072-D551-4D41-A0F8-15BF6BBA6291">
-        <File Id="fil6C2B7DD08BCCEC9AF4731DA587E1322E" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Junte.WCF.dll" />
+      <Component Id="_746C14E44D334B6994C2AE573C40CF3F" Guid="746C14E4-4D33-4B69-94C2-AE573C40CF3F">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Junte.Translation.dll" />
       </Component>
-      <Component Id="cmpF2F1C15A47B64F045101B1AE5B4D6054" Directory="INSTALLFOLDER" Guid="9BCCF945-D324-419F-BDC0-CCBC8421D804">
-        <File Id="filC342596B66E98254BB6E1CFFE50AE4AA" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Microsoft.Practices.ServiceLocation.dll" />
+      <Component Id="_BCA661BD98FC4399AA8AAE7F067E7E31" Guid="BCA661BD-98FC-4399-AA8A-AE7F067E7E31">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Junte.Parallel.dll" />
       </Component>
-      <Component Id="cmpBB1767D7C200C536ABB2D361F40F9D92" Directory="INSTALLFOLDER" Guid="0A72D2FF-EB77-4638-8646-B7BE1D0C3913">
-        <File Id="fil4E0F4321F336BF83461A34116F3E30B7" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Microsoft.WindowsAPICodePack.dll" />
+      <Component Id="_5ECD461EBCE8479B84FACA96D53E71B7" Guid="5ECD461E-BCE8-479B-84FA-CA96D53E71B7">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Junte.UI.WinForms.dll" />
       </Component>
-      <Component Id="cmpA1ECE8DB012BBA16B976018E9D98B56D" Directory="INSTALLFOLDER" Guid="5DE582AB-B9D7-48DE-9E40-330BB014EE2B">
-        <File Id="filC55FB4457A2C6CA4AE46C6FCC459FDE1" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\NHibernate.dll" />
+      <Component Id="_AF46FACEE1684DA59814C5CDB490A3E4"  Guid="AF46FACE-E168-4DA5-9814-C5CDB490A3E4">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Junte.Data.NHibernate.dll" />
       </Component>
-      <Component Id="cmp4DF6D8BE3FE45464337ABFEB5559E3A2" Directory="INSTALLFOLDER" Guid="B3E9E9BB-2DA5-4FDC-B2C7-9E34D51BEE06">
-        <File Id="fil1EF6643CE31BF2606EFB9190B521C794" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\NHibernate.Mapping.Attributes.dll" />
+      <Component Id="_17E6E4E800D948348411111A1FFEE66A" Guid="17E6E4E8-00D9-4834-8411-111A1FFEE66A">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Junte.UI.WinForms.NHibernate.dll" />
       </Component>
-      <Component Id="cmp29BB8F57044D76D02FF5E6AF31B7DD68" Directory="INSTALLFOLDER" Guid="5EB16F71-D1BC-4595-A5F9-56C76DB1DC66">
-        <File Id="filA3EF2D57B176A42CDA6CD8C795D89651" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\NHibernate.Validator.dll" />
+    </ComponentGroup>
+
+    <ComponentGroup Id="Queue" Directory="INSTALLFOLDER">
+      <Component Id="_63E8ECE5E2AD43B8A1028F43A453B518" Guid="63E8ECE5-E2AD-43B8-A102-8F43A453B518">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Common.dll" />
       </Component>
-      <Component Id="cmpB0751B8FC1E91828723DBE949D8ED3C7" Directory="INSTALLFOLDER" Guid="F7C280AB-C73D-43B5-B59E-35F3D176079B">
-        <File Id="filADFE9E5EC55BF88347B1A04AF21CA490" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\NHibernate.Validator.Specific.dll" />
+      <Component Id="_3499ED254C1F4A2D9854D0A49EEA0C85" Guid="3499ED25-4C1F-4A2D-9854-D0A49EEA0C85">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Model.Common.dll" />
       </Component>
-      <Component Id="cmpB7F1EBE42DCB1051B92D42C1EF84E2F9" Directory="INSTALLFOLDER" Guid="C26F9DB3-86E7-4831-84D3-88F168E184CF">
-        <File Id="filA09ADF42C6343B9B7C7780D266455CC4" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\NLog.dll" />
+      <Component Id="_4E24339528494B8C9DC4A1A45B4854C0" Guid="4E243395-2849-4B8C-9DC4-A1A45B4854C0">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Model.dll" />
       </Component>
-      <Component Id="cmp55C662695779CA92FAA1C1E8F030C8C5" Directory="INSTALLFOLDER" Guid="088F83CE-8F50-4DC1-A97F-54EB3A5178CA">
-        <File Id="filF091F2ECF8894DC2ED432C5359E96097" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Common.dll" />
+      <Component Id="_960D55E9549A416B9ECA58561F502927" Guid="960D55E9-549A-416B-9ECA-58561F502927">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Metric.dll" />
       </Component>
-      <Component Id="cmp70D5CE0BCF705C3CF206DC141D71CD57" Directory="INSTALLFOLDER" Guid="D4D4316B-8C0F-4DE6-B2C6-4A2E23683A64">
-        <File Id="fil4BE3D399883863F17E18715F8239CF29" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Hosts.Common.dll" />
+      <Component Id="_1DF3C97A0A2D43A9B8B046FB965DFB19" Guid="1DF3C97A-0A2D-43A9-B8B0-46FB965DFB19">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.UI.Common.dll" />
       </Component>
-      <Component Id="cmp7BF1D409BE7AC80F7AEC3D886D4EF822" Directory="INSTALLFOLDER" Guid="73E8260F-00AC-4903-AD97-1E23EE73681E">
-        <File Id="fil7B66119F229D920ED38D55ECB297FB98" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Hosts.Metric.WinForms.exe" />
+      <Component Id="_AEBDBAEE52344F79809ACF24DD7837FC" Guid="AEBDBAEE-5234-4F79-809A-CF24DD7837FC">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.UI.WinForms.dll" />
       </Component>
-      <Component Id="cmp948733428A3A84379B174418F81B7410" Directory="INSTALLFOLDER" Guid="967088C5-1AD4-42BE-B7B6-DCD8024A6AA8">
-        <File Id="fil412FB5F7A8D360DA33A923760F78FB36" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Hosts.Metric.WinForms.exe.config" />
+    </ComponentGroup>
+
+    <ComponentGroup Id="Application" Directory="INSTALLFOLDER">
+      <Component Id="_D3CF4A9C958F456EB3921E43716E3633" Guid="D3CF4A9C-958F-456E-B392-1E43716E3633">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Hosts.Metric.WinForms.exe" />
       </Component>
-      <Component Id="cmp37963FE2E27575DAC5B7DC0E3B857CEC" Directory="INSTALLFOLDER" Guid="AF4E275F-34A7-4C65-8A9A-C073F859C208">
-        <File Id="fil318BCDFC71E5625D8026B89B32F0488D" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Metric.dll" />
+      <Component Id="_549CF6F06A0F4C6DB3B56201B2F1203E" Guid="549CF6F0-6A0F-4C6D-B3B5-6201B2F1203E">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Hosts.Metric.WinForms.exe.config" />
       </Component>
-      <Component Id="cmp2CE2F83A5AB32BAFBA87C152C2C6F326" Directory="INSTALLFOLDER" Guid="21CFDA38-AF1D-4D80-94A5-B4D5A93ED5C3">
-        <File Id="filA43D6849C111501753C2BC7E8E96E9A0" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Model.Common.dll" />
+      <Component Id="_C23DBBC8CE01463897E2AF3E72C4AFF1" Guid="C23DBBC8-CE01-4638-97E2-AF3E72C4AFF1">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinService.TargetDir)\Queue.Hosts.Metric.WinService.exe" />
       </Component>
-      <Component Id="cmp6DC3B5112C8E1BBC28D8321BA38A65DB" Directory="INSTALLFOLDER" Guid="46DA76EF-4E24-4A5D-B99D-8B15F5A3E0FB">
-        <File Id="fil2071BFBA1667BF5D04F6A2EC3054ACDC" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Model.dll" />
-      </Component>
-      <Component Id="cmp3111FB7FBF8E83855ABE23B857069FBD" Directory="INSTALLFOLDER" Guid="77C331B3-82A2-4944-9727-9F96C8051E6A">
-        <File Id="fil5083433A7E8CCB9C46CE1C735BE07909" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Services.Common.dll" />
-      </Component>
-      <Component Id="cmpC4E247D01A6FC492047FFCAFBA4A2F7E" Directory="INSTALLFOLDER" Guid="AEBB5429-4677-48BB-8AB2-5D6915FD6D4E">
-        <File Id="filC31EFD008AE5A05C968392FCDA6865C4" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Services.Contracts.dll" />
-      </Component>
-      <Component Id="cmp43DB63E4B74D1504244115D8B4DEBC10" Directory="INSTALLFOLDER" Guid="1263A68E-CF02-4810-A95E-E6225A8D2C9D">
-        <File Id="fil0AE4E4ED0D0ADF966E5E800E7EDC6425" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Services.DTO.dll" />
-      </Component>
-      <Component Id="cmpDEBF93F703C4F623A75B793A9E8EAF13" Directory="INSTALLFOLDER" Guid="71505954-C99B-45BF-BCB4-E9D0E427D112">
-        <File Id="filF7EA23D4DED6D5A4218DC0EA8DC146CD" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.UI.WinForms.dll" />
-      </Component>
-      <Component Id="cmp9E98642C203CBE503D536267AA9C6716" Directory="dir7CB7E03714D9D7C1BF30BD3C91566568" Guid="D11CFBC2-853F-4A66-8B08-07D5CA7A1FFF">
-        <File Id="fil5D9E49DD016924C30B0F5CBD21526774" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\en-US\Queue.Common.resources.dll" />
-      </Component>
-      <Component Id="cmpD1D82FF0036914B68146F38F4D9EB65A" Directory="dir7CB7E03714D9D7C1BF30BD3C91566568" Guid="B923B936-82A5-46DB-9025-F1EC10AAD926">
-        <File Id="fil8A9F9219907F477A05D75AB31BAA9002" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\en-US\Queue.Model.Common.resources.dll" />
-      </Component>
-      <Component Id="cmp004783A9F940C4858FF07D6B644B3614" Directory="dir7CB7E03714D9D7C1BF30BD3C91566568" Guid="A67D63AB-1C36-4B08-9720-270EA6231CE2">
-        <File Id="fil7DF2E6F3C8A6D36D3F2ADEF0922C38FD" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\en-US\Queue.UI.WinForms.resources.dll" />
-      </Component>
-      <Component Id="cmp9260B5C05654B7E655448B2BBEAEFBB1" Directory="dir8C5E37FA87D1897FFB78337F53EB198C" Guid="AACF22D8-5D6B-40E7-A1AD-DB551BCD7286">
-        <File Id="fil830AA1B86A91766731BCFA135114DBFA" KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\zh-CN\Queue.UI.WinForms.resources.dll" />
+      <Component Id="_AC9961691AC142DB8E419272A93FD252" Guid="AC996169-1AC1-42DB-8E41-9272A93FD252">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinService.TargetDir)\Queue.Hosts.Metric.WinService.exe.config" />
       </Component>
     </ComponentGroup>
   </Fragment>

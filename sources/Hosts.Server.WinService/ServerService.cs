@@ -20,10 +20,10 @@ namespace Queue.Hosts.Server.WinService
         #region fields
 
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private static UnityContainer container;
-        private static ConfigurationManager configuration;
-        private static ServerSettings settings;
-        private static TemplateServiceSettings templateServiceSettings;
+        private UnityContainer container;
+        private ConfigurationManager configuration;
+        private ServerSettings settings;
+        private TemplateServiceSettings templateServiceSettings;
         private ServerInstance server;
 
         #endregion fields

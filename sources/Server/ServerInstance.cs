@@ -6,6 +6,7 @@ using Microsoft.Practices.Unity;
 using NHibernate.Caches.SysCache2;
 using NLog;
 using Queue.Server.Settings;
+using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.Server;
 using System;
@@ -94,6 +95,28 @@ namespace Queue.Server
 
                         hosts.Add(host);
                     }
+
+                    {
+                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServerServicesPaths.User));
+                        logger.Info("TCP service host uri = {0}", uri);
+
+                        var host = new ServerUserTcpServiceHost();
+                        host.AddServiceEndpoint(typeof(IServerUserTcpService), Bindings.NetTcpBinding, uri);
+                        host.Description.Behaviors.Add(new ServiceMetadataBehavior());
+
+                        hosts.Add(host);
+                    }
+
+                    {
+                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServerServicesPaths.Workplace));
+                        logger.Info("TCP service host uri = {0}", uri);
+
+                        var host = new ServerWorkplaceTcpServiceHost();
+                        host.AddServiceEndpoint(typeof(IServerWorkplaceTcpService), Bindings.NetTcpBinding, uri);
+                        host.Description.Behaviors.Add(new ServiceMetadataBehavior());
+
+                        hosts.Add(host);
+                    }
                 }
             }
 
@@ -126,6 +149,41 @@ namespace Queue.Server
                     var host = new ServerTemplateHttpServiceHost();
                     var endpoint = host.AddServiceEndpoint(typeof(IServerTemplateHttpService), Bindings.WebHttpBinding, uri);
                     endpoint.Behaviors.Add(new WebHttpBehavior());
+                    endpoint.Behaviors.Add(new EnableCrossOriginResourceSharingBehavior());
+                    host.Description.Behaviors.Add(new ServiceMetadataBehavior()
+                    {
+                        HttpGetUrl = uri,
+                        HttpGetEnabled = true
+                    });
+
+                    hosts.Add(host);
+                }
+
+                {
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServerServicesPaths.User));
+                    logger.Info("HTTP service host uri = {0}", uri);
+
+                    var host = new ServerUserHttpServiceHost();
+                    var endpoint = host.AddServiceEndpoint(typeof(IServerUserHttpService), Bindings.WebHttpBinding, uri);
+                    endpoint.Behaviors.Add(new WebHttpBehavior());
+                    endpoint.Behaviors.Add(new EnableCrossOriginResourceSharingBehavior());
+                    host.Description.Behaviors.Add(new ServiceMetadataBehavior()
+                    {
+                        HttpGetUrl = uri,
+                        HttpGetEnabled = true
+                    });
+
+                    hosts.Add(host);
+                }
+
+                {
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServerServicesPaths.Workplace));
+                    logger.Info("HTTP service host uri = {0}", uri);
+
+                    var host = new ServerWorkplaceHttpServiceHost();
+                    var endpoint = host.AddServiceEndpoint(typeof(IServerWorkplaceHttpService), Bindings.WebHttpBinding, uri);
+                    endpoint.Behaviors.Add(new WebHttpBehavior());
+                    endpoint.Behaviors.Add(new EnableCrossOriginResourceSharingBehavior());
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                     {
                         HttpGetUrl = uri,

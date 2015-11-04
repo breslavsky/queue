@@ -18,7 +18,7 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerWorkplaceTcpService> ServerWorkplace { get; set; }
 
         #endregion dependency
 
@@ -93,9 +93,9 @@ namespace Queue.Administrator
                 {
                     taskPool.Dispose();
                 }
-                if (ChannelManager != null)
+                if (ServerWorkplace != null)
                 {
-                    ChannelManager.Dispose();
+                    ServerWorkplace.Dispose();
                 }
             }
             base.Dispose(disposing);
@@ -112,26 +112,26 @@ namespace Queue.Administrator
             {
                 Enabled = false;
 
-                using (var channel = ChannelManager.CreateChannel())
+                try
                 {
-                    try
+                    using (var channel = ServerWorkplace.CreateChannel())
                     {
                         Workplace = await taskPool.AddTask(channel.Service.GetWorkplace(workplaceId));
+                    }
 
-                        Enabled = true;
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
+                    Enabled = true;
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
                 }
             }
             else
@@ -179,7 +179,7 @@ namespace Queue.Administrator
 
         private async void saveButton_Click(object sender, EventArgs e)
         {
-            using (var channel = ChannelManager.CreateChannel())
+            using (var channel = ServerWorkplace.CreateChannel())
             {
                 try
                 {

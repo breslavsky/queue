@@ -90,13 +90,16 @@ namespace Queue.Notification.ViewModels
         {
             var container = ServiceLocator.Current.GetInstance<IUnityContainer>();
 
-            container.RegisterInstance(new ServerService(connectPage.Model.Endpoint, ServerServicesPaths.Server));
-            container.RegisterInstance(new ServerTemplateService(connectPage.Model.Endpoint, ServerServicesPaths.Template));
-            container.RegisterInstance(new HubDisplayService(ServiceLocator.Current.GetInstance<HubSettings>().Endpoint, HubServicesPaths.Display));
+            container.RegisterInstance(new ServerService(connectPage.Model.Endpoint));
+            container.RegisterInstance(new ServerTemplateService(connectPage.Model.Endpoint));
+            container.RegisterInstance(new HubDisplayService(ServiceLocator.Current.GetInstance<HubSettings>().Endpoint));
 
-            container.RegisterType<DuplexChannelManager<IServerTcpService>>(new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager()));
-            container.RegisterType<ChannelManager<IServerTemplateTcpService>>(new InjectionFactory(c => c.Resolve<ServerTemplateService>().CreateChannelManager()));
-            container.RegisterType<ChannelManager<IHubDisplayTcpService>>(new InjectionFactory(c => c.Resolve<HubDisplayService>().CreateChannelManager()));
+            container.RegisterType<DuplexChannelManager<IServerTcpService>>
+                (new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager()));
+            container.RegisterType<ChannelManager<IServerTemplateTcpService>>
+                (new InjectionFactory(c => c.Resolve<ServerTemplateService>().CreateChannelManager()));
+            container.RegisterType<ChannelManager<IHubDisplayTcpService>>
+                (new InjectionFactory(c => c.Resolve<HubDisplayService>().CreateChannelManager()));
 
             container.RegisterType<TaskPool>();
             container.RegisterInstance<ClientRequestsListener>(new ClientRequestsListener());

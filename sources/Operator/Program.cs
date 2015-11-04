@@ -23,9 +23,14 @@ namespace Queue.Operator
         private static HubSettings hubSettings;
         private static LoginSettings loginSettings;
         private static LoginFormSettings loginFormSettings;
-        private static ServerService serverService;
-        private static HubQualityService hubQualityService;
+
+        private static string endpoint;
+        private static Guid sessionId;
         private static QueueOperator currentUser;
+
+        private static ServerService serverService;
+        private static ServerUserService serverUserService;
+        private static HubQualityService hubQualityService;
 
         [STAThread]
         private static void Main()
@@ -49,34 +54,22 @@ namespace Queue.Operator
             hubSettings = configuration.GetSection<HubSettings>(HubSettings.SectionKey);
             container.RegisterInstance(hubSettings);
 
-            hubQualityService = new HubQualityService(hubSettings.Endpoint, HubServicesPaths.Quality);
-            container.RegisterInstance(hubQualityService);
-
-            container.RegisterType<DuplexChannelManager<IHubQualityTcpService>>
-                (new InjectionFactory(c => hubQualityService.CreateChannelManager()));
-
             ParseOptions();
 
             if (options.AutoLogin)
             {
-                serverService = new ServerService(options.Endpoint, ServerServicesPaths.Server);
-
-                Guid sessionId;
-
-                using (var channelManager = serverService.CreateChannelManager())
+                using (var serverUserService = new ServerUserService(options.Endpoint))
+                using (var channelManager = serverUserService.CreateChannelManager())
                 using (var channel = channelManager.CreateChannel())
                 {
                     sessionId = Guid.Parse(options.SessionId);
                     currentUser = channel.Service.OpenUserSession(sessionId).Result as QueueOperator;
                 }
 
-                container.RegisterInstance(serverService);
-
-                container.RegisterType<DuplexChannelManager<IServerTcpService>>
-                    (new InjectionFactory(c => serverService.CreateChannelManager(sessionId)));
-
                 container.RegisterInstance<User>(currentUser);
                 container.RegisterInstance<QueueOperator>(currentUser);
+
+                RegisterServices();
 
                 Application.Run(new OperatorForm());
             }
@@ -89,34 +82,31 @@ namespace Queue.Operator
                     {
                         configuration.Save();
 
+                        endpoint = loginSettings.Endpoint;
                         currentUser = loginForm.CurrentUser as QueueOperator;
+                        sessionId = currentUser.SessionId;
+
+                        container.RegisterInstance<User>(currentUser);
                         container.RegisterInstance<QueueOperator>(currentUser);
+
+                        RegisterServices();
 
                         loginForm.Dispose();
 
-                        serverService = new ServerService(loginSettings.Endpoint, ServerServicesPaths.Server);
-                        container.RegisterInstance<ServerService>(serverService);
-
-                        container.RegisterType<DuplexChannelManager<IServerTcpService>>
-                            (new InjectionFactory(c => serverService.CreateChannelManager(currentUser.SessionId)));
-
-                        var mainForm = new OperatorForm();
-                        Application.Run(mainForm);
-
-                        if (mainForm.IsLogout)
+                        using (var f = new OperatorForm())
                         {
-                            ResetSettings();
-                            continue;
+                            Application.Run(f);
+
+                            if (f.IsLogout)
+                            {
+                                ResetSettings();
+                                continue;
+                            }
                         }
                     }
 
                     break;
                 }
-            }
-
-            if (serverService != null)
-            {
-                serverService.Dispose();
             }
         }
 
@@ -124,6 +114,24 @@ namespace Queue.Operator
         {
             options = new AppOptions();
             CommandLine.Parser.Default.ParseArguments(Environment.GetCommandLineArgs(), options);
+        }
+
+        private static void RegisterServices()
+        {
+            hubQualityService = new HubQualityService(hubSettings.Endpoint, HubServicesPaths.Quality);
+            container.RegisterInstance(hubQualityService);
+            container.RegisterType<DuplexChannelManager<IHubQualityTcpService>>
+                (new InjectionFactory(c => hubQualityService.CreateChannelManager()));
+
+            serverService = new ServerService(endpoint);
+            container.RegisterInstance(serverService);
+            container.RegisterType<DuplexChannelManager<IServerTcpService>>
+                (new InjectionFactory(c => serverService.CreateChannelManager(sessionId)));
+
+            serverUserService = new ServerUserService(endpoint);
+            container.RegisterInstance(serverUserService);
+            container.RegisterType<ChannelManager<IServerUserTcpService>>
+                (new InjectionFactory(c => serverUserService.CreateChannelManager(sessionId)));
         }
 
         private static void ResetSettings()

@@ -9,7 +9,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hosts.Hub.WinService
+namespace Queue.Hosts.Hub.WinService
 {
     internal static class Program
     {

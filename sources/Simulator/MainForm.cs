@@ -1,49 +1,27 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
+using System.Linq;
 using System.Reflection;
 using System.ServiceModel;
+using System.Windows.Forms;
 
 namespace Queue.Simulator
 {
-    public partial class MainForm : RichForm
+    public partial class SimulatorForm : DependencyForm
     {
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private DuplexChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
-        private TaskPool taskPool;
-
-        public MainForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        public SimulatorForm()
             : base()
         {
             InitializeComponent();
-
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-
-            channelManager = new DuplexChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
-            taskPool = new TaskPool();
-
-            Text = currentUser.ToString();
         }
 
         public bool IsLogout { get; private set; }
-
-        private void clientRequestsMenuItem_Click(object sender, EventArgs eventArgs)
-        {
-            var form = new ClientRequstsForm(channelBuilder, currentUser)
-            {
-                MdiParent = this
-            };
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-            form.Show();
-        }
 
         private void logoutButton_Click(object sender, EventArgs e)
         {
@@ -51,45 +29,38 @@ namespace Queue.Simulator
             Close();
         }
 
-        private void MainForm_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
-        {
-            taskPool.Dispose();
-            channelManager.Dispose();
-        }
-
-        private async void MainForm_Load(object sender, EventArgs eventArgs)
+        private void MainForm_Load(object sender, EventArgs eventArgs)
         {
             Text += string.Format(" ({0})", Assembly.GetEntryAssembly().GetName().Version);
-
-            using (var channel = channelManager.CreateChannel())
-            {
-                try
-                {
-                    DefaultConfig config = await taskPool.AddTask(channel.Service.GetDefaultConfig());
-                    Text += string.Format(" | {0}", config.QueueName);
-                }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-            }
         }
 
-        private void opeatorsMenuItem_Click(object sender, EventArgs eventArgs)
+        private void ShowForm<T>(Func<Form> create)
         {
-            var form = new OperatorsForm(channelBuilder, currentUser)
+            var form = MdiChildren.FirstOrDefault(f => f.GetType() == typeof(T));
+            if (form != null)
             {
-                MdiParent = this
-            };
+                form.Activate();
+                return;
+            }
+
+            form = create();
+            form.MdiParent = this;
+
             FormClosing += (s, e) =>
             {
                 form.Close();
             };
             form.Show();
+        }
+
+        private void clientRequestsMenuItem_Click(object sender, EventArgs eventArgs)
+        {
+            ShowForm<ClientRequstsForm>(() => new ClientRequstsForm());
+        }
+
+        private void opeatorsMenuItem_Click(object sender, EventArgs eventArgs)
+        {
+            ShowForm<OperatorsForm>(() => new OperatorsForm());
         }
     }
 }

@@ -45,6 +45,9 @@ namespace Queue.Operator
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ServerChannelManager { get; set; }
 
+        [Dependency]
+        public ChannelManager<IServerUserTcpService> ServerUserChannelManager { get; set; }
+
         #endregion dependency
 
         #region fields
@@ -452,10 +455,16 @@ namespace Queue.Operator
                         CurrentClientRequestPlan = await pingTaskPool.AddTask(pingServerChannel.Service.GetCurrentClientRequestPlan());
                     }
 
-                    ServerDateTime.Sync(await pingTaskPool.AddTask(pingServerChannel.Service.GetDateTime()));
-                    currentDateTimeLabel.Text = ServerDateTime.Now.ToLongTimeString();
+                    using (var channel = ServerChannelManager.CreateChannel())
+                    {
+                        ServerDateTime.Sync(await pingTaskPool.AddTask(pingServerChannel.Service.GetDateTime()));
+                        currentDateTimeLabel.Text = ServerDateTime.Now.ToLongTimeString();
+                    }
 
-                    await pingTaskPool.AddTask(pingServerChannel.Service.UserHeartbeat());
+                    using (var channel = ServerUserChannelManager.CreateChannel())
+                    {
+                        await pingTaskPool.AddTask(channel.Service.UserHeartbeat());
+                    }
 
                     serverStateLabel.Image = Icons.online16x16;
                 }

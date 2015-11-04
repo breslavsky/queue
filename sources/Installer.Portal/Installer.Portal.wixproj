@@ -25,7 +25,6 @@
   <ItemGroup>
     <Compile Include="Files.wxs" />
     <Compile Include="Product.wxs" />
-    <Compile Include="Site.wxs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />

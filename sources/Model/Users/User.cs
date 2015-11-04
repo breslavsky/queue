@@ -54,6 +54,9 @@ namespace Queue.Model
         [Property]
         public virtual string Password { get; set; }
 
+        [Property(Column = "_Identity")]
+        public virtual string Identity { get; set; }
+
         [Property]
         public virtual bool IsActive { get; set; }
 

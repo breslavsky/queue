@@ -30,6 +30,9 @@ namespace Queue.Administrator
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
+        [Dependency]
+        public ChannelManager<IServerUserTcpService> ServerUserChannelManager { get; set; }
+
         #endregion dependency
 
         #region fields
@@ -38,7 +41,6 @@ namespace Queue.Administrator
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private readonly Timer pingTimer;
         private readonly TaskPool taskPool;
-        private Channel<IServerTcpService> pingChannel;
 
         #endregion fields
 
@@ -56,8 +58,6 @@ namespace Queue.Administrator
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
-
-            pingChannel = ChannelManager.CreateChannel();
 
             pingTimer = new Timer();
             pingTimer.Elapsed += pingTimer_Elapsed;
@@ -81,13 +81,13 @@ namespace Queue.Administrator
                 {
                     taskPool.Dispose();
                 }
-                if (pingChannel != null)
-                {
-                    pingChannel.Dispose();
-                }
                 if (ChannelManager != null)
                 {
                     ChannelManager.Dispose();
+                }
+                if (ServerUserChannelManager != null)
+                {
+                    ServerUserChannelManager.Dispose();
                 }
             }
             base.Dispose(disposing);
@@ -170,7 +170,6 @@ namespace Queue.Administrator
         {
             pingTimer.Stop();
             taskPool.Cancel();
-            pingChannel.Close();
         }
 
         private async void MainForm_Load(object sender, EventArgs eventArgs)
@@ -229,10 +228,16 @@ namespace Queue.Administrator
                     {
                         serverStateLabel.Image = QIcons.connecting16x16;
 
-                        ServerDateTime.Sync(await taskPool.AddTask(pingChannel.Service.GetDateTime()));
-                        currentDateTimeLabel.Text = ServerDateTime.Now.ToLongTimeString();
+                        using (var channel = ChannelManager.CreateChannel())
+                        {
+                            ServerDateTime.Sync(await taskPool.AddTask(channel.Service.GetDateTime()));
+                            currentDateTimeLabel.Text = ServerDateTime.Now.ToLongTimeString();
+                        }
 
-                        await taskPool.AddTask(pingChannel.Service.UserHeartbeat());
+                        using (var channel = ServerUserChannelManager.CreateChannel())
+                        {
+                            await taskPool.AddTask(channel.Service.UserHeartbeat());
+                        }
 
                         serverStateLabel.Image = QIcons.online16x16;
                     }
@@ -244,9 +249,6 @@ namespace Queue.Administrator
                     {
                         currentDateTimeLabel.Text = exception.Message;
                         serverStateLabel.Image = QIcons.offline16x16;
-
-                        pingChannel.Dispose();
-                        pingChannel = ChannelManager.CreateChannel();
                     }
                     finally
                     {
@@ -277,8 +279,7 @@ namespace Queue.Administrator
 
         private void ShowForm<T>(Func<Form> create)
         {
-            Form form = MdiChildren.FirstOrDefault(f => f.GetType() == typeof(T));
-
+            var form = MdiChildren.FirstOrDefault(f => f.GetType() == typeof(T));
             if (form != null)
             {
                 form.Activate();

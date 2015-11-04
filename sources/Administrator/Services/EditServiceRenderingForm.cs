@@ -21,6 +21,9 @@ namespace Queue.Administrator
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
+        [Dependency]
+        public ChannelManager<IServerUserTcpService> ServerUser { get; set; }
+
         #endregion dependency
 
         #region events
@@ -101,18 +104,21 @@ namespace Queue.Administrator
         {
             Enabled = false;
 
-            using (var channel = ChannelManager.CreateChannel())
+            try
             {
-                try
+                using (var channel = ServerUser.CreateChannel())
+                {
+                    operatorControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(UserRole.Operator)));
+                }
+
+                using (var channel = ChannelManager.CreateChannel())
                 {
                     schedule = await taskPool.AddTask(channel.Service.GetSchedule(scheduleId));
                     if (schedule is ServiceSchedule)
                     {
-                        Service service = (schedule as ServiceSchedule).Service;
+                        var service = (schedule as ServiceSchedule).Service;
                         serviceStepControl.Initialize(await taskPool.AddTask(channel.Service.GetServiceStepLinks(service.Id)));
                     }
-
-                    operatorControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(UserRole.Operator)));
 
                     ServiceRendering = serviceRenderingId != Guid.Empty ?
                         await taskPool.AddTask(channel.Service.GetServiceRendering(serviceRenderingId))
@@ -121,22 +127,22 @@ namespace Queue.Administrator
                             Schedule = schedule
                         };
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    Enabled = true;
-                }
+            }
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
+            {
+                UIHelper.Warning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
+            }
+            finally
+            {
+                Enabled = true;
             }
         }
 

@@ -18,7 +18,7 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerWorkplaceTcpService> ServerWorkplace { get; set; }
 
         #endregion dependency
 
@@ -56,9 +56,9 @@ namespace Queue.Administrator
                 {
                     taskPool.Dispose();
                 }
-                if (ChannelManager != null)
+                if (ServerWorkplace != null)
                 {
-                    ChannelManager.Dispose();
+                    ServerWorkplace.Dispose();
                 }
             }
             base.Dispose(disposing);
@@ -92,7 +92,7 @@ namespace Queue.Administrator
 
         private async void WorkplacesForm_Load(object sender, EventArgs e)
         {
-            using (var channel = ChannelManager.CreateChannel())
+            using (var channel = ServerWorkplace.CreateChannel())
             {
                 try
                 {
@@ -149,24 +149,24 @@ namespace Queue.Administrator
             {
                 Workplace workplace = e.Row.Tag as Workplace;
 
-                using (var channel = ChannelManager.CreateChannel())
+                try
                 {
-                    try
+                    using (var channel = ServerWorkplace.CreateChannel())
                     {
                         await taskPool.AddTask(channel.Service.DeleteWorkplace(workplace.Id));
                     }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
                 }
             }
         }

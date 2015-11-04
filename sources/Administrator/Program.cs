@@ -25,9 +25,15 @@ namespace Queue.Administrator
         private static AdministratorSettings administratorSettings;
         private static LoginSettings loginSettings;
         private static LoginFormSettings loginFormSettings;
+
+        private static string endpoint;
+        private static Guid sessionId;
+        private static QueueAdministrator currentUser;
+
         private static ServerService serverService;
         private static ServerTemplateService serverTemplateService;
-        private static QueueAdministrator currentUser;
+        private static ServerUserService serverUserService;
+        private static ServerWorkplaceService serverWorkplaceService;
 
         [STAThread]
         private static void Main()
@@ -58,11 +64,10 @@ namespace Queue.Administrator
 
             if (options.AutoLogin)
             {
-                serverService = new ServerService(options.Endpoint, ServerServicesPaths.Server);
+                endpoint = options.Endpoint;
 
-                Guid sessionId;
-
-                using (var channelManager = serverService.CreateChannelManager())
+                using (var serverUserService = new ServerUserService(endpoint))
+                using (var channelManager = serverUserService.CreateChannelManager())
                 using (var channel = channelManager.CreateChannel())
                 {
                     sessionId = Guid.Parse(options.SessionId);
@@ -72,9 +77,7 @@ namespace Queue.Administrator
                 container.RegisterInstance<User>(currentUser);
                 container.RegisterInstance<QueueAdministrator>(currentUser);
 
-                container.RegisterInstance(serverService);
-                container.RegisterType<DuplexChannelManager<IServerTcpService>>
-                    (new InjectionFactory(c => serverService.CreateChannelManager(sessionId)));
+                RegisterServices();
 
                 Application.Run(new AdministratorForm());
             }
@@ -87,41 +90,55 @@ namespace Queue.Administrator
                     {
                         configuration.Save();
 
+                        endpoint = loginSettings.Endpoint;
                         currentUser = loginForm.CurrentUser as QueueAdministrator;
+                        sessionId = currentUser.SessionId;
+
                         container.RegisterInstance<User>(currentUser);
                         container.RegisterInstance<QueueAdministrator>(currentUser);
 
+                        RegisterServices();
+
                         loginForm.Dispose();
 
-                        var endpoint = loginSettings.Endpoint;
-
-                        serverService = new ServerService(endpoint, ServerServicesPaths.Server);
-                        container.RegisterInstance(serverService);
-
-                        container.RegisterType<DuplexChannelManager<IServerTcpService>>
-                            (new InjectionFactory(c => serverService.CreateChannelManager(currentUser.SessionId)));
-
-                        serverTemplateService = new ServerTemplateService(endpoint, ServerServicesPaths.Template);
-                        container.RegisterInstance(serverTemplateService);
-
-                        var mainForm = new AdministratorForm();
-                        Application.Run(mainForm);
-
-                        if (mainForm.IsLogout)
+                        using (var f = new AdministratorForm())
                         {
-                            ResetSettings();
-                            continue;
+                            Application.Run(f);
+
+                            if (f.IsLogout)
+                            {
+                                ResetSettings();
+                                continue;
+                            }
                         }
                     }
 
                     break;
                 }
             }
+        }
 
-            if (serverService != null)
-            {
-                serverService.Dispose();
-            }
+        private static void RegisterServices()
+        {
+            serverService = new ServerService(endpoint);
+            container.RegisterInstance(serverService);
+            container.RegisterType<DuplexChannelManager<IServerTcpService>>
+                (new InjectionFactory(c => serverService.CreateChannelManager(sessionId)));
+
+            serverUserService = new ServerUserService(endpoint);
+            container.RegisterInstance(serverUserService);
+            container.RegisterType<ChannelManager<IServerUserTcpService>>
+                (new InjectionFactory(c => serverUserService.CreateChannelManager(sessionId)));
+
+            serverTemplateService = new ServerTemplateService(endpoint);
+            container.RegisterInstance(serverTemplateService);
+            container.RegisterType<ChannelManager<IServerTemplateTcpService>>
+                (new InjectionFactory(c => serverTemplateService.CreateChannelManager(sessionId)));
+
+            serverWorkplaceService = new ServerWorkplaceService(endpoint);
+            container.RegisterInstance(serverWorkplaceService);
+            container.RegisterType<ChannelManager<IServerWorkplaceTcpService>>
+                (new InjectionFactory(c => serverWorkplaceService.CreateChannelManager(sessionId)));
         }
 
         private static void ParseOptions()

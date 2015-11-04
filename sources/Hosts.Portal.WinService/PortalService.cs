@@ -1,37 +1,61 @@
 ﻿using Junte.Configuration;
+using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Hosts.Common;
 using Queue.Portal;
+using Queue.Services.Portal.Settings;
 using System;
 using System.ServiceProcess;
+using SpecialFolder = System.Environment.SpecialFolder;
 
 namespace Hosts.Portal.WinService
 {
     public partial class PortalService : ServiceBase
     {
-        private readonly Logger logger = LogManager.GetCurrentClassLogger();
+        #region fields
 
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private UnityContainer container;
+        private ConfigurationManager configuration;
+        private PortalSettings settings;
+        private LoginSettings loginSettings;
+        private PortalServiceSettings portalServiceSettings;
         private PortalInstance portal;
+
+        #endregion fields
 
         public PortalService()
         {
             InitializeComponent();
         }
 
-        protected override async void OnStart(string[] args)
+        protected override void OnStart(string[] args)
         {
             logger.Info("Starting service...");
 
             try
             {
-                ConfigurationManager configuration = new ConfigurationManager(HostsConsts.PortalApp, Environment.SpecialFolder.CommonApplicationData);
-                PortalSettings portalSettings = configuration.GetSection<PortalSettings>(HostsConsts.PortalSettingsSectionKey);
-                LoginSettings connectionSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
+                container = new UnityContainer();
+                container.RegisterInstance(container);
+                ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
-                portal = new PortalInstance(portalSettings, connectionSettings);
-                await portal.Start();
+                configuration = new ConfigurationManager(HostsConsts.PortalApp, SpecialFolder.CommonApplicationData);
+                container.RegisterInstance(configuration);
+
+                settings = configuration.GetSection<PortalSettings>(PortalSettings.SectionKey);
+                container.RegisterInstance(settings);
+
+                loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
+                container.RegisterInstance(loginSettings);
+
+                portalServiceSettings = configuration.GetSection<PortalServiceSettings>(PortalServiceSettings.SectionKey);
+                container.RegisterInstance(portalServiceSettings);
+
+                portal = new PortalInstance(settings, loginSettings);
+                portal.Start();
 
                 logger.Info("Service started");
             }

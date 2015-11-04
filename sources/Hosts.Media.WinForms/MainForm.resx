@@ -351,6 +351,9 @@
         ORwOh1MJM8jhcDicSphBDofD4VTCDHI4HA5HCUj+H35NlBrXHuZrAAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="mediaServiceSettingsBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>504, 29</value>
+  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAUAQEAAAAEAIAAoQgAAVgAAADAwAAABACAAqCUAAH5CAAAgIAAAAQAgAKgQAAAmaAAAGBgAAAEA

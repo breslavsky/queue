@@ -23,6 +23,9 @@ namespace Queue.Administrator
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
+        [Dependency]
+        public ChannelManager<IServerUserTcpService> ServerUserChannelManager { get; set; }
+
         #endregion dependency
 
         #region fields
@@ -80,27 +83,31 @@ namespace Queue.Administrator
         {
             requestDatePicker.Value = DateTime.Today;
 
-            using (var channel = ChannelManager.CreateChannel())
+            try
             {
-                try
+                using (var channel = ChannelManager.CreateChannel())
                 {
                     serviceControl.Initialize(await taskPool.AddTask(channel.Service.GetServiceLinks()));
-                    operatorControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(UserRole.Operator)));
+                }
 
-                    RefreshClienRequestsGridView();
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
+                using (var channel = ServerUserChannelManager.CreateChannel())
                 {
-                    UIHelper.Warning(exception.Reason.ToString());
+                    operatorControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(UserRole.Operator)));
                 }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
+
+                RefreshClienRequestsGridView();
+            }
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
+            {
+                UIHelper.Warning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
             }
         }
 

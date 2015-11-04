@@ -3,7 +3,6 @@
   <Fragment>
     <DirectoryRef Id="INSTALLFOLDER">
       <Directory Id="en_US" Name="en-US" />
-      <Directory Id="zh_CN" Name="zh-CN" />
     </DirectoryRef>
   </Fragment>
   <Fragment>
@@ -104,13 +103,7 @@
         <File KeyPath="yes" Source="$(var.Operator.TargetDir)\en-US\Queue.Model.Common.resources.dll" />
       </Component>
       <Component Id="_2CD3DBD2BE734676A0C63F499EE86153" Guid="2CD3DBD2-BE73-4676-A0C6-3F499EE86153">
-        <File Id="Queue_UI_WinForms_resources_dll_en_US" KeyPath="yes" Source="$(var.Operator.TargetDir)\en-US\Queue.UI.WinForms.resources.dll" />
-      </Component>
-    </ComponentGroup>
-
-    <ComponentGroup Id="Resources_zh_CN" Directory="zh_CN">
-      <Component Id="_5D83502AB5494EFE97CEC21B51839CFA" Guid="5D83502A-B549-4EFE-97CE-C21B51839CFA">
-        <File Id="Queue_UI_WinForms_resources_dll_zh_CN" KeyPath="yes" Source="$(var.Operator.TargetDir)\zh-CN\Queue.UI.WinForms.resources.dll" />
+        <File KeyPath="yes" Source="$(var.Operator.TargetDir)\en-US\Queue.UI.WinForms.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>

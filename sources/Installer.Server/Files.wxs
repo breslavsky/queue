@@ -44,7 +44,6 @@
   </Fragment>
 
   <Fragment>
-    <Property Id="SERVICE_NAME" Value="JunteQueueServer" />
 
     <ComponentGroup Id="Microsoft" Directory="INSTALLFOLDER">
       <Component Id="_FC1E669C0CE84071B94CC0E85F53E152" Guid="FC1E669C-0CE8-4071-B94C-C0E85F53E152">
@@ -174,10 +173,10 @@
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\templates\notification\default\client-requests.xaml" />
       </Component>
       <Component Id="_C4BF923CADCB49EF8B376CFAB0FC711B" Directory="NOTIFICATION_DEFAULT" Guid="C4BF923C-ADCB-49EF-8B37-6CFAB0FC711B">
-        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\templates\notification\default\main-page.xaml" />
+        <File Id="notification_main_page" KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\templates\notification\default\main-page.xaml" />
       </Component>
-      <Component Id="_C4BF923CADCB49EF8B376CFAB0FC711B" Directory="TERMINAL_DEFAULT" Guid="C4BF923C-ADCB-49EF-8B37-6CFAB0FC711B">
-        <File KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\templates\terminal\default\main-page.xaml" />
+      <Component Id="_F354674C62B04B0FA4B799164C93A92B" Directory="TERMINAL_DEFAULT" Guid="F354674C-62B0-4B0F-A4B7-99164C93A92B">
+        <File Id="terminal_main_page" KeyPath="yes" Source="$(var.Hosts.Server.WinForms.TargetDir)\templates\terminal\default\main-page.xaml" />
       </Component>
     </ComponentGroup>
 
@@ -191,12 +190,6 @@
 
       <Component Id="_C23DBBC8CE01463897E2AF3E72C4AFF1" Guid="C23DBBC8-CE01-4638-97E2-AF3E72C4AFF1">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinService.TargetDir)\Queue.Hosts.Server.WinService.exe" />
-        <ServiceControl
-           Id="removeQueueService"
-           Name="[SERVICE_NAME]"
-           Stop="both"
-           Remove="uninstall"
-           Wait="yes" />
       </Component>
       <Component Id="_AC9961691AC142DB8E419272A93FD252" Guid="AC996169-1AC1-42DB-8E41-9272A93FD252">
         <File KeyPath="yes" Source="$(var.Hosts.Server.WinService.TargetDir)\Queue.Hosts.Server.WinService.exe.config" />

@@ -37,6 +37,8 @@
             this.commentLabel = new System.Windows.Forms.Label();
             this.commentTextBox = new System.Windows.Forms.TextBox();
             this.additionalPropertiesTabPage = new System.Windows.Forms.TabPage();
+            this.maxClientRecallsLabel = new System.Windows.Forms.Label();
+            this.maxClientRecallsUpDown = new System.Windows.Forms.NumericUpDown();
             this.clientCallDelayLabel = new System.Windows.Forms.Label();
             this.clientCallDelayUpDown = new System.Windows.Forms.NumericUpDown();
             this.clientCallDelaySecondsLabel = new System.Windows.Forms.Label();
@@ -79,14 +81,13 @@
             this.fridayTabPage = new System.Windows.Forms.TabPage();
             this.saturdayTabPage = new System.Windows.Forms.TabPage();
             this.sundayTabPage = new System.Windows.Forms.TabPage();
-            this.maxClientRecallsLabel = new System.Windows.Forms.Label();
-            this.maxClientRecallsUpDown = new System.Windows.Forms.NumericUpDown();
             this.parametersTabPage.SuspendLayout();
             this.exceptionScheduleTabPage.SuspendLayout();
             this.commonTabPage.SuspendLayout();
             this.servicePropertiesTabControl.SuspendLayout();
             this.commonPropertiesTabPage.SuspendLayout();
             this.additionalPropertiesTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxClientRecallsUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.clientCallDelayUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeIntervalRoundingUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxSubjectsUpDown)).BeginInit();
@@ -100,7 +101,6 @@
             this.weekdayTabControl.SuspendLayout();
             this.mondayTabPage.SuspendLayout();
             this.weekdaySchedulePanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.maxClientRecallsUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // parametersTabPage
@@ -349,6 +349,28 @@
             this.additionalPropertiesTabPage.TabIndex = 1;
             this.additionalPropertiesTabPage.Text = "Дополнительные параметры";
             this.additionalPropertiesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // maxClientRecallsLabel
+            // 
+            this.maxClientRecallsLabel.Location = new System.Drawing.Point(315, 20);
+            this.maxClientRecallsLabel.Name = "maxClientRecallsLabel";
+            this.maxClientRecallsLabel.Size = new System.Drawing.Size(205, 30);
+            this.maxClientRecallsLabel.TabIndex = 10;
+            this.maxClientRecallsLabel.Text = "Максимальное кол-во повторных вызовов";
+            this.maxClientRecallsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // maxClientRecallsUpDown
+            // 
+            this.maxClientRecallsUpDown.Location = new System.Drawing.Point(525, 30);
+            this.maxClientRecallsUpDown.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.maxClientRecallsUpDown.Name = "maxClientRecallsUpDown";
+            this.maxClientRecallsUpDown.Size = new System.Drawing.Size(50, 20);
+            this.maxClientRecallsUpDown.TabIndex = 11;
+            this.maxClientRecallsUpDown.Leave += new System.EventHandler(this.maxClientRecallsUpDown_Leave);
             // 
             // clientCallDelayLabel
             // 
@@ -608,7 +630,6 @@
             this.fontSizeTrackBar.LargeChange = 10;
             this.fontSizeTrackBar.Location = new System.Drawing.Point(115, 50);
             this.fontSizeTrackBar.Maximum = 300;
-            this.fontSizeTrackBar.Minimum = 10;
             this.fontSizeTrackBar.Name = "fontSizeTrackBar";
             this.fontSizeTrackBar.Size = new System.Drawing.Size(245, 45);
             this.fontSizeTrackBar.TabIndex = 12;
@@ -655,11 +676,9 @@
             // 
             // serviceStepsControl
             // 
-
             this.serviceStepsControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.serviceStepsControl.Location = new System.Drawing.Point(3, 3);
             this.serviceStepsControl.Name = "serviceStepsControl";
-
             this.serviceStepsControl.Service = null;
             this.serviceStepsControl.Size = new System.Drawing.Size(830, 450);
             this.serviceStepsControl.TabIndex = 0;
@@ -800,28 +819,6 @@
             this.sundayTabPage.Text = "Воскресенье";
             this.sundayTabPage.UseVisualStyleBackColor = true;
             // 
-            // maxClientRecallsLabel
-            // 
-            this.maxClientRecallsLabel.Location = new System.Drawing.Point(315, 20);
-            this.maxClientRecallsLabel.Name = "maxClientRecallsLabel";
-            this.maxClientRecallsLabel.Size = new System.Drawing.Size(205, 30);
-            this.maxClientRecallsLabel.TabIndex = 10;
-            this.maxClientRecallsLabel.Text = "Максимальное кол-во повторных вызовов";
-            this.maxClientRecallsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // maxClientRecallsUpDown
-            // 
-            this.maxClientRecallsUpDown.Location = new System.Drawing.Point(525, 30);
-            this.maxClientRecallsUpDown.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.maxClientRecallsUpDown.Name = "maxClientRecallsUpDown";
-            this.maxClientRecallsUpDown.Size = new System.Drawing.Size(50, 20);
-            this.maxClientRecallsUpDown.TabIndex = 11;
-            this.maxClientRecallsUpDown.Leave += new System.EventHandler(this.maxClientRecallsUpDown_Leave);
-            // 
             // EditServiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -846,6 +843,7 @@
             this.commonPropertiesTabPage.PerformLayout();
             this.additionalPropertiesTabPage.ResumeLayout(false);
             this.additionalPropertiesTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxClientRecallsUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.clientCallDelayUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.timeIntervalRoundingUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxSubjectsUpDown)).EndInit();
@@ -861,7 +859,6 @@
             this.mondayTabPage.ResumeLayout(false);
             this.weekdaySchedulePanel.ResumeLayout(false);
             this.weekdaySchedulePanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.maxClientRecallsUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }

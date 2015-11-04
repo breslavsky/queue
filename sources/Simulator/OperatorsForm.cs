@@ -1,9 +1,11 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.Linq;
 using System.ServiceModel;
@@ -14,26 +16,28 @@ using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Simulator
 {
-    public partial class OperatorsForm : RichForm
+    public partial class OperatorsForm : DependencyForm
     {
-        private CancellationTokenSource cancellationTokenSource;
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private DuplexChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
-        private Random random;
-        private TaskPool taskPool;
+        #region dependency
 
-        public OperatorsForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        [Dependency]
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        [Dependency]
+        public ChannelManager<IServerUserTcpService> ServerUser { get; set; }
+
+        #endregion dependency
+
+        private CancellationTokenSource cancellationTokenSource;
+        private readonly Random random;
+        private readonly TaskPool taskPool;
+
+        public OperatorsForm()
             : base()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-
-            channelManager = new DuplexChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
-
             random = new Random();
         }
 
@@ -56,15 +60,16 @@ namespace Queue.Simulator
                 cancellationTokenSource.Cancel();
             }
 
-            taskPool.Dispose();
-            channelManager.Dispose();
+            taskPool.Cancel();
+            ChannelManager.Dispose();
+            ServerUser.Dispose();
         }
 
         private async void startButton_Click(object sender, EventArgs e)
         {
             int delay = (int)delayUpDown.Value * 1000;
 
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ServerUser.CreateChannel())
             {
                 try
                 {
@@ -76,7 +81,7 @@ namespace Queue.Simulator
                     log(string.Format("Всего пользователей {0}", users.Length));
 
                     cancellationTokenSource = new CancellationTokenSource();
-                    CancellationToken token = cancellationTokenSource.Token;
+                    var token = cancellationTokenSource.Token;
 
                     foreach (var queueOperator in users.Where(u => u is QueueOperator))
                     {
@@ -118,12 +123,16 @@ namespace Queue.Simulator
 
         private async void UpdateCurrentClientRequest(QueueOperator queueOperator)
         {
-            using (var channel = channelManager.CreateChannel(queueOperator.SessionId))
+            try
             {
-                try
+                using (var channel = ServerUser.CreateChannel(queueOperator.SessionId))
                 {
                     await taskPool.AddTask(channel.Service.UserHeartbeat());
-                    ClientRequestPlan clientRequestPlan = await channel.Service.GetCurrentClientRequestPlan();
+                }
+
+                using (var channel = ChannelManager.CreateChannel(queueOperator.SessionId))
+                {
+                    var clientRequestPlan = await channel.Service.GetCurrentClientRequestPlan();
                     if (clientRequestPlan != null)
                     {
                         ClientRequest clientRequest = clientRequestPlan.ClientRequest;
@@ -159,14 +168,14 @@ namespace Queue.Simulator
                         log(string.Format("[{0}] = [нет активных запросов]", queueOperator));
                     }
                 }
-                catch (FaultException exception)
-                {
-                    log(string.Format("[{0}] = [{1}]", queueOperator, exception.Reason));
-                }
-                catch (Exception exception)
-                {
-                    log(exception.ToString());
-                }
+            }
+            catch (FaultException exception)
+            {
+                log(string.Format("[{0}] = [{1}]", queueOperator, exception.Reason));
+            }
+            catch (Exception exception)
+            {
+                log(exception.ToString());
             }
         }
     }

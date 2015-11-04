@@ -2,8 +2,8 @@
 {
     public class ServerTemplateService : ClientService<IServerTemplateTcpService>
     {
-        public ServerTemplateService(string endpoint, string path)
-            : base(endpoint, path)
+        public ServerTemplateService(string endpoint)
+            : base(endpoint, ServerServicesPaths.Template)
         {
         }
     }

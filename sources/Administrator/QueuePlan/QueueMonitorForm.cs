@@ -26,6 +26,9 @@ namespace Queue.Administrator
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
+        [Dependency]
+        public ChannelManager<IServerUserTcpService> ServerUserChannelManager { get; set; }
+
         #endregion dependency
 
         #region fields
@@ -120,9 +123,9 @@ namespace Queue.Administrator
 
         private async void queueMonitorControl_OperatorLogin(object sender, QueueMonitorEventArgs eventArgs)
         {
-            using (var channel = ChannelManager.CreateChannel())
+            try
             {
-                try
+                using (var channel = ServerUserChannelManager.CreateChannel())
                 {
                     var queueOperator = await channel.Service.GetUser(eventArgs.Operator.Id) as QueueOperator;
 
@@ -135,18 +138,18 @@ namespace Queue.Administrator
                         WorkingDirectory = Environment.CurrentDirectory
                     });
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
+            }
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
+            {
+                UIHelper.Warning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
             }
         }
 

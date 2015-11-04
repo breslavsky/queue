@@ -10,5 +10,7 @@ namespace Queue.Services.Contracts
     {
         public const string Server = "";
         public const string Template = "template";
+        public const string User = "user";
+        public const string Workplace = "workplace";
     }
 }

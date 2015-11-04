@@ -18,7 +18,10 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerWorkplaceTcpService> ServerWorkplace { get; set; }
+
+        [Dependency]
+        public ChannelManager<IServerUserTcpService> ServerUser { get; set; }
 
         #endregion dependency
 
@@ -72,7 +75,6 @@ namespace Queue.Administrator
         private void EditOperatorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Dispose();
-            ChannelManager.Dispose();
         }
 
         private async void EditOperatorForm_Load(object sender, EventArgs e)
@@ -81,28 +83,31 @@ namespace Queue.Administrator
             {
                 Enabled = false;
 
-                using (var channel = ChannelManager.CreateChannel())
+                try
                 {
-                    try
+                    using (var channel = ServerWorkplace.CreateChannel())
                     {
                         workplaceControl.Initialize(await taskPool.AddTask(channel.Service.GetWorkplacesLinks()));
+                    }
 
+                    using (var channel = ServerUser.CreateChannel())
+                    {
                         Operator = await taskPool.AddTask(channel.Service.GetUser(operatorId)) as QueueOperator;
+                    }
 
-                        Enabled = true;
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
+                    Enabled = true;
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
                 }
             }
             else
@@ -121,30 +126,30 @@ namespace Queue.Administrator
             {
                 if (f.ShowDialog() == DialogResult.OK)
                 {
-                    using (var channel = ChannelManager.CreateChannel())
+                    try
                     {
-                        try
-                        {
-                            passwordButton.Enabled = false;
+                        passwordButton.Enabled = false;
 
+                        using (var channel = ServerUser.CreateChannel())
+                        {
                             await taskPool.AddTask(channel.Service.ChangeUserPassword(queueOperator.Id, f.Password));
                         }
-                        catch (OperationCanceledException) { }
-                        catch (CommunicationObjectAbortedException) { }
-                        catch (ObjectDisposedException) { }
-                        catch (InvalidOperationException) { }
-                        catch (FaultException exception)
-                        {
-                            UIHelper.Warning(exception.Reason.ToString());
-                        }
-                        catch (Exception exception)
-                        {
-                            UIHelper.Warning(exception.Message);
-                        }
-                        finally
-                        {
-                            passwordButton.Enabled = true;
-                        }
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                    finally
+                    {
+                        passwordButton.Enabled = true;
                     }
                 }
             }
@@ -152,35 +157,35 @@ namespace Queue.Administrator
 
         private async void saveButton_Click(object sender, EventArgs e)
         {
-            using (var channel = ChannelManager.CreateChannel())
+            try
             {
-                try
-                {
-                    saveButton.Enabled = false;
+                saveButton.Enabled = false;
 
+                using (var channel = ServerUser.CreateChannel())
+                {
                     Operator = await taskPool.AddTask(channel.Service.EditOperator(queueOperator));
+                }
 
-                    if (Saved != null)
-                    {
-                        Saved(this, EventArgs.Empty);
-                    }
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
+                if (Saved != null)
                 {
-                    UIHelper.Warning(exception.Reason.ToString());
+                    Saved(this, EventArgs.Empty);
                 }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    saveButton.Enabled = true;
-                }
+            }
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
+            {
+                UIHelper.Warning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
+            }
+            finally
+            {
+                saveButton.Enabled = true;
             }
         }
 

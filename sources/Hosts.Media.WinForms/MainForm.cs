@@ -6,6 +6,7 @@ using Queue.Common.Settings;
 using Queue.Hosts.Common;
 using Queue.Media;
 using Queue.Model.Common;
+using Queue.Services.Media.Settings;
 using System;
 using System.IO;
 using System.Reflection;
@@ -20,45 +21,45 @@ namespace Queue.Hosts.Media.WinForms
         private const string StartServiceButtonTitle = "Запустить службу";
         private const string StopServiceButtonTitle = "Остановить службу";
 
-        private ServiceManager serviceManager;
-        private ConfigurationManager configurationManager;
-        private MediaSettings settings;
+        private ConfigurationManager configuration;
         private bool started;
         private MediaInstance media;
-        private LoginSettings loginSettings;
+        private ServiceManager serviceManager;
+        private MediaSettings settings;
+        private MediaServiceSettings mediaServiceSettings;
 
         public MainForm()
         {
             InitializeComponent();
 
+            var container = new UnityContainer();
+            container.RegisterInstance(container);
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
+
             string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.MediaServiceExe);
             serviceManager = new ServiceManager(HostsConsts.MediaServiceName, exePath);
+
+            configuration = new ConfigurationManager(HostsConsts.MediaApp, Environment.SpecialFolder.CommonApplicationData);
+            container.RegisterInstance(configuration);
+
+            settings = configuration.GetSection<MediaSettings>(MediaSettings.SectionKey);
+            container.RegisterInstance(settings);
+
+            mediaSettingsBindingSource.DataSource = settings;
+
+            mediaServiceSettings = configuration.GetSection<MediaServiceSettings>(MediaServiceSettings.SectionKey);
+            container.RegisterInstance(mediaServiceSettings);
+
+            mediaServiceSettingsBindingSource.DataSource = mediaServiceSettings;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            configurationManager = new ConfigurationManager(HostsConsts.MediaApp, Environment.SpecialFolder.CommonApplicationData);
-            settings = configurationManager.GetSection<MediaSettings>(HostsConsts.MediaSettingsSectionKey);
-            mediaSettingsBindingSource.DataSource = settings;
-
-            RegisterContainer();
-
-            loginSettings = configurationManager.GetSection<LoginSettings>(LoginSettings.SectionKey);
-            loginSettingsControl.UserRole = UserRole.Administrator;
-            loginSettingsControl.Settings = loginSettings;
-
             Text += string.Format(" ({0})", typeof(MediaInstance).Assembly.GetName().Version);
 
             AdjustServiceState();
 
             serviceStateTimer.Start();
-        }
-
-        private void RegisterContainer()
-        {
-            var container = new UnityContainer();
-            container.RegisterInstance(configurationManager);
-            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
 
         private void AdjustServiceState()
@@ -88,7 +89,7 @@ namespace Queue.Hosts.Media.WinForms
         {
             try
             {
-                configurationManager.Save();
+                configuration.Save();
                 MessageBox.Show("Настройки сохранены");
             }
             catch (Exception ex)
@@ -107,15 +108,13 @@ namespace Queue.Hosts.Media.WinForms
             AdjustServiceState();
         }
 
-        private void selectFolderButton_Click(object sender, EventArgs e)
+        private void selectMediaFolderButton_Click(object sender, EventArgs e)
         {
-            if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                return;
+                mediaServiceSettings.MediaFolder = folderBrowserDialog.SelectedPath;
+                mediaServiceSettingsBindingSource.ResetBindings(false);
             }
-
-            settings.Folder = folderBrowserDialog.SelectedPath;
-            mediaSettingsBindingSource.ResetBindings(false);
         }
 
         private void installServiceButton_Click(object sender, EventArgs e)
@@ -176,7 +175,7 @@ namespace Queue.Hosts.Media.WinForms
             }
         }
 
-        private async void StartMedia()
+        private void StartMedia()
         {
             try
             {
@@ -184,8 +183,8 @@ namespace Queue.Hosts.Media.WinForms
 
                 startButton.Enabled = false;
 
-                media = new MediaInstance(settings, loginSettings);
-                await media.Start();
+                media = new MediaInstance(settings);
+                media.Start();
 
                 startButton.Enabled = false;
                 stopButton.Enabled = true;

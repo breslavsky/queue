@@ -29,6 +29,9 @@ namespace Queue.Operator
         [Dependency]
         public ServerService ServerService { get; set; }
 
+        [Dependency]
+        public ChannelManager<IServerUserTcpService> UserChannelManager { get; set; }
+
         #endregion dependency
 
         #region fields
@@ -68,7 +71,7 @@ namespace Queue.Operator
 
         private async void RedirectToOperatorForm_Load(object sender, EventArgs e)
         {
-            using (var channel = serverChannelManager.CreateChannel())
+            using (var channel = UserChannelManager.CreateChannel())
             {
                 try
                 {

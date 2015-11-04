@@ -1,8 +1,10 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
+using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
@@ -12,39 +14,38 @@ using System.Windows.Forms;
 
 namespace Queue.Simulator
 {
-    public partial class ClientRequstsForm : RichForm
+    public partial class ClientRequstsForm : DependencyForm
     {
+        #region dependency
+
+        [Dependency]
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        #endregion dependency
+
         private const int Subjects = 1;
         private CancellationTokenSource cancellationTokenSource;
-        private DuplexChannelBuilder<IServerTcpService> channelBuilder;
-        private DuplexChannelManager<IServerTcpService> channelManager;
-        private User currentUser;
-        private Random random;
-        private TaskPool taskPool;
+        private readonly TaskPool taskPool;
+        private readonly Random random;
 
-        public ClientRequstsForm(DuplexChannelBuilder<IServerTcpService> channelBuilder, User currentUser)
+        public ClientRequstsForm()
             : base()
         {
             InitializeComponent();
 
-            this.channelBuilder = channelBuilder;
-            this.currentUser = currentUser;
-
-            channelManager = new DuplexChannelManager<IServerTcpService>(channelBuilder, currentUser.SessionId);
             taskPool = new TaskPool();
-
             random = new Random();
         }
 
         private async void addClientRequest(Service service)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 string surname = string.Format("client {0}", random.Next());
 
                 try
                 {
-                    Client client = await channel.Service.EditClient(new Client()
+                    var client = await channel.Service.EditClient(new Client()
                     {
                         Surname = surname
                     });
@@ -73,13 +74,13 @@ namespace Queue.Simulator
                 cancellationTokenSource.Cancel();
             }
 
-            taskPool.Dispose();
-            channelManager.Dispose();
+            taskPool.Cancel();
+            ChannelManager.Dispose();
         }
 
         private async Task<Service[]> getServices(ServiceGroup serviceGroup = null)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 var serviceGroups = serviceGroup != null
                     ? await taskPool.AddTask(channel.Service.GetServiceGroups(serviceGroup.Id))

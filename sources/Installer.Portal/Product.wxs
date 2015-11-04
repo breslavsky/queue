@@ -38,9 +38,15 @@
     </Directory>
 
     <Feature Id="ProductFeature" Title="$(var.ProductName)" Level="1">
-      <ComponentGroupRef Id="CoreFiles" />
-      <ComponentGroupRef Id="SiteFiles" />
-      <ComponentGroupRef Id="Service" />
+
+      <ComponentGroupRef Id="Microsoft" />
+      <ComponentGroupRef Id="Logging" />
+      <ComponentGroupRef Id="Data" />
+      <ComponentGroupRef Id="Junte" />
+      <ComponentGroupRef Id="Queue" />
+      <ComponentGroupRef Id="Application" />
+      <ComponentGroupRef Id="Resources_en_US" />
+
       <ComponentRef Id="ApplicationShortcut" />
     </Feature>
 
@@ -60,21 +66,6 @@
                        KeyPath="yes" />
       </Component>
     </DirectoryRef>
-
-    <ComponentGroup Id="Service">
-      <Component Id="cmp99CBDE2AFC8047ADA75F210CE325511E" Directory="INSTALLFOLDER" Guid="99CBDE2A-FC80-47AD-A75F-210CE325511E">
-        <File Id="fil30EB42677F4344FE9F53C86859BC9E98"  KeyPath="yes" Source="$(var.Hosts.Portal.WinService.TargetPath)" />
-        <ServiceControl
-          Id="removeQueueService"
-          Name="[SERVICE_NAME]"
-          Stop="both"
-          Remove="uninstall"
-          Wait="yes" />
-      </Component>
-      <Component Id="cmpCD018660E6B74490A15F51F6AFA9AE39" Directory="INSTALLFOLDER" Guid="CD018660-E6B7-4490-A15F-51F6AFA9AE39">
-        <File Id="filD465FBD1D9034644A5863A8A3A507CDD" KeyPath="yes" Source="$(var.Hosts.Portal.WinService.TargetPath).config" />
-      </Component>
-    </ComponentGroup>
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" ></Property>
     <WixVariable Id="WixUIDialogBmp" Value="$(var.Installer.Common.ProjectDir)mainBanner.bmp" />

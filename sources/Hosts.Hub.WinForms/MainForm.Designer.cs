@@ -1,4 +1,4 @@
-﻿namespace Hosts.Hub.WinForms
+﻿namespace Queue.Hosts.Hub.WinForms
 {
     partial class MainForm
     {

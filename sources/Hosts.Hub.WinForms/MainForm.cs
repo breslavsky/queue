@@ -14,7 +14,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Formatting = Newtonsoft.Json.Formatting;
 
-namespace Hosts.Hub.WinForms
+namespace Queue.Hosts.Hub.WinForms
 {
     public partial class MainForm : RichForm
     {
@@ -43,6 +43,7 @@ namespace Hosts.Hub.WinForms
             container.RegisterInstance(configuration);
 
             settings = configuration.GetSection<HubSettings>(HubSettings.SectionKey);
+            container.RegisterInstance(settings);
 
             string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.HubServiceExe);
             serviceManager = new ServiceManager(HostsConsts.HubServiceName, exePath);

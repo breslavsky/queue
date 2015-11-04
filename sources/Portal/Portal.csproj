@@ -925,253 +925,89 @@
     <Content Include="www\components\webcomponentsjs\webcomponents.min.js" />
     <Content Include="www\elements\common-style.html" />
     <Content Include="www\elements\login-page.html" />
-    <Content Include="www\flot\excanvas.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\excanvas.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.colorhelpers.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.colorhelpers.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.canvas.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.canvas.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.categories.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.categories.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.crosshair.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.crosshair.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.errorbars.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.errorbars.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.fillbetween.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.fillbetween.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.image.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.image.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.navigate.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.navigate.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.pie.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.pie.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.resize.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.resize.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.selection.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.selection.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.stack.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.stack.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.symbol.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.symbol.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.threshold.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.threshold.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.time.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\flot\jquery.flot.time.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="www\flot\excanvas.js" />
+    <Content Include="www\flot\excanvas.min.js" />
+    <Content Include="www\flot\jquery.colorhelpers.js" />
+    <Content Include="www\flot\jquery.colorhelpers.min.js" />
+    <Content Include="www\flot\jquery.flot.canvas.js" />
+    <Content Include="www\flot\jquery.flot.canvas.min.js" />
+    <Content Include="www\flot\jquery.flot.categories.js" />
+    <Content Include="www\flot\jquery.flot.categories.min.js" />
+    <Content Include="www\flot\jquery.flot.crosshair.js" />
+    <Content Include="www\flot\jquery.flot.crosshair.min.js" />
+    <Content Include="www\flot\jquery.flot.errorbars.js" />
+    <Content Include="www\flot\jquery.flot.errorbars.min.js" />
+    <Content Include="www\flot\jquery.flot.fillbetween.js" />
+    <Content Include="www\flot\jquery.flot.fillbetween.min.js" />
+    <Content Include="www\flot\jquery.flot.image.js" />
+    <Content Include="www\flot\jquery.flot.image.min.js" />
+    <Content Include="www\flot\jquery.flot.js" />
+    <Content Include="www\flot\jquery.flot.min.js" />
+    <Content Include="www\flot\jquery.flot.navigate.js" />
+    <Content Include="www\flot\jquery.flot.navigate.min.js" />
+    <Content Include="www\flot\jquery.flot.pie.js" />
+    <Content Include="www\flot\jquery.flot.pie.min.js" />
+    <Content Include="www\flot\jquery.flot.resize.js" />
+    <Content Include="www\flot\jquery.flot.resize.min.js" />
+    <Content Include="www\flot\jquery.flot.selection.js" />
+    <Content Include="www\flot\jquery.flot.selection.min.js" />
+    <Content Include="www\flot\jquery.flot.stack.js" />
+    <Content Include="www\flot\jquery.flot.stack.min.js" />
+    <Content Include="www\flot\jquery.flot.symbol.js" />
+    <Content Include="www\flot\jquery.flot.symbol.min.js" />
+    <Content Include="www\flot\jquery.flot.threshold.js" />
+    <Content Include="www\flot\jquery.flot.threshold.min.js" />
+    <Content Include="www\flot\jquery.flot.time.js" />
+    <Content Include="www\flot\jquery.flot.time.min.js" />
     <Content Include="www\index.html" />
-    <Content Include="www\js\apng-canvas.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\css\bootstrap-responsive.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\css\bootstrap-responsive.min.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\css\bootstrap.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\css\bootstrap.min.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\img\glyphicons-halflings-white.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\img\glyphicons-halflings.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\js\bootstrap-affix.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\js\bootstrap-alert.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\js\bootstrap-button.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\js\bootstrap-carousel.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\js\bootstrap-collapse.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\js\bootstrap-dropdown.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\js\bootstrap-modal.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\js\bootstrap-popover.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\js\bootstrap-scrollspy.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\js\bootstrap-tab.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\js\bootstrap-tooltip.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\js\bootstrap-transition.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\js\bootstrap-typeahead.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\js\bootstrap.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\bootstrap\js\bootstrap.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\date\date-ru-RU.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\date\date.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\favicon.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\fullcalendar\fullcalendar.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\fullcalendar\fullcalendar.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\fullcalendar\fullcalendar.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\fullcalendar\fullcalendar.print.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\fullcalendar\gcal.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\client\index.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\operator\index.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\js\jquery.cookie.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\js\jquery.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\js\jquery.PrintArea.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\js\common.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\js\jquery.sparkline.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\js\justgage.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\js\raphael.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\js\translation.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\loading.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\client\main.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\client\main.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\main.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\main.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\social.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\js\string.format.min.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="www\js\watch.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="www\js\apng-canvas.min.js" />
+    <Content Include="www\bootstrap\css\bootstrap-responsive.css" />
+    <Content Include="www\bootstrap\css\bootstrap-responsive.min.css" />
+    <Content Include="www\bootstrap\css\bootstrap.css" />
+    <Content Include="www\bootstrap\css\bootstrap.min.css" />
+    <Content Include="www\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="www\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="www\bootstrap\js\bootstrap-affix.js" />
+    <Content Include="www\bootstrap\js\bootstrap-alert.js" />
+    <Content Include="www\bootstrap\js\bootstrap-button.js" />
+    <Content Include="www\bootstrap\js\bootstrap-carousel.js" />
+    <Content Include="www\bootstrap\js\bootstrap-collapse.js" />
+    <Content Include="www\bootstrap\js\bootstrap-dropdown.js" />
+    <Content Include="www\bootstrap\js\bootstrap-modal.js" />
+    <Content Include="www\bootstrap\js\bootstrap-popover.js" />
+    <Content Include="www\bootstrap\js\bootstrap-scrollspy.js" />
+    <Content Include="www\bootstrap\js\bootstrap-tab.js" />
+    <Content Include="www\bootstrap\js\bootstrap-tooltip.js" />
+    <Content Include="www\bootstrap\js\bootstrap-transition.js" />
+    <Content Include="www\bootstrap\js\bootstrap-typeahead.js" />
+    <Content Include="www\bootstrap\js\bootstrap.js" />
+    <Content Include="www\bootstrap\js\bootstrap.min.js" />
+    <Content Include="www\date\date-ru-RU.js" />
+    <Content Include="www\date\date.js" />
+    <Content Include="www\favicon.ico" />
+    <Content Include="www\fullcalendar\fullcalendar.css" />
+    <Content Include="www\fullcalendar\fullcalendar.js" />
+    <Content Include="www\fullcalendar\fullcalendar.min.js" />
+    <Content Include="www\fullcalendar\fullcalendar.print.css" />
+    <Content Include="www\fullcalendar\gcal.js" />
+    <Content Include="www\client\index.html" />
+    <Content Include="www\operator\index.html" />
+    <Content Include="www\js\jquery.cookie.js" />
+    <Content Include="www\js\jquery.min.js" />
+    <Content Include="www\js\jquery.PrintArea.js" />
+    <Content Include="www\js\common.js" />
+    <Content Include="www\js\jquery.sparkline.min.js" />
+    <Content Include="www\js\justgage.min.js" />
+    <Content Include="www\js\raphael.min.js" />
+    <Content Include="www\js\translation.js" />
+    <Content Include="www\loading.png" />
+    <Content Include="www\client\main.css" />
+    <Content Include="www\client\main.js" />
+    <Content Include="www\main.css" />
+    <Content Include="www\main.js" />
+    <Content Include="www\social.png" />
+    <Content Include="www\js\string.format.min.js" />
+    <Content Include="www\js\watch.js" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

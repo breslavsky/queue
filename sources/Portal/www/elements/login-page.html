@@ -3,24 +3,44 @@
 <link rel="import" href="/content/components/polymer/polymer.html">
 <link rel="import" href="/content/components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="/content/components/paper-input/paper-input.html">
+<link rel="import" href="/content/components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="/content/components/paper-menu/paper-menu.html">
 
 <dom-module id="login-page">
     <style is="custom-style">
         #container {
             margin: 10px;
-        }       
+        }    
+        
+        div[title] {
+            font-weight: bold;
+        }
+
+        paper-input {
+            margin-left: 5px;
+
+        }   
     </style>
 
     <template>
-        <paper-toolbar>
-            <paper-icon-button icon="menu"></paper-icon-button>
-            <div class="title">Вход в систему</div>
-        </paper-toolbar>
-        <div id="container">
-            <paper-input label="Пользователь"></paper-input>
+    
+        <div id="container" class="horizontal layout end">
+            <paper-dropdown-menu label="Пользователь">
+          
+
+
+                <paper-menu class="dropdown-content">
+                  <template is="dom-repeat" items="[[users]]">
+                    <paper-tab>[[item.Presentation]]</paper-tab>
+                  </template>
+                </paper-menu>
+
+        
+            </paper-dropdown-menu>
             <paper-input label="Пароль"></paper-input>
-            <paper-button>Вход</paper-button>
-        </div>
+            <paper-button primary raised>Войти</paper-button>
+        </div>   
+
     </template>
 </dom-module>
 
@@ -31,30 +51,24 @@
 
         ready: function () {
 
-            $.soap({
-                url: 'http://localhost:4506/',
-                namespaceQualifier: 'xmlns',
-                namespaceURL: 'http://queue.name/server-service',
-                error: function (soapResponse) {
-                    // show error
-                    console.log(soapResponse);
-                },
-                soap12: true,
-                enableLogging: true
+            var self = this;
+
+            $.ajax({
+                url: "http://localhost:4506/user/get-user-links",
+                data: { userRole: "Administrator" }
+            }).done(function (operators) {
+                self.users = operators;
+                //self.userId = operators[0].Id;
             });
-
-            $.soap({
-                method: 'GetDateTime',
-                data: {
-
-                },
-                success: function (soapResponse) {
-                    // do stuff with soapResponse
-                }
-            });            
         },
 
         properties: {
+
+            users: {
+                type: Array,
+                value: []
+            },
+
             userId: {
                 type: String,
                 value: ""

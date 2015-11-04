@@ -199,41 +199,6 @@ namespace Queue.Services.Contracts
         Task DeleteServiceGroup(Guid serviceGroupId);
 
         [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<User> OpenUserSession(Guid sessionId);
-
-        [OperationContract]
-        Task UserHeartbeat();
-
-        [OperationContract]
-        Task<User[]> GetUsers();
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<User> GetUser(Guid userId);
-
-        [OperationContract]
-        Task<IdentifiedEntityLink[]> GetUserLinks(UserRole userRole);
-
-        [OperationContract]
-        Task<IdentifiedEntityLink[]> GetRedirectOperatorsLinks();
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<User> UserLogin(Guid userId, string password);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<Administrator> EditAdministrator(Administrator administrator);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<Operator> EditOperator(Operator user);
-
-        [OperationContract]
-        Task DeleteUser(Guid userId);
-
-        [OperationContract]
         Task<DTO.OperatorInterruption[]> GetOperatorInterruptions(OperatorInterruptionFilter filter);
 
         [OperationContract]
@@ -247,10 +212,6 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task DeleteOperatorInterruption(Guid operatorInterruptionId);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task ChangeUserPassword(Guid userId, string password);
 
         [OperationContract]
         Task<Office[]> GetOffices();
@@ -284,27 +245,6 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task DeleteAdditionalService(Guid additionalServiceId);
-
-        [OperationContract]
-        Task<IdentifiedEntityLink[]> GetWorkplacesLinks();
-
-        [OperationContract]
-        Task<Workplace[]> GetWorkplaces();
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<Workplace> GetWorkplace(Guid workplaceId);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<Workplace> EditWorkplace(Workplace workplace);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task DeleteWorkplace(Guid workplaceId);
-
-        [OperationContract]
-        Task<Operator[]> GetWorkplaceOperators(Guid workplaceId);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]

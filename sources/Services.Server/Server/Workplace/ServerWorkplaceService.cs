@@ -1,19 +1,31 @@
 ﻿using AutoMapper;
 using Junte.Data.NHibernate;
+using Microsoft.Practices.Unity;
 using NHibernate.Criterion;
+using NLog;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Services.Common;
+using Queue.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Threading.Tasks;
 
 namespace Queue.Services.Server
 {
-    public partial class ServerService
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession,
+                    ConcurrencyMode = ConcurrencyMode.Multiple,
+                    IncludeExceptionDetailInFaults = true)]
+    public partial class ServerWorkplaceService : StandardServerService, IServerWorkplaceService
     {
+        public ServerWorkplaceService()
+            : base()
+        {
+        }
+
         public async Task<DTO.IdentifiedEntityLink[]> GetWorkplacesLinks()
         {
             return await Task.Run(() =>

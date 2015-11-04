@@ -24,6 +24,9 @@ namespace Queue.Administrator.Reports
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
+        [Dependency]
+        public ChannelManager<IServerUserTcpService> ServerUserChannelManager { get; set; }
+
         #endregion dependency
 
         #region fields
@@ -144,27 +147,27 @@ namespace Queue.Administrator.Reports
 
         private async void LoadOperators()
         {
-            using (Channel<IServerTcpService> channel = ChannelManager.CreateChannel())
+            try
             {
-                try
+                using (var channel = ServerUserChannelManager.CreateChannel())
                 {
                     foreach (IdentifiedEntity op in await channel.Service.GetUserLinks(UserRole.Operator))
                     {
                         operatorsListBox.Items.Add(op, true);
                     }
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
+            }
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
+            {
+                UIHelper.Warning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
             }
         }
 

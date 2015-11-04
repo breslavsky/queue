@@ -72,7 +72,7 @@ namespace Queue.UI.WinForms
                     throw new QueueException("Не указан адрес сервера");
                 }
 
-                using (var serverService = new ServerService(Settings.Endpoint, ServerServicesPaths.Server))
+                using (var serverService = new ServerUserService(Settings.Endpoint))
                 using (var channelManager = serverService.CreateChannelManager())
                 using (var channel = channelManager.CreateChannel())
                 {
@@ -88,6 +88,7 @@ namespace Queue.UI.WinForms
 
                     connected = true;
 
+                    connectionGroupBox.Enabled = false;
                     loginGroupBox.Enabled = true;
                 }
             }

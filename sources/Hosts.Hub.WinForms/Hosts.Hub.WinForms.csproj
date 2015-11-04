@@ -7,8 +7,8 @@
     <ProjectGuid>{00ABDF24-8A02-46A7-99BE-C3F642C2D80C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hosts.Hub.WinForms</RootNamespace>
-    <AssemblyName>Hosts.Hub.WinForms</AssemblyName>
+    <RootNamespace>Queue.Hosts.Hub.WinForms</RootNamespace>
+    <AssemblyName>Queue.Hosts.Hub.WinForms</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -104,6 +104,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -90,6 +90,9 @@
       <HintPath>..\packages\WindowsAPICodePack-Core.1.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.4.2.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -165,6 +168,10 @@
       <Project>{57ddd930-5377-4427-92f1-d46b7463c5b6}</Project>
       <Name>Model.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Services.Common\Services.Common.csproj">
+      <Project>{03915831-23b5-462a-a144-49662864ae34}</Project>
+      <Name>Services.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Services.Contracts\Services.Contracts.csproj">
       <Project>{77ef6d1d-f45b-48b4-8fdd-ca004c4a12f4}</Project>
       <Name>Services.Contracts</Name>
@@ -172,6 +179,10 @@
     <ProjectReference Include="..\Services.DTO\Services.DTO.csproj">
       <Project>{2c2d256d-2353-409a-a0bd-bcc147e18694}</Project>
       <Name>Services.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI.Common\UI.Common.csproj">
+      <Project>{dfb572df-6412-460f-ba17-9c3fedf6fd12}</Project>
+      <Name>UI.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\UI.WinForms\UI.WinForms.csproj">
       <Project>{23b4c880-5f87-4e9d-b310-6dc25ea170b5}</Project>

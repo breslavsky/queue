@@ -110,6 +110,7 @@
     <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Queue.Media.MediaSettings.datasource" />
+    <None Include="Properties\DataSources\Queue.Services.Media.Settings.MediaServiceSettings.datasource" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -137,6 +138,14 @@
     <ProjectReference Include="..\Services.Contracts\Services.Contracts.csproj">
       <Project>{77ef6d1d-f45b-48b4-8fdd-ca004c4a12f4}</Project>
       <Name>Services.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services.Media\Services.Media.csproj">
+      <Project>{de07c975-94af-497e-9bf8-e92116fecaa2}</Project>
+      <Name>Services.Media</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UI.Common\UI.Common.csproj">
+      <Project>{dfb572df-6412-460f-ba17-9c3fedf6fd12}</Project>
+      <Name>UI.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\UI.WinForms\UI.WinForms.csproj">
       <Project>{23b4c880-5f87-4e9d-b310-6dc25ea170b5}</Project>

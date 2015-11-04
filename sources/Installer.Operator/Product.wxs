@@ -46,7 +46,6 @@
       <ComponentGroupRef Id="UI" />
       <ComponentGroupRef Id="Application" />
       <ComponentGroupRef Id="Resources_en_US" />
-      <ComponentGroupRef Id="Resources_zh_CN" />
 
       <ComponentRef Id="ApplicationShortcut" />
     </Feature>
