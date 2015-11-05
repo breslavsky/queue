@@ -103,9 +103,9 @@ namespace Queue.UI.WPF.ViewModels
 
         private void AddKeyboardRow(string line)
         {
-            KeyboardRow row = new KeyboardRow();
+            var row = new KeyboardRow();
 
-            foreach (char ch in line)
+            foreach (var ch in line)
             {
                 row.Buttons.Add(new KeyboardButton() { Title = ch.ToString() });
             }
@@ -115,11 +115,11 @@ namespace Queue.UI.WPF.ViewModels
 
         private void AddLetterKeyboardRow(string line, Language lang)
         {
-            KeyboardRow row = new KeyboardRow();
+            var row = new KeyboardRow();
 
             foreach (char ch in line)
             {
-                LetterKeyboardButton letter = new LetterKeyboardButton()
+                var letter = new LetterKeyboardButton()
                 {
                     Title = ch.ToString(),
                     Language = lang
@@ -135,7 +135,7 @@ namespace Queue.UI.WPF.ViewModels
         private void SetLanguage(Language lang)
         {
             language = lang;
-            foreach (LetterKeyboardButton btn in letters)
+            foreach (var btn in letters)
             {
                 btn.Visible = btn.Language == lang;
             }
@@ -152,7 +152,7 @@ namespace Queue.UI.WPF.ViewModels
         {
             IsUpper = val;
 
-            foreach (LetterKeyboardButton btn in letters)
+            foreach (var btn in letters)
             {
                 btn.SetUppercase(IsUpper);
             }

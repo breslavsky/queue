@@ -10,8 +10,11 @@ namespace Queue.Notification
         {
             foreach (var sound in Speaker.GetSounds(number))
             {
-                player.Stream = new MemoryStream(sound);
-                player.PlaySync();
+                using (var stream = new MemoryStream(sound))
+                {
+                    player.Stream = stream;
+                    player.PlaySync();
+                }
             }
         }
 

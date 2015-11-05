@@ -2,7 +2,6 @@
 using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common;
@@ -11,6 +10,7 @@ using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
+using Queue.UI.WPF.Core;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -23,7 +23,7 @@ using Drawing = System.Drawing;
 
 namespace Queue.Notification.ViewModels
 {
-    public class ClientRequestsControlViewModel : ObservableObject, IDisposable
+    public class ClientRequestsControlViewModel : DependencyObservableObject, IDisposable
     {
         private const int DefaultClientRequestsLength = 6;
 
@@ -59,9 +59,8 @@ namespace Queue.Notification.ViewModels
         public ObservableCollection<ClientRequestWrap> Requests { get; set; }
 
         public ClientRequestsControlViewModel()
+            : base()
         {
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
-
             LoadedCommand = new RelayCommand(Loaded);
             UnloadedCommand = new RelayCommand(Unloaded);
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Practices.ServiceLocation;
-using Microsoft.Practices.Unity;
 using Queue.Notification.ViewModels;
 using Queue.UI.WPF;
 using System.ComponentModel;
@@ -16,7 +15,7 @@ namespace Queue.Notification.UserControls
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 Content = ServiceLocator.Current.GetInstance<ITemplateManager>().GetTemplate("client-requests.xaml");
-                DataContext = ServiceLocator.Current.GetInstance<IUnityContainer>().Resolve<ClientRequestsControlViewModel>();
+                DataContext = new ClientRequestsControlViewModel();
             }
         }
     }

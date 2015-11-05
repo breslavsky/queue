@@ -1,7 +1,7 @@
 ﻿using Junte.Configuration;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using Queue.Display.Models;
 using Queue.Display.ViewModels;
 using Queue.Display.Views;
 using Queue.Services.Contracts;
@@ -21,12 +21,21 @@ namespace Queue.Display
 
         protected override Panel RootElement { get { return mainGrid; } }
 
+        [Dependency]
+        public IUnityContainer UnityContainer { get; set; }
+
+        [Dependency]
+        public AppSettings Settings { get; set; }
+
+        [Dependency]
+        public ConfigurationManager ConfigurationManager { get; set; }
+
         public MainWindow()
             : base()
         {
             InitializeComponent();
 
-            ServiceLocator.Current.GetInstance<IUnityContainer>().RegisterInstance<IMainWindow>(this);
+            UnityContainer.RegisterInstance<IMainWindow>(this);
 
             DataContext = new MainWindowViewModel();
         }
@@ -68,20 +77,23 @@ namespace Queue.Display
 
         private void RegisterTypes()
         {
-            var container = ServiceLocator.Current.GetInstance<IUnityContainer>();
+            UnityContainer.RegisterInstance(new ServerService(Settings.Endpoint));
+            UnityContainer.RegisterType<DuplexChannelManager<IServerTcpService>>
+                (new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager()));
 
-            container.RegisterInstance<DuplexChannelBuilder<IServerTcpService>>(loginPage.Model.ChannelBuilder);
-            container.RegisterInstance<Workplace>(loginPage.Model.Workplace);
+            UnityContainer.RegisterInstance(new ServerWorkplaceService(Settings.Endpoint));
+            UnityContainer.RegisterType<ChannelManager<IServerWorkplaceTcpService>>
+                (new InjectionFactory(c => c.Resolve<ServerWorkplaceService>().CreateChannelManager()));
+
+            UnityContainer.RegisterInstance<Workplace>(loginPage.Model.Workplace);
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             if (Keyboard.IsKeyDown(Key.LeftShift) && (e.Key == Key.Escape))
             {
-                var configuration = ServiceLocator.Current.GetInstance<ConfigurationManager>();
-                var loginFormSettings = configuration.GetSection<AppSettings>(AppSettings.SectionKey);
-                loginFormSettings.IsRemember = false;
-                configuration.Save();
+                Settings.IsRemember = false;
+                ConfigurationManager.Save();
 
                 Application.Current.Shutdown();
             }

@@ -65,8 +65,6 @@ namespace Queue.Notification.ViewModels
 
         public ICommand LoadedCommand { get; set; }
 
-        public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
-
         public Language SelectedLanguage
         {
             get { return selectedLanguage; }

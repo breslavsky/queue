@@ -4,6 +4,7 @@ using NLog;
 using Queue.Model.Common;
 using Queue.Services.DTO;
 using Queue.Sounds;
+using Queue.UI.WPF.Core;
 using System;
 using System.Media;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using System.Windows.Input;
 
 namespace Queue.Notification.ViewModels
 {
-    public class CallClientControlViewModel : ObservableObject
+    public class CallClientControlViewModel : DependencyObservableObject
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
         private object callLock = new object();

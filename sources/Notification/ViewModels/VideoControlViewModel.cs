@@ -1,12 +1,12 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WPF;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Notification.UserControls;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WPF.Core;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -20,7 +20,7 @@ using Vlc.DotNet.Wpf;
 
 namespace Queue.Notification.ViewModels
 {
-    public class VideoControlViewModel
+    public class VideoControlViewModel : DependencyObservableObject
     {
         private const string MediaFileUriPattern = "{0}/media-config/files/{1}/load";
 
@@ -42,8 +42,6 @@ namespace Queue.Notification.ViewModels
         public VideoControlViewModel(VideoControl control)
         {
             this.control = control;
-
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
             LoadedCommand = new RelayCommand(Loaded);
             UnloadedCommand = new RelayCommand(Unloaded);

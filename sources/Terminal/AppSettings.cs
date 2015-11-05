@@ -1,7 +1,7 @@
 ﻿using Queue.Common;
 using System.Configuration;
 
-namespace Queue.UI.WPF
+namespace Queue.Terminal
 {
     public class AppSettings : ConfigurationSection
     {

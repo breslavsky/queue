@@ -5,11 +5,11 @@ using System.Globalization;
 
 namespace Queue.Display.Models
 {
-    public class DisplayLoginSettings : ConfigurationSection
+    public class AppSettings : ConfigurationSection
     {
-        public const string SectionKey = "loginForm";
+        public const string SectionKey = "displaySettings";
 
-        public DisplayLoginSettings()
+        public AppSettings()
         {
             Endpoint = "net.tcp://queue:4505";
             Language = CultureInfo.CurrentCulture.GetLanguage();
