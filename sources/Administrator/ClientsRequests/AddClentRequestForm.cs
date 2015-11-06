@@ -6,6 +6,7 @@ using Queue.Administrator.Settings;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.Common;
 using Queue.UI.WinForms;
@@ -29,7 +30,7 @@ namespace Queue.Administrator
         public AdministratorSettings Settings { get; set; }
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 

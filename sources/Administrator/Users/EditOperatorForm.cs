@@ -3,6 +3,7 @@ using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
@@ -18,10 +19,10 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public ChannelManager<IServerWorkplaceTcpService> ServerWorkplace { get; set; }
+        public ChannelManager<IWorkplaceTcpService> WorkplaceChannelManager { get; set; }
 
         [Dependency]
-        public ChannelManager<IServerUserTcpService> ServerUser { get; set; }
+        public ChannelManager<IUserTcpService> UserChannelManager { get; set; }
 
         #endregion dependency
 
@@ -85,12 +86,12 @@ namespace Queue.Administrator
 
                 try
                 {
-                    using (var channel = ServerWorkplace.CreateChannel())
+                    using (var channel = WorkplaceChannelManager.CreateChannel())
                     {
                         workplaceControl.Initialize(await taskPool.AddTask(channel.Service.GetWorkplacesLinks()));
                     }
 
-                    using (var channel = ServerUser.CreateChannel())
+                    using (var channel = UserChannelManager.CreateChannel())
                     {
                         Operator = await taskPool.AddTask(channel.Service.GetUser(operatorId)) as QueueOperator;
                     }
@@ -130,7 +131,7 @@ namespace Queue.Administrator
                     {
                         passwordButton.Enabled = false;
 
-                        using (var channel = ServerUser.CreateChannel())
+                        using (var channel = UserChannelManager.CreateChannel())
                         {
                             await taskPool.AddTask(channel.Service.ChangeUserPassword(queueOperator.Id, f.Password));
                         }
@@ -161,7 +162,7 @@ namespace Queue.Administrator
             {
                 saveButton.Enabled = false;
 
-                using (var channel = ServerUser.CreateChannel())
+                using (var channel = UserChannelManager.CreateChannel())
                 {
                     Operator = await taskPool.AddTask(channel.Service.EditOperator(queueOperator));
                 }

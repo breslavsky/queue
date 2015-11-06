@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Queue.Hub.Svetovod
 {
-    public class SvetovodDisplayDriver : IHubDisplayDriver, IDisposable
+    public class SvetovodDisplayDriver : IDisplayDriver, IDisposable
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 

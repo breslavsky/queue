@@ -4,14 +4,13 @@ using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Model.Common;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
 using System.Drawing;
 using System.ServiceModel;
 using System.Windows.Forms;
-using QueueAdministrator = Queue.Services.DTO.Administrator;
 using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
@@ -21,10 +20,10 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
-        public ChannelManager<IServerUserTcpService> ServerUserChannelManager { get; set; }
+        public ChannelManager<IUserTcpService> UserChannelManager { get; set; }
 
         #endregion dependency
 
@@ -90,7 +89,7 @@ namespace Queue.Administrator
                     serviceControl.Initialize(await taskPool.AddTask(channel.Service.GetServiceLinks()));
                 }
 
-                using (var channel = ServerUserChannelManager.CreateChannel())
+                using (var channel = UserChannelManager.CreateChannel())
                 {
                     operatorControl.Initialize(await taskPool.AddTask(channel.Service.GetUserLinks(UserRole.Operator)));
                 }

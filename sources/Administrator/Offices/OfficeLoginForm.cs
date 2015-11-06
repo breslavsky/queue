@@ -5,6 +5,7 @@ using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
@@ -19,7 +20,7 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
@@ -84,7 +85,7 @@ namespace Queue.Administrator
 
         private async void loginButton_Click(object sender, EventArgs e)
         {
-            using (var serverUserService = new ServerUserService(Settings.Endpoint))
+            using (var serverUserService = new UserService(Settings.Endpoint))
             using (var channelManager = serverUserService.CreateChannelManager())
             using (var channel = channelManager.CreateChannel())
             {

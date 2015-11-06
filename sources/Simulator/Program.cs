@@ -6,6 +6,7 @@ using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
@@ -28,7 +29,8 @@ namespace Queue.Simulator
         private static QueueAdministrator currentUser;
 
         private static ServerService serverService;
-        private static ServerUserService serverUserService;
+        private static QueuePlanService queuePlanService;
+        private static UserService userService;
 
         [STAThread]
         private static void Main()
@@ -88,20 +90,20 @@ namespace Queue.Simulator
 
         private static void RegisterServices()
         {
-            serverUserService = new ServerUserService(endpoint);
-            container.RegisterInstance(serverUserService);
-            container.RegisterType<ChannelManager<IServerUserTcpService>>
-                (new InjectionFactory(c => serverUserService.CreateChannelManager(sessionId)));
-
             serverService = new ServerService(endpoint);
             container.RegisterInstance(serverService);
-            container.RegisterType<DuplexChannelManager<IServerTcpService>>
+            container.RegisterType<ChannelManager<IServerTcpService>>
                 (new InjectionFactory(c => serverService.CreateChannelManager(sessionId)));
 
-            serverUserService = new ServerUserService(endpoint);
-            container.RegisterInstance(serverUserService);
-            container.RegisterType<ChannelManager<IServerUserTcpService>>
-                (new InjectionFactory(c => serverUserService.CreateChannelManager(sessionId)));
+            userService = new UserService(endpoint);
+            container.RegisterInstance(userService);
+            container.RegisterType<ChannelManager<IUserTcpService>>
+                (new InjectionFactory(c => userService.CreateChannelManager(sessionId)));
+
+            queuePlanService = new QueuePlanService(endpoint);
+            container.RegisterInstance(queuePlanService);
+            container.RegisterType<DuplexChannelManager<IQueuePlanTcpService>>
+                (new InjectionFactory(c => queuePlanService.CreateChannelManager(sessionId)));
         }
 
         private static void ResetSettings()

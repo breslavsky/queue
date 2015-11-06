@@ -1,5 +1,5 @@
-﻿using Queue.Services.DTO;
-using Queue.Services.Common;
+﻿using Queue.Services.Common;
+using Queue.Services.DTO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +9,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Queue.Services.Contracts
+namespace Queue.Services.Contracts.Media
 {
     [ServiceContract]
     public partial interface IMediaService

@@ -31,7 +31,7 @@ namespace Queue.Display.ViewModels
         private readonly TaskPool taskPool;
         private bool disposed;
         private Workplace workplace;
-        private ServerCallback callbackObject;
+        private QueuePlanCallback callbackObject;
         private Channel<IServerTcpService> pingChannel;
         private string workplaceTitle;
         private string workplaceComment;
@@ -82,7 +82,7 @@ namespace Queue.Display.ViewModels
             channelManager = new DuplexChannelManager<IServerTcpService>(ServiceLocator.Current.GetInstance<DuplexChannelBuilder<IServerTcpService>>());
             taskPool = new TaskPool();
 
-            callbackObject = new ServerCallback();
+            callbackObject = new QueuePlanCallback();
             callbackObject.OnCurrentClientRequestPlanUpdated += CurrentClientRequestPlanUpdated;
 
             pingChannel = channelManager.CreateChannel(callbackObject);
@@ -188,13 +188,13 @@ namespace Queue.Display.ViewModels
                 UpdateOperatorCurrentRequest(plan.Key, plan.Value);
             }
 
-            pingChannel.Service.Subscribe(ServerServiceEventType.CurrentClientRequestPlanUpdated, new ServerSubscribtionArgs
+            pingChannel.Service.Subscribe(QueuePlanEventType.CurrentClientRequestPlanUpdated, new QueuePlanSubscribtionArgs
             {
                 Operators = await pingChannel.Service.GetWorkplaceOperators(workplace.Id)
             });
         }
 
-        private void CurrentClientRequestPlanUpdated(object sender, ServerEventArgs e)
+        private void CurrentClientRequestPlanUpdated(object sender, QueuePlanEventArgs e)
         {
             if (e.Operator == null)
             {

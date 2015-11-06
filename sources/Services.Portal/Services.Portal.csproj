@@ -81,7 +81,6 @@
     <Compile Include="Client\PortalClientServiceHost.cs" />
     <Compile Include="Client\PortalClientServiceProvider.cs" />
     <Compile Include="ContentType.cs" />
-    <Compile Include="ExtendHttpHeaders.cs" />
     <Compile Include="PortalService.cs" />
     <Compile Include="PortalServiceHost.cs" />
     <Compile Include="PortalServiceProvider.cs" />

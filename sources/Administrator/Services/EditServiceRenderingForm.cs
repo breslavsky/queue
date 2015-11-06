@@ -4,6 +4,7 @@ using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
@@ -19,10 +20,10 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
-        public ChannelManager<IServerUserTcpService> ServerUser { get; set; }
+        public ChannelManager<IUserTcpService> ServerUser { get; set; }
 
         #endregion dependency
 

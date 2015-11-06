@@ -4,6 +4,7 @@ using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Hub.Settings;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Hub;
 using Queue.Services.Hub;
 using System;
 using System.Collections.Generic;
@@ -27,8 +28,8 @@ namespace Queue.Hub
 
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private readonly IList<ServiceHost> hosts = new List<ServiceHost>();
-        private readonly IList<IHubQualityDriver> qualityDrivers = new List<IHubQualityDriver>();
-        private readonly IList<IHubDisplayDriver> displayDrivers = new List<IHubDisplayDriver>();
+        private readonly IList<IQualityDriver> qualityDrivers = new List<IQualityDriver>();
+        private readonly IList<IDisplayDriver> displayDrivers = new List<IDisplayDriver>();
         private readonly HubSettings settings;
         private bool disposed;
 
@@ -51,7 +52,7 @@ namespace Queue.Hub
                 var config = d.Config as DriverConfig;
                 var type = Assembly.Load(config.Assembly).GetType(config.Type);
 
-                var driver = Activator.CreateInstance(type, config) as IHubDisplayDriver;
+                var driver = Activator.CreateInstance(type, config) as IDisplayDriver;
                 if (driver == null)
                 {
                     throw new ApplicationException(string.Format("Error load display driver {0} from {1}", config.Type, config.Assembly));
@@ -67,7 +68,7 @@ namespace Queue.Hub
                 var config = d.Config as DriverConfig;
                 var type = Assembly.Load(config.Assembly).GetType(config.Type);
 
-                var driver = Activator.CreateInstance(type, config) as IHubQualityDriver;
+                var driver = Activator.CreateInstance(type, config) as IQualityDriver;
                 if (driver == null)
                 {
                     throw new ApplicationException(string.Format("Error load quality driver {0} from {1}", config.Type, config.Assembly));
@@ -88,24 +89,24 @@ namespace Queue.Hub
             {
                 {
                     //quality
-                    var host = new HubQualityTcpServiceHost();
+                    var host = new QualityTcpServiceHost();
 
-                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, HubServicesPaths.Quality));
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServicesPaths.Quality));
                     logger.Info("TCP service host uri = {0}", uri);
 
-                    host.AddServiceEndpoint(typeof(IHubQualityTcpService), Bindings.NetTcpBinding, uri);
+                    host.AddServiceEndpoint(typeof(IQualityTcpService), Bindings.NetTcpBinding, uri);
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior());
                     hosts.Add(host);
                 }
 
                 {
                     //display
-                    var host = new HubDisplayTcpServiceHost();
+                    var host = new DisplayTcpServiceHost();
 
-                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, HubServicesPaths.Display));
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServicesPaths.Display));
                     logger.Info("TCP service host uri = {0}", uri);
 
-                    host.AddServiceEndpoint(typeof(IHubDisplayTcpService), Bindings.NetTcpBinding, uri);
+                    host.AddServiceEndpoint(typeof(IDisplayTcpService), Bindings.NetTcpBinding, uri);
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior());
 
                     hosts.Add(host);
@@ -118,12 +119,12 @@ namespace Queue.Hub
             {
                 {
                     //quality
-                    var host = new HubQualityHttpServiceHost();
+                    var host = new QualityHttpServiceHost();
 
-                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, HubServicesPaths.Quality));
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServicesPaths.Quality));
                     logger.Info("HTTP service host uri = {0}", uri);
 
-                    var endpoint = host.AddServiceEndpoint(typeof(IHubQualityHttpService), Bindings.WebHttpBinding, uri);
+                    var endpoint = host.AddServiceEndpoint(typeof(IQualityHttpService), Bindings.WebHttpBinding, uri);
                     endpoint.Behaviors.Add(new WebHttpBehavior());
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                     {
@@ -136,12 +137,12 @@ namespace Queue.Hub
 
                 {
                     //display
-                    var host = new HubDisplayHttpServiceHost();
+                    var host = new DisplayHttpServiceHost();
 
-                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, HubServicesPaths.Display));
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServicesPaths.Display));
                     logger.Info("HTTP service host uri = {0}", uri);
 
-                    var endpoint = host.AddServiceEndpoint(typeof(IHubDisplayHttpService), Bindings.WebHttpBinding, uri);
+                    var endpoint = host.AddServiceEndpoint(typeof(IDisplayHttpService), Bindings.WebHttpBinding, uri);
                     endpoint.Behaviors.Add(new WebHttpBehavior());
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                     {

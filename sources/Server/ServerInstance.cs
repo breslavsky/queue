@@ -8,6 +8,7 @@ using NLog;
 using Queue.Server.Settings;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.Server;
 using System;
 using System.Collections.Generic;
@@ -75,7 +76,7 @@ namespace Queue.Server
             {
                 {
                     {
-                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServerServicesPaths.Server));
+                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServicesPaths.Server));
                         logger.Info("TCP service host uri = {0}", uri);
 
                         var host = new ServerTcpServiceHost();
@@ -86,33 +87,44 @@ namespace Queue.Server
                     }
 
                     {
-                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServerServicesPaths.Template));
+                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServicesPaths.Template));
                         logger.Info("TCP service host uri = {0}", uri);
 
-                        var host = new ServerTemplateTcpServiceHost();
-                        host.AddServiceEndpoint(typeof(IServerTemplateTcpService), Bindings.NetTcpBinding, uri);
+                        var host = new TemplateTcpServiceHost();
+                        host.AddServiceEndpoint(typeof(ITemplateTcpService), Bindings.NetTcpBinding, uri);
                         host.Description.Behaviors.Add(new ServiceMetadataBehavior());
 
                         hosts.Add(host);
                     }
 
                     {
-                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServerServicesPaths.User));
+                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServicesPaths.User));
                         logger.Info("TCP service host uri = {0}", uri);
 
-                        var host = new ServerUserTcpServiceHost();
-                        host.AddServiceEndpoint(typeof(IServerUserTcpService), Bindings.NetTcpBinding, uri);
+                        var host = new UserTcpServiceHost();
+                        host.AddServiceEndpoint(typeof(IUserTcpService), Bindings.NetTcpBinding, uri);
                         host.Description.Behaviors.Add(new ServiceMetadataBehavior());
 
                         hosts.Add(host);
                     }
 
                     {
-                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServerServicesPaths.Workplace));
+                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServicesPaths.Workplace));
                         logger.Info("TCP service host uri = {0}", uri);
 
-                        var host = new ServerWorkplaceTcpServiceHost();
-                        host.AddServiceEndpoint(typeof(IServerWorkplaceTcpService), Bindings.NetTcpBinding, uri);
+                        var host = new WorkplaceTcpServiceHost();
+                        host.AddServiceEndpoint(typeof(IWorkplaceTcpService), Bindings.NetTcpBinding, uri);
+                        host.Description.Behaviors.Add(new ServiceMetadataBehavior());
+
+                        hosts.Add(host);
+                    }
+
+                    {
+                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServicesPaths.QueuePlan));
+                        logger.Info("TCP service host uri = {0}", uri);
+
+                        var host = new QueuePlanTcpServiceHost();
+                        host.AddServiceEndpoint(typeof(IQueuePlanTcpService), Bindings.NetTcpBinding, uri);
                         host.Description.Behaviors.Add(new ServiceMetadataBehavior());
 
                         hosts.Add(host);
@@ -128,7 +140,7 @@ namespace Queue.Server
                     {
                         var host = new ServerHttpServiceHost();
 
-                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServerServicesPaths.Server));
+                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServicesPaths.Server));
                         logger.Info("HTTP service host uri = {0}", uri);
 
                         var endpoint = host.AddServiceEndpoint(typeof(IServerHttpService), Bindings.BasicHttpBinding, uri);
@@ -143,13 +155,13 @@ namespace Queue.Server
                 }
 
                 {
-                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServerServicesPaths.Template));
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServicesPaths.Template));
                     logger.Info("HTTP service host uri = {0}", uri);
 
-                    var host = new ServerTemplateHttpServiceHost();
-                    var endpoint = host.AddServiceEndpoint(typeof(IServerTemplateHttpService), Bindings.WebHttpBinding, uri);
+                    var host = new TemplateHttpServiceHost();
+                    var endpoint = host.AddServiceEndpoint(typeof(ITemplateHttpService), Bindings.WebHttpBinding, uri);
                     endpoint.Behaviors.Add(new WebHttpBehavior());
-                    endpoint.Behaviors.Add(new EnableCrossOriginResourceSharingBehavior());
+                    endpoint.Behaviors.Add(new EnableCORSBehavior());
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                     {
                         HttpGetUrl = uri,
@@ -160,13 +172,13 @@ namespace Queue.Server
                 }
 
                 {
-                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServerServicesPaths.User));
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServicesPaths.User));
                     logger.Info("HTTP service host uri = {0}", uri);
 
-                    var host = new ServerUserHttpServiceHost();
-                    var endpoint = host.AddServiceEndpoint(typeof(IServerUserHttpService), Bindings.WebHttpBinding, uri);
+                    var host = new UserHttpServiceHost();
+                    var endpoint = host.AddServiceEndpoint(typeof(IUserHttpService), Bindings.WebHttpBinding, uri);
                     endpoint.Behaviors.Add(new WebHttpBehavior());
-                    endpoint.Behaviors.Add(new EnableCrossOriginResourceSharingBehavior());
+                    endpoint.Behaviors.Add(new EnableCORSBehavior());
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                     {
                         HttpGetUrl = uri,
@@ -177,13 +189,30 @@ namespace Queue.Server
                 }
 
                 {
-                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServerServicesPaths.Workplace));
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServicesPaths.Workplace));
                     logger.Info("HTTP service host uri = {0}", uri);
 
-                    var host = new ServerWorkplaceHttpServiceHost();
-                    var endpoint = host.AddServiceEndpoint(typeof(IServerWorkplaceHttpService), Bindings.WebHttpBinding, uri);
+                    var host = new WorkplaceHttpServiceHost();
+                    var endpoint = host.AddServiceEndpoint(typeof(IWorkplaceHttpService), Bindings.WebHttpBinding, uri);
                     endpoint.Behaviors.Add(new WebHttpBehavior());
-                    endpoint.Behaviors.Add(new EnableCrossOriginResourceSharingBehavior());
+                    endpoint.Behaviors.Add(new EnableCORSBehavior());
+                    host.Description.Behaviors.Add(new ServiceMetadataBehavior()
+                    {
+                        HttpGetUrl = uri,
+                        HttpGetEnabled = true
+                    });
+
+                    hosts.Add(host);
+                }
+
+                {
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServicesPaths.QueuePlan));
+                    logger.Info("HTTP service host uri = {0}", uri);
+
+                    var host = new QueuePlanHttpServiceHost();
+                    var endpoint = host.AddServiceEndpoint(typeof(IQueuePlanHttpService), Bindings.WebHttpBinding, uri);
+                    endpoint.Behaviors.Add(new WebHttpBehavior());
+                    endpoint.Behaviors.Add(new EnableCORSBehavior());
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                     {
                         HttpGetUrl = uri,

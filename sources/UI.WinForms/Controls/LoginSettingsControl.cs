@@ -3,6 +3,7 @@ using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using System;
 using System.ServiceModel;
@@ -72,8 +73,8 @@ namespace Queue.UI.WinForms
                     throw new QueueException("Не указан адрес сервера");
                 }
 
-                using (var serverService = new ServerUserService(Settings.Endpoint))
-                using (var channelManager = serverService.CreateChannelManager())
+                using (var userService = new UserService(Settings.Endpoint))
+                using (var channelManager = userService.CreateChannelManager())
                 using (var channel = channelManager.CreateChannel())
                 {
                     connectButton.Enabled = false;

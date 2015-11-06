@@ -4,6 +4,7 @@ using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
@@ -18,7 +19,7 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public ChannelManager<IServerWorkplaceTcpService> ServerWorkplace { get; set; }
+        public ChannelManager<IWorkplaceTcpService> WorkplaceChannelManager { get; set; }
 
         #endregion dependency
 
@@ -93,9 +94,9 @@ namespace Queue.Administrator
                 {
                     taskPool.Dispose();
                 }
-                if (ServerWorkplace != null)
+                if (WorkplaceChannelManager != null)
                 {
-                    ServerWorkplace.Dispose();
+                    WorkplaceChannelManager.Dispose();
                 }
             }
             base.Dispose(disposing);
@@ -114,7 +115,7 @@ namespace Queue.Administrator
 
                 try
                 {
-                    using (var channel = ServerWorkplace.CreateChannel())
+                    using (var channel = WorkplaceChannelManager.CreateChannel())
                     {
                         Workplace = await taskPool.AddTask(channel.Service.GetWorkplace(workplaceId));
                     }
@@ -179,7 +180,7 @@ namespace Queue.Administrator
 
         private async void saveButton_Click(object sender, EventArgs e)
         {
-            using (var channel = ServerWorkplace.CreateChannel())
+            using (var channel = WorkplaceChannelManager.CreateChannel())
             {
                 try
                 {

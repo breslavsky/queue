@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace Queue.Hub.Svetovod
 {
-    public class SvetovodQualityPanelDriver : IHubQualityDriver, IDisposable
+    public class SvetovodQualityPanelDriver : IQualityDriver, IDisposable
     {
         #region events
 
-        public event EventHandler<IHubQualityDriverArgs> Accepted = delegate { };
+        public event EventHandler<IQualityDriverArgs> Accepted = delegate { };
 
         #endregion events
 

@@ -6,18 +6,10 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
-namespace Queue.Services.Contracts
+namespace Queue.Services.Contracts.Server
 {
-    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IServerCallback))]
+    [ServiceContract(SessionMode = SessionMode.Required)]
     public interface IServerTcpService : IServerService
     {
-        [OperationContract]
-        bool IsSubscribed(ServerServiceEventType eventType);
-
-        [OperationContract]
-        void Subscribe(ServerServiceEventType eventType, ServerSubscribtionArgs args = null);
-
-        [OperationContract]
-        void UnSubscribe(ServerServiceEventType eventType);
     }
 }

@@ -3,6 +3,7 @@ using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
@@ -18,7 +19,7 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public ChannelManager<IServerUserTcpService> ChannelManager { get; set; }
+        public ChannelManager<IUserTcpService> UserChannelManager { get; set; }
 
         #endregion dependency
 
@@ -59,9 +60,9 @@ namespace Queue.Administrator
                 {
                     taskPool.Dispose();
                 }
-                if (ChannelManager != null)
+                if (UserChannelManager != null)
                 {
-                    ChannelManager.Dispose();
+                    UserChannelManager.Dispose();
                 }
             }
             base.Dispose(disposing);
@@ -137,7 +138,7 @@ namespace Queue.Administrator
 
         private async void UsersForm_Load(object sender, EventArgs e)
         {
-            using (var channel = ChannelManager.CreateChannel())
+            using (var channel = UserChannelManager.CreateChannel())
             {
                 try
                 {
@@ -210,7 +211,7 @@ namespace Queue.Administrator
             {
                 User user = e.Row.Tag as User;
 
-                using (var channel = ChannelManager.CreateChannel())
+                using (var channel = UserChannelManager.CreateChannel())
                 {
                     try
                     {

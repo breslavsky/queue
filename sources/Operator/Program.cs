@@ -6,6 +6,8 @@ using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Hub;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
@@ -29,8 +31,9 @@ namespace Queue.Operator
         private static QueueOperator currentUser;
 
         private static ServerService serverService;
-        private static ServerUserService serverUserService;
-        private static HubQualityService hubQualityService;
+        private static QueuePlanService queuePlanService;
+        private static UserService userService;
+        private static QualityService qualityService;
 
         [STAThread]
         private static void Main()
@@ -58,7 +61,9 @@ namespace Queue.Operator
 
             if (options.AutoLogin)
             {
-                using (var serverUserService = new ServerUserService(options.Endpoint))
+                endpoint = options.Endpoint;
+
+                using (var serverUserService = new UserService(endpoint))
                 using (var channelManager = serverUserService.CreateChannelManager())
                 using (var channel = channelManager.CreateChannel())
                 {
@@ -118,20 +123,25 @@ namespace Queue.Operator
 
         private static void RegisterServices()
         {
-            hubQualityService = new HubQualityService(hubSettings.Endpoint, HubServicesPaths.Quality);
-            container.RegisterInstance(hubQualityService);
-            container.RegisterType<DuplexChannelManager<IHubQualityTcpService>>
-                (new InjectionFactory(c => hubQualityService.CreateChannelManager()));
+            qualityService = new QualityService(hubSettings.Endpoint);
+            container.RegisterInstance(qualityService);
+            container.RegisterType<DuplexChannelManager<IQualityTcpService>>
+                (new InjectionFactory(c => qualityService.CreateChannelManager()));
 
             serverService = new ServerService(endpoint);
             container.RegisterInstance(serverService);
-            container.RegisterType<DuplexChannelManager<IServerTcpService>>
+            container.RegisterType<ChannelManager<IServerTcpService>>
                 (new InjectionFactory(c => serverService.CreateChannelManager(sessionId)));
 
-            serverUserService = new ServerUserService(endpoint);
-            container.RegisterInstance(serverUserService);
-            container.RegisterType<ChannelManager<IServerUserTcpService>>
-                (new InjectionFactory(c => serverUserService.CreateChannelManager(sessionId)));
+            userService = new UserService(endpoint);
+            container.RegisterInstance(userService);
+            container.RegisterType<ChannelManager<IUserTcpService>>
+                (new InjectionFactory(c => userService.CreateChannelManager(sessionId)));
+
+            queuePlanService = new QueuePlanService(endpoint);
+            container.RegisterInstance(queuePlanService);
+            container.RegisterType<DuplexChannelManager<IQueuePlanTcpService>>
+                (new InjectionFactory(c => queuePlanService.CreateChannelManager(sessionId)));
         }
 
         private static void ResetSettings()

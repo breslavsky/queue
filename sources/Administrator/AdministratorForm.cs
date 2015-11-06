@@ -7,6 +7,7 @@ using Queue.Administrator.Reports;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.UI.WinForms;
 using System;
 using System.Collections.Generic;
@@ -28,10 +29,10 @@ namespace Queue.Administrator
         public QueueAdministrator CurrentUser { get; set; }
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
-        public ChannelManager<IServerUserTcpService> ServerUserChannelManager { get; set; }
+        public ChannelManager<IUserTcpService> ServerUserChannelManager { get; set; }
 
         #endregion dependency
 

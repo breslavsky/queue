@@ -120,6 +120,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOMapping.cs" />
+    <Compile Include="Server\QueuePlan\QueuePlanHttpService.cs" />
+    <Compile Include="Server\QueuePlan\QueuePlanHttpServiceHost.cs" />
+    <Compile Include="Server\QueuePlan\QueuePlanHttpServiceProvider.cs" />
+    <Compile Include="Server\QueuePlan\QueuePlanService.cs" />
+    <Compile Include="Server\QueuePlan\QueuePlanServiceTcpProvider.cs" />
+    <Compile Include="Server\QueuePlan\QueuePlanTcpService.cs" />
+    <Compile Include="Server\QueuePlan\QueuePlanTcpServiceHost.cs" />
     <Compile Include="Server\ServerHttpService.cs" />
     <Compile Include="Server\ServerTcpService.cs" />
     <Compile Include="Server\ServerServiceTcpProvider.cs" />
@@ -143,7 +150,6 @@
     <Compile Include="Server\Controllers\OperatorInterruption.cs" />
     <Compile Include="Server\Controllers\Offices.cs" />
     <Compile Include="Server\Controllers\PINs.cs" />
-    <Compile Include="Server\Controllers\QueuePlan.cs" />
     <Compile Include="Server\Controllers\Reports.cs" />
     <Compile Include="Server\Controllers\Schedule.cs" />
     <Compile Include="Server\Controllers\ServiceGroups.cs" />
@@ -155,29 +161,29 @@
     <Compile Include="Server\Controllers\AdditionalService.cs" />
     <Compile Include="Server\Controllers\ClientRequestAdditionalService.cs" />
     <Compile Include="Server\Controllers\ClientRequestParameter.cs" />
-    <Compile Include="Server\Template\ServerTemplateTcpServiceProvider.cs" />
-    <Compile Include="Server\Template\ServerTemplateTcpService.cs" />
-    <Compile Include="Server\Template\ServerTemplateTcpServiceHost.cs" />
-    <Compile Include="Server\Template\ServerTemplateHttpService.cs" />
-    <Compile Include="Server\Template\ServerTemplateHttpServiceHost.cs" />
-    <Compile Include="Server\Template\ServerTemplateHttpServiceProvider.cs" />
-    <Compile Include="Server\Template\ServerTemplateService.cs" />
+    <Compile Include="Server\Template\TemplateTcpServiceProvider.cs" />
+    <Compile Include="Server\Template\TemplateTcpService.cs" />
+    <Compile Include="Server\Template\TemplateTcpServiceHost.cs" />
+    <Compile Include="Server\Template\TemplateHttpService.cs" />
+    <Compile Include="Server\Template\TemplateHttpServiceHost.cs" />
+    <Compile Include="Server\Template\TemplateHttpServiceProvider.cs" />
+    <Compile Include="Server\Template\TemplateService.cs" />
     <Compile Include="Server\Template\TemplateServiceSettings.cs" />
-    <Compile Include="Server\User\ServerUserHttpService.cs" />
-    <Compile Include="Server\User\ServerUserHttpServiceHost.cs" />
-    <Compile Include="Server\User\ServerUserHttpServiceProvider.cs" />
-    <Compile Include="Server\User\ServerUserService.cs" />
-    <Compile Include="Server\User\ServerUserServiceTcpProvider.cs" />
-    <Compile Include="Server\User\ServerUserTcpService.cs" />
-    <Compile Include="Server\User\ServerUserTcpServiceHost.cs" />
+    <Compile Include="Server\User\UserHttpService.cs" />
+    <Compile Include="Server\User\UserHttpServiceHost.cs" />
+    <Compile Include="Server\User\UserHttpServiceProvider.cs" />
+    <Compile Include="Server\User\UserService.cs" />
+    <Compile Include="Server\User\UserServiceTcpProvider.cs" />
+    <Compile Include="Server\User\UserTcpService.cs" />
+    <Compile Include="Server\User\UserTcpServiceHost.cs" />
     <Compile Include="Server\StandardServerService.cs" />
-    <Compile Include="Server\Workplace\ServerWorkplaceHttpService.cs" />
-    <Compile Include="Server\Workplace\ServerWorkplaceHttpServiceHost.cs" />
-    <Compile Include="Server\Workplace\ServerWorkplaceHttpServiceProvider.cs" />
-    <Compile Include="Server\Workplace\ServerWorkplaceService.cs" />
-    <Compile Include="Server\Workplace\ServerWorkplaceServiceTcpProvider.cs" />
-    <Compile Include="Server\Workplace\ServerWorkplaceTcpService.cs" />
-    <Compile Include="Server\Workplace\ServerWorkplaceTcpServiceHost.cs" />
+    <Compile Include="Server\Workplace\WorkplaceHttpService.cs" />
+    <Compile Include="Server\Workplace\WorkplaceHttpServiceHost.cs" />
+    <Compile Include="Server\Workplace\WorkplaceHttpServiceProvider.cs" />
+    <Compile Include="Server\Workplace\WorkplaceService.cs" />
+    <Compile Include="Server\Workplace\WorkplaceServiceTcpProvider.cs" />
+    <Compile Include="Server\Workplace\WorkplaceTcpService.cs" />
+    <Compile Include="Server\Workplace\WorkplaceTcpServiceHost.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

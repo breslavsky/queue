@@ -166,7 +166,7 @@ namespace Queue.Display.ViewModels
                 ChannelBuilder.Dispose();
             }
 
-            ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
+            ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new QueuePlanCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
 
             if (channelManager != null)
             {

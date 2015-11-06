@@ -7,6 +7,7 @@ using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using System;
 using System.Reflection;
@@ -38,8 +39,8 @@ namespace Queue.UI.WinForms
 
         #region fields
 
-        private ServerUserService serverUserService;
-        private ChannelManager<IServerUserTcpService> channelManager;
+        private UserService serverUserService;
+        private ChannelManager<IUserTcpService> channelManager;
         private readonly TaskPool taskPool;
         private readonly UserRole userRole;
 
@@ -99,7 +100,7 @@ namespace Queue.UI.WinForms
                 serverUserService.Dispose();
             }
 
-            serverUserService = new ServerUserService(LoginSettings.Endpoint);
+            serverUserService = new UserService(LoginSettings.Endpoint);
 
             if (channelManager != null)
             {

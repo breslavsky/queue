@@ -3,12 +3,12 @@ using Queue.Services.Common;
 using System;
 using System.ServiceModel;
 
-namespace Queue.Services.Contracts
+namespace Queue.Services.Contracts.Server
 {
-    public class ServerService : DuplexClientService<IServerTcpService, ServerCallback>
+    public class ServerService : ClientService<IServerTcpService>
     {
         public ServerService(string endpoint)
-            : base(endpoint, ServerServicesPaths.Server)
+            : base(endpoint, ServicesPaths.Server)
         {
         }
     }

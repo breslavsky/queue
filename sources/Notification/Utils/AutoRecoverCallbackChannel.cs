@@ -17,7 +17,7 @@ namespace Queue.Notification
         private bool disposed;
 
         private Channel<IServerTcpService> channel;
-        private readonly ServerCallback callback;
+        private readonly QueuePlanCallback callback;
 
         private Timer timer;
         private Action<IServerTcpService> subscribeFunc;
@@ -28,7 +28,7 @@ namespace Queue.Notification
         [Dependency]
         public TaskPool TaskPool { get; set; }
 
-        public AutoRecoverCallbackChannel(ServerCallback callback, Action<IServerTcpService> subscribeFunc)
+        public AutoRecoverCallbackChannel(QueuePlanCallback callback, Action<IServerTcpService> subscribeFunc)
         {
             ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 

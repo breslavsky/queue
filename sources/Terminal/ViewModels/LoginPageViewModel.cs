@@ -179,7 +179,7 @@ namespace Queue.Terminal.ViewModels
 
         public async void Connect()
         {
-            ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
+            ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new QueuePlanCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
             channelManager = new DuplexChannelManager<IServerTcpService>(ChannelBuilder);
 
             using (var channel = channelManager.CreateChannel())

@@ -349,5 +349,49 @@ namespace Queue.Services.Server
                 }
             });
         }
+
+        public async Task<DTO.ServiceFreeTime> GetServiceFreeTime(Guid serviceId, DateTime planDate, ClientRequestType requestType)
+        {
+            return await Task.Run(() =>
+            {
+                using (var session = SessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    var service = session.Get<Service>(serviceId);
+                    if (service == null)
+                    {
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId), string.Format("Услуга [{0}] не найдена", serviceId));
+                    }
+
+                    planDate = planDate.Date;
+
+                    QueuePlan queuePlan;
+
+                    if (planDate == DateTime.Today)
+                    {
+                        queuePlan = QueueInstance.TodayQueuePlan;
+                    }
+                    else
+                    {
+                        queuePlan = new QueuePlan();
+                        queuePlan.Load(planDate);
+                        queuePlan.Build();
+                    }
+
+                    try
+                    {
+                        using (var locker = queuePlan.ReadLock())
+                        {
+                            var serviceFreeTime = queuePlan.GetServiceFreeTime(service, service.GetFirstStep(session), requestType);
+                            return Mapper.Map<ServiceFreeTime, DTO.ServiceFreeTime>(serviceFreeTime);
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        throw new FaultException(exception.Message);
+                    }
+                }
+            });
+        }
     }
 }

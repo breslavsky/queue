@@ -5,6 +5,7 @@ using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Administrator.Settings;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.UI.WinForms;
 using System;
 using System.Printing;
@@ -28,10 +29,10 @@ namespace Queue.Administrator
         public ConfigurationManager Configuration { get; set; }
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
-        public ChannelManager<IServerUserTcpService> ServerUserChannelManager { get; set; }
+        public ChannelManager<IUserTcpService> UserChannelManager { get; set; }
 
         #endregion dependency
 
@@ -110,7 +111,7 @@ namespace Queue.Administrator
                     {
                         passwordButton.Enabled = false;
 
-                        using (var channel = ServerUserChannelManager.CreateChannel())
+                        using (var channel = UserChannelManager.CreateChannel())
                         {
                             await taskPool.AddTask(channel.Service.ChangeUserPassword(CurrentUser.Id, f.Password));
                         }

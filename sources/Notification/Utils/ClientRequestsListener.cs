@@ -25,30 +25,30 @@ namespace Queue.Notification
             channel = new AutoRecoverCallbackChannel(CreateServerCallback(), Subscribe);
         }
 
-        private ServerCallback CreateServerCallback()
+        private QueuePlanCallback CreateServerCallback()
         {
-            var result = new ServerCallback();
+            var result = new QueuePlanCallback();
             result.OnClientRequestUpdated += OnClientRequestUpdated;
             result.OnCallClient += OnCallClient;
 
             return result;
         }
 
-        private void OnCallClient(object sender, ServerEventArgs e)
+        private void OnCallClient(object sender, QueuePlanEventArgs e)
         {
             ClientRequestUpdated(this, e.ClientRequest);
             CallClient(this, e.ClientRequest);
         }
 
-        private void OnClientRequestUpdated(object sender, ServerEventArgs e)
+        private void OnClientRequestUpdated(object sender, QueuePlanEventArgs e)
         {
             ClientRequestUpdated(this, e.ClientRequest);
         }
 
         private void Subscribe(IServerTcpService service)
         {
-            service.Subscribe(ServerServiceEventType.ClientRequestUpdated);
-            service.Subscribe(ServerServiceEventType.CallClient);
+            service.Subscribe(QueuePlanEventType.ClientRequestUpdated);
+            service.Subscribe(QueuePlanEventType.CallClient);
         }
 
         #region IDisposable

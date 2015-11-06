@@ -4,6 +4,7 @@ using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
@@ -21,10 +22,13 @@ namespace Queue.Simulator
         #region dependency
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
-        public ChannelManager<IServerUserTcpService> ServerUser { get; set; }
+        public ChannelManager<IUserTcpService> ServerUser { get; set; }
+
+        [Dependency]
+        public DuplexChannelManager<IQueuePlanTcpService> QueuePlanChannelManager { get; set; }
 
         #endregion dependency
 
@@ -130,7 +134,7 @@ namespace Queue.Simulator
                     await taskPool.AddTask(channel.Service.UserHeartbeat());
                 }
 
-                using (var channel = ChannelManager.CreateChannel(queueOperator.SessionId))
+                using (var channel = QueuePlanChannelManager.CreateChannel(queueOperator.SessionId))
                 {
                     var clientRequestPlan = await channel.Service.GetCurrentClientRequestPlan();
                     if (clientRequestPlan != null)

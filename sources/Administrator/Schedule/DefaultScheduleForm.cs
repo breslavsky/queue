@@ -5,6 +5,7 @@ using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
@@ -18,7 +19,7 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 

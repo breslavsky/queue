@@ -6,6 +6,8 @@ using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Portal;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.Services.Portal;
 using System;
@@ -45,7 +47,7 @@ namespace Queue.Portal
 
         private void ConnectToServer()
         {
-            var serverUserService = new ServerUserService(loginSettings.Endpoint);
+            var serverUserService = new UserService(loginSettings.Endpoint);
 
             Administrator currentUser;
 
@@ -62,7 +64,7 @@ namespace Queue.Portal
 
             var serverService = new ServerService(loginSettings.Endpoint);
             Container.RegisterInstance(serverService);
-            Container.RegisterType<DuplexChannelManager<IServerTcpService>>
+            Container.RegisterType<ChannelManager<IServerTcpService>>
                 (new InjectionFactory(c => serverService.CreateChannelManager(currentUser.SessionId)));
         }
 
@@ -74,7 +76,7 @@ namespace Queue.Portal
                 var uri = new Uri(string.Format("{0}://0.0.0.0:{1}/", Schemes.Http, portalSettings.Port));
                 var endpoint = host.AddServiceEndpoint(typeof(IPortalService), Bindings.WebHttpBinding, uri.ToString());
                 endpoint.Behaviors.Add(new WebHttpBehavior());
-                endpoint.Behaviors.Add(new EnableCrossOriginResourceSharingBehavior());
+                endpoint.Behaviors.Add(new EnableCORSBehavior());
 
                 hosts.Add(host);
             }
@@ -84,7 +86,7 @@ namespace Queue.Portal
                 var uri = new Uri(string.Format("{0}://0.0.0.0:{1}/operator", Schemes.Http, portalSettings.Port));
                 var endpoint = host.AddServiceEndpoint(typeof(IPortalOperatorService), Bindings.WebHttpBinding, uri);
                 endpoint.Behaviors.Add(new WebHttpBehavior());
-                endpoint.Behaviors.Add(new EnableCrossOriginResourceSharingBehavior());
+                endpoint.Behaviors.Add(new EnableCORSBehavior());
 
                 hosts.Add(host);
             }
@@ -95,7 +97,7 @@ namespace Queue.Portal
                 var uri = new Uri(string.Format("{0}://0.0.0.0:{1}/client", Schemes.Http, portalSettings.Port));
                 var endpoint = host.AddServiceEndpoint(typeof(IPortalClientService), Bindings.WebHttpBinding, uri);
                 endpoint.Behaviors.Add(new WebHttpBehavior());
-                endpoint.Behaviors.Add(new EnableCrossOriginResourceSharingBehavior());
+                endpoint.Behaviors.Add(new EnableCORSBehavior());
 
                 hosts.Add(host);
             }

@@ -5,6 +5,7 @@ using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
@@ -22,10 +23,10 @@ namespace Queue.Administrator.Reports
         #region dependency
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
-        public ChannelManager<IServerUserTcpService> ServerUserChannelManager { get; set; }
+        public ChannelManager<IUserTcpService> UserChannelManager { get; set; }
 
         #endregion dependency
 
@@ -149,7 +150,7 @@ namespace Queue.Administrator.Reports
         {
             try
             {
-                using (var channel = ServerUserChannelManager.CreateChannel())
+                using (var channel = UserChannelManager.CreateChannel())
                 {
                     foreach (IdentifiedEntity op in await channel.Service.GetUserLinks(UserRole.Operator))
                     {

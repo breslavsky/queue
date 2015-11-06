@@ -3,6 +3,7 @@ using NLog;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Portal;
 using Queue.Services.DTO;
 using Queue.UI.Common;
 using System;
@@ -21,8 +22,7 @@ namespace Queue.Services.Portal
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall,
                     ConcurrencyMode = ConcurrencyMode.Multiple,
-                    IncludeExceptionDetailInFaults = true,
-                    UseSynchronizationContext = false)]
+                    IncludeExceptionDetailInFaults = true)]
     public sealed class PortalClientService : PortalService, IPortalClientService
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
@@ -207,12 +207,12 @@ namespace Queue.Services.Portal
 
         public async Task<ServiceFreeTime> GetServiceFreeTime(string planDate, string queueType, string serviceId)
         {
-            using (var channel = ChannelManager.CreateChannel())
+            try
             {
-                try
+                var targetDate = DateTime.Parse(planDate);
+                if (targetDate.Date == DateTime.Today)
                 {
-                    var targetDate = DateTime.Parse(planDate);
-                    if (targetDate.Date == DateTime.Today)
+                    using (var channel = ChannelManager.CreateChannel())
                     {
                         var portalConfig = await channel.Service.GetPortalConfig();
                         if (!portalConfig.CurrentDayRecording)
@@ -220,18 +220,21 @@ namespace Queue.Services.Portal
                             throw new FaultException("Запись на текущий день на портале запрещена");
                         }
                     }
+                }
 
+                using (var channel = ChannelManager.CreateChannel())
+                {
                     return await channel.Service.GetServiceFreeTime(Guid.Parse(serviceId), targetDate, (ClientRequestType)int.Parse(queueType));
                 }
-                catch (FaultException exception)
-                {
-                    throw new WebFaultException<string>(exception.Reason.ToString(), HttpStatusCode.BadRequest);
-                }
-                catch (Exception exception)
-                {
-                    logger.Error(exception);
-                    throw exception;
-                }
+            }
+            catch (FaultException exception)
+            {
+                throw new WebFaultException<string>(exception.Reason.ToString(), HttpStatusCode.BadRequest);
+            }
+            catch (Exception exception)
+            {
+                logger.Error(exception);
+                throw exception;
             }
         }
 

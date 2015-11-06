@@ -3,6 +3,8 @@ using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Portal;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.Services.Portal.Settings;
 using System;
@@ -18,8 +20,7 @@ namespace Queue.Services.Portal
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall,
                     ConcurrencyMode = ConcurrencyMode.Multiple,
-                    IncludeExceptionDetailInFaults = true,
-                    UseSynchronizationContext = false)]
+                    IncludeExceptionDetailInFaults = true)]
     public class PortalService : DependencyService, IPortalService
     {
         #region dependency
@@ -28,7 +29,10 @@ namespace Queue.Services.Portal
         public PortalServiceSettings Settings { get; set; }
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        [Dependency]
+        public DuplexChannelManager<IQueuePlanTcpService> QueuePlanChannelManager { get; set; }
 
         #endregion dependency
 

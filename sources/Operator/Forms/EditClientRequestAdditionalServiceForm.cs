@@ -3,6 +3,7 @@ using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
@@ -17,10 +18,7 @@ namespace Queue.Operator
         #region dependency
 
         [Dependency]
-        public QueueOperator CurrentUser { get; set; }
-
-        [Dependency]
-        public ServerService ServerService { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
@@ -32,7 +30,6 @@ namespace Queue.Operator
 
         #region fields
 
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly Guid clientRequestAdditionalServiceId;
         private readonly Guid clientRequestId;
         private readonly TaskPool taskPool;
@@ -67,8 +64,6 @@ namespace Queue.Operator
             this.clientRequestAdditionalServiceId = clientRequestAdditionalServiceId.HasValue ?
                 clientRequestAdditionalServiceId.Value : Guid.Empty;
 
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
-
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
@@ -91,15 +86,15 @@ namespace Queue.Operator
             {
                 taskPool.Dispose();
             }
-            if (channelManager != null)
+            if (ChannelManager != null)
             {
-                channelManager.Dispose();
+                ChannelManager.Dispose();
             }
         }
 
         private async void EditAdditionalServiceForm_Load(object sender, EventArgs e)
         {
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = ChannelManager.CreateChannel())
             {
                 try
                 {
@@ -151,7 +146,7 @@ namespace Queue.Operator
 
         private async void saveButton_Click(object sender, EventArgs e)
         {
-            using (Channel<IServerTcpService> channel = channelManager.CreateChannel())
+            using (Channel<IServerTcpService> channel = ChannelManager.CreateChannel())
             {
                 try
                 {

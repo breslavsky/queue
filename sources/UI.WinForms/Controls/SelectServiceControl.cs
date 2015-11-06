@@ -3,6 +3,7 @@ using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using System;
 using System.ComponentModel;
@@ -19,12 +20,7 @@ namespace Queue.UI.WinForms
         [Dependency]
         [ReadOnly(true)]
         [Browsable(false)]
-        public User CurrentUser { get; set; }
-
-        [Dependency]
-        [ReadOnly(true)]
-        [Browsable(false)]
-        public ServerService ServerService { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
@@ -36,7 +32,6 @@ namespace Queue.UI.WinForms
 
         #region fields
 
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
         private readonly TaskPool taskPool;
 
         #endregion fields
@@ -56,8 +51,6 @@ namespace Queue.UI.WinForms
                 return;
             }
 
-            channelManager = ServerService.CreateChannelManager(CurrentUser.SessionId);
-
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
@@ -75,7 +68,7 @@ namespace Queue.UI.WinForms
 
         private async void LoadServiceGroup(TreeNodeCollection nodes, ServiceGroup serviceGroup = null)
         {
-            using (var channel = channelManager.CreateChannel())
+            using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {

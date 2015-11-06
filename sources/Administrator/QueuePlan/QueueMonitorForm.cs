@@ -6,6 +6,7 @@ using NLog;
 using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.UI.WinForms;
 using System;
 using System.Diagnostics;
@@ -24,10 +25,13 @@ namespace Queue.Administrator
         public LoginSettings Settings { get; set; }
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
-        public ChannelManager<IServerUserTcpService> ServerUserChannelManager { get; set; }
+        public DuplexChannelManager<IQueuePlanTcpService> QueuePlanChannelManager { get; set; }
+
+        [Dependency]
+        public ChannelManager<IUserTcpService> ServerUserChannelManager { get; set; }
 
         #endregion dependency
 
@@ -74,30 +78,30 @@ namespace Queue.Administrator
 
         private async void loadButton_Click(object sender, EventArgs e)
         {
-            using (var channel = ChannelManager.CreateChannel())
+            try
             {
-                try
-                {
-                    loadButton.Enabled = false;
+                loadButton.Enabled = false;
 
+                using (var channel = QueuePlanChannelManager.CreateChannel())
+                {
                     queueMonitorControl.QueuePlan = await channel.Service.GetQueuePlan(planDate);
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    loadButton.Enabled = true;
-                }
+            }
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
+            {
+                UIHelper.Warning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
+            }
+            finally
+            {
+                loadButton.Enabled = true;
             }
         }
 
@@ -173,24 +177,24 @@ namespace Queue.Administrator
             if (MessageBox.Show("Перезагрузить текущий план очереди? В этом случае будет произведено полное обновление информации из базы данных. Продолжительность данной операции зависит от количества запросов клиентов.",
                 "Подтвердите операцию", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                using (var channel = ChannelManager.CreateChannel())
+                try
                 {
-                    try
+                    using (var channel = QueuePlanChannelManager.CreateChannel())
                     {
                         await channel.Service.RefreshTodayQueuePlan();
                     }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
                 }
             }
         }
@@ -199,28 +203,28 @@ namespace Queue.Administrator
         {
             reloadInterval.Stop();
 
-            using (var channel = ChannelManager.CreateChannel())
+            try
             {
-                try
+                using (var channel = QueuePlanChannelManager.CreateChannel())
                 {
                     queueMonitorControl.QueuePlan = await channel.Service.GetQueuePlan(planDate);
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    logger.Warn(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    logger.Error(exception.Message);
-                }
-                finally
-                {
-                    reloadInterval.Start();
-                }
+            }
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
+            {
+                logger.Warn(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                logger.Error(exception.Message);
+            }
+            finally
+            {
+                reloadInterval.Start();
             }
         }
 

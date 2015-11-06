@@ -4,6 +4,7 @@ using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
@@ -18,7 +19,7 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public ChannelManager<IServerWorkplaceTcpService> ServerWorkplace { get; set; }
+        public ChannelManager<IWorkplaceTcpService> WorkplaceChannelManager { get; set; }
 
         #endregion dependency
 
@@ -56,9 +57,9 @@ namespace Queue.Administrator
                 {
                     taskPool.Dispose();
                 }
-                if (ServerWorkplace != null)
+                if (WorkplaceChannelManager != null)
                 {
-                    ServerWorkplace.Dispose();
+                    WorkplaceChannelManager.Dispose();
                 }
             }
             base.Dispose(disposing);
@@ -92,7 +93,7 @@ namespace Queue.Administrator
 
         private async void WorkplacesForm_Load(object sender, EventArgs e)
         {
-            using (var channel = ServerWorkplace.CreateChannel())
+            using (var channel = WorkplaceChannelManager.CreateChannel())
             {
                 try
                 {
@@ -151,7 +152,7 @@ namespace Queue.Administrator
 
                 try
                 {
-                    using (var channel = ServerWorkplace.CreateChannel())
+                    using (var channel = WorkplaceChannelManager.CreateChannel())
                     {
                         await taskPool.AddTask(channel.Service.DeleteWorkplace(workplace.Id));
                     }

@@ -7,13 +7,17 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Threading.Tasks;
 
-namespace Queue.Services.Contracts
+namespace Queue.Services.Contracts.Server
 {
     [ServiceContract(Namespace = "http://queue.name/server-service")]
     public interface IServerService
     {
         [OperationContract]
         Task<DateTime> GetDateTime();
+
+        [OperationContract]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<ServiceFreeTime> GetServiceFreeTime(Guid serviceId, DateTime planDate, ClientRequestType queueType);
 
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
@@ -120,48 +124,6 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task DeleteClientRequestAdditionalService(Guid clientRequestAdditionalServiceId);
-
-        [OperationContract]
-        Task<ClientRequestPlan[]> GetOperatorClientRequestPlans();
-
-        [OperationContract]
-        Task<Dictionary<Operator, ClientRequestPlan>> GetCurrentClientRequestPlans();
-
-        [OperationContract]
-        Task<ClientRequestPlan> GetCurrentClientRequestPlan();
-
-        [OperationContract]
-        Task<ClientRequest> EditCurrentClientRequest(ClientRequest source);
-
-        [OperationContract]
-        Task UpdateCurrentClientRequest(ClientRequestState state);
-
-        [OperationContract]
-        Task RedirectToOperatorCurrentClientRequest(Guid redirectOperatorId);
-
-        [OperationContract]
-        Task CallClientByRequestNumber(int number);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task PostponeCurrentClientRequest(TimeSpan postponeTime);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task ReturnCurrentClientRequest();
-
-        [OperationContract]
-        Task CallCurrentClient();
-
-        [OperationContract]
-        Task<QueuePlan> GetQueuePlan(DateTime planDate);
-
-        [OperationContract]
-        [FaultContract(typeof(ObjectNotFoundFault))]
-        Task<ServiceFreeTime> GetServiceFreeTime(Guid serviceId, DateTime planDate, ClientRequestType queueType);
-
-        [OperationContract]
-        Task RefreshTodayQueuePlan();
 
         [OperationContract]
         Task<ServiceGroup[]> GetRootServiceGroups();
@@ -326,10 +288,6 @@ namespace Queue.Services.Contracts
         [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task DeleteServiceRendering(Guid serviceRenderingId);
-
-        //[OperationContract]
-        //[FaultContract(typeof(ObjectNotFoundFault))]
-        //Task<Schedule> GetServiceCurrentSchedule(Guid serviceId, DateTime planDate);
 
         [OperationContract]
         Task<Schedule> GetDefaultWeekdaySchedule(DayOfWeek dayOfWeek);

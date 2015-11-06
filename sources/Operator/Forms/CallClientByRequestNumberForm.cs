@@ -4,6 +4,7 @@ using Junte.WCF;
 using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.UI.WinForms;
 using System;
 using System.Collections.Generic;
@@ -24,18 +25,13 @@ namespace Queue.Operator
         #region dependency
 
         [Dependency]
-        public QueueOperator CurrentOperator { get; set; }
-
-        [Dependency]
-        public ServerService ServerService { get; set; }
+        public DuplexChannelManager<IQueuePlanTcpService> QueuePlanChannelManager { get; set; }
 
         #endregion dependency
 
         #region fields
 
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-
-        private readonly DuplexChannelManager<IServerTcpService> serverChannelManager;
         private readonly TaskPool taskPool;
 
         #endregion fields
@@ -44,8 +40,6 @@ namespace Queue.Operator
             : base()
         {
             InitializeComponent();
-
-            serverChannelManager = ServerService.CreateChannelManager(CurrentOperator.SessionId);
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
@@ -71,32 +65,32 @@ namespace Queue.Operator
             var clientRequestNumber = (int)clientRequestNumberUpDown.Value;
             if (clientRequestNumber > 0)
             {
-                using (var channel = serverChannelManager.CreateChannel())
+                try
                 {
-                    try
-                    {
-                        submitButton.Enabled = false;
+                    submitButton.Enabled = false;
 
+                    using (var channel = QueuePlanChannelManager.CreateChannel())
+                    {
                         await taskPool.AddTask(channel.Service.CallClientByRequestNumber(clientRequestNumber));
+                    }
 
-                        DialogResult = DialogResult.OK;
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
-                    finally
-                    {
-                        submitButton.Enabled = true;
-                    }
+                    DialogResult = DialogResult.OK;
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+                finally
+                {
+                    submitButton.Enabled = true;
                 }
             }
         }

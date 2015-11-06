@@ -3,7 +3,7 @@ using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Common;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.UI.WPF.Enums;
 using System;
 using System.Timers;
@@ -48,7 +48,7 @@ namespace Queue.UI.WPF.ViewModels
         }
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
         public TaskPool TaskPool { get; set; }

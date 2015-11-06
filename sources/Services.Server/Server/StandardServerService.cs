@@ -43,9 +43,28 @@ namespace Queue.Services.Server
         {
             try
             {
-                sessionId = Guid.Parse(OperationContext.Current.IncomingMessageHeaders
-                    .GetHeader<string>("SessionId", string.Empty));
+                var operationContext = OperationContext.Current;
+                if (operationContext != null)
+                {
+                    sessionId = Guid.Parse(operationContext.IncomingMessageHeaders
+                        .GetHeader<string>("SessionId", string.Empty));
+                }
+            }
+            catch { }
 
+            try
+            {
+                var webOperationContext = WebOperationContext.Current;
+                if (webOperationContext != null && sessionId == Guid.Empty)
+                {
+                    sessionId = Guid.Parse(webOperationContext.IncomingRequest
+                        .Headers[ExtendHttpHeaders.Session]);
+                }
+            }
+            catch { }
+
+            if (sessionId != Guid.Empty)
+            {
                 using (var session = SessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
@@ -55,8 +74,6 @@ namespace Queue.Services.Server
                         .UniqueResult<User>();
                 }
             }
-
-            catch { }
 
             logger.Debug("Создан новый экземпляр службы [{0}]", sessionId);
 

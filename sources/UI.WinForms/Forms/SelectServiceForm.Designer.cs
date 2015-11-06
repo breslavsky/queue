@@ -52,7 +52,6 @@
             this.Name = "SelectServiceForm";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Text = "Выбор услуги";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ServicesForm_FormClosing);
             this.ResumeLayout(false);
 
         }

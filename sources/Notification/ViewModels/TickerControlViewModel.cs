@@ -102,9 +102,9 @@ namespace Queue.Notification.ViewModels
             }
         }
 
-        private ServerCallback CreateServerCallback()
+        private QueuePlanCallback CreateServerCallback()
         {
-            var result = new ServerCallback();
+            var result = new QueuePlanCallback();
             result.OnConfigUpdated += OnConfigUpdated;
 
             return result;
@@ -112,13 +112,13 @@ namespace Queue.Notification.ViewModels
 
         private void Subscribe(IServerTcpService service)
         {
-            service.Subscribe(ServerServiceEventType.ConfigUpdated, new ServerSubscribtionArgs()
+            service.Subscribe(QueuePlanEventType.ConfigUpdated, new QueuePlanSubscribtionArgs()
             {
                 ConfigTypes = new[] { ConfigType.Media }
             });
         }
 
-        private void OnConfigUpdated(object sender, ServerEventArgs e)
+        private void OnConfigUpdated(object sender, QueuePlanEventArgs e)
         {
             switch (e.Config.Type)
             {

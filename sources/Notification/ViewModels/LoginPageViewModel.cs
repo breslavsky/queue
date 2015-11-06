@@ -132,7 +132,7 @@ namespace Queue.Notification.ViewModels
             try
             {
                 using (var channelManager = new DuplexChannelManager<IServerTcpService>(
-                                                new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(),
+                                                new DuplexChannelBuilder<IServerTcpService>(new QueuePlanCallback(),
                                                                                             Bindings.NetTcpBinding,
                                                                                             new EndpointAddress(Endpoint))))
                 using (var channel = channelManager.CreateChannel())

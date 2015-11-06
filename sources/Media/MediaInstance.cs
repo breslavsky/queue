@@ -6,6 +6,7 @@ using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Media;
 using Queue.Services.DTO;
 using Queue.Services.Media;
 using System;

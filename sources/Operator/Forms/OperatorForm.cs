@@ -9,6 +9,8 @@ using Queue.Common.Settings;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Hub;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
@@ -40,13 +42,16 @@ namespace Queue.Operator
         public HubSettings HubQualitySettings { get; set; }
 
         [Dependency]
-        public DuplexChannelManager<IHubQualityTcpService> QualityChannelManager { get; set; }
+        public DuplexChannelManager<IQualityTcpService> QualityChannelManager { get; set; }
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ServerChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ServerChannelManager { get; set; }
 
         [Dependency]
-        public ChannelManager<IServerUserTcpService> ServerUserChannelManager { get; set; }
+        public DuplexChannelManager<IQueuePlanTcpService> QueuePlanChannelManager { get; set; }
+
+        [Dependency]
+        public ChannelManager<IUserTcpService> ServerUserChannelManager { get; set; }
 
         #endregion dependency
 
@@ -63,15 +68,15 @@ namespace Queue.Operator
 
         private readonly Timer pingQualityTimer;
         private readonly Timer pingServerTimer;
-        private readonly HubQualityCallback qualityCallback;
-        private readonly ServerCallback serverCallback;
+        private readonly QualityCallback qualityCallback;
+        private readonly QueuePlanCallback queuePlanCallback;
         private readonly TaskPool taskPool;
         private readonly TaskPool pingTaskPool;
         private BindingList<ClientRequestAdditionalService> additionalServices;
         private ClientRequestPlan currentClientRequestPlan;
         private BindingList<ClientRequestParameter> parameters;
-        private Channel<IServerTcpService> pingServerChannel;
-        private Channel<IHubQualityTcpService> pingQualityChannel;
+        private Channel<IQueuePlanTcpService> queuePlanChannel;
+        private Channel<IQualityTcpService> qualityChannel;
         private byte qualityPanelDeviceId;
         private bool qualityPanelEnabled;
         private byte step = byte.MaxValue;
@@ -181,7 +186,7 @@ namespace Queue.Operator
 
                                 if (currentClientRequestPlan.StartTime <= ServerDateTime.Now.TimeOfDay)
                                 {
-                                    using (var channel = ServerChannelManager.CreateChannel())
+                                    using (var channel = QueuePlanChannelManager.CreateChannel())
                                     {
                                         try
                                         {
@@ -292,15 +297,17 @@ namespace Queue.Operator
         {
             InitializeComponent();
 
-            serverCallback = new ServerCallback();
-            serverCallback.OnCurrentClientRequestPlanUpdated += serverCallback_OnCurrentClientRequestPlanUpdated;
-            serverCallback.OnOperatorPlanMetricsUpdated += serverCallback_OnOperatorPlanMetricsUpdated;
+            queuePlanCallback = new QueuePlanCallback();
+            queuePlanCallback.OnCurrentClientRequestPlanUpdated += queuePlanCallback_OnCurrentClientRequestPlanUpdated;
+            queuePlanCallback.OnOperatorPlanMetricsUpdated += queuePlanCallback_OnOperatorPlanMetricsUpdated;
 
-            qualityCallback = new HubQualityCallback();
+            qualityCallback = new QualityCallback();
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
+
+            taskPool.OnAddTask += taskPool_OnAddTask;
 
             pingTaskPool = new TaskPool();
 
@@ -356,17 +363,17 @@ namespace Queue.Operator
 
                 #region channels
 
-                if (pingServerChannel != null)
+                if (queuePlanChannel != null)
                 {
-                    pingServerChannel.Dispose();
+                    queuePlanChannel.Dispose();
                 }
                 if (ServerChannelManager != null)
                 {
                     ServerChannelManager.Dispose();
                 }
-                if (pingQualityChannel != null)
+                if (qualityChannel != null)
                 {
-                    pingQualityChannel.Dispose();
+                    qualityChannel.Dispose();
                 }
                 if (QualityChannelManager != null)
                 {
@@ -388,14 +395,14 @@ namespace Queue.Operator
             pingQualityTimer.Stop();
             pingQualityTimer.Dispose();
 
-            if (pingServerChannel != null)
+            if (queuePlanChannel != null)
             {
-                pingServerChannel.Close();
+                queuePlanChannel.Close();
             }
 
-            if (pingQualityChannel != null)
+            if (qualityChannel != null)
             {
-                pingQualityChannel.Close();
+                qualityChannel.Close();
             }
 
             taskPool.Cancel();
@@ -437,27 +444,27 @@ namespace Queue.Operator
 
             Invoke((MethodInvoker)async delegate
             {
-                if (pingServerChannel == null)
+                if (queuePlanChannel == null)
                 {
-                    pingServerChannel = ServerChannelManager.CreateChannel(serverCallback);
+                    queuePlanChannel = QueuePlanChannelManager.CreateChannel(queuePlanCallback);
                 }
 
                 try
                 {
                     serverStateLabel.Image = Icons.connecting16x16;
 
-                    if (!pingServerChannel.IsConnected)
+                    if (!queuePlanChannel.IsConnected)
                     {
-                        pingServerChannel.Service.Subscribe(ServerServiceEventType.CurrentClientRequestPlanUpdated,
-                            new ServerSubscribtionArgs { Operators = new DTO.Operator[] { CurrentOperator } });
-                        pingServerChannel.Service.Subscribe(ServerServiceEventType.OperatorPlanMetricsUpdated,
-                            new ServerSubscribtionArgs { Operators = new DTO.Operator[] { CurrentOperator } });
-                        CurrentClientRequestPlan = await pingTaskPool.AddTask(pingServerChannel.Service.GetCurrentClientRequestPlan());
+                        queuePlanChannel.Service.Subscribe(QueuePlanEventType.CurrentClientRequestPlanUpdated,
+                            new QueuePlanSubscribtionArgs { Operators = new DTO.Operator[] { CurrentOperator } });
+                        queuePlanChannel.Service.Subscribe(QueuePlanEventType.OperatorPlanMetricsUpdated,
+                            new QueuePlanSubscribtionArgs { Operators = new DTO.Operator[] { CurrentOperator } });
+                        CurrentClientRequestPlan = await pingTaskPool.AddTask(queuePlanChannel.Service.GetCurrentClientRequestPlan());
                     }
 
                     using (var channel = ServerChannelManager.CreateChannel())
                     {
-                        ServerDateTime.Sync(await pingTaskPool.AddTask(pingServerChannel.Service.GetDateTime()));
+                        ServerDateTime.Sync(await taskPool.AddTask(channel.Service.GetDateTime()));
                         currentDateTimeLabel.Text = ServerDateTime.Now.ToLongTimeString();
                     }
 
@@ -479,8 +486,8 @@ namespace Queue.Operator
                     currentDateTimeLabel.Text = exception.Message;
                     serverStateLabel.Image = Icons.offline16x16;
 
-                    pingServerChannel.Dispose();
-                    pingServerChannel = null;
+                    queuePlanChannel.Dispose();
+                    queuePlanChannel = null;
                 }
                 finally
                 {
@@ -502,22 +509,22 @@ namespace Queue.Operator
 
             Invoke((MethodInvoker)async delegate
             {
-                if (pingQualityChannel == null)
+                if (qualityChannel == null)
                 {
-                    pingQualityChannel = QualityChannelManager.CreateChannel(qualityCallback);
+                    qualityChannel = QualityChannelManager.CreateChannel(qualityCallback);
                 }
 
                 try
                 {
                     qualityStateLabel.Image = Icons.connecting16x16;
 
-                    if (!pingQualityChannel.IsConnected)
+                    if (!qualityChannel.IsConnected)
                     {
-                        pingQualityChannel.Service.Subscribe(HubQualityServiceEventType.RatingAccepted,
-                            new HubQualityServiceSubscribtionArgs { DeviceId = qualityPanelDeviceId });
+                        qualityChannel.Service.Subscribe(QualityServiceEventType.RatingAccepted,
+                            new QualityServiceSubscribtionArgs { DeviceId = qualityPanelDeviceId });
                     }
 
-                    await pingTaskPool.AddTask(pingQualityChannel.Service.Heartbeat());
+                    await pingTaskPool.AddTask(qualityChannel.Service.Heartbeat());
 
                     qualityStateLabel.Image = Icons.online16x16;
                 }
@@ -531,8 +538,8 @@ namespace Queue.Operator
 
                     qualityStateLabel.Image = Icons.offline16x16;
 
-                    pingQualityChannel.Dispose();
-                    pingQualityChannel = null;
+                    qualityChannel.Dispose();
+                    qualityChannel = null;
                 }
                 finally
                 {
@@ -548,7 +555,7 @@ namespace Queue.Operator
 
         #region callbacks
 
-        private void qualityCallback_OnAccepted(object sender, HubQualityEventArgs e)
+        private void qualityCallback_OnAccepted(object sender, QualityEventArgs e)
         {
             Invoke(new MethodInvoker(async () =>
             {
@@ -559,33 +566,33 @@ namespace Queue.Operator
                     var clientRequest = currentClientRequestPlan.ClientRequest;
                     clientRequest.Rating = e.Rating;
 
-                    using (var channel = ServerChannelManager.CreateChannel())
+                    try
                     {
-                        try
+                        using (var channel = QueuePlanChannelManager.CreateChannel())
                         {
                             await taskPool.AddTask(channel.Service.EditCurrentClientRequest(clientRequest));
+                        }
 
-                            qualityCallback.OnAccepted -= qualityCallback_OnAccepted;
-                            qualityPanelEnabled = false;
-                        }
-                        catch (OperationCanceledException) { }
-                        catch (CommunicationObjectAbortedException) { }
-                        catch (ObjectDisposedException) { }
-                        catch (InvalidOperationException) { }
-                        catch (FaultException exception)
-                        {
-                            logger.Warn(exception.Reason);
-                        }
-                        catch (Exception exception)
-                        {
-                            logger.Error(exception);
-                        }
+                        qualityCallback.OnAccepted -= qualityCallback_OnAccepted;
+                        qualityPanelEnabled = false;
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        logger.Warn(exception.Reason);
+                    }
+                    catch (Exception exception)
+                    {
+                        logger.Error(exception);
                     }
                 }
             }));
         }
 
-        private async void serverCallback_OnCurrentClientRequestPlanUpdated(object sender, ServerEventArgs e)
+        private async void queuePlanCallback_OnCurrentClientRequestPlanUpdated(object sender, QueuePlanEventArgs e)
         {
             await Task.Run(() =>
             {
@@ -593,7 +600,7 @@ namespace Queue.Operator
             });
         }
 
-        private async void serverCallback_OnOperatorPlanMetricsUpdated(object sender, ServerEventArgs e)
+        private async void queuePlanCallback_OnOperatorPlanMetricsUpdated(object sender, QueuePlanEventArgs e)
         {
             await Task.Run(() =>
             {
@@ -658,40 +665,25 @@ namespace Queue.Operator
             }
         }
 
-        private async void mainTabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        private async void serviceChangeLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            switch (e.TabPageIndex)
+            if (currentClientRequestPlan != null)
             {
-                case 0:
-                    Width = MinimumSize.Width;
-                    break;
+                var clientRequest = currentClientRequestPlan.ClientRequest;
 
-                case 1:
-                    Width = MaximumSize.Width;
-
-                    using (var channel = ServerChannelManager.CreateChannel())
+                using (var f = new SelectServiceForm())
+                {
+                    if (f.ShowDialog() == DialogResult.OK)
                     {
+                        clientRequest.Service = f.Service;
+
                         try
                         {
-                            clientRequestsGridView.Rows.Clear();
+                            serviceChangeLink.Enabled = false;
 
-                            var clientRequestPlans = await taskPool.AddTask(channel.Service.GetOperatorClientRequestPlans());
-
-                            foreach (var clientRequestPlan in clientRequestPlans)
+                            using (var channel = QueuePlanChannelManager.CreateChannel())
                             {
-                                var clientRequest = clientRequestPlan.ClientRequest;
-
-                                int index = clientRequestsGridView.Rows.Add();
-                                var row = clientRequestsGridView.Rows[index];
-
-                                row.Cells["numberColumn"].Value = clientRequest.Number;
-                                row.Cells["subjectsColumn"].Value = clientRequest.Subjects;
-                                row.Cells["startTimeColumn"].Value = clientRequestPlan.StartTime.ToString("hh\\:mm\\:ss");
-                                row.Cells["timeIntervalColumn"].Value = (clientRequestPlan.FinishTime - clientRequestPlan.StartTime).Minutes;
-                                row.Cells["clientColumn"].Value = clientRequest.Client;
-                                row.Cells["serviceColumn"].Value = clientRequest.Service;
-                                row.Cells["stateColumn"].Value = Translater.Enum(clientRequest.State);
-                                row.Tag = clientRequest;
+                                await taskPool.AddTask(channel.Service.EditCurrentClientRequest(clientRequest));
                             }
                         }
                         catch (OperationCanceledException) { }
@@ -706,47 +698,9 @@ namespace Queue.Operator
                         {
                             UIHelper.Warning(exception.Message);
                         }
-                    }
-                    break;
-            }
-        }
-
-        private async void serviceChangeLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            if (currentClientRequestPlan != null)
-            {
-                var clientRequest = currentClientRequestPlan.ClientRequest;
-
-                using (var f = new SelectServiceForm())
-                {
-                    if (f.ShowDialog() == DialogResult.OK)
-                    {
-                        clientRequest.Service = f.Service;
-
-                        using (var channel = ServerChannelManager.CreateChannel())
+                        finally
                         {
-                            try
-                            {
-                                serviceChangeLink.Enabled = false;
-
-                                await taskPool.AddTask(channel.Service.EditCurrentClientRequest(clientRequest));
-                            }
-                            catch (OperationCanceledException) { }
-                            catch (CommunicationObjectAbortedException) { }
-                            catch (ObjectDisposedException) { }
-                            catch (InvalidOperationException) { }
-                            catch (FaultException exception)
-                            {
-                                UIHelper.Warning(exception.Reason.ToString());
-                            }
-                            catch (Exception exception)
-                            {
-                                UIHelper.Warning(exception.Message);
-                            }
-                            finally
-                            {
-                                serviceChangeLink.Enabled = true;
-                            }
+                            serviceChangeLink.Enabled = true;
                         }
                     }
                 }
@@ -760,30 +714,30 @@ namespace Queue.Operator
                 var clientRequest = currentClientRequestPlan.ClientRequest;
                 clientRequest.ServiceStep = serviceStepControl.Selected<ServiceStep>();
 
-                using (var channel = ServerChannelManager.CreateChannel())
+                try
                 {
-                    try
-                    {
-                        serviceStepControl.Enabled = false;
+                    serviceStepControl.Enabled = false;
 
+                    using (var channel = QueuePlanChannelManager.CreateChannel())
+                    {
                         await taskPool.AddTask(channel.Service.EditCurrentClientRequest(clientRequest));
                     }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
-                    finally
-                    {
-                        serviceStepControl.Enabled = true;
-                    }
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+                finally
+                {
+                    serviceStepControl.Enabled = true;
                 }
             }
         }
@@ -792,68 +746,68 @@ namespace Queue.Operator
         {
             if (currentClientRequestPlan != null)
             {
-                ClientRequest clientRequest = currentClientRequestPlan.ClientRequest;
+                var clientRequest = currentClientRequestPlan.ClientRequest;
                 clientRequest.ServiceType = serviceTypeControl.Selected<ServiceType>();
 
-                using (var channel = ServerChannelManager.CreateChannel())
+                try
                 {
-                    try
-                    {
-                        serviceTypeControl.Enabled = false;
+                    serviceTypeControl.Enabled = false;
 
+                    using (var channel = QueuePlanChannelManager.CreateChannel())
+                    {
                         await taskPool.AddTask(channel.Service.EditCurrentClientRequest(clientRequest));
                     }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
-                    finally
-                    {
-                        serviceTypeControl.Enabled = true;
-                    }
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+                finally
+                {
+                    serviceTypeControl.Enabled = true;
                 }
             }
         }
 
-        private async void subjectsChangeButton_Click(object sender, EventArgs e)
+        private async void subjectsChangeLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (currentClientRequestPlan != null)
             {
                 var clientRequest = currentClientRequestPlan.ClientRequest;
                 clientRequest.Subjects = (int)subjectsUpDown.Value;
 
-                using (var channel = ServerChannelManager.CreateChannel())
+                try
                 {
-                    try
-                    {
-                        subjectsChangeButton.Enabled = false;
+                    subjectsChangeLink.Enabled = false;
 
+                    using (var channel = QueuePlanChannelManager.CreateChannel())
+                    {
                         await taskPool.AddTask(channel.Service.EditCurrentClientRequest(clientRequest));
                     }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
-                    finally
-                    {
-                        subjectsChangeButton.Enabled = true;
-                    }
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+                finally
+                {
+                    subjectsChangeLink.Enabled = true;
                 }
             }
         }
@@ -865,30 +819,30 @@ namespace Queue.Operator
                 var clientRequest = currentClientRequestPlan.ClientRequest;
                 clientRequest.Comment = commentTextBox.Text;
 
-                using (var channel = ServerChannelManager.CreateChannel())
+                try
                 {
-                    try
-                    {
-                        commentSaveLink.Enabled = false;
+                    commentSaveLink.Enabled = false;
 
+                    using (var channel = QueuePlanChannelManager.CreateChannel())
+                    {
                         await taskPool.AddTask(channel.Service.EditCurrentClientRequest(clientRequest));
                     }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (FaultException exception)
-                    {
-                        UIHelper.Warning(exception.Reason.ToString());
-                    }
-                    catch (Exception exception)
-                    {
-                        UIHelper.Warning(exception.Message);
-                    }
-                    finally
-                    {
-                        commentSaveLink.Enabled = true;
-                    }
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+                finally
+                {
+                    commentSaveLink.Enabled = true;
                 }
             }
         }
@@ -950,7 +904,7 @@ namespace Queue.Operator
                     return;
                 }
 
-                using (var channel = ServerChannelManager.CreateChannel())
+                using (var channel = QueuePlanChannelManager.CreateChannel())
                 {
                     try
                     {
@@ -985,94 +939,94 @@ namespace Queue.Operator
 
         private async void absenceButton_Click(object sender, EventArgs e)
         {
-            using (var channel = ServerChannelManager.CreateChannel())
+            try
             {
-                try
-                {
-                    absenceButton.Enabled = false;
+                absenceButton.Enabled = false;
 
+                using (var channel = QueuePlanChannelManager.CreateChannel())
+                {
                     await taskPool.AddTask(channel.Service.UpdateCurrentClientRequest(ClientRequestState.Absence));
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    absenceButton.Enabled = true;
+            }
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
+            {
+                UIHelper.Warning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
+            }
+            finally
+            {
+                absenceButton.Enabled = true;
 
-                    digitalTimer.Reset();
-                }
+                digitalTimer.Reset();
             }
         }
 
         private async void recallingButton_Click(object sender, EventArgs e)
         {
-            using (var channel = ServerChannelManager.CreateChannel())
+            try
             {
-                try
-                {
-                    recallingButton.Enabled = false;
+                recallingButton.Enabled = false;
 
+                using (var channel = QueuePlanChannelManager.CreateChannel())
+                {
                     await taskPool.AddTask(channel.Service.CallCurrentClient());
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    recallingButton.Enabled = true;
+            }
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
+            {
+                UIHelper.Warning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
+            }
+            finally
+            {
+                recallingButton.Enabled = true;
 
-                    digitalTimer.Reset();
-                }
+                digitalTimer.Reset();
             }
         }
 
         private async void renderingButton_Click(object sender, EventArgs e)
         {
-            using (var channel = ServerChannelManager.CreateChannel())
+            try
             {
-                try
-                {
-                    renderingButton.Enabled = false;
+                renderingButton.Enabled = false;
 
+                using (var channel = QueuePlanChannelManager.CreateChannel())
+                {
                     await taskPool.AddTask(channel.Service.UpdateCurrentClientRequest(ClientRequestState.Rendering));
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    renderingButton.Enabled = true;
+            }
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
+            {
+                UIHelper.Warning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
+            }
+            finally
+            {
+                renderingButton.Enabled = true;
 
-                    digitalTimer.Reset();
-                }
+                digitalTimer.Reset();
             }
         }
 
@@ -1082,94 +1036,94 @@ namespace Queue.Operator
 
         private async void postponeButton_Click(object sender, EventArgs e)
         {
-            using (var channel = ServerChannelManager.CreateChannel())
+            try
             {
-                try
-                {
-                    postponeButton.Enabled = false;
+                postponeButton.Enabled = false;
 
+                using (var channel = QueuePlanChannelManager.CreateChannel())
+                {
                     await taskPool.AddTask(channel.Service.PostponeCurrentClientRequest(new TimeSpan(0, (int)postponeMinutesUpDown.Value, 0)));
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    postponeButton.Enabled = true;
+            }
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
+            {
+                UIHelper.Warning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
+            }
+            finally
+            {
+                postponeButton.Enabled = true;
 
-                    digitalTimer.Reset();
-                }
+                digitalTimer.Reset();
             }
         }
 
         private async void renderedButton_Click(object sender, EventArgs e)
         {
-            using (var channel = ServerChannelManager.CreateChannel())
+            try
             {
-                try
-                {
-                    renderedButton.Enabled = false;
+                renderedButton.Enabled = false;
 
+                using (var channel = QueuePlanChannelManager.CreateChannel())
+                {
                     await taskPool.AddTask(channel.Service.UpdateCurrentClientRequest(ClientRequestState.Rendered));
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    renderedButton.Enabled = true;
+            }
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
+            {
+                UIHelper.Warning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
+            }
+            finally
+            {
+                renderedButton.Enabled = true;
 
-                    digitalTimer.Reset();
-                }
+                digitalTimer.Reset();
             }
         }
 
         private async void returnButton_Click(object sender, EventArgs e)
         {
-            using (var channel = ServerChannelManager.CreateChannel())
+            try
             {
-                try
-                {
-                    returnButton.Enabled = false;
+                returnButton.Enabled = false;
 
+                using (var channel = QueuePlanChannelManager.CreateChannel())
+                {
                     await taskPool.AddTask(channel.Service.ReturnCurrentClientRequest());
                 }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-                finally
-                {
-                    returnButton.Enabled = true;
+            }
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
+            {
+                UIHelper.Warning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
+            }
+            finally
+            {
+                returnButton.Enabled = true;
 
-                    digitalTimer.Reset();
-                }
+                digitalTimer.Reset();
             }
         }
 

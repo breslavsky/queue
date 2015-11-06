@@ -53,8 +53,8 @@ namespace Queue.Operator
             this.typeTextBlock = new System.Windows.Forms.Label();
             this.subjectsLabel = new System.Windows.Forms.Label();
             this.subjectsPanel = new System.Windows.Forms.Panel();
+            this.subjectsChangeLink = new System.Windows.Forms.LinkLabel();
             this.subjectsUpDown = new System.Windows.Forms.NumericUpDown();
-            this.subjectsChangeButton = new System.Windows.Forms.Button();
             this.clientLabel = new System.Windows.Forms.Label();
             this.clientTextBlock = new System.Windows.Forms.Label();
             this.serviceLabel = new System.Windows.Forms.Label();
@@ -251,7 +251,6 @@ namespace Queue.Operator
             this.mainTabControl.SelectedIndex = 0;
             this.mainTabControl.Size = new System.Drawing.Size(504, 510);
             this.mainTabControl.TabIndex = 1;
-            this.mainTabControl.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.mainTabControl_Selecting);
             // 
             // currentClientRequestTab
             // 
@@ -394,12 +393,23 @@ namespace Queue.Operator
             // 
             // subjectsPanel
             // 
+            this.subjectsPanel.Controls.Add(this.subjectsChangeLink);
             this.subjectsPanel.Controls.Add(this.subjectsUpDown);
-            this.subjectsPanel.Controls.Add(this.subjectsChangeButton);
             this.subjectsPanel.Location = new System.Drawing.Point(115, 70);
             this.subjectsPanel.Name = "subjectsPanel";
             this.subjectsPanel.Size = new System.Drawing.Size(210, 30);
             this.subjectsPanel.TabIndex = 5;
+            // 
+            // subjectsChangeLink
+            // 
+            this.subjectsChangeLink.AutoSize = true;
+            this.subjectsChangeLink.Location = new System.Drawing.Point(70, 10);
+            this.subjectsChangeLink.Name = "subjectsChangeLink";
+            this.subjectsChangeLink.Size = new System.Drawing.Size(62, 13);
+            this.subjectsChangeLink.TabIndex = 16;
+            this.subjectsChangeLink.TabStop = true;
+            this.subjectsChangeLink.Text = "[изменить]";
+            this.subjectsChangeLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.subjectsChangeLink_LinkClicked);
             // 
             // subjectsUpDown
             // 
@@ -412,16 +422,6 @@ namespace Queue.Operator
             this.subjectsUpDown.Name = "subjectsUpDown";
             this.subjectsUpDown.Size = new System.Drawing.Size(60, 20);
             this.subjectsUpDown.TabIndex = 1;
-            // 
-            // subjectsChangeButton
-            // 
-            this.subjectsChangeButton.Location = new System.Drawing.Point(70, 5);
-            this.subjectsChangeButton.Name = "subjectsChangeButton";
-            this.subjectsChangeButton.Size = new System.Drawing.Size(75, 20);
-            this.subjectsChangeButton.TabIndex = 4;
-            this.subjectsChangeButton.Text = "Изменить";
-            this.subjectsChangeButton.UseVisualStyleBackColor = true;
-            this.subjectsChangeButton.Click += new System.EventHandler(this.subjectsChangeButton_Click);
             // 
             // clientLabel
             // 
@@ -1013,6 +1013,7 @@ namespace Queue.Operator
             this.actionsMenu.ResumeLayout(false);
             this.actionsMenu.PerformLayout();
             this.subjectsPanel.ResumeLayout(false);
+            this.subjectsPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.subjectsUpDown)).EndInit();
             this.clientRequestTabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -1081,7 +1082,6 @@ namespace Queue.Operator
         private System.Windows.Forms.ToolStripStatusLabel standingTextLabel;
         private System.Windows.Forms.ToolStripStatusLabel separator1;
         private System.Windows.Forms.ToolStripStatusLabel separator2;
-        private System.Windows.Forms.Button subjectsChangeButton;
         private System.Windows.Forms.Panel subjectsPanel;
         private System.Windows.Forms.Label serviceStepLabel;
         private System.Windows.Forms.Button logoutButton;
@@ -1117,6 +1117,7 @@ namespace Queue.Operator
         private System.Windows.Forms.ToolStripMenuItem additionalMenu;
         private System.Windows.Forms.ToolStripMenuItem callClientByRequestNumberMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redirectToOperatorMenuItem;
+        private System.Windows.Forms.LinkLabel subjectsChangeLink;
 
     }
 }

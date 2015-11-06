@@ -3,6 +3,7 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -16,7 +17,7 @@ namespace Queue.UI.WPF
         private readonly string theme;
 
         [Dependency]
-        public ChannelManager<IServerTemplateTcpService> ChannelManager { get; set; }
+        public ChannelManager<ITemplateTcpService> ChannelManager { get; set; }
 
         private Dictionary<string, string> cache = new Dictionary<string, string>();
 

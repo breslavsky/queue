@@ -6,6 +6,7 @@ using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
@@ -21,7 +22,7 @@ namespace Queue.Administrator
         #region dependency
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
@@ -136,7 +137,7 @@ namespace Queue.Administrator
 
                         if (office.SessionId != Guid.Empty)
                         {
-                            var officeServerUserService = new ServerUserService(office.Endpoint);
+                            var officeServerUserService = new UserService(office.Endpoint);
 
                             using (var officeChannelManager = officeServerUserService.CreateChannelManager())
                             using (var officeChannel = officeChannelManager.CreateChannel())

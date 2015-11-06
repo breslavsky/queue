@@ -61,25 +61,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Display\HubDisplayService.cs" />
-    <Compile Include="Display\HubDisplayTcpServiceHost.cs" />
-    <Compile Include="Display\HubDisplayServiceTcpProvider.cs" />
-    <Compile Include="Display\IHubDisplayDriver.cs" />
-    <Compile Include="Display\HubDisplayTcpService.cs" />
-    <Compile Include="Display\HubDisplayHttpService.cs" />
-    <Compile Include="Display\HubDisplayHttpServiceHost.cs" />
-    <Compile Include="Display\HubDisplayHttpServiceProvider.cs" />
+    <Compile Include="Display\DisplayService.cs" />
+    <Compile Include="Display\DisplayTcpServiceHost.cs" />
+    <Compile Include="Display\DisplayServiceTcpProvider.cs" />
+    <Compile Include="Display\IDisplayDriver.cs" />
+    <Compile Include="Display\DisplayTcpService.cs" />
+    <Compile Include="Display\DisplayHttpService.cs" />
+    <Compile Include="Display\DisplayHttpServiceHost.cs" />
+    <Compile Include="Display\DisplayHttpServiceProvider.cs" />
     <Compile Include="IHubDriver.cs" />
-    <Compile Include="Quality\HubQualityTcpServiceHost.cs" />
-    <Compile Include="Quality\HubQualityTcpServiceProvider.cs" />
+    <Compile Include="Quality\QualityTcpServiceHost.cs" />
+    <Compile Include="Quality\QualityTcpServiceProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Quality\HubQualityService.cs" />
-    <Compile Include="Quality\IHubQualityDriverArgs.cs" />
-    <Compile Include="Quality\IHubQualityDriver.cs" />
-    <Compile Include="Quality\HubQualityTcpService.cs" />
-    <Compile Include="Quality\HubQualityHttpService.cs" />
-    <Compile Include="Quality\HubQualityHttpServiceHost.cs" />
-    <Compile Include="Quality\HubQualityHttpServiceProvider.cs" />
+    <Compile Include="Quality\QualityService.cs" />
+    <Compile Include="Quality\IQualityDriverArgs.cs" />
+    <Compile Include="Quality\IQualityDriver.cs" />
+    <Compile Include="Quality\QualityTcpService.cs" />
+    <Compile Include="Quality\QualityHttpService.cs" />
+    <Compile Include="Quality\QualityHttpServiceHost.cs" />
+    <Compile Include="Quality\QualityHttpServiceProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

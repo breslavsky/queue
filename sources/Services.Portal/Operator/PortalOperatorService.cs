@@ -1,14 +1,13 @@
-﻿using Junte.WCF;
-
-using NLog;
-using Queue.Services.Contracts;
-using Queue.Services.DTO;
+﻿using NLog;
+using Queue.Services.Contracts.Portal;
 using System.IO;
 using System.ServiceModel;
 
 namespace Queue.Services.Portal
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Multiple, IncludeExceptionDetailInFaults = true, UseSynchronizationContext = false)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall,
+        ConcurrencyMode = ConcurrencyMode.Multiple,
+        IncludeExceptionDetailInFaults = true)]
     public sealed class PortalOperatorService : PortalService, IPortalOperatorService
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();

@@ -2,6 +2,7 @@
 using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Media;
 using Queue.Services.DTO;
 using Queue.Services.Media.Settings;
 using System.IO;

@@ -113,7 +113,7 @@
     <None Include="Properties\DataSources\Queue.Services.Media.Settings.MediaServiceSettings.datasource" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />

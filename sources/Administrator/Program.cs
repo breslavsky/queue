@@ -7,6 +7,7 @@ using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
@@ -31,9 +32,10 @@ namespace Queue.Administrator
         private static QueueAdministrator currentUser;
 
         private static ServerService serverService;
-        private static ServerTemplateService serverTemplateService;
-        private static ServerUserService serverUserService;
-        private static ServerWorkplaceService serverWorkplaceService;
+        private static TemplateService templateService;
+        private static UserService userService;
+        private static WorkplaceService workplaceService;
+        private static QueuePlanService queuePlanService;
 
         [STAThread]
         private static void Main()
@@ -66,7 +68,7 @@ namespace Queue.Administrator
             {
                 endpoint = options.Endpoint;
 
-                using (var serverUserService = new ServerUserService(endpoint))
+                using (var serverUserService = new UserService(endpoint))
                 using (var channelManager = serverUserService.CreateChannelManager())
                 using (var channel = channelManager.CreateChannel())
                 {
@@ -122,23 +124,28 @@ namespace Queue.Administrator
         {
             serverService = new ServerService(endpoint);
             container.RegisterInstance(serverService);
-            container.RegisterType<DuplexChannelManager<IServerTcpService>>
+            container.RegisterType<ChannelManager<IServerTcpService>>
                 (new InjectionFactory(c => serverService.CreateChannelManager(sessionId)));
 
-            serverUserService = new ServerUserService(endpoint);
-            container.RegisterInstance(serverUserService);
-            container.RegisterType<ChannelManager<IServerUserTcpService>>
-                (new InjectionFactory(c => serverUserService.CreateChannelManager(sessionId)));
+            userService = new UserService(endpoint);
+            container.RegisterInstance(userService);
+            container.RegisterType<ChannelManager<IUserTcpService>>
+                (new InjectionFactory(c => userService.CreateChannelManager(sessionId)));
 
-            serverTemplateService = new ServerTemplateService(endpoint);
-            container.RegisterInstance(serverTemplateService);
-            container.RegisterType<ChannelManager<IServerTemplateTcpService>>
-                (new InjectionFactory(c => serverTemplateService.CreateChannelManager(sessionId)));
+            templateService = new TemplateService(endpoint);
+            container.RegisterInstance(templateService);
+            container.RegisterType<ChannelManager<ITemplateTcpService>>
+                (new InjectionFactory(c => templateService.CreateChannelManager(sessionId)));
 
-            serverWorkplaceService = new ServerWorkplaceService(endpoint);
-            container.RegisterInstance(serverWorkplaceService);
-            container.RegisterType<ChannelManager<IServerWorkplaceTcpService>>
-                (new InjectionFactory(c => serverWorkplaceService.CreateChannelManager(sessionId)));
+            workplaceService = new WorkplaceService(endpoint);
+            container.RegisterInstance(workplaceService);
+            container.RegisterType<ChannelManager<IWorkplaceTcpService>>
+                (new InjectionFactory(c => workplaceService.CreateChannelManager(sessionId)));
+
+            queuePlanService = new QueuePlanService(endpoint);
+            container.RegisterInstance(queuePlanService);
+            container.RegisterType<DuplexChannelManager<IQueuePlanTcpService>>
+                (new InjectionFactory(c => queuePlanService.CreateChannelManager(sessionId)));
         }
 
         private static void ParseOptions()
