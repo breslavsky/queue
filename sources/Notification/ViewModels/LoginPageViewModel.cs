@@ -7,6 +7,7 @@ using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.UI.WPF;
 using System;
 using System.Globalization;
@@ -64,8 +65,6 @@ namespace Queue.Notification.ViewModels
         public ICommand ConnectCommand { get; set; }
 
         public ICommand LoadedCommand { get; set; }
-
-        public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
 
         public Language SelectedLanguage
         {

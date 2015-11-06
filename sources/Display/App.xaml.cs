@@ -1,6 +1,7 @@
 ﻿using Junte.Configuration;
 using Microsoft.Practices.Unity;
 using Queue.Common;
+using Queue.Display.Models;
 using Queue.UI.WPF;
 using SpecialFolder = System.Environment.SpecialFolder;
 
@@ -12,6 +13,8 @@ namespace Queue.Display
         {
             container.RegisterInstance(container);
             container.RegisterInstance(new ConfigurationManager(Product.Display.AppName, SpecialFolder.ApplicationData));
+            container.RegisterType<AppSettings>(
+               new InjectionFactory(c => c.Resolve<ConfigurationManager>().GetSection<AppSettings>(AppSettings.SectionKey)));
         }
     }
 }

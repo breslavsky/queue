@@ -3,16 +3,14 @@ using Junte.Parallel;
 using Junte.UI.WPF;
 using Junte.WCF;
 using MahApps.Metro;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Display.Models;
-using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
+using Queue.UI.WPF.Core;
 using System;
-using System.Globalization;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows;
@@ -22,11 +20,9 @@ using WPFLocalizeExtension.Engine;
 
 namespace Queue.Display.ViewModels
 {
-    public class LoginPageViewModel : ObservableObject, IDisposable
+    public class LoginPageViewModel : DependencyObservableObject, IDisposable
     {
         private bool disposed;
-        private readonly TaskPool taskPool;
-        private DuplexChannelManager<IServerTcpService> channelManager;
         private AccentColorComboBoxItem selectedAccent;
         private bool isConnected;
 
@@ -36,12 +32,11 @@ namespace Queue.Display.ViewModels
         private IdentifiedEntityLink[] workplaces;
         private Guid selectedWorkplace;
 
-        public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
+        private ServerWorkplaceService serverWorkplaceService;
+        private ChannelManager<IServerWorkplaceTcpService> channelManager;
 
-        public event EventHandler OnLogined;
+        public event EventHandler OnLogined = delegate { };
 
-        private ConfigurationManager configuration;
-        private DisplayLoginSettings loginSettings;
         private Language selectedLanguage;
 
         public string Endpoint
@@ -81,8 +76,8 @@ namespace Queue.Display.ViewModels
             get { return selectedAccent; }
             set
             {
-                Tuple<AppTheme, Accent> theme = ThemeManager.DetectAppStyle(Application.Current);
-                Accent accent = ThemeManager.GetAccent(value.Name);
+                var theme = ThemeManager.DetectAppStyle(Application.Current);
+                var accent = ThemeManager.GetAccent(value.Name);
                 ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
 
                 SetProperty(ref selectedAccent, value);
@@ -96,7 +91,7 @@ namespace Queue.Display.ViewModels
             {
                 SetProperty(ref selectedLanguage, value);
 
-                CultureInfo culture = selectedLanguage.GetCulture();
+                var culture = selectedLanguage.GetCulture();
 
                 LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
                 LocalizeDictionary.Instance.Culture = culture;
@@ -117,15 +112,21 @@ namespace Queue.Display.ViewModels
         [Dependency]
         public IMainWindow Window { get; set; }
 
+        [Dependency]
+        public ConfigurationManager ConfigurationManager { get; set; }
+
+        [Dependency]
+        public AppSettings Settings { get; set; }
+
+        [Dependency]
+        public TaskPool TaskPool { get; set; }
+
         public LoginPageViewModel(RichPage owner)
+            : base()
         {
             this.owner = owner;
 
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
-
             AccentColors = ThemeManager.Accents.Select(a => new AccentColorComboBoxItem(a.Name, a.Resources["AccentColorBrush"] as Brush)).ToArray();
-
-            taskPool = new TaskPool();
 
             LoadedCommand = new RelayCommand(Loaded);
             UnloadedCommand = new RelayCommand(Unloaded);
@@ -145,35 +146,36 @@ namespace Queue.Display.ViewModels
 
         private void LoadSettings()
         {
-            configuration = ServiceLocator.Current.GetInstance<ConfigurationManager>();
-            loginSettings = configuration.GetSection<DisplayLoginSettings>(DisplayLoginSettings.SectionKey);
+            Endpoint = Settings.Endpoint;
+            SelectedWorkplace = Settings.WorkplaceId;
+            SelectedLanguage = Settings.Language;
+            IsRemember = Settings.IsRemember;
 
-            Endpoint = loginSettings.Endpoint;
-            SelectedWorkplace = loginSettings.WorkplaceId;
-            SelectedLanguage = loginSettings.Language;
-            IsRemember = loginSettings.IsRemember;
-
-            if (!string.IsNullOrWhiteSpace(loginSettings.Accent))
+            if (!String.IsNullOrWhiteSpace(Settings.Accent))
             {
-                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == loginSettings.Accent);
+                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == Settings.Accent);
             }
         }
 
         private async void Connect()
         {
-            if (ChannelBuilder != null)
+            if (serverWorkplaceService != null)
             {
-                ChannelBuilder.Dispose();
+                serverWorkplaceService.Dispose();
             }
 
+<<<<<<< HEAD
             ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new QueuePlanCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
+=======
+            serverWorkplaceService = new ServerWorkplaceService(Endpoint);
+>>>>>>> origin/master
 
             if (channelManager != null)
             {
                 channelManager.Dispose();
             }
 
-            channelManager = new DuplexChannelManager<IServerTcpService>(ChannelBuilder);
+            channelManager = serverWorkplaceService.CreateChannelManager();
 
             IsConnected = false;
 
@@ -183,9 +185,9 @@ namespace Queue.Display.ViewModels
 
                 try
                 {
-                    Workplaces = await taskPool.AddTask(channel.Service.GetWorkplacesLinks());
+                    Workplaces = await TaskPool.AddTask(channel.Service.GetWorkplacesLinks());
 
-                    SelectedWorkplace = loginSettings.WorkplaceId != Guid.Empty ? loginSettings.WorkplaceId : Workplaces.First().Id;
+                    SelectedWorkplace = Settings.WorkplaceId != Guid.Empty ? Settings.WorkplaceId : Workplaces.First().Id;
 
                     IsConnected = true;
                 }
@@ -226,14 +228,11 @@ namespace Queue.Display.ViewModels
             {
                 try
                 {
-                    Workplace = await taskPool.AddTask(channel.Service.GetWorkplace(SelectedWorkplace));
+                    Workplace = await TaskPool.AddTask(channel.Service.GetWorkplace(SelectedWorkplace));
 
                     SaveSettings();
 
-                    if (OnLogined != null)
-                    {
-                        OnLogined(this, null);
-                    }
+                    OnLogined(this, null);
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -256,13 +255,13 @@ namespace Queue.Display.ViewModels
 
         private void SaveSettings()
         {
-            loginSettings.Endpoint = Endpoint;
-            loginSettings.WorkplaceId = SelectedWorkplace;
-            loginSettings.IsRemember = IsRemember;
-            loginSettings.Accent = SelectedAccent == null ? String.Empty : SelectedAccent.Name;
-            loginSettings.Language = SelectedLanguage;
+            Settings.Endpoint = Endpoint;
+            Settings.WorkplaceId = SelectedWorkplace;
+            Settings.IsRemember = IsRemember;
+            Settings.Accent = SelectedAccent == null ? String.Empty : SelectedAccent.Name;
+            Settings.Language = SelectedLanguage;
 
-            configuration.Save();
+            ConfigurationManager.Save();
         }
 
         private void Unloaded()
@@ -285,21 +284,21 @@ namespace Queue.Display.ViewModels
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (disposed)
             {
-                if (disposing)
-                {
-                    if (taskPool != null)
-                    {
-                        taskPool.Dispose();
-                    }
-                    if (channelManager != null)
-                    {
-                        channelManager.Dispose();
-                    }
-                }
-                disposed = true;
+                return;
             }
+
+            if (disposing)
+            {
+                TaskPool.Dispose();
+
+                if (channelManager != null)
+                {
+                    channelManager.Dispose();
+                }
+            }
+            disposed = true;
         }
 
         #endregion IDisposable

@@ -38,7 +38,7 @@ namespace Queue.Display.ViewModels
                                                                  "AppName",
                                                                  LocalizeDictionary.Instance.Culture);
 
-            Version version = Assembly.GetEntryAssembly().GetName().Version;
+            var version = Assembly.GetEntryAssembly().GetName().Version;
 
             Title = String.Format("{0} ({1})", appName, version);
         }

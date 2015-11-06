@@ -1,14 +1,15 @@
 ﻿using Junte.Parallel;
 using Junte.UI.WPF;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Notification.UserControls;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
+using Queue.UI.WPF.Core;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ using System.Windows.Media.Animation;
 
 namespace Queue.Notification.ViewModels
 {
-    public class TickerControlViewModel : ObservableObject, IDisposable
+    public class TickerControlViewModel : DependencyObservableObject, IDisposable
     {
         private const double MillisecondsPerUnit = 15;
         private const int DefaultSpeed = 5;
@@ -53,9 +54,9 @@ namespace Queue.Notification.ViewModels
         public TaskPool TaskPool { get; set; }
 
         public TickerControlViewModel(TickerControl control)
+            : base()
         {
             this.control = control;
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
             LoadedCommand = new RelayCommand(Loaded);
             UnloadedCommand = new RelayCommand(Unloaded);

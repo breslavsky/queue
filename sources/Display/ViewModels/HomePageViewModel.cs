@@ -3,11 +3,13 @@ using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
+using Queue.UI.WPF.Core;
 using Queue.UI.WPF.Enums;
 using System;
 using System.Collections.ObjectModel;
@@ -20,19 +22,22 @@ using Drawing = System.Drawing;
 
 namespace Queue.Display.ViewModels
 {
-    public class HomePageViewModel : ObservableObject, IDisposable
+    public class HomePageViewModel : DependencyObservableObject, IDisposable
     {
         private const int PingInterval = 10000;
 
         private DispatcherTimer pingTimer;
         private ServerState serverState;
 
-        private readonly DuplexChannelManager<IServerTcpService> channelManager;
-        private readonly TaskPool taskPool;
         private bool disposed;
         private Workplace workplace;
+<<<<<<< HEAD
         private QueuePlanCallback callbackObject;
         private Channel<IServerTcpService> pingChannel;
+=======
+        private ServerCallback callbackObject;
+        private Channel<IServerTcpService> serverChannel;
+>>>>>>> origin/master
         private string workplaceTitle;
         private string workplaceComment;
         private bool showNotification;
@@ -72,29 +77,48 @@ namespace Queue.Display.ViewModels
 
         public ICommand UnloadedCommand { get; set; }
 
-        public HomePageViewModel()
+        [Dependency]
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        [Dependency]
+        public ChannelManager<IServerWorkplaceTcpService> WorkplaceChannelManager { get; set; }
+
+        [Dependency]
+        public TaskPool TaskPool { get; set; }
+
+        public HomePageViewModel() :
+            base()
         {
             workplace = ServiceLocator.Current.GetInstance<Workplace>();
 
             WorkplaceTitle = workplace.ToString();
             WorkplaceComment = workplace.Comment;
 
+<<<<<<< HEAD
             channelManager = new DuplexChannelManager<IServerTcpService>(ServiceLocator.Current.GetInstance<DuplexChannelBuilder<IServerTcpService>>());
             taskPool = new TaskPool();
 
             callbackObject = new QueuePlanCallback();
+=======
+            callbackObject = new ServerCallback();
+>>>>>>> origin/master
             callbackObject.OnCurrentClientRequestPlanUpdated += CurrentClientRequestPlanUpdated;
 
-            pingChannel = channelManager.CreateChannel(callbackObject);
+            serverChannel = ChannelManager.CreateChannel(callbackObject);
 
-            pingTimer = new DispatcherTimer(DispatcherPriority.Background);
-            pingTimer.Interval = TimeSpan.FromSeconds(1);
-            pingTimer.Tick += PingElapsed;
+            BuildUpTimer();
 
             currentRequests = new ObservableCollection<ClientRequestWrapper>();
 
             LoadedCommand = new RelayCommand(Loaded);
             UnloadedCommand = new RelayCommand(Unloaded);
+        }
+
+        private void BuildUpTimer()
+        {
+            pingTimer = new DispatcherTimer(DispatcherPriority.Background);
+            pingTimer.Interval = TimeSpan.FromSeconds(1);
+            pingTimer.Tick += PingElapsed;
         }
 
         private void Loaded()
@@ -158,12 +182,12 @@ namespace Queue.Display.ViewModels
             {
                 ServerState = ServerState.Request;
 
-                if (!pingChannel.IsConnected)
+                if (!serverChannel.IsConnected)
                 {
                     await Subscribe();
                 }
 
-                ServerDateTime.Sync(await taskPool.AddTask(pingChannel.Service.GetDateTime()));
+                ServerDateTime.Sync(await TaskPool.AddTask(serverChannel.Service.GetDateTime()));
 
                 ServerState = ServerState.Available;
             }
@@ -171,8 +195,8 @@ namespace Queue.Display.ViewModels
             {
                 ServerState = ServerState.Unavailable;
 
-                pingChannel.Dispose();
-                pingChannel = channelManager.CreateChannel(callbackObject);
+                serverChannel.Dispose();
+                serverChannel = ChannelManager.CreateChannel(callbackObject);
             }
 
             pingTimer.Start();
@@ -180,7 +204,7 @@ namespace Queue.Display.ViewModels
 
         private async Task Subscribe()
         {
-            var plans = (await pingChannel.Service.GetCurrentClientRequestPlans())
+            var plans = (await serverChannel.Service.GetCurrentClientRequestPlans())
                                                 .Where(p => p.Key != null && p.Key.Workplace.Equals(workplace))
                                                 .ToList();
             foreach (var plan in plans)
@@ -188,10 +212,17 @@ namespace Queue.Display.ViewModels
                 UpdateOperatorCurrentRequest(plan.Key, plan.Value);
             }
 
+<<<<<<< HEAD
             pingChannel.Service.Subscribe(QueuePlanEventType.CurrentClientRequestPlanUpdated, new QueuePlanSubscribtionArgs
+=======
+            using (var workplaceChannel = WorkplaceChannelManager.CreateChannel())
+>>>>>>> origin/master
             {
-                Operators = await pingChannel.Service.GetWorkplaceOperators(workplace.Id)
-            });
+                serverChannel.Service.Subscribe(ServerServiceEventType.CurrentClientRequestPlanUpdated, new ServerSubscribtionArgs
+                {
+                    Operators = await workplaceChannel.Service.GetWorkplaceOperators(workplace.Id)
+                });
+            }
         }
 
         private void CurrentClientRequestPlanUpdated(object sender, QueuePlanEventArgs e)
@@ -224,23 +255,24 @@ namespace Queue.Display.ViewModels
 
             if (disposing)
             {
-                if (pingTimer != null)
+                try
                 {
-                    pingTimer.Tick -= PingElapsed;
-                    pingTimer.Stop();
+                    if (serverChannel != null)
+                    {
+                        serverChannel.Dispose();
+                    }
+
+                    TaskPool.Dispose();
+                    ChannelManager.Dispose();
+                    WorkplaceChannelManager.Dispose();
+
+                    if (pingTimer != null)
+                    {
+                        pingTimer.Tick -= PingElapsed;
+                        pingTimer.Stop();
+                    }
                 }
-                if (taskPool != null)
-                {
-                    taskPool.Dispose();
-                }
-                if (pingChannel != null)
-                {
-                    pingChannel.Dispose();
-                }
-                if (channelManager != null)
-                {
-                    channelManager.Dispose();
-                }
+                catch { }
             }
             disposed = true;
         }

@@ -9,6 +9,8 @@ using Queue.Common.Settings;
 using Queue.Notification.Utils;
 using Queue.Notification.Views;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Hub;
+using Queue.Services.Contracts.Server;
 using Queue.UI.WPF;
 using System;
 using System.ComponentModel;
@@ -91,15 +93,15 @@ namespace Queue.Notification.ViewModels
             var container = ServiceLocator.Current.GetInstance<IUnityContainer>();
 
             container.RegisterInstance(new ServerService(connectPage.Model.Endpoint));
-            container.RegisterInstance(new ServerTemplateService(connectPage.Model.Endpoint));
-            container.RegisterInstance(new HubDisplayService(ServiceLocator.Current.GetInstance<HubSettings>().Endpoint));
+            container.RegisterInstance(new TemplateService(connectPage.Model.Endpoint));
+            container.RegisterInstance(new DisplayService(ServiceLocator.Current.GetInstance<HubSettings>().Endpoint));
 
             container.RegisterType<DuplexChannelManager<IServerTcpService>>
                 (new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager()));
-            container.RegisterType<ChannelManager<IServerTemplateTcpService>>
-                (new InjectionFactory(c => c.Resolve<ServerTemplateService>().CreateChannelManager()));
-            container.RegisterType<ChannelManager<IHubDisplayTcpService>>
-                (new InjectionFactory(c => c.Resolve<HubDisplayService>().CreateChannelManager()));
+            container.RegisterType<ChannelManager<ITemplateTcpService>>
+                (new InjectionFactory(c => c.Resolve<TemplateService>().CreateChannelManager()));
+            container.RegisterType<ChannelManager<IDisplayTcpService>>
+                (new InjectionFactory(c => c.Resolve<IDisplayTcpService>().CreateChannelManager()));
 
             container.RegisterType<TaskPool>();
             container.RegisterInstance<ClientRequestsListener>(new ClientRequestsListener());

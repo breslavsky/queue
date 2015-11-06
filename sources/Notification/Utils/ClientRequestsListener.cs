@@ -2,6 +2,7 @@
 using Microsoft.Practices.Unity;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using System;
 

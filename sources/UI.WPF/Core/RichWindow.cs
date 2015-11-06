@@ -1,4 +1,6 @@
 ﻿using MahApps.Metro.Controls;
+using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +13,12 @@ namespace Queue.UI.WPF
 
         private LoadingControl loading;
         private UserControl activeMessageBox;
+
+        public RichWindow()
+            : base()
+        {
+            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(GetType(), this);
+        }
 
         #region IMainWindow
 

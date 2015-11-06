@@ -5,6 +5,7 @@ using NLog;
 using Queue.Common.Settings;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
+using Queue.Services.Contracts.Hub;
 using Queue.Services.DTO;
 using System;
 
@@ -20,7 +21,7 @@ namespace Queue.Notification.Utils
         public ClientRequestsListener ClientRequestsListener { get; set; }
 
         [Dependency]
-        public ChannelManager<IHubDisplayTcpService> HubDisplayChannelManager { get; set; }
+        public ChannelManager<IDisplayTcpService> DisplayChannelManager { get; set; }
 
         [Dependency]
         public HubSettings HubSettings { get; set; }
@@ -56,7 +57,7 @@ namespace Queue.Notification.Utils
             {
                 logger.Debug("show text [device: {0}; text: {1}]", request.Operator.Workplace.DisplayDeviceId, request.Number);
 
-                using (var channel = HubDisplayChannelManager.CreateChannel())
+                using (var channel = DisplayChannelManager.CreateChannel())
                 {
                     await channel.Service.ShowText(request.Operator.Workplace.DisplayDeviceId, request.Number.ToString());
                 }
@@ -78,7 +79,7 @@ namespace Queue.Notification.Utils
             {
                 logger.Debug("clear text [device: {0}]", request.Operator.Workplace.DisplayDeviceId);
 
-                using (var channel = HubDisplayChannelManager.CreateChannel())
+                using (var channel = DisplayChannelManager.CreateChannel())
                 {
                     await channel.Service.ClearText(request.Operator.Workplace.DisplayDeviceId);
                 }
