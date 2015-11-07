@@ -1,5 +1,4 @@
-﻿using Junte.Parallel;
-using Junte.UI.WPF;
+﻿using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Common;
@@ -11,7 +10,7 @@ using System.Windows.Input;
 
 namespace Queue.UI.WPF.ViewModels
 {
-    public class ConnectionStatusControlViewModel : ObservableObject, IDisposable
+    public class ConnectionStatusControlViewModel : RichViewModel, IDisposable
     {
         private const int PingInterval = 10000;
 
@@ -50,14 +49,12 @@ namespace Queue.UI.WPF.ViewModels
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
-        [Dependency]
-        public TaskPool TaskPool { get; set; }
-
         public ICommand LoadedCommand { get; set; }
 
         public ICommand UnloadedCommand { get; set; }
 
         public ConnectionStatusControlViewModel()
+            : base()
         {
             LoadedCommand = new RelayCommand(Loaded);
             UnloadedCommand = new RelayCommand(Unloaded);
@@ -101,7 +98,7 @@ namespace Queue.UI.WPF.ViewModels
             {
                 ServerState = ServerState.Request;
 
-                ServerDateTime.Sync(await TaskPool.AddTask(channel.Service.GetDateTime()));
+                ServerDateTime.Sync(await channel.Service.GetDateTime());
 
                 ServerState = ServerState.Available;
             }
@@ -131,40 +128,36 @@ namespace Queue.UI.WPF.ViewModels
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (disposed)
             {
-                if (disposing)
+                return;
+            }
+
+            if (disposing)
+            {
+                try
                 {
-                    if (pingTimer != null)
-                    {
-                        pingTimer.Stop();
-                        pingTimer.Elapsed -= PingElapsed;
-                        pingTimer = null;
-                    }
-
-                    if (timeTimer != null)
-                    {
-                        timeTimer.Stop();
-                        timeTimer.Elapsed -= TimerElapsed;
-                        timeTimer = null;
-                    }
-
                     if (channel != null)
                     {
                         channel.Dispose();
                         channel = null;
                     }
-
-                    if (TaskPool != null)
-                    {
-                        TaskPool.Cancel();
-                        TaskPool.Dispose();
-                        TaskPool = null;
-                    }
                 }
+                catch { }
             }
 
             disposed = true;
+        }
+
+        private void DestroyTimers()
+        {
+            pingTimer.Stop();
+            pingTimer.Elapsed -= PingElapsed;
+            pingTimer = null;
+
+            timeTimer.Stop();
+            timeTimer.Elapsed -= TimerElapsed;
+            timeTimer = null;
         }
 
         ~ConnectionStatusControlViewModel()

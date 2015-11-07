@@ -1,6 +1,4 @@
-﻿using Junte.WCF;
-using Microsoft.Practices.Unity;
-using Queue.Services.Common;
+﻿using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using System;
@@ -10,9 +8,6 @@ namespace Queue.Notification
     public class ClientRequestsListener : IDisposable
     {
         private AutoRecoverCallbackChannel channel;
-
-        [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         public event EventHandler<ClientRequest> ClientRequestUpdated = delegate { };
 

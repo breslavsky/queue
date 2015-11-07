@@ -2,11 +2,11 @@
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 
-namespace Queue.UI.WPF.Core
+namespace Queue.UI.WPF
 {
-    public abstract class DependencyObservableObject : ObservableObject
+    public abstract class RichViewModel : ObservableObject
     {
-        public DependencyObservableObject()
+        public RichViewModel()
         {
             ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(GetType(), this);
         }

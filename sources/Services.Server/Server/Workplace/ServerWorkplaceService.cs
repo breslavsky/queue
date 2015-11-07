@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Junte.Data.NHibernate;
-using Microsoft.Practices.Unity;
 using NHibernate.Criterion;
-using NLog;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -11,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
-using System.ServiceModel.Channels;
 using System.Threading.Tasks;
 
 namespace Queue.Services.Server

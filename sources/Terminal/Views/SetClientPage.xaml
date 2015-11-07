@@ -3,16 +3,22 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:lex="http://wpflocalizeextension.codeplex.com"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:ui_common="clr-namespace:Queue.UI.WPF;assembly=Queue.UI.WPF"
                     xmlns:views="clr-namespace:Queue.Terminal.Views"
-                    Loaded="TerminalPage_Loaded"
+                    Loaded="Loaded"
                     d:DesignHeight="300"
                     d:DesignWidth="300"
                     lex:ResxLocalizationProvider.DefaultAssembly="Queue.Terminal"
                     lex:ResxLocalizationProvider.DefaultDictionary="Strings"
                     mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
         <Grid.RowDefinitions>

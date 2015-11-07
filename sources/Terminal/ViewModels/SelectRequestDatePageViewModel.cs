@@ -1,5 +1,4 @@
-﻿using Junte.Parallel;
-using Junte.Translation;
+﻿using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
@@ -13,7 +12,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.ServiceModel;
 using System.Windows.Input;
 
 namespace Queue.Terminal.ViewModels
@@ -62,9 +60,6 @@ namespace Queue.Terminal.ViewModels
 
         [Dependency]
         public Navigator Navigator { get; set; }
-
-        [Dependency]
-        public TaskPool TaskPool { get; set; }
 
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
@@ -156,62 +151,60 @@ namespace Queue.Terminal.ViewModels
                 return;
             }
 
-            using (var channel = ChannelManager.CreateChannel())
+            var freeTime = await Window.ExecuteLongTask(async () =>
             {
-                var loading = Window.ShowLoading();
-
-                try
+                using (var channel = ChannelManager.CreateChannel())
                 {
-                    var freeTime = await TaskPool.AddTask(channel.Service.GetServiceFreeTime(Model.SelectedService.Id, Model.SelectedDate.Value, ClientRequestType.Early));
-                    var timeIntervals = freeTime.TimeIntervals;
-
-                    if (timeIntervals.Length == 0)
-                    {
-                        return;
-                    }
-
-                    foreach (var timeInterval in timeIntervals)
-                    {
-                        var hour = AvailableHours.SingleOrDefault(h => h.Hour == timeInterval.Hours);
-                        if (hour == null)
-                        {
-                            hour = new EarlyRequestHour()
-                            {
-                                Hour = timeInterval.Hours
-                            };
-                            AvailableHours.Add(hour);
-                        }
-
-                        if (!hour.Minutes.Exists(m => m == timeInterval.Minutes))
-                        {
-                            hour.Minutes.Add(timeInterval.Minutes);
-                        }
-                    }
-
-                    SelectedHour = AvailableHours.Count > 0 ? AvailableHours[0] : null;
+                    return await channel.Service.GetServiceFreeTime(Model.SelectedService.Id, Model.SelectedDate.Value, ClientRequestType.Early);
                 }
-                catch (FaultException exception)
+            });
+
+            if (freeTime == null)
+            {
+                return;
+            }
+
+            var timeIntervals = freeTime.TimeIntervals;
+            if (timeIntervals.Length == 0)
+            {
+                return;
+            }
+
+            foreach (var timeInterval in timeIntervals)
+            {
+                var hour = AvailableHours.SingleOrDefault(h => h.Hour == timeInterval.Hours);
+                if (hour == null)
                 {
-                    Window.Warning(exception.Reason.ToString());
+                    hour = new EarlyRequestHour(timeInterval.Hours);
+                    AvailableHours.Add(hour);
                 }
-                catch (Exception exception)
+
+                if (!hour.Minutes.Exists(m => m == timeInterval.Minutes))
                 {
-                    UIHelper.Warning(null, exception.Message);
-                }
-                finally
-                {
-                    loading.Hide();
+                    hour.Minutes.Add(timeInterval.Minutes);
                 }
             }
+
+            SelectedHour = AvailableHours.Count > 0 ? AvailableHours[0] : null;
         }
 
         internal void Unloaded()
         {
             Model.PropertyChanged -= model_PropertyChanged;
+            try
+            {
+                ChannelManager.Dispose();
+            }
+            catch { }
         }
 
         public class EarlyRequestHour
         {
+            public EarlyRequestHour(int hour)
+            {
+                Hour = hour;
+            }
+
             private List<int> minutes = new List<int>();
 
             public int Hour { get; set; }

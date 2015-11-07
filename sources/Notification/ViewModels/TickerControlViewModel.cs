@@ -8,7 +8,7 @@ using Queue.Notification.UserControls;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
-using Queue.UI.WPF.Core;
+using Queue.UI.WPF;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -19,7 +19,7 @@ using System.Windows.Media.Animation;
 
 namespace Queue.Notification.ViewModels
 {
-    public class TickerControlViewModel : DependencyObservableObject, IDisposable
+    public class TickerControlViewModel : RichViewModel, IDisposable
     {
         private const double MillisecondsPerUnit = 15;
         private const int DefaultSpeed = 5;

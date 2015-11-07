@@ -1,10 +1,10 @@
-﻿using Junte.UI.WPF;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using Queue.Terminal.Core;
+using Queue.UI.WPF;
 
 namespace Queue.Terminal.ViewModels
 {
-    public abstract class PageViewModel : ObservableObject
+    public abstract class PageViewModel : RichViewModel
     {
         private ClientRequestModel model;
 

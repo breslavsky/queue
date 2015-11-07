@@ -5,9 +5,9 @@ using System.Windows.Controls;
 
 namespace Queue.UI.WPF
 {
-    public class RichPage : Page
+    public class RichUserControl : UserControl
     {
-        public RichPage()
+        public RichUserControl()
         {
             if (!DesignerProperties.GetIsInDesignMode(this))
             {

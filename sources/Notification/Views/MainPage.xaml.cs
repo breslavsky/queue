@@ -1,5 +1,5 @@
 ﻿using Junte.UI.WPF;
-using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using Queue.UI.WPF;
 using System;
 using System.Windows;
@@ -9,6 +9,9 @@ namespace Queue.Notification.Views
 {
     public partial class MainPage : RichPage
     {
+        [Dependency]
+        public ITemplateManager TemplateManager { get; set; }
+
         public MainPage()
             : base()
         {
@@ -16,7 +19,7 @@ namespace Queue.Notification.Views
 
             try
             {
-                Content = ServiceLocator.Current.GetInstance<ITemplateManager>().GetTemplate("main-page.xaml");
+                Content = TemplateManager.GetTemplate("main-page.xaml");
             }
             catch (Exception e)
             {

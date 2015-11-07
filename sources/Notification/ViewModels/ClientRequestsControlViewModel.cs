@@ -10,7 +10,6 @@ using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Core;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -23,7 +22,7 @@ using Drawing = System.Drawing;
 
 namespace Queue.Notification.ViewModels
 {
-    public class ClientRequestsControlViewModel : DependencyObservableObject, IDisposable
+    public class ClientRequestsControlViewModel : RichViewModel, IDisposable
     {
         private const int DefaultClientRequestsLength = 6;
 

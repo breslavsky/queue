@@ -1,23 +1,16 @@
 ﻿using Junte.Configuration;
-using Junte.Parallel;
 using Junte.UI.WPF;
 using Junte.WCF;
 using MahApps.Metro;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
-using Queue.Common.Settings;
 using Queue.Model.Common;
-using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Views;
 using Queue.UI.WPF;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.ServiceModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -25,8 +18,10 @@ using WPFLocalizeExtension.Engine;
 
 namespace Queue.Terminal.ViewModels
 {
-    public class LoginPageViewModel : ObservableObject, IDisposable
+    public class LoginPageViewModel : RichViewModel, IDisposable
     {
+        private bool disposed;
+
         private LoginPage owner;
         private string endpoint;
         private bool isConnected;
@@ -34,22 +29,14 @@ namespace Queue.Terminal.ViewModels
         private bool isRemember;
         private AccentColorComboBoxItem selectedAccent;
         private UserComboBoxItem selectedUser;
-        private List<UserComboBoxItem> users;
+        private UserComboBoxItem[] users;
         private UserRole userRole;
-
-        private DuplexChannelManager<IServerTcpService> channelManager;
-        private TaskPool taskPool;
         private Language selectedLanguage;
-        private ConfigurationManager configuration;
-        private LoginSettings loginSettings;
-        private AppSettings loginFormSettings;
 
-        public event EventHandler OnLogined;
+        private ChannelManager<IServerUserTcpService> channelManager;
+        private ServerUserService serverUserService;
 
-        public DuplexChannelBuilder<IServerTcpService> ChannelBuilder { get; private set; }
-
-        [Dependency]
-        public IMainWindow Window { get; set; }
+        public event EventHandler OnLogined = delegate { };
 
         #region UIProperties
 
@@ -86,8 +73,8 @@ namespace Queue.Terminal.ViewModels
             get { return selectedAccent; }
             set
             {
-                Tuple<AppTheme, Accent> theme = ThemeManager.DetectAppStyle(Application.Current);
-                Accent accent = ThemeManager.GetAccent(value.Name);
+                var theme = ThemeManager.DetectAppStyle(Application.Current);
+                var accent = ThemeManager.GetAccent(value.Name);
                 ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
 
                 SetProperty(ref selectedAccent, value);
@@ -101,7 +88,7 @@ namespace Queue.Terminal.ViewModels
             {
                 SetProperty(ref selectedLanguage, value);
 
-                CultureInfo culture = selectedLanguage.GetCulture();
+                var culture = selectedLanguage.GetCulture();
 
                 LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
                 LocalizeDictionary.Instance.Culture = culture;
@@ -109,7 +96,7 @@ namespace Queue.Terminal.ViewModels
             }
         }
 
-        public List<UserComboBoxItem> Users
+        public UserComboBoxItem[] Users
         {
             get { return users; }
             set { SetProperty(ref users, value); }
@@ -131,16 +118,22 @@ namespace Queue.Terminal.ViewModels
 
         #endregion UIProperties
 
-        public LoginPageViewModel(UserRole userRole, LoginPage owner)
+        [Dependency]
+        public IMainWindow Window { get; set; }
+
+        [Dependency]
+        public ConfigurationManager ConfigurationManager { get; set; }
+
+        [Dependency]
+        public AppSettings Settings { get; set; }
+
+        public LoginPageViewModel(UserRole userRole, LoginPage owner) :
+            base()
         {
             this.userRole = userRole;
             this.owner = owner;
 
             AccentColors = ThemeManager.Accents.Select(a => new AccentColorComboBoxItem(a.Name, a.Resources["AccentColorBrush"] as Brush)).ToArray();
-
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
-
-            taskPool = new TaskPool();
 
             ConnectCommand = new RelayCommand(Connect);
             LoginCommand = new RelayCommand(Login);
@@ -152,7 +145,7 @@ namespace Queue.Terminal.ViewModels
         {
             LoadSettings();
 
-            if (IsRemember || (loginSettings.User != Guid.Empty))
+            if (IsRemember || (Settings.User != Guid.Empty))
             {
                 Connect();
             }
@@ -160,18 +153,14 @@ namespace Queue.Terminal.ViewModels
 
         private void LoadSettings()
         {
-            configuration = ServiceLocator.Current.GetInstance<ConfigurationManager>();
-            loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
-            Endpoint = loginSettings.Endpoint;
-            Password = loginSettings.Password;
+            Endpoint = Settings.Endpoint;
+            Password = Settings.Password;
+            IsRemember = Settings.IsRemember;
+            SelectedLanguage = Settings.Language;
 
-            loginFormSettings = configuration.GetSection<AppSettings>(AppSettings.SectionKey);
-            IsRemember = loginFormSettings.IsRemember;
-            SelectedLanguage = loginFormSettings.Language;
-
-            if (!String.IsNullOrWhiteSpace(loginFormSettings.Accent))
+            if (!String.IsNullOrWhiteSpace(Settings.Accent))
             {
-                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == loginFormSettings.Accent);
+                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == Settings.Accent);
             }
 
             owner.Adjust();
@@ -179,49 +168,35 @@ namespace Queue.Terminal.ViewModels
 
         public async void Connect()
         {
-            ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new ServerCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
-            channelManager = new DuplexChannelManager<IServerTcpService>(ChannelBuilder);
+            serverUserService = new ServerUserService(Endpoint);
+            channelManager = serverUserService.CreateChannelManager();
 
-            using (var channel = channelManager.CreateChannel())
+            var result = await Window.ExecuteLongTask(async () =>
+                  {
+                      using (var channel = channelManager.CreateChannel())
+                      {
+                          return await channel.Service.GetUserLinks(userRole);
+                      }
+                  });
+
+            if (result == null)
             {
-                var loading = Window.ShowLoading();
-                try
-                {
-                    Users = (await taskPool.AddTask(channel.Service.GetUserLinks(userRole))).Select(u => new UserComboBoxItem()
-                    {
-                        Id = u.Id,
-                        Name = u.ToString()
-                    }).ToList();
-
-                    if (loginSettings.User != Guid.Empty)
-                    {
-                        SelectedUser = Users.SingleOrDefault(u => u.Id == loginSettings.User);
-                    }
-
-                    if (SelectedUser == null)
-                    {
-                        SelectedUser = Users.First();
-                    }
-
-                    IsConnected = true;
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(null, exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(null, exception.Message);
-                }
-                finally
-                {
-                    loading.Hide();
-                }
+                return;
             }
+
+            Users = result.Select(u => new UserComboBoxItem(u.Id, u.ToString())).ToArray();
+
+            if (Settings.User != Guid.Empty)
+            {
+                SelectedUser = Users.SingleOrDefault(u => u.Id == Settings.User);
+            }
+
+            if (SelectedUser == null)
+            {
+                SelectedUser = Users.First();
+            }
+
+            IsConnected = true;
 
             if (IsConnected && IsRemember)
             {
@@ -236,51 +211,37 @@ namespace Queue.Terminal.ViewModels
                 return;
             }
 
-            using (var channel = channelManager.CreateChannel())
+            User = await Window.ExecuteLongTask(async () =>
             {
-                var loading = Window.ShowLoading();
+                using (var channel = channelManager.CreateChannel())
+                {
+                    return await channel.Service.UserLogin(SelectedUser.Id, Password);
+                }
+            });
 
-                try
-                {
-                    User = await taskPool.AddTask(channel.Service.UserLogin(SelectedUser.Id, Password));
+            if (User == null)
+            {
+                return;
+            }
 
-                    SaveSettings();
+            SaveSettings();
 
-                    if (OnLogined != null)
-                    {
-                        OnLogined(this, new EventArgs());
-                    }
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(null, exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(null, exception.Message);
-                }
-                finally
-                {
-                    loading.Hide();
-                }
+            if (OnLogined != null)
+            {
+                OnLogined(this, new EventArgs());
             }
         }
 
         private void SaveSettings()
         {
-            loginSettings.Endpoint = Endpoint;
-            loginSettings.Password = IsRemember ? Password : string.Empty;
-            loginSettings.User = SelectedUser.Id;
+            Settings.Endpoint = Endpoint;
+            Settings.Password = IsRemember ? Password : String.Empty;
+            Settings.User = SelectedUser.Id;
+            Settings.IsRemember = IsRemember;
+            Settings.Accent = SelectedAccent == null ? String.Empty : SelectedAccent.Name;
+            Settings.Language = SelectedLanguage;
 
-            loginFormSettings.IsRemember = IsRemember;
-            loginFormSettings.Accent = SelectedAccent == null ? string.Empty : SelectedAccent.Name;
-            loginFormSettings.Language = SelectedLanguage;
-
-            configuration.Save();
+            ConfigurationManager.Save();
         }
 
         private void Unloaded()
@@ -288,21 +249,63 @@ namespace Queue.Terminal.ViewModels
             Dispose();
         }
 
+        private void Disconnect()
+        {
+            try
+            {
+                if (channelManager != null)
+                {
+                    channelManager.Dispose();
+                    channelManager = null;
+                }
+
+                if (serverUserService != null)
+                {
+                    serverUserService.Dispose();
+                    serverUserService = null;
+                }
+            }
+            catch { }
+        }
+
+        #region IDisposable
+
         public void Dispose()
         {
-            if (taskPool != null)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
             {
-                taskPool.Dispose();
+                return;
             }
 
-            if (channelManager != null)
+            if (disposing)
             {
-                channelManager.Dispose();
+                Disconnect();
             }
+
+            disposed = true;
         }
+
+        ~LoginPageViewModel()
+        {
+            Dispose(false);
+        }
+
+        #endregion IDisposable
 
         public class UserComboBoxItem
         {
+            public UserComboBoxItem(Guid id, string name)
+            {
+                Id = id;
+                Name = name;
+            }
+
             public Guid Id { get; set; }
 
             public string Name { get; set; }

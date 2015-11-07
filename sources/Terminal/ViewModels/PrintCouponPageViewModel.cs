@@ -1,5 +1,4 @@
-﻿using Junte.Parallel;
-using Junte.UI.WPF;
+﻿using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
@@ -12,7 +11,6 @@ using Queue.UI.Common;
 using Queue.UI.WPF;
 using System;
 using System.Collections.Generic;
-using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -26,7 +24,6 @@ namespace Queue.Terminal.ViewModels
         private bool disposed;
         private DispatcherTimer timer;
         private bool success;
-        private WarningControl warn;
 
         public bool Success
         {
@@ -45,9 +42,6 @@ namespace Queue.Terminal.ViewModels
         public Navigator Navigator { get; set; }
 
         [Dependency]
-        public TaskPool TaskPool { get; set; }
-
-        [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         public PrintCouponPageViewModel()
@@ -63,35 +57,21 @@ namespace Queue.Terminal.ViewModels
 
         private async void Loaded()
         {
-            using (var channel = ChannelManager.CreateChannel())
-            {
-                var loading = Window.ShowLoading();
+            await Window.ExecuteLongTask(async () =>
+             {
+                 using (var channel = ChannelManager.CreateChannel())
+                 {
+                     //await channel.Service.OpenClientSession(Model.CurrentAdministrator.SessionId);
 
-                try
-                {
-                    await channel.Service.OpenUserSession(Model.CurrentAdministrator.SessionId);
+                     var clientRequest = await AddClientRequest(channel);
 
-                    var clientRequest = await AddClientRequest(channel);
+                     Success = true;
 
-                    Success = true;
+                     await PrintCoupon(channel, clientRequest);
+                 }
+             });
 
-                    await PrintCoupon(channel, clientRequest);
-                }
-                catch (FaultException exception)
-                {
-                    warn = Window.Warning(exception.Reason, () => Navigator.Reset());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(null, exception.Message);
-                }
-                finally
-                {
-                    loading.Hide();
-                }
-
-                timer.Start();
-            }
+            timer.Start();
         }
 
         private void Unloaded()
@@ -102,14 +82,7 @@ namespace Queue.Terminal.ViewModels
         private void timer_Tick(object sender, EventArgs e)
         {
             timer.Stop();
-            if (warn != null)
-            {
-                warn.Hide();
-            }
-            else
-            {
-                Navigator.Reset();
-            }
+            Navigator.Reset();
         }
 
         private async Task<ClientRequest> AddClientRequest(Channel<IServerTcpService> channel)
@@ -122,20 +95,20 @@ namespace Queue.Terminal.ViewModels
             {
                 case ClientRequestType.Live:
 
-                    return await TaskPool.AddTask(channel.Service.AddLiveClientRequest(clientId,
+                    return await channel.Service.AddLiveClientRequest(clientId,
                                          Model.SelectedService.Id,
                                          false,
                                          new Dictionary<Guid, object>(),
-                                         (int)(Model.Subjects ?? 1)));
+                                         (int)(Model.Subjects ?? 1));
 
                 case ClientRequestType.Early:
 
-                    return await TaskPool.AddTask(channel.Service.AddEarlyClientRequest(clientId,
+                    return await channel.Service.AddEarlyClientRequest(clientId,
                                         Model.SelectedService.Id,
                                         Model.SelectedDate.Value,
                                         Model.SelectedTime.Value,
                                         new Dictionary<Guid, object>(),
-                                        (int)(Model.Subjects ?? 1)));
+                                        (int)(Model.Subjects ?? 1));
             }
 
             return null;
@@ -144,7 +117,7 @@ namespace Queue.Terminal.ViewModels
         private async Task PrintCoupon(Channel<IServerTcpService> channel, ClientRequest clientRequest)
         {
             logger.Debug("печать талона [client: {0}; service: {1}]", clientRequest.Client, clientRequest.Service);
-            var data = await TaskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
+            var data = await channel.Service.GetClientRequestCoupon(clientRequest.Id);
             var template = ServiceLocator.Current.GetInstance<CouponConfig>().Template;
             XPSUtils.PrintXaml(template, data);
         }
@@ -176,6 +149,8 @@ namespace Queue.Terminal.ViewModels
                     timer.Stop();
                     timer.Tick -= timer_Tick;
                     timer = null;
+
+                    ChannelManager.Dispose();
                 }
                 catch { }
             }

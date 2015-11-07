@@ -6,7 +6,7 @@ using Queue.Common;
 using Queue.Notification.UserControls;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
-using Queue.UI.WPF.Core;
+using Queue.UI.WPF;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -20,7 +20,7 @@ using Vlc.DotNet.Wpf;
 
 namespace Queue.Notification.ViewModels
 {
-    public class VideoControlViewModel : DependencyObservableObject
+    public class VideoControlViewModel : RichViewModel
     {
         private const string MediaFileUriPattern = "{0}/media-config/files/{1}/load";
 
@@ -39,7 +39,8 @@ namespace Queue.Notification.ViewModels
         [Dependency]
         public TaskPool TaskPool { get; set; }
 
-        public VideoControlViewModel(VideoControl control)
+        public VideoControlViewModel(VideoControl control) :
+            base()
         {
             this.control = control;
 

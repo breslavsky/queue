@@ -1,15 +1,6 @@
-﻿using Microsoft.Practices.Unity;
-using NLog;
-using Queue.Services.Common;
-using Queue.Services.Contracts;
-using System;
-using System.Collections.Generic;
+﻿using Queue.Services.Contracts;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.ServiceModel;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Queue.Services.Server
 {

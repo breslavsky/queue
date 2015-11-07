@@ -22,7 +22,7 @@ namespace Queue.Terminal.Views
             usernameTextBox.TextChanged += usernameTextBox_TextChanged;
         }
 
-        private void TerminalPage_Loaded(object sender, RoutedEventArgs e)
+        private void Loaded(object sender, RoutedEventArgs e)
         {
             FocusManager.SetFocusedElement(this, usernameTextBox);
 

@@ -7,5 +7,10 @@
                     xmlns:pages="clr-namespace:Queue.Terminal.Views"
                     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
                     xmlns:ui_common="clr-namespace:Queue.UI.WPF;assembly=Queue.UI.WPF"
-                    Loaded="OnLoaded"
-                    Unloaded="OnUnloaded" />
+                    Loaded="OnLoaded">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+</ui_common:RichPage>

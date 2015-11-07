@@ -1,5 +1,4 @@
-﻿using Queue.Services.Contracts;
-using System;
+﻿using System;
 using System.ServiceModel;
 
 namespace Queue.Services.Server

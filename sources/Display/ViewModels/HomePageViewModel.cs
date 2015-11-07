@@ -2,14 +2,13 @@
 using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
-using Queue.UI.WPF.Core;
+using Queue.UI.WPF;
 using Queue.UI.WPF.Enums;
 using System;
 using System.Collections.ObjectModel;
@@ -22,7 +21,7 @@ using Drawing = System.Drawing;
 
 namespace Queue.Display.ViewModels
 {
-    public class HomePageViewModel : DependencyObservableObject, IDisposable
+    public class HomePageViewModel : RichViewModel, IDisposable
     {
         private const int PingInterval = 10000;
 
@@ -30,7 +29,6 @@ namespace Queue.Display.ViewModels
         private ServerState serverState;
 
         private bool disposed;
-        private Workplace workplace;
         private ServerCallback callbackObject;
         private Channel<IServerTcpService> serverChannel;
         private string workplaceTitle;
@@ -81,13 +79,14 @@ namespace Queue.Display.ViewModels
         [Dependency]
         public TaskPool TaskPool { get; set; }
 
+        [Dependency]
+        public Workplace Workplace { get; set; }
+
         public HomePageViewModel() :
             base()
         {
-            workplace = ServiceLocator.Current.GetInstance<Workplace>();
-
-            WorkplaceTitle = workplace.ToString();
-            WorkplaceComment = workplace.Comment;
+            WorkplaceTitle = Workplace.ToString();
+            WorkplaceComment = Workplace.Comment;
 
             callbackObject = new ServerCallback();
             callbackObject.OnCurrentClientRequestPlanUpdated += CurrentClientRequestPlanUpdated;
@@ -193,7 +192,7 @@ namespace Queue.Display.ViewModels
         private async Task Subscribe()
         {
             var plans = (await serverChannel.Service.GetCurrentClientRequestPlans())
-                                                .Where(p => p.Key != null && p.Key.Workplace.Equals(workplace))
+                                                .Where(p => p.Key != null && p.Key.Workplace.Equals(Workplace))
                                                 .ToList();
             foreach (var plan in plans)
             {
@@ -204,7 +203,7 @@ namespace Queue.Display.ViewModels
             {
                 serverChannel.Service.Subscribe(ServerServiceEventType.CurrentClientRequestPlanUpdated, new ServerSubscribtionArgs
                 {
-                    Operators = await workplaceChannel.Service.GetWorkplaceOperators(workplace.Id)
+                    Operators = await workplaceChannel.Service.GetWorkplaceOperators(Workplace.Id)
                 });
             }
         }

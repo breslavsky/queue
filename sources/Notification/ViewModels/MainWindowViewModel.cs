@@ -21,7 +21,7 @@ using WinForms = System.Windows.Forms;
 
 namespace Queue.Notification.ViewModels
 {
-    public class MainWindowViewModel : ObservableObject
+    public class MainWindowViewModel : RichViewModel
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -41,9 +41,19 @@ namespace Queue.Notification.ViewModels
         public ICommand UnloadedCommand { get; set; }
 
         [Dependency]
-        public IMainWindow window { get; set; }
+        public IMainWindow Window { get; set; }
 
-        public MainWindowViewModel()
+        [Dependency]
+        public AppSettings Settings { get; set; }
+
+        [Dependency]
+        public ConfigurationManager ConfigurationManager { get; set; }
+
+        [Dependency]
+        public IUnityContainer UnityContainer { get; set; }
+
+        public MainWindowViewModel() :
+            base()
         {
             LoadedCommand = new RelayCommand(Loaded);
             UnloadedCommand = new RelayCommand(Unloaded);
@@ -56,7 +66,7 @@ namespace Queue.Notification.ViewModels
         private void Loaded()
         {
             connectPage = CreateConnectPage();
-            window.Navigate(connectPage);
+            Window.Navigate(connectPage);
         }
 
         private LoginPage CreateConnectPage()
@@ -72,7 +82,7 @@ namespace Queue.Notification.ViewModels
             RegisterServices();
 
             operatorDisplayTextUpdater = new OperatorDisplayTextUpdater();
-            window.Navigate(new MainPage());
+            Window.Navigate(new MainPage());
 
             Application.Current.MainWindow.KeyDown += MainWindow_KeyDown;
 
@@ -83,37 +93,33 @@ namespace Queue.Notification.ViewModels
                 Application.Current.MainWindow.Top = screen.WorkingArea.Top;
             }
 
-            window.MakeFullScreen();
+            Window.MakeFullScreen();
         }
 
         private void RegisterServices()
         {
-            var container = ServiceLocator.Current.GetInstance<IUnityContainer>();
+            UnityContainer.RegisterInstance(new ServerService(connectPage.Model.Endpoint));
+            UnityContainer.RegisterInstance(new ServerTemplateService(connectPage.Model.Endpoint));
+            UnityContainer.RegisterInstance(new HubDisplayService(ServiceLocator.Current.GetInstance<HubSettings>().Endpoint));
 
-            container.RegisterInstance(new ServerService(connectPage.Model.Endpoint));
-            container.RegisterInstance(new ServerTemplateService(connectPage.Model.Endpoint));
-            container.RegisterInstance(new HubDisplayService(ServiceLocator.Current.GetInstance<HubSettings>().Endpoint));
-
-            container.RegisterType<DuplexChannelManager<IServerTcpService>>
+            UnityContainer.RegisterType<DuplexChannelManager<IServerTcpService>>
                 (new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager()));
-            container.RegisterType<ChannelManager<IServerTemplateTcpService>>
+            UnityContainer.RegisterType<ChannelManager<IServerTemplateTcpService>>
                 (new InjectionFactory(c => c.Resolve<ServerTemplateService>().CreateChannelManager()));
-            container.RegisterType<ChannelManager<IHubDisplayTcpService>>
+            UnityContainer.RegisterType<ChannelManager<IHubDisplayTcpService>>
                 (new InjectionFactory(c => c.Resolve<HubDisplayService>().CreateChannelManager()));
 
-            container.RegisterType<TaskPool>();
-            container.RegisterInstance<ClientRequestsListener>(new ClientRequestsListener());
-            container.RegisterInstance<ITemplateManager>(new TemplateManager("notification", ServiceLocator.Current.GetInstance<AppSettings>().Theme));
+            UnityContainer.RegisterType<TaskPool>();
+            UnityContainer.RegisterInstance<ClientRequestsListener>(new ClientRequestsListener());
+            UnityContainer.RegisterInstance<ITemplateManager>(new TemplateManager("notification", ServiceLocator.Current.GetInstance<AppSettings>().Theme));
         }
 
-        private void MainWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if (Keyboard.IsKeyDown(Key.LeftShift) && e.Key == Key.Escape)
             {
-                var configuration = ServiceLocator.Current.GetInstance<ConfigurationManager>();
-                var loginFormSettings = configuration.GetSection<AppSettings>(AppSettings.SectionKey);
-                loginFormSettings.IsRemember = false;
-                configuration.Save();
+                Settings.IsRemember = false;
+                ConfigurationManager.Save();
 
                 Application.Current.Shutdown();
             }

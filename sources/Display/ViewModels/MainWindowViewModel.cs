@@ -33,7 +33,7 @@ namespace Queue.Display.ViewModels
 
         private void UpdateTitle()
         {
-            string appName = (string)LocalizeDictionary.Instance.GetLocalizedObject(typeof(MainWindowViewModel).Assembly.FullName,
+            var appName = (string)LocalizeDictionary.Instance.GetLocalizedObject(typeof(MainWindowViewModel).Assembly.FullName,
                                                                  "Strings",
                                                                  "AppName",
                                                                  LocalizeDictionary.Instance.Culture);

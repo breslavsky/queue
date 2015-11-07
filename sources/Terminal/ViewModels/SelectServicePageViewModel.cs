@@ -1,5 +1,4 @@
-﻿using Junte.Parallel;
-using Junte.Translation;
+﻿using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
@@ -14,7 +13,6 @@ using Queue.UI.WPF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel;
 using System.Windows.Input;
 
 namespace Queue.Terminal.ViewModels
@@ -26,15 +24,10 @@ namespace Queue.Terminal.ViewModels
         public event EventHandler<RenderServicesEventArgs> OnRenderServices;
 
         public ICommand LoadedCommand { get; set; }
+        public ICommand UnloadedCommand { get; set; }
 
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
-
-        [Dependency]
-        public IMainWindow Window { get; set; }
-
-        [Dependency]
-        public TaskPool TaskPool { get; set; }
 
         [Dependency]
         public TerminalConfig TerminalConfig { get; set; }
@@ -42,9 +35,14 @@ namespace Queue.Terminal.ViewModels
         [Dependency]
         public Navigator Navigator { get; set; }
 
+        [Dependency]
+        public IMainWindow Window { get; set; }
+
         public SelectServicePageViewModel()
+            : base()
         {
             LoadedCommand = new RelayCommand(Loaded);
+            UnloadedCommand = new RelayCommand(Unloaded);
         }
 
         private void Loaded()
@@ -54,75 +52,67 @@ namespace Queue.Terminal.ViewModels
 
         private async void LoadRootServiceGroups()
         {
-            var buttons = new List<SelectServiceButton>();
+            ServiceGroup[] groups = null;
+            Service[] services = null;
 
-            using (var channel = ChannelManager.CreateChannel())
-            {
-                var loading = Window.ShowLoading();
+            await Window.ExecuteLongTask(async () =>
+             {
+                 using (var channel = ChannelManager.CreateChannel())
+                 {
+                     groups = await channel.Service.GetRootServiceGroups();
+                     services = await channel.Service.GetRootServices();
+                 }
+             });
 
-                try
-                {
-                    AddGroupsToButtons(await TaskPool.AddTask(channel.Service.GetRootServiceGroups()), buttons);
-                    AddServicesToButtons(await TaskPool.AddTask(channel.Service.GetRootServices()), buttons);
-                }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(null, exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(null, exception.Message);
-                }
-                finally
-                {
-                    loading.Hide();
-                }
-            }
-
-            RenderServices(buttons, TerminalConfig.Columns, TerminalConfig.Rows);
+            RenderServices(CreateControlsForGroupsAndServices(groups, services), TerminalConfig.Columns, TerminalConfig.Rows);
         }
 
         private async void LoadServiceGroup(Guid serviceGroupId, int cols, int rows)
         {
-            var buttons = new List<SelectServiceButton>();
+            ServiceGroup[] groups = null;
+            Service[] services = null;
 
-            using (var channel = ChannelManager.CreateChannel())
+            await Window.ExecuteLongTask(async () =>
             {
-                var loading = Window.ShowLoading();
+                using (var channel = ChannelManager.CreateChannel())
+                {
+                    groups = await channel.Service.GetServiceGroups(serviceGroupId);
+                    services = await channel.Service.GetServices(serviceGroupId);
+                }
+            });
 
-                try
+            RenderServices(CreateControlsForGroupsAndServices(groups, services), cols, rows);
+        }
+
+        private SelectServiceButton[] CreateControlsForGroupsAndServices(ServiceGroup[] groups, Service[] services)
+        {
+            var buttons = new List<SelectServiceButton>();
+            if (groups != null)
+            {
+                foreach (var group in groups.Where(g => g.IsActive))
                 {
-                    AddGroupsToButtons(await TaskPool.AddTask(channel.Service.GetServiceGroups(serviceGroupId)), buttons);
-                    AddServicesToButtons(await TaskPool.AddTask(channel.Service.GetServices(serviceGroupId)), buttons);
+                    buttons.Add(CreateSelectServiceButton(group.Code, group.Name, group.Color, group.FontSize, (s, a) => OnServiceGroupSelected(group)));
                 }
-                catch (FaultException exception)
+            }
+            if (services != null)
+            {
+                foreach (var service in services.Where(s => s.IsActive))
                 {
-                    UIHelper.Warning(null, exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(null, exception.Message);
-                }
-                finally
-                {
-                    loading.Hide();
+                    buttons.Add(CreateSelectServiceButton(service.Code,
+                                                        service.Name,
+                                                        service.GetColor(),
+                                                        service.FontSize,
+                                                        (s, a) => SetSelectedService(service)
+                    ));
                 }
             }
 
-            RenderServices(buttons, cols, rows);
+            return buttons.ToArray();
         }
 
         private void OnServiceGroupSelected(ServiceGroup group)
         {
             LoadServiceGroup(group.Id, group.Columns, group.Rows);
-        }
-
-        private void AddGroupsToButtons(ServiceGroup[] groups, List<SelectServiceButton> buttons)
-        {
-            foreach (var group in groups.Where(g => g.IsActive))
-            {
-                buttons.Add(CreateSelectServiceButton(group.Code, group.Name, group.Color, group.FontSize, (s, a) => OnServiceGroupSelected(group)));
-            }
         }
 
         private void AddServicesToButtons(Service[] services, List<SelectServiceButton> buttons)
@@ -164,30 +154,14 @@ namespace Queue.Terminal.ViewModels
 
             if (Model.RequestType != null)
             {
-                var loading = Window.ShowLoading();
-
                 try
                 {
                     await Model.AdjustMaxSubjects();
-                    Navigator.NextPage();
                 }
-                catch (FaultException exception)
-                {
-                    Window.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    Window.Warning(exception.Message);
-                }
-                finally
-                {
-                    loading.Hide();
-                }
+                catch { };
             }
-            else
-            {
-                Navigator.NextPage();
-            }
+
+            Navigator.NextPage();
         }
 
         private SelectServiceButton CreateSelectServiceButton(string code, string name, string color, float fontSize, EventHandler onSelected)
@@ -196,7 +170,7 @@ namespace Queue.Terminal.ViewModels
             {
                 Code = code,
                 Name = name,
-                FontSize = fontSize,
+                FontSize = fontSize == 0 ? 1 : fontSize,
                 ServiceBrush = color.GetBrushForColor()
             };
             model.OnServiceSelected += onSelected;
@@ -206,7 +180,7 @@ namespace Queue.Terminal.ViewModels
             return result;
         }
 
-        private void RenderServices(List<SelectServiceButton> services, int cols, int rows)
+        private void RenderServices(SelectServiceButton[] services, int cols, int rows)
         {
             if (OnRenderServices != null)
             {
@@ -217,6 +191,15 @@ namespace Queue.Terminal.ViewModels
                     Rows = rows
                 });
             }
+        }
+
+        private void Unloaded()
+        {
+            try
+            {
+                ChannelManager.Dispose();
+            }
+            catch { }
         }
     }
 }

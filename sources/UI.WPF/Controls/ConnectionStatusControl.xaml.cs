@@ -1,6 +1,4 @@
-﻿using Microsoft.Practices.ServiceLocation;
-using Microsoft.Practices.Unity;
-using Queue.UI.WPF.ViewModels;
+﻿using Queue.UI.WPF.ViewModels;
 using System.Windows.Controls;
 
 namespace Queue.UI.WPF.Controls
@@ -11,8 +9,7 @@ namespace Queue.UI.WPF.Controls
         {
             InitializeComponent();
 
-            DataContext = ServiceLocator.Current.GetInstance<IUnityContainer>()
-                                            .Resolve<ConnectionStatusControlViewModel>();
+            DataContext = new ConnectionStatusControlViewModel();
         }
     }
 }

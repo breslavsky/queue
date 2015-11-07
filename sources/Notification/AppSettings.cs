@@ -10,6 +10,14 @@ namespace Queue.Notification
         public AppSettings()
         {
             Theme = "default";
+            Endpoint = "net.tcp://queue:4505";
+        }
+
+        [ConfigurationProperty("endpoint")]
+        public string Endpoint
+        {
+            get { return (string)this["endpoint"]; }
+            set { this["endpoint"] = value; }
         }
 
         [ConfigurationProperty("theme")]

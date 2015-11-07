@@ -1,5 +1,4 @@
-﻿using Junte.Parallel;
-using Junte.UI.WPF;
+﻿using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Common;
@@ -7,6 +6,7 @@ using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.Terminal.Enums;
+using Queue.UI.WPF;
 using Queue.UI.WPF.Enums;
 using System;
 using System.Timers;
@@ -15,7 +15,7 @@ using Timer = System.Timers.Timer;
 
 namespace Queue.Terminal.ViewModels
 {
-    public class TerminalWindowViewModel : ObservableObject, IDisposable
+    public class TerminalWindowViewModel : RichViewModel, IDisposable
     {
         private const int PingInterval = 10000;
 
@@ -58,8 +58,7 @@ namespace Queue.Terminal.ViewModels
 
         public ICommand SearchServiceCommand { get; set; }
 
-        [Dependency]
-        public TaskPool TaskPool { get; set; }
+        public ICommand UnloadedCommand { get; set; }
 
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
@@ -71,9 +70,11 @@ namespace Queue.Terminal.ViewModels
         public DefaultConfig DefaultConfig { get; set; }
 
         public TerminalWindowViewModel()
+            : base()
         {
             HomeCommand = new RelayCommand(Home);
             SearchServiceCommand = new RelayCommand(SearchService);
+            UnloadedCommand = new RelayCommand(Dispose);
         }
 
         public void Initialize()
@@ -138,7 +139,7 @@ namespace Queue.Terminal.ViewModels
                 try
                 {
                     ServerState = ServerState.Request;
-                    ServerDateTime.Sync(await TaskPool.AddTask(channel.Service.GetDateTime()));
+                    ServerDateTime.Sync(await channel.Service.GetDateTime());
                     ServerState = ServerState.Available;
                 }
                 catch
@@ -173,12 +174,14 @@ namespace Queue.Terminal.ViewModels
                     {
                         pingTimer.Stop();
                         pingTimer.Dispose();
+                        pingTimer = null;
                     }
 
                     if (timeTimer != null)
                     {
                         timeTimer.Stop();
                         timeTimer.Dispose();
+                        timeTimer = null;
                     }
                 }
             }

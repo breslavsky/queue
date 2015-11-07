@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using Queue.Terminal.Enums;
 using Queue.Terminal.Views;
+using Queue.UI.WPF;
 using System;
 using System.Collections.Generic;
 using System.Windows.Navigation;
@@ -29,6 +30,9 @@ namespace Queue.Terminal.Core
         [Dependency]
         public ClientRequestModel UserRequest { get; set; }
 
+        [Dependency]
+        public IMainWindow Window { get; set; }
+
         public Navigator()
         {
             history = new List<ClientRequestModelState>();
@@ -49,6 +53,8 @@ namespace Queue.Terminal.Core
         public void ResetState()
         {
             history.Clear();
+            Window.HideActiveMessageBox();
+
             UserRequest.Reset();
         }
 
@@ -64,13 +70,13 @@ namespace Queue.Terminal.Core
                 UserRequest.Reset();
             }
 
-            navigationService.Navigate(UnityContainer.Resolve(GetPageType(page.Value)));
+            navigationService.Navigate(Activator.CreateInstance(GetPageType(page.Value)));
             currentPage = page;
         }
 
         public void NextPage()
         {
-            ClientRequestModelState state = UserRequest.GetCurrentState();
+            var state = UserRequest.GetCurrentState();
             CaptureState(state);
 
             if (!currentPage.HasValue)
@@ -133,12 +139,12 @@ namespace Queue.Terminal.Core
             }
             else
             {
-                ClientRequestModelState state = UserRequest.GetCurrentState();
+                var state = UserRequest.GetCurrentState();
                 history.Remove(state);
 
-                ClientRequestModelState prevState = history.Count > 0 ?
-                                                        history[history.Count - 1] :
-                                                        ClientRequestModelState.SetService;
+                var prevState = history.Count > 0 ?
+                                            history[history.Count - 1] :
+                                            ClientRequestModelState.SetService;
 
                 switch (currentPage)
                 {

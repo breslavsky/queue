@@ -1,5 +1,4 @@
-﻿using Junte.Parallel;
-using Junte.Translation;
+﻿using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
@@ -8,7 +7,7 @@ using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.UI.WPF;
 using System;
-using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -23,19 +22,19 @@ namespace Queue.Terminal.ViewModels
         public ICommand PrevCommand { get; set; }
 
         [Dependency]
-        public IMainWindow Window { get; set; }
-
-        [Dependency]
         public Navigator Navigator { get; set; }
 
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
-        public TaskPool TaskPool { get; set; }
+        public ChannelManager<IServerUserTcpService> UserChannelManager { get; set; }
 
         [Dependency]
         public TerminalConfig TerminalConfig { get; set; }
+
+        [Dependency]
+        public IMainWindow Window { get; set; }
 
         public string Username
         {
@@ -43,13 +42,17 @@ namespace Queue.Terminal.ViewModels
             set { SetProperty(ref username, value); }
         }
 
+        public ICommand UnloadedCommand { get; set; }
+
         public SetClientPageViewModel()
+            : base()
         {
             PrevCommand = new RelayCommand(Prev);
             NextCommand = new RelayCommand(Next);
+            UnloadedCommand = new RelayCommand(Unloaded);
         }
 
-        private async void Next()
+        private void Next()
         {
             if (String.IsNullOrWhiteSpace(Username))
             {
@@ -62,50 +65,39 @@ namespace Queue.Terminal.ViewModels
                 Application.Current.Shutdown();
             }
 
+            Window.ExecuteLongTask(DoSetClient);
+        }
+
+        private async Task DoSetClient()
+        {
             using (var channel = ChannelManager.CreateChannel())
+            using (var userChannel = UserChannelManager.CreateChannel())
             {
-                var loading = Window.ShowLoading();
+                await userChannel.Service.OpenUserSession(Model.CurrentAdministrator.SessionId);
 
-                try
+                var words = Username.Split(' ');
+                var surname = words[0];
+
+                var name = String.Empty;
+                if (words.Length > 1)
                 {
-                    await channel.Service.OpenUserSession(Model.CurrentAdministrator.SessionId);
-
-                    var words = Username.Split(' ');
-                    var surname = words[0];
-
-                    var name = String.Empty;
-                    if (words.Length > 1)
-                    {
-                        name = words[1];
-                    }
-
-                    var patronymic = String.Empty;
-                    if (words.Length > 2)
-                    {
-                        patronymic = words[2];
-                    }
-
-                    Model.CurrentClient = await TaskPool.AddTask(channel.Service.EditClient(new Client()
-                    {
-                        Surname = surname,
-                        Name = name,
-                        Patronymic = patronymic
-                    }));
-
-                    Navigator.NextPage();
+                    name = words[1];
                 }
-                catch (FaultException exception)
+
+                var patronymic = String.Empty;
+                if (words.Length > 2)
                 {
-                    Window.Warning(exception.Reason.ToString());
+                    patronymic = words[2];
                 }
-                catch (Exception exception)
+
+                Model.CurrentClient = await channel.Service.EditClient(new Client()
                 {
-                    UIHelper.Warning(null, exception.Message);
-                }
-                finally
-                {
-                    loading.Hide();
-                }
+                    Surname = surname,
+                    Name = name,
+                    Patronymic = patronymic
+                });
+
+                Navigator.NextPage();
             }
         }
 
@@ -113,6 +105,16 @@ namespace Queue.Terminal.ViewModels
         {
             Model.CurrentClient = null;
             Navigator.PrevPage();
+        }
+
+        private void Unloaded()
+        {
+            try
+            {
+                ChannelManager.Dispose();
+                UserChannelManager.Dispose();
+            }
+            catch { }
         }
     }
 }
