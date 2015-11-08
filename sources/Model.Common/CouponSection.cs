@@ -10,7 +10,8 @@ namespace Queue.Model.Common
         Objects = 4,
         Position = 8,
         WaitingTime = 16,
-        Workplaces = 32,
-        Service = 64
+        Client = 32,
+        Workplaces = 64,
+        Service = 128
     }
 }

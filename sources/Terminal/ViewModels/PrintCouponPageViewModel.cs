@@ -74,7 +74,7 @@ namespace Queue.Terminal.ViewModels
 
             if (couponData != null)
             {
-                XPSUtils.PrintXaml(CouponConfig.Template, couponData);
+                //XPSUtils.PrintXaml(CouponConfig.Template, couponData);
             }
 
             timer.Start();

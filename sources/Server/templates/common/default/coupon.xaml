@@ -2,10 +2,12 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:ui="clr-namespace:Queue.UI.WPF;assembly=Queue.UI.WPF"
       Width="280"
       Background="#FFFFFF"
       mc:Ignorable="d">
     <Grid.Resources>
+        <ui:EnumBooleanConverter x:Key="enumBooleanConverter" />
         <Style x:Key="{x:Type GroupBox}" TargetType="{x:Type GroupBox}">
             <Setter Property="BorderThickness" Value="2" />
             <Setter Property="BorderBrush" Value="Black" />
@@ -144,7 +146,7 @@
                 </Grid>
             </GroupBox>
         </StackPanel>
-        <GroupBox>
+        <GroupBox Visibility="{Binding Path=Sections, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Client}">
             <GroupBox.Style>
                 <Style BasedOn="{StaticResource {x:Type GroupBox}}" TargetType="GroupBox">
                     <Style.Triggers>
