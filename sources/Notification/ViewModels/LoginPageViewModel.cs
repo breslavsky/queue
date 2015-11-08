@@ -2,15 +2,13 @@
 using Junte.UI.WPF;
 using Junte.WCF;
 using MahApps.Metro;
-using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using Queue.Common;
-using Queue.Common.Settings;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
 using Queue.UI.WPF;
 using System;
-using System.Globalization;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -21,7 +19,7 @@ using WPFLocalizeExtension.Engine;
 
 namespace Queue.Notification.ViewModels
 {
-    public class LoginPageViewModel : ObservableObject
+    public class LoginPageViewModel : RichViewModel
     {
         private bool isRemember;
 
@@ -30,9 +28,6 @@ namespace Queue.Notification.ViewModels
 
         public event EventHandler OnConnected = delegate { };
 
-        private ConfigurationManager configuration;
-        private LoginSettings loginSettings;
-        private AppSettings appSettings;
         private Language selectedLanguage;
 
         public bool IsRemember
@@ -73,7 +68,7 @@ namespace Queue.Notification.ViewModels
             {
                 SetProperty(ref selectedLanguage, value);
 
-                CultureInfo culture = selectedLanguage.GetCulture();
+                var culture = selectedLanguage.GetCulture();
 
                 LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
                 LocalizeDictionary.Instance.Culture = culture;
@@ -81,7 +76,14 @@ namespace Queue.Notification.ViewModels
             }
         }
 
+        [Dependency]
+        public AppSettings Settings { get; set; }
+
+        [Dependency]
+        public ConfigurationManager ConfigurationManager { get; set; }
+
         public LoginPageViewModel()
+            : base()
         {
             AccentColors = ThemeManager.Accents.Select(a => new AccentColorComboBoxItem(a.Name, a.Resources["AccentColorBrush"] as Brush)).ToArray();
 
@@ -101,17 +103,13 @@ namespace Queue.Notification.ViewModels
 
         private void LoadSettings()
         {
-            configuration = ServiceLocator.Current.GetInstance<ConfigurationManager>();
-            loginSettings = configuration.GetSection<LoginSettings>(LoginSettings.SectionKey);
-            Endpoint = loginSettings.Endpoint;
+            IsRemember = Settings.IsRemember;
+            SelectedLanguage = Settings.Language;
+            Endpoint = Settings.Endpoint;
 
-            appSettings = configuration.GetSection<AppSettings>(AppSettings.SectionKey);
-            IsRemember = appSettings.IsRemember;
-            SelectedLanguage = appSettings.Language;
-
-            if (!String.IsNullOrWhiteSpace(appSettings.Accent))
+            if (!String.IsNullOrWhiteSpace(Settings.Accent))
             {
-                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == appSettings.Accent);
+                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == Settings.Accent);
             }
         }
 
@@ -151,12 +149,12 @@ namespace Queue.Notification.ViewModels
 
         private void SaveSettings()
         {
-            loginSettings.Endpoint = Endpoint;
-            appSettings.IsRemember = IsRemember;
-            appSettings.Accent = SelectedAccent == null ? string.Empty : SelectedAccent.Name;
-            appSettings.Language = SelectedLanguage;
+            Settings.Endpoint = Endpoint;
+            Settings.IsRemember = IsRemember;
+            Settings.Accent = SelectedAccent == null ? String.Empty : SelectedAccent.Name;
+            Settings.Language = SelectedLanguage;
 
-            configuration.Save();
+            ConfigurationManager.Save();
         }
     }
 }

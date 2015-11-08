@@ -2,14 +2,13 @@
 using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
-using Queue.UI.WPF.Core;
+using Queue.UI.WPF;
 using Queue.UI.WPF.Enums;
 using System;
 using System.Collections.ObjectModel;
@@ -22,7 +21,7 @@ using Drawing = System.Drawing;
 
 namespace Queue.Display.ViewModels
 {
-    public class HomePageViewModel : DependencyObservableObject, IDisposable
+    public class HomePageViewModel : RichViewModel, IDisposable
     {
         private const int PingInterval = 10000;
 
@@ -30,14 +29,8 @@ namespace Queue.Display.ViewModels
         private ServerState serverState;
 
         private bool disposed;
-        private Workplace workplace;
-<<<<<<< HEAD
-        private QueuePlanCallback callbackObject;
-        private Channel<IServerTcpService> pingChannel;
-=======
         private ServerCallback callbackObject;
         private Channel<IServerTcpService> serverChannel;
->>>>>>> origin/master
         private string workplaceTitle;
         private string workplaceComment;
         private bool showNotification;
@@ -86,22 +79,16 @@ namespace Queue.Display.ViewModels
         [Dependency]
         public TaskPool TaskPool { get; set; }
 
+        [Dependency]
+        public Workplace Workplace { get; set; }
+
         public HomePageViewModel() :
             base()
         {
-            workplace = ServiceLocator.Current.GetInstance<Workplace>();
+            WorkplaceTitle = Workplace.ToString();
+            WorkplaceComment = Workplace.Comment;
 
-            WorkplaceTitle = workplace.ToString();
-            WorkplaceComment = workplace.Comment;
-
-<<<<<<< HEAD
-            channelManager = new DuplexChannelManager<IServerTcpService>(ServiceLocator.Current.GetInstance<DuplexChannelBuilder<IServerTcpService>>());
-            taskPool = new TaskPool();
-
-            callbackObject = new QueuePlanCallback();
-=======
             callbackObject = new ServerCallback();
->>>>>>> origin/master
             callbackObject.OnCurrentClientRequestPlanUpdated += CurrentClientRequestPlanUpdated;
 
             serverChannel = ChannelManager.CreateChannel(callbackObject);
@@ -205,27 +192,23 @@ namespace Queue.Display.ViewModels
         private async Task Subscribe()
         {
             var plans = (await serverChannel.Service.GetCurrentClientRequestPlans())
-                                                .Where(p => p.Key != null && p.Key.Workplace.Equals(workplace))
+                                                .Where(p => p.Key != null && p.Key.Workplace.Equals(Workplace))
                                                 .ToList();
             foreach (var plan in plans)
             {
                 UpdateOperatorCurrentRequest(plan.Key, plan.Value);
             }
 
-<<<<<<< HEAD
-            pingChannel.Service.Subscribe(QueuePlanEventType.CurrentClientRequestPlanUpdated, new QueuePlanSubscribtionArgs
-=======
             using (var workplaceChannel = WorkplaceChannelManager.CreateChannel())
->>>>>>> origin/master
             {
                 serverChannel.Service.Subscribe(ServerServiceEventType.CurrentClientRequestPlanUpdated, new ServerSubscribtionArgs
                 {
-                    Operators = await workplaceChannel.Service.GetWorkplaceOperators(workplace.Id)
+                    Operators = await workplaceChannel.Service.GetWorkplaceOperators(Workplace.Id)
                 });
             }
         }
 
-        private void CurrentClientRequestPlanUpdated(object sender, QueuePlanEventArgs e)
+        private void CurrentClientRequestPlanUpdated(object sender, ServerEventArgs e)
         {
             if (e.Operator == null)
             {

@@ -12,10 +12,5 @@ namespace Queue.Terminal.Views
         {
             InitializeComponent();
         }
-
-        private void TerminalPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            (DataContext as SelectRequestTypePageViewModel).Initialize();
-        }
     }
 }

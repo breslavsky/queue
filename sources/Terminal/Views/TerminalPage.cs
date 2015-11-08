@@ -1,18 +1,16 @@
-﻿using Microsoft.Practices.ServiceLocation;
-using Microsoft.Practices.Unity;
+﻿using Queue.UI.WPF;
 using System;
-using System.Windows.Controls;
 
 namespace Queue.Terminal.Views
 {
-    public abstract class TerminalPage : Page
+    public abstract class TerminalPage : RichPage
     {
         protected abstract Type ModelType { get; }
 
         public TerminalPage()
+            : base()
         {
-            DataContext = ServiceLocator.Current.GetInstance<IUnityContainer>()
-                                                .Resolve(ModelType);
+            DataContext = Activator.CreateInstance(ModelType);
         }
     }
 }

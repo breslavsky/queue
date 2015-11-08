@@ -1,20 +1,23 @@
-﻿using Junte.Parallel;
-using Junte.Translation;
+﻿using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.DTO;
 using Queue.Terminal.Enums;
+using Queue.UI.WPF;
 using System;
 using System.Threading.Tasks;
 
 namespace Queue.Terminal.Core
 {
-    public class ClientRequestModel : ObservableObject
+    public class ClientRequestModel : ObservableObject, IDisposable
     {
+        private bool disposed;
+
         private Service selectedService;
         private DateTime? selectedDate;
         private TimeSpan? selectedTime;
@@ -22,8 +25,17 @@ namespace Queue.Terminal.Core
         private int? maxSubjects;
         private int? subjects;
 
-        public ClientRequestModel()
+        [Dependency]
+        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        [Dependency]
+        public IMainWindow Window { get; set; }
+
+        public ClientRequestModel(Administrator administrator)
         {
+            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
+            CurrentAdministrator = administrator;
+
             Reset();
         }
 
@@ -117,16 +129,17 @@ namespace Queue.Terminal.Core
 
             if (RequestType == ClientRequestType.Live)
             {
-                var channelManager = ServiceLocator.Current.GetInstance<DuplexChannelManager<IServerTcpService>>();
-                var taskPool = ServiceLocator.Current.GetInstance<TaskPool>();
-                using (var channel = channelManager.CreateChannel())
+                await Window.ExecuteLongTask(async () =>
                 {
-                    var timeIntervals = (await taskPool.AddTask(channel.Service.GetServiceFreeTime(SelectedService.Id, ServerDateTime.Today, ClientRequestType.Live))).TimeIntervals;
-                    if (timeIntervals.Length > 0)
+                    using (var channel = ChannelManager.CreateChannel())
                     {
-                        MaxSubjects = Math.Min(SelectedService.MaxSubjects, timeIntervals.Length);
-                    }
-                }
+                        var timeIntervals = (await channel.Service.GetServiceFreeTime(SelectedService.Id, ServerDateTime.Today, ClientRequestType.Live)).TimeIntervals;
+                        if (timeIntervals.Length > 0)
+                        {
+                            MaxSubjects = Math.Min(SelectedService.MaxSubjects, timeIntervals.Length);
+                        }
+                    };
+                });
             }
             else
             {
@@ -138,5 +151,39 @@ namespace Queue.Terminal.Core
                 throw new ApplicationException(Translater.Message("NoFreeSubjects"));
             }
         }
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                try
+                {
+                    ChannelManager.Dispose();
+                }
+                catch { }
+            }
+
+            disposed = true;
+        }
+
+        ~ClientRequestModel()
+        {
+            Dispose(false);
+        }
+
+        #endregion IDisposable
     }
 }

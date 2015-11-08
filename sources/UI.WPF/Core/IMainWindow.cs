@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace Queue.UI.WPF
@@ -17,6 +18,8 @@ namespace Queue.UI.WPF
 
         void HideMessageBox(UserControl control);
 
+        void HideActiveMessageBox();
+
         void HideLoading();
 
         void AttachControl(UserControl control);
@@ -26,5 +29,9 @@ namespace Queue.UI.WPF
         void MakeFullScreen();
 
         void Navigate(Page page);
+
+        Task<T> ExecuteLongTask<T>(Func<Task<T>> task);
+
+        Task ExecuteLongTask(Func<Task> task);
     }
 }

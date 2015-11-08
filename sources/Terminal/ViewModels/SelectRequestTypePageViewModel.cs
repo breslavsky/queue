@@ -1,5 +1,4 @@
-﻿using Junte.Parallel;
-using Junte.Translation;
+﻿using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
@@ -9,8 +8,6 @@ using Queue.Services.Contracts;
 using Queue.Terminal.Core;
 using Queue.UI.WPF;
 using System;
-using System.ServiceModel;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -26,6 +23,9 @@ namespace Queue.Terminal.ViewModels
         private GridLength commentRowHeight;
 
         public ICommand SelectTypeCommand { get; set; }
+        public ICommand LoadedCommand { get; set; }
+
+        public ICommand UnloadedCommand { get; set; }
 
         public string Comment
         {
@@ -72,96 +72,68 @@ namespace Queue.Terminal.ViewModels
         [Dependency]
         public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
 
-        [Dependency]
-        public TaskPool TaskPool { get; set; }
-
-        public SelectRequestTypePageViewModel()
+        public SelectRequestTypePageViewModel() :
+            base()
         {
             SelectTypeCommand = new RelayCommand<ClientRequestType>(SelectType);
+            LoadedCommand = new RelayCommand(Loaded);
+            UnloadedCommand = new RelayCommand(Unloaded);
+        }
+
+        public void Loaded()
+        {
+            UpdateView();
         }
 
         private async void SelectType(ClientRequestType type)
         {
             Model.RequestType = type;
-            var loading = Window.ShowLoading();
 
-            try
-            {
-                await Model.AdjustMaxSubjects();
-                Navigator.NextPage();
-            }
-            catch (FaultException exception)
-            {
-                Window.Warning(exception.Reason.ToString());
-            }
-            catch (Exception exception)
-            {
-                Window.Warning(exception.Message);
-            }
-            finally
-            {
-                loading.Hide();
-            }
+            await Model.AdjustMaxSubjects();
+            Navigator.NextPage();
         }
 
-        public async void Initialize()
-        {
-            await UpdateView();
-        }
-
-        private async Task UpdateView()
+        private void UpdateView()
         {
             Model.MaxSubjects = null;
 
             Comment = Model.SelectedService.Comment;
             CommentRowHeight = new GridLength(String.IsNullOrEmpty(Comment) ? 10 : 50);
 
-            await AdjustLive();
+            AdjustLive();
             AdjustEarly();
         }
 
-        private async Task AdjustLive()
+        private async void AdjustLive()
         {
             AllowLive = false;
 
             if (!Model.SelectedService.LiveRegistrator.HasFlag(ClientRequestRegistrator.Terminal))
             {
                 LiveComment = EarlyComment = Translater.Message("DisabledByAdmin");
-                return;
             }
-
-            using (var channel = ChannelManager.CreateChannel())
+            else
             {
-                var loading = Window.ShowLoading();
+                LiveComment = string.Empty;
 
-                try
+                var timeIntervals = await Window.ExecuteLongTask(async () =>
                 {
-                    LiveComment = string.Empty;
-
-                    var timeIntervals = (await TaskPool.AddTask(channel.Service.GetServiceFreeTime(Model.SelectedService.Id, ServerDateTime.Today, ClientRequestType.Live))).TimeIntervals;
-                    if (timeIntervals.Length > 0)
+                    using (var channel = ChannelManager.CreateChannel())
                     {
-                        Model.MaxSubjects = Math.Min(Model.SelectedService.MaxSubjects, timeIntervals.Length);
-                        AllowLive = true;
+                        return (await channel.Service.GetServiceFreeTime(Model.SelectedService.Id, ServerDateTime.Today, ClientRequestType.Live)).TimeIntervals;
+                    }
+                });
 
-                        LiveComment = Translater.Message("AvailableCount", timeIntervals.Length);
-                    }
-                    else
-                    {
-                        LiveComment = Translater.Message("NoFreeTime");
-                    }
-                }
-                catch (FaultException exception)
+                if (timeIntervals != null && timeIntervals.Length > 0)
                 {
-                    LiveComment = exception.Reason.ToString();
+                    Model.MaxSubjects = Math.Min(Model.SelectedService.MaxSubjects, timeIntervals.Length);
+                    AllowLive = true;
+
+                    LiveComment = Translater.Message("AvailableCount", timeIntervals.Length);
                 }
-                catch (Exception exception)
+                else
                 {
-                    UIHelper.Warning(null, exception.Message);
-                }
-                finally
-                {
-                    loading.Hide();
+                    LiveComment = Translater.Message("NoFreeTime");
                 }
             }
         }
@@ -179,6 +151,15 @@ namespace Queue.Terminal.ViewModels
             {
                 EarlyComment = Translater.Message("DisabledByAdmin");
             }
+        }
+
+        private void Unloaded()
+        {
+            try
+            {
+                ChannelManager.Dispose();
+            }
+            catch { }
         }
     }
 }

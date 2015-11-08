@@ -1,7 +1,11 @@
-﻿using MahApps.Metro.Controls;
+﻿using Junte.UI.WPF;
+using MahApps.Metro.Controls;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using System;
+using System.ComponentModel;
+using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,29 +18,38 @@ namespace Queue.UI.WPF
         private LoadingControl loading;
         private UserControl activeMessageBox;
 
+        private object messageLock = new object();
+        private object loadingLock = new object();
+
         public RichWindow()
             : base()
         {
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(GetType(), this);
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(GetType(), this);
+            }
         }
 
         #region IMainWindow
 
         public LoadingControl ShowLoading()
         {
-            if (loading != null)
+            lock (loadingLock)
             {
+                if (loading != null)
+                {
+                    return loading;
+                }
+
+                Invoke(() =>
+                {
+                    var control = new LoadingControl();
+                    AttachControl(control);
+                    loading = control;
+                });
+
                 return loading;
             }
-
-            Invoke(() =>
-            {
-                var control = new LoadingControl();
-                AttachControl(control);
-                loading = control;
-            });
-
-            return loading;
         }
 
         public void HideLoading()
@@ -51,7 +64,7 @@ namespace Queue.UI.WPF
             loading = null;
         }
 
-        private void HideActiveMessageBox()
+        public void HideActiveMessageBox()
         {
             if (activeMessageBox != null)
             {
@@ -71,18 +84,21 @@ namespace Queue.UI.WPF
 
         public T ShowMessageBox<T>(Func<T> ctor) where T : UserControl
         {
-            HideActiveMessageBox();
-
-            T box = null;
-            Invoke(() =>
+            lock (messageLock)
             {
-                box = ctor();
-                AttachControl(box);
-            });
+                HideActiveMessageBox();
 
-            activeMessageBox = box;
+                T box = null;
+                Invoke(() =>
+                {
+                    box = ctor();
+                    AttachControl(box);
+                });
 
-            return box;
+                activeMessageBox = box;
+
+                return box;
+            }
         }
 
         public void HideMessageBox(UserControl control)
@@ -128,6 +144,67 @@ namespace Queue.UI.WPF
 
             UseNoneWindowStyle = true;
             TitlebarHeight = 0;
+        }
+
+        public Task<T> ExecuteLongTask<T>(Func<Task<T>> task)
+        {
+            return Task.Run(async () =>
+            {
+                ShowLoading();
+                var result = default(T);
+
+                try
+                {
+                    result = await task();
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    Invoke(() => UIHelper.Warning(null, exception.Message));
+                }
+                finally
+                {
+                    HideLoading();
+                }
+
+                return result;
+            });
+        }
+
+        public Task ExecuteLongTask(Func<Task> task)
+        {
+            return Task.Run(async () =>
+            {
+                ShowLoading();
+
+                try
+                {
+                    await task();
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    Invoke(() => UIHelper.Warning(null, exception.Message));
+                }
+                finally
+                {
+                    HideLoading();
+                }
+            });
         }
     }
 }

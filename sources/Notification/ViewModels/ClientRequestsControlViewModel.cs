@@ -8,10 +8,8 @@ using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
-using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
-using Queue.UI.WPF.Core;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -24,7 +22,7 @@ using Drawing = System.Drawing;
 
 namespace Queue.Notification.ViewModels
 {
-    public class ClientRequestsControlViewModel : DependencyObservableObject, IDisposable
+    public class ClientRequestsControlViewModel : RichViewModel, IDisposable
     {
         private const int DefaultClientRequestsLength = 6;
 
@@ -120,15 +118,15 @@ namespace Queue.Notification.ViewModels
             ClientRequestsLength = config.ClientRequestsLength;
         }
 
-        private QueuePlanCallback CreateServerCallback()
+        private ServerCallback CreateServerCallback()
         {
-            var result = new QueuePlanCallback();
+            var result = new ServerCallback();
             result.OnConfigUpdated += OnConfigUpdated;
 
             return result;
         }
 
-        private void OnConfigUpdated(object sender, QueuePlanEventArgs e)
+        private void OnConfigUpdated(object sender, ServerEventArgs e)
         {
             switch (e.Config.Type)
             {
@@ -140,7 +138,7 @@ namespace Queue.Notification.ViewModels
 
         private void Subscribe(IServerTcpService service)
         {
-            service.Subscribe(QueuePlanEventType.ConfigUpdated, new QueuePlanSubscribtionArgs()
+            service.Subscribe(ServerServiceEventType.ConfigUpdated, new ServerSubscribtionArgs()
             {
                 ConfigTypes = new[] { ConfigType.Notification }
             });

@@ -11,6 +11,8 @@ namespace Queue.Terminal
         protected override void RegistrateTypes(IUnityContainer container)
         {
             container.RegisterInstance(new ConfigurationManager(Product.Terminal.AppName, SpecialFolder.ApplicationData));
+            container.RegisterType<AppSettings>(new InjectionFactory(c => c.Resolve<ConfigurationManager>()
+                                                                .GetSection<AppSettings>(AppSettings.SectionKey)));
         }
     }
 }

@@ -7,9 +7,8 @@ using Queue.Model.Common;
 using Queue.Notification.UserControls;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
-using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
-using Queue.UI.WPF.Core;
+using Queue.UI.WPF;
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -20,7 +19,7 @@ using System.Windows.Media.Animation;
 
 namespace Queue.Notification.ViewModels
 {
-    public class TickerControlViewModel : DependencyObservableObject, IDisposable
+    public class TickerControlViewModel : RichViewModel, IDisposable
     {
         private const double MillisecondsPerUnit = 15;
         private const int DefaultSpeed = 5;
@@ -103,9 +102,9 @@ namespace Queue.Notification.ViewModels
             }
         }
 
-        private QueuePlanCallback CreateServerCallback()
+        private ServerCallback CreateServerCallback()
         {
-            var result = new QueuePlanCallback();
+            var result = new ServerCallback();
             result.OnConfigUpdated += OnConfigUpdated;
 
             return result;
@@ -113,13 +112,13 @@ namespace Queue.Notification.ViewModels
 
         private void Subscribe(IServerTcpService service)
         {
-            service.Subscribe(QueuePlanEventType.ConfigUpdated, new QueuePlanSubscribtionArgs()
+            service.Subscribe(ServerServiceEventType.ConfigUpdated, new ServerSubscribtionArgs()
             {
                 ConfigTypes = new[] { ConfigType.Media }
             });
         }
 
-        private void OnConfigUpdated(object sender, QueuePlanEventArgs e)
+        private void OnConfigUpdated(object sender, ServerEventArgs e)
         {
             switch (e.Config.Type)
             {

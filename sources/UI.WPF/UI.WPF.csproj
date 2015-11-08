@@ -105,8 +105,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\DependencyObservableObject.cs" />
     <Compile Include="Core\RichApplication.cs" />
+    <Compile Include="Core\RichUserControl.cs" />
+    <Compile Include="Core\RichViewModel.cs" />
     <Compile Include="Core\RichWindow.cs" />
     <Compile Include="Controls\ConnectionStatusControl.xaml.cs">
       <DependentUpon>ConnectionStatusControl.xaml</DependentUpon>

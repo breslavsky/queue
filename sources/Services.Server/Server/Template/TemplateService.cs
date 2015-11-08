@@ -5,12 +5,9 @@ using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
 using Queue.Services.Server.Settings;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.ServiceModel;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Queue.Services.Server

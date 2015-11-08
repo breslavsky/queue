@@ -1,7 +1,6 @@
 ﻿using Junte.UI.WPF;
 using Queue.Terminal.UserControls;
 using Queue.Terminal.Views;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,7 +10,7 @@ namespace Queue.Terminal.Core
     public class ServicesPager : ObservableObject
     {
         private SelectServicePage page;
-        private List<SelectServiceButton> services;
+        private SelectServiceButton[] services;
 
         private bool hasNext;
         private bool hasPrev;
@@ -46,7 +45,7 @@ namespace Queue.Terminal.Core
             NextCommand = new RelayCommand(Next);
         }
 
-        public void UpdateServices(List<SelectServiceButton> services, int cols, int rows)
+        public void UpdateServices(SelectServiceButton[] services, int cols, int rows)
         {
             this.services = services;
             this.cols = cols;
@@ -85,7 +84,7 @@ namespace Queue.Terminal.Core
             int row = 0;
             int col = 0;
 
-            foreach (SelectServiceButton button in services.Skip(pageNo * servicesPerPage).Take(servicesPerPage))
+            foreach (var button in services.Skip(pageNo * servicesPerPage).Take(servicesPerPage))
             {
                 if (col >= cols)
                 {

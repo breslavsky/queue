@@ -8,13 +8,12 @@ using Queue.Terminal.Extensions;
 using Queue.Terminal.UserControls;
 using Queue.UI.WPF;
 using System;
-using System.ServiceModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Queue.Terminal.ViewModels
 {
-    public class SearchServiceResultsViewModel : ObservableObject, IServiceSearch
+    public class SearchServiceResultsViewModel : RichViewModel, IServiceSearch
     {
         private const int ResultsColCount = 2;
         private const int ResultsRowCount = 3;
@@ -25,7 +24,6 @@ namespace Queue.Terminal.ViewModels
         private bool hasPrev;
         private bool hasResults;
         private int currentPage;
-
         private string filter;
 
         public bool HasNext
@@ -50,6 +48,8 @@ namespace Queue.Terminal.ViewModels
 
         public ICommand PrevCommand { get; set; }
 
+        public ICommand UnloadedCommand { get; set; }
+
         [Dependency]
         public IMainWindow Window { get; set; }
 
@@ -63,9 +63,11 @@ namespace Queue.Terminal.ViewModels
         public ClientRequestModel Request { get; set; }
 
         public SearchServiceResultsViewModel()
+            : base()
         {
             NextCommand = new RelayCommand(Next);
             PrevCommand = new RelayCommand(Prev);
+            UnloadedCommand = new RelayCommand(Unloaded);
         }
 
         public void Initialize(Grid resultsGrid)
@@ -92,36 +94,23 @@ namespace Queue.Terminal.ViewModels
         private async void ShowResultPage(int pageNo)
         {
             HasPrev = pageNo > 0;
-            using (var channel = ChannelManager.CreateChannel())
+
+            var services = await Window.ExecuteLongTask(async () =>
             {
-                var loading = Window.ShowLoading();
+                using (var channel = ChannelManager.CreateChannel())
+                {
+                    return await channel.Service.FindServices(filter, pageNo * ResultsPerPage, ResultsPerPage);
+                };
+            });
 
-                try
-                {
-                    var services = await channel.Service.FindServices(filter, pageNo * ResultsPerPage, ResultsPerPage);
-
-                    RenderServices(services);
-                    HasNext = services.Length == ResultsPerPage;
-                    if (pageNo == 0)
-                    {
-                        HasResults = services.Length > 0;
-                    }
-
-                    currentPage = pageNo;
-                }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(null, exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(null, exception.Message);
-                }
-                finally
-                {
-                    loading.Hide();
-                }
+            RenderServices(services);
+            HasNext = services.Length == ResultsPerPage;
+            if (pageNo == 0)
+            {
+                HasResults = services.Length > 0;
             }
+
+            currentPage = pageNo;
         }
 
         private void RenderServices(Service[] services)
@@ -169,7 +158,7 @@ namespace Queue.Terminal.ViewModels
             {
                 Code = service.Code,
                 Name = service.Name,
-                FontSize = service.FontSize,
+                FontSize = service.FontSize == 0 ? 1 : service.FontSize,
                 ServiceBrush = service.GetColor().GetBrushForColor()
             };
             model.OnServiceSelected += onSelected;
@@ -178,6 +167,15 @@ namespace Queue.Terminal.ViewModels
             {
                 DataContext = model
             };
+        }
+
+        private void Unloaded()
+        {
+            try
+            {
+                ChannelManager.Dispose();
+            }
+            catch { }
         }
     }
 }
