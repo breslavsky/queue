@@ -2,6 +2,7 @@
 using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
+using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
@@ -27,6 +28,12 @@ namespace Queue.Terminal.ViewModels
 
         private LoginPage loginPage;
         private Navigator navigator;
+
+        private UserService userService;
+        private ServerService serverService;
+        private TemplateService templateService;
+        private TemplateManager templateManager;
+        private CommonTemplateManager commonTemplateManager;
 
         private DispatcherTimer resetTimer;
 
@@ -113,26 +120,46 @@ namespace Queue.Terminal.ViewModels
 
         private async Task RegisterTypes()
         {
-            UnityContainer.RegisterInstance(new ServerService(AppSettings.Endpoint));
-            UnityContainer.RegisterInstance(new UserService(AppSettings.Endpoint));
-            UnityContainer.RegisterInstance(new TemplateService(AppSettings.Endpoint));
+            RegisterServices();
+            RegisterChannelManagers();
+            RegisterTemplateManagers();
 
-            UnityContainer.RegisterType<ChannelManager<IServerTcpService>>
-                (new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager(loginPage.Model.User.SessionId)));
-            UnityContainer.RegisterType<ChannelManager<ITemplateTcpService>>
-                (new InjectionFactory(c => c.Resolve<TemplateService>().CreateChannelManager()));
-            UnityContainer.RegisterType<ChannelManager<IUserTcpService>>
-               (new InjectionFactory(c => c.Resolve<UserService>().CreateChannelManager()));
-
-            UnityContainer.RegisterInstance<ITemplateManager>(new TemplateManager("terminal", AppSettings.Theme));
             UnityContainer.RegisterInstance(new ClientRequestModel((Administrator)loginPage.Model.User));
 
             navigator = UnityContainer.Resolve<Navigator>();
             UnityContainer.RegisterInstance(navigator);
-            await LoadConfigs();
+            await RegisterConfigs();
         }
 
-        private async Task LoadConfigs()
+        private void RegisterServices()
+        {
+            serverService = new ServerService(AppSettings.Endpoint);
+            userService = new UserService(AppSettings.Endpoint);
+            templateService = new TemplateService(AppSettings.Endpoint);
+            UnityContainer.RegisterInstance(serverService)
+                        .RegisterInstance(userService)
+                        .RegisterInstance(templateService);
+        }
+
+        private void RegisterChannelManagers()
+        {
+            UnityContainer.RegisterType<ChannelManager<IServerTcpService>>
+                            (new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager(loginPage.Model.User.SessionId)))
+                        .RegisterType<ChannelManager<ITemplateTcpService>>
+                            (new InjectionFactory(c => c.Resolve<TemplateService>().CreateChannelManager()))
+                        .RegisterType<ChannelManager<IUserTcpService>>
+                            (new InjectionFactory(c => c.Resolve<UserService>().CreateChannelManager()));
+        }
+
+        private void RegisterTemplateManagers()
+        {
+            templateManager = new TemplateManager(Templates.Apps.Terminal, AppSettings.Theme);
+            commonTemplateManager = new CommonTemplateManager(AppSettings.Theme);
+            UnityContainer.RegisterInstance<ITemplateManager>(templateManager)
+                            .RegisterInstance<ICommonTemplateManager>(commonTemplateManager);
+        }
+
+        private async Task RegisterConfigs()
         {
             using (var manager = UnityContainer.Resolve<ChannelManager<IServerTcpService>>())
             using (var channel = manager.CreateChannel())
@@ -141,7 +168,6 @@ namespace Queue.Terminal.ViewModels
                 {
                     UnityContainer.RegisterInstance(await channel.Service.GetTerminalConfig());
                     UnityContainer.RegisterInstance(await channel.Service.GetDefaultConfig());
-                    UnityContainer.RegisterInstance(await channel.Service.GetCouponConfig());
                 }
                 catch (FaultException exception)
                 {
@@ -210,6 +236,12 @@ namespace Queue.Terminal.ViewModels
             {
                 try
                 {
+                    serverService.Dispose();
+                    templateService.Dispose();
+                    userService.Dispose();
+                    templateManager.Dispose();
+                    commonTemplateManager.Dispose();
+
                     resetTimer.Stop();
                     resetTimer = null;
                 }

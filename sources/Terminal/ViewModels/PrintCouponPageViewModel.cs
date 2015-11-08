@@ -2,6 +2,7 @@
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using NLog;
+using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
@@ -44,7 +45,7 @@ namespace Queue.Terminal.ViewModels
         public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
-        public CouponConfig CouponConfig { get; set; }
+        public ICommonTemplateManager CommonTemplateManager { get; set; }
 
         public PrintCouponPageViewModel()
             : base()
@@ -74,10 +75,22 @@ namespace Queue.Terminal.ViewModels
 
             if (couponData != null)
             {
-                XPSUtils.PrintXaml(CouponConfig.Template, couponData);
+                PrintCoupon(couponData);
             }
 
             timer.Start();
+        }
+
+        private void PrintCoupon(ClientRequestCoupon data)
+        {
+            try
+            {
+                XPSUtils.PrintXaml(CommonTemplateManager.GetTemplate(Templates.Coupon), data);
+            }
+            catch (Exception e)
+            {
+                Window.Warning(e.Message);
+            }
         }
 
         private void Unloaded()

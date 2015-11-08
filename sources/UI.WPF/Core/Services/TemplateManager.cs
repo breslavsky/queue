@@ -2,7 +2,6 @@
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
-using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
 using System;
 using System.Collections.Generic;
@@ -11,15 +10,17 @@ using System.Windows.Markup;
 
 namespace Queue.UI.WPF
 {
-    public class TemplateManager : ITemplateManager
+    public class TemplateManager : ITemplateManager, IDisposable
     {
+        private bool disposed;
+
         private readonly string app;
         private readonly string theme;
 
+        private Dictionary<string, string> cache = new Dictionary<string, string>();
+
         [Dependency]
         public ChannelManager<ITemplateTcpService> ChannelManager { get; set; }
-
-        private Dictionary<string, string> cache = new Dictionary<string, string>();
 
         public TemplateManager(string app, string theme = "default")
         {
@@ -62,5 +63,40 @@ namespace Queue.UI.WPF
                 throw new QueueException("Не удалось получить шаблон с сервера: " + e.Message);
             }
         }
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                try
+                {
+                    ChannelManager.Dispose();
+                    ChannelManager = null;
+                }
+                catch { }
+            }
+
+            disposed = true;
+        }
+
+        ~TemplateManager()
+        {
+            Dispose(false);
+        }
+
+        #endregion IDisposable
     }
 }

@@ -98,22 +98,31 @@ namespace Queue.Display.ViewModels
 
         private void RegisterTypes()
         {
+            RegisterServices();
+            RegisterChannelManagers();
+
+            UnityContainer.RegisterInstance<Workplace>(loginPage.Model.Workplace);
+        }
+
+        private void RegisterServices()
+        {
             serverService = new ServerService(AppSettings.Endpoint);
             workplaceService = new WorkplaceService(AppSettings.Endpoint);
             queuePlanService = new QueuePlanService(AppSettings.Endpoint);
 
-            UnityContainer.RegisterInstance(serverService);
-            UnityContainer.RegisterInstance(workplaceService);
-            UnityContainer.RegisterInstance(queuePlanService);
+            UnityContainer.RegisterInstance(serverService)
+                            .RegisterInstance(workplaceService)
+                            .RegisterInstance(queuePlanService);
+        }
 
+        private void RegisterChannelManagers()
+        {
             UnityContainer.RegisterType<ChannelManager<IServerTcpService>>
-                (new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager()));
-            UnityContainer.RegisterType<ChannelManager<IWorkplaceTcpService>>
-                (new InjectionFactory(c => c.Resolve<WorkplaceService>().CreateChannelManager()));
-            UnityContainer.RegisterType<DuplexChannelManager<IQueuePlanTcpService>>
-                (new InjectionFactory(c => c.Resolve<QueuePlanService>().CreateChannelManager()));
-
-            UnityContainer.RegisterInstance<Workplace>(loginPage.Model.Workplace);
+                               (new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager()))
+                           .RegisterType<ChannelManager<IWorkplaceTcpService>>
+                               (new InjectionFactory(c => c.Resolve<WorkplaceService>().CreateChannelManager()))
+                           .RegisterType<DuplexChannelManager<IQueuePlanTcpService>>
+                               (new InjectionFactory(c => c.Resolve<QueuePlanService>().CreateChannelManager()));
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)

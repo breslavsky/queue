@@ -3,6 +3,7 @@ using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using NLog;
+using Queue.Common;
 using Queue.Common.Settings;
 using Queue.Notification.Utils;
 using Queue.Notification.Views;
@@ -34,6 +35,7 @@ namespace Queue.Notification.ViewModels
 
         private string title;
         private bool disposed;
+        private TemplateManager templateManager;
 
         public string Title
         {
@@ -87,7 +89,7 @@ namespace Queue.Notification.ViewModels
 
         private void OnConnected(object sender, EventArgs e)
         {
-            RegisterServices();
+            RegisterTypes();
 
             operatorDisplayTextUpdater = new OperatorDisplayTextUpdater();
             Window.Navigate(new MainPage());
@@ -104,6 +106,15 @@ namespace Queue.Notification.ViewModels
             Window.MakeFullScreen();
         }
 
+        private void RegisterTypes()
+        {
+            RegisterServices();
+            RegisterChannelManagers();
+            RegisterTemplateManagers();
+
+            UnityContainer.RegisterInstance<ClientRequestsListener>(new ClientRequestsListener());
+        }
+
         private void RegisterServices()
         {
             serverService = new ServerService(AppSettings.Endpoint);
@@ -111,22 +122,28 @@ namespace Queue.Notification.ViewModels
             displayService = new DisplayService(HubSettings.Endpoint);
             queuePlanService = new QueuePlanService(AppSettings.Endpoint);
 
-            UnityContainer.RegisterInstance(serverService);
-            UnityContainer.RegisterInstance(templateService);
-            UnityContainer.RegisterInstance(displayService);
-            UnityContainer.RegisterInstance(queuePlanService);
+            UnityContainer.RegisterInstance(serverService)
+                         .RegisterInstance(templateService)
+                         .RegisterInstance(displayService)
+                         .RegisterInstance(queuePlanService);
+        }
 
+        private void RegisterChannelManagers()
+        {
             UnityContainer.RegisterType<ChannelManager<IServerTcpService>>
-                (new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager()));
-            UnityContainer.RegisterType<DuplexChannelManager<IQueuePlanTcpService>>
-                (new InjectionFactory(c => c.Resolve<QueuePlanService>().CreateChannelManager()));
-            UnityContainer.RegisterType<ChannelManager<ITemplateTcpService>>
-                (new InjectionFactory(c => c.Resolve<TemplateService>().CreateChannelManager()));
-            UnityContainer.RegisterType<ChannelManager<IDisplayTcpService>>
-                (new InjectionFactory(c => c.Resolve<DisplayService>().CreateChannelManager()));
+                              (new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager()))
+                          .RegisterType<DuplexChannelManager<IQueuePlanTcpService>>
+                              (new InjectionFactory(c => c.Resolve<QueuePlanService>().CreateChannelManager()))
+                          .RegisterType<ChannelManager<ITemplateTcpService>>
+                              (new InjectionFactory(c => c.Resolve<TemplateService>().CreateChannelManager()))
+                          .RegisterType<ChannelManager<IDisplayTcpService>>
+                              (new InjectionFactory(c => c.Resolve<DisplayService>().CreateChannelManager()));
+        }
 
-            UnityContainer.RegisterInstance<ClientRequestsListener>(new ClientRequestsListener());
-            UnityContainer.RegisterInstance<ITemplateManager>(new TemplateManager("notification", AppSettings.Theme));
+        private void RegisterTemplateManagers()
+        {
+            templateManager = new TemplateManager(Templates.Apps.Notification, AppSettings.Theme);
+            UnityContainer.RegisterInstance<ITemplateManager>(templateManager);
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -191,6 +208,8 @@ namespace Queue.Notification.ViewModels
                     displayService.Dispose();
                     templateService.Dispose();
                     queuePlanService.Dispose();
+
+                    templateManager.Dispose();
                 }
                 catch { }
             }

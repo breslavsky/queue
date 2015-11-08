@@ -7,7 +7,6 @@ using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.UI.WPF;
 using System;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -100,10 +99,6 @@ namespace Queue.Terminal.ViewModels
 
             Model.CurrentClient = client;
             Navigator.NextPage();
-        }
-
-        private async Task DoSetClient()
-        {
         }
 
         private void Prev()

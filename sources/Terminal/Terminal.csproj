@@ -137,7 +137,9 @@
     </ApplicationDefinition>
     <Compile Include="Converters\ClientRequestTypeConverter.cs" />
     <Compile Include="Converters\RequestDateTimeConverter.cs" />
+    <Compile Include="Core\CommonTemplateManager.cs" />
     <Compile Include="Core\Extensions\ServiceExtensions.cs" />
+    <Compile Include="Core\ICommonTemplateManager.cs" />
     <Compile Include="Enums\ClientRequestModelState.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="Translate\Messages.Designer.cs">
