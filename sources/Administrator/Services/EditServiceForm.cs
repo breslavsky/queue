@@ -68,8 +68,8 @@ namespace Queue.Administrator
                 clientCallDelayUpDown.Value = (int)service.ClientCallDelay.TotalSeconds;
                 clientRequireCheckBox.Checked = service.ClientRequire;
                 timeIntervalRoundingUpDown.Value = (int)service.TimeIntervalRounding.TotalMinutes;
-                liveRegistratorFlagsControl.Select<ClientRequestRegistrator>(service.LiveRegistrator);
-                earlyRegistratorFlagsControl.Select<ClientRequestRegistrator>(service.EarlyRegistrator);
+                liveRegistratorControl.Select<ClientRequestRegistrator>(service.LiveRegistrator);
+                earlyRegistratorControl.Select<ClientRequestRegistrator>(service.EarlyRegistrator);
                 if (!string.IsNullOrWhiteSpace(service.Color))
                 {
                     colorButton.BackColor = ColorTranslator.FromHtml(service.Color);
@@ -102,8 +102,8 @@ namespace Queue.Administrator
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
-            liveRegistratorFlagsControl.Initialize<ClientRequestRegistrator>();
-            earlyRegistratorFlagsControl.Initialize<ClientRequestRegistrator>();
+            liveRegistratorControl.Initialize<ClientRequestRegistrator>();
+            earlyRegistratorControl.Initialize<ClientRequestRegistrator>();
         }
 
         protected override void Dispose(bool disposing)
@@ -286,9 +286,9 @@ namespace Queue.Administrator
             service.Description = descriptionTextBox.Text;
         }
 
-        private void earlyRegistratorFlagsControl_Leave(object sender, EventArgs e)
+        private void earlyRegistratorControl_Leave(object sender, EventArgs e)
         {
-            service.EarlyRegistrator = earlyRegistratorFlagsControl.Selected<ClientRequestRegistrator>();
+            service.EarlyRegistrator = earlyRegistratorControl.Selected<ClientRequestRegistrator>();
         }
 
         private void isPlanSubjectsCheckBox_Leave(object sender, EventArgs e)
@@ -306,9 +306,9 @@ namespace Queue.Administrator
             service.Link = linkTextBox.Text;
         }
 
-        private void liveRegistratorFlagsControl_Leave(object sender, EventArgs e)
+        private void liveRegistratorControl_Leave(object sender, EventArgs e)
         {
-            service.LiveRegistrator = liveRegistratorFlagsControl.Selected<ClientRequestRegistrator>();
+            service.LiveRegistrator = liveRegistratorControl.Selected<ClientRequestRegistrator>();
         }
 
         private void maxEarlyDaysUpDown_Leave(object sender, EventArgs e)

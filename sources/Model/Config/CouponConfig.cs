@@ -16,8 +16,8 @@ namespace Queue.Model
 
         #region properties
 
-        [Property(Length = TemplateLength)]
-        public virtual string Template { get; set; }
+        [Property]
+        public virtual CouponSection Sections { get; set; }
 
         #endregion properties
     }

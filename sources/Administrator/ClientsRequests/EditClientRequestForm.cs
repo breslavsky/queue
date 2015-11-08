@@ -233,7 +233,7 @@ namespace Queue.Administrator
 
                     ClientRequestCoupon data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
                     CouponConfig config = await taskPool.AddTask(channel.Service.GetCouponConfig());
-                    XPSUtils.PrintXaml(config.Template, data, Settings.CouponPrinter);
+                    //XPSUtils.PrintXaml(config.Template, data, Settings.CouponPrinter);
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

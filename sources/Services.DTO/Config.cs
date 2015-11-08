@@ -46,7 +46,7 @@ namespace Queue.Services.DTO
     public class CouponConfig : Config
     {
         [DataMember]
-        public string Template { get; set; }
+        public CouponSection Sections { get; set; }
     }
 
     [DataContract]

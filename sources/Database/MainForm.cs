@@ -6,7 +6,6 @@ using NHibernate.Criterion;
 using NLog;
 using Queue.Model;
 using Queue.Model.Common;
-using Queue.Resources;
 using Queue.UI.WinForms;
 using System;
 using System.Linq;
@@ -339,7 +338,13 @@ namespace Queue.Database
                 {
                     couponConfig = new CouponConfig()
                     {
-                        Template = Templates.ClientRequestCoupon
+                        Sections = CouponSection.RequestDate 
+                        | CouponSection.RequestTime
+                        | CouponSection.Objects
+                        | CouponSection.Position
+                        | CouponSection.WaitingTime
+                        | CouponSection.Workplaces
+                        | CouponSection.Service
                     };
                     session.Save(couponConfig);
                 }

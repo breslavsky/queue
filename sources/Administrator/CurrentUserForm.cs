@@ -3,6 +3,7 @@ using Junte.Parallel;
 using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
+using NLog;
 using Queue.Administrator.Settings;
 using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
@@ -38,6 +39,7 @@ namespace Queue.Administrator
 
         #region fields
 
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private readonly TaskPool taskPool;
 
         #endregion fields
@@ -71,9 +73,16 @@ namespace Queue.Administrator
                 couponPrintersComboBox.Items.Add(p.FullName);
             }
 
-            couponPrintersComboBox.SelectedItem = string.IsNullOrWhiteSpace(Settings.CouponPrinter)
-                ? LocalPrintServer.GetDefaultPrintQueue().FullName
-                : Settings.CouponPrinter;
+            try
+            {
+                couponPrintersComboBox.SelectedItem = string.IsNullOrWhiteSpace(Settings.CouponPrinter)
+                    ? LocalPrintServer.GetDefaultPrintQueue().FullName
+                    : Settings.CouponPrinter;
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex);
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -153,7 +153,7 @@ namespace Queue.Services.Server
                         throw new SystemException();
                     }
 
-                    сonfig.Template = source.Template;
+                    сonfig.Sections = source.Sections;
 
                     session.Save(сonfig);
                     transaction.Commit();

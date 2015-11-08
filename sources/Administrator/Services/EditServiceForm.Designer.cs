@@ -31,9 +31,9 @@
             this.tagsLabel = new System.Windows.Forms.Label();
             this.tagsTextBox = new System.Windows.Forms.TextBox();
             this.liveRegistratorLabel = new System.Windows.Forms.Label();
-            this.liveRegistratorFlagsControl = new Queue.UI.WinForms.EnumFlagsControl();
+            this.liveRegistratorControl = new Queue.UI.WinForms.EnumFlagsControl();
             this.earlyRegistratorLabel = new System.Windows.Forms.Label();
-            this.earlyRegistratorFlagsControl = new Queue.UI.WinForms.EnumFlagsControl();
+            this.earlyRegistratorControl = new Queue.UI.WinForms.EnumFlagsControl();
             this.commentLabel = new System.Windows.Forms.Label();
             this.commentTextBox = new System.Windows.Forms.TextBox();
             this.additionalPropertiesTabPage = new System.Windows.Forms.TabPage();
@@ -200,9 +200,9 @@
             this.commonPropertiesTabPage.Controls.Add(this.tagsLabel);
             this.commonPropertiesTabPage.Controls.Add(this.tagsTextBox);
             this.commonPropertiesTabPage.Controls.Add(this.liveRegistratorLabel);
-            this.commonPropertiesTabPage.Controls.Add(this.liveRegistratorFlagsControl);
+            this.commonPropertiesTabPage.Controls.Add(this.liveRegistratorControl);
             this.commonPropertiesTabPage.Controls.Add(this.earlyRegistratorLabel);
-            this.commonPropertiesTabPage.Controls.Add(this.earlyRegistratorFlagsControl);
+            this.commonPropertiesTabPage.Controls.Add(this.earlyRegistratorControl);
             this.commonPropertiesTabPage.Controls.Add(this.commentLabel);
             this.commonPropertiesTabPage.Controls.Add(this.commentTextBox);
             this.commonPropertiesTabPage.Location = new System.Drawing.Point(4, 26);
@@ -275,13 +275,13 @@
             this.liveRegistratorLabel.Text = "Регистраторы живой очереди";
             this.liveRegistratorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // liveRegistratorFlagsControl
+            // liveRegistratorControl
             // 
-            this.liveRegistratorFlagsControl.Location = new System.Drawing.Point(380, 145);
-            this.liveRegistratorFlagsControl.Name = "liveRegistratorFlagsControl";
-            this.liveRegistratorFlagsControl.Size = new System.Drawing.Size(180, 65);
-            this.liveRegistratorFlagsControl.TabIndex = 3;
-            this.liveRegistratorFlagsControl.Leave += new System.EventHandler(this.liveRegistratorFlagsControl_Leave);
+            this.liveRegistratorControl.Location = new System.Drawing.Point(380, 145);
+            this.liveRegistratorControl.Name = "liveRegistratorControl";
+            this.liveRegistratorControl.Size = new System.Drawing.Size(180, 65);
+            this.liveRegistratorControl.TabIndex = 3;
+            this.liveRegistratorControl.Leave += new System.EventHandler(this.liveRegistratorControl_Leave);
             // 
             // earlyRegistratorLabel
             // 
@@ -292,13 +292,13 @@
             this.earlyRegistratorLabel.Text = "Регистраторы по записи";
             this.earlyRegistratorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // earlyRegistratorFlagsControl
+            // earlyRegistratorControl
             // 
-            this.earlyRegistratorFlagsControl.Location = new System.Drawing.Point(600, 145);
-            this.earlyRegistratorFlagsControl.Name = "earlyRegistratorFlagsControl";
-            this.earlyRegistratorFlagsControl.Size = new System.Drawing.Size(180, 65);
-            this.earlyRegistratorFlagsControl.TabIndex = 4;
-            this.earlyRegistratorFlagsControl.Leave += new System.EventHandler(this.earlyRegistratorFlagsControl_Leave);
+            this.earlyRegistratorControl.Location = new System.Drawing.Point(600, 145);
+            this.earlyRegistratorControl.Name = "earlyRegistratorControl";
+            this.earlyRegistratorControl.Size = new System.Drawing.Size(180, 65);
+            this.earlyRegistratorControl.TabIndex = 4;
+            this.earlyRegistratorControl.Leave += new System.EventHandler(this.earlyRegistratorControl_Leave);
             // 
             // commentLabel
             // 
@@ -920,8 +920,8 @@
         private System.Windows.Forms.CheckBox isPlanSubjectsCheckBox;
         private System.Windows.Forms.TextBox linkTextBox;
         private System.Windows.Forms.Label linkLabel;
-        private UI.WinForms.EnumFlagsControl earlyRegistratorFlagsControl;
-        private UI.WinForms.EnumFlagsControl liveRegistratorFlagsControl;
+        private UI.WinForms.EnumFlagsControl earlyRegistratorControl;
+        private UI.WinForms.EnumFlagsControl liveRegistratorControl;
         private System.Windows.Forms.CheckBox isUseTypeCheckBox;
         private System.Windows.Forms.TabPage designPropertiesTabControl;
         private System.Windows.Forms.Label fontSizeLabel;

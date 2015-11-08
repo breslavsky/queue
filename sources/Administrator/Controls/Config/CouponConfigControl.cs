@@ -2,6 +2,7 @@
 using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
+using Queue.Model.Common;
 using Queue.Resources;
 using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
@@ -30,8 +31,6 @@ namespace Queue.Administrator
 
         #region fields
 
-        private const string HighligtingStyle = "XML";
-
         private readonly TaskPool taskPool;
         private CouponConfig config;
 
@@ -48,11 +47,8 @@ namespace Queue.Administrator
             private set
             {
                 config = value;
-                if (config != null)
-                {
-                    couponTemplateEditor.Text = config.Template;
-                    couponTemplateEditor.SetHighlighting(HighligtingStyle);
-                }
+
+                sectionsControl.Select<CouponSection>(config.Sections);
             }
         }
 
@@ -68,6 +64,8 @@ namespace Queue.Administrator
             {
                 return;
             }
+
+            sectionsControl.Initialize<CouponSection>();
 
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
@@ -99,23 +97,6 @@ namespace Queue.Administrator
                 {
                     UIHelper.Warning(exception.Message);
                 }
-            }
-        }
-
-        private void couponTemplateEditor_Leave(object sender, EventArgs e)
-        {
-            config.Template = couponTemplateEditor.Text;
-        }
-
-        private void previewLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs eventArgs)
-        {
-            try
-            {
-                Process.Start(XPSUtils.WriteXaml(couponTemplateEditor.Text, null));
-            }
-            catch (Exception exception)
-            {
-                UIHelper.Warning(exception.Message);
             }
         }
 
@@ -158,9 +139,9 @@ namespace Queue.Administrator
             Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
         }
 
-        private void templateLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void sectionsControl_Leave(object sender, EventArgs e)
         {
-            config.Template = couponTemplateEditor.Text = Templates.ClientRequestCoupon;
+            config.Sections = sectionsControl.Selected<CouponSection>();
         }
     }
 }

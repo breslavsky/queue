@@ -61,6 +61,7 @@
     <Compile Include="Settings\HubSettings.cs" />
     <Compile Include="Settings\LoginSettings.cs" />
     <Compile Include="ServerTime.cs" />
+    <Compile Include="Templates.cs" />
     <Compile Include="TicksInterval.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="Product.cs" />

@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdministratorPermissions.cs" />
+    <Compile Include="CouponSection.cs" />
     <Compile Include="ClientRequestRegistrator.cs" />
     <Compile Include="ClientRequestState.cs" />
     <Compile Include="ClientRequestType.cs" />
@@ -57,6 +58,11 @@
     <Compile Include="ServiceType.cs" />
     <Compile Include="Translate\AdministratorPermissions.Designer.cs">
       <DependentUpon>AdministratorPermissions.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Translate\CouponSection.Designer.cs">
+      <DependentUpon>CouponSection.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -120,6 +126,10 @@
     <EmbeddedResource Include="Translate\AdministratorPermissions.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AdministratorPermissions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Translate\CouponSection.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CouponSection.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translate\ClientRequestRegistrator.en-US.resx" />
     <EmbeddedResource Include="Translate\ClientRequestRegistrator.resx">

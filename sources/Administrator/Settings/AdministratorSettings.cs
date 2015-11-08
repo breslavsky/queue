@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using Queue.Common;
+using System.Configuration;
 
 namespace Queue.Administrator.Settings
 {
@@ -11,6 +12,18 @@ namespace Queue.Administrator.Settings
         {
             get { return (string)this["couponPrinter"]; }
             set { this["couponPrinter"] = value; }
+        }
+
+        [ConfigurationProperty("theme")]
+        public string Theme
+        {
+            get { return (string)this["theme"]; }
+            set { this["theme"] = value; }
+        }
+
+        public AdministratorSettings()
+        {
+            Theme = Templates.Themes.Default;
         }
 
         public override bool IsReadOnly()

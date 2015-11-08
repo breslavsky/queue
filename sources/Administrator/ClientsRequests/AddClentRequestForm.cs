@@ -10,6 +10,7 @@ using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.Common;
 using Queue.UI.WinForms;
+using Queue.UI.WPF;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -31,6 +32,9 @@ namespace Queue.Administrator
 
         [Dependency]
         public ChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        [Dependency]
+        public ITemplateManager TemplateManager { get; set; }
 
         #endregion dependency
 
@@ -190,11 +194,12 @@ namespace Queue.Administrator
 
                             if (couponAutoPrintCheckBox.Checked)
                             {
-                                XPSUtils.PrintXaml(config.Template, data, Settings.CouponPrinter);
+                                //XPSUtils.PrintXaml(config.Template, data, Settings.CouponPrinter);
                             }
                             else
                             {
-                                Process.Start(XPSUtils.WriteXaml(config.Template, data));
+                                var template = TemplateManager.GetTemplate(Templates.Coupon);
+                                Process.Start(XPSUtils.WriteXaml(template, data));
                             }
                         }
                     }

@@ -10,6 +10,7 @@ using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
+using Queue.UI.WPF;
 using System;
 using System.Windows.Forms;
 using QueueAdministrator = Queue.Services.DTO.Administrator;
@@ -26,6 +27,7 @@ namespace Queue.Administrator
         private static AdministratorSettings administratorSettings;
         private static LoginSettings loginSettings;
         private static LoginFormSettings loginFormSettings;
+        private static TemplateManager templateManager;
 
         private static string endpoint;
         private static Guid sessionId;
@@ -146,6 +148,12 @@ namespace Queue.Administrator
             container.RegisterInstance(queuePlanService);
             container.RegisterType<DuplexChannelManager<IQueuePlanTcpService>>
                 (new InjectionFactory(c => queuePlanService.CreateChannelManager(sessionId)));
+
+            var theme = string.IsNullOrEmpty(administratorSettings.Theme) 
+                ? Templates.Themes.Default : administratorSettings.Theme;
+
+            templateManager = new TemplateManager(Templates.Apps.Common, theme);
+            container.RegisterInstance<ITemplateManager>(templateManager);
         }
 
         private static void ParseOptions()

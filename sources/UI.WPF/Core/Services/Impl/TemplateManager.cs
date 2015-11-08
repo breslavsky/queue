@@ -29,7 +29,7 @@ namespace Queue.UI.WPF
             ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
         }
 
-        public DependencyObject GetTemplate(string template)
+        public FrameworkElement GetTemplate(string template)
         {
             string content = cache.ContainsKey(template) ?
                 cache[template] :
@@ -37,7 +37,7 @@ namespace Queue.UI.WPF
 
             try
             {
-                return XamlReader.Parse(content) as DependencyObject;
+                return XamlReader.Parse(content) as FrameworkElement;
             }
             catch (Exception e)
             {
