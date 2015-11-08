@@ -30,8 +30,8 @@ namespace Queue.Hosts.Metric.WinForms
         {
             InitializeComponent();
 
-            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.MetricServiceExe);
-            serviceManager = new ServiceManager(HostsConsts.MetricServiceName, exePath);
+            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostMetadata.MetricServiceExe);
+            serviceManager = new ServiceManager(HostMetadata.MetricServiceName, exePath);
             LoadConfiguration();
 
             editDatabaseSettingsControl.Settings = settings.Database;
@@ -39,8 +39,8 @@ namespace Queue.Hosts.Metric.WinForms
 
         private void LoadConfiguration()
         {
-            configuration = new ConfigurationManager(HostsConsts.MetricApp, Environment.SpecialFolder.CommonApplicationData);
-            settings = configuration.GetSection<MetricSettings>(HostsConsts.MetricSettingsSectionKey);
+            configuration = new ConfigurationManager(HostMetadata.MetricApp, Environment.SpecialFolder.CommonApplicationData);
+            settings = configuration.GetSection<MetricSettings>(MetricSettings.SectionKey);
         }
 
         private void MainForm_Load(object sender, EventArgs e)

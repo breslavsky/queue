@@ -13,14 +13,14 @@ namespace Queue.Portal
             Theme = Templates.Themes.Default;
         }
 
-        [ConfigurationProperty("port", IsRequired = true)]
+        [ConfigurationProperty("port")]
         public int Port
         {
             get { return (int)this["port"]; }
             set { this["port"] = value; }
         }
 
-        [ConfigurationProperty("Theme", IsRequired = true)]
+        [ConfigurationProperty("theme")]
         public string Theme
         {
             get { return (string)this["theme"]; }

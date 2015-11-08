@@ -42,7 +42,7 @@ namespace Hosts.Portal.WinService
                 container.RegisterInstance(container);
                 ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
-                configuration = new ConfigurationManager(HostsConsts.PortalApp, SpecialFolder.CommonApplicationData);
+                configuration = new ConfigurationManager(HostMetadata.PortalApp, SpecialFolder.CommonApplicationData);
                 container.RegisterInstance(configuration);
 
                 settings = configuration.GetSection<PortalSettings>(PortalSettings.SectionKey);

@@ -39,10 +39,10 @@ namespace Queue.Hosts.Server.WinForms
             container.RegisterInstance(container);
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
-            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.ServerServiceExe);
-            serviceManager = new ServiceManager(HostsConsts.ServerServiceName, exePath);
+            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostMetadata.ServerServiceExe);
+            serviceManager = new ServiceManager(HostMetadata.ServerServiceName, exePath);
 
-            configuration = new ConfigurationManager(HostsConsts.ServerApp, Environment.SpecialFolder.CommonApplicationData);
+            configuration = new ConfigurationManager(HostMetadata.ServerApp, Environment.SpecialFolder.CommonApplicationData);
             container.RegisterInstance(configuration);
 
             var commonApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);

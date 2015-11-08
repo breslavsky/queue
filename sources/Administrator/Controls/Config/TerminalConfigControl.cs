@@ -2,7 +2,6 @@
 using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
-using Queue.Resources;
 using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;

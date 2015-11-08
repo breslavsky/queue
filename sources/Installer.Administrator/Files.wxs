@@ -67,9 +67,6 @@
       <Component Id="_63E8ECE5E2AD43B8A1028F43A453B518" Guid="63E8ECE5-E2AD-43B8-A102-8F43A453B518">
         <File KeyPath="yes" Source="$(var.Administrator.TargetDir)\Queue.Common.dll" />
       </Component>
-      <Component Id="_1CE1FAF4ACA446DA8952A5F3A9DC9052" Guid="1CE1FAF4-ACA4-46DA-8952-A5F3A9DC9052">
-        <File KeyPath="yes" Source="$(var.Administrator.TargetDir)\Queue.Resources.dll" />
-      </Component>
       <Component Id="_D7860FC4DEBF48359A2291E272857BEB" Guid="D7860FC4-DEBF-4835-9A22-91E272857BEB">
         <File KeyPath="yes" Source="$(var.Administrator.TargetDir)\Queue.Model.Common.dll" />
       </Component>

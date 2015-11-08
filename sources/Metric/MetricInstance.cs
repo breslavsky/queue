@@ -16,8 +16,7 @@ namespace Queue.Metric
     public class MetricInstance : IDisposable
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
-
-        private SessionProvider sessionProvider;
+        private readonly SessionProvider sessionProvider;
 
         private Timer updateTimer;
         private int UpdateInterval = 60000;
@@ -53,9 +52,9 @@ namespace Queue.Metric
             {
                 CollectMetric();
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                logger.Error(exception);
+                logger.Error(ex);
             }
             finally
             {
@@ -65,7 +64,7 @@ namespace Queue.Metric
 
         private void CollectMetric()
         {
-            using (ISession session = sessionProvider.OpenSession())
+            using (var session = sessionProvider.OpenSession())
             {
                 CollectQueuePlanMetric(session);
                 CollectQueuePlanServiceMetric(session);
@@ -95,7 +94,7 @@ namespace Queue.Metric
                     .Add(Projections.Sum(Projections.Conditional(Restrictions.Eq("State", ClientRequestState.Rendered),
                          Projections.Property("Productivity"), Projections.Constant(0, NHibernateUtil.Single))), "Productivity");
 
-            IList<QueuePlanMetric> queuePlanMetrics = session.CreateCriteria<ClientRequest>()
+            var queuePlanMetrics = session.CreateCriteria<ClientRequest>()
                 .Add(Restrictions.Eq("RequestDate", requestDate.Date))
                 .SetProjection(projections)
                 .SetResultTransformer(Transformers.AliasToBean(typeof(QueuePlanMetric)))
@@ -149,10 +148,10 @@ namespace Queue.Metric
                          Projections.Property("Productivity"), Projections.Constant(0, NHibernateUtil.Single))), "Productivity");
 
             var queuePlanServiceMetrics = session.CreateCriteria<ClientRequest>()
-                                                                            .Add(Restrictions.Eq("RequestDate", requestDate.Date))
-                                                                            .SetProjection(projections)
-                                                                            .SetResultTransformer(Transformers.AliasToBean(typeof(QueuePlanServiceMetric)))
-                                                                            .List<QueuePlanServiceMetric>();
+                    .Add(Restrictions.Eq("RequestDate", requestDate.Date))
+                    .SetProjection(projections)
+                    .SetResultTransformer(Transformers.AliasToBean(typeof(QueuePlanServiceMetric)))
+                    .List<QueuePlanServiceMetric>();
 
             foreach (var m in queuePlanServiceMetrics)
             {
@@ -197,10 +196,10 @@ namespace Queue.Metric
                           Projections.Property("Productivity"), Projections.Constant(0, NHibernateUtil.Single))), "Productivity");
 
             var queuePlanOperatorMetrics = session.CreateCriteria<ClientRequest>()
-                                                                            .Add(Restrictions.Eq("RequestDate", requestDate.Date))
-                                                                            .SetProjection(projections)
-                                                                            .SetResultTransformer(Transformers.AliasToBean(typeof(QueuePlanOperatorMetric)))
-                                                                            .List<QueuePlanOperatorMetric>();
+                    .Add(Restrictions.Eq("RequestDate", requestDate.Date))
+                    .SetProjection(projections)
+                    .SetResultTransformer(Transformers.AliasToBean(typeof(QueuePlanOperatorMetric)))
+                    .List<QueuePlanOperatorMetric>();
 
             foreach (var m in queuePlanOperatorMetrics)
             {

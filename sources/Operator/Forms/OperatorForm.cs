@@ -855,6 +855,59 @@ namespace Queue.Operator
             }
         }
 
+        private async void mainTabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            switch (e.TabPageIndex)
+            {
+                case 0:
+                    Width = MinimumSize.Width;
+                    break;
+
+                case 1:
+                    Width = MaximumSize.Width;
+
+                    try
+                    {
+                        clientRequestsGridView.Rows.Clear();
+
+                        using (var channel = QueuePlanChannelManager.CreateChannel())
+                        {
+                            var clientRequestPlans = await taskPool.AddTask(channel.Service.GetOperatorClientRequestPlans());
+
+                            foreach (var clientRequestPlan in clientRequestPlans)
+                            {
+                                var clientRequest = clientRequestPlan.ClientRequest;
+
+                                int index = clientRequestsGridView.Rows.Add();
+                                var row = clientRequestsGridView.Rows[index];
+
+                                row.Cells["numberColumn"].Value = clientRequest.Number;
+                                row.Cells["subjectsColumn"].Value = clientRequest.Subjects;
+                                row.Cells["startTimeColumn"].Value = clientRequestPlan.StartTime.ToString("hh\\:mm\\:ss");
+                                row.Cells["timeIntervalColumn"].Value = (clientRequestPlan.FinishTime - clientRequestPlan.StartTime).Minutes;
+                                row.Cells["clientColumn"].Value = clientRequest.Client;
+                                row.Cells["serviceColumn"].Value = clientRequest.Service;
+                                row.Cells["stateColumn"].Value = Translater.Enum(clientRequest.State);
+                                row.Tag = clientRequest;
+                            }
+                        }
+                    }
+                    catch (OperationCanceledException) { }
+                    catch (CommunicationObjectAbortedException) { }
+                    catch (ObjectDisposedException) { }
+                    catch (InvalidOperationException) { }
+                    catch (FaultException exception)
+                    {
+                        UIHelper.Warning(exception.Reason.ToString());
+                    }
+                    catch (Exception exception)
+                    {
+                        UIHelper.Warning(exception.Message);
+                    }
+                    break;
+            }
+        }
+
         #region task pool
 
         private void taskPool_OnAddTask(object sender, EventArgs e)

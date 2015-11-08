@@ -54,8 +54,8 @@
       <Component Id="_5ECD461EBCE8479B84FACA96D53E71B7" Guid="5ECD461E-BCE8-479B-84FA-CA96D53E71B7">
         <File KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\Junte.UI.WinForms.dll" />
       </Component>
-      <Component Id="_2D83E85939F24F429AE3E686F5831E1C" Guid="2D83E859-39F2-4F42-9AE3-E686F5831E1C">
-        <File KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\Queue.Hosts.Common.dll" />
+      <Component Id="_7593A931AF1747D9804380D74BE35EEC" Guid="7593A931-AF17-47D9-8043-80D74BE35EEC">
+        <File KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\Junte.UI.WPF.dll" />
       </Component>
     </ComponentGroup>
 
@@ -86,6 +86,12 @@
       </Component>
       <Component Id="_AEBDBAEE52344F79809ACF24DD7837FC" Guid="AEBDBAEE-5234-4F79-809A-CF24DD7837FC">
         <File KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\Queue.UI.WinForms.dll" />
+      </Component>
+      <Component Id="_2D83E85939F24F429AE3E686F5831E1C" Guid="2D83E859-39F2-4F42-9AE3-E686F5831E1C">
+        <File KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\Queue.Hosts.Common.dll" />
+      </Component>
+      <Component Id="_61A06434FC7844CDBE53291657FEA351" Guid="61A06434-FC78-44CD-BE53-291657FEA351">
+        <File KeyPath="yes" Source="$(var.Hosts.Portal.WinForms.TargetDir)\Queue.UI.WPF.dll" />
       </Component>
     </ComponentGroup>
 

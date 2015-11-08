@@ -33,6 +33,9 @@ namespace Queue.Services.DTO
         public string Mobile { get; set; }
 
         [DataMember]
+        public string Identity { get; set; }
+
+        [DataMember]
         public bool IsActive { get; set; }
 
         [DataMember]

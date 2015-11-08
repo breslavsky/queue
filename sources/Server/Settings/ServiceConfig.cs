@@ -9,21 +9,21 @@ namespace Queue.Server.Settings
 {
     public class ServiceConfig : ConfigurationElement
     {
-        [ConfigurationProperty("enabled", IsRequired = true)]
+        [ConfigurationProperty("enabled")]
         public bool Enabled
         {
             get { return (bool)this["enabled"]; }
             set { this["enabled"] = value; }
         }
 
-        [ConfigurationProperty("host", IsRequired = true)]
+        [ConfigurationProperty("host")]
         public string Host
         {
             get { return (string)this["host"]; }
             set { this["host"] = value; }
         }
 
-        [ConfigurationProperty("port", IsRequired = true)]
+        [ConfigurationProperty("port")]
         public int Port
         {
             get { return (int)this["port"]; }

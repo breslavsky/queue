@@ -43,7 +43,7 @@ namespace Queue.Hosts.Server.WinService
                 container.RegisterInstance(container);
                 ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
-                configuration = new ConfigurationManager(HostsConsts.ServerApp, SpecialFolder.CommonApplicationData);
+                configuration = new ConfigurationManager(HostMetadata.ServerApp, SpecialFolder.CommonApplicationData);
                 container.RegisterInstance(configuration);
 
                 settings = configuration.GetSection<ServerSettings>(ServerSettings.SectionKey);

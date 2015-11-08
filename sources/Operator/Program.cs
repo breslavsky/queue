@@ -1,4 +1,5 @@
 ﻿using Junte.Configuration;
+using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
@@ -63,12 +64,20 @@ namespace Queue.Operator
             {
                 endpoint = options.Endpoint;
 
-                using (var serverUserService = new UserService(endpoint))
-                using (var channelManager = serverUserService.CreateChannelManager())
-                using (var channel = channelManager.CreateChannel())
+                try
                 {
-                    sessionId = Guid.Parse(options.SessionId);
-                    currentUser = channel.Service.OpenUserSession(sessionId).Result as QueueOperator;
+                    using (var serverUserService = new UserService(endpoint))
+                    using (var channelManager = serverUserService.CreateChannelManager())
+                    using (var channel = channelManager.CreateChannel())
+                    {
+                        sessionId = Guid.Parse(options.SessionId);
+                        currentUser = channel.Service.OpenUserSession(sessionId).Result as QueueOperator;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.InnerException.Message);
+                    return;
                 }
 
                 container.RegisterInstance<User>(currentUser);

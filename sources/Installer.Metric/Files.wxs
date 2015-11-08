@@ -87,6 +87,9 @@
       <Component Id="_AEBDBAEE52344F79809ACF24DD7837FC" Guid="AEBDBAEE-5234-4F79-809A-CF24DD7837FC">
         <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.UI.WinForms.dll" />
       </Component>
+      <Component Id="_2D83E85939F24F429AE3E686F5831E1C" Guid="2D83E859-39F2-4F42-9AE3-E686F5831E1C">
+        <File KeyPath="yes" Source="$(var.Hosts.Metric.WinForms.TargetDir)\Queue.Hosts.Common.dll" />
+      </Component>
     </ComponentGroup>
 
     <ComponentGroup Id="Application" Directory="INSTALLFOLDER">

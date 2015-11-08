@@ -11,7 +11,7 @@ namespace Queue.Hosts.Metric.WinService
         {
             InitializeComponent();
 
-            serviceInstaller.ServiceName = HostsConsts.MetricServiceName;
+            serviceInstaller.ServiceName = HostMetadata.MetricServiceName;
         }
     }
 }

@@ -5,14 +5,14 @@ namespace Queue.Hub.Svetovod
 {
     public class SvetovodQualityPanelDriverConfig : DriverConfig
     {
-        [ConfigurationProperty("port", IsRequired = true)]
+        [ConfigurationProperty("port")]
         public string Port
         {
             get { return (string)this["port"]; }
             set { this["port"] = value; }
         }
 
-        [ConfigurationProperty("deviceId", IsRequired = true)]
+        [ConfigurationProperty("deviceId")]
         public byte DeviceId
         {
             get { return (byte)this["deviceId"]; }

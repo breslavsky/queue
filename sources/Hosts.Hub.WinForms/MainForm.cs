@@ -39,14 +39,14 @@ namespace Queue.Hosts.Hub.WinForms
             container.RegisterInstance(container);
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
-            configuration = new ConfigurationManager(HostsConsts.HubApp, Environment.SpecialFolder.CommonApplicationData);
+            configuration = new ConfigurationManager(HostMetadata.HubApp, Environment.SpecialFolder.CommonApplicationData);
             container.RegisterInstance(configuration);
 
             settings = configuration.GetSection<HubSettings>(HubSettings.SectionKey);
             container.RegisterInstance(settings);
 
-            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.HubServiceExe);
-            serviceManager = new ServiceManager(HostsConsts.HubServiceName, exePath);
+            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostMetadata.HubServiceExe);
+            serviceManager = new ServiceManager(HostMetadata.HubServiceName, exePath);
         }
 
         private void MainForm_Load(object sender, EventArgs e)

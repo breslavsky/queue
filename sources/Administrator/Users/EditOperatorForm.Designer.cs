@@ -43,6 +43,8 @@
             this.workplaceControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.workplaceLabel = new System.Windows.Forms.Label();
             this.isActiveCheckBox = new System.Windows.Forms.CheckBox();
+            this.identityTextBox = new System.Windows.Forms.TextBox();
+            this.indentityLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // surnameLabel
@@ -133,20 +135,20 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(185, 160);
+            this.saveButton.Location = new System.Drawing.Point(185, 185);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
-            this.saveButton.TabIndex = 10;
+            this.saveButton.TabIndex = 9;
             this.saveButton.Text = "Записать";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // passwordButton
             // 
-            this.passwordButton.Location = new System.Drawing.Point(5, 160);
+            this.passwordButton.Location = new System.Drawing.Point(5, 185);
             this.passwordButton.Name = "passwordButton";
             this.passwordButton.Size = new System.Drawing.Size(75, 25);
-            this.passwordButton.TabIndex = 9;
+            this.passwordButton.TabIndex = 8;
             this.passwordButton.Text = "Пароль";
             this.passwordButton.UseVisualStyleBackColor = true;
             this.passwordButton.Click += new System.EventHandler(this.passwordButton_Click);
@@ -173,19 +175,36 @@
             // isActiveCheckBox
             // 
             this.isActiveCheckBox.AutoSize = true;
-            this.isActiveCheckBox.Location = new System.Drawing.Point(115, 165);
+            this.isActiveCheckBox.Location = new System.Drawing.Point(115, 190);
             this.isActiveCheckBox.Name = "isActiveCheckBox";
             this.isActiveCheckBox.Size = new System.Drawing.Size(68, 17);
-            this.isActiveCheckBox.TabIndex = 11;
+            this.isActiveCheckBox.TabIndex = 7;
             this.isActiveCheckBox.Text = "Активен";
             this.isActiveCheckBox.UseVisualStyleBackColor = true;
             this.isActiveCheckBox.Leave += new System.EventHandler(this.isActiveCheckBox_Leave);
+            // 
+            // identityTextBox
+            // 
+            this.identityTextBox.Location = new System.Drawing.Point(120, 155);
+            this.identityTextBox.Name = "identityTextBox";
+            this.identityTextBox.Size = new System.Drawing.Size(140, 20);
+            this.identityTextBox.TabIndex = 6;
+            this.identityTextBox.Leave += new System.EventHandler(this.identityTextBox_Leave);
+            // 
+            // indentityLabel
+            // 
+            this.indentityLabel.Location = new System.Drawing.Point(5, 155);
+            this.indentityLabel.Name = "indentityLabel";
+            this.indentityLabel.Size = new System.Drawing.Size(110, 20);
+            this.indentityLabel.TabIndex = 13;
+            this.indentityLabel.Text = "Идентификация";
+            this.indentityLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // EditOperatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(269, 191);
+            this.ClientSize = new System.Drawing.Size(269, 221);
             this.Controls.Add(this.isActiveCheckBox);
             this.Controls.Add(this.surnameLabel);
             this.Controls.Add(this.surnameTextBox);
@@ -199,6 +218,8 @@
             this.Controls.Add(this.mobileTextBox);
             this.Controls.Add(this.workplaceLabel);
             this.Controls.Add(this.workplaceControl);
+            this.Controls.Add(this.indentityLabel);
+            this.Controls.Add(this.identityTextBox);
             this.Controls.Add(this.passwordButton);
             this.Controls.Add(this.saveButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -228,5 +249,7 @@
         private UI.WinForms.IdentifiedEntityControl workplaceControl;
         private System.Windows.Forms.Label workplaceLabel;
         private System.Windows.Forms.CheckBox isActiveCheckBox;
+        private System.Windows.Forms.TextBox identityTextBox;
+        private System.Windows.Forms.Label indentityLabel;
     }
 }

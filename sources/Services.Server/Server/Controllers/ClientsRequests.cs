@@ -162,6 +162,11 @@ namespace Queue.Services.Server
                         throw new FaultException("Выбранная услуга не активна");
                     }
 
+                    if (service.ClientRequire && client == null)
+                    {
+                        throw new FaultException("Выбранная услуга требует наличие клиента");
+                    }
+
                     requestDate = requestDate.Date;
                     var isRequestDateToday = requestDate == DateTime.Today;
 

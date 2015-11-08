@@ -3,18 +3,13 @@ using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Model.Common;
-using Queue.Resources;
-using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
-using Queue.UI.Common;
 using Queue.UI.WinForms;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.ServiceModel;
 using System.Windows.Forms;
-using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {

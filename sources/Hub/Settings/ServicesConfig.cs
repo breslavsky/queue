@@ -9,14 +9,14 @@ namespace Queue.Hub.Settings
 {
     public class ServicesConfig : ConfigurationElement
     {
-        [ConfigurationProperty("httpService", IsRequired = true)]
+        [ConfigurationProperty("httpService")]
         public HttpServiceConfig HttpService
         {
             get { return (HttpServiceConfig)this["httpService"]; }
             set { this["httpService"] = value; }
         }
 
-        [ConfigurationProperty("tcpService", IsRequired = true)]
+        [ConfigurationProperty("tcpService")]
         public TcpServiceConfig TcpService
         {
             get { return (TcpServiceConfig)this["tcpService"]; }

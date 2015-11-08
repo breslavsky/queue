@@ -5,6 +5,8 @@ namespace Queue.Metric
 {
     public class MetricSettings : ConfigurationSection
     {
+        public const string SectionKey = "metric";
+
         public MetricSettings()
         {
             Database = GetDefaultDatabaseSettings();

@@ -56,6 +56,7 @@ namespace Queue.Administrator
                 mobileTextBox.Text = queueOperator.Mobile;
                 isActiveCheckBox.Checked = queueOperator.IsActive;
                 workplaceControl.Select<Workplace>(queueOperator.Workplace);
+                identityTextBox.Text = queueOperator.Identity;
             }
         }
 
@@ -235,6 +236,11 @@ namespace Queue.Administrator
         private void surnameTextBox_Leave(object sender, EventArgs e)
         {
             queueOperator.Surname = surnameTextBox.Text;
+        }
+
+        private void identityTextBox_Leave(object sender, EventArgs e)
+        {
+            queueOperator.Identity = identityTextBox.Text;
         }
 
         #endregion bindings

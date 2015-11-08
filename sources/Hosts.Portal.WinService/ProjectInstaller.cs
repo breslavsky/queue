@@ -11,7 +11,7 @@ namespace Queue.Hosts.Portal.WinService
         {
             InitializeComponent();
 
-            serviceInstaller.ServiceName = HostsConsts.PortalServiceName;
+            serviceInstaller.ServiceName = HostMetadata.PortalServiceName;
         }
     }
 }

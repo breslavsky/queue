@@ -1,1 +1,1 @@
-﻿update _coupon_config set Sections = 63;
+﻿update _config_coupon set Sections = 255;

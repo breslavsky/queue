@@ -1,7 +1,6 @@
 ﻿namespace Queue.Hosts.Common
 {
-    //TODO: переместить в продукт
-    public static class HostsConsts
+    public static class HostMetadata
     {
         #region server
 
@@ -24,7 +23,6 @@
         public const string MediaApp = "Queue.Media";
         public const string MediaServiceName = "JunteQueueMedia";
         public const string MediaServiceExe = "Queue.Hosts.Media.WinService.exe";
-        public const string MediaSettingsSectionKey = "media";
 
         #endregion media
 
@@ -33,7 +31,6 @@
         public const string MetricApp = "Queue.Metric";
         public const string MetricServiceName = "JunteQueueMetric";
         public const string MetricServiceExe = "Queue.Hosts.Metric.WinService.exe";
-        public const string MetricSettingsSectionKey = "metric";
 
         #endregion metric
 
@@ -42,7 +39,6 @@
         public const string HubApp = "Queue.Hub";
         public const string HubServiceName = "JunteQueueHub";
         public const string HubServiceExe = "Queue.Hosts.Hub.WinService.exe";
-        public const string HubSettingsSectionKey = "hub";
 
         #endregion hub
     }

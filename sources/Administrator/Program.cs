@@ -70,12 +70,20 @@ namespace Queue.Administrator
             {
                 endpoint = options.Endpoint;
 
-                using (var serverUserService = new UserService(endpoint))
-                using (var channelManager = serverUserService.CreateChannelManager())
-                using (var channel = channelManager.CreateChannel())
+                try
                 {
-                    sessionId = Guid.Parse(options.SessionId);
-                    currentUser = channel.Service.OpenUserSession(sessionId).Result as QueueAdministrator;
+                    using (var serverUserService = new UserService(endpoint))
+                    using (var channelManager = serverUserService.CreateChannelManager())
+                    using (var channel = channelManager.CreateChannel())
+                    {
+                        sessionId = Guid.Parse(options.SessionId);
+                        currentUser = channel.Service.OpenUserSession(sessionId).Result as QueueAdministrator;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.InnerException.Message);
+                    return;
                 }
 
                 container.RegisterInstance<User>(currentUser);
@@ -149,7 +157,7 @@ namespace Queue.Administrator
             container.RegisterType<DuplexChannelManager<IQueuePlanTcpService>>
                 (new InjectionFactory(c => queuePlanService.CreateChannelManager(sessionId)));
 
-            var theme = string.IsNullOrEmpty(administratorSettings.Theme) 
+            var theme = string.IsNullOrEmpty(administratorSettings.Theme)
                 ? Templates.Themes.Default : administratorSettings.Theme;
 
             templateManager = new TemplateManager(Templates.Apps.Common, theme);

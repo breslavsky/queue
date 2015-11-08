@@ -6,7 +6,7 @@ namespace Queue.Hub.Svetovod
 {
     public class SvetovodDisplayConnectionConfig : ConfigurationElement
     {
-        [ConfigurationProperty("sysnum", IsRequired = true)]
+        [ConfigurationProperty("sysnum")]
         public byte Sysnum
         {
             get { return (byte)this["sysnum"]; }
@@ -20,7 +20,7 @@ namespace Queue.Hub.Svetovod
             get { return (SvetovodDisplayType)this["type"]; }
         }
 
-        [ConfigurationProperty("width", IsRequired = true)]
+        [ConfigurationProperty("width")]
         public byte Width
         {
             get { return (byte)this["width"]; }

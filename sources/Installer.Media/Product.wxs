@@ -3,7 +3,7 @@
   <?include $(var.Installer.Common.ProjectDir)Consts.wxi ?>
 
   <?define ProductName="Queue Media" ?>
-  <?define ProductTitle="Медиа-служба очереди" ?>
+  <?define ProductTitle="Медиа-служба" ?>
   <?define UpgradeCode="1793500C-0A3C-4195-8A09-A015DCC551B0"?>
 
   <Product Id="$(var.ProductCode)"

@@ -11,7 +11,7 @@ namespace Queue.Hosts.Media.WinService
         {
             InitializeComponent();
 
-            serviceInstaller.ServiceName = HostsConsts.MediaServiceName;
+            serviceInstaller.ServiceName = HostMetadata.MediaServiceName;
         }
     }
 }

@@ -24,8 +24,8 @@ namespace Queue.Hosts.Metric.WinService
 
             try
             {
-                var configuration = new ConfigurationManager(HostsConsts.MetricApp, Environment.SpecialFolder.CommonApplicationData);
-                var settings = configuration.GetSection<MetricSettings>(HostsConsts.MetricSettingsSectionKey);
+                var configuration = new ConfigurationManager(HostMetadata.MetricApp, Environment.SpecialFolder.CommonApplicationData);
+                var settings = configuration.GetSection<MetricSettings>(MetricSettings.SectionKey);
 
                 metric = new MetricInstance(settings);
                 metric.Start();

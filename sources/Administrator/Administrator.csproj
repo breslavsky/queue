@@ -81,9 +81,9 @@
     <Reference Include="CommandLine">
       <HintPath>..\packages\CommandLineParser.1.9.71\lib\net45\CommandLine.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.Configuration, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Junte.Configuration.1.0.2.0\lib\net45\Junte.Configuration.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Junte.Configuration, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.Configuration.1.0.5.0\lib\net45\Junte.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Junte.Parallel">
       <HintPath>..\packages\Junte.Parallel.1.0.0.0\lib\net45\Junte.Parallel.dll</HintPath>
@@ -646,10 +646,6 @@
     <ProjectReference Include="..\Operator\Operator.csproj">
       <Project>{0a11098e-2cc9-487c-b895-b5f9c667785f}</Project>
       <Name>Operator</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Resources\Resources.csproj">
-      <Project>{90c422a9-c537-42a7-b4a8-2490e4d20d3a}</Project>
-      <Name>Resources</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services.Common\Services.Common.csproj">
       <Project>{03915831-23b5-462a-a144-49662864ae34}</Project>

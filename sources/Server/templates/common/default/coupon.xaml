@@ -62,19 +62,31 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Row="0"
                            HorizontalAlignment="Left"
-                           Content="Дата" />
+                           Content="Дата"
+                           Visibility="{Binding Path=Sections,
+                                                Converter={StaticResource visibilityConverter},
+                                                ConverterParameter=RequestDate}" />
                     <TextBlock Grid.Row="0"
                                Grid.Column="1"
                                HorizontalAlignment="Left"
                                Text="{Binding RequestDate,
                                               StringFormat={}{0:dd.MM.yyyy},
-                                              FallbackValue=-}" />
+                                              FallbackValue=-}"
+                               Visibility="{Binding Path=Sections,
+                                                    Converter={StaticResource visibilityConverter},
+                                                    ConverterParameter=RequestDate}" />
                     <Label Grid.Row="1"
                            HorizontalAlignment="Left"
-                           Content="Время" />
+                           Content="Время"
+                           Visibility="{Binding Path=Sections,
+                                                Converter={StaticResource visibilityConverter},
+                                                ConverterParameter=RequestTime}" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="1"
-                               HorizontalAlignment="Left">
+                               HorizontalAlignment="Left"
+                               Visibility="{Binding Path=Sections,
+                                                    Converter={StaticResource visibilityConverter},
+                                                    ConverterParameter=RequestTime}">
                         <TextBlock.Text>
                             <MultiBinding FallbackValue="-" StringFormat="{}{0:00}:{1:00}:{2:00}">
                                 <Binding Path="RequestTime.Hours" />
@@ -85,12 +97,18 @@
                     </TextBlock>
                     <Label Grid.Row="2"
                            HorizontalAlignment="Left"
-                           Content="Объектов" />
+                           Content="Объектов"
+                           Visibility="{Binding Path=Sections,
+                                                Converter={StaticResource visibilityConverter},
+                                                ConverterParameter=Objects}" />
                     <TextBlock Grid.Row="2"
                                Grid.Column="1"
                                HorizontalAlignment="Left"
                                Text="{Binding Subjects,
-                                              FallbackValue=-}" />
+                                              FallbackValue=-}"
+                               Visibility="{Binding Path=Sections,
+                                                    Converter={StaticResource visibilityConverter},
+                                                    ConverterParameter=Objects}" />
                 </Grid>
                 <Border Grid.Row="0"
                         Grid.Column="1"
@@ -118,7 +136,7 @@
                     </Style.Triggers>
                 </Style>
             </StackPanel.Style>
-            <GroupBox>
+            <GroupBox Visibility="{Binding WaitingTime, Path=Sections, Converter={StaticResource visibilityConverter}, ConverterParameter='Position, WaitingTime'}">
                 <GroupBox.Header>
                     <Label Content="Очередь" Style="{DynamicResource GroupBoxHeaderLabel}" />
                 </GroupBox.Header>
@@ -132,17 +150,31 @@
                         <ColumnDefinition Width="180" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Content="Позиция" />
+                    <Label Grid.Row="0"
+                           Content="Позиция"
+                           Visibility="{Binding Path=Sections,
+                                                Converter={StaticResource visibilityConverter},
+                                                ConverterParameter=Position}" />
                     <TextBlock Grid.Row="0"
                                Grid.Column="1"
                                Text="{Binding Position,
-                                              FallbackValue=-}" />
-                    <Label Grid.Row="1" Content="Время ожидания" />
+                                              FallbackValue=-}"
+                               Visibility="{Binding Path=Sections,
+                                                    Converter={StaticResource visibilityConverter},
+                                                    ConverterParameter=Position}" />
+                    <Label Grid.Row="1"
+                           Content="Время ожидания"
+                           Visibility="{Binding Path=Sections,
+                                                Converter={StaticResource visibilityConverter},
+                                                ConverterParameter=WaitingTime}" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="1"
                                Text="{Binding WaitingTime.TotalMinutes,
                                               StringFormat={}{0:0} мин.,
-                                              FallbackValue=0 мин.}" />
+                                              FallbackValue=0 мин.}"
+                               Visibility="{Binding Path=Sections,
+                                                    Converter={StaticResource visibilityConverter},
+                                                    ConverterParameter=WaitingTime}" />
                 </Grid>
             </GroupBox>
         </StackPanel>
@@ -164,7 +196,7 @@
             </GroupBox.Header>
             <TextBlock Margin="15,5,0,0" Text="{Binding Client, FallbackValue=-}" />
         </GroupBox>
-        <GroupBox>
+        <GroupBox Visibility="{Binding Path=Sections, Converter={StaticResource visibilityConverter}, ConverterParameter=Workplaces}">
             <GroupBox.Header>
                 <Label Content="Места" Style="{DynamicResource GroupBoxHeaderLabel}" />
             </GroupBox.Header>
@@ -185,7 +217,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </GroupBox>
-        <GroupBox>
+        <GroupBox Visibility="{Binding Path=Sections, Converter={StaticResource visibilityConverter}, ConverterParameter=Service}">
             <GroupBox.Header>
                 <Label Content="Услуга" Style="{DynamicResource GroupBoxHeaderLabel}" />
             </GroupBox.Header>

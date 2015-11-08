@@ -40,7 +40,7 @@ namespace Queue.Hosts.Hub.WinService
                 container.RegisterInstance(container);
                 ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
-                configuration = new ConfigurationManager(HostsConsts.HubApp, Environment.SpecialFolder.CommonApplicationData);
+                configuration = new ConfigurationManager(HostMetadata.HubApp, Environment.SpecialFolder.CommonApplicationData);
                 container.RegisterInstance(configuration);
 
                 settings = configuration.GetSection<HubSettings>(HubSettings.SectionKey);

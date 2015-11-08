@@ -119,6 +119,7 @@ namespace Queue.Administrator
             var items = new List<ToolStripItem>(topMenu.Items.Cast<ToolStripItem>());
             items.AddRange(dictionariesMenu.DropDownItems.Cast<ToolStripItem>());
             items.AddRange(clientRequestsMenu.DropDownItems.Cast<ToolStripItem>());
+            items.AddRange(queuePlanMenu.DropDownItems.Cast<ToolStripItem>());
 
             foreach (ToolStripItem c in items)
             {

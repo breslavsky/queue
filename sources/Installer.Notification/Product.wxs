@@ -37,7 +37,17 @@
     </Directory>
 
     <Feature Id="ProductFeature" Title="$(var.ProductName)" Level="1">
-      <ComponentGroupRef Id="CoreFiles" />
+
+      <ComponentGroupRef Id="Microsoft" />
+      <ComponentGroupRef Id="Logging" />
+      <ComponentGroupRef Id="Data" />
+      <ComponentGroupRef Id="Junte" />
+      <ComponentGroupRef Id="Queue" />
+      <ComponentGroupRef Id="UI" />
+      <ComponentGroupRef Id="VLC" />
+      <ComponentGroupRef Id="Application" />
+      <ComponentGroupRef Id="Resources_en_US" />
+
       <ComponentRef Id="ApplicationShortcut" />
     </Feature>
 

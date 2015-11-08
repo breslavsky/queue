@@ -13,14 +13,14 @@ namespace Queue.Common.Settings
             Endpoint = "net.tcp://localhost:4511/";
         }
 
-        [ConfigurationProperty("enabled", IsRequired = true)]
+        [ConfigurationProperty("enabled")]
         public bool Enabled
         {
             get { return (bool)this["enabled"]; }
             set { this["enabled"] = value; }
         }
 
-        [ConfigurationProperty("endpoint", IsRequired = true)]
+        [ConfigurationProperty("endpoint")]
         public string Endpoint
         {
             get { return (string)this["endpoint"]; }

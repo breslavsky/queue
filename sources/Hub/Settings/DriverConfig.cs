@@ -5,7 +5,7 @@ namespace Queue.Hub.Settings
 {
     public class DriverConfig : ConfigurationElement
     {
-        [ConfigurationProperty("name", IsKey = true, IsRequired = true)]
+        [ConfigurationProperty("name", IsKey = true)]
         public string Name
         {
             get { return (string)base["name"]; }
@@ -19,21 +19,21 @@ namespace Queue.Hub.Settings
             set { this["enabled"] = value; }
         }
 
-        [ConfigurationProperty("assembly", IsRequired = true)]
+        [ConfigurationProperty("assembly")]
         public string Assembly
         {
             get { return (string)this["assembly"]; }
             set { this["assembly"] = value; }
         }
 
-        [ConfigurationProperty("settings", IsRequired = true)]
+        [ConfigurationProperty("settings")]
         public string Settings
         {
             get { return (string)this["settings"]; }
             set { this["settings"] = value; }
         }
 
-        [ConfigurationProperty("type", IsRequired = true)]
+        [ConfigurationProperty("type")]
         public string Type
         {
             get { return (string)this["type"]; }

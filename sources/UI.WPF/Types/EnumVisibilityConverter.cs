@@ -11,20 +11,24 @@ namespace Queue.UI.WPF
 {
     public class EnumVisibilityConverter : IValueConverter
     {
+        public const char Delimiter = ',';
+
         #region IValueConverter Members
 
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string parameterString = parameter as string;
-            if (parameterString == null)
-                return DependencyProperty.UnsetValue;
+            if (value == null || parameter == null || !(value is Enum))
+            {
+                return Visibility.Collapsed;
+            }
 
-            if (Enum.IsDefined(value.GetType(), value) == false)
-                return DependencyProperty.UnsetValue;
+            var currentFlags = value.ToString()
+                .Split(Delimiter);
+            var findFlags = parameter.ToString()
+                .Split(Delimiter);
 
-            object parameterValue = Enum.Parse(value.GetType(), parameterString);
-
-            return parameterValue.Equals(value) ? Visibility.Visible : Visibility.Collapsed;
+            var finded = currentFlags.Any(x => findFlags.Any(f => f.Trim() == x.Trim()));
+            return finded ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

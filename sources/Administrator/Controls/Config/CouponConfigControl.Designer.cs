@@ -35,24 +35,24 @@
             // 
             // sectionsLabel
             // 
-            this.sectionsLabel.Location = new System.Drawing.Point(4, 11);
+            this.sectionsLabel.Location = new System.Drawing.Point(5, 5);
             this.sectionsLabel.Name = "sectionsLabel";
-            this.sectionsLabel.Size = new System.Drawing.Size(195, 18);
+            this.sectionsLabel.Size = new System.Drawing.Size(195, 30);
             this.sectionsLabel.TabIndex = 4;
             this.sectionsLabel.Text = "Разделы талона";
             this.sectionsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // sectionsControl
             // 
-            this.sectionsControl.Location = new System.Drawing.Point(19, 36);
+            this.sectionsControl.Location = new System.Drawing.Point(15, 40);
             this.sectionsControl.Name = "sectionsControl";
-            this.sectionsControl.Size = new System.Drawing.Size(180, 125);
+            this.sectionsControl.Size = new System.Drawing.Size(195, 145);
             this.sectionsControl.TabIndex = 5;
             this.sectionsControl.Leave += new System.EventHandler(this.sectionsControl_Leave);
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(124, 167);
+            this.saveButton.Location = new System.Drawing.Point(135, 185);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 9;
@@ -67,7 +67,7 @@
             this.Controls.Add(this.sectionsLabel);
             this.Controls.Add(this.sectionsControl);
             this.Name = "CouponConfigControl";
-            this.Size = new System.Drawing.Size(219, 208);
+            this.Size = new System.Drawing.Size(220, 220);
             this.Load += new System.EventHandler(this.CouponConfigControl_Load);
             this.ResumeLayout(false);
 

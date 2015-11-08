@@ -72,9 +72,6 @@
       <Component Id="_63E8ECE5E2AD43B8A1028F43A453B518" Guid="63E8ECE5-E2AD-43B8-A102-8F43A453B518">
         <File KeyPath="yes" Source="$(var.Database.TargetDir)\Queue.Common.dll" />
       </Component>
-      <Component Id="_1CE1FAF4ACA446DA8952A5F3A9DC9052" Guid="1CE1FAF4-ACA4-46DA-8952-A5F3A9DC9052">
-        <File KeyPath="yes" Source="$(var.Database.TargetDir)\Queue.Resources.dll" />
-      </Component>
       <Component Id="_3499ED254C1F4A2D9854D0A49EEA0C85" Guid="3499ED25-4C1F-4A2D-9854-D0A49EEA0C85">
         <File KeyPath="yes" Source="$(var.Database.TargetDir)\Queue.Model.Common.dll" />
       </Component>

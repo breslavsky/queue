@@ -40,9 +40,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Junte.Configuration, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Junte.Configuration.1.0.2.0\lib\net45\Junte.Configuration.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Junte.Configuration, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Junte.Configuration.1.0.5.0\lib\net45\Junte.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Junte.Parallel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

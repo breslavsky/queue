@@ -46,29 +46,45 @@ namespace Queue.Portal
             CreateServices();
         }
 
-        private void ConnectToServer()
+        private void RegisterServices()
         {
-            var serverUserService = new UserService(loginSettings.Endpoint);
+            var endpoint = loginSettings.Endpoint;
 
-            Administrator currentUser;
+            var serverUserService = new UserService(endpoint);
+
+            Guid sessionId;
 
             using (var channelManager = serverUserService.CreateChannelManager())
             using (var channel = channelManager.CreateChannel())
             {
-                currentUser = channel.Service.UserLogin(loginSettings.User, loginSettings.Password).Result as Administrator;
+                var currentUser = channel.Service.UserLogin(loginSettings.User, loginSettings.Password).Result as Administrator;
+                sessionId = currentUser.SessionId;
                 Container.RegisterInstance(currentUser);
             }
 
             Container.RegisterInstance(serverUserService);
             Container.RegisterType<ChannelManager<IServerTcpService>>
-                (new InjectionFactory(c => serverUserService.CreateChannelManager(currentUser.SessionId)));
+                (new InjectionFactory(c => serverUserService.CreateChannelManager(sessionId)));
 
-            var serverService = new ServerService(loginSettings.Endpoint);
+            var serverService = new ServerService(endpoint);
             Container.RegisterInstance(serverService);
             Container.RegisterType<ChannelManager<IServerTcpService>>
-                (new InjectionFactory(c => serverService.CreateChannelManager(currentUser.SessionId)));
+                (new InjectionFactory(c => serverService.CreateChannelManager(sessionId)));
 
-            var templateManager = new TemplateManager(Templates.Apps.Common, portalSettings.Theme);
+            var queuePlanService = new QueuePlanService(endpoint);
+            Container.RegisterInstance(queuePlanService);
+            Container.RegisterType<DuplexChannelManager<IQueuePlanTcpService>>
+                (new InjectionFactory(c => queuePlanService.CreateChannelManager(sessionId)));
+
+            var templateService = new TemplateService(endpoint);
+            Container.RegisterInstance(templateService);
+            Container.RegisterType<ChannelManager<ITemplateTcpService>>
+                (new InjectionFactory(c => templateService.CreateChannelManager(sessionId)));
+
+            var theme = string.IsNullOrEmpty(portalSettings.Theme)
+                ? Templates.Themes.Default : portalSettings.Theme;
+
+            var templateManager = new TemplateManager(Templates.Apps.Common, theme);
             Container.RegisterInstance<ITemplateManager>(templateManager);
         }
 
@@ -111,7 +127,7 @@ namespace Queue.Portal
         {
             logger.Info("Starting");
 
-            ConnectToServer();
+            RegisterServices();
 
             foreach (var h in hosts)
             {

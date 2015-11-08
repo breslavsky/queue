@@ -385,6 +385,7 @@ namespace Queue.Services.Server
                     queueOperator.Email = source.Email;
                     queueOperator.Mobile = source.Mobile;
                     queueOperator.IsActive = source.IsActive;
+                    queueOperator.Identity = source.Identity;
 
                     if (source.Workplace != null)
                     {

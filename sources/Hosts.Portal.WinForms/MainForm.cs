@@ -42,10 +42,10 @@ namespace Hosts.Portal.WinForms
             container.RegisterInstance(container);
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
 
-            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostsConsts.PortalServiceExe);
-            serviceManager = new ServiceManager(HostsConsts.PortalServiceName, exePath);
+            string exePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), HostMetadata.PortalServiceExe);
+            serviceManager = new ServiceManager(HostMetadata.PortalServiceName, exePath);
 
-            configuration = new ConfigurationManager(HostsConsts.PortalApp, Environment.SpecialFolder.CommonApplicationData);
+            configuration = new ConfigurationManager(HostMetadata.PortalApp, Environment.SpecialFolder.CommonApplicationData);
             container.RegisterInstance(configuration);
 
             settings = configuration.GetSection<PortalSettings>(PortalSettings.SectionKey);
