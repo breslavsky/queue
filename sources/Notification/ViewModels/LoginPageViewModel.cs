@@ -1,16 +1,12 @@
 ﻿using Junte.Configuration;
 using Junte.UI.WPF;
-using Junte.WCF;
 using MahApps.Metro;
 using Microsoft.Practices.Unity;
 using Queue.Common;
-using Queue.Services.Common;
-using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
 using Queue.UI.WPF;
 using System;
 using System.Linq;
-using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -77,7 +73,7 @@ namespace Queue.Notification.ViewModels
         }
 
         [Dependency]
-        public AppSettings Settings { get; set; }
+        public AppSettings AppSettings { get; set; }
 
         [Dependency]
         public ConfigurationManager ConfigurationManager { get; set; }
@@ -103,13 +99,13 @@ namespace Queue.Notification.ViewModels
 
         private void LoadSettings()
         {
-            IsRemember = Settings.IsRemember;
-            SelectedLanguage = Settings.Language;
-            Endpoint = Settings.Endpoint;
+            IsRemember = AppSettings.IsRemember;
+            SelectedLanguage = AppSettings.Language;
+            Endpoint = AppSettings.Endpoint;
 
-            if (!String.IsNullOrWhiteSpace(Settings.Accent))
+            if (!String.IsNullOrWhiteSpace(AppSettings.Accent))
             {
-                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == Settings.Accent);
+                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == AppSettings.Accent);
             }
         }
 
@@ -128,10 +124,8 @@ namespace Queue.Notification.ViewModels
         {
             try
             {
-                using (var channelManager = new DuplexChannelManager<IServerTcpService>(
-                                                new DuplexChannelBuilder<IServerTcpService>(new QueuePlanCallback(),
-                                                                                            Bindings.NetTcpBinding,
-                                                                                            new EndpointAddress(Endpoint))))
+                using (var service = new ServerService(Endpoint))
+                using (var channelManager = service.CreateChannelManager())
                 using (var channel = channelManager.CreateChannel())
                 {
                     var date = await channel.Service.GetDateTime();
@@ -149,10 +143,10 @@ namespace Queue.Notification.ViewModels
 
         private void SaveSettings()
         {
-            Settings.Endpoint = Endpoint;
-            Settings.IsRemember = IsRemember;
-            Settings.Accent = SelectedAccent == null ? String.Empty : SelectedAccent.Name;
-            Settings.Language = SelectedLanguage;
+            AppSettings.Endpoint = Endpoint;
+            AppSettings.IsRemember = IsRemember;
+            AppSettings.Accent = SelectedAccent == null ? String.Empty : SelectedAccent.Name;
+            AppSettings.Language = SelectedLanguage;
 
             ConfigurationManager.Save();
         }

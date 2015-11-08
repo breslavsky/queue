@@ -3,7 +3,7 @@ using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Model.Common;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.Terminal.Views;
@@ -52,7 +52,7 @@ namespace Queue.Terminal.ViewModels
         public ConfigurationManager ConfigurationManager { get; set; }
 
         [Dependency]
-        public AppSettings Settings { get; set; }
+        public AppSettings AppSettings { get; set; }
 
         public MainWindowViewModel()
             : base()
@@ -113,18 +113,18 @@ namespace Queue.Terminal.ViewModels
 
         private async Task RegisterTypes()
         {
-            UnityContainer.RegisterInstance(new ServerService(loginPage.Model.Endpoint));
-            UnityContainer.RegisterInstance(new ServerUserService(loginPage.Model.Endpoint));
-            UnityContainer.RegisterInstance(new ServerTemplateService(loginPage.Model.Endpoint));
+            UnityContainer.RegisterInstance(new ServerService(AppSettings.Endpoint));
+            UnityContainer.RegisterInstance(new UserService(AppSettings.Endpoint));
+            UnityContainer.RegisterInstance(new TemplateService(AppSettings.Endpoint));
 
-            UnityContainer.RegisterType<DuplexChannelManager<IServerTcpService>>
-                (new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager()));
-            UnityContainer.RegisterType<ChannelManager<IServerTemplateTcpService>>
-                (new InjectionFactory(c => c.Resolve<ServerTemplateService>().CreateChannelManager()));
-            UnityContainer.RegisterType<ChannelManager<IServerUserTcpService>>
-               (new InjectionFactory(c => c.Resolve<ServerUserService>().CreateChannelManager()));
+            UnityContainer.RegisterType<ChannelManager<IServerTcpService>>
+                (new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager(loginPage.Model.User.SessionId)));
+            UnityContainer.RegisterType<ChannelManager<ITemplateTcpService>>
+                (new InjectionFactory(c => c.Resolve<TemplateService>().CreateChannelManager()));
+            UnityContainer.RegisterType<ChannelManager<IUserTcpService>>
+               (new InjectionFactory(c => c.Resolve<UserService>().CreateChannelManager()));
 
-            UnityContainer.RegisterInstance<ITemplateManager>(new TemplateManager("terminal", Settings.Theme));
+            UnityContainer.RegisterInstance<ITemplateManager>(new TemplateManager("terminal", AppSettings.Theme));
             UnityContainer.RegisterInstance(new ClientRequestModel((Administrator)loginPage.Model.User));
 
             navigator = UnityContainer.Resolve<Navigator>();
@@ -134,7 +134,7 @@ namespace Queue.Terminal.ViewModels
 
         private async Task LoadConfigs()
         {
-            using (var manager = UnityContainer.Resolve<DuplexChannelManager<IServerTcpService>>())
+            using (var manager = UnityContainer.Resolve<ChannelManager<IServerTcpService>>())
             using (var channel = manager.CreateChannel())
             {
                 try
@@ -158,7 +158,7 @@ namespace Queue.Terminal.ViewModels
         {
             if (Keyboard.IsKeyDown(Key.LeftShift) && e.Key == Key.Escape)
             {
-                Settings.IsRemember = false;
+                AppSettings.IsRemember = false;
                 ConfigurationManager.Save();
 
                 Application.Current.Shutdown();

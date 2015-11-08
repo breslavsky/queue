@@ -1,10 +1,9 @@
 ﻿using Junte.UI.WPF;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Model.Common;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.UI.Common;
@@ -42,7 +41,10 @@ namespace Queue.Terminal.ViewModels
         public Navigator Navigator { get; set; }
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
+
+        [Dependency]
+        public CouponConfig CouponConfig { get; set; }
 
         public PrintCouponPageViewModel()
             : base()
@@ -57,19 +59,23 @@ namespace Queue.Terminal.ViewModels
 
         private async void Loaded()
         {
-            await Window.ExecuteLongTask(async () =>
+            var couponData = await Window.ExecuteLongTask(async () =>
              {
                  using (var channel = ChannelManager.CreateChannel())
                  {
-                     //await channel.Service.OpenClientSession(Model.CurrentAdministrator.SessionId);
-
                      var clientRequest = await AddClientRequest(channel);
 
                      Success = true;
 
-                     await PrintCoupon(channel, clientRequest);
+                     logger.Debug("печать талона [client: {0}; service: {1}]", clientRequest.Client, clientRequest.Service);
+                     return await channel.Service.GetClientRequestCoupon(clientRequest.Id);
                  }
              });
+
+            if (couponData != null)
+            {
+                XPSUtils.PrintXaml(CouponConfig.Template, couponData);
+            }
 
             timer.Start();
         }
@@ -112,14 +118,6 @@ namespace Queue.Terminal.ViewModels
             }
 
             return null;
-        }
-
-        private async Task PrintCoupon(Channel<IServerTcpService> channel, ClientRequest clientRequest)
-        {
-            logger.Debug("печать талона [client: {0}; service: {1}]", clientRequest.Client, clientRequest.Service);
-            var data = await channel.Service.GetClientRequestCoupon(clientRequest.Id);
-            var template = ServiceLocator.Current.GetInstance<CouponConfig>().Template;
-            XPSUtils.PrintXaml(template, data);
         }
 
         #region IDisposable

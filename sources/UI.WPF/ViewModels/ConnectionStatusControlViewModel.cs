@@ -47,7 +47,7 @@ namespace Queue.UI.WPF.ViewModels
         }
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         public ICommand LoadedCommand { get; set; }
 

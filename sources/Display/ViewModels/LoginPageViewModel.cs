@@ -1,17 +1,15 @@
 ﻿using Junte.Configuration;
-using Junte.Parallel;
 using Junte.UI.WPF;
 using Junte.WCF;
 using MahApps.Metro;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Display.Models;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
 using System;
 using System.Linq;
-using System.ServiceModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -31,8 +29,8 @@ namespace Queue.Display.ViewModels
         private IdentifiedEntityLink[] workplaces;
         private Guid selectedWorkplace;
 
-        private ServerWorkplaceService serverWorkplaceService;
-        private ChannelManager<IServerWorkplaceTcpService> channelManager;
+        private WorkplaceService workplaceService;
+        private ChannelManager<IWorkplaceTcpService> channelManager;
 
         public event EventHandler OnLogined = delegate { };
 
@@ -115,10 +113,7 @@ namespace Queue.Display.ViewModels
         public ConfigurationManager ConfigurationManager { get; set; }
 
         [Dependency]
-        public AppSettings Settings { get; set; }
-
-        [Dependency]
-        public TaskPool TaskPool { get; set; }
+        public AppSettings AppSettings { get; set; }
 
         public LoginPageViewModel(RichPage owner)
             : base()
@@ -145,68 +140,50 @@ namespace Queue.Display.ViewModels
 
         private void LoadSettings()
         {
-            Endpoint = Settings.Endpoint;
-            SelectedWorkplace = Settings.WorkplaceId;
-            SelectedLanguage = Settings.Language;
-            IsRemember = Settings.IsRemember;
+            Endpoint = AppSettings.Endpoint;
+            SelectedWorkplace = AppSettings.WorkplaceId;
+            SelectedLanguage = AppSettings.Language;
+            IsRemember = AppSettings.IsRemember;
 
-            if (!String.IsNullOrWhiteSpace(Settings.Accent))
+            if (!String.IsNullOrWhiteSpace(AppSettings.Accent))
             {
-                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == Settings.Accent);
+                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == AppSettings.Accent);
             }
         }
 
         private async void Connect()
         {
-            if (serverWorkplaceService != null)
+            if (workplaceService != null)
             {
-                serverWorkplaceService.Dispose();
+                workplaceService.Dispose();
             }
 
-<<<<<<< HEAD
-            ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new QueuePlanCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
-=======
-            serverWorkplaceService = new ServerWorkplaceService(Endpoint);
->>>>>>> origin/master
+            workplaceService = new WorkplaceService(Endpoint);
 
             if (channelManager != null)
             {
                 channelManager.Dispose();
             }
 
-            channelManager = serverWorkplaceService.CreateChannelManager();
+            channelManager = workplaceService.CreateChannelManager();
 
             IsConnected = false;
 
-            using (var channel = channelManager.CreateChannel())
+            Workplaces = await Window.ExecuteLongTask(async () =>
+             {
+                 using (var channel = channelManager.CreateChannel())
+                 {
+                     return await channel.Service.GetWorkplacesLinks();
+                 }
+             });
+
+            if (Workplaces == null)
             {
-                var loading = Window.ShowLoading();
-
-                try
-                {
-                    Workplaces = await TaskPool.AddTask(channel.Service.GetWorkplacesLinks());
-
-                    SelectedWorkplace = Settings.WorkplaceId != Guid.Empty ? Settings.WorkplaceId : Workplaces.First().Id;
-
-                    IsConnected = true;
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(null, exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(null, exception.Message);
-                }
-                finally
-                {
-                    loading.Hide();
-                }
+                return;
             }
+
+            SelectedWorkplace = AppSettings.WorkplaceId != Guid.Empty ? AppSettings.WorkplaceId : Workplaces.First().Id;
+            IsConnected = true;
 
             if (isConnected && IsRemember)
             {
@@ -221,44 +198,31 @@ namespace Queue.Display.ViewModels
                 return;
             }
 
-            var loading = Window.ShowLoading();
+            Workplace = await Window.ExecuteLongTask(async () =>
+                 {
+                     using (var channel = channelManager.CreateChannel())
+                     {
+                         return await channel.Service.GetWorkplace(SelectedWorkplace);
+                     }
+                 });
 
-            using (var channel = channelManager.CreateChannel())
+            if (Workplace == null)
             {
-                try
-                {
-                    Workplace = await TaskPool.AddTask(channel.Service.GetWorkplace(SelectedWorkplace));
-
-                    SaveSettings();
-
-                    OnLogined(this, null);
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(null, exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(null, exception.Message);
-                }
-                finally
-                {
-                    loading.Hide();
-                }
+                return;
             }
+
+            SaveSettings();
+
+            OnLogined(this, null);
         }
 
         private void SaveSettings()
         {
-            Settings.Endpoint = Endpoint;
-            Settings.WorkplaceId = SelectedWorkplace;
-            Settings.IsRemember = IsRemember;
-            Settings.Accent = SelectedAccent == null ? String.Empty : SelectedAccent.Name;
-            Settings.Language = SelectedLanguage;
+            AppSettings.Endpoint = Endpoint;
+            AppSettings.WorkplaceId = SelectedWorkplace;
+            AppSettings.IsRemember = IsRemember;
+            AppSettings.Accent = SelectedAccent == null ? String.Empty : SelectedAccent.Name;
+            AppSettings.Language = SelectedLanguage;
 
             ConfigurationManager.Save();
         }
@@ -290,13 +254,16 @@ namespace Queue.Display.ViewModels
 
             if (disposing)
             {
-                TaskPool.Dispose();
-
-                if (channelManager != null)
+                try
                 {
-                    channelManager.Dispose();
+                    if (channelManager != null)
+                    {
+                        channelManager.Dispose();
+                    }
                 }
+                catch { }
             }
+
             disposed = true;
         }
 

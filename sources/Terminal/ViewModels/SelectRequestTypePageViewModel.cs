@@ -4,7 +4,7 @@ using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Terminal.Core;
 using Queue.UI.WPF;
 using System;
@@ -23,6 +23,7 @@ namespace Queue.Terminal.ViewModels
         private GridLength commentRowHeight;
 
         public ICommand SelectTypeCommand { get; set; }
+
         public ICommand LoadedCommand { get; set; }
 
         public ICommand UnloadedCommand { get; set; }
@@ -70,7 +71,7 @@ namespace Queue.Terminal.ViewModels
         public Navigator Navigator { get; set; }
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         public SelectRequestTypePageViewModel() :
             base()

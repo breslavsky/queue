@@ -1,49 +1,49 @@
-﻿using Queue.Services.Common;
-using Queue.Services.Contracts;
+﻿using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
+using Queue.UI.WPF;
 using System;
 
 namespace Queue.Notification
 {
     public class ClientRequestsListener : IDisposable
     {
-        private AutoRecoverCallbackChannel channel;
+        private bool disposed;
+
+        private AutoRecoverQueuePlanChannel channel;
 
         public event EventHandler<ClientRequest> ClientRequestUpdated = delegate { };
 
         public event EventHandler<ClientRequest> CallClient = delegate { };
 
-        private bool disposed;
-
         public ClientRequestsListener()
         {
-            channel = new AutoRecoverCallbackChannel(CreateServerCallback(), Subscribe);
+            channel = new AutoRecoverQueuePlanChannel(CreateQueuePlanCallback(), Subscribe);
         }
 
-        private ServerCallback CreateServerCallback()
+        private QueuePlanCallback CreateQueuePlanCallback()
         {
-            var result = new ServerCallback();
+            var result = new QueuePlanCallback();
             result.OnClientRequestUpdated += OnClientRequestUpdated;
             result.OnCallClient += OnCallClient;
 
             return result;
         }
 
-        private void OnCallClient(object sender, ServerEventArgs e)
+        private void OnCallClient(object sender, QueuePlanEventArgs e)
         {
             ClientRequestUpdated(this, e.ClientRequest);
             CallClient(this, e.ClientRequest);
         }
 
-        private void OnClientRequestUpdated(object sender, ServerEventArgs e)
+        private void OnClientRequestUpdated(object sender, QueuePlanEventArgs e)
         {
             ClientRequestUpdated(this, e.ClientRequest);
         }
 
-        private void Subscribe(IServerTcpService service)
+        private void Subscribe(IQueuePlanTcpService service)
         {
-            service.Subscribe(ServerServiceEventType.ClientRequestUpdated);
-            service.Subscribe(ServerServiceEventType.CallClient);
+            service.Subscribe(QueuePlanEventType.ClientRequestUpdated);
+            service.Subscribe(QueuePlanEventType.CallClient);
         }
 
         #region IDisposable

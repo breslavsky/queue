@@ -105,6 +105,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoRecoverQueuePlanChannel.cs" />
     <Compile Include="Core\RichApplication.cs" />
     <Compile Include="Core\RichUserControl.cs" />
     <Compile Include="Core\RichViewModel.cs" />

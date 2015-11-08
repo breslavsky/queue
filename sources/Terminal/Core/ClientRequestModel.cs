@@ -5,7 +5,7 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.Terminal.Enums;
 using Queue.UI.WPF;
@@ -26,7 +26,7 @@ namespace Queue.Terminal.Core
         private int? subjects;
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
         public IMainWindow Window { get; set; }

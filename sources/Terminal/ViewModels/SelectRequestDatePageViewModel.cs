@@ -3,7 +3,7 @@ using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Model.Common;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.UI.WPF;
@@ -62,7 +62,7 @@ namespace Queue.Terminal.ViewModels
         public Navigator Navigator { get; set; }
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         public SelectRequestDatePageViewModel()
         {

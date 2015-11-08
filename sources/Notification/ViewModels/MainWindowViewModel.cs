@@ -1,14 +1,13 @@
 ﻿using Junte.Configuration;
-using Junte.Parallel;
 using Junte.UI.WPF;
 using Junte.WCF;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common.Settings;
 using Queue.Notification.Utils;
 using Queue.Notification.Views;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Hub;
+using Queue.Services.Contracts.Server;
 using Queue.UI.WPF;
 using System;
 using System.ComponentModel;
@@ -21,14 +20,20 @@ using WinForms = System.Windows.Forms;
 
 namespace Queue.Notification.ViewModels
 {
-    public class MainWindowViewModel : RichViewModel
+    public class MainWindowViewModel : RichViewModel, IDisposable
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private LoginPage connectPage;
         private OperatorDisplayTextUpdater operatorDisplayTextUpdater;
 
+        private ServerService serverService;
+        private TemplateService templateService;
+        private DisplayService displayService;
+        private QueuePlanService queuePlanService;
+
         private string title;
+        private bool disposed;
 
         public string Title
         {
@@ -44,7 +49,10 @@ namespace Queue.Notification.ViewModels
         public IMainWindow Window { get; set; }
 
         [Dependency]
-        public AppSettings Settings { get; set; }
+        public AppSettings AppSettings { get; set; }
+
+        [Dependency]
+        public HubSettings HubSettings { get; set; }
 
         [Dependency]
         public ConfigurationManager ConfigurationManager { get; set; }
@@ -98,27 +106,34 @@ namespace Queue.Notification.ViewModels
 
         private void RegisterServices()
         {
-            UnityContainer.RegisterInstance(new ServerService(connectPage.Model.Endpoint));
-            UnityContainer.RegisterInstance(new ServerTemplateService(connectPage.Model.Endpoint));
-            UnityContainer.RegisterInstance(new HubDisplayService(ServiceLocator.Current.GetInstance<HubSettings>().Endpoint));
+            serverService = new ServerService(AppSettings.Endpoint);
+            templateService = new TemplateService(AppSettings.Endpoint);
+            displayService = new DisplayService(HubSettings.Endpoint);
+            queuePlanService = new QueuePlanService(AppSettings.Endpoint);
 
-            UnityContainer.RegisterType<DuplexChannelManager<IServerTcpService>>
+            UnityContainer.RegisterInstance(serverService);
+            UnityContainer.RegisterInstance(templateService);
+            UnityContainer.RegisterInstance(displayService);
+            UnityContainer.RegisterInstance(queuePlanService);
+
+            UnityContainer.RegisterType<ChannelManager<IServerTcpService>>
                 (new InjectionFactory(c => c.Resolve<ServerService>().CreateChannelManager()));
-            UnityContainer.RegisterType<ChannelManager<IServerTemplateTcpService>>
-                (new InjectionFactory(c => c.Resolve<ServerTemplateService>().CreateChannelManager()));
-            UnityContainer.RegisterType<ChannelManager<IHubDisplayTcpService>>
-                (new InjectionFactory(c => c.Resolve<HubDisplayService>().CreateChannelManager()));
+            UnityContainer.RegisterType<DuplexChannelManager<IQueuePlanTcpService>>
+                (new InjectionFactory(c => c.Resolve<QueuePlanService>().CreateChannelManager()));
+            UnityContainer.RegisterType<ChannelManager<ITemplateTcpService>>
+                (new InjectionFactory(c => c.Resolve<TemplateService>().CreateChannelManager()));
+            UnityContainer.RegisterType<ChannelManager<IDisplayTcpService>>
+                (new InjectionFactory(c => c.Resolve<DisplayService>().CreateChannelManager()));
 
-            UnityContainer.RegisterType<TaskPool>();
             UnityContainer.RegisterInstance<ClientRequestsListener>(new ClientRequestsListener());
-            UnityContainer.RegisterInstance<ITemplateManager>(new TemplateManager("notification", ServiceLocator.Current.GetInstance<AppSettings>().Theme));
+            UnityContainer.RegisterInstance<ITemplateManager>(new TemplateManager("notification", AppSettings.Theme));
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if (Keyboard.IsKeyDown(Key.LeftShift) && e.Key == Key.Escape)
             {
-                Settings.IsRemember = false;
+                AppSettings.IsRemember = false;
                 ConfigurationManager.Save();
 
                 Application.Current.Shutdown();
@@ -152,5 +167,42 @@ namespace Queue.Notification.ViewModels
                 operatorDisplayTextUpdater.Dispose();
             }
         }
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                try
+                {
+                    serverService.Dispose();
+                    displayService.Dispose();
+                    templateService.Dispose();
+                    queuePlanService.Dispose();
+                }
+                catch { }
+            }
+
+            disposed = true;
+        }
+
+        ~MainWindowViewModel()
+        {
+            Dispose(false);
+        }
+
+        #endregion IDisposable
     }
 }

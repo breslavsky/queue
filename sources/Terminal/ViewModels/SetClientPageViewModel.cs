@@ -2,7 +2,7 @@
 using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
 using Queue.UI.WPF;
@@ -25,10 +25,10 @@ namespace Queue.Terminal.ViewModels
         public Navigator Navigator { get; set; }
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         [Dependency]
-        public ChannelManager<IServerUserTcpService> UserChannelManager { get; set; }
+        public ChannelManager<IUserTcpService> UserChannelManager { get; set; }
 
         [Dependency]
         public TerminalConfig TerminalConfig { get; set; }
@@ -52,7 +52,7 @@ namespace Queue.Terminal.ViewModels
             UnloadedCommand = new RelayCommand(Unloaded);
         }
 
-        private void Next()
+        private async void Next()
         {
             if (String.IsNullOrWhiteSpace(Username))
             {
@@ -65,40 +65,45 @@ namespace Queue.Terminal.ViewModels
                 Application.Current.Shutdown();
             }
 
-            Window.ExecuteLongTask(DoSetClient);
+            var client = await Window.ExecuteLongTask(async () =>
+            {
+                using (var channel = ChannelManager.CreateChannel())
+                {
+                    var words = Username.Split(' ');
+                    var surname = words[0];
+
+                    var name = String.Empty;
+                    if (words.Length > 1)
+                    {
+                        name = words[1];
+                    }
+
+                    var patronymic = String.Empty;
+                    if (words.Length > 2)
+                    {
+                        patronymic = words[2];
+                    }
+
+                    return await channel.Service.EditClient(new Client()
+                    {
+                        Surname = surname,
+                        Name = name,
+                        Patronymic = patronymic
+                    });
+                }
+            });
+
+            if (client == null)
+            {
+                return;
+            }
+
+            Model.CurrentClient = client;
+            Navigator.NextPage();
         }
 
         private async Task DoSetClient()
         {
-            using (var channel = ChannelManager.CreateChannel())
-            using (var userChannel = UserChannelManager.CreateChannel())
-            {
-                await userChannel.Service.OpenUserSession(Model.CurrentAdministrator.SessionId);
-
-                var words = Username.Split(' ');
-                var surname = words[0];
-
-                var name = String.Empty;
-                if (words.Length > 1)
-                {
-                    name = words[1];
-                }
-
-                var patronymic = String.Empty;
-                if (words.Length > 2)
-                {
-                    patronymic = words[2];
-                }
-
-                Model.CurrentClient = await channel.Service.EditClient(new Client()
-                {
-                    Surname = surname,
-                    Name = name,
-                    Patronymic = patronymic
-                });
-
-                Navigator.NextPage();
-            }
         }
 
         private void Prev()

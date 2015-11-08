@@ -5,7 +5,7 @@ using MahApps.Metro;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Model.Common;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.Terminal.Views;
 using Queue.UI.WPF;
@@ -33,8 +33,8 @@ namespace Queue.Terminal.ViewModels
         private UserRole userRole;
         private Language selectedLanguage;
 
-        private ChannelManager<IServerUserTcpService> channelManager;
-        private ServerUserService serverUserService;
+        private ChannelManager<IUserTcpService> channelManager;
+        private UserService serverUserService;
 
         public event EventHandler OnLogined = delegate { };
 
@@ -168,11 +168,7 @@ namespace Queue.Terminal.ViewModels
 
         public async void Connect()
         {
-<<<<<<< HEAD
-            ChannelBuilder = new DuplexChannelBuilder<IServerTcpService>(new QueuePlanCallback(), Bindings.NetTcpBinding, new EndpointAddress(Endpoint));
-            channelManager = new DuplexChannelManager<IServerTcpService>(ChannelBuilder);
-=======
-            serverUserService = new ServerUserService(Endpoint);
+            serverUserService = new UserService(Endpoint);
             channelManager = serverUserService.CreateChannelManager();
 
             var result = await Window.ExecuteLongTask(async () =>
@@ -187,7 +183,6 @@ namespace Queue.Terminal.ViewModels
             {
                 return;
             }
->>>>>>> origin/master
 
             Users = result.Select(u => new UserComboBoxItem(u.Id, u.ToString())).ToArray();
 

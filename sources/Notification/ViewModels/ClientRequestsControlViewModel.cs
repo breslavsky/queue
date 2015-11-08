@@ -6,8 +6,7 @@ using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common;
 using Queue.Model.Common;
-using Queue.Services.Common;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
 using System;
@@ -37,10 +36,9 @@ namespace Queue.Notification.ViewModels
         private DispatcherTimer timer;
 
         private int ClientRequestsLength;
-        private AutoRecoverCallbackChannel channel;
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<IServerTcpService> ServerChannelManager { get; set; }
 
         [Dependency]
         public TaskPool TaskPool { get; set; }
@@ -81,8 +79,6 @@ namespace Queue.Notification.ViewModels
             try
             {
                 await ReadConfig();
-
-                channel = new AutoRecoverCallbackChannel(CreateServerCallback(), Subscribe);
             }
             catch (Exception e)
             {
@@ -92,7 +88,7 @@ namespace Queue.Notification.ViewModels
 
         private async Task ReadConfig()
         {
-            using (var channel = ChannelManager.CreateChannel())
+            using (var channel = ServerChannelManager.CreateChannel())
             {
                 try
                 {
@@ -116,32 +112,6 @@ namespace Queue.Notification.ViewModels
         private void AdjustConfig(NotificationConfig config)
         {
             ClientRequestsLength = config.ClientRequestsLength;
-        }
-
-        private ServerCallback CreateServerCallback()
-        {
-            var result = new ServerCallback();
-            result.OnConfigUpdated += OnConfigUpdated;
-
-            return result;
-        }
-
-        private void OnConfigUpdated(object sender, ServerEventArgs e)
-        {
-            switch (e.Config.Type)
-            {
-                case ConfigType.Notification:
-                    AdjustConfig(e.Config as NotificationConfig);
-                    break;
-            }
-        }
-
-        private void Subscribe(IServerTcpService service)
-        {
-            service.Subscribe(ServerServiceEventType.ConfigUpdated, new ServerSubscribtionArgs()
-            {
-                ConfigTypes = new[] { ConfigType.Notification }
-            });
         }
 
         private void ClientRequestUpdated(object sender, ClientRequest e)

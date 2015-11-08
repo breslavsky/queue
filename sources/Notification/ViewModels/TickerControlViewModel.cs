@@ -1,12 +1,9 @@
-﻿using Junte.Parallel;
-using Junte.UI.WPF;
+﻿using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Common;
-using Queue.Model.Common;
 using Queue.Notification.UserControls;
-using Queue.Services.Common;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
 using System;
@@ -34,7 +31,6 @@ namespace Queue.Notification.ViewModels
 
         private TranslateTransform translateTransform;
         private TickerControl control;
-        private AutoRecoverCallbackChannel channel;
 
         public ICommand LoadedCommand { get; set; }
 
@@ -47,10 +43,7 @@ namespace Queue.Notification.ViewModels
         }
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
-
-        [Dependency]
-        public TaskPool TaskPool { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         public TickerControlViewModel(TickerControl control)
             : base()
@@ -70,8 +63,6 @@ namespace Queue.Notification.ViewModels
                 control.TickerItem.RenderTransform = translateTransform;
 
                 await ReadConfig();
-
-                channel = new AutoRecoverCallbackChannel(CreateServerCallback(), Subscribe);
             }
             catch (Exception ex)
             {
@@ -85,7 +76,7 @@ namespace Queue.Notification.ViewModels
             {
                 try
                 {
-                    ApplyConfig(await TaskPool.AddTask(channel.Service.GetMediaConfig()));
+                    ApplyConfig(await channel.Service.GetMediaConfig());
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -99,32 +90,6 @@ namespace Queue.Notification.ViewModels
                 {
                     throw new QueueException(exception.Message);
                 }
-            }
-        }
-
-        private ServerCallback CreateServerCallback()
-        {
-            var result = new ServerCallback();
-            result.OnConfigUpdated += OnConfigUpdated;
-
-            return result;
-        }
-
-        private void Subscribe(IServerTcpService service)
-        {
-            service.Subscribe(ServerServiceEventType.ConfigUpdated, new ServerSubscribtionArgs()
-            {
-                ConfigTypes = new[] { ConfigType.Media }
-            });
-        }
-
-        private void OnConfigUpdated(object sender, ServerEventArgs e)
-        {
-            switch (e.Config.Type)
-            {
-                case ConfigType.Media:
-                    ApplyConfig(e.Config as MediaConfig);
-                    break;
             }
         }
 
@@ -223,18 +188,7 @@ namespace Queue.Notification.ViewModels
             {
                 if (disposing)
                 {
-                    if (channel != null)
-                    {
-                        channel.Dispose();
-                        channel = null;
-                    }
-
-                    if (TaskPool != null)
-                    {
-                        TaskPool.Cancel();
-                        TaskPool.Dispose();
-                        TaskPool = null;
-                    }
+                    ChannelManager.Dispose();
                 }
             }
             catch { }

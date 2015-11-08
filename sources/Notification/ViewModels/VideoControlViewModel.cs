@@ -1,10 +1,9 @@
-﻿using Junte.Parallel;
-using Junte.UI.WPF;
+﻿using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Notification.UserControls;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
 using System;
@@ -34,10 +33,7 @@ namespace Queue.Notification.ViewModels
         public ICommand UnloadedCommand { get; set; }
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
-
-        [Dependency]
-        public TaskPool TaskPool { get; set; }
+        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
 
         public VideoControlViewModel(VideoControl control) :
             base()
@@ -67,8 +63,8 @@ namespace Queue.Notification.ViewModels
             {
                 try
                 {
-                    ApplyConfig(await TaskPool.AddTask(channel.Service.GetMediaConfig()),
-                                await TaskPool.AddTask(channel.Service.GetMediaConfigFiles()));
+                    ApplyConfig(await channel.Service.GetMediaConfig(),
+                                await channel.Service.GetMediaConfigFiles());
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }
@@ -158,21 +154,15 @@ namespace Queue.Notification.ViewModels
                 return;
             }
 
-            try
+            if (disposing)
             {
-                if (disposing)
+                try
                 {
                     VlcContext.CloseAll();
-
-                    if (TaskPool != null)
-                    {
-                        TaskPool.Cancel();
-                        TaskPool.Dispose();
-                        TaskPool = null;
-                    }
+                    ChannelManager.Dispose();
                 }
+                catch { }
             }
-            catch { }
 
             disposed = true;
         }

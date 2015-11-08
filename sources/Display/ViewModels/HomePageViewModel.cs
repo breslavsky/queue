@@ -1,12 +1,9 @@
-﻿using Junte.Parallel;
-using Junte.Translation;
+﻿using Junte.Translation;
 using Junte.UI.WPF;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
-using Queue.Common;
 using Queue.Model.Common;
-using Queue.Services.Common;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
 using Queue.UI.WPF.Enums;
@@ -29,8 +26,8 @@ namespace Queue.Display.ViewModels
         private ServerState serverState;
 
         private bool disposed;
-        private ServerCallback callbackObject;
-        private Channel<IServerTcpService> serverChannel;
+        private QueuePlanCallback callbackObject;
+        private Channel<IQueuePlanTcpService> queuePlanChannel;
         private string workplaceTitle;
         private string workplaceComment;
         private bool showNotification;
@@ -71,13 +68,10 @@ namespace Queue.Display.ViewModels
         public ICommand UnloadedCommand { get; set; }
 
         [Dependency]
-        public DuplexChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public DuplexChannelManager<IQueuePlanTcpService> QueuePlanChannelManager { get; set; }
 
         [Dependency]
-        public ChannelManager<IServerWorkplaceTcpService> WorkplaceChannelManager { get; set; }
-
-        [Dependency]
-        public TaskPool TaskPool { get; set; }
+        public ChannelManager<IWorkplaceTcpService> WorkplaceChannelManager { get; set; }
 
         [Dependency]
         public Workplace Workplace { get; set; }
@@ -88,10 +82,10 @@ namespace Queue.Display.ViewModels
             WorkplaceTitle = Workplace.ToString();
             WorkplaceComment = Workplace.Comment;
 
-            callbackObject = new ServerCallback();
+            callbackObject = new QueuePlanCallback();
             callbackObject.OnCurrentClientRequestPlanUpdated += CurrentClientRequestPlanUpdated;
 
-            serverChannel = ChannelManager.CreateChannel(callbackObject);
+            queuePlanChannel = QueuePlanChannelManager.CreateChannel(callbackObject);
 
             BuildUpTimer();
 
@@ -169,12 +163,12 @@ namespace Queue.Display.ViewModels
             {
                 ServerState = ServerState.Request;
 
-                if (!serverChannel.IsConnected)
+                if (!queuePlanChannel.IsConnected)
                 {
                     await Subscribe();
                 }
 
-                ServerDateTime.Sync(await TaskPool.AddTask(serverChannel.Service.GetDateTime()));
+                await queuePlanChannel.Service.Heartbeat();
 
                 ServerState = ServerState.Available;
             }
@@ -182,8 +176,9 @@ namespace Queue.Display.ViewModels
             {
                 ServerState = ServerState.Unavailable;
 
-                serverChannel.Dispose();
-                serverChannel = ChannelManager.CreateChannel(callbackObject);
+                CloseChannel();
+
+                queuePlanChannel = QueuePlanChannelManager.CreateChannel(callbackObject);
             }
 
             pingTimer.Start();
@@ -191,7 +186,7 @@ namespace Queue.Display.ViewModels
 
         private async Task Subscribe()
         {
-            var plans = (await serverChannel.Service.GetCurrentClientRequestPlans())
+            var plans = (await queuePlanChannel.Service.GetCurrentClientRequestPlans())
                                                 .Where(p => p.Key != null && p.Key.Workplace.Equals(Workplace))
                                                 .ToList();
             foreach (var plan in plans)
@@ -201,14 +196,14 @@ namespace Queue.Display.ViewModels
 
             using (var workplaceChannel = WorkplaceChannelManager.CreateChannel())
             {
-                serverChannel.Service.Subscribe(ServerServiceEventType.CurrentClientRequestPlanUpdated, new ServerSubscribtionArgs
+                queuePlanChannel.Service.Subscribe(QueuePlanEventType.CurrentClientRequestPlanUpdated, new QueuePlanSubscribtionArgs
                 {
                     Operators = await workplaceChannel.Service.GetWorkplaceOperators(Workplace.Id)
                 });
             }
         }
 
-        private void CurrentClientRequestPlanUpdated(object sender, ServerEventArgs e)
+        private void CurrentClientRequestPlanUpdated(object sender, QueuePlanEventArgs e)
         {
             if (e.Operator == null)
             {
@@ -217,6 +212,18 @@ namespace Queue.Display.ViewModels
 
             UpdateOperatorCurrentRequest(e.Operator, e.ClientRequestPlan);
         }
+
+        private void CloseChannel()
+        {
+            if (queuePlanChannel != null)
+            {
+                queuePlanChannel.Dispose();
+            }
+
+            queuePlanChannel = null;
+        }
+
+        #region IDisposable
 
         ~HomePageViewModel()
         {
@@ -240,25 +247,24 @@ namespace Queue.Display.ViewModels
             {
                 try
                 {
-                    if (serverChannel != null)
-                    {
-                        serverChannel.Dispose();
-                    }
+                    CloseChannel();
 
-                    TaskPool.Dispose();
-                    ChannelManager.Dispose();
+                    QueuePlanChannelManager.Dispose();
                     WorkplaceChannelManager.Dispose();
 
                     if (pingTimer != null)
                     {
                         pingTimer.Tick -= PingElapsed;
                         pingTimer.Stop();
+                        pingTimer = null;
                     }
                 }
                 catch { }
             }
             disposed = true;
         }
+
+        #endregion IDisposable
     }
 
     public class ClientRequestWrapper : ObservableObject
