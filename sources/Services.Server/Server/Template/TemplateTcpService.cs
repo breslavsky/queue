@@ -1,14 +1,4 @@
-<<<<<<< HEAD:sources/Services.Server/Server/Template/TemplateTcpService.cs
-﻿using Microsoft.Practices.Unity;
-using NLog;
-using Queue.Services.Common;
-using Queue.Services.Contracts;
-using Queue.Services.Contracts.Server;
-using System;
-using System.Collections.Generic;
-=======
-﻿using Queue.Services.Contracts;
->>>>>>> origin/master:sources/Services.Server/Server/Template/ServerTemplateTcpService.cs
+﻿using Queue.Services.Contracts.Server;
 using System.IO;
 using System.ServiceModel;
 using System.Threading.Tasks;

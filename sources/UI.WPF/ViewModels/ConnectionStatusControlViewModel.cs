@@ -2,7 +2,7 @@
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Common;
-using Queue.Services.Contracts;
+using Queue.Services.Contracts.Server;
 using Queue.UI.WPF.Enums;
 using System;
 using System.Timers;

@@ -16,11 +16,7 @@ namespace Queue.Services.Server
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession,
                     ConcurrencyMode = ConcurrencyMode.Multiple,
                     IncludeExceptionDetailInFaults = true)]
-<<<<<<< HEAD:sources/Services.Server/Server/User/UserService.cs
-    public partial class UserService : StandardServerService, IUserService
-=======
-    public class ServerUserService : StandardServerService, IServerUserService
->>>>>>> origin/master:sources/Services.Server/Server/User/ServerUserService.cs
+    public class UserService : StandardServerService, IUserService
     {
         public UserService()
             : base()

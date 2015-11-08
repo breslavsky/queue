@@ -1,20 +1,5 @@
-<<<<<<< HEAD:sources/Services.Server/Server/Workplace/WorkplaceHttpService.cs
-﻿using Microsoft.Practices.Unity;
-using NLog;
-using Queue.Services.Common;
-using Queue.Services.Contracts;
-using Queue.Services.Contracts.Server;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Queue.Services.Contracts.Server;
 using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Threading;
-using System.Threading.Tasks;
-=======
-﻿using Queue.Services.Contracts;
-using System.ServiceModel;
->>>>>>> origin/master:sources/Services.Server/Server/Workplace/ServerWorkplaceTcpService.cs
 
 namespace Queue.Services.Server
 {
