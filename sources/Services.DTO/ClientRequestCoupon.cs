@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using Queue.Model.Common;
+using System;
 using System.Runtime.Serialization;
 
 namespace Queue.Services.DTO
@@ -47,5 +49,8 @@ namespace Queue.Services.DTO
 
         [DataMember]
         public bool IsToday { get; set; }
+
+        [DataMember]
+        public CouponSection Sections { get; set; }
     }
 }

@@ -34,7 +34,8 @@ namespace Queue.Database
             {14, Scheme._014},
             {15, Scheme._015},
             {16, Scheme._016},
-            {17, Scheme._017}
+            {17, Scheme._017},
+            {18, Scheme._018}
         };
     }
 }

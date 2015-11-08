@@ -1,0 +1,1 @@
+﻿update _coupon_config set Sections = 63;

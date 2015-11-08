@@ -10,6 +10,7 @@ using Queue.Services.Contracts.Portal;
 using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.Services.Portal;
+using Queue.UI.WPF;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
@@ -66,6 +67,9 @@ namespace Queue.Portal
             Container.RegisterInstance(serverService);
             Container.RegisterType<ChannelManager<IServerTcpService>>
                 (new InjectionFactory(c => serverService.CreateChannelManager(currentUser.SessionId)));
+
+            var templateManager = new TemplateManager(Templates.Apps.Common, portalSettings.Theme);
+            Container.RegisterInstance<ITemplateManager>(templateManager);
         }
 
         private void CreateServices()

@@ -36,15 +36,15 @@ namespace UnitTest
                     }}
                 };
 
-            string xpsFile = XPSUtils.WriteXaml(Queue.Resources.Templates.ClientRequestCoupon, data);
-            try
-            {
-                PrintQueue defaultPrintQueue = LocalPrintServer.GetDefaultPrintQueue();
-                defaultPrintQueue.AddJob("test", xpsFile, false);
-            }
-            catch
-            {
-            }
+            //string xpsFile = XPSUtils.WriteXaml(Queue.Resources.Templates.ClientRequestCoupon, data);
+            //try
+            //{
+            //    PrintQueue defaultPrintQueue = LocalPrintServer.GetDefaultPrintQueue();
+            //    defaultPrintQueue.AddJob("test", xpsFile, false);
+            //}
+            //catch
+            //{
+            //}
         }
     }
 }

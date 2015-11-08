@@ -189,17 +189,16 @@ namespace Queue.Administrator
                             subjectsUpDown.Value = Math.Min(1, subjectsUpDown.Maximum);
                             priorityCheckBox.Checked = false;
 
-                            ClientRequestCoupon data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
-                            CouponConfig config = await taskPool.AddTask(channel.Service.GetCouponConfig());
+                            var coupon = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
+                            var template = TemplateManager.GetTemplate(Templates.Coupon);
 
                             if (couponAutoPrintCheckBox.Checked)
                             {
-                                //XPSUtils.PrintXaml(config.Template, data, Settings.CouponPrinter);
+                                XPSUtils.PrintXaml(template, coupon, Settings.CouponPrinter);
                             }
                             else
                             {
-                                var template = TemplateManager.GetTemplate(Templates.Coupon);
-                                Process.Start(XPSUtils.WriteXaml(template, data));
+                                Process.Start(XPSUtils.WriteXaml(template, coupon));
                             }
                         }
                     }

@@ -1,11 +1,14 @@
 ﻿using Junte.WCF;
+using Microsoft.Practices.Unity;
 using NLog;
+using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.Contracts.Portal;
 using Queue.Services.DTO;
 using Queue.UI.Common;
+using Queue.UI.WPF;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +28,13 @@ namespace Queue.Services.Portal
                     IncludeExceptionDetailInFaults = true)]
     public sealed class PortalClientService : PortalService, IPortalClientService
     {
+        #region dependency
+
+        [Dependency]
+        public ITemplateManager TemplateManager { get; set; }
+
+        #endregion dependency
+
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private Client currentClient;
@@ -154,10 +164,10 @@ namespace Queue.Services.Portal
             {
                 string xpsFile = string.Empty;
 
-                ClientRequestCoupon data = await channel.Service.GetClientRequestCoupon(Guid.Parse(requestId));
-                CouponConfig config = await channel.Service.GetCouponConfig();
+                var coupon = await channel.Service.GetClientRequestCoupon(Guid.Parse(requestId));
 
-                Thread thread = new Thread(new ThreadStart(() => xpsFile = XPSUtils.WriteXaml(config.Template, data)));
+                var template = TemplateManager.GetTemplate(Templates.Coupon);
+                var thread = new Thread(new ThreadStart(() => xpsFile = XPSUtils.WriteXaml(template, coupon)));
 
                 thread.SetApartmentState(ApartmentState.STA);
                 thread.Start();

@@ -115,6 +115,10 @@
       <Project>{dfb572df-6412-460f-ba17-9c3fedf6fd12}</Project>
       <Name>UI.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UI.WPF\UI.WPF.csproj">
+      <Project>{a927dc6b-87b0-412a-bec0-faa03f4f3f28}</Project>
+      <Name>UI.WPF</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
