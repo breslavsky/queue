@@ -225,11 +225,7 @@ namespace Queue.Terminal.ViewModels
             }
 
             SaveSettings();
-
-            if (OnLogined != null)
-            {
-                OnLogined(this, new EventArgs());
-            }
+            OnLogined(this, null);
         }
 
         private void SaveSettings()

@@ -1,5 +1,4 @@
 ﻿using Junte.UI.WPF;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Queue.Common;
 using Queue.Terminal.Core;
@@ -17,9 +16,6 @@ namespace Queue.Terminal
         private TerminalWindowViewModel model;
 
         [Dependency]
-        public IUnityContainer UnityContainer { get; set; }
-
-        [Dependency]
         public Navigator Navigator { get; set; }
 
         [Dependency]
@@ -35,7 +31,7 @@ namespace Queue.Terminal
         {
             try
             {
-                var rootObject = TemplateManager.GetTemplate("main-page.xaml");
+                var rootObject = (DependencyObject)TemplateManager.GetTemplate("main-page.xaml");
 
                 var pageFrame = LogicalTreeHelper.FindLogicalNode(rootObject, PageFrameName) as Frame;
                 if (pageFrame == null)
@@ -46,8 +42,6 @@ namespace Queue.Terminal
                 pageFrame.Navigated += (s, args) => pageFrame.NavigationService.RemoveBackEntry();
 
                 Content = rootObject;
-
-                ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
 
                 model = new TerminalWindowViewModel();
 
