@@ -130,7 +130,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Core\Services\Impl\TemplateManager.cs" />
+    <Compile Include="Core\Services\TemplateManager.cs" />
     <Compile Include="Types\AccentColorComboBoxItem.cs" />
     <Compile Include="ViewModels\ConnectionStatusControlViewModel.cs" />
     <Compile Include="ViewModels\KeyboardControlViewModel.cs" />
