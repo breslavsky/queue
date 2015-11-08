@@ -122,7 +122,7 @@
     <Compile Include="Controls\LoadingControl.xaml.cs">
       <DependentUpon>LoadingControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EnumConverter.cs" />
+    <Compile Include="Types\EnumVisibilityConverter.cs" />
     <Compile Include="Enums\ServerState.cs" />
     <Compile Include="Core\Services\ITemplateManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,7 +9,7 @@ using System.Windows.Data;
 
 namespace Queue.UI.WPF
 {
-    public class EnumBooleanConverter : IValueConverter
+    public class EnumVisibilityConverter : IValueConverter
     {
         #region IValueConverter Members
 

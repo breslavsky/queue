@@ -7,7 +7,7 @@
       Background="#FFFFFF"
       mc:Ignorable="d">
     <Grid.Resources>
-        <ui:EnumBooleanConverter x:Key="enumBooleanConverter" />
+        <ui:EnumVisibilityConverter x:Key="visibilityConverter" />
         <Style x:Key="{x:Type GroupBox}" TargetType="{x:Type GroupBox}">
             <Setter Property="BorderThickness" Value="2" />
             <Setter Property="BorderBrush" Value="Black" />
@@ -146,7 +146,7 @@
                 </Grid>
             </GroupBox>
         </StackPanel>
-        <GroupBox Visibility="{Binding Path=Sections, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Client}">
+        <GroupBox Visibility="{Binding Path=Sections, Converter={StaticResource visibilityConverter}, ConverterParameter=Client}">
             <GroupBox.Style>
                 <Style BasedOn="{StaticResource {x:Type GroupBox}}" TargetType="GroupBox">
                     <Style.Triggers>
