@@ -1,9 +1,7 @@
-﻿using Junte.WCF;
+﻿using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
-using Queue.Services.Contracts;
 using Queue.Services.Contracts.Media;
-using Queue.Services.DTO;
 using Queue.Services.Media.Settings;
 using System.IO;
 using System.ServiceModel;
@@ -30,6 +28,7 @@ namespace Queue.Services.Media
 
         public MediaService()
         {
+            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
         }
 
         public virtual string Index()
@@ -43,7 +42,7 @@ namespace Queue.Services.Media
 
             using (var fileStream = File.Open(file, FileMode.Create))
             {
-                byte[] buffer = new byte[BufferLength];
+                var buffer = new byte[BufferLength];
 
                 int readed = 0;
                 do
@@ -57,8 +56,7 @@ namespace Queue.Services.Media
         public Stream LoadMediaConfigFile(string mediaConfigFileId)
         {
             WebOperationContext.Current.OutgoingResponse.ContentType = "video/wmv";
-            var file = string.Format("{0}/{1}", Settings.MediaFolder, mediaConfigFileId);
-            return File.OpenRead(file);
+            return File.OpenRead(Path.Combine(Settings.MediaFolder, mediaConfigFileId));
         }
     }
 }
