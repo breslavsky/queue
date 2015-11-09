@@ -4,12 +4,14 @@ using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Administrator.Settings;
+using Queue.Common;
 using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.Common;
 using Queue.UI.WinForms;
+using Queue.UI.WPF;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -34,6 +36,9 @@ namespace Queue.Administrator
 
         [Dependency]
         public ChannelManager<IUserTcpService> UserChannelManager { get; set; }
+
+        [Dependency]
+        public ITemplateManager TemplateManager { get; set; }
 
         #endregion dependency
 
@@ -231,9 +236,10 @@ namespace Queue.Administrator
                 {
                     couponMenuItem.Enabled = false;
 
-                    ClientRequestCoupon data = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
-                    CouponConfig config = await taskPool.AddTask(channel.Service.GetCouponConfig());
-                    //XPSUtils.PrintXaml(config.Template, data, Settings.CouponPrinter);
+                    var coupon = await taskPool.AddTask(channel.Service.GetClientRequestCoupon(clientRequest.Id));
+                    var template = TemplateManager.GetTemplate(Templates.Coupon);
+
+                    XPSUtils.PrintXaml(template, coupon, Settings.CouponPrinter);
                 }
                 catch (OperationCanceledException) { }
                 catch (CommunicationObjectAbortedException) { }

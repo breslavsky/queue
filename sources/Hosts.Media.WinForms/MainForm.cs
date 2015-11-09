@@ -2,10 +2,8 @@
 using Junte.UI.WinForms;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
-using Queue.Common.Settings;
 using Queue.Hosts.Common;
 using Queue.Media;
-using Queue.Model.Common;
 using Queue.Services.Media.Settings;
 using System;
 using System.IO;

@@ -2,8 +2,6 @@
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
-using Queue.Common;
-using Queue.Common.Settings;
 using Queue.Hosts.Common;
 using Queue.Media;
 using Queue.Services.Media.Settings;
