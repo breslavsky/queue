@@ -162,6 +162,7 @@ namespace Queue.Server
                     var endpoint = host.AddServiceEndpoint(typeof(ITemplateHttpService), Bindings.WebHttpBinding, uri);
                     endpoint.Behaviors.Add(new WebHttpBehavior());
                     endpoint.Behaviors.Add(new EnableCORSBehavior());
+                    endpoint.Behaviors.Add(new NoCacheBehavior());
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                     {
                         HttpGetUrl = uri,
@@ -179,6 +180,7 @@ namespace Queue.Server
                     var endpoint = host.AddServiceEndpoint(typeof(IUserHttpService), Bindings.WebHttpBinding, uri);
                     endpoint.Behaviors.Add(new WebHttpBehavior());
                     endpoint.Behaviors.Add(new EnableCORSBehavior());
+                    endpoint.Behaviors.Add(new NoCacheBehavior());
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                     {
                         HttpGetUrl = uri,
@@ -196,6 +198,7 @@ namespace Queue.Server
                     var endpoint = host.AddServiceEndpoint(typeof(IWorkplaceHttpService), Bindings.WebHttpBinding, uri);
                     endpoint.Behaviors.Add(new WebHttpBehavior());
                     endpoint.Behaviors.Add(new EnableCORSBehavior());
+                    endpoint.Behaviors.Add(new NoCacheBehavior());
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                     {
                         HttpGetUrl = uri,
@@ -213,6 +216,7 @@ namespace Queue.Server
                     var endpoint = host.AddServiceEndpoint(typeof(IQueuePlanHttpService), Bindings.WebHttpBinding, uri);
                     endpoint.Behaviors.Add(new WebHttpBehavior());
                     endpoint.Behaviors.Add(new EnableCORSBehavior());
+                    endpoint.Behaviors.Add(new NoCacheBehavior());
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                     {
                         HttpGetUrl = uri,

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
+using Queue.Services.Common;
 using Queue.Services.Contracts.Media;
 using Queue.Services.Media.Settings;
 using System.IO;
@@ -13,7 +14,7 @@ namespace Queue.Services.Media
         ConcurrencyMode = ConcurrencyMode.Multiple,
         IncludeExceptionDetailInFaults = true,
         UseSynchronizationContext = false)]
-    public partial class MediaService : IMediaService
+    public partial class MediaService : DependencyService, IMediaService
     {
         #region dependency
 
@@ -27,13 +28,13 @@ namespace Queue.Services.Media
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public MediaService()
+            : base()
         {
-            ServiceLocator.Current.GetInstance<IUnityContainer>().BuildUp(this);
         }
 
         public virtual string Index()
         {
-            return "Служба успешно запущена";
+            return "working";
         }
 
         public void UploadMediaConfigFile(string mediaConfigFileId, Stream data)

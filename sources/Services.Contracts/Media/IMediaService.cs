@@ -15,15 +15,15 @@ namespace Queue.Services.Contracts.Media
     public partial interface IMediaService
     {
         [OperationContract]
-        [WebGet(UriTemplate = MediaServiceMap.Index)]
+        [WebGet(UriTemplate = "/")]
         string Index();
 
         [OperationContract]
-        [WebInvoke(Method = "POST", UriTemplate = MediaServiceMap.UploadMediaConfigFile)]
+        [WebInvoke(Method = "POST", UriTemplate = "/media-config/files/{mediaConfigFileId}/upload")]
         void UploadMediaConfigFile(string mediaConfigFileId, Stream data);
 
         [OperationContract]
-        [WebGet(UriTemplate = MediaServiceMap.LoadMediaConfigFile)]
+        [WebGet(UriTemplate = "/media-config/files/{mediaConfigFileId}/load")]
         Stream LoadMediaConfigFile(string mediaConfigFileId);
     }
 }

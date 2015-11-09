@@ -97,6 +97,7 @@ namespace Queue.Portal
                 var endpoint = host.AddServiceEndpoint(typeof(IPortalService), Bindings.WebHttpBinding, uri.ToString());
                 endpoint.Behaviors.Add(new WebHttpBehavior());
                 endpoint.Behaviors.Add(new EnableCORSBehavior());
+                endpoint.Behaviors.Add(new NoCacheBehavior());
 
                 hosts.Add(host);
             }
@@ -107,6 +108,7 @@ namespace Queue.Portal
                 var endpoint = host.AddServiceEndpoint(typeof(IPortalOperatorService), Bindings.WebHttpBinding, uri);
                 endpoint.Behaviors.Add(new WebHttpBehavior());
                 endpoint.Behaviors.Add(new EnableCORSBehavior());
+                endpoint.Behaviors.Add(new NoCacheBehavior());
 
                 hosts.Add(host);
             }
@@ -118,6 +120,7 @@ namespace Queue.Portal
                 var endpoint = host.AddServiceEndpoint(typeof(IPortalClientService), Bindings.WebHttpBinding, uri);
                 endpoint.Behaviors.Add(new WebHttpBehavior());
                 endpoint.Behaviors.Add(new EnableCORSBehavior());
+                endpoint.Behaviors.Add(new NoCacheBehavior());
 
                 hosts.Add(host);
             }

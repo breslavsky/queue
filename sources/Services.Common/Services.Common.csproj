@@ -59,16 +59,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomHeaderMessageInspector.cs" />
     <Compile Include="ExtendHttpHeaders.cs" />
     <Compile Include="StandardServiceProvider.cs" />
     <Compile Include="DependencyService.cs" />
     <Compile Include="EnableCORSBehavior.cs" />
-    <Compile Include="Maps\MediaServiceMap.cs" />
     <Compile Include="Maps\PortalClientServiceMap.cs" />
-    <Compile Include="Maps\PortalOperatorServiceMap.cs" />
     <Compile Include="Maps\PortalServiceMap.cs" />
     <Compile Include="Exceptions\ObjectNotFoundFault.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="NoCacheBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

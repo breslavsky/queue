@@ -24,19 +24,14 @@
     
         <div id="container" class="horizontal layout end">
             <paper-dropdown-menu label="Пользователь">
-          
-
-
-                <paper-menu class="dropdown-content">
+                <paper-menu class="dropdown-content" selected="{{selected}}">
                   <template is="dom-repeat" items="[[users]]">
                     <paper-tab>[[item.Presentation]]</paper-tab>
                   </template>
                 </paper-menu>
-
-        
             </paper-dropdown-menu>
-            <paper-input label="Пароль"></paper-input>
-            <paper-button primary raised>Войти</paper-button>
+            <paper-input label="Пароль" value="{{password}}"></paper-input>
+            <paper-button primary raised on-click="login">Войти</paper-button>
         </div>   
 
     </template>
@@ -53,11 +48,28 @@
 
             $.ajax({
                 url: "http://localhost:4506/user/get-user-links",
-                data: { userRole: "Administrator" }
+                data: { userRole: "Operator" }
             }).done(function (operators) {
                 self.users = operators;
-                //self.userId = operators[0].Id;
             });
+        },
+
+        login: function () {
+
+            var self = this;
+
+            $.ajax({
+                url: "http://localhost:4506/user/login",
+                data: { userId: this.userId, password: this.password }
+            }).done(function (operator) {
+                console.log(operator);
+            });
+        },
+
+        userIdCompute: function (selected) {
+            if (this.users.length > 0) {
+                return this.users[selected].Id;
+            }
         },
 
         properties: {
@@ -67,9 +79,15 @@
                 value: []
             },
 
+            selected: {
+                type: Number,
+                value: -1
+            },
+
             userId: {
                 type: String,
-                value: ""
+                value: "",
+                computed: "userIdCompute(selected)"
             },
 
             password: {

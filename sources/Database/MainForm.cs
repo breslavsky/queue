@@ -338,11 +338,12 @@ namespace Queue.Database
                 {
                     couponConfig = new CouponConfig()
                     {
-                        Sections = CouponSection.RequestDate 
+                        Sections = CouponSection.RequestDate
                         | CouponSection.RequestTime
                         | CouponSection.Objects
                         | CouponSection.Position
                         | CouponSection.WaitingTime
+                        | CouponSection.Client
                         | CouponSection.Workplaces
                         | CouponSection.Service
                     };

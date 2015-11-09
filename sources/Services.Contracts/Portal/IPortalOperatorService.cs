@@ -15,7 +15,7 @@ namespace Queue.Services.Contracts.Portal
     public partial interface IPortalOperatorService
     {
         [OperationContract]
-        [WebGet(UriTemplate = PortalOperatorServiceMap.Index)]
+        [WebGet(UriTemplate = "/")]
         Stream Index();
     }
 }
