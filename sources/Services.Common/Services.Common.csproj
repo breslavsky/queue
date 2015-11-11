@@ -52,6 +52,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,7 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomHeaderMessageInspector.cs" />
+    <Compile Include="ExtendedWebHttpBehavior.cs" />
     <Compile Include="ExtendHttpHeaders.cs" />
+    <Compile Include="FaultErrorHandler.cs" />
     <Compile Include="StandardServiceProvider.cs" />
     <Compile Include="DependencyService.cs" />
     <Compile Include="EnableCORSBehavior.cs" />

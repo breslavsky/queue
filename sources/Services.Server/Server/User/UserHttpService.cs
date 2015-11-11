@@ -8,5 +8,8 @@ namespace Queue.Services.Server
                     IncludeExceptionDetailInFaults = true)]
     public sealed class UserHttpService : UserService, IUserHttpService
     {
+        public void Options()
+        {
+        }
     }
 }

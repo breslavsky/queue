@@ -18,20 +18,78 @@
     <link rel="import" href="/content/components/iron-icons/iron-icons.html">
     <link rel="import" href="/content/components/paper-icon-button/paper-icon-button.html">
 
+    <link rel="import" href="/content/components/neon-animation/neon-animated-pages.html">
+    <link rel="import" href="/content/components/neon-animation/neon-animations.html">
+    <link rel="import" href="/content/components/neon-animation/neon-shared-element-animatable-behavior.html">
+    <link rel="import" href="/content/components/neon-page-behavior/neon-page-behavior.html">
+    <link rel="import" href="/content/components/globals-behavior.html">
+
     <link rel="import" href="/content/elements/common-style.html">
     <link rel="import" href="/content/elements/login-page.html">
+    <link rel="import" href="/content/elements/client-request-plan.html">
 
 </head>
 <body fullbleed vertical layout>
     <dom-module id="main-document-element">
 
+        <style is="custom-style">
+            :host {
+                display: block;
+            }
+
+            neon-animated-pages {
+                @apply(--fullsize);
+            }
+        </style>
         <template>
-            <login-page />
+            <neon-animated-pages id="pages" selected="[[currentPage]]">
+                <div>Загрузка...</div>
+                <login-page on-logined="logined"></login-page>
+                <client-request-plan></client-request-plan>
+            </neon-animated-pages>
         </template>
         <script>
             HTMLImports.whenReady(function () {
                 Polymer({
                     is: 'main-document-element',
+
+                    behaviors: [GlobalsBehaviour],
+
+                    ready: function(){
+                    
+                        var self = this;
+
+                        $.ajaxSetup({
+                            cache: false,
+                            crossDomain: true,
+                            beforeSend: function (request) {
+                                this.url = 'http://localhost:4506/' + this.url;
+
+                                var currentUser = self.globals.currentUser;
+                                if (currentUser != undefined) {
+                                    request.setRequestHeader("SessionId", currentUser.SessionId);
+                                }
+                            },
+                            error: function (xhr, options, error) {
+                                alert(xhr.responseText);
+                            }
+                        });
+
+                        this.currentPage = 1;
+
+                    },
+
+                    logined: function () {
+                        this.currentPage = 2;
+                    },
+
+                    properties: {
+
+                        currentPage: {
+                            type: Number,
+                            value: 0
+                        }
+                    }
 
                 });
             });

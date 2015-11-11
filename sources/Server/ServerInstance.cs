@@ -181,6 +181,7 @@ namespace Queue.Server
                     endpoint.Behaviors.Add(new WebHttpBehavior());
                     endpoint.Behaviors.Add(new EnableCORSBehavior());
                     endpoint.Behaviors.Add(new NoCacheBehavior());
+                    endpoint.Behaviors.Add(new ExtendedWebHttpBehavior());
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                     {
                         HttpGetUrl = uri,
@@ -199,6 +200,7 @@ namespace Queue.Server
                     endpoint.Behaviors.Add(new WebHttpBehavior());
                     endpoint.Behaviors.Add(new EnableCORSBehavior());
                     endpoint.Behaviors.Add(new NoCacheBehavior());
+                    endpoint.Behaviors.Add(new ExtendedWebHttpBehavior());
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                     {
                         HttpGetUrl = uri,
@@ -217,6 +219,7 @@ namespace Queue.Server
                     endpoint.Behaviors.Add(new WebHttpBehavior());
                     endpoint.Behaviors.Add(new EnableCORSBehavior());
                     endpoint.Behaviors.Add(new NoCacheBehavior());
+                    endpoint.Behaviors.Add(new ExtendedWebHttpBehavior());
                     host.Description.Behaviors.Add(new ServiceMetadataBehavior()
                     {
                         HttpGetUrl = uri,

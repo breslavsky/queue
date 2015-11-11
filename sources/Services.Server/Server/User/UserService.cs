@@ -23,6 +23,27 @@ namespace Queue.Services.Server
         {
         }
 
+        public async Task<DTO.User> Identify(string identity)
+        {
+            return await Task.Run(() =>
+            {
+                using (var session = SessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    var user = session.CreateCriteria<User>()
+                        .Add(Expression.Eq("Identity", identity))
+                        .SetMaxResults(1)
+                        .UniqueResult<User>();
+                    if (user == null)
+                    {
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(sessionId), "Пользователь не идентифицирован");
+                    }
+
+                    return Mapper.Map<User, DTO.User>(user);
+                }
+            });
+        }
+
         public async Task<DTO.User> OpenUserSession(Guid sessionId)
         {
             return await Task.Run(() =>

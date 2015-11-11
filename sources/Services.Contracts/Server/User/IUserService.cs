@@ -14,6 +14,11 @@ namespace Queue.Services.Contracts.Server
     public interface IUserService : IStandardServerService
     {
         [OperationContract]
+        [WebGet(UriTemplate = "/identify?identity={identity}", ResponseFormat = WebMessageFormat.Json)]
+        [FaultContract(typeof(ObjectNotFoundFault))]
+        Task<User> Identify(string identity);
+
+        [OperationContract]
         [WebGet(UriTemplate = "/open-session?sessionId={sessionId}", ResponseFormat = WebMessageFormat.Json)]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task<User> OpenUserSession(Guid sessionId);

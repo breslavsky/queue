@@ -24,9 +24,11 @@ namespace Queue.Services.Contracts.Server
         Task<ClientRequestPlan> GetCurrentClientRequestPlan();
 
         [OperationContract]
+        [WebGet(UriTemplate = "/call-current-client", ResponseFormat = WebMessageFormat.Json)]
         Task CallCurrentClient();
 
         [OperationContract]
+        [WebGet(UriTemplate = "/update-current-client-request?state={state}", ResponseFormat = WebMessageFormat.Json)]
         Task UpdateCurrentClientRequest(ClientRequestState state);
 
         [OperationContract]

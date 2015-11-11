@@ -18,5 +18,8 @@ namespace Queue.Services.Server
                     IncludeExceptionDetailInFaults = true)]
     public sealed class QueuePlanHttpService : QueuePlanService, IQueuePlanHttpService
     {
+        public void Options()
+        {
+        }
     }
 }

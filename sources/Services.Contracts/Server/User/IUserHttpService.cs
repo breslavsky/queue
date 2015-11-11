@@ -13,5 +13,8 @@ namespace Queue.Services.Contracts.Server
     [ServiceContract]
     public interface IUserHttpService : IUserService
     {
+        [OperationContract]
+        [WebInvoke(Method = "OPTIONS", UriTemplate = "*")]
+        void Options();
     }
 }

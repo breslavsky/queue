@@ -27,7 +27,7 @@ namespace Queue.Services.Common
 
             requiredHeaders.Add("Access-Control-Allow-Origin", "*");
             requiredHeaders.Add("Access-Control-Request-Method", "POST,GET,PUT,DELETE,OPTIONS");
-            requiredHeaders.Add("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
+            requiredHeaders.Add("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,SessionId");
 
             endpointDispatcher.DispatchRuntime.MessageInspectors.Add(new CustomHeaderMessageInspector(requiredHeaders));
         }

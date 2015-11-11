@@ -930,6 +930,7 @@
     <Content Include="www\components\webcomponentsjs\webcomponents.min.js" />
     <Content Include="www\elements\common-style.html" />
     <Content Include="www\elements\login-page.html" />
+    <Content Include="www\elements\client-request-plan.html" />
     <Content Include="www\flot\excanvas.js" />
     <Content Include="www\flot\excanvas.min.js" />
     <Content Include="www\flot\jquery.colorhelpers.js" />

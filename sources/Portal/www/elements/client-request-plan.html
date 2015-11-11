@@ -1,0 +1,187 @@
+﻿<link rel="import" href="/content/components/polymer/polymer.html">
+<link rel="import" href="/content/components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="/content/components/paper-input/paper-input.html">
+<link rel="import" href="/content/components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="/content/components/paper-menu/paper-menu.html">
+<link rel="import" href="/content/components/globals-behavior.html">
+
+<link rel="import" href="/content/components/neon-animation/neon-animated-pages.html">
+<link rel="import" href="/content/components/neon-animation/neon-animations.html">
+<link rel="import" href="/content/components/neon-animation/neon-shared-element-animatable-behavior.html">
+<link rel="import" href="/content/components/neon-page-behavior/neon-page-behavior.html">
+
+<dom-module id="client-request-plan">
+    <style is="custom-style">
+        #container {
+            margin: 10px;
+        }
+    </style>
+
+    <template>
+    
+        <div id="container" class="horizontal layout end">
+            <template is="dom-if" if="[[!currentClientRequest]]">
+                Нет активных запросов
+            </template>
+            <template is="dom-if" if="[[currentClientRequest]]">
+
+                <template is="dom-if" if="[[currentClientRequest.Client]]">
+                    <div>
+                        <span>[[currentClientRequest.Client.Surname]]</span>
+                        <span> </span>
+                        <span>[[currentClientRequest.Client.Name]]</span>
+                    </div>
+                </template>
+
+                <template is="dom-if" if="[[equals(currentClientRequest.State, 0)]]">
+                    <paper-button raised on-click="callClient">Вызвать</paper-button>
+                </template>
+
+                <template is="dom-if" if="[[equals(currentClientRequest.State, 1)]]">
+                    <paper-button raised on-click="recallClient">Вызвать повторно</paper-button>
+                    <paper-button raised on-click="absence">Клиент не подошел</paper-button>
+                    <paper-button raised on-click="rendering">Начать обслуживание</paper-button>
+                </template>
+
+                <template is="dom-if" if="[[equals(currentClientRequest.State, 3)]]">
+                    <paper-button raised on-click="rendered">Закончить обслуживание</paper-button>
+                </template>
+
+            </template>
+
+        </div>   
+    </template>
+</dom-module>
+
+<script>
+
+    Polymer({
+        is: 'client-request-plan',
+
+        behaviors: [Polymer.NeonSharedElementAnimatableBehavior, Polymer.NeonPageBehavior, GlobalsBehaviour],
+
+        listeners: {
+            'entry-animation-start': 'onEntryStart'
+        },
+
+        onEntryStart: function () {
+            console.log(this.globals);
+            this.currentUser = this.globals.currentUser;
+
+            var self = this;
+
+            window.setInterval(function () {
+                self.loadCurrentClientRequest();
+            }, 2500);
+
+            window.setInterval(function () {
+                self.heartbeat();
+            }, 10000);
+        },
+
+        equals: function (value, checked) {
+            return value == checked;
+        },
+
+        heartbeat: function () {
+            $.ajax({
+                url: "user/user-heartbeat",
+            });
+        },
+
+        loadCurrentClientRequest: function () {
+            var self = this;
+
+            $.ajax({
+                url: "queue-plan/get-current-client-request-plan",
+            }).done(function (clientRequestPlan) {
+                self.currentClientRequest = clientRequestPlan != undefined ? clientRequestPlan.ClientRequest : null;
+                console.log(self.currentClientRequest);
+            });
+        },
+
+        callClient: function () {
+            var self = this;
+
+            $.ajax({
+                url: "queue-plan/update-current-client-request",
+                data: { state: 1 },
+            }).done(function () {
+
+                self.loadCurrentClientRequest();
+
+                $.ajax({
+                    url: "queue-plan/call-current-client",
+                });
+
+            });
+        },
+
+        recallClient: function () {
+            $.ajax({
+                url: "queue-plan/call-current-client",
+            });
+        },
+
+        absence: function () {
+            var self = this;
+
+            $.ajax({
+                url: "queue-plan/update-current-client-request",
+                data: { state: 2 },
+            }).done(function () {
+                self.loadCurrentClientRequest();
+            });
+        },
+
+        rendering: function () {
+            var self = this;
+
+            $.ajax({
+                url: "queue-plan/update-current-client-request",
+                data: { state: 3 },
+            }).done(function () {
+                self.loadCurrentClientRequest();
+            });
+        },
+
+        rendered: function () {
+            var self = this;
+
+            $.ajax({
+                url: "queue-plan/update-current-client-request",
+                data: { state: 5 },
+            }).done(function () {
+                self.loadCurrentClientRequest();
+            });
+        },
+
+        properties: {
+
+            currentUser: {
+                type: Object,
+                value: null
+            },
+            
+            currentClientRequest: {
+                type: Object,
+                value: null
+            },
+
+            animationConfig: {
+                value: function () {
+                    return {
+                        'entry': [{
+                            name: 'fade-in-animation',
+                            node: this.$.container
+                        }],
+                        'exit': [{
+                            name: 'fade-out-animation',
+                            node: this.$.container
+                        }]
+                    };
+                }
+            }
+        }
+    });
+</script>
