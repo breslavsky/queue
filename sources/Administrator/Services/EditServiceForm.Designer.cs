@@ -15,12 +15,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.parametersTabPage = new System.Windows.Forms.TabPage();
-            this.serviceParametersControl = new Queue.Administrator.ServiceParametersControl();
             this.exceptionScheduleTabPage = new System.Windows.Forms.TabPage();
             this.exceptionScheduleDatePicker = new System.Windows.Forms.DateTimePicker();
             this.exceptionScheduleCheckBox = new System.Windows.Forms.CheckBox();
-            this.exceptionScheduleControl = new Queue.Administrator.ScheduleControl();
             this.commonTabPage = new System.Windows.Forms.TabPage();
             this.servicePropertiesTabControl = new System.Windows.Forms.TabControl();
             this.commonPropertiesTabPage = new System.Windows.Forms.TabPage();
@@ -68,19 +67,22 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.serviceTabControl = new System.Windows.Forms.TabControl();
             this.stepsTabPage = new System.Windows.Forms.TabPage();
-            this.serviceStepsControl = new Queue.Administrator.ServiceStepsControl();
             this.weekdayScheduleTabPage = new System.Windows.Forms.TabPage();
             this.weekdayTabControl = new System.Windows.Forms.TabControl();
             this.mondayTabPage = new System.Windows.Forms.TabPage();
             this.weekdaySchedulePanel = new System.Windows.Forms.Panel();
             this.weekdayScheduleCheckBox = new System.Windows.Forms.CheckBox();
-            this.weekdayScheduleControl = new Queue.Administrator.ScheduleControl();
             this.tuesdayTabPage = new System.Windows.Forms.TabPage();
             this.wednesdayTabPage = new System.Windows.Forms.TabPage();
             this.thursdayTabPage = new System.Windows.Forms.TabPage();
             this.fridayTabPage = new System.Windows.Forms.TabPage();
             this.saturdayTabPage = new System.Windows.Forms.TabPage();
             this.sundayTabPage = new System.Windows.Forms.TabPage();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.serviceStepsControl = new Queue.Administrator.ServiceStepsControl();
+            this.weekdayScheduleControl = new Queue.Administrator.ScheduleControl();
+            this.exceptionScheduleControl = new Queue.Administrator.ScheduleControl();
+            this.serviceParametersControl = new Queue.Administrator.ServiceParametersControl();
             this.parametersTabPage.SuspendLayout();
             this.exceptionScheduleTabPage.SuspendLayout();
             this.commonTabPage.SuspendLayout();
@@ -113,15 +115,6 @@
             this.parametersTabPage.TabIndex = 0;
             this.parametersTabPage.Text = "Параметры услуги";
             this.parametersTabPage.UseVisualStyleBackColor = true;
-            // 
-            // serviceParametersControl
-            // 
-            this.serviceParametersControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serviceParametersControl.Location = new System.Drawing.Point(3, 3);
-            this.serviceParametersControl.Name = "serviceParametersControl";
-            this.serviceParametersControl.Service = null;
-            this.serviceParametersControl.Size = new System.Drawing.Size(830, 450);
-            this.serviceParametersControl.TabIndex = 0;
             // 
             // exceptionScheduleTabPage
             // 
@@ -157,14 +150,6 @@
             this.exceptionScheduleCheckBox.UseVisualStyleBackColor = true;
             this.exceptionScheduleCheckBox.CheckedChanged += new System.EventHandler(this.exceptionScheduleCheckBox_CheckedChanged);
             this.exceptionScheduleCheckBox.Click += new System.EventHandler(this.exceptionScheduleCheckBox_Click);
-            // 
-            // exceptionScheduleControl
-            // 
-            this.exceptionScheduleControl.Location = new System.Drawing.Point(10, 65);
-            this.exceptionScheduleControl.Name = "exceptionScheduleControl";
-            this.exceptionScheduleControl.Schedule = null;
-            this.exceptionScheduleControl.Size = new System.Drawing.Size(790, 320);
-            this.exceptionScheduleControl.TabIndex = 2;
             // 
             // commonTabPage
             // 
@@ -320,8 +305,6 @@
             // 
             // additionalPropertiesTabPage
             // 
-            this.additionalPropertiesTabPage.Controls.Add(this.maxClientRecallsLabel);
-            this.additionalPropertiesTabPage.Controls.Add(this.maxClientRecallsUpDown);
             this.additionalPropertiesTabPage.Controls.Add(this.clientCallDelayLabel);
             this.additionalPropertiesTabPage.Controls.Add(this.clientCallDelayUpDown);
             this.additionalPropertiesTabPage.Controls.Add(this.clientCallDelaySecondsLabel);
@@ -334,6 +317,8 @@
             this.additionalPropertiesTabPage.Controls.Add(this.maxEarlyDaysUpDown);
             this.additionalPropertiesTabPage.Controls.Add(this.maxEarlyDaysDaysLabel);
             this.additionalPropertiesTabPage.Controls.Add(this.priorityLabel);
+            this.additionalPropertiesTabPage.Controls.Add(this.maxClientRecallsLabel);
+            this.additionalPropertiesTabPage.Controls.Add(this.maxClientRecallsUpDown);
             this.additionalPropertiesTabPage.Controls.Add(this.priorityUpDown);
             this.additionalPropertiesTabPage.Controls.Add(this.clientRequireCheckBox);
             this.additionalPropertiesTabPage.Controls.Add(this.isPlanSubjectsCheckBox);
@@ -392,6 +377,9 @@
             this.clientCallDelayUpDown.Name = "clientCallDelayUpDown";
             this.clientCallDelayUpDown.Size = new System.Drawing.Size(50, 20);
             this.clientCallDelayUpDown.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.clientCallDelayUpDown, "После выдачи талона клиенту вызвать его к оператору только через это время. Обычн" +
+        "о данное время позволяет клиенту соориентироваться и не пропустить свою очередь." +
+        "");
             this.clientCallDelayUpDown.Leave += new System.EventHandler(this.clientCallDelayUpDown_Leave);
             // 
             // clientCallDelaySecondsLabel
@@ -674,15 +662,6 @@
             this.stepsTabPage.Text = "Этапы услуги";
             this.stepsTabPage.UseVisualStyleBackColor = true;
             // 
-            // serviceStepsControl
-            // 
-            this.serviceStepsControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serviceStepsControl.Location = new System.Drawing.Point(3, 3);
-            this.serviceStepsControl.Name = "serviceStepsControl";
-            this.serviceStepsControl.Service = null;
-            this.serviceStepsControl.Size = new System.Drawing.Size(830, 450);
-            this.serviceStepsControl.TabIndex = 0;
-            // 
             // weekdayScheduleTabPage
             // 
             this.weekdayScheduleTabPage.Controls.Add(this.weekdayTabControl);
@@ -751,14 +730,6 @@
             this.weekdayScheduleCheckBox.CheckedChanged += new System.EventHandler(this.weekdayScheduleCheckBox_CheckedChanged);
             this.weekdayScheduleCheckBox.Click += new System.EventHandler(this.weekdayScheduleCheckBox_Click);
             // 
-            // weekdayScheduleControl
-            // 
-            this.weekdayScheduleControl.Location = new System.Drawing.Point(5, 45);
-            this.weekdayScheduleControl.Name = "weekdayScheduleControl";
-            this.weekdayScheduleControl.Schedule = null;
-            this.weekdayScheduleControl.Size = new System.Drawing.Size(790, 320);
-            this.weekdayScheduleControl.TabIndex = 0;
-            // 
             // tuesdayTabPage
             // 
             this.tuesdayTabPage.Location = new System.Drawing.Point(4, 26);
@@ -818,6 +789,47 @@
             this.sundayTabPage.Tag = "0";
             this.sundayTabPage.Text = "Воскресенье";
             this.sundayTabPage.UseVisualStyleBackColor = true;
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.AutoPopDelay = 5000;
+            this.toolTip1.InitialDelay = 0;
+            this.toolTip1.ReshowDelay = 100;
+            this.toolTip1.ToolTipTitle = "Пояснение";
+            // 
+            // serviceStepsControl
+            // 
+            this.serviceStepsControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serviceStepsControl.Location = new System.Drawing.Point(3, 3);
+            this.serviceStepsControl.Name = "serviceStepsControl";
+            this.serviceStepsControl.Service = null;
+            this.serviceStepsControl.Size = new System.Drawing.Size(830, 450);
+            this.serviceStepsControl.TabIndex = 0;
+            // 
+            // weekdayScheduleControl
+            // 
+            this.weekdayScheduleControl.Location = new System.Drawing.Point(5, 45);
+            this.weekdayScheduleControl.Name = "weekdayScheduleControl";
+            this.weekdayScheduleControl.Schedule = null;
+            this.weekdayScheduleControl.Size = new System.Drawing.Size(790, 320);
+            this.weekdayScheduleControl.TabIndex = 0;
+            // 
+            // exceptionScheduleControl
+            // 
+            this.exceptionScheduleControl.Location = new System.Drawing.Point(10, 65);
+            this.exceptionScheduleControl.Name = "exceptionScheduleControl";
+            this.exceptionScheduleControl.Schedule = null;
+            this.exceptionScheduleControl.Size = new System.Drawing.Size(790, 320);
+            this.exceptionScheduleControl.TabIndex = 2;
+            // 
+            // serviceParametersControl
+            // 
+            this.serviceParametersControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.serviceParametersControl.Location = new System.Drawing.Point(3, 3);
+            this.serviceParametersControl.Name = "serviceParametersControl";
+            this.serviceParametersControl.Service = null;
+            this.serviceParametersControl.Size = new System.Drawing.Size(830, 450);
+            this.serviceParametersControl.TabIndex = 0;
             // 
             // EditServiceForm
             // 
@@ -931,6 +943,7 @@
         private System.Windows.Forms.Label fontSizeValueLabel;
         private System.Windows.Forms.Label maxClientRecallsLabel;
         private System.Windows.Forms.NumericUpDown maxClientRecallsUpDown;
+        private System.Windows.Forms.ToolTip toolTip1;
 
     }
 }

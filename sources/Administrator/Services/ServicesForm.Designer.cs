@@ -37,7 +37,7 @@
             // buttonDown
             // 
             this.buttonDown.Image = ((System.Drawing.Image)(resources.GetObject("buttonDown.Image")));
-            this.buttonDown.Location = new System.Drawing.Point(0, 25);
+            this.buttonDown.Location = new System.Drawing.Point(0, 30);
             this.buttonDown.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.buttonDown.Name = "buttonDown";
             this.buttonDown.Size = new System.Drawing.Size(30, 25);
