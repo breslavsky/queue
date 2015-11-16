@@ -11,35 +11,35 @@ namespace Queue.Services.Contracts.Portal
     public partial interface IPortalService
     {
         [OperationContract]
-        [WebGet(UriTemplate = PortalServiceMap.Index)]
+        [WebGet(UriTemplate = "/")]
         Stream Index();
 
         [OperationContract]
-        [WebGet(UriTemplate = PortalServiceMap.Favicon)]
+        [WebGet(UriTemplate = "/favicon.ico")]
         Stream Favicon();
 
         [OperationContract]
-        [WebGet(UriTemplate = PortalServiceMap.GetContent)]
+        [WebGet(UriTemplate = "/content/{*path}")]
         Stream GetContent(string path);
 
         [OperationContract]
-        [WebGet(UriTemplate = PortalServiceMap.GetDefaultConfig, ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/config/default", ResponseFormat = WebMessageFormat.Json)]
         Task<DefaultConfig> GetDefaultConfig();
 
         [OperationContract]
-        [WebGet(UriTemplate = PortalServiceMap.GetPortalConfig, ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/config/portal", ResponseFormat = WebMessageFormat.Json)]
         Task<PortalConfig> GetPortalConfig();
 
         [OperationContract]
-        [WebGet(UriTemplate = PortalServiceMap.FindServices, ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/find-services?query={query}", ResponseFormat = WebMessageFormat.Json)]
         Task<Service[]> FindServices(string query);
 
         [OperationContract]
-        [WebGet(UriTemplate = PortalServiceMap.GetQueuePlanMetric, ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/get-queue-plan-metric?year={year}&month={month}&day={day}&hour={hour}&minute={minute}&second={second}", ResponseFormat = WebMessageFormat.Json)]
         Task<QueuePlanMetric> GetQueuePlanMetric(int year, int month, int day, int hour, int minute, int second);
 
         [OperationContract]
-        [WebGet(UriTemplate = PortalServiceMap.GetQueuePlanServiceMetric, ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/get-queue-plan-service-metric?year={year}&month={month}&day={day}&hour={hour}&minute={minute}&second={second}&serviceId={serviceId}", ResponseFormat = WebMessageFormat.Json)]
         Task<QueuePlanServiceMetric> GetQueuePlanServiceMetric(int year, int month, int day, int hour, int minute, int second, string serviceId);
     }
 }

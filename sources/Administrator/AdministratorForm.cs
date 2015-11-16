@@ -38,10 +38,15 @@ namespace Queue.Administrator
 
         #region fields
 
-        private const int PingInterval = 10000;
+        private const int ServerDateTimeTimerInterval = 60000;
+        private const int CurrentDateTimerInterval = 1000;
+        private const int HeartbeatTimerInterval = 5000;
+
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private readonly Timer pingTimer;
-        private readonly TaskPool taskPool;
+        private readonly Timer currentDateTimeTimer = new Timer();
+        private readonly Timer serverDateTimeTimer = new Timer();
+        private readonly Timer heartbeatTimer = new Timer();
+        private readonly TaskPool taskPool = new TaskPool();
 
         #endregion fields
 
@@ -56,12 +61,12 @@ namespace Queue.Administrator
         {
             InitializeComponent();
 
-            taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
 
-            pingTimer = new Timer();
-            pingTimer.Elapsed += pingTimer_Elapsed;
+            currentDateTimeTimer.Elapsed += currentDateTimeTimer_Elapsed;
+            serverDateTimeTimer.Elapsed += serverDateTimeTimer_Elapsed;
+            heartbeatTimer.Elapsed += heartbeatTimer_Elapsed;
 
             CheckPermissions();
         }
@@ -74,14 +79,26 @@ namespace Queue.Administrator
                 {
                     components.Dispose();
                 }
-                if (pingTimer != null)
+
+                if (currentDateTimeTimer != null)
                 {
-                    pingTimer.Dispose();
+                    currentDateTimeTimer.Dispose();
                 }
+
+                if (serverDateTimeTimer != null)
+                {
+                    serverDateTimeTimer.Dispose();
+                }
+                if (heartbeatTimer != null)
+                {
+                    heartbeatTimer.Dispose();
+                }
+
                 if (taskPool != null)
                 {
                     taskPool.Dispose();
                 }
+
                 if (ChannelManager != null)
                 {
                     ChannelManager.Dispose();
@@ -93,6 +110,198 @@ namespace Queue.Administrator
             }
             base.Dispose(disposing);
         }
+
+        #region form events
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            serverDateTimeTimer.Stop();
+            currentDateTimeTimer.Stop();
+            heartbeatTimer.Stop();
+            taskPool.Cancel();
+        }
+
+        private async void MainForm_Load(object sender, EventArgs eventArgs)
+        {
+            Text = currentUserMenuItem.Text = CurrentUser.ToString();
+            Controls.OfType<MdiClient>().First().BackgroundImage = Properties.Resources.background;
+
+            using (var channel = ChannelManager.CreateChannel())
+            {
+                try
+                {
+                    var config = await taskPool.AddTask(channel.Service.GetDefaultConfig());
+                    Text += string.Format(" | {0}", config.QueueName);
+                }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+            }
+
+            currentDateTimeTimer.Start();
+            serverDateTimeTimer.Start();
+            heartbeatTimer.Start();
+        }
+
+        #endregion form events
+
+        #region taskpool
+
+        private void taskPool_OnAddTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
+        }
+
+        private void taskPool_OnRemoveTask(object sender, EventArgs e)
+        {
+            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
+        }
+
+        #endregion taskpool
+
+        #region timers
+
+        private void currentDateTimeTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            currentDateTimeTimer.Stop();
+            if (currentDateTimeTimer.Interval < CurrentDateTimerInterval)
+            {
+                currentDateTimeTimer.Interval = CurrentDateTimerInterval;
+            }
+
+            try
+            {
+                Invoke((MethodInvoker)delegate
+                {
+                    try
+                    {
+                        currentDateTimeLabel.Text = ServerDateTime.Now.ToLongTimeString();
+                    }
+                    catch (Exception exception)
+                    {
+                        logger.Error(exception);
+                    }
+                    finally
+                    {
+                        currentDateTimeTimer.Start();
+                    }
+                });
+            }
+            catch (Exception exception)
+            {
+                logger.Error(exception);
+            }
+        }
+
+        private async void serverDateTimeTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            serverDateTimeTimer.Stop();
+            if (serverDateTimeTimer.Interval < ServerDateTimeTimerInterval)
+            {
+                serverDateTimeTimer.Interval = ServerDateTimeTimerInterval;
+            }
+
+            try
+            {
+                using (var channel = ChannelManager.CreateChannel())
+                {
+                    ServerDateTime.Sync(await taskPool.AddTask(channel.Service.GetDateTime()));
+                }
+            }
+            catch (Exception exception)
+            {
+                logger.Error(exception);
+            }
+            finally
+            {
+                serverDateTimeTimer.Start();
+            }
+        }
+
+        private void heartbeatTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            heartbeatTimer.Stop();
+            if (heartbeatTimer.Interval < HeartbeatTimerInterval)
+            {
+                heartbeatTimer.Interval = HeartbeatTimerInterval;
+            }
+
+            try
+            {
+                Invoke((MethodInvoker)async delegate
+                {
+                    try
+                    {
+                        serverStateLabel.Image = QIcons.connecting16x16;
+
+                        using (var channel = ServerUserChannelManager.CreateChannel())
+                        {
+                            await taskPool.AddTask(channel.Service.UserHeartbeat());
+                        }
+
+                        serverStateLabel.Image = QIcons.online16x16;
+                    }
+                    catch
+                    {
+                        serverStateLabel.Image = QIcons.offline16x16;
+                    }
+                    finally
+                    {
+                        heartbeatTimer.Start();
+                    }
+                });
+            }
+            catch (Exception exception)
+            {
+                logger.Error(exception);
+            }
+        }
+
+        #endregion timers
+
+        private void CheckPermissions()
+        {
+            var items = new List<ToolStripItem>(topMenu.Items.Cast<ToolStripItem>());
+            items.AddRange(dictionariesMenu.DropDownItems.Cast<ToolStripItem>());
+            items.AddRange(clientRequestsMenu.DropDownItems.Cast<ToolStripItem>());
+            items.AddRange(queuePlanMenu.DropDownItems.Cast<ToolStripItem>());
+
+            foreach (ToolStripItem c in items)
+            {
+                string p = c.Tag as string;
+                if (!string.IsNullOrEmpty(p))
+                {
+                    AdministratorPermissions permission = (AdministratorPermissions)Enum.Parse(typeof(AdministratorPermissions), p);
+                    c.Visible = CurrentUser.Permissions.HasFlag(permission);
+                }
+            }
+        }
+
+        private void ShowForm<T>(Func<Form> create)
+        {
+            var form = MdiChildren.FirstOrDefault(f => f.GetType() == typeof(T));
+            if (form != null)
+            {
+                form.Activate();
+                return;
+            }
+
+            form = create();
+            form.MdiParent = this;
+
+            FormClosing += (s, e) =>
+            {
+                form.Close();
+            };
+            form.Show();
+        }
+
+        #region top menu
 
         private void aboutMenuItem_Click(object sender, EventArgs e)
         {
@@ -112,24 +321,6 @@ namespace Queue.Administrator
         private void additionalServicesMenuItem_Click(object sender, EventArgs e)
         {
             ShowForm<AdditionalServicesForm>(() => new AdditionalServicesForm());
-        }
-
-        private void CheckPermissions()
-        {
-            var items = new List<ToolStripItem>(topMenu.Items.Cast<ToolStripItem>());
-            items.AddRange(dictionariesMenu.DropDownItems.Cast<ToolStripItem>());
-            items.AddRange(clientRequestsMenu.DropDownItems.Cast<ToolStripItem>());
-            items.AddRange(queuePlanMenu.DropDownItems.Cast<ToolStripItem>());
-
-            foreach (ToolStripItem c in items)
-            {
-                string p = c.Tag as string;
-                if (!string.IsNullOrEmpty(p))
-                {
-                    AdministratorPermissions permission = (AdministratorPermissions)Enum.Parse(typeof(AdministratorPermissions), p);
-                    c.Visible = CurrentUser.Permissions.HasFlag(permission);
-                }
-            }
         }
 
         private void clientRequestsMenuItem_Click(object sender, EventArgs eventArgs)
@@ -162,43 +353,6 @@ namespace Queue.Administrator
             ShowForm<ExceptionScheduleReportForm>(() => new ExceptionScheduleReportForm());
         }
 
-        private void logoutMenuItem_Click(object sender, EventArgs e)
-        {
-            IsLogout = true;
-            Close();
-        }
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            pingTimer.Stop();
-            taskPool.Cancel();
-        }
-
-        private async void MainForm_Load(object sender, EventArgs eventArgs)
-        {
-            Text = currentUserMenuItem.Text = CurrentUser.ToString();
-            Controls.OfType<MdiClient>().First().BackgroundImage = Properties.Resources.background;
-
-            using (var channel = ChannelManager.CreateChannel())
-            {
-                try
-                {
-                    var config = await taskPool.AddTask(channel.Service.GetDefaultConfig());
-                    Text += string.Format(" | {0}", config.QueueName);
-
-                    pingTimer.Start();
-                }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
-            }
-        }
-
         private void officesMenuItem_Click(object sender, EventArgs eventArgsventArgs)
         {
             ShowForm<OfficesForm>(() => new OfficesForm());
@@ -212,56 +366,6 @@ namespace Queue.Administrator
         private void operatorsRatingToolStripMenuItem_Click(object sender, EventArgs eventArgs)
         {
             ShowForm<OperatorRatingReportForm>(() => new OperatorRatingReportForm());
-        }
-
-        private void pingTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            pingTimer.Stop();
-            if (pingTimer.Interval < PingInterval)
-            {
-                pingTimer.Interval = PingInterval;
-            }
-
-            try
-            {
-                Invoke((MethodInvoker)async delegate
-                {
-                    try
-                    {
-                        serverStateLabel.Image = QIcons.connecting16x16;
-
-                        using (var channel = ChannelManager.CreateChannel())
-                        {
-                            ServerDateTime.Sync(await taskPool.AddTask(channel.Service.GetDateTime()));
-                            currentDateTimeLabel.Text = ServerDateTime.Now.ToLongTimeString();
-                        }
-
-                        using (var channel = ServerUserChannelManager.CreateChannel())
-                        {
-                            await taskPool.AddTask(channel.Service.UserHeartbeat());
-                        }
-
-                        serverStateLabel.Image = QIcons.online16x16;
-                    }
-                    catch (OperationCanceledException) { }
-                    catch (CommunicationObjectAbortedException) { }
-                    catch (ObjectDisposedException) { }
-                    catch (InvalidOperationException) { }
-                    catch (Exception exception)
-                    {
-                        currentDateTimeLabel.Text = exception.Message;
-                        serverStateLabel.Image = QIcons.offline16x16;
-                    }
-                    finally
-                    {
-                        pingTimer.Start();
-                    }
-                });
-            }
-            catch (Exception exception)
-            {
-                logger.Error(exception);
-            }
         }
 
         private void queueMonitorMenuItem_Click(object sender, EventArgs eventArgs)
@@ -279,35 +383,6 @@ namespace Queue.Administrator
             ShowForm<ServicesForm>(() => new ServicesForm());
         }
 
-        private void ShowForm<T>(Func<Form> create)
-        {
-            var form = MdiChildren.FirstOrDefault(f => f.GetType() == typeof(T));
-            if (form != null)
-            {
-                form.Activate();
-                return;
-            }
-
-            form = create();
-            form.MdiParent = this;
-
-            FormClosing += (s, e) =>
-            {
-                form.Close();
-            };
-            form.Show();
-        }
-
-        private void taskPool_OnAddTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.WaitCursor));
-        }
-
-        private void taskPool_OnRemoveTask(object sender, EventArgs e)
-        {
-            Invoke((MethodInvoker)(() => Cursor = Cursors.Default));
-        }
-
         private void usersMenuItem_Click(object sender, EventArgs eventArgs)
         {
             ShowForm<UsersForm>(() => new UsersForm());
@@ -322,5 +397,13 @@ namespace Queue.Administrator
         {
             ShowForm<CurrentScheduleForm>(() => new CurrentScheduleForm());
         }
+
+        private void logoutMenuItem_Click(object sender, EventArgs e)
+        {
+            IsLogout = true;
+            Close();
+        }
+
+        #endregion top menu
     }
 }

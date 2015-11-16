@@ -61,17 +61,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomHeaderMessageInspector.cs" />
-    <Compile Include="ExtendedWebHttpBehavior.cs" />
+    <Compile Include="Behaviors\ExtendedWebHttpBehavior.cs" />
     <Compile Include="ExtendHttpHeaders.cs" />
     <Compile Include="FaultErrorHandler.cs" />
     <Compile Include="StandardServiceProvider.cs" />
     <Compile Include="DependencyService.cs" />
-    <Compile Include="EnableCORSBehavior.cs" />
-    <Compile Include="Maps\PortalClientServiceMap.cs" />
-    <Compile Include="Maps\PortalServiceMap.cs" />
+    <Compile Include="Behaviors\EnableCORSBehavior.cs" />
     <Compile Include="Exceptions\ObjectNotFoundFault.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="NoCacheBehavior.cs" />
+    <Compile Include="Behaviors\NoCacheBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

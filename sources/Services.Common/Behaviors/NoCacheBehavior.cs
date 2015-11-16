@@ -15,10 +15,12 @@ namespace Queue.Services.Common
     {
         public void AddBindingParameters(ServiceEndpoint endpoint, BindingParameterCollection bindingParameters)
         {
+            //
         }
 
         public void ApplyClientBehavior(ServiceEndpoint endpoint, ClientRuntime clientRuntime)
         {
+            //
         }
 
         public void ApplyDispatchBehavior(ServiceEndpoint endpoint, EndpointDispatcher endpointDispatcher)
@@ -29,11 +31,13 @@ namespace Queue.Services.Common
             requiredHeaders.Add("Pragma", "no-cache");
             requiredHeaders.Add("Expires", "0");
 
-            endpointDispatcher.DispatchRuntime.MessageInspectors.Add(new CustomHeaderMessageInspector(requiredHeaders));
+            endpointDispatcher.DispatchRuntime.MessageInspectors
+                .Add(new CustomHeaderMessageInspector(requiredHeaders));
         }
 
         public void Validate(ServiceEndpoint endpoint)
         {
+            //
         }
 
         public override Type BehaviorType
