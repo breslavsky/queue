@@ -19,6 +19,13 @@ namespace Queue.Terminal.Core.Settings
             set { this["to"] = value; }
         }
 
+        [ConfigurationProperty("message")]
+        public string Message
+        {
+            get { return (string)this["message"]; }
+            set { this["message"] = value; }
+        }
+
         public override bool IsReadOnly()
         {
             return false;

@@ -38,7 +38,7 @@ namespace Queue.Terminal.ViewModels
         private CommonTemplateManager commonTemplateManager;
         private DispatcherTimer resetTimer;
         private DispatcherTimer serviceBreakTimer;
-        private bool serviceBreak;
+        private bool isServiceBreak;
 
         private string title;
 
@@ -126,39 +126,45 @@ namespace Queue.Terminal.ViewModels
         private void ServiceBreakTimerTick(object sender, EventArgs e)
         {
             var time = DateTime.Now.TimeOfDay;
-            if (IsServiceBreak())
+            var currentServiceBreak = GetServiceBreakForNow();
+
+            if (currentServiceBreak != null)
             {
-                if (!serviceBreak)
+                if (!isServiceBreak)
                 {
                     navigator.Reset();
                     resetTimer.Stop();
-                    Window.Warning("В данный момент услуга не оказывается", null, false);
+                    var msg = String.IsNullOrWhiteSpace(currentServiceBreak.Message) ?
+                                        "В данный момент услуга не оказывается" :
+                                        currentServiceBreak.Message;
 
-                    serviceBreak = true;
+                    Window.Warning(msg, null, false);
+
+                    isServiceBreak = true;
                 }
             }
             else
             {
-                if (serviceBreak)
+                if (isServiceBreak)
                 {
                     Window.HideActiveMessageBox();
-                    serviceBreak = false;
+                    isServiceBreak = false;
                 }
             }
         }
 
-        private bool IsServiceBreak()
+        private ServiceBreak GetServiceBreakForNow()
         {
             var time = DateTime.Now.TimeOfDay;
             foreach (ServiceBreak serviceBreak in AppSettings.ServiceBreaks)
             {
                 if (time >= serviceBreak.From && time <= serviceBreak.To)
                 {
-                    return true;
+                    return serviceBreak;
                 }
             }
 
-            return false;
+            return null;
         }
 
         private void MainWindow_PreviewMouseUp(object sender, MouseButtonEventArgs e)
