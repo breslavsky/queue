@@ -8,13 +8,19 @@ namespace Queue.UI.WPF
     public partial class WarningControl : UserControl
     {
         private Action closed;
+        public string Text { get; set; }
 
-        public WarningControl(string message, Action closed)
+        public bool Closeable { get; set; }
+
+        public WarningControl(string message, Action closed, bool closeable)
         {
             InitializeComponent();
 
-            warningTextBlock.Text = message;
             this.closed = closed;
+
+            Text = message;
+            Closeable = closeable;
+            DataContext = this;
         }
 
         public void Hide()

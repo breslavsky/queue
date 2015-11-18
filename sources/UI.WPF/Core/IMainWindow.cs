@@ -14,7 +14,7 @@ namespace Queue.UI.WPF
 
         NoticeControl Notice(object message, Action callback = null);
 
-        WarningControl Warning(object message, Action callback = null);
+        WarningControl Warning(object message, Action callback = null, bool closeable = true);
 
         void HideMessageBox(UserControl control);
 

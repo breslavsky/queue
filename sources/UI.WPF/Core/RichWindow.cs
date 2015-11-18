@@ -77,9 +77,9 @@ namespace Queue.UI.WPF
             return ShowMessageBox(() => new NoticeControl(message.ToString(), callback));
         }
 
-        public WarningControl Warning(object message, Action callback = null)
+        public WarningControl Warning(object message, Action callback = null, bool closeable = true)
         {
-            return ShowMessageBox(() => new WarningControl(message.ToString(), callback));
+            return ShowMessageBox(() => new WarningControl(message.ToString(), callback, closeable));
         }
 
         public T ShowMessageBox<T>(Func<T> ctor) where T : UserControl

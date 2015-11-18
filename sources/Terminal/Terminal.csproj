@@ -140,6 +140,8 @@
     <Compile Include="Core\CommonTemplateManager.cs" />
     <Compile Include="Core\Extensions\ServiceExtensions.cs" />
     <Compile Include="Core\ICommonTemplateManager.cs" />
+    <Compile Include="Core\Settings\ServiceBreak.cs" />
+    <Compile Include="Core\Settings\ServiceBreakCollection.cs" />
     <Compile Include="Enums\ClientRequestModelState.cs" />
     <Compile Include="AppSettings.cs" />
     <Compile Include="Translate\Messages.Designer.cs">

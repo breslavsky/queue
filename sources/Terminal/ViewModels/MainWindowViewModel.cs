@@ -7,6 +7,7 @@ using Queue.Model.Common;
 using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.Terminal.Core;
+using Queue.Terminal.Core.Settings;
 using Queue.Terminal.Views;
 using Queue.UI.WPF;
 using System;
@@ -24,6 +25,7 @@ namespace Queue.Terminal.ViewModels
     public class MainWindowViewModel : RichViewModel, IDisposable
     {
         private const double ActivityWaitTime = 120;
+        private const double ServiceBreakPingTime = 30;
         private bool disposed = false;
 
         private LoginPage loginPage;
@@ -34,8 +36,9 @@ namespace Queue.Terminal.ViewModels
         private TemplateService templateService;
         private TemplateManager templateManager;
         private CommonTemplateManager commonTemplateManager;
-
         private DispatcherTimer resetTimer;
+        private DispatcherTimer serviceBreakTimer;
+        private bool serviceBreak;
 
         private string title;
 
@@ -97,7 +100,7 @@ namespace Queue.Terminal.ViewModels
 
             Window.Navigate(new TerminalWindow());
 
-            CreateResetTimer();
+            CreateTimers();
 
             Application.Current.MainWindow.KeyDown += MainWindow_KeyDown;
             Application.Current.MainWindow.PreviewMouseUp += MainWindow_PreviewMouseUp;
@@ -105,11 +108,57 @@ namespace Queue.Terminal.ViewModels
             Window.MakeFullScreen();
         }
 
-        private void CreateResetTimer()
+        private void CreateTimers()
         {
             resetTimer = new DispatcherTimer(DispatcherPriority.Background);
             resetTimer.Tick += ResetTimerTick;
             resetTimer.Interval = TimeSpan.FromSeconds(ActivityWaitTime);
+
+            if (AppSettings.ServiceBreaks.Count > 0)
+            {
+                serviceBreakTimer = new DispatcherTimer(DispatcherPriority.Background);
+                serviceBreakTimer.Tick += ServiceBreakTimerTick;
+                serviceBreakTimer.Interval = TimeSpan.FromSeconds(ServiceBreakPingTime);
+                serviceBreakTimer.Start();
+            }
+        }
+
+        private void ServiceBreakTimerTick(object sender, EventArgs e)
+        {
+            var time = DateTime.Now.TimeOfDay;
+            if (IsServiceBreak())
+            {
+                if (!serviceBreak)
+                {
+                    navigator.Reset();
+                    resetTimer.Stop();
+                    Window.Warning("В данный момент услуга не оказывается", null, false);
+
+                    serviceBreak = true;
+                }
+            }
+            else
+            {
+                if (serviceBreak)
+                {
+                    Window.HideActiveMessageBox();
+                    serviceBreak = false;
+                }
+            }
+        }
+
+        private bool IsServiceBreak()
+        {
+            var time = DateTime.Now.TimeOfDay;
+            foreach (ServiceBreak serviceBreak in AppSettings.ServiceBreaks)
+            {
+                if (time >= serviceBreak.From && time <= serviceBreak.To)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void MainWindow_PreviewMouseUp(object sender, MouseButtonEventArgs e)

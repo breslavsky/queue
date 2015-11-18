@@ -1,4 +1,5 @@
 ﻿using Queue.Common;
+using Queue.Terminal.Core.Settings;
 using System;
 using System.Configuration;
 
@@ -61,6 +62,13 @@ namespace Queue.Terminal
         {
             get { return (string)this["endpoint"]; }
             set { this["endpoint"] = value; }
+        }
+
+        [ConfigurationProperty("serviceBreaks")]
+        public ServiceBreakCollection ServiceBreaks
+        {
+            get { return this["serviceBreaks"] as ServiceBreakCollection; }
+            set { this["serviceBreaks"] = value; }
         }
 
         public override bool IsReadOnly()

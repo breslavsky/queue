@@ -31,6 +31,18 @@
                         Grid.Row="0"
                         Grid.Column="1"
                         Click="hideButton_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Closeable}" Value="true">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Closeable}" Value="false">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <Viewbox Margin="-7.5">
                         <ContentPresenter Content="{Binding Source={StaticResource appbar_close}}" />
                     </Viewbox>
@@ -39,7 +51,7 @@
                            Grid.Row="1"
                            Grid.ColumnSpan="2"
                            Margin="5"
-                           Text="Сопроводительное сообщение"
+                           Text="{Binding Text}"
                            TextWrapping="Wrap" />
             </Grid>
         </Border>
