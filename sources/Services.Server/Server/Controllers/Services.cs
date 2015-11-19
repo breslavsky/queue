@@ -342,7 +342,6 @@ namespace Queue.Services.Server
                     nextService.SortId = sortId;
 
                     session.Save(nextService);
-                    session.Flush();
                     transaction.Commit();
 
                     return true;
