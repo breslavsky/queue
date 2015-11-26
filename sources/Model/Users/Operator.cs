@@ -1,4 +1,5 @@
 ﻿using NHibernate.Mapping.Attributes;
+using NHibernate.Validator.Constraints;
 using Queue.Model.Common;
 
 namespace Queue.Model
@@ -8,6 +9,7 @@ namespace Queue.Model
     {
         #region properties
 
+        [NotNull(Message = "Не указано рабочее место оператора")]
         [ManyToOne(ClassType = typeof(Workplace), Column = "WorkplaceId", ForeignKey = "OperatorToWorkplaceReference")]
         public virtual Workplace Workplace { get; set; }
 
