@@ -140,7 +140,7 @@ namespace Queue.Services.Server
                         }
 
                         clientRequest.CallingLastTime = DateTime.Now.TimeOfDay;
-                        session.Save(clientRequest);
+                        session.Update(clientRequest);
 
                         var queueEvent = new ClientRequestEvent()
                         {
