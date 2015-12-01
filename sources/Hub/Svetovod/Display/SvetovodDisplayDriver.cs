@@ -100,13 +100,8 @@ namespace Queue.Hub.Svetovod
         private void ShowTextOnSegmentDisplay(byte sysnum, string text, SvetovodDisplayConnectionConfig conf)
         {
             var connection = new SvetovodSegmentDisplayConnection(config.Port);
-            short number;
-            if (!Int16.TryParse(text, out number))
-            {
-                throw new QueueException("Данное табло [id: {0}] поддерживает вывод только цифровой информации", sysnum);
-            }
 
-            connection.ShowNumber(sysnum, number, conf.Width);
+            connection.ShowNumber(sysnum, text, conf.Width);
 
             activeConnection = connection;
         }

@@ -1,5 +1,4 @@
 ﻿using Queue.Common;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +12,7 @@ namespace Queue.Hub.Svetovod
         {
         }
 
-        public void ShowNumber(byte sysnum, short number, byte width)
+        public void ShowNumber(byte sysnum, string number, byte width)
         {
             var body = CreateBody(GetBodyContent(sysnum, number, width));
             WriteToPort(CreateHeader(sysnum, 0x00, 0x00, (byte)(body.Length - 1)), body);
@@ -69,23 +68,16 @@ namespace Queue.Hub.Svetovod
             return bytes.First();
         }
 
-        private static byte[] GetBodyContent(byte sysnum, short number, byte segments)
+        private static byte[] GetBodyContent(byte sysnum, string number, byte segments)
         {
-            string source = number.ToString();
-
-            if (number < 0)
-            {
-                source = String.Empty;
-            }
-
-            int lenght = source.Length;
+            int lenght = number.Length;
 
             if (lenght > segments)
             {
                 throw new QueueException();
             }
 
-            var digits = source.ToCharArray();
+            var digits = number.ToCharArray();
 
             var units = new List<byte>();
             foreach (var d in digits)
