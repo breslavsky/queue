@@ -39,7 +39,7 @@ namespace Queue.Hub.Svetovod
             switch (conf.Type)
             {
                 case SvetovodDisplayType.Segment:
-                    ShowTextOnSegmentDisplay(deviceId, text);
+                    ShowTextOnSegmentDisplay(deviceId, text, conf);
                     break;
 
                 case SvetovodDisplayType.Matrix:
@@ -97,7 +97,7 @@ namespace Queue.Hub.Svetovod
             return conf;
         }
 
-        private void ShowTextOnSegmentDisplay(byte sysnum, string text)
+        private void ShowTextOnSegmentDisplay(byte sysnum, string text, SvetovodDisplayConnectionConfig conf)
         {
             var connection = new SvetovodSegmentDisplayConnection(config.Port);
             short number;
@@ -106,7 +106,7 @@ namespace Queue.Hub.Svetovod
                 throw new QueueException("Данное табло [id: {0}] поддерживает вывод только цифровой информации", sysnum);
             }
 
-            connection.ShowNumber(sysnum, number);
+            connection.ShowNumber(sysnum, number, conf.Width);
 
             activeConnection = connection;
         }

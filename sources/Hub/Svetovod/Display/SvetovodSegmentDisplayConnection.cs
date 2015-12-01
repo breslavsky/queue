@@ -8,20 +8,14 @@ namespace Queue.Hub.Svetovod
 {
     public class SvetovodSegmentDisplayConnection : SvetovodConnection, ISvetovodDisplayConnection
     {
-        #region fields
-
-        private const byte Segments = 0x04;
-
-        #endregion fields
-
         public SvetovodSegmentDisplayConnection(string port) :
             base(port)
         {
         }
 
-        public void ShowNumber(byte sysnum, short number)
+        public void ShowNumber(byte sysnum, short number, byte width)
         {
-            var body = CreateBody(GetBodyContent(sysnum, number, Segments));
+            var body = CreateBody(GetBodyContent(sysnum, number, width));
             WriteToPort(CreateHeader(sysnum, 0x00, 0x00, (byte)(body.Length - 1)), body);
         }
 
