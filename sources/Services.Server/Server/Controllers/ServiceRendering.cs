@@ -31,6 +31,8 @@ namespace Queue.Services.Server
                         .AddOrder(Order.Asc("ServiceStep"))
                         .AddOrder(Order.Asc("Operator"))
                         .List<ServiceRendering>();
+
+                    //.OrderBy(r => r.Operator.Name).ThenBy(r => r.ServiceStep)
                     return Mapper.Map<IList<ServiceRendering>, DTO.ServiceRendering[]>(serviceRenderings);
                 }
             });

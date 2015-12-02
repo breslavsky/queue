@@ -4,7 +4,6 @@ using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Model.Common;
-using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
@@ -12,7 +11,6 @@ using System;
 using System.ComponentModel;
 using System.ServiceModel;
 using System.Windows.Forms;
-using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
@@ -59,7 +57,7 @@ namespace Queue.Administrator
                     maxClientRequestsUpDown.Value = schedule.MaxClientRequests;
                     renderingModeControl.Select<ServiceRenderingMode>(schedule.RenderingMode);
                     earlyStartTimeTextBox.Text = schedule.EarlyStartTime.ToString("hh\\:mm");
-                    earlyFinishTimeTextBox.Text = schedule.FinishTime.ToString("hh\\:mm");
+                    earlyFinishTimeTextBox.Text = schedule.EarlyFinishTime.ToString("hh\\:mm");
                     earlyReservationUpDown.Value = schedule.EarlyReservation;
                     earlyClientIntervalUpDown.Value = (decimal)schedule.EarlyClientInterval.TotalMinutes;
 
