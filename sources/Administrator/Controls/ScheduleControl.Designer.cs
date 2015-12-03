@@ -39,12 +39,12 @@
             this.priorityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.maxClientRequestsMeasureLabel = new System.Windows.Forms.Label();
             this.earlyGroupBox = new System.Windows.Forms.GroupBox();
-            this.earlyClientIntervalLabel = new System.Windows.Forms.Label();
-            this.earlyClientIntervalUpDown = new System.Windows.Forms.NumericUpDown();
             this.earlyTimeLabel = new System.Windows.Forms.Label();
-            this.minLabel3 = new System.Windows.Forms.Label();
             this.earlyStartTimeTextBox = new System.Windows.Forms.MaskedTextBox();
             this.earlyFinishTimeTextBox = new System.Windows.Forms.MaskedTextBox();
+            this.earlyClientIntervalLabel = new System.Windows.Forms.Label();
+            this.earlyClientIntervalUpDown = new System.Windows.Forms.NumericUpDown();
+            this.minLabel3 = new System.Windows.Forms.Label();
             this.earlyReservationLabel = new System.Windows.Forms.Label();
             this.earlyReservationUpDown = new System.Windows.Forms.NumericUpDown();
             this.timeLabel = new System.Windows.Forms.Label();
@@ -182,28 +182,6 @@
             this.earlyGroupBox.TabStop = false;
             this.earlyGroupBox.Text = "По записи";
             // 
-            // earlyClientIntervalLabel
-            // 
-            this.earlyClientIntervalLabel.Location = new System.Drawing.Point(5, 40);
-            this.earlyClientIntervalLabel.Name = "earlyClientIntervalLabel";
-            this.earlyClientIntervalLabel.Size = new System.Drawing.Size(105, 25);
-            this.earlyClientIntervalLabel.TabIndex = 3;
-            this.earlyClientIntervalLabel.Text = "Время оказания";
-            this.earlyClientIntervalLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // earlyClientIntervalUpDown
-            // 
-            this.earlyClientIntervalUpDown.Location = new System.Drawing.Point(115, 45);
-            this.earlyClientIntervalUpDown.Maximum = new decimal(new int[] {
-            600,
-            0,
-            0,
-            0});
-            this.earlyClientIntervalUpDown.Name = "earlyClientIntervalUpDown";
-            this.earlyClientIntervalUpDown.Size = new System.Drawing.Size(35, 20);
-            this.earlyClientIntervalUpDown.TabIndex = 4;
-            this.earlyClientIntervalUpDown.Leave += new System.EventHandler(this.earlyClientIntervalUpDown_Leave);
-            // 
             // earlyTimeLabel
             // 
             this.earlyTimeLabel.Location = new System.Drawing.Point(5, 15);
@@ -212,15 +190,6 @@
             this.earlyTimeLabel.TabIndex = 0;
             this.earlyTimeLabel.Text = "Время записи";
             this.earlyTimeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // minLabel3
-            // 
-            this.minLabel3.AutoSize = true;
-            this.minLabel3.Location = new System.Drawing.Point(155, 50);
-            this.minLabel3.Name = "minLabel3";
-            this.minLabel3.Size = new System.Drawing.Size(27, 13);
-            this.minLabel3.TabIndex = 5;
-            this.minLabel3.Text = "мин";
             // 
             // earlyStartTimeTextBox
             // 
@@ -244,6 +213,37 @@
             this.earlyFinishTimeTextBox.ValidatingType = typeof(System.DateTime);
             this.earlyFinishTimeTextBox.Leave += new System.EventHandler(this.earlyFinishTimeTextBox_Leave);
             // 
+            // earlyClientIntervalLabel
+            // 
+            this.earlyClientIntervalLabel.Location = new System.Drawing.Point(5, 40);
+            this.earlyClientIntervalLabel.Name = "earlyClientIntervalLabel";
+            this.earlyClientIntervalLabel.Size = new System.Drawing.Size(105, 25);
+            this.earlyClientIntervalLabel.TabIndex = 3;
+            this.earlyClientIntervalLabel.Text = "Время оказания";
+            this.earlyClientIntervalLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // earlyClientIntervalUpDown
+            // 
+            this.earlyClientIntervalUpDown.Location = new System.Drawing.Point(115, 45);
+            this.earlyClientIntervalUpDown.Maximum = new decimal(new int[] {
+            600,
+            0,
+            0,
+            0});
+            this.earlyClientIntervalUpDown.Name = "earlyClientIntervalUpDown";
+            this.earlyClientIntervalUpDown.Size = new System.Drawing.Size(35, 20);
+            this.earlyClientIntervalUpDown.TabIndex = 4;
+            this.earlyClientIntervalUpDown.Leave += new System.EventHandler(this.earlyClientIntervalUpDown_Leave);
+            // 
+            // minLabel3
+            // 
+            this.minLabel3.AutoSize = true;
+            this.minLabel3.Location = new System.Drawing.Point(155, 50);
+            this.minLabel3.Name = "minLabel3";
+            this.minLabel3.Size = new System.Drawing.Size(27, 13);
+            this.minLabel3.TabIndex = 5;
+            this.minLabel3.Text = "мин";
+            // 
             // earlyReservationLabel
             // 
             this.earlyReservationLabel.Location = new System.Drawing.Point(5, 65);
@@ -261,11 +261,6 @@
             0,
             0});
             this.earlyReservationUpDown.Location = new System.Drawing.Point(115, 70);
-            this.earlyReservationUpDown.Maximum = new decimal(new int[] {
-            90,
-            0,
-            0,
-            0});
             this.earlyReservationUpDown.Name = "earlyReservationUpDown";
             this.earlyReservationUpDown.Size = new System.Drawing.Size(35, 20);
             this.earlyReservationUpDown.TabIndex = 0;

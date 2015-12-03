@@ -524,6 +524,11 @@ namespace Queue.Services.Server
                             string.Format("Запрос клиента [{0}] не найден", clientRequestId));
                     }
 
+                    if (!clientRequest.IsClosed)
+                    {
+                        throw new FaultException("Запрос клиента не закрыт");
+                    }
+
                     session.Delete(clientRequest);
                     transaction.Commit();
                 }

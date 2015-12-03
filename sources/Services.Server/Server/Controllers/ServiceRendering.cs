@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using NHibernate.Criterion;
+using NHibernate.SqlCommand;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Services.Common;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
+using QueueOperator = Queue.Model.Operator;
 
 namespace Queue.Services.Server
 {
@@ -20,19 +22,20 @@ namespace Queue.Services.Server
                 using (var session = SessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    var schedule = session.Get<Schedule>(scheduleId);
-                    if (schedule == null)
-                    {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(scheduleId), string.Format("Расписание [{0}] не найдено", scheduleId));
-                    }
+                    ServiceRendering renderingAlias = null;
+                    Schedule scheduleAlias = null;
+                    ServiceStep stepAlias = null;
+                    QueueOperator operatorAlias = null;
 
-                    var serviceRenderings = session.CreateCriteria<ServiceRendering>()
-                        .Add(Restrictions.Eq("Schedule", schedule))
-                        .AddOrder(Order.Asc("ServiceStep"))
-                        .AddOrder(Order.Asc("Operator"))
+                    var serviceRenderings = session.QueryOver(() => renderingAlias)
+                        .JoinAlias(() => renderingAlias.Schedule, () => scheduleAlias)
+                        .Left.JoinAlias(() => renderingAlias.ServiceStep, () => stepAlias)
+                        .JoinAlias(() => renderingAlias.Operator, () => operatorAlias)
+                        .Where(() => scheduleAlias.Id == scheduleId)
+                        .OrderBy(() => stepAlias.SortId).Asc
+                        .ThenBy(() => operatorAlias.Surname).Asc
                         .List<ServiceRendering>();
 
-                    //.OrderBy(r => r.Operator.Name).ThenBy(r => r.ServiceStep)
                     return Mapper.Map<IList<ServiceRendering>, DTO.ServiceRendering[]>(serviceRenderings);
                 }
             });
@@ -48,7 +51,8 @@ namespace Queue.Services.Server
                     var serviceRendering = session.Get<ServiceRendering>(serviceRenderingId);
                     if (serviceRendering == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceRenderingId), string.Format("Обслуживание [{0}] не найдено", serviceRenderingId));
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceRenderingId),
+                            string.Format("Обслуживание [{0}] не найдено", serviceRenderingId));
                     }
 
                     return Mapper.Map<ServiceRendering, DTO.ServiceRendering>(serviceRendering);
@@ -170,7 +174,8 @@ namespace Queue.Services.Server
                     var serviceRendering = session.Get<ServiceRendering>(serviceRenderingId);
                     if (serviceRendering == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceRenderingId), string.Format("Обслуживание услуги [{0}] не найдено", serviceRenderingId));
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceRenderingId),
+                            string.Format("Обслуживание услуги [{0}] не найдено", serviceRenderingId));
                     }
 
                     session.Delete(serviceRendering);

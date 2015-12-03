@@ -17,5 +17,17 @@ namespace Queue.Services.Hub
                     IncludeExceptionDetailInFaults = true)]
     public sealed class DisplayHttpService : DisplayService, IDisplayHttpService
     {
+        public async void ShowLines(byte deviceId, string lines)
+        {
+            var data = new List<ushort[]>();
+
+            var rows = lines.Split('|');
+            foreach (var r in rows)
+            {
+                data.Add(r.Split(',').Select(ushort.Parse).ToArray());
+            }
+
+            await base.ShowLines(deviceId, data.ToArray());
+        }
     }
 }

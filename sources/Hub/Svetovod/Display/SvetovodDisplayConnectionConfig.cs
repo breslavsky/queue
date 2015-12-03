@@ -33,5 +33,12 @@ namespace Queue.Hub.Svetovod
             get { return (byte)this["height"]; }
             set { this["height"] = value; }
         }
+
+        [ConfigurationProperty("columns")]
+        [ConfigurationCollection(typeof(SvetovodDisplayConnectionColumnCollection))]
+        public SvetovodDisplayConnectionColumnCollection Columns
+        {
+            get { return (SvetovodDisplayConnectionColumnCollection)base["columns"]; }
+        }
     }
 }

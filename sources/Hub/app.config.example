@@ -9,28 +9,34 @@
       <httpService enabled="true" host="localhost" port="4512" />
     </services>
     <drivers>
-		<display>
-			<driver name="svetovodDisplay" 
-					enabled="true" 
-					assembly="Queue.Hub"
-					settings="Queue.Hub.Svetovod.SvetovodDisplayDriverConfig" 
-					type="Queue.Hub.Svetovod.SvetovodDisplayDriver"
-					port="COM2" 
-					deviceId="0" >
-				<connections>
-					<connection sysnum="0" type="segment" width="4" />
-					<connection sysnum="1" type="matrix" width="32" height="12"/>
-				</connections>
-			</driver>
-		</display>
-		<quality>
-			<driver name="svetovodQualityPanel" 
-					enabled="true" 
-					assembly="Queue.Hub"
-					settings="Queue.Hub.Svetovod.SvetovodQualityPanelDriverConfig" 
-					type="Queue.Hub.Svetovod.SvetovodQualityPanelDriver"
-					port="COM2" deviceId="0" />
-		</quality>
+      <display>
+        <driver name="svetovodDisplay"
+            enabled="true"
+            assembly="Queue.Hub"
+            settings="Queue.Hub.Svetovod.SvetovodDisplayDriverConfig"
+            type="Queue.Hub.Svetovod.SvetovodDisplayDriver"
+            port="COM2"
+            deviceId="0">
+          <connections>
+            <connection sysnum="0" type="segment" width="4">
+              <!--http://localhost:4512/display/show-lines?deviceId=12&lines=1,10|2,11 -->
+              <columns>
+                <column index="0" width="3" />
+                <column index="1" width="2" />
+              </columns>
+            </connection>
+            <connection sysnum="1" type="matrix" width="32" height="12" />
+          </connections>
+        </driver>
+      </display>
+      <quality>
+        <driver name="svetovodQualityPanel"
+            enabled="true"
+            assembly="Queue.Hub"
+            settings="Queue.Hub.Svetovod.SvetovodQualityPanelDriverConfig"
+            type="Queue.Hub.Svetovod.SvetovodQualityPanelDriver"
+            port="COM2" deviceId="0" />
+      </quality>
     </drivers>
   </hub>
 </configuration>

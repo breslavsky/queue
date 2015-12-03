@@ -59,6 +59,17 @@ namespace Queue.Services.Hub
             });
         }
 
+        public async Task ShowLines(byte deviceId, ushort[][] lines)
+        {
+            await Task.Run(() =>
+            {
+                foreach (var d in Drivers)
+                {
+                    d.ShowLines(deviceId, lines);
+                }
+            });
+        }
+
         public async Task ClearText(byte deviceId)
         {
             await Task.Run(() =>

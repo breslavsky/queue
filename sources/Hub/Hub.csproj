@@ -123,6 +123,8 @@
     <Compile Include="Svetovod\Display\SvetovodDisplayConnectionCollection.cs" />
     <Compile Include="Svetovod\Display\SvetovodDisplayConnectionConfig.cs" />
     <Compile Include="Svetovod\Display\SvetovodDisplayType.cs" />
+    <Compile Include="Svetovod\Display\SvetovodDisplayConnectionColumnCollection.cs" />
+    <Compile Include="Svetovod\Display\SvetovodDisplayConnectionColumnConfig.cs" />
     <Compile Include="Svetovod\SvetovodConnection.cs" />
     <Compile Include="Svetovod\Display\SvetovodDisplayDriver.cs" />
     <Compile Include="Svetovod\Display\SvetovodMatrixDisplayConnection.cs" />

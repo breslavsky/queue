@@ -11,5 +11,7 @@ namespace Queue.Services.Contracts.Hub
     [ServiceContract(SessionMode = SessionMode.Required)]
     public interface IDisplayTcpService : IDisplayService
     {
+        [OperationContract]
+        Task ShowLines(byte deviceId, ushort[][] lines);
     }
 }

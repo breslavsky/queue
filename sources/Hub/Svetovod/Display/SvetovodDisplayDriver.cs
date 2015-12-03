@@ -50,6 +50,33 @@ namespace Queue.Hub.Svetovod
             CloseActiveConnection();
         }
 
+        public void ShowLines(byte deviceId, ushort[][] lines)
+        {
+            logger.Debug("show lines [device: {0}; lines: {1}]", deviceId, lines.Length);
+
+            CloseActiveConnection();
+
+            if (config.DeviceId != 0 && config.DeviceId != deviceId)
+            {
+                return;
+            }
+
+            var conf = GetDeviceConfig(deviceId);
+
+            switch (conf.Type)
+            {
+                case SvetovodDisplayType.Segment:
+                    throw new NotImplementedException();
+                    break;
+
+                case SvetovodDisplayType.Matrix:
+                    throw new NotImplementedException();
+                    break;
+            }
+
+            CloseActiveConnection();
+        }
+
         public void ClearText(byte deviceId)
         {
             logger.Debug("clear text [device: {0}]", deviceId);

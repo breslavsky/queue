@@ -342,7 +342,10 @@ namespace Queue.Services.Server
                     }
                     else
                     {
-                        administrator = new Administrator();
+                        administrator = new Administrator()
+                        {
+                            SessionId = Guid.NewGuid()
+                        };
                     }
 
                     administrator.Surname = source.Surname;
@@ -397,7 +400,10 @@ namespace Queue.Services.Server
                     }
                     else
                     {
-                        queueOperator = new Operator();
+                        queueOperator = new Operator()
+                        {
+                            SessionId = Guid.NewGuid()
+                        };
                     }
 
                     queueOperator.Surname = source.Surname;
