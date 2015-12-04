@@ -127,7 +127,7 @@
     <value>Клиент</value>
   </data>
   <data name="CompletedMessage" xml:space="preserve">
-    <value>Спасибо, Вы записаны, возьмите талон</value>
+    <value>Спасибо, Вы записаны под номером </value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Дата</value>
@@ -164,5 +164,8 @@
   </data>
   <data name="Subjects" xml:space="preserve">
     <value>Количество объектов</value>
+  </data>
+  <data name="TakeCoupon" xml:space="preserve">
+    <value>Возьмите Ваш талон</value>
   </data>
 </root>

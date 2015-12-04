@@ -78,6 +78,8 @@ namespace Queue.Terminal.ViewModels
                 PrintCoupon(couponData);
             }
 
+            //couponData.Number
+
             timer.Start();
         }
 

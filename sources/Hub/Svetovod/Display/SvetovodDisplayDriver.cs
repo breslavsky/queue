@@ -29,24 +29,15 @@ namespace Queue.Hub.Svetovod
 
             CloseActiveConnection();
 
-            if (config.DeviceId != 0 && config.DeviceId != deviceId)
+            var connection = GetConnectionForDevice(deviceId);
+            if (connection == null)
             {
                 return;
             }
 
-            var conf = GetDeviceConfig(deviceId);
+            connection.ShowText(deviceId, text);
 
-            switch (conf.Type)
-            {
-                case SvetovodDisplayType.Segment:
-                    ShowTextOnSegmentDisplay(deviceId, text, conf);
-                    break;
-
-                case SvetovodDisplayType.Matrix:
-                    ShowTextOnMatrixDisplay(deviceId, text, conf);
-                    break;
-            }
-
+            activeConnection = connection;
             CloseActiveConnection();
         }
 
@@ -56,24 +47,15 @@ namespace Queue.Hub.Svetovod
 
             CloseActiveConnection();
 
-            if (config.DeviceId != 0 && config.DeviceId != deviceId)
+            var connection = GetConnectionForDevice(deviceId);
+            if (connection == null)
             {
                 return;
             }
 
-            var conf = GetDeviceConfig(deviceId);
+            connection.ShowLines(deviceId, lines);
 
-            switch (conf.Type)
-            {
-                case SvetovodDisplayType.Segment:
-                    throw new NotImplementedException();
-                    break;
-
-                case SvetovodDisplayType.Matrix:
-                    throw new NotImplementedException();
-                    break;
-            }
-
+            activeConnection = connection;
             CloseActiveConnection();
         }
 
@@ -83,9 +65,23 @@ namespace Queue.Hub.Svetovod
 
             CloseActiveConnection();
 
-            if (config.DeviceId != 0 && config.DeviceId != deviceId)
+            var connection = GetConnectionForDevice(deviceId);
+            if (connection == null)
             {
                 return;
+            }
+
+            connection.Clear(deviceId);
+
+            activeConnection = connection;
+            CloseActiveConnection();
+        }
+
+        private ISvetovodDisplayConnection GetConnectionForDevice(byte deviceId)
+        {
+            if (config.DeviceId != 0 && config.DeviceId != deviceId)
+            {
+                return null;
             }
 
             var conf = GetDeviceConfig(deviceId);
@@ -93,15 +89,14 @@ namespace Queue.Hub.Svetovod
             switch (conf.Type)
             {
                 case SvetovodDisplayType.Segment:
-                    ClearTextOnSegmentDisplay(deviceId);
-                    break;
+                    return new SvetovodSegmentDisplayConnection(config.Port, conf);
 
                 case SvetovodDisplayType.Matrix:
-                    ClearTextOnMatrixDisplay(deviceId, conf);
-                    break;
-            }
+                    return new SvetovodMatrixDisplayConnection(config.Port, conf);
 
-            CloseActiveConnection();
+                default:
+                    throw new QueueException("Данный вид табло не поддерживается: {0}", conf.Type);
+            }
         }
 
         private SvetovodDisplayConnectionConfig GetDeviceConfig(byte deviceId)
@@ -112,8 +107,7 @@ namespace Queue.Hub.Svetovod
 
             if (conf == null)
             {
-                conf = connections.Where(c => c.Sysnum == 0)
-                                        .FirstOrDefault();
+                conf = connections.Where(c => c.Sysnum == 0).FirstOrDefault();
             }
 
             if (conf == null)
@@ -122,39 +116,6 @@ namespace Queue.Hub.Svetovod
             }
 
             return conf;
-        }
-
-        private void ShowTextOnSegmentDisplay(byte sysnum, string text, SvetovodDisplayConnectionConfig conf)
-        {
-            var connection = new SvetovodSegmentDisplayConnection(config.Port);
-
-            connection.ShowNumber(sysnum, text, conf.Width);
-
-            activeConnection = connection;
-        }
-
-        private void ClearTextOnSegmentDisplay(byte sysnum)
-        {
-            var connection = new SvetovodSegmentDisplayConnection(config.Port);
-            connection.ClearNumber(sysnum);
-
-            activeConnection = connection;
-        }
-
-        private void ShowTextOnMatrixDisplay(byte sysnum, string text, SvetovodDisplayConnectionConfig conf)
-        {
-            var connection = new SvetovodMatrixDisplayConnection(config.Port);
-            connection.ShowText(sysnum, text, conf.Width, conf.Height);
-
-            activeConnection = connection;
-        }
-
-        private void ClearTextOnMatrixDisplay(byte sysnum, SvetovodDisplayConnectionConfig conf)
-        {
-            var connection = new SvetovodMatrixDisplayConnection(config.Port);
-            connection.ShowText(sysnum, " ", conf.Width, conf.Height);
-
-            activeConnection = connection;
         }
 
         private void CloseActiveConnection()

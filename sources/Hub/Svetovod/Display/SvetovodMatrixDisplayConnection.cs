@@ -7,17 +7,29 @@ namespace Queue.Hub.Svetovod
 {
     public class SvetovodMatrixDisplayConnection : SvetovodConnection, ISvetovodDisplayConnection
     {
-        public SvetovodMatrixDisplayConnection(string port) :
+        private readonly SvetovodDisplayConnectionConfig config;
+
+        public SvetovodMatrixDisplayConnection(string port, SvetovodDisplayConnectionConfig config) :
             base(port)
         {
+            this.config = config;
         }
 
-        public void ShowText(byte sysnum, string text, int width, int height)
+        public void ShowText(byte sysnum, string text)
         {
-            text = GetPreparedText(text, width);
-            var body = CreateBody(GetTextBytes(text, width, height));
+            var body = CreateBody(GetTextBytes(GetPreparedText(text, config.Width), config.Width, config.Height));
             var header = CreateHeader(sysnum, 0x00, 0x00, (byte)(body.Length - 1));
             WriteToPort(header, body);
+        }
+
+        public void Clear(byte sysnum)
+        {
+            ShowText(sysnum, " ");
+        }
+
+        public void ShowLines(byte sysnum, ushort[][] lines)
+        {
+            throw new NotImplementedException();
         }
 
         private string GetPreparedText(string text, int width)

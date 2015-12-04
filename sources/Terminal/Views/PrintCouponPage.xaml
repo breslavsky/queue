@@ -19,15 +19,9 @@
             <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <TextBlock HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               FontSize="20"
-               FontWeight="Bold"
-               Text="{lex:Loc CompletedMessage}"
-               TextAlignment="Center"
-               TextWrapping="WrapWithOverflow">
-        <TextBlock.Style>
-            <Style TargetType="TextBlock">
+    <Grid VerticalAlignment="Center">
+        <Grid.Style>
+            <Style TargetType="Grid">
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Success}" Value="True">
                         <Setter Property="Visibility" Value="Visible" />
@@ -37,6 +31,21 @@
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
-        </TextBlock.Style>
-    </TextBlock>
+        </Grid.Style>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" al>
+            <TextBlock HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   Text="{lex:Loc CompletedMessage}"
+                   TextAlignment="Center"
+                   TextWrapping="WrapWithOverflow" />
+            <Label>test</Label>
+        </StackPanel>
+    </Grid>
 </views:TerminalPage>

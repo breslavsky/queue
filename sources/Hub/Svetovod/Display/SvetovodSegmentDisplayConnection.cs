@@ -7,18 +7,92 @@ namespace Queue.Hub.Svetovod
 {
     public class SvetovodSegmentDisplayConnection : SvetovodConnection, ISvetovodDisplayConnection
     {
-        public SvetovodSegmentDisplayConnection(string port) :
+        private readonly SvetovodDisplayConnectionConfig config;
+
+        public SvetovodSegmentDisplayConnection(string port, SvetovodDisplayConnectionConfig config) :
             base(port)
         {
+            this.config = config;
         }
 
-        public void ShowNumber(byte sysnum, string number, byte width)
+        public void ShowText(byte sysnum, string number)
         {
-            var body = CreateBody(GetBodyContent(sysnum, number, width));
+            var body = CreateBody(GetBlockContent(number, config.Width));
             WriteToPort(CreateHeader(sysnum, 0x00, 0x00, (byte)(body.Length - 1)), body);
         }
 
+        public void ShowLines(byte sysnum, ushort[][] lines)
+        {
+            var columnsConfig = config.Columns.Cast<SvetovodDisplayConnectionColumnConfig>().ToArray();
+            var content = new List<byte>();
+
+            foreach (var line in lines.Take(config.Width / columnsConfig.Sum(i => i.Width)))
+            {
+                for (int i = 0; i < line.Length; i++)
+                {
+                    // передали больше колонок
+                    if (i >= columnsConfig.Length)
+                    {
+                        break;
+                    }
+
+                    content.AddRange(GetBlockContent(line[i].ToString(), columnsConfig[i].Width));
+                }
+
+                //передали меньше колонок - забьем пустотой
+                if (line.Length < columnsConfig.Length)
+                {
+                    content.AddRange(new byte[columnsConfig.Skip(line.Length).Sum(i => i.Width)]);
+                }
+            }
+
+            //дозабиваем нулями
+            if (content.Count < config.Width)
+            {
+                content.AddRange(new byte[config.Width - content.Count]);
+            }
+
+            var body = CreateBody(content.ToArray());
+            WriteToPort(CreateHeader(sysnum, 0x00, 0x00, (byte)(body.Length - 1)), body);
+        }
+
+        public void Clear(byte sysnum)
+        {
+            ShowText(sysnum, "");
+        }
+
         #region protocol
+
+        private static byte[] GetBlockContent(string number, byte width)
+        {
+            int length = number.Length;
+
+            if (length > width)
+            {
+                throw new QueueException();
+            }
+
+            var digits = number.ToCharArray();
+
+            var units = new List<byte>();
+            foreach (var d in digits)
+            {
+                units.Add(byte.Parse(d.ToString()));
+            }
+
+            var data = new List<byte>();
+            for (byte i = 0; i < width - length; i++)
+            {
+                data.Add(0);
+            }
+
+            foreach (var s in units)
+            {
+                data.Add(GetDigit(s));
+            }
+
+            return data.ToArray();
+        }
 
         private static byte GetDigit(byte digit)
         {
@@ -68,42 +142,6 @@ namespace Queue.Hub.Svetovod
             return bytes.First();
         }
 
-        private static byte[] GetBodyContent(byte sysnum, string number, byte segments)
-        {
-            int lenght = number.Length;
-
-            if (lenght > segments)
-            {
-                throw new QueueException();
-            }
-
-            var digits = number.ToCharArray();
-
-            var units = new List<byte>();
-            foreach (var d in digits)
-            {
-                units.Add(byte.Parse(d.ToString()));
-            }
-
-            var data = new List<byte>();
-            for (byte i = 0; i < segments - lenght; i++)
-            {
-                data.Add(0);
-            }
-
-            foreach (var s in units)
-            {
-                data.Add(GetDigit(s));
-            }
-
-            return data.ToArray();
-        }
-
         #endregion protocol
-
-        public void ClearNumber(byte sysnum)
-        {
-            //TODO
-        }
     }
 }

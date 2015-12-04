@@ -136,7 +136,7 @@
     <None Include="app.config.example" />
     <None Include="default.config" />
     <None Include="packages.config" />
-    <None Include="Svetovod\doc.pdf" />
+    <None Include="Svetovod\Quality\doc.pdf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
