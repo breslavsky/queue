@@ -24,11 +24,18 @@ namespace Queue.Terminal.ViewModels
         private bool disposed;
         private DispatcherTimer timer;
         private bool success;
+        private ClientRequestCoupon coupon;
 
         public bool Success
         {
             get { return success; }
             set { SetProperty(ref success, value); }
+        }
+
+        public ClientRequestCoupon Coupon
+        {
+            get { return coupon; }
+            set { SetProperty(ref coupon, value); }
         }
 
         public ICommand LoadedCommand { get; set; }
@@ -60,25 +67,24 @@ namespace Queue.Terminal.ViewModels
 
         private async void Loaded()
         {
+            ClientRequest req = null;
             var couponData = await Window.ExecuteLongTask(async () =>
              {
                  using (var channel = ChannelManager.CreateChannel())
                  {
-                     var clientRequest = await AddClientRequest(channel);
-
-                     Success = true;
-
-                     logger.Debug("печать талона [client: {0}; service: {1}]", clientRequest.Client, clientRequest.Service);
-                     return await channel.Service.GetClientRequestCoupon(clientRequest.Id);
+                     req = await AddClientRequest(channel);
+                     return await channel.Service.GetClientRequestCoupon(req.Id);
                  }
              });
 
             if (couponData != null)
             {
+                Success = true;
+                Coupon = couponData;
+
+                logger.Debug("печать талона [client: {0}; service: {1}]", req.Client, req.Service);
                 PrintCoupon(couponData);
             }
-
-            //couponData.Number
 
             timer.Start();
         }

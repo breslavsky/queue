@@ -127,7 +127,7 @@
     <value>Client</value>
   </data>
   <data name="CompletedMessage" xml:space="preserve">
-    <value>Thank you, take a ticket</value>
+    <value>Thank you, you number is</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
@@ -164,5 +164,8 @@
   </data>
   <data name="Subjects" xml:space="preserve">
     <value>Subjects</value>
+  </data>
+  <data name="TakeCoupon" xml:space="preserve">
+    <value>Take coupon</value>
   </data>
 </root>

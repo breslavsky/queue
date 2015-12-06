@@ -7,7 +7,7 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:views="clr-namespace:Queue.Terminal.Views"
                     d:DesignHeight="300"
-                    d:DesignWidth="300"
+                    d:DesignWidth="600"
                     lex:ResxLocalizationProvider.DefaultAssembly="Queue.Terminal"
                     lex:ResxLocalizationProvider.DefaultDictionary="Strings"
                     mc:Ignorable="d">
@@ -19,9 +19,9 @@
             <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <Grid VerticalAlignment="Center">
-        <Grid.Style>
-            <Style TargetType="Grid">
+    <StackPanel VerticalAlignment="Center">
+        <StackPanel.Style>
+            <Style TargetType="StackPanel">
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Success}" Value="True">
                         <Setter Property="Visibility" Value="Visible" />
@@ -31,21 +31,26 @@
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
-        </Grid.Style>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-        </Grid.RowDefinitions>
+        </StackPanel.Style>
 
-        <StackPanel Orientation="Horizontal" al>
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
             <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Text="{lex:Loc CompletedMessage}"
+                       TextAlignment="Center"
+                       TextWrapping="WrapWithOverflow" />
+            <Label FontSize="20" FontWeight="Bold">
+                <TextBlock Text="{Binding Coupon.Number, StringFormat=№{0}}" TextDecorations="Underline" />
+            </Label>
+        </StackPanel>
+        <TextBlock HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontSize="20"
                    FontWeight="Bold"
-                   Text="{lex:Loc CompletedMessage}"
+                   Text="{lex:Loc TakeCoupon}"
                    TextAlignment="Center"
                    TextWrapping="WrapWithOverflow" />
-            <Label>test</Label>
-        </StackPanel>
-    </Grid>
+    </StackPanel>
 </views:TerminalPage>
