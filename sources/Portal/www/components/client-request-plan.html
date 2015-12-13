@@ -25,6 +25,8 @@
 
                 <template is="dom-if" if="[[currentClientRequest.Client]]">
                     <div client>
+                        <span>[[currentClientRequest.Number]]</span>
+                        <span>-</span>
                         <span>[[currentClientRequest.Client.Surname]]</span>
                         <span> </span>
                         <span>[[currentClientRequest.Client.Name]]</span>
