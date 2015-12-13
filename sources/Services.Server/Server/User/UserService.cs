@@ -485,8 +485,16 @@ namespace Queue.Services.Server
                         }
                     }
 
-                    session.Delete(user);
-                    transaction.Commit();
+                    try
+                    {
+                        session.Delete(user);
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex);
+                        throw ex;
+                    }
                 }
             });
         }
