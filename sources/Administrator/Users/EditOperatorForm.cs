@@ -81,44 +81,44 @@ namespace Queue.Administrator
 
         private async void EditOperatorForm_Load(object sender, EventArgs e)
         {
-            if (operatorId != Guid.Empty)
+            Enabled = false;
+
+            try
             {
-                Enabled = false;
-
-                try
+                using (var channel = WorkplaceChannelManager.CreateChannel())
                 {
-                    using (var channel = WorkplaceChannelManager.CreateChannel())
-                    {
-                        workplaceControl.Initialize(await taskPool.AddTask(channel.Service.GetWorkplacesLinks()));
-                    }
+                    workplaceControl.Initialize(await taskPool.AddTask(channel.Service.GetWorkplacesLinks()));
+                }
 
+                if (operatorId != Guid.Empty)
+                {
                     using (var channel = UserChannelManager.CreateChannel())
                     {
                         Operator = await taskPool.AddTask(channel.Service.GetUser(operatorId)) as QueueOperator;
                     }
+                }
+                else
+                {
+                    Operator = new QueueOperator()
+                    {
+                        Surname = "Новый пользователь",
+                        IsActive = true
+                    };
+                }
 
-                    Enabled = true;
-                }
-                catch (OperationCanceledException) { }
-                catch (CommunicationObjectAbortedException) { }
-                catch (ObjectDisposedException) { }
-                catch (InvalidOperationException) { }
-                catch (FaultException exception)
-                {
-                    UIHelper.Warning(exception.Reason.ToString());
-                }
-                catch (Exception exception)
-                {
-                    UIHelper.Warning(exception.Message);
-                }
+                Enabled = true;
             }
-            else
+            catch (OperationCanceledException) { }
+            catch (CommunicationObjectAbortedException) { }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
+            catch (FaultException exception)
             {
-                Operator = new QueueOperator()
-                {
-                    Surname = "Новый пользователь",
-                    IsActive = true
-                };
+                UIHelper.Warning(exception.Reason.ToString());
+            }
+            catch (Exception exception)
+            {
+                UIHelper.Warning(exception.Message);
             }
         }
 

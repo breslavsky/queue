@@ -7,26 +7,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
 
-    <script src="/content/components/webcomponentsjs/webcomponents.js"></script>
+    <script src="/content/bower_components/webcomponentsjs/webcomponents.js"></script>
     <script src="/content/js/jquery.min.js"></script>
 
-    <link rel="import" href="/content/components/polymer/polymer.html">
-    <link rel="import" href="/content/components/paper-input/paper-input.html">
-    <link rel="import" href="/content/components/paper-button/paper-button.html">
-    <link rel="import" href="/content/components/paper-styles/paper-styles.html">
-    <link rel="import" href="/content/components/paper-toolbar/paper-toolbar.html">
-    <link rel="import" href="/content/components/iron-icons/iron-icons.html">
-    <link rel="import" href="/content/components/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="/content/bower_components/polymer/polymer.html">
+    <link rel="import" href="/content/bower_components/paper-styles/paper-styles.html">
+    <link rel="import" href="/content/bower_components/iron-icons/iron-icons.html">
+    <link rel="import" href="/content/bower_components/iron-icons/av-icons.html">
+    <link rel="import" href="/content/bower_components/paper-input/paper-input.html">
+    <link rel="import" href="/content/bower_components/paper-button/paper-button.html">
+    <link rel="import" href="/content/bower_components/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="/content/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="/content/bower_components/paper-menu/paper-menu.html">
 
-    <link rel="import" href="/content/components/neon-animation/neon-animated-pages.html">
-    <link rel="import" href="/content/components/neon-animation/neon-animations.html">
-    <link rel="import" href="/content/components/neon-animation/neon-shared-element-animatable-behavior.html">
-    <link rel="import" href="/content/components/neon-page-behavior/neon-page-behavior.html">
+    <link rel="import" href="/content/bower_components/neon-animation/neon-animated-pages.html">
+    <link rel="import" href="/content/bower_components/neon-animation/neon-animations.html">
+    <link rel="import" href="/content/bower_components/neon-animation/neon-shared-element-animatable-behavior.html">
+    <link rel="import" href="/content/bower_components/neon-page-behavior/neon-page-behavior.html">
+    
     <link rel="import" href="/content/components/globals-behavior.html">
-
-    <link rel="import" href="/content/elements/common-style.html">
-    <link rel="import" href="/content/elements/login-page.html">
-    <link rel="import" href="/content/elements/client-request-plan.html">
+    <link rel="import" href="/content/components/common-style.html">
+    <link rel="import" href="/content/components/login-page.html">
+    <link rel="import" href="/content/components/client-request-plan.html">
 
 </head>
 <body fullbleed vertical layout>
@@ -95,7 +97,13 @@
             });
         </script>
     </dom-module>
-
+    <style>
+        body {
+            font-family: 'Arial Narrow', 'Nimbus Sans L', sans-serif;
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
     <main-document-element></main-document-element>
 </body>
 </html>

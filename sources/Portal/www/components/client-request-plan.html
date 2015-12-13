@@ -1,55 +1,54 @@
-﻿<link rel="import" href="/content/components/polymer/polymer.html">
-<link rel="import" href="/content/components/paper-toolbar/paper-toolbar.html">
-<link rel="import" href="/content/components/paper-input/paper-input.html">
-<link rel="import" href="/content/components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="/content/components/paper-menu/paper-menu.html">
-<link rel="import" href="/content/components/globals-behavior.html">
-
-<link rel="import" href="/content/components/neon-animation/neon-animated-pages.html">
-<link rel="import" href="/content/components/neon-animation/neon-animations.html">
-<link rel="import" href="/content/components/neon-animation/neon-shared-element-animatable-behavior.html">
-<link rel="import" href="/content/components/neon-page-behavior/neon-page-behavior.html">
-
-<dom-module id="client-request-plan">
+﻿<dom-module id="client-request-plan">
     <style is="custom-style">
         #container {
             margin: 10px;
+        }
+
+        div[client] {
+            margin-right: 10px;
+            padding-right: 10px;
+            border-right: 1px solid black;
+        }
+
+        paper-input[subjects] {
+            width: 50px;
         }
     </style>
 
     <template>
     
-        <div id="container" class="horizontal layout end">
+        <div id="container" class="horizontal layout center">
             <template is="dom-if" if="[[!currentClientRequest]]">
                 Нет активных запросов
             </template>
             <template is="dom-if" if="[[currentClientRequest]]">
 
                 <template is="dom-if" if="[[currentClientRequest.Client]]">
-                    <div>
+                    <div client>
                         <span>[[currentClientRequest.Client.Surname]]</span>
                         <span> </span>
                         <span>[[currentClientRequest.Client.Name]]</span>
                     </div>
                 </template>
 
-                <template is="dom-if" if="[[equals(currentClientRequest.State, 0)]]">
-                    <paper-button raised on-click="callClient">Вызвать</paper-button>
-                </template>
+                <div class="horizontal layout">
+                    <template is="dom-if" if="[[equals(currentClientRequest.State, 0)]]">
+                        <paper-icon-button icon="icons:alarm-on" on-click="callClient"></paper-icon-button>
+                    </template>
 
-                <template is="dom-if" if="[[equals(currentClientRequest.State, 1)]]">
-                    <paper-button raised on-click="recallClient">Вызвать повторно</paper-button>
-                    <paper-button raised on-click="absence">Клиент не подошел</paper-button>
-                    <paper-button raised on-click="rendering">Начать обслуживание</paper-button>
-                </template>
+                    <template is="dom-if" if="[[equals(currentClientRequest.State, 1)]]">
+                        <paper-icon-button title="Вызвать повторно" icon="icons:alarm-on" on-click="recallClient"></paper-icon-button>
+                        <paper-icon-button title="Клиент не подошел" icon="icons:close" on-click="absence"></paper-icon-button>
+                        <paper-icon-button title="Начать обслуживание" icon="av:play-arrow" on-click="rendering"></paper-icon-button>
+                    </template>
 
-                <template is="dom-if" if="[[equals(currentClientRequest.State, 3)]]">
-                    <paper-button raised on-click="rendered">Закончить обслуживание</paper-button>
-                </template>
-
-            </template>
-
-        </div>   
+                    <template is="dom-if" if="[[equals(currentClientRequest.State, 3)]]">
+                        <paper-input subjects size="5" no-label-float type="number" on-change="subjectsChanged" 
+                            value="{{currentClientRequest.Subjects}}"></paper-input>
+                        <paper-icon-button title="Законить обслуживание" icon="av:stop" on-click="rendered"></paper-icon-button>
+                    </template>
+                </div>
+            </template>   
     </template>
 </dom-module>
 
@@ -65,18 +64,19 @@
         },
 
         onEntryStart: function () {
-            console.log(this.globals);
             this.currentUser = this.globals.currentUser;
 
             var self = this;
 
             window.setInterval(function () {
                 self.loadCurrentClientRequest();
-            }, 2500);
+            }, 5000);
 
             window.setInterval(function () {
                 self.heartbeat();
             }, 10000);
+
+            this.loadCurrentClientRequest();
         },
 
         equals: function (value, checked) {
@@ -95,8 +95,23 @@
             $.ajax({
                 url: "queue-plan/get-current-client-request-plan",
             }).done(function (clientRequestPlan) {
-                self.currentClientRequest = clientRequestPlan != undefined ? clientRequestPlan.ClientRequest : null;
-                console.log(self.currentClientRequest);
+                self.currentClientRequest = clientRequestPlan != undefined
+                    ? clientRequestPlan.ClientRequest : null;
+            });
+        },
+
+        subjectsChanged: function () {
+            var self = this;
+
+            $.ajax({
+                type: "POST",
+                url: "queue-plan/edit-current-client-request",
+                data: JSON.stringify({ source: this.currentClientRequest }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                processData: true
+            }).done(function (clientRequestPlan) {
+                self.currentClientRequest = clientRequestPlan;
             });
         },
 

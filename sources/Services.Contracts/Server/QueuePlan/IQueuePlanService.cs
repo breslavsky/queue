@@ -46,6 +46,8 @@ namespace Queue.Services.Contracts.Server
         Task PostponeCurrentClientRequest(TimeSpan postponeTime);
 
         [OperationContract]
+        [WebInvoke(Method = "POST", UriTemplate = "/edit-current-client-request", RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest, ResponseFormat = WebMessageFormat.Json)]
         Task<ClientRequest> EditCurrentClientRequest(ClientRequest source);
 
         [OperationContract]
