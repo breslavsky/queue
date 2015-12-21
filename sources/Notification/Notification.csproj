@@ -144,7 +144,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AppSettings.cs" />
+    <Compile Include="Settings\NotificationSettings.cs" />
+    <Compile Include="Settings\DisplayCollection.cs" />
+    <Compile Include="Settings\DisplayConfig.cs" />
+    <Compile Include="Settings\WorkplaceConfig.cs" />
+    <Compile Include="Settings\WorkplaceCollection.cs" />
     <Compile Include="Utils\ClientRequestsListener.cs" />
     <Compile Include="UserControls\VideoControl.xaml.cs">
       <DependentUpon>VideoControl.xaml</DependentUpon>

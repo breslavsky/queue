@@ -335,7 +335,6 @@ namespace Queue.Administrator
             {
                 if (f.ShowDialog() == DialogResult.OK)
                 {
-                    clientRequest.Client = f.Client;
                     clientTextBlock.Text = f.Client.ToString();
                 }
             }

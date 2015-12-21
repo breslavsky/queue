@@ -172,10 +172,12 @@ $(document).on("portalConfigLoaded", function () {
                 plot2.setData(data2);
                 plot2.draw();
 
-                new JustGage({ id: "productivity", value: metric.Productivity, min: 0, max: 100, label: "%", title: "Производительность" });
+                if (hour == today.getHours()) {
+                    new JustGage({ id: "productivity", value: last.Productivity, min: 0, max: 100, label: "%", title: "Производительность" });
+                }
             }
         }).always(function () {
-            if (this.hour <= workFinishTime.hours) {
+            if (this.hour <= Math.min(today.getHours(), workFinishTime.hours)) {
                 getQueueMetric(this.hour + 1);
             }
         });

@@ -242,6 +242,107 @@ namespace Queue.Services.Server
             });
         }
 
+        public async Task FillServiceWeekdaySchedule(Guid serviceId, DayOfWeek targetDay)
+        {
+            await Task.Run(() =>
+            {
+                CheckPermission(UserRole.Administrator, AdministratorPermissions.Services);
+
+                using (var session = SessionProvider.OpenSession())
+                using (var transaction = session.BeginTransaction())
+                {
+                    var service = session.Get<Service>(serviceId);
+                    if (service == null)
+                    {
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(serviceId),
+                            string.Format("Услуга [{0}] не найдена", serviceId));
+                    }
+
+                    var template = session.CreateCriteria<ServiceWeekdaySchedule>()
+                        .Add(Expression.Eq("Service", service))
+                        .Add(Expression.Eq("DayOfWeek", targetDay))
+                        .SetMaxResults(1)
+                        .UniqueResult<ServiceWeekdaySchedule>();
+                    if (template == null)
+                    {
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(targetDay),
+                            string.Format("Расписание не найдено [{0}] день недели", targetDay));
+                    }
+
+                    foreach (var day in new DayOfWeek[] {
+                        DayOfWeek.Monday,
+                        DayOfWeek.Tuesday,
+                        DayOfWeek.Wednesday,
+                        DayOfWeek.Thursday,
+                        DayOfWeek.Friday })
+                    {
+                        if (day != targetDay)
+                        {
+                            var schedule = session.CreateCriteria<ServiceWeekdaySchedule>()
+                                .Add(Expression.Eq("Service", service))
+                                .Add(Expression.Eq("DayOfWeek", day))
+                                .SetMaxResults(1)
+                                .UniqueResult<ServiceWeekdaySchedule>();
+                            if (schedule == null)
+                            {
+                                schedule = new ServiceWeekdaySchedule()
+                                {
+                                    Service = service,
+                                    DayOfWeek = day
+                                };
+                            }
+
+                            schedule.StartTime = template.StartTime;
+                            schedule.FinishTime = template.FinishTime;
+                            schedule.IsWorked = template.IsWorked;
+                            schedule.LiveClientInterval = template.LiveClientInterval;
+                            schedule.Intersection = template.Intersection;
+                            schedule.MaxClientRequests = template.MaxClientRequests;
+                            schedule.RenderingMode = template.RenderingMode;
+                            schedule.EarlyStartTime = template.EarlyStartTime;
+                            schedule.EarlyFinishTime = template.EarlyFinishTime;
+                            schedule.EarlyReservation = template.EarlyReservation;
+                            schedule.EarlyClientInterval = template.EarlyClientInterval;
+                            session.Save(schedule);
+
+                            foreach (var r in session.CreateCriteria<ServiceRendering>()
+                                .Add(Expression.Eq("Schedule", schedule))
+                                .List<ServiceRendering>())
+                            {
+                                session.Delete(r);
+                            }
+
+                            foreach (var r in session.CreateCriteria<ServiceRendering>()
+                                .Add(Expression.Eq("Schedule", template))
+                                .List<ServiceRendering>())
+                            {
+                                var rendering = new ServiceRendering()
+                                {
+                                    Schedule = schedule,
+                                    Operator = r.Operator,
+                                    Mode = r.Mode,
+                                    Priority = r.Priority
+                                };
+
+                                session.Save(rendering);
+                            }
+
+                            session.Save(schedule);
+                        }
+                    }
+
+                    var todayQueuePlan = QueueInstance.TodayQueuePlan;
+                    using (var locker = todayQueuePlan.WriteLock())
+                    {
+                        transaction.Commit();
+
+                        todayQueuePlan.Flush(QueuePlanFlushMode.ServiceSchedule);
+                        todayQueuePlan.Build(DateTime.Now.TimeOfDay);
+                    }
+                }
+            });
+        }
+
         public async Task<DTO.Schedule> GetServiceExceptionSchedule(Guid serviceId, DateTime scheduleDate)
         {
             return await Task.Run(() =>
@@ -452,7 +553,8 @@ namespace Queue.Services.Server
                     var schedule = session.Get<Schedule>(scheduleId);
                     if (schedule == null)
                     {
-                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(scheduleId), string.Format("Расписание [{0}] не найдено", scheduleId));
+                        throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(scheduleId),
+                            string.Format("Расписание [{0}] не найдено", scheduleId));
                     }
 
                     session.Delete(schedule);

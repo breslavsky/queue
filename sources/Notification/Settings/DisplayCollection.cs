@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Configuration;
 
-namespace Queue.Hub.Svetovod
+namespace Queue.Notification.Settings
 {
-    [ConfigurationCollection(typeof(SvetovodDisplayConnectionConfig))]
-    public class SvetovodDisplayConnectionCollection : ConfigurationElementCollection
+    [ConfigurationCollection(typeof(DisplayConfig))]
+    public class DisplayCollection : ConfigurationElementCollection
     {
-        private const string PropertyName = "connection";
+        private const string PropertyName = "display";
 
         public override ConfigurationElementCollectionType CollectionType
         {
             get { return ConfigurationElementCollectionType.BasicMapAlternate; }
         }
 
-        public void Add(SvetovodDisplayConnectionConfig element)
+        public void Add(DisplayConfig element)
         {
             LockItem = false;
             BaseAdd(element);
@@ -36,12 +36,12 @@ namespace Queue.Hub.Svetovod
 
         protected override ConfigurationElement CreateNewElement()
         {
-            return new SvetovodDisplayConnectionConfig();
+            return new DisplayConfig();
         }
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((SvetovodDisplayConnectionConfig)(element)).Sysnum;
+            return ((DisplayConfig)(element)).DeviceId;
         }
     }
 }

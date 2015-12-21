@@ -641,7 +641,7 @@ function loadService(service) {
             { min: workStartTime.hours, max: workFinishTime.hours }
         ],
         yaxes: [
-            { position: 'left', min: 0, max: globals.DefaultConfig.MaxClientRequests }
+            { position: 'right', min: 0, max: globals.DefaultConfig.MaxClientRequests }
         ],
         grid: {
             hoverable: true,

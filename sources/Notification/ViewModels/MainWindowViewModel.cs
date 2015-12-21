@@ -5,6 +5,7 @@ using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common;
 using Queue.Common.Settings;
+using Queue.Notification.Settings;
 using Queue.Notification.Utils;
 using Queue.Notification.Views;
 using Queue.Services.Contracts.Hub;
@@ -51,7 +52,7 @@ namespace Queue.Notification.ViewModels
         public IMainWindow Window { get; set; }
 
         [Dependency]
-        public AppSettings AppSettings { get; set; }
+        public NotificationSettings AppSettings { get; set; }
 
         [Dependency]
         public HubSettings HubSettings { get; set; }

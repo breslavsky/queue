@@ -166,8 +166,11 @@ namespace Queue.Services.Portal
 
                 var coupon = await channel.Service.GetClientRequestCoupon(Guid.Parse(requestId));
 
-                var template = TemplateManager.GetTemplate(Templates.Coupon);
-                var thread = new Thread(new ThreadStart(() => xpsFile = XPSUtils.WriteXaml(template, coupon)));
+                var thread = new Thread(new ThreadStart(() =>
+                {
+                    var template = TemplateManager.GetTemplate(Templates.Coupon);
+                    xpsFile = XPSUtils.WriteXaml(template, coupon);
+                }));
 
                 thread.SetApartmentState(ApartmentState.STA);
                 thread.Start();

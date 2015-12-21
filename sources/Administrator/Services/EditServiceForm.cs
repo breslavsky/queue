@@ -195,7 +195,6 @@ namespace Queue.Administrator
                     saveButton.Enabled = false;
 
                     service = await taskPool.AddTask(channel.Service.EditService(service));
-
                     if (Saved != null)
                     {
                         Saved(this, EventArgs.Empty);
@@ -551,5 +550,36 @@ namespace Queue.Administrator
         }
 
         #endregion exception schedule
+
+        private async void fillButton_Click(object sender, EventArgs e)
+        {
+            var dayOfWeek = (DayOfWeek)int.Parse(weekdayTabControl.SelectedTab.Tag.ToString());
+
+            using (var channel = ChannelManager.CreateChannel())
+            {
+                try
+                {
+                    fillButton.Enabled = false;
+
+                    await taskPool.AddTask(channel.Service.FillServiceWeekdaySchedule(service.Id, dayOfWeek));
+                }
+                catch (OperationCanceledException) { }
+                catch (CommunicationObjectAbortedException) { }
+                catch (ObjectDisposedException) { }
+                catch (InvalidOperationException) { }
+                catch (FaultException exception)
+                {
+                    UIHelper.Warning(exception.Reason.ToString());
+                }
+                catch (Exception exception)
+                {
+                    UIHelper.Warning(exception.Message);
+                }
+                finally
+                {
+                    fillButton.Enabled = true;
+                }
+            }
+        }
     }
 }

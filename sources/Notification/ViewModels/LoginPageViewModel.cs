@@ -3,6 +3,7 @@ using Junte.UI.WPF;
 using MahApps.Metro;
 using Microsoft.Practices.Unity;
 using Queue.Common;
+using Queue.Notification.Settings;
 using Queue.Services.Contracts.Server;
 using Queue.UI.WPF;
 using System;
@@ -73,7 +74,7 @@ namespace Queue.Notification.ViewModels
         }
 
         [Dependency]
-        public AppSettings AppSettings { get; set; }
+        public NotificationSettings AppSettings { get; set; }
 
         [Dependency]
         public ConfigurationManager ConfigurationManager { get; set; }

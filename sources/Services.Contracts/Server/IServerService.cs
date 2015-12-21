@@ -307,6 +307,9 @@ namespace Queue.Services.Contracts.Server
         Task<Schedule> AddServiceWeekdaySchedule(Guid serviceId, DayOfWeek dayOfWeek);
 
         [OperationContract]
+        Task FillServiceWeekdaySchedule(Guid serviceId, DayOfWeek targetDay);
+
+        [OperationContract]
         [FaultContract(typeof(ObjectNotFoundFault))]
         Task<Schedule> GetServiceExceptionSchedule(Guid serviceId, DateTime scheduleDate);
 
