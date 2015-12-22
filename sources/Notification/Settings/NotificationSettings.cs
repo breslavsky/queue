@@ -5,7 +5,7 @@ namespace Queue.Notification.Settings
 {
     public class NotificationSettings : ConfigurationSection
     {
-        public const string SectionKey = "notificationSettings";
+        public const string SectionKey = "notification";
 
         public NotificationSettings()
         {

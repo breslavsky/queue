@@ -1,6 +1,4 @@
-﻿using Junte.Configuration;
-using System.ComponentModel;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Queue.Notification.Settings
 {
