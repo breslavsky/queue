@@ -3,7 +3,6 @@ using Microsoft.Practices.Unity;
 using Queue.UI.WPF;
 using System;
 using System.Windows;
-using System.Windows.Input;
 
 namespace Queue.Notification.Views
 {
@@ -30,7 +29,6 @@ namespace Queue.Notification.Views
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
-            Mouse.OverrideCursor = Cursors.None;
         }
     }
 }
