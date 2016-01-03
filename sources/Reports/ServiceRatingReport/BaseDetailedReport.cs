@@ -210,7 +210,7 @@ namespace Queue.Reports.ServiceRatingReport
 
         protected void RenderRating(IRow row, ServiceRating rating)
         {
-            ICell cell = row.CreateCell(5);
+            var cell = row.CreateCell(5);
             cell.SetCellValue(rating.Total);
             cell = row.CreateCell(6);
             cell.SetCellValue(rating.Live);
@@ -259,7 +259,7 @@ namespace Queue.Reports.ServiceRatingReport
             {
                 cell.CellStyle = CreateCellBoldStyle(worksheet.Workbook);
 
-                foreach (var serviceType in Enum.GetValues(typeof(ServiceType)))
+                foreach (ServiceType serviceType in Enum.GetValues(typeof(ServiceType)))
                 {
                     row = worksheet.CreateRow(rowIndex++);
                     cell = row.CreateCell(4);
@@ -308,7 +308,7 @@ namespace Queue.Reports.ServiceRatingReport
         {
             var current = service.ServiceGroup;
             ServiceGroupDto group = null;
-            
+
             while (true)
             {
                 var _group = FindServiceGroup(rootGroups, current.Id);
@@ -386,7 +386,7 @@ namespace Queue.Reports.ServiceRatingReport
                                                 .OrderBy(g => g.SortId).Asc
                                                 .List();
 
-           var result = new List<ServiceGroupDto>();
+            var result = new List<ServiceGroupDto>();
             foreach (var group in groups)
             {
                 result.Add(new ServiceGroupDto()

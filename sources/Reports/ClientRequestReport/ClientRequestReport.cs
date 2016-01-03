@@ -1,7 +1,5 @@
-﻿using NHibernate;
-using NHibernate.Transform;
+﻿using NHibernate.Transform;
 using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
 using Queue.Model;
 using Queue.Services.Common;
 using System;
@@ -23,25 +21,20 @@ namespace Queue.Reports.ClientRequestReport
 
         public override HSSFWorkbook Generate()
         {
-            ReportData data = GetData();
-
-            HSSFWorkbook workbook = new HSSFWorkbook(new MemoryStream(Templates.ClientRequest));
-            ISheet worksheet = workbook.GetSheetAt(0);
-
-            ICellStyle boldCellStyle = CreateCellBoldStyle(workbook);
-
-            IRow row;
-            ICell cell;
+            var data = GetData();
+            var workbook = new HSSFWorkbook(new MemoryStream(Templates.ClientRequest));
+            var worksheet = workbook.GetSheetAt(0);
+            var boldCellStyle = CreateCellBoldStyle(workbook);
             int rowIndex = worksheet.LastRowNum + 1;
 
-            row = worksheet.CreateRow(0);
+            var row = worksheet.CreateRow(0);
             row.RowStyle = boldCellStyle;
 
-            cell = row.CreateCell(0);
+            var cell = row.CreateCell(0);
             cell.SetCellValue(data.Title);
             cell.CellStyle = boldCellStyle;
 
-            foreach (ClientRequestEventReportItem item in data.Items)
+            foreach (var item in data.Items)
             {
                 row = worksheet.CreateRow(rowIndex++);
                 cell = row.CreateCell(0);
@@ -57,14 +50,14 @@ namespace Queue.Reports.ClientRequestReport
         {
             using (var session = SessionProvider.OpenSession())
             {
-                ClientRequest clientRequest = session.Get<ClientRequest>(clientRequestId);
+                var clientRequest = session.Get<ClientRequest>(clientRequestId);
                 if (clientRequest == null)
                 {
                     throw new FaultException<ObjectNotFoundFault>(
                         new ObjectNotFoundFault(clientRequestId), string.Format("Запрос [{0}] не найден", clientRequestId));
                 }
 
-                ReportData result = new ReportData();
+                var result = new ReportData();
                 result.Title = clientRequest.ToString();
 
                 ClientRequestEventReportItem dto = null;

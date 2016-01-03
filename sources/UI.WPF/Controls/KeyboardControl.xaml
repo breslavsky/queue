@@ -86,7 +86,7 @@
             <Button Width="150"
                     Command="{Binding KeyboardButtonClick}"
                     CommandParameter=" "
-                    Content=" "
+                    Content="Пробел"
                     Style="{StaticResource keyboardButton}" />
 
             <Button Command="{Binding BackspaceCommand}" Style="{StaticResource keyboardButton}">
