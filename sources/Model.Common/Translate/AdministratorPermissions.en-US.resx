@@ -138,6 +138,9 @@
   <data name="DefaultSchedule" xml:space="preserve">
     <value>Default Schedule</value>
   </data>
+  <data name="LifeSituations" xml:space="preserve">
+    <value>Life Situations</value>
+  </data>
   <data name="None" xml:space="preserve">
     <value>None</value>
   </data>

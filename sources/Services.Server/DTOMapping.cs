@@ -72,6 +72,15 @@ namespace Queue.Services.Server
         }
     }
 
+    public class LifeSituationDTOProfile : Profile
+    {
+        protected override void Configure()
+        {
+            Mapper.CreateMap<LifeSituationGroup, DTO.LifeSituationGroup>();
+            Mapper.CreateMap<LifeSituation, DTO.LifeSituation>();
+        }
+    }
+
     public class OfficeDTOProfile : Profile
     {
         protected override void Configure()
@@ -186,6 +195,7 @@ namespace Queue.Services.Server
             Mapper.AddProfile(new ClientDTOProfile());
             Mapper.AddProfile(new OfficeDTOProfile());
             Mapper.AddProfile(new ServiceDTOProfile());
+            Mapper.AddProfile(new LifeSituationDTOProfile());
             Mapper.AddProfile(new MetricDTOProfile());
             Mapper.AddProfile(new ClientRequestDTOProfile());
             Mapper.AddProfile(new EventDTOProfile());

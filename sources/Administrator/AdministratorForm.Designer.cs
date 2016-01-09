@@ -47,6 +47,7 @@
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.serverStateLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.currentDateTimeLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lifeSituationsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.topMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             this.SuspendLayout();
@@ -103,6 +104,7 @@
             this.workplacesMenuItem,
             this.defaultScheduleMenuItem,
             this.servicesMenuItem,
+            this.lifeSituationsMenuItem,
             this.additionalServicesMenuItem,
             this.operatorInterruptionsFormMenuItem,
             this.officesMenuItem});
@@ -329,6 +331,14 @@
             this.currentDateTimeLabel.Size = new System.Drawing.Size(12, 17);
             this.currentDateTimeLabel.Text = "-";
             // 
+            // lifeSituationsMenuItem
+            // 
+            this.lifeSituationsMenuItem.Name = "lifeSituationsMenuItem";
+            this.lifeSituationsMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.lifeSituationsMenuItem.Tag = "LifeSituations";
+            this.lifeSituationsMenuItem.Text = "Жизненные ситуации";
+            this.lifeSituationsMenuItem.Click += new System.EventHandler(this.lifeSituationsMenuItem_Click);
+            // 
             // AdministratorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -387,6 +397,7 @@
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
 
         private System.Windows.Forms.ToolStripMenuItem additionalServiceReportMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lifeSituationsMenuItem;
 
 
     }

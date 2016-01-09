@@ -7,6 +7,7 @@ using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.ServiceModel;
@@ -15,12 +16,12 @@ using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
-    public partial class ServicesForm : DependencyForm
+    public partial class LifeSituationsForm : DependencyForm
     {
         #region dependency
 
         [Dependency]
-        public ChannelManager<IServerTcpService> ChannelManager { get; set; }
+        public ChannelManager<ILifeSituationTcpService> ChannelManager { get; set; }
 
         #endregion dependency
 
@@ -30,12 +31,13 @@ namespace Queue.Administrator
 
         #endregion fields
 
-        public ServicesForm()
+        public LifeSituationsForm()
             : base()
         {
             InitializeComponent();
 
             taskPool = new TaskPool();
+
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
         }
@@ -54,25 +56,25 @@ namespace Queue.Administrator
 
         #endregion task pool
 
-        private void ServicesForm_Load(object sender, EventArgs e)
+        private void LifeSituationsForm_Load(object sender, EventArgs e)
         {
             loadGroup(treeView.Nodes);
         }
 
-        private void ServicesForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void LifeSituationsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             taskPool.Cancel();
         }
 
-        private async void loadGroup(TreeNodeCollection nodes, ServiceGroup group = null)
+        private async void loadGroup(TreeNodeCollection nodes, LifeSituationGroup group = null)
         {
             using (var channel = ChannelManager.CreateChannel())
             {
                 try
                 {
                     var serviceGroups = group != null
-                        ? await taskPool.AddTask(channel.Service.GetServiceGroups(group.Id))
-                        : await taskPool.AddTask(channel.Service.GetRootServiceGroups());
+                        ? await taskPool.AddTask(channel.Service.GetGroups(group.Id))
+                        : await taskPool.AddTask(channel.Service.GetRootGroups());
 
                     foreach (var g in serviceGroups)
                     {
@@ -88,8 +90,8 @@ namespace Queue.Administrator
                     }
 
                     var services = group != null
-                        ? await taskPool.AddTask(channel.Service.GetServices(group.Id))
-                        : await taskPool.AddTask(channel.Service.GetRootServices());
+                        ? await taskPool.AddTask(channel.Service.GetLifeSituations(group.Id))
+                        : await taskPool.AddTask(channel.Service.GetRootLifeSituations());
 
                     foreach (var s in services)
                     {
@@ -135,16 +137,16 @@ namespace Queue.Administrator
 
                         bool isUp = false;
 
-                        if (selectedNode.Tag is ServiceGroup)
+                        if (selectedNode.Tag is LifeSituationGroup)
                         {
-                            var group = selectedNode.Tag as ServiceGroup;
-                            isUp = await taskPool.AddTask(channel.Service.ServiceGroupUp(group.Id));
+                            var group = selectedNode.Tag as LifeSituationGroup;
+                            isUp = await taskPool.AddTask(channel.Service.GroupUp(group.Id));
                         }
 
-                        if (selectedNode.Tag is Service)
+                        if (selectedNode.Tag is LifeSituation)
                         {
-                            var service = selectedNode.Tag as Service;
-                            isUp = await taskPool.AddTask(channel.Service.ServiceUp(service.Id));
+                            var lifeSituation = selectedNode.Tag as LifeSituation;
+                            isUp = await taskPool.AddTask(channel.Service.LifeSituationUp(lifeSituation.Id));
                         }
 
                         if (isUp)
@@ -197,16 +199,16 @@ namespace Queue.Administrator
 
                         bool isDown = false;
 
-                        if (selectedNode.Tag is ServiceGroup)
+                        if (selectedNode.Tag is LifeSituationGroup)
                         {
-                            var group = selectedNode.Tag as ServiceGroup;
-                            isDown = await taskPool.AddTask(channel.Service.ServiceGroupDown(group.Id));
+                            var group = selectedNode.Tag as LifeSituationGroup;
+                            isDown = await taskPool.AddTask(channel.Service.GroupDown(group.Id));
                         }
 
-                        if (selectedNode.Tag is Service)
+                        if (selectedNode.Tag is LifeSituation)
                         {
-                            var service = selectedNode.Tag as Service;
-                            isDown = await taskPool.AddTask(channel.Service.ServiceDown(service.Id));
+                            var lifeSituation = selectedNode.Tag as LifeSituation;
+                            isDown = await taskPool.AddTask(channel.Service.LifeSituationDown(lifeSituation.Id));
                         }
 
                         if (isDown)
@@ -248,37 +250,37 @@ namespace Queue.Administrator
 
         #region context menu
 
-        private void contextMenuStrip_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        private void contextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
             TreeNode selectedNode = treeView.SelectedNode;
 
-            addServiceGroupMenuItem.Visible = false;
-            addServiceMenuItem.Visible = false;
-            editServiceGroupMenuItem.Visible = false;
-            editServiceMenuItem.Visible = false;
+            addGroupMenuItem.Visible = false;
+            addLifeSituationMenuItem.Visible = false;
+            editGroupMenuItem.Visible = false;
+            editLifeSituationMenuItem.Visible = false;
             deleteGroupMenuItem.Visible = false;
-            deleteServiceMenuItem.Visible = false;
+            deleteLifeSituationMenuItem.Visible = false;
 
             if (selectedNode != null)
             {
-                if (selectedNode.Tag is ServiceGroup)
+                if (selectedNode.Tag is LifeSituationGroup)
                 {
-                    addServiceGroupMenuItem.Visible = true;
-                    addServiceMenuItem.Visible = true;
-                    editServiceGroupMenuItem.Visible = true;
+                    addGroupMenuItem.Visible = true;
+                    addLifeSituationMenuItem.Visible = true;
+                    editGroupMenuItem.Visible = true;
                     deleteGroupMenuItem.Visible = true;
                 }
 
-                if (selectedNode.Tag is Service)
+                if (selectedNode.Tag is LifeSituation)
                 {
-                    editServiceMenuItem.Visible = true;
-                    deleteServiceMenuItem.Visible = true;
+                    editLifeSituationMenuItem.Visible = true;
+                    deleteLifeSituationMenuItem.Visible = true;
                 }
             }
             else
             {
-                addServiceGroupMenuItem.Visible = true;
-                addServiceMenuItem.Visible = true;
+                addGroupMenuItem.Visible = true;
+                addLifeSituationMenuItem.Visible = true;
             }
         }
 
@@ -289,10 +291,10 @@ namespace Queue.Administrator
             var selectedNode = treeView.SelectedNode;
             if (selectedNode != null)
             {
-                parentGroupId = (selectedNode.Tag as ServiceGroup).Id;
+                parentGroupId = (selectedNode.Tag as LifeSituationGroup).Id;
             }
 
-            using (var f = new EditServiceGroupForm(parentGroupId))
+            using (var f = new EditLifeSituationGroupForm(parentGroupId))
             {
                 TreeNode treeNode = null;
 
@@ -301,8 +303,8 @@ namespace Queue.Administrator
                     if (treeNode == null)
                     {
                         treeNode = new TreeNode();
-                        treeNode.Tag = f.ServiceGroup;
-                        treeNode.Checked = f.ServiceGroup.IsActive;
+                        treeNode.Tag = f.Group;
+                        treeNode.Checked = f.Group.IsActive;
 
                         if (selectedNode != null)
                         {
@@ -317,27 +319,25 @@ namespace Queue.Administrator
                         treeView.SelectedNode = treeNode;
                     }
 
-                    treeNode.Text = f.ServiceGroup.ToString();
+                    treeNode.Text = f.Group.ToString();
                     f.Close();
                 };
 
                 f.ShowDialog();
-
-                ServiceGroup serviceGroup = f.ServiceGroup;
             }
         }
 
-        private void addServiceMenuItem_Click(object sender, EventArgs e)
+        private void addLifeSituationMenuItem_Click(object sender, EventArgs e)
         {
             Guid? groupId = null;
 
             var selectedNode = treeView.SelectedNode;
             if (selectedNode != null)
             {
-                groupId = (selectedNode.Tag as ServiceGroup).Id;
+                groupId = (selectedNode.Tag as LifeSituationGroup).Id;
             }
 
-            using (var f = new EditServiceForm(groupId))
+            using (var f = new EditLifeSituationForm(groupId))
             {
                 TreeNode treeNode = null;
 
@@ -346,8 +346,8 @@ namespace Queue.Administrator
                     if (treeNode == null)
                     {
                         treeNode = new TreeNode();
-                        treeNode.Tag = f.Service;
-                        treeNode.Checked = f.Service.IsActive;
+                        treeNode.Tag = f.LifeSituation;
+                        treeNode.Checked = f.LifeSituation.IsActive;
 
                         if (selectedNode != null)
                         {
@@ -362,25 +362,25 @@ namespace Queue.Administrator
                         treeView.SelectedNode = treeNode;
                     }
 
-                    treeNode.Text = f.Service.ToString();
+                    treeNode.Text = f.LifeSituation.ToString();
+                    f.Close();
                 };
 
                 f.ShowDialog();
             }
         }
 
-        private void editServiceGroupMenuItem_Click(object sender, EventArgs e)
+        private void editGroupMenuItem_Click(object sender, EventArgs e)
         {
             var selectedNode = treeView.SelectedNode;
             if (selectedNode != null)
             {
-                var group = selectedNode.Tag as ServiceGroup;
-
-                using (var f = new EditServiceGroupForm(null, group.Id))
+                var group = selectedNode.Tag as LifeSituationGroup;
+                using (var f = new EditLifeSituationGroupForm(null, group.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {
-                        selectedNode.Text = f.ServiceGroup.ToString();
+                        selectedNode.Text = f.Group.ToString();
                         f.Close();
                     };
 
@@ -389,17 +389,17 @@ namespace Queue.Administrator
             }
         }
 
-        private void editServiceMenuItem_Click(object sender, EventArgs e)
+        private void editLifeSituationMenuItem_Click(object sender, EventArgs e)
         {
             var selectedNode = treeView.SelectedNode;
             if (selectedNode != null)
             {
-                var service = selectedNode.Tag as Service;
-                using (var f = new EditServiceForm(null, service.Id))
+                var lifeSituation = selectedNode.Tag as LifeSituation;
+                using (var f = new EditLifeSituationForm(null, lifeSituation.Id))
                 {
                     f.Saved += (s, eventArgs) =>
                     {
-                        selectedNode.Text = f.Service.ToString();
+                        selectedNode.Text = f.LifeSituation.ToString();
                         f.Close();
                     };
 
@@ -413,7 +413,7 @@ namespace Queue.Administrator
             var selectedNode = treeView.SelectedNode;
             if (selectedNode != null)
             {
-                var group = selectedNode.Tag as ServiceGroup;
+                var group = selectedNode.Tag as LifeSituationGroup;
                 if (MessageBox.Show(string.Format("Вы действительно хотите удалить [{0}] ?", group),
                     "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
@@ -423,7 +423,7 @@ namespace Queue.Administrator
                         {
                             deleteGroupMenuItem.Enabled = false;
 
-                            await taskPool.AddTask(channel.Service.DeleteServiceGroup(group.Id));
+                            await taskPool.AddTask(channel.Service.DeleteGroup(group.Id));
 
                             selectedNode.Nodes.Remove(selectedNode);
                         }
@@ -448,22 +448,22 @@ namespace Queue.Administrator
             }
         }
 
-        private async void deleteServiceMenuItem_Click(object sender, EventArgs e)
+        private async void deleteLifeSituationMenuItem_Click(object sender, EventArgs e)
         {
             var selectedNode = treeView.SelectedNode;
             if (selectedNode != null)
             {
-                var service = selectedNode.Tag as Service;
-                if (MessageBox.Show(string.Format("Вы действительно хотите удалить [{0}] ?", service),
+                var lifeSituation = selectedNode.Tag as LifeSituation;
+                if (MessageBox.Show(string.Format("Вы действительно хотите удалить [{0}] ?", lifeSituation),
                     "Подтвердите удаление", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     using (var channel = ChannelManager.CreateChannel())
                     {
                         try
                         {
-                            deleteServiceMenuItem.Enabled = false;
+                            deleteLifeSituationMenuItem.Enabled = false;
 
-                            await taskPool.AddTask(channel.Service.DeleteService(service.Id));
+                            await taskPool.AddTask(channel.Service.DeleteLifeSituation(lifeSituation.Id));
 
                             selectedNode.Nodes.Remove(selectedNode);
                         }
@@ -481,7 +481,7 @@ namespace Queue.Administrator
                         }
                         finally
                         {
-                            deleteServiceMenuItem.Enabled = true;
+                            deleteLifeSituationMenuItem.Enabled = true;
                         }
                     }
                 }
@@ -492,6 +492,21 @@ namespace Queue.Administrator
 
         #region tree view
 
+        private void treeView_AfterExpand(object sender, TreeViewEventArgs e)
+        {
+            var expandedNode = e.Node;
+            if (expandedNode != null && expandedNode.Tag is LifeSituationGroup)
+            {
+                var group = expandedNode.Tag as LifeSituationGroup;
+
+                if (expandedNode.Nodes.Cast<TreeNode>()
+                    .Any(x => x.Tag.Equals(group)))
+                {
+                    loadGroup(expandedNode.Nodes, group);
+                }
+            }
+        }
+
         private async void treeView_AfterCheck(object sender, TreeViewEventArgs e)
         {
             var checkedNode = e.Node;
@@ -500,18 +515,18 @@ namespace Queue.Administrator
             {
                 try
                 {
-                    if (checkedNode.Tag is ServiceGroup)
+                    if (checkedNode.Tag is LifeSituationGroup)
                     {
-                        var group = checkedNode.Tag as ServiceGroup;
+                        var group = checkedNode.Tag as LifeSituationGroup;
                         group.IsActive = checkedNode.Checked;
-                        await taskPool.AddTask(channel.Service.EditServiceGroup(group));
+                        await taskPool.AddTask(channel.Service.EditGroup(group));
                     }
 
-                    if (checkedNode.Tag is Service)
+                    if (checkedNode.Tag is LifeSituation)
                     {
-                        var service = checkedNode.Tag as Service;
-                        service.IsActive = checkedNode.Checked;
-                        await taskPool.AddTask(channel.Service.EditService(service));
+                        var lifeSituation = checkedNode.Tag as LifeSituation;
+                        lifeSituation.IsActive = checkedNode.Checked;
+                        await taskPool.AddTask(channel.Service.EditLifeSituation(lifeSituation));
                     }
                 }
                 catch (OperationCanceledException) { }
@@ -525,21 +540,6 @@ namespace Queue.Administrator
                 catch (Exception exception)
                 {
                     UIHelper.Warning(exception.Message);
-                }
-            }
-        }
-
-        private void treeView_AfterExpand(object sender, TreeViewEventArgs e)
-        {
-            var expandedNode = e.Node;
-            if (expandedNode != null && expandedNode.Tag is ServiceGroup)
-            {
-                var group = expandedNode.Tag as ServiceGroup;
-
-                if (expandedNode.Nodes.Cast<TreeNode>()
-                    .Any(x => x.Tag.Equals(group)))
-                {
-                    loadGroup(expandedNode.Nodes, group);
                 }
             }
         }
@@ -562,7 +562,7 @@ namespace Queue.Administrator
 
         private void treeView_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            treeView.SelectedNode = (TreeNode)e.Item;
+            treeView.SelectedNode = e.Item as TreeNode;
             treeView.DoDragDrop(e.Item, DragDropEffects.All);
         }
 
@@ -573,21 +573,21 @@ namespace Queue.Administrator
                 var draggingNode = e.Data.GetData(typeof(TreeNode)) as TreeNode;
                 var hoveringNode = treeView.GetNodeAt(treeView.PointToClient(new Point(e.X, e.Y)));
 
-                if (draggingNode.Tag is ServiceGroup)
+                if (draggingNode.Tag is LifeSituationGroup)
                 {
-                    var group = draggingNode.Tag as ServiceGroup;
+                    var group = draggingNode.Tag as LifeSituationGroup;
 
                     if (hoveringNode != null)
                     {
-                        if (hoveringNode.Tag is ServiceGroup)
+                        if (hoveringNode.Tag is LifeSituationGroup)
                         {
-                            var targetGroup = hoveringNode.Tag as ServiceGroup;
+                            var targetGroup = hoveringNode.Tag as LifeSituationGroup;
 
                             using (var channel = ChannelManager.CreateChannel())
                             {
                                 try
                                 {
-                                    await taskPool.AddTask(channel.Service.MoveServiceGroup(group.Id, targetGroup.Id));
+                                    await taskPool.AddTask(channel.Service.MoveGroup(group.Id, targetGroup.Id));
                                 }
                                 catch (OperationCanceledException) { }
                                 catch (CommunicationObjectAbortedException) { }
@@ -603,11 +603,6 @@ namespace Queue.Administrator
                                 }
                             }
                         }
-
-                        if (typeof(Service).IsInstanceOfType(hoveringNode.Tag))
-                        {
-                            return;
-                        }
                     }
                     else
                     {
@@ -615,7 +610,7 @@ namespace Queue.Administrator
                         {
                             try
                             {
-                                await taskPool.AddTask(channel.Service.MoveServiceGroupToRoot(group.Id));
+                                await taskPool.AddTask(channel.Service.MoveGroupToRoot(group.Id));
                             }
                             catch (OperationCanceledException) { }
                             catch (CommunicationObjectAbortedException) { }
@@ -633,21 +628,21 @@ namespace Queue.Administrator
                     }
                 }
 
-                if (draggingNode.Tag is Service)
+                if (draggingNode.Tag is LifeSituation)
                 {
-                    var service = draggingNode.Tag as Service;
+                    var lifeSituation = draggingNode.Tag as LifeSituation;
 
                     if (hoveringNode != null)
                     {
-                        var group = hoveringNode.Tag as ServiceGroup;
-
                         if (hoveringNode.Tag is ServiceGroup)
                         {
+                            var group = hoveringNode.Tag as LifeSituationGroup;
+
                             using (var channel = ChannelManager.CreateChannel())
                             {
                                 try
                                 {
-                                    await taskPool.AddTask(channel.Service.MoveService(service.Id, group.Id));
+                                    await taskPool.AddTask(channel.Service.MoveLifeSituation(lifeSituation.Id, group.Id));
                                 }
                                 catch (OperationCanceledException) { }
                                 catch (CommunicationObjectAbortedException) { }
@@ -668,10 +663,6 @@ namespace Queue.Administrator
                         {
                             return;
                         }
-                    }
-                    else
-                    {
-                        return;
                     }
                 }
 
@@ -691,20 +682,19 @@ namespace Queue.Administrator
         private void treeView_DragOver(object sender, DragEventArgs e)
         {
             var draggingNode = e.Data.GetData(typeof(TreeNode)) as TreeNode;
-            var hoveringNode = treeView.GetNodeAt(treeView.PointToClient(new Point(e.X, e.Y)));
-
+            var hoveringNode = treeView.GetNodeAt(treeView.PointToClient(new Point(e.X, e.Y))) as TreeNode;
             if (draggingNode != hoveringNode)
             {
-                if (draggingNode.Tag is ServiceGroup)
+                if (draggingNode.Tag is LifeSituationGroup)
                 {
                     if (hoveringNode != null)
                     {
-                        if (hoveringNode.Tag is ServiceGroup)
+                        if (hoveringNode.Tag is LifeSituationGroup)
                         {
                             e.Effect = DragDropEffects.Move;
                         }
 
-                        if (hoveringNode.Tag is Service)
+                        if (hoveringNode.Tag is LifeSituation)
                         {
                             e.Effect = DragDropEffects.None;
                         }
@@ -715,16 +705,16 @@ namespace Queue.Administrator
                     }
                 }
 
-                if (draggingNode.Tag is Service)
+                if (draggingNode.Tag is LifeSituation)
                 {
                     if (hoveringNode != null)
                     {
-                        if (hoveringNode.Tag is ServiceGroup)
+                        if (hoveringNode.Tag is LifeSituationGroup)
                         {
                             e.Effect = DragDropEffects.Move;
                         }
 
-                        if (hoveringNode.Tag is Service)
+                        if (hoveringNode.Tag is LifeSituation)
                         {
                             e.Effect = DragDropEffects.None;
                         }

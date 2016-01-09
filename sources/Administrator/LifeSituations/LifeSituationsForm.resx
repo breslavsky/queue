@@ -117,65 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="constraints" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>constraints.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="buttonDown.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
+        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAAsMAAALDAE/QCLIAAAAGHRFWHRTb2Z0d2FyZQBBZG9i
+        ZSBGaXJld29ya3NPsx9OAAAAZ0lEQVQ4T+3MoQ6AMAwE0Kn9UA2fToLFoAiS8CHIck3WpGtOELATT+x2
+        16Kqv9DQiIhG+d/R0IwD4wAG0+cDKM9wx3Fj2ZL73cOgVOFso+iCmvvdI0J5D+ODdQwNHYYrbOzP0fA9
+        LQ8AkaDX9JCuIQAAAABJRU5ErkJggg==
+</value>
   </data>
-  <data name="_001" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\001.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_002" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\002.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_003" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\003.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_004" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\004.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_005" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\005.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_006" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\006.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_007" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\007.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_008" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\008.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_009" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\009.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_010" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\010.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_011" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\011.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_012" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\012.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_013" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\013.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_014" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\014.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_015" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\015.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_016" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\016.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_017" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\017.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_018" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\018.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="_019" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>patches\019.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <metadata name="contextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="buttonUp.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
+        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAAAsMAAALDAE/QCLIAAAAGHRFWHRTb2Z0d2FyZQBBZG9i
+        ZSBGaXJld29ya3NPsx9OAAAAqElEQVQ4T2P4//8/RRiroFqyEoOxsTEzEJ8B4sPY1MAwVkGgJiYgvgzE
+        /6H4LDZ1IIwhAFTMAcR3kTTD8HUgZkVXj8IBYaCivUD8HaoJGX8D4u3o6lE4IAxUxAjEIC8ga/4LxGZA
+        zIiuHoUDw0CFGAZgUwfCGAJOndaUGeA50ZEyA/xnulNmQNhCX8oMiFkZRJkBSRsjKDMgfXsMZQbk7E2k
+        zADS8H8GAKxnb4f3hbSeAAAAAElFTkSuQmCC
+</value>
   </data>
 </root>

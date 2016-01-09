@@ -440,6 +440,7 @@ namespace Queue.Database
                             | AdministratorPermissions.Offices
                             | AdministratorPermissions.AdditionalServices
                             | AdministratorPermissions.OperatorInterruptions
+                            | AdministratorPermissions.LifeSituations
                     });
                 }
 

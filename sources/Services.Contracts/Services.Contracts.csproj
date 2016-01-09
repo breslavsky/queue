@@ -65,6 +65,10 @@
     <Compile Include="Portal\IPortalService.cs" />
     <Compile Include="Media\IMediaService.cs" />
     <Compile Include="Portal\IPortalOperatorService.cs" />
+    <Compile Include="Server\LifeSituation\ILifeSituationHttpService.cs" />
+    <Compile Include="Server\LifeSituation\ILifeSituationService.cs" />
+    <Compile Include="Server\LifeSituation\ILifeSituationTcpService.cs" />
+    <Compile Include="Server\LifeSituation\LifeSituationService.cs" />
     <Compile Include="Server\QueuePlan\IQueuePlanCallback.cs" />
     <Compile Include="Server\QueuePlan\IQueuePlanHttpService.cs" />
     <Compile Include="Server\QueuePlan\IQueuePlanService.cs" />

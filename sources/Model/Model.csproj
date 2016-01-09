@@ -117,6 +117,8 @@
     <Compile Include="AdditionalService.cs" />
     <Compile Include="ClientRequestAdditionalService.cs" />
     <Compile Include="QueuePlanReport.cs" />
+    <Compile Include="LifeSituationGroup.cs" />
+    <Compile Include="LifeSituation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

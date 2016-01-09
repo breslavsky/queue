@@ -79,7 +79,7 @@ namespace Queue.Administrator
                 parametersTabPage.Parent =
                     exceptionScheduleTabPage.Parent =
                     weekdayScheduleTabPage.Parent =
-                    stepsTabPage.Parent = service.Empty() ? null : serviceTabControl;
+                    stepsTabPage.Parent = service.Empty() ? null : mainTabControl;
 
                 exceptionScheduleDatePicker.Value = ServerDateTime.Today;
             }
@@ -221,7 +221,7 @@ namespace Queue.Administrator
 
         private void serviceTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selectedTab = serviceTabControl.SelectedTab;
+            var selectedTab = mainTabControl.SelectedTab;
             if (selectedTab.Equals(stepsTabPage))
             {
                 serviceStepsControl.Service = Service;

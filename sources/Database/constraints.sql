@@ -159,3 +159,9 @@ ALTER TABLE _queue_plan_report DROP CONSTRAINT QueuePlanReportToClientRequestRef
 ALTER TABLE _queue_plan_report ADD  CONSTRAINT QueuePlanReportToClientRequestReference FOREIGN KEY(ClientRequestId)
 REFERENCES _client_request (Id)
 ON DELETE CASCADE;
+-- SEPARATOR
+ALTER TABLE _life_situation DROP CONSTRAINT LifeSituationToServiceReference;
+-- SEPARATOR
+ALTER TABLE _life_situation ADD  CONSTRAINT LifeSituationToServiceReference FOREIGN KEY(ServiceId)
+REFERENCES _service (Id)
+ON DELETE CASCADE;

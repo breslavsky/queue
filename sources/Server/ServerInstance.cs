@@ -129,6 +129,17 @@ namespace Queue.Server
 
                         hosts.Add(host);
                     }
+
+                    {
+                        var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.NetTcp, tcpService.Host, tcpService.Port, ServicesPaths.LifeSituation));
+                        logger.Info("TCP service host uri = {0}", uri);
+
+                        var host = new LifeSituationTcpServiceHost();
+                        host.AddServiceEndpoint(typeof(ILifeSituationTcpService), Bindings.NetTcpBinding, uri);
+                        host.Description.Behaviors.Add(new ServiceMetadataBehavior());
+
+                        hosts.Add(host);
+                    }
                 }
             }
 
@@ -216,6 +227,25 @@ namespace Queue.Server
 
                     var host = new QueuePlanHttpServiceHost();
                     var endpoint = host.AddServiceEndpoint(typeof(IQueuePlanHttpService), Bindings.WebHttpBinding, uri);
+                    endpoint.Behaviors.Add(new WebHttpBehavior());
+                    endpoint.Behaviors.Add(new EnableCORSBehavior());
+                    endpoint.Behaviors.Add(new NoCacheBehavior());
+                    endpoint.Behaviors.Add(new ExtendedWebHttpBehavior());
+                    host.Description.Behaviors.Add(new ServiceMetadataBehavior()
+                    {
+                        HttpGetUrl = uri,
+                        HttpGetEnabled = true
+                    });
+
+                    hosts.Add(host);
+                }
+
+                {
+                    var uri = new Uri(string.Format("{0}://{1}:{2}/{3}", Schemes.Http, httpService.Host, httpService.Port, ServicesPaths.LifeSituation));
+                    logger.Info("HTTP service host uri = {0}", uri);
+
+                    var host = new LifeSituationHttpServiceHost();
+                    var endpoint = host.AddServiceEndpoint(typeof(ILifeSituationHttpService), Bindings.WebHttpBinding, uri);
                     endpoint.Behaviors.Add(new WebHttpBehavior());
                     endpoint.Behaviors.Add(new EnableCORSBehavior());
                     endpoint.Behaviors.Add(new NoCacheBehavior());

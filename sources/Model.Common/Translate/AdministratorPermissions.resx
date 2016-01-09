@@ -138,6 +138,9 @@
   <data name="DefaultSchedule" xml:space="preserve">
     <value>Расписание по умолчанию</value>
   </data>
+  <data name="LifeSituations" xml:space="preserve">
+    <value>Жизненные ситуации</value>
+  </data>
   <data name="None" xml:space="preserve">
     <value>Нет</value>
   </data>

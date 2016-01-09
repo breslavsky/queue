@@ -383,6 +383,11 @@ namespace Queue.Administrator
             ShowForm<ServicesForm>(() => new ServicesForm());
         }
 
+        private void lifeSituationsMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowForm<LifeSituationsForm>(() => new LifeSituationsForm());
+        }
+
         private void usersMenuItem_Click(object sender, EventArgs eventArgs)
         {
             ShowForm<UsersForm>(() => new UsersForm());

@@ -1,6 +1,6 @@
 ﻿namespace Queue.Administrator
 {
-    partial class EditServiceGroupForm
+    partial class EditLifeSituationGroupForm
     {
         /// <summary>
         /// Required designer variable.
@@ -50,9 +50,9 @@
             // 
             // commentLabel
             // 
-            this.commentLabel.Location = new System.Drawing.Point(10, 145);
+            this.commentLabel.Location = new System.Drawing.Point(10, 150);
             this.commentLabel.Name = "commentLabel";
-            this.commentLabel.Size = new System.Drawing.Size(395, 25);
+            this.commentLabel.Size = new System.Drawing.Size(395, 18);
             this.commentLabel.TabIndex = 0;
             this.commentLabel.Text = "Комментарий";
             this.commentLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -68,9 +68,9 @@
             // 
             // nameLabel
             // 
-            this.nameLabel.Location = new System.Drawing.Point(10, 65);
+            this.nameLabel.Location = new System.Drawing.Point(10, 70);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(395, 25);
+            this.nameLabel.Size = new System.Drawing.Size(395, 18);
             this.nameLabel.TabIndex = 0;
             this.nameLabel.Text = "Наименование";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -103,9 +103,9 @@
             // 
             // descriptionLabel
             // 
-            this.descriptionLabel.Location = new System.Drawing.Point(10, 240);
+            this.descriptionLabel.Location = new System.Drawing.Point(10, 245);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(395, 25);
+            this.descriptionLabel.Size = new System.Drawing.Size(395, 18);
             this.descriptionLabel.TabIndex = 0;
             this.descriptionLabel.Text = "Описание";
             this.descriptionLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -191,16 +191,16 @@
             // 
             this.fontSizeLabel.Location = new System.Drawing.Point(175, 10);
             this.fontSizeLabel.Name = "fontSizeLabel";
-            this.fontSizeLabel.Size = new System.Drawing.Size(105, 25);
+            this.fontSizeLabel.Size = new System.Drawing.Size(110, 25);
             this.fontSizeLabel.TabIndex = 15;
             this.fontSizeLabel.Text = "Размер шрифта %";
             this.fontSizeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // fontSizeValueLabel
             // 
-            this.fontSizeValueLabel.Location = new System.Drawing.Point(280, 15);
+            this.fontSizeValueLabel.Location = new System.Drawing.Point(285, 10);
             this.fontSizeValueLabel.Name = "fontSizeValueLabel";
-            this.fontSizeValueLabel.Size = new System.Drawing.Size(125, 20);
+            this.fontSizeValueLabel.Size = new System.Drawing.Size(115, 25);
             this.fontSizeValueLabel.TabIndex = 19;
             this.fontSizeValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
@@ -211,13 +211,13 @@
             this.fontSizeTrackBar.Maximum = 300;
             this.fontSizeTrackBar.Minimum = 10;
             this.fontSizeTrackBar.Name = "fontSizeTrackBar";
-            this.fontSizeTrackBar.Size = new System.Drawing.Size(235, 45);
+            this.fontSizeTrackBar.Size = new System.Drawing.Size(230, 45);
             this.fontSizeTrackBar.TabIndex = 18;
             this.fontSizeTrackBar.Value = 10;
             this.fontSizeTrackBar.ValueChanged += new System.EventHandler(this.fontSizeTrackBar_ValueChanged);
             this.fontSizeTrackBar.Leave += new System.EventHandler(this.fontSizeTrackBar_Leave);
             // 
-            // EditServiceGroupForm
+            // EditLifeSituationGroupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -239,9 +239,10 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "EditServiceGroupForm";
+            this.MinimumSize = new System.Drawing.Size(400, 470);
+            this.Name = "EditLifeSituationGroupForm";
             this.Padding = new System.Windows.Forms.Padding(10);
-            this.Text = "Редактирование группы услуг";
+            this.Text = "Редактирование жизненной ситуации";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ServiceGroupEditForm_FormClosing);
             this.Load += new System.EventHandler(this.ServiceGroupEdit_Load);
             this.layoutGroupBox.ResumeLayout(false);

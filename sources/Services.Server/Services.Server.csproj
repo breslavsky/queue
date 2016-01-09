@@ -120,6 +120,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOMapping.cs" />
+    <Compile Include="Server\LifeSituation\LifeSituationHttpService.cs" />
+    <Compile Include="Server\LifeSituation\LifeSituationHttpServiceHost.cs" />
+    <Compile Include="Server\LifeSituation\LifeSituationHttpServiceProvider.cs" />
+    <Compile Include="Server\LifeSituation\LifeSituationService.cs" />
+    <Compile Include="Server\LifeSituation\LifeSituationServiceTcpProvider.cs" />
+    <Compile Include="Server\LifeSituation\LifeSituationTcpService.cs" />
+    <Compile Include="Server\LifeSituation\LifeSituationTcpServiceHost.cs" />
     <Compile Include="Server\QueuePlan\QueuePlanHttpService.cs" />
     <Compile Include="Server\QueuePlan\QueuePlanHttpServiceHost.cs" />
     <Compile Include="Server\QueuePlan\QueuePlanHttpServiceProvider.cs" />

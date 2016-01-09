@@ -13,5 +13,6 @@ namespace Queue.Services.Contracts.Server
         public const string User = "user";
         public const string Workplace = "workplace";
         public const string QueuePlan = "queue-plan";
+        public const string LifeSituation = "life-situation";
     }
 }

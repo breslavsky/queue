@@ -98,6 +98,8 @@
     <Compile Include="Workplace.cs" />
     <Compile Include="ClientRequestAdditionalService.cs" />
     <Compile Include="OperatorInterruptionFilter.cs" />
+    <Compile Include="LifeSituationGroup.cs" />
+    <Compile Include="LifeSituation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

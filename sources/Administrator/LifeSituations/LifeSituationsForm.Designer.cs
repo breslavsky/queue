@@ -1,6 +1,6 @@
 ﻿namespace Queue.Administrator
 {
-    partial class ServicesForm
+    partial class LifeSituationsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -16,16 +16,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServicesForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LifeSituationsForm));
             this.buttonDown = new System.Windows.Forms.Button();
             this.treeView = new System.Windows.Forms.TreeView();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addServiceGroupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addServiceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editServiceGroupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editServiceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addGroupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addLifeSituationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editGroupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editLifeSituationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteGroupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteServiceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteLifeSituationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.movePanel = new System.Windows.Forms.Panel();
             this.buttonUp = new System.Windows.Forms.Button();
@@ -44,7 +44,7 @@
             this.buttonDown.TabIndex = 0;
             this.buttonDown.Click += new System.EventHandler(this.buttonDown_Click);
             // 
-            // servicesTreeView
+            // treeView
             // 
             this.treeView.AllowDrop = true;
             this.treeView.CheckBoxes = true;
@@ -53,7 +53,7 @@
             this.treeView.HideSelection = false;
             this.treeView.Location = new System.Drawing.Point(0, 0);
             this.treeView.Margin = new System.Windows.Forms.Padding(0);
-            this.treeView.Name = "servicesTreeView";
+            this.treeView.Name = "treeView";
             this.treeView.Size = new System.Drawing.Size(589, 442);
             this.treeView.TabIndex = 0;
             this.treeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterCheck);
@@ -67,57 +67,57 @@
             // contextMenuStrip
             // 
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addServiceGroupMenuItem,
-            this.addServiceMenuItem,
-            this.editServiceGroupMenuItem,
-            this.editServiceMenuItem,
+            this.addGroupMenuItem,
+            this.addLifeSituationMenuItem,
+            this.editGroupMenuItem,
+            this.editLifeSituationMenuItem,
             this.deleteGroupMenuItem,
-            this.deleteServiceMenuItem});
+            this.deleteLifeSituationMenuItem});
             this.contextMenuStrip.Name = "serviceCategoriesTreeMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(203, 136);
+            this.contextMenuStrip.Size = new System.Drawing.Size(253, 158);
             this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
             // 
-            // addServiceGroupMenuItem
+            // addGroupMenuItem
             // 
-            this.addServiceGroupMenuItem.Name = "addServiceGroupMenuItem";
-            this.addServiceGroupMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.addServiceGroupMenuItem.Text = "Добавить группу услуг";
-            this.addServiceGroupMenuItem.Click += new System.EventHandler(this.addGroupMenuItem_Click);
+            this.addGroupMenuItem.Name = "addGroupMenuItem";
+            this.addGroupMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.addGroupMenuItem.Text = "Добавить группу";
+            this.addGroupMenuItem.Click += new System.EventHandler(this.addGroupMenuItem_Click);
             // 
-            // addServiceMenuItem
+            // addLifeSituationMenuItem
             // 
-            this.addServiceMenuItem.Name = "addServiceMenuItem";
-            this.addServiceMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.addServiceMenuItem.Text = "Добавить услугу";
-            this.addServiceMenuItem.Click += new System.EventHandler(this.addServiceMenuItem_Click);
+            this.addLifeSituationMenuItem.Name = "addLifeSituationMenuItem";
+            this.addLifeSituationMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.addLifeSituationMenuItem.Text = "Добавить жизненную ситуацию";
+            this.addLifeSituationMenuItem.Click += new System.EventHandler(this.addLifeSituationMenuItem_Click);
             // 
-            // editServiceGroupMenuItem
+            // editGroupMenuItem
             // 
-            this.editServiceGroupMenuItem.Name = "editServiceGroupMenuItem";
-            this.editServiceGroupMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.editServiceGroupMenuItem.Text = "Изменить группу услуг";
-            this.editServiceGroupMenuItem.Click += new System.EventHandler(this.editServiceGroupMenuItem_Click);
+            this.editGroupMenuItem.Name = "editGroupMenuItem";
+            this.editGroupMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.editGroupMenuItem.Text = "Изменить группу";
+            this.editGroupMenuItem.Click += new System.EventHandler(this.editGroupMenuItem_Click);
             // 
-            // editServiceMenuItem
+            // editLifeSituationMenuItem
             // 
-            this.editServiceMenuItem.Name = "editServiceMenuItem";
-            this.editServiceMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.editServiceMenuItem.Text = "Изменить услугу";
-            this.editServiceMenuItem.Click += new System.EventHandler(this.editServiceMenuItem_Click);
+            this.editLifeSituationMenuItem.Name = "editLifeSituationMenuItem";
+            this.editLifeSituationMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.editLifeSituationMenuItem.Text = "Изменить жизненную ситуацию";
+            this.editLifeSituationMenuItem.Click += new System.EventHandler(this.editLifeSituationMenuItem_Click);
             // 
-            // deleteServiceGroupMenuItem
+            // deleteGroupMenuItem
             // 
-            this.deleteGroupMenuItem.Name = "deleteServiceGroupMenuItem";
-            this.deleteGroupMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.deleteGroupMenuItem.Text = "Удалить группу услуг";
+            this.deleteGroupMenuItem.Name = "deleteGroupMenuItem";
+            this.deleteGroupMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.deleteGroupMenuItem.Text = "Удалить группу";
             this.deleteGroupMenuItem.Click += new System.EventHandler(this.deleteGroupMenuItem_Click);
             // 
-            // deleteServiceMenuItem
+            // deleteLifeSituationMenuItem
             // 
-            this.deleteServiceMenuItem.Name = "deleteServiceMenuItem";
-            this.deleteServiceMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.deleteServiceMenuItem.Text = "Удалить услугу";
-            this.deleteServiceMenuItem.Click += new System.EventHandler(this.deleteServiceMenuItem_Click);
+            this.deleteLifeSituationMenuItem.Name = "deleteLifeSituationMenuItem";
+            this.deleteLifeSituationMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.deleteLifeSituationMenuItem.Text = "Удалить жизненную ситуацию";
+            this.deleteLifeSituationMenuItem.Click += new System.EventHandler(this.deleteLifeSituationMenuItem_Click);
             // 
             // mainLayoutPanel
             // 
@@ -154,19 +154,19 @@
             this.buttonUp.TabIndex = 1;
             this.buttonUp.Click += new System.EventHandler(this.buttonUp_Click);
             // 
-            // ServicesForm
+            // LifeSituationsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(644, 462);
             this.Controls.Add(this.mainLayoutPanel);
             this.MinimumSize = new System.Drawing.Size(660, 500);
-            this.Name = "ServicesForm";
+            this.Name = "LifeSituationsForm";
             this.Padding = new System.Windows.Forms.Padding(10);
-            this.Text = "Настройка услуг";
+            this.Text = "Настройка жизненных ситуаций";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ServicesForm_FormClosing);
-            this.Load += new System.EventHandler(this.ServicesForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LifeSituationsForm_FormClosing);
+            this.Load += new System.EventHandler(this.LifeSituationsForm_Load);
             this.contextMenuStrip.ResumeLayout(false);
             this.mainLayoutPanel.ResumeLayout(false);
             this.movePanel.ResumeLayout(false);
@@ -179,12 +179,12 @@
         private System.Windows.Forms.Button buttonDown;
         private System.Windows.Forms.TreeView treeView;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem addServiceGroupMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteServiceMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addGroupMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteLifeSituationMenuItem;
         private System.Windows.Forms.TableLayoutPanel mainLayoutPanel;
-        private System.Windows.Forms.ToolStripMenuItem addServiceMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editServiceGroupMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editServiceMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addLifeSituationMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editGroupMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editLifeSituationMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteGroupMenuItem;
         private System.Windows.Forms.Panel movePanel;
         private System.Windows.Forms.Button buttonUp;

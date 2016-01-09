@@ -17,6 +17,7 @@ namespace Queue.Model.Common
         Reports = 512,
         Offices = 1024,
         AdditionalServices = 2048,
-        OperatorInterruptions = 4096
+        OperatorInterruptions = 4096,
+        LifeSituations = 8192
     }
 }

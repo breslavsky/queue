@@ -38,6 +38,7 @@ namespace Queue.Administrator
         private static UserService userService;
         private static WorkplaceService workplaceService;
         private static QueuePlanService queuePlanService;
+        private static LifeSituationService lifeSituationService;
 
         [STAThread]
         private static void Main()
@@ -156,6 +157,11 @@ namespace Queue.Administrator
             container.RegisterInstance(queuePlanService);
             container.RegisterType<DuplexChannelManager<IQueuePlanTcpService>>
                 (new InjectionFactory(c => queuePlanService.CreateChannelManager(sessionId)));
+
+            lifeSituationService = new LifeSituationService(endpoint);
+            container.RegisterInstance(lifeSituationService);
+            container.RegisterType<ChannelManager<ILifeSituationTcpService>>
+                (new InjectionFactory(c => lifeSituationService.CreateChannelManager(sessionId)));
 
             var theme = string.IsNullOrEmpty(administratorSettings.Theme)
                 ? Templates.Themes.Default : administratorSettings.Theme;

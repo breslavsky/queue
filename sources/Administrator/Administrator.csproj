@@ -213,10 +213,28 @@
     <Compile Include="CurrentUserForm.Designer.cs">
       <DependentUpon>CurrentUserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LifeSituations\LifeSituationsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LifeSituations\LifeSituationsForm.Designer.cs">
+      <DependentUpon>LifeSituationsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\EditServiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Services\EditServiceForm.Designer.cs">
+      <DependentUpon>EditServiceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\EditServiceGroupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Services\EditServiceGroupForm.Designer.cs">
+      <DependentUpon>EditServiceGroupForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings\AdministratorSettings.cs" />
     <Compile Include="Offices\OfficeLoginForm.cs">
@@ -395,17 +413,17 @@
     <Compile Include="Users\UsersForm.Designer.cs">
       <DependentUpon>UsersForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\EditServiceForm.cs">
+    <Compile Include="LifeSituations\EditLifeSituationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Services\EditServiceForm.Designer.cs">
-      <DependentUpon>EditServiceForm.cs</DependentUpon>
+    <Compile Include="LifeSituations\EditLifeSituationForm.Designer.cs">
+      <DependentUpon>EditLifeSituationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\EditServiceGroupForm.cs">
+    <Compile Include="LifeSituations\EditLifeSituationGroupForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Services\EditServiceGroupForm.Designer.cs">
-      <DependentUpon>EditServiceGroupForm.cs</DependentUpon>
+    <Compile Include="LifeSituations\EditLifeSituationGroupForm.Designer.cs">
+      <DependentUpon>EditLifeSituationGroupForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\ServicesForm.cs">
       <SubType>Form</SubType>
@@ -467,6 +485,9 @@
     <EmbeddedResource Include="CurrentUserForm.resx">
       <DependentUpon>CurrentUserForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LifeSituations\LifeSituationsForm.resx">
+      <DependentUpon>LifeSituationsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Offices\OfficeLoginForm.resx">
       <DependentUpon>OfficeLoginForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -488,6 +509,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Schedule\DefaultScheduleForm.resx">
       <DependentUpon>DefaultScheduleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Services\EditServiceForm.resx">
+      <DependentUpon>EditServiceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Services\EditServiceGroupForm.resx">
+      <DependentUpon>EditServiceGroupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Translate\CouponConfigControl.en-US.resx" />
     <EmbeddedResource Include="Translate\DefaultConfigControl.en-US.resx" />
@@ -545,8 +572,8 @@
     <EmbeddedResource Include="Reports\OperatorRatingReportForm.resx">
       <DependentUpon>OperatorRatingReportForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Services\EditServiceForm.resx">
-      <DependentUpon>EditServiceForm.cs</DependentUpon>
+    <EmbeddedResource Include="LifeSituations\EditLifeSituationForm.resx">
+      <DependentUpon>EditLifeSituationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ServiceParametersControl.resx">
       <DependentUpon>ServiceParametersControl.cs</DependentUpon>
@@ -602,8 +629,8 @@
     <EmbeddedResource Include="Users\UsersForm.resx">
       <DependentUpon>UsersForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Services\EditServiceGroupForm.resx">
-      <DependentUpon>EditServiceGroupForm.cs</DependentUpon>
+    <EmbeddedResource Include="LifeSituations\EditLifeSituationGroupForm.resx">
+      <DependentUpon>EditLifeSituationGroupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Services\ServicesForm.resx">
       <DependentUpon>ServicesForm.cs</DependentUpon>

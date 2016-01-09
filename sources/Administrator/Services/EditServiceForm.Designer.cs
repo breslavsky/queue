@@ -23,7 +23,7 @@
             this.exceptionScheduleCheckBox = new System.Windows.Forms.CheckBox();
             this.exceptionScheduleControl = new Queue.Administrator.ScheduleControl();
             this.commonTabPage = new System.Windows.Forms.TabPage();
-            this.servicePropertiesTabControl = new System.Windows.Forms.TabControl();
+            this.nestedTabControl = new System.Windows.Forms.TabControl();
             this.commonPropertiesTabPage = new System.Windows.Forms.TabPage();
             this.codeLabel = new System.Windows.Forms.Label();
             this.codeTextBox = new System.Windows.Forms.TextBox();
@@ -67,13 +67,14 @@
             this.fontSizeLabel = new System.Windows.Forms.Label();
             this.fontSizeTrackBar = new System.Windows.Forms.TrackBar();
             this.saveButton = new System.Windows.Forms.Button();
-            this.serviceTabControl = new System.Windows.Forms.TabControl();
+            this.mainTabControl = new System.Windows.Forms.TabControl();
             this.stepsTabPage = new System.Windows.Forms.TabPage();
             this.serviceStepsControl = new Queue.Administrator.ServiceStepsControl();
             this.weekdayScheduleTabPage = new System.Windows.Forms.TabPage();
             this.weekdayTabControl = new System.Windows.Forms.TabControl();
             this.mondayTabPage = new System.Windows.Forms.TabPage();
             this.weekdaySchedulePanel = new System.Windows.Forms.Panel();
+            this.fillButton = new System.Windows.Forms.Button();
             this.weekdayScheduleCheckBox = new System.Windows.Forms.CheckBox();
             this.weekdayScheduleControl = new Queue.Administrator.ScheduleControl();
             this.tuesdayTabPage = new System.Windows.Forms.TabPage();
@@ -83,11 +84,10 @@
             this.saturdayTabPage = new System.Windows.Forms.TabPage();
             this.sundayTabPage = new System.Windows.Forms.TabPage();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.fillButton = new System.Windows.Forms.Button();
             this.parametersTabPage.SuspendLayout();
             this.exceptionScheduleTabPage.SuspendLayout();
             this.commonTabPage.SuspendLayout();
-            this.servicePropertiesTabControl.SuspendLayout();
+            this.nestedTabControl.SuspendLayout();
             this.commonPropertiesTabPage.SuspendLayout();
             this.additionalPropertiesTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clientCallDelayUpDown)).BeginInit();
@@ -98,7 +98,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.priorityUpDown)).BeginInit();
             this.designPropertiesTabControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fontSizeTrackBar)).BeginInit();
-            this.serviceTabControl.SuspendLayout();
+            this.mainTabControl.SuspendLayout();
             this.stepsTabPage.SuspendLayout();
             this.weekdayScheduleTabPage.SuspendLayout();
             this.weekdayTabControl.SuspendLayout();
@@ -171,7 +171,7 @@
             // 
             // commonTabPage
             // 
-            this.commonTabPage.Controls.Add(this.servicePropertiesTabControl);
+            this.commonTabPage.Controls.Add(this.nestedTabControl);
             this.commonTabPage.Controls.Add(this.saveButton);
             this.commonTabPage.Location = new System.Drawing.Point(4, 26);
             this.commonTabPage.Name = "commonTabPage";
@@ -180,19 +180,19 @@
             this.commonTabPage.Text = "Общая информация";
             this.commonTabPage.UseVisualStyleBackColor = true;
             // 
-            // servicePropertiesTabControl
+            // nestedTabControl
             // 
-            this.servicePropertiesTabControl.Controls.Add(this.commonPropertiesTabPage);
-            this.servicePropertiesTabControl.Controls.Add(this.additionalPropertiesTabPage);
-            this.servicePropertiesTabControl.Controls.Add(this.designPropertiesTabControl);
-            this.servicePropertiesTabControl.Location = new System.Drawing.Point(5, 5);
-            this.servicePropertiesTabControl.Margin = new System.Windows.Forms.Padding(5);
-            this.servicePropertiesTabControl.Multiline = true;
-            this.servicePropertiesTabControl.Name = "servicePropertiesTabControl";
-            this.servicePropertiesTabControl.Padding = new System.Drawing.Point(5, 5);
-            this.servicePropertiesTabControl.SelectedIndex = 0;
-            this.servicePropertiesTabControl.Size = new System.Drawing.Size(825, 410);
-            this.servicePropertiesTabControl.TabIndex = 0;
+            this.nestedTabControl.Controls.Add(this.commonPropertiesTabPage);
+            this.nestedTabControl.Controls.Add(this.additionalPropertiesTabPage);
+            this.nestedTabControl.Controls.Add(this.designPropertiesTabControl);
+            this.nestedTabControl.Location = new System.Drawing.Point(5, 5);
+            this.nestedTabControl.Margin = new System.Windows.Forms.Padding(5);
+            this.nestedTabControl.Multiline = true;
+            this.nestedTabControl.Name = "nestedTabControl";
+            this.nestedTabControl.Padding = new System.Drawing.Point(5, 5);
+            this.nestedTabControl.SelectedIndex = 0;
+            this.nestedTabControl.Size = new System.Drawing.Size(825, 410);
+            this.nestedTabControl.TabIndex = 0;
             // 
             // commonPropertiesTabPage
             // 
@@ -610,7 +610,7 @@
             this.colorLabel.Name = "colorLabel";
             this.colorLabel.Size = new System.Drawing.Size(105, 30);
             this.colorLabel.TabIndex = 16;
-            this.colorLabel.Text = "Цвет услуги";
+            this.colorLabel.Text = "Цвет";
             this.colorLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // colorButton
@@ -652,22 +652,22 @@
             this.saveButton.Text = "Записать";
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
-            // serviceTabControl
+            // mainTabControl
             // 
-            this.serviceTabControl.Controls.Add(this.commonTabPage);
-            this.serviceTabControl.Controls.Add(this.stepsTabPage);
-            this.serviceTabControl.Controls.Add(this.weekdayScheduleTabPage);
-            this.serviceTabControl.Controls.Add(this.exceptionScheduleTabPage);
-            this.serviceTabControl.Controls.Add(this.parametersTabPage);
-            this.serviceTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.serviceTabControl.Location = new System.Drawing.Point(10, 10);
-            this.serviceTabControl.Margin = new System.Windows.Forms.Padding(5);
-            this.serviceTabControl.Name = "serviceTabControl";
-            this.serviceTabControl.Padding = new System.Drawing.Point(5, 5);
-            this.serviceTabControl.SelectedIndex = 0;
-            this.serviceTabControl.Size = new System.Drawing.Size(844, 486);
-            this.serviceTabControl.TabIndex = 0;
-            this.serviceTabControl.SelectedIndexChanged += new System.EventHandler(this.serviceTabControl_SelectedIndexChanged);
+            this.mainTabControl.Controls.Add(this.commonTabPage);
+            this.mainTabControl.Controls.Add(this.stepsTabPage);
+            this.mainTabControl.Controls.Add(this.weekdayScheduleTabPage);
+            this.mainTabControl.Controls.Add(this.exceptionScheduleTabPage);
+            this.mainTabControl.Controls.Add(this.parametersTabPage);
+            this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainTabControl.Location = new System.Drawing.Point(10, 10);
+            this.mainTabControl.Margin = new System.Windows.Forms.Padding(5);
+            this.mainTabControl.Name = "mainTabControl";
+            this.mainTabControl.Padding = new System.Drawing.Point(5, 5);
+            this.mainTabControl.SelectedIndex = 0;
+            this.mainTabControl.Size = new System.Drawing.Size(844, 486);
+            this.mainTabControl.TabIndex = 0;
+            this.mainTabControl.SelectedIndexChanged += new System.EventHandler(this.serviceTabControl_SelectedIndexChanged);
             // 
             // stepsTabPage
             // 
@@ -744,6 +744,16 @@
             this.weekdaySchedulePanel.Name = "weekdaySchedulePanel";
             this.weekdaySchedulePanel.Size = new System.Drawing.Size(818, 416);
             this.weekdaySchedulePanel.TabIndex = 1;
+            // 
+            // fillButton
+            // 
+            this.fillButton.Location = new System.Drawing.Point(5, 385);
+            this.fillButton.Name = "fillButton";
+            this.fillButton.Size = new System.Drawing.Size(75, 25);
+            this.fillButton.TabIndex = 4;
+            this.fillButton.Text = "Заполнить";
+            this.fillButton.UseVisualStyleBackColor = true;
+            this.fillButton.Click += new System.EventHandler(this.fillButton_Click);
             // 
             // weekdayScheduleCheckBox
             // 
@@ -833,22 +843,12 @@
             this.toolTip1.ReshowDelay = 100;
             this.toolTip1.ToolTipTitle = "Пояснение";
             // 
-            // fillButton
-            // 
-            this.fillButton.Location = new System.Drawing.Point(5, 385);
-            this.fillButton.Name = "fillButton";
-            this.fillButton.Size = new System.Drawing.Size(75, 25);
-            this.fillButton.TabIndex = 4;
-            this.fillButton.Text = "Заполнить";
-            this.fillButton.UseVisualStyleBackColor = true;
-            this.fillButton.Click += new System.EventHandler(this.fillButton_Click);
-            // 
             // EditServiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(864, 506);
-            this.Controls.Add(this.serviceTabControl);
+            this.Controls.Add(this.mainTabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -862,7 +862,7 @@
             this.exceptionScheduleTabPage.ResumeLayout(false);
             this.exceptionScheduleTabPage.PerformLayout();
             this.commonTabPage.ResumeLayout(false);
-            this.servicePropertiesTabControl.ResumeLayout(false);
+            this.nestedTabControl.ResumeLayout(false);
             this.commonPropertiesTabPage.ResumeLayout(false);
             this.commonPropertiesTabPage.PerformLayout();
             this.additionalPropertiesTabPage.ResumeLayout(false);
@@ -876,7 +876,7 @@
             this.designPropertiesTabControl.ResumeLayout(false);
             this.designPropertiesTabControl.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fontSizeTrackBar)).EndInit();
-            this.serviceTabControl.ResumeLayout(false);
+            this.mainTabControl.ResumeLayout(false);
             this.stepsTabPage.ResumeLayout(false);
             this.weekdayScheduleTabPage.ResumeLayout(false);
             this.weekdayTabControl.ResumeLayout(false);
@@ -889,7 +889,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl serviceTabControl;
+        private System.Windows.Forms.TabControl mainTabControl;
         private System.Windows.Forms.TabPage commonTabPage;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.TabPage exceptionScheduleTabPage;
@@ -926,7 +926,7 @@
         private System.Windows.Forms.Label clientCallDelaySecondsLabel;
         private System.Windows.Forms.Label clientCallDelayLabel;
         private System.Windows.Forms.NumericUpDown clientCallDelayUpDown;
-        private System.Windows.Forms.TabControl servicePropertiesTabControl;
+        private System.Windows.Forms.TabControl nestedTabControl;
         private System.Windows.Forms.TabPage commonPropertiesTabPage;
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.TextBox commentTextBox;
