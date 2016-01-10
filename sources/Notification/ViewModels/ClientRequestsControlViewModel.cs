@@ -5,11 +5,15 @@ using Junte.WCF;
 using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common;
+using Queue.Common.Settings;
 using Queue.Model.Common;
+using Queue.Notification.Settings;
+using Queue.Services.Contracts.Hub;
 using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
@@ -42,6 +46,15 @@ namespace Queue.Notification.ViewModels
 
         [Dependency]
         public TaskPool TaskPool { get; set; }
+
+        [Dependency]
+        public NotificationSettings AppSettings { get; set; }
+
+        [Dependency]
+        public HubSettings HubSettings { get; set; }
+
+        [Dependency]
+        public ChannelManager<IDisplayTcpService> DisplayChannelManager { get; set; }
 
         [Dependency]
         public ClientRequestsListener ClientRequestsListener { get; set; }
@@ -126,8 +139,7 @@ namespace Queue.Notification.ViewModels
                 Window.Invoke(() =>
                    {
                        var wrap = Requests.SingleOrDefault(r => r.Request.Equals(request));
-
-                       bool isImportantState = (request.State == ClientRequestState.Calling) ||
+                       var isImportantState = (request.State == ClientRequestState.Calling) ||
                                                (request.State == ClientRequestState.Absence);
 
                        if (!isImportantState && (wrap == null))
@@ -157,6 +169,8 @@ namespace Queue.Notification.ViewModels
                        AdjustRequestsLength();
                    });
             }
+
+            SendRequestsToDisplays();
         }
 
         private void AdjustRequestsLength()
@@ -165,6 +179,60 @@ namespace Queue.Notification.ViewModels
             {
                 Requests.RemoveAt(Requests.Count - 1);
             }
+        }
+
+        private void SendRequestsToDisplays()
+        {
+            if (AppSettings.Displays.Count == 0 || !HubSettings.Enabled)
+            {
+                return;
+            }
+
+            foreach (DisplayConfig display in AppSettings.Displays)
+            {
+                SendRequestsToDisplay(display);
+            }
+        }
+
+        private async void SendRequestsToDisplay(DisplayConfig display)
+        {
+            try
+            {
+                var lines = GetLinesForDisplay(display);
+
+                logger.Debug("show lines [device: {0}; lines: {1}]",
+                    display.DeviceId,
+                    String.Join(", ", lines.Select(l => String.Format("[{0}: {1}]", l[0], l[1]))));
+
+                using (var channel = DisplayChannelManager.CreateChannel())
+                {
+                    await channel.Service.ShowLines(display.DeviceId, lines);
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+            }
+        }
+
+        private ushort[][] GetLinesForDisplay(DisplayConfig display)
+        {
+            var toSend = new List<ushort[]>();
+            var workplaces = display.Workplaces
+                                    .Cast<WorkplaceConfig>()
+                                    .Select(c => c.Number);
+
+            foreach (var req in Requests)
+            {
+                if (display.Workplaces.Count > 0 && !workplaces.Contains(req.Request.Operator.Workplace.Number))
+                {
+                    continue;
+                }
+
+                toSend.Add(new[] { (ushort)req.Request.Number, (ushort)req.Request.Operator.Workplace.Number });
+            }
+
+            return toSend.ToArray();
         }
 
         private void timer_Tick(object sender, EventArgs e)

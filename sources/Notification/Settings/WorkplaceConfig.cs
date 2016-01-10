@@ -1,15 +1,13 @@
-﻿using Junte.Configuration;
-using System.ComponentModel;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Queue.Notification.Settings
 {
     public class WorkplaceConfig : ConfigurationElement
     {
         [ConfigurationProperty("number")]
-        public byte Number
+        public int Number
         {
-            get { return (byte)this["number"]; }
+            get { return (int)this["number"]; }
             set { this["number"] = value; }
         }
     }

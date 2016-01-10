@@ -4,7 +4,6 @@ using NHibernate.Criterion;
 using Queue.Model;
 using Queue.Model.Common;
 using Queue.Services.Common;
-using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
 using System;
 using System.Collections.Generic;

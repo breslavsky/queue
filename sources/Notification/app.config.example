@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <section name="hub" type="Queue.Common.Settings.HubSettings, Queue.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <section name="notification" type="Queue.Notification.Settings.NotificationSettings, Queue.Notification, Version=1.7.1.0, Culture=neutral, PublicKeyToken=null" />
+  </configSections>
+  <hub endpoint="net.tcp://localhost:4511/" />
+  <notification theme="default" endpoint="net.tcp://queue:4505"
+      isRemember="false" language="ru_RU" accent="">
+    <displays>
+      <display deviceId="99">
+        <workplaces>
+          <workplace number="10" />
+          <workplace number="12" />
+        </workplaces>
+      </display>
+    </displays>
+  </notification>
+</configuration>

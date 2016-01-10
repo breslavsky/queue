@@ -19,6 +19,7 @@ namespace Queue.Notification.ViewModels
     public class LoginPageViewModel : RichViewModel
     {
         private bool isRemember;
+        private bool isFullScreen;
 
         private string endpoint;
         private AccentColorComboBoxItem selectedAccent;
@@ -31,6 +32,12 @@ namespace Queue.Notification.ViewModels
         {
             get { return isRemember; }
             set { SetProperty(ref isRemember, value); }
+        }
+
+        public bool IsFullScreen
+        {
+            get { return isFullScreen; }
+            set { SetProperty(ref isFullScreen, value); }
         }
 
         public string Endpoint
@@ -101,6 +108,7 @@ namespace Queue.Notification.ViewModels
         private void LoadSettings()
         {
             IsRemember = AppSettings.IsRemember;
+            IsFullScreen = AppSettings.IsFullScreen;
             SelectedLanguage = AppSettings.Language;
             Endpoint = AppSettings.Endpoint;
 
@@ -146,6 +154,7 @@ namespace Queue.Notification.ViewModels
         {
             AppSettings.Endpoint = Endpoint;
             AppSettings.IsRemember = IsRemember;
+            AppSettings.IsFullScreen = IsFullScreen;
             AppSettings.Accent = SelectedAccent == null ? String.Empty : SelectedAccent.Name;
             AppSettings.Language = SelectedLanguage;
 

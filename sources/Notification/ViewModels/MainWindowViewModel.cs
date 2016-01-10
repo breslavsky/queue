@@ -97,14 +97,19 @@ namespace Queue.Notification.ViewModels
 
             Application.Current.MainWindow.KeyDown += MainWindow_KeyDown;
 
-            var screen = WinForms.Screen.AllScreens.FirstOrDefault(s => !s.Primary);
-            if (screen != null)
+            if (AppSettings.IsFullScreen)
             {
-                Application.Current.MainWindow.Left = screen.WorkingArea.Left;
-                Application.Current.MainWindow.Top = screen.WorkingArea.Top;
-            }
+                Mouse.OverrideCursor = Cursors.None;
 
-            Window.MakeFullScreen();
+                var screen = WinForms.Screen.AllScreens.FirstOrDefault(s => !s.Primary);
+                if (screen != null)
+                {
+                    Application.Current.MainWindow.Left = screen.WorkingArea.Left;
+                    Application.Current.MainWindow.Top = screen.WorkingArea.Top;
+                }
+
+                Window.MakeFullScreen();
+            }
         }
 
         private void RegisterTypes()

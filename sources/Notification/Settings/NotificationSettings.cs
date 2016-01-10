@@ -5,12 +5,13 @@ namespace Queue.Notification.Settings
 {
     public class NotificationSettings : ConfigurationSection
     {
-        public const string SectionKey = "notificationSettings";
+        public const string SectionKey = "notification";
 
         public NotificationSettings()
         {
             Theme = "default";
             Endpoint = "net.tcp://queue:4505";
+            IsFullScreen = true;
         }
 
         [ConfigurationProperty("endpoint")]
@@ -32,6 +33,13 @@ namespace Queue.Notification.Settings
         {
             get { return (bool)this["isRemember"]; }
             set { this["isRemember"] = value; }
+        }
+
+        [ConfigurationProperty("isFullScreen", DefaultValue = true)]
+        public bool IsFullScreen
+        {
+            get { return (bool)this["isFullScreen"]; }
+            set { this["isFullScreen"] = value; }
         }
 
         [ConfigurationProperty("language")]

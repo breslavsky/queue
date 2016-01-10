@@ -1,5 +1,4 @@
-﻿using NHibernate;
-using NPOI.HSSF.UserModel;
+﻿using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using Queue.Model;
 using System;
@@ -55,9 +54,8 @@ namespace Queue.Reports.ExceptionScheduleReport
 
         private void AddDataToReport(ISheet worksheet, DefaultExceptionScheduleReportData[] items, bool isDefault = true)
         {
-            int rowIndex = worksheet.LastRowNum + 1;
-
-            ICellStyle boldCellStyle = CreateCellBoldStyle(worksheet.Workbook);
+            var rowIndex = worksheet.LastRowNum + 1;
+            var boldCellStyle = CreateCellBoldStyle(worksheet.Workbook);
 
             var dateTitle = DateTime.MinValue;
 

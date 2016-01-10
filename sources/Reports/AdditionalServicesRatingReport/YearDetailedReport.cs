@@ -41,7 +41,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
             worksheet.SetColumnHidden(1, true);
             worksheet.SetColumnHidden(2, true);
 
-            ReportDataItem[] items = data.GroupBy(y => y.Year)
+            var items = data.GroupBy(y => y.Year)
                                             .Select(y => new ReportDataItem()
                                             {
                                                 Year = y.Key,
@@ -51,13 +51,13 @@ namespace Queue.Reports.AdditionalServicesRatingReport
                                             .ToArray();
 
             int rowIndex = worksheet.LastRowNum + 1;
-            foreach (ReportDataItem item in items)
+            foreach (var item in items)
             {
                 WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(item.Year));
 
-                foreach (AdditionalService service in GetAdditionalServices(session))
+                foreach (var service in GetAdditionalServices(session))
                 {
-                    IRow row = worksheet.CreateRow(rowIndex++);
+                    var row = worksheet.CreateRow(rowIndex++);
                     WriteBoldCell(row, 3, c => c.SetCellValue(service.ToString()));
 
                     RenderServiceRating(row, service, item.Rating);

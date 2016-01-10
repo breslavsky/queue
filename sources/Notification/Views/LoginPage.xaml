@@ -16,7 +16,7 @@
     </i:Interaction.Triggers>
 
     <Border>
-        <Grid Width="400" Height="180">
+        <Grid Width="400" Height="220">
             <Border BorderBrush="{DynamicResource AccentColorBrush}"
                     BorderThickness="2"
                     CornerRadius="5"
@@ -33,6 +33,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
@@ -115,6 +116,10 @@
                               Grid.Column="1"
                               Content="{lex:Loc Remember}"
                               IsChecked="{Binding IsRemember}" />
+                    <CheckBox Grid.Row="4"
+                              Grid.Column="1"
+                              Content="Во весь экран"
+                              IsChecked="{Binding IsFullScreen}" />
                 </Grid>
             </Border>
         </Grid>
