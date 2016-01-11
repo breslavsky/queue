@@ -106,7 +106,10 @@ namespace Queue.UI.WPF.ViewModels
             {
                 ServerState = ServerState.Unavailable;
 
-                channel.Dispose();
+                if (channel != null)
+                {
+                    channel.Dispose();
+                }
                 channel = ChannelManager.CreateChannel();
             }
 

@@ -20,6 +20,8 @@ namespace Queue.Terminal.ViewModels
 
         public ICommand ShowServicesCommand { get; set; }
 
+        public bool ShowPagesSelector { get; set; }
+
         public bool ShowServices
         {
             get { return showServices; }
@@ -38,6 +40,9 @@ namespace Queue.Terminal.ViewModels
         [Dependency]
         public IMainWindow Window { get; set; }
 
+        [Dependency]
+        public TerminalConfig TerminalConfig { get; set; }
+
         public SelectServicePageViewModel()
             : base()
         {
@@ -53,7 +58,22 @@ namespace Queue.Terminal.ViewModels
                 ShowLifeSituations = false;
             });
 
-            ShowServices = true;
+            ApplyConfig();
+        }
+
+        private void ApplyConfig()
+        {
+            ShowPagesSelector = TerminalConfig.Pages.HasFlag(TerminalPages.Services) &&
+                                TerminalConfig.Pages.HasFlag(TerminalPages.LifeSituations);
+
+            if (TerminalConfig.StartPage == TerminalPages.Services)
+            {
+                ShowServices = true;
+            }
+            else
+            {
+                ShowLifeSituations = true;
+            }
         }
 
         public async void SetSelectedService(Service service)
