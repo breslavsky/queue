@@ -464,6 +464,8 @@ namespace Queue.Services.Server
                     сonfig.CurrentDayRecording = source.CurrentDayRecording;
                     сonfig.Columns = source.Columns;
                     сonfig.Rows = source.Rows;
+                    сonfig.Pages = source.Pages;
+                    сonfig.StartPage = source.StartPage;
 
                     var errors = сonfig.Validate();
                     if (errors.Length > 0)

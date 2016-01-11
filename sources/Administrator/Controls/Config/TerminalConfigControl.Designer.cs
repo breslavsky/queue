@@ -37,6 +37,10 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.terminalPINLabel = new System.Windows.Forms.Label();
             this.currentDayRecordingCheckBox = new System.Windows.Forms.CheckBox();
+            this.pagesLabel = new System.Windows.Forms.Label();
+            this.pagesControl = new Queue.UI.WinForms.EnumFlagsControl();
+            this.startPageControl = new Queue.UI.WinForms.EnumItemControl();
+            this.startPageLabel = new System.Windows.Forms.Label();
             this.terminallayoutGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.columnsUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rowsUpDown)).BeginInit();
@@ -142,10 +146,48 @@
             this.currentDayRecordingCheckBox.UseVisualStyleBackColor = true;
             this.currentDayRecordingCheckBox.Leave += new System.EventHandler(this.currentDayRecordingCheckBox_Leave);
             // 
+            // pagesLabel
+            // 
+            this.pagesLabel.Location = new System.Drawing.Point(255, 5);
+            this.pagesLabel.Name = "pagesLabel";
+            this.pagesLabel.Size = new System.Drawing.Size(195, 25);
+            this.pagesLabel.TabIndex = 11;
+            this.pagesLabel.Text = "Страницы";
+            this.pagesLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // pagesControl
+            // 
+            this.pagesControl.Location = new System.Drawing.Point(270, 35);
+            this.pagesControl.Name = "pagesControl";
+            this.pagesControl.Size = new System.Drawing.Size(180, 65);
+            this.pagesControl.TabIndex = 12;
+            this.pagesControl.Leave += new System.EventHandler(this.pagesControl_Leave);
+            // 
+            // startPageControl
+            // 
+            this.startPageControl.Location = new System.Drawing.Point(255, 135);
+            this.startPageControl.Name = "startPageControl";
+            this.startPageControl.Size = new System.Drawing.Size(195, 21);
+            this.startPageControl.TabIndex = 13;
+            this.startPageControl.Leave += new System.EventHandler(this.startPageControl_Leave);
+            // 
+            // startPageLabel
+            // 
+            this.startPageLabel.Location = new System.Drawing.Point(255, 105);
+            this.startPageLabel.Name = "startPageLabel";
+            this.startPageLabel.Size = new System.Drawing.Size(195, 25);
+            this.startPageLabel.TabIndex = 14;
+            this.startPageLabel.Text = "Начальная страница";
+            this.startPageLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
             // TerminalConfigControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.startPageLabel);
+            this.Controls.Add(this.startPageControl);
+            this.Controls.Add(this.pagesLabel);
+            this.Controls.Add(this.pagesControl);
             this.Controls.Add(this.terminallayoutGroupBox);
             this.Controls.Add(this.PINUpDown);
             this.Controls.Add(this.saveButton);
@@ -173,5 +215,9 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Label terminalPINLabel;
         private System.Windows.Forms.CheckBox currentDayRecordingCheckBox;
+        private System.Windows.Forms.Label pagesLabel;
+        private UI.WinForms.EnumFlagsControl pagesControl;
+        private UI.WinForms.EnumItemControl startPageControl;
+        private System.Windows.Forms.Label startPageLabel;
     }
 }

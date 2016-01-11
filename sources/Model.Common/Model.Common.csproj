@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdministratorPermissions.cs" />
+    <Compile Include="TerminalPages.cs" />
     <Compile Include="CouponSection.cs" />
     <Compile Include="ClientRequestRegistrator.cs" />
     <Compile Include="ClientRequestState.cs" />
@@ -111,6 +112,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Translate\TerminalPages.Designer.cs">
+      <DependentUpon>TerminalPages.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Translate\WorkplaceType.Designer.cs">
       <DependentUpon>WorkplaceType.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -177,6 +183,10 @@
     <EmbeddedResource Include="Translate\WorkplaceModificator.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>WorkplaceModificator.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Translate\TerminalPages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TerminalPages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Translate\WorkplaceType.en-US.resx" />
     <EmbeddedResource Include="Translate\WorkplaceType.resx">

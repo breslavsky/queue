@@ -1,0 +1,1 @@
+﻿update _config_terminal set Pages = 1, StartPage = 1;

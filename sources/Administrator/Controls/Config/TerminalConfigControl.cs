@@ -2,6 +2,7 @@
 using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
+using Queue.Model.Common;
 using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
@@ -51,6 +52,9 @@ namespace Queue.Administrator
                     currentDayRecordingCheckBox.Checked = config.CurrentDayRecording;
                     columnsUpDown.Value = config.Columns;
                     rowsUpDown.Value = config.Rows;
+
+                    pagesControl.Select<TerminalPages>(config.Pages);
+                    startPageControl.Select<TerminalPages>(config.StartPage);
                 }
             }
         }
@@ -71,6 +75,9 @@ namespace Queue.Administrator
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
+
+            pagesControl.Initialize<TerminalPages>();
+            startPageControl.Initialize<TerminalPages>();
         }
 
         private void columnsUpDown_Leave(object sender, EventArgs e)
@@ -91,6 +98,16 @@ namespace Queue.Administrator
         private void rowsUpDown_Leave(object sender, EventArgs e)
         {
             config.Rows = (int)rowsUpDown.Value;
+        }
+
+        private void pagesControl_Leave(object sender, EventArgs e)
+        {
+            config.Pages = pagesControl.Selected<TerminalPages>();
+        }
+
+        private void startPageControl_Leave(object sender, EventArgs e)
+        {
+            config.StartPage = startPageControl.Selected<TerminalPages>();
         }
 
         private async void saveButton_Click(object sender, EventArgs e)
