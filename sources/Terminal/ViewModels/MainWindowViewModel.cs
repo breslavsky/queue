@@ -34,6 +34,7 @@ namespace Queue.Terminal.ViewModels
         private UserService userService;
         private ServerService serverService;
         private TemplateService templateService;
+        private LifeSituationService lifeSituationService;
         private TemplateManager templateManager;
         private CommonTemplateManager commonTemplateManager;
         private DispatcherTimer resetTimer;
@@ -191,9 +192,12 @@ namespace Queue.Terminal.ViewModels
             serverService = new ServerService(AppSettings.Endpoint);
             userService = new UserService(AppSettings.Endpoint);
             templateService = new TemplateService(AppSettings.Endpoint);
+            lifeSituationService = new LifeSituationService(AppSettings.Endpoint);
+
             UnityContainer.RegisterInstance(serverService)
                         .RegisterInstance(userService)
-                        .RegisterInstance(templateService);
+                        .RegisterInstance(templateService)
+                        .RegisterInstance(lifeSituationService);
         }
 
         private void RegisterChannelManagers()
@@ -203,7 +207,9 @@ namespace Queue.Terminal.ViewModels
                         .RegisterType<ChannelManager<ITemplateTcpService>>
                             (new InjectionFactory(c => c.Resolve<TemplateService>().CreateChannelManager()))
                         .RegisterType<ChannelManager<IUserTcpService>>
-                            (new InjectionFactory(c => c.Resolve<UserService>().CreateChannelManager()));
+                            (new InjectionFactory(c => c.Resolve<UserService>().CreateChannelManager()))
+                        .RegisterType<ChannelManager<ILifeSituationTcpService>>
+                            (new InjectionFactory(c => c.Resolve<LifeSituationService>().CreateChannelManager()));
         }
 
         private void RegisterTemplateManagers()
@@ -295,6 +301,7 @@ namespace Queue.Terminal.ViewModels
                     templateService.Dispose();
                     userService.Dispose();
                     templateManager.Dispose();
+                    lifeSituationService.Dispose();
                     commonTemplateManager.Dispose();
 
                     resetTimer.Stop();

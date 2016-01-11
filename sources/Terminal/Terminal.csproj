@@ -138,6 +138,7 @@
     <Compile Include="Converters\ClientRequestTypeConverter.cs" />
     <Compile Include="Converters\RequestDateTimeConverter.cs" />
     <Compile Include="Core\CommonTemplateManager.cs" />
+    <Compile Include="Core\Extensions\LifeSituationExtensions.cs" />
     <Compile Include="Core\Extensions\ServiceExtensions.cs" />
     <Compile Include="Core\ICommonTemplateManager.cs" />
     <Compile Include="Core\Settings\ServiceBreak.cs" />
@@ -154,18 +155,29 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\SelectLifeSituationUserControl.xaml.cs">
+      <DependentUpon>SelectLifeSituationUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SelectServiceButton.xaml.cs">
+      <DependentUpon>SelectServiceButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SelectServiceUserControl.xaml.cs">
+      <DependentUpon>SelectServiceUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\PrintCouponPageViewModel.cs" />
+    <Compile Include="ViewModels\SelectLifeSituationViewModel.cs" />
     <Compile Include="ViewModels\SelectRequestDatePageViewModel.cs" />
     <Compile Include="ViewModels\SearchServicePageViewModel.cs" />
+    <Compile Include="ViewModels\SelectServiceViewModel.cs" />
     <Compile Include="ViewModels\SelectSubjectsPageViewModel.cs" />
+    <Compile Include="ViewModels\ServiceButtonViewModel.cs" />
     <Compile Include="ViewModels\SetClientPageViewModel.cs" />
     <Compile Include="ViewModels\SearchServiceResultsViewModel.cs" />
     <Compile Include="ViewModels\TerminalWindowViewModel.cs" />
     <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\SelectRequestTypePageViewModel.cs" />
-    <Compile Include="ViewModels\ServiceButtonViewModel.cs" />
     <Compile Include="ViewModels\SelectServicePageViewModel.cs" />
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -185,13 +197,22 @@
     <Compile Include="Core\ClientRequestModel.cs" />
     <Compile Include="Types\IServiceSearch.cs" />
     <Compile Include="Types\RenderServicesEventArgs.cs" />
-    <Compile Include="Core\ServicesPager.cs" />
+    <Compile Include="Core\ObjectsPager.cs" />
     <Compile Include="UserControls\SearchServiceResults.xaml.cs">
       <DependentUpon>SearchServiceResults.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\SelectServiceButton.xaml.cs">
-      <DependentUpon>SelectServiceButton.xaml</DependentUpon>
-    </Compile>
+    <Page Include="UserControls\SelectLifeSituationUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SelectServiceButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\SelectServiceUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -248,10 +269,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\SearchServiceResults.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\SelectServiceButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

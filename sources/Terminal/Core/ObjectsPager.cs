@@ -1,15 +1,14 @@
 ﻿using Junte.UI.WPF;
 using Queue.Terminal.UserControls;
-using Queue.Terminal.Views;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Queue.Terminal.Core
 {
-    public class ServicesPager : ObservableObject
+    public class ObjectsPager : ObservableObject
     {
-        private SelectServicePage page;
+        private Grid grid;
         private SelectServiceButton[] services;
 
         private bool hasNext;
@@ -37,9 +36,9 @@ namespace Queue.Terminal.Core
 
         public ICommand PrevCommand { get; set; }
 
-        public ServicesPager(SelectServicePage page)
+        public ObjectsPager(Grid grid)
         {
-            this.page = page;
+            this.grid = grid;
 
             PrevCommand = new RelayCommand(Prev);
             NextCommand = new RelayCommand(Next);
@@ -75,11 +74,11 @@ namespace Queue.Terminal.Core
         {
             HasPrev = pageNo > 0;
 
-            page.servicesGrid.Children.Clear();
-            page.servicesGrid.RowDefinitions.Clear();
-            page.servicesGrid.RowDefinitions.Add(new RowDefinition());
+            grid.Children.Clear();
+            grid.RowDefinitions.Clear();
+            grid.RowDefinitions.Add(new RowDefinition());
 
-            page.servicesGrid.ColumnDefinitions.Clear();
+            grid.ColumnDefinitions.Clear();
 
             int row = 0;
             int col = 0;
@@ -89,20 +88,20 @@ namespace Queue.Terminal.Core
                 if (col >= cols)
                 {
                     col = 0;
-                    page.servicesGrid.RowDefinitions.Add(new RowDefinition());
+                    grid.RowDefinitions.Add(new RowDefinition());
                     row++;
                 }
                 else
                 {
-                    if (col + 1 > page.servicesGrid.ColumnDefinitions.Count)
+                    if (col + 1 > grid.ColumnDefinitions.Count)
                     {
-                        page.servicesGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        grid.ColumnDefinitions.Add(new ColumnDefinition());
                     }
                 }
 
                 button.SetValue(Grid.ColumnProperty, col++);
                 button.SetValue(Grid.RowProperty, row);
-                page.servicesGrid.Children.Add(button);
+                grid.Children.Add(button);
             }
 
             HasNext = services.Skip((pageNo + 1) * servicesPerPage).Take(servicesPerPage).Count() > 0;

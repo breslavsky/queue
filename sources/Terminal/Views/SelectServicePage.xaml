@@ -5,117 +5,84 @@
                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:lex="http://wpflocalizeextension.codeplex.com"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:userControls="clr-namespace:Queue.Terminal.UserControls"
                     xmlns:views="clr-namespace:Queue.Terminal.Views"
                     d:DesignHeight="400"
                     d:DesignWidth="400"
                     lex:ResxLocalizationProvider.DefaultAssembly="Queue.Terminal"
                     lex:ResxLocalizationProvider.DefaultDictionary="Strings"
                     mc:Ignorable="d">
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
-        </i:EventTrigger>
-        <i:EventTrigger EventName="Unloaded">
-            <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+    <views:TerminalPage.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+    </views:TerminalPage.Resources>
+
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <Button x:Name="prevButton"
-                Margin="0,5,0,10"
-                HorizontalAlignment="Stretch"
-                Background="{DynamicResource AccentColorBrush}"
-                Command="{Binding PrevCommand}">
-            <Button.LayoutTransform>
-                <RotateTransform Angle="-90" />
-            </Button.LayoutTransform>
-            <StackPanel Orientation="Horizontal">
-                <Rectangle Width="20"
-                           Height="20"
-                           Margin="0,0,10,0"
-                           Fill="{Binding Path=Foreground,
-                                          RelativeSource={RelativeSource FindAncestor,
-                                                                         AncestorType={x:Type Button}}}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_arrow_corner_up_right}" />
-                    </Rectangle.OpacityMask>
-                    <Rectangle.LayoutTransform>
-                        <RotateTransform Angle="-90" />
-                    </Rectangle.LayoutTransform>
-                </Rectangle>
-                <TextBlock FontSize="15"
-                           FontWeight="Bold"
-                           Text="{lex:Loc Back}" />
-            </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <Button.Style>
-                <Style BasedOn="{StaticResource MetroButton}" TargetType="{x:Type Button}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding HasPrev}" Value="True">
-                            <Setter Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding HasPrev}" Value="False">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
-        <Grid x:Name="servicesGrid"
-              Grid.Column="1"
-              Margin="5" />
-        <Button x:Name="nextButton"
-                Grid.Column="2"
-                Margin="0,5,0,10"
-                HorizontalAlignment="Stretch"
-                Background="{DynamicResource AccentColorBrush}"
-                Command="{Binding NextCommand}">
+            <Button Margin="0 0 10 0"
+                    BorderBrush="{DynamicResource AccentColorBrush}"
+                    Command="{Binding ShowServicesCommand}">
+                <TextBlock>
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ShowServices}" Value="True">
+                                    <Setter Property="TextDecorations" Value="Underline" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                    Услуги
+                </TextBlock>
+            </Button>
+            <Button Grid.Column="1"
+                    Margin="10 0 0 0"
+                    BorderBrush="{DynamicResource AccentColorBrush}"
+                    Command="{Binding ShowLifeSituationsCommand}">
+                <TextBlock>
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ShowLifeSituations}" Value="True">
+                                    <Setter Property="TextDecorations" Value="Underline" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                    Жизненные ситуации
+                </TextBlock>
+            </Button>
+            <Separator Grid.Row="1"
+                       Grid.ColumnSpan="2"
+                       Margin="10"
+                       Foreground="Black" />
+        </Grid>
 
-            <Button.LayoutTransform>
-                <RotateTransform Angle="90" />
-            </Button.LayoutTransform>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Margin="0,0,10,0"
-                           FontSize="15"
-                           FontWeight="Bold"
-                           Text="{lex:Loc Next}" />
-                <Rectangle Width="20"
-                           Height="20"
-                           Fill="{Binding Path=Foreground,
-                                          RelativeSource={RelativeSource FindAncestor,
-                                                                         AncestorType={x:Type Button}}}"
-                           RenderTransformOrigin="0.5,0.5">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_arrow_corner_up_right}" />
-                    </Rectangle.OpacityMask>
+        <userControls:SelectServiceUserControl x:Name="ctrlSelectService"
+                                               Grid.Row="1"
+                                               Visibility="{Binding Path=DataContext.ShowServices,
+                                                                    Converter={StaticResource BoolToVisConverter},
+                                                                    RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                                                   AncestorType=views:TerminalPage}}" />
 
-                    <Rectangle.RenderTransform>
-                        <ScaleTransform ScaleY="-1" />
-                    </Rectangle.RenderTransform>
-
-                    <Rectangle.LayoutTransform>
-                        <RotateTransform Angle="90" />
-                    </Rectangle.LayoutTransform>
-                </Rectangle>
-            </StackPanel>
-
-            <Button.Style>
-                <Style BasedOn="{StaticResource MetroButton}" TargetType="{x:Type Button}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding HasNext}" Value="True">
-                            <Setter Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding HasNext}" Value="False">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
+        <userControls:SelectLifeSituationUserControl x:Name="ctrlSelectLifeSituation"
+                                                     Grid.Row="1"
+                                                     Visibility="{Binding Path=DataContext.ShowLifeSituations,
+                                                                          Converter={StaticResource BoolToVisConverter},
+                                                                          RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                                                         AncestorType=views:TerminalPage}}" />
     </Grid>
 </views:TerminalPage>
