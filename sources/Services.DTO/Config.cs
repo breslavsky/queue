@@ -117,6 +117,12 @@ namespace Queue.Services.DTO
 
         [DataMember]
         public int Rows { get; set; }
+
+        [DataMember]
+        public TerminalPages Pages { get; set; }
+
+        [DataMember]
+        public TerminalPages StartPage { get; set; }
     }
 
     [DataContract]

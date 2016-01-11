@@ -29,6 +29,12 @@ namespace Queue.Model
         [Property]
         public virtual int Rows { get; set; }
 
+        [Property]
+        public virtual TerminalPages Pages { get; set; }
+
+        [Property]
+        public virtual TerminalPages StartPage { get; set; }
+
         #endregion properties
     }
 }
