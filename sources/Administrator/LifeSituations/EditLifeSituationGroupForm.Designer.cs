@@ -242,7 +242,7 @@
             this.MinimumSize = new System.Drawing.Size(400, 470);
             this.Name = "EditLifeSituationGroupForm";
             this.Padding = new System.Windows.Forms.Padding(10);
-            this.Text = "Редактирование жизненной ситуации";
+            this.Text = "Редактирование группы жизненной ситуации";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ServiceGroupEditForm_FormClosing);
             this.Load += new System.EventHandler(this.ServiceGroupEdit_Load);
             this.layoutGroupBox.ResumeLayout(false);
