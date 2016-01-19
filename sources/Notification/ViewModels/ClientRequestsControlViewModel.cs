@@ -129,7 +129,15 @@ namespace Queue.Notification.ViewModels
 
         private void ClientRequestUpdated(object sender, ClientRequest e)
         {
-            AdjustClientRequests(e);
+            logger.Debug("ClientRequestUpdated...");
+            try
+            {
+                AdjustClientRequests(e);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
         }
 
         public void AdjustClientRequests(ClientRequest request)
