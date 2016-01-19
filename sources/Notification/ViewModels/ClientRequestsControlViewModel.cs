@@ -183,6 +183,7 @@ namespace Queue.Notification.ViewModels
 
         private void SendRequestsToDisplays()
         {
+            logger.Debug("SendRequestsToDisplays...");
             if (AppSettings.Displays.Count == 0 || !HubSettings.Enabled)
             {
                 return;
@@ -221,9 +222,11 @@ namespace Queue.Notification.ViewModels
             var workplaces = display.Workplaces
                                     .Cast<WorkplaceConfig>()
                                     .Select(c => c.Number);
+            logger.Debug("workplaces: " + String.Join(", ", workplaces));
 
             foreach (var req in Requests)
             {
+                logger.Debug("req.Request.Operator.Workplace.Number: " + req.Request.Operator.Workplace.Number);
                 if (display.Workplaces.Count > 0 && !workplaces.Contains(req.Request.Operator.Workplace.Number))
                 {
                     continue;
@@ -231,6 +234,8 @@ namespace Queue.Notification.ViewModels
 
                 toSend.Add(new[] { (ushort)req.Request.Number, (ushort)req.Request.Operator.Workplace.Number });
             }
+
+            logger.Debug("GetLinesForDisplay: " + toSend.Count);
 
             return toSend.ToArray();
         }
