@@ -71,7 +71,7 @@ namespace Queue.Notification.ViewModels
         public ClientRequestsControlViewModel()
             : base()
         {
-            logger.Debug("test!!!!");
+            logger.Info("test!!!!");
 
             LoadedCommand = new RelayCommand(Loaded);
             UnloadedCommand = new RelayCommand(Unloaded);
