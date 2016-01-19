@@ -71,6 +71,8 @@ namespace Queue.Notification.ViewModels
         public ClientRequestsControlViewModel()
             : base()
         {
+            logger.Debug("test!!!!");
+
             LoadedCommand = new RelayCommand(Loaded);
             UnloadedCommand = new RelayCommand(Unloaded);
 
@@ -240,7 +242,7 @@ namespace Queue.Notification.ViewModels
                     continue;
                 }
 
-                toSend.Add(new[] { (ushort)req.Request.Number, (ushort)req.Request.Operator.Workplace.Number });
+                toSend.Add(new[] { (ushort)req.Request.Operator.Workplace.Number, (ushort)req.Request.Number });
             }
 
             logger.Debug("GetLinesForDisplay: " + toSend.Count);
