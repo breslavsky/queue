@@ -15,11 +15,10 @@ namespace Queue.UI.WPF
         {
             base.OnStartup(e);
 
+            //ConfigureLogger();
+
             logger.Info("starting application...");
-
-            ConfigureLogger();
             InitializeContainer();
-
             logger.Info("application started");
         }
 
