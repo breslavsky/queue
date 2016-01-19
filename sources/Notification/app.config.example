@@ -6,7 +6,7 @@
   </configSections>
   <hub endpoint="net.tcp://localhost:4511/" />
   <notification theme="default" endpoint="net.tcp://queue:4505"
-      isRemember="false" language="ru_RU" accent="">
+      isRemember="false" isFullScreen="false" language="ru_RU" accent="">
     <displays>
       <display deviceId="99">
         <workplaces>
