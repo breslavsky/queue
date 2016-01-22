@@ -16,65 +16,77 @@ namespace Queue.Hub.Svetovod
         private ISvetovodDisplayConnection activeConnection;
         private SvetovodDisplayDriverConfig config;
 
+        private object operationLock = new object();
+
         #endregion fields
 
         public SvetovodDisplayDriver(SvetovodDisplayDriverConfig config)
         {
+            logger.Debug("SvetovodDisplayDriver created");
             this.config = config;
         }
 
         public void ShowText(byte deviceId, string text)
         {
-            logger.Debug("show text [device: {0}; text: {1}]", deviceId, text);
-
-            CloseActiveConnection();
-
-            var connection = GetConnectionForDevice(deviceId);
-            if (connection == null)
+            lock (operationLock)
             {
-                return;
+                logger.Debug("show text [device: {0}; text: {1}]", deviceId, text);
+
+                CloseActiveConnection();
+
+                var connection = GetConnectionForDevice(deviceId);
+                if (connection == null)
+                {
+                    return;
+                }
+
+                connection.ShowText(deviceId, text);
+
+                activeConnection = connection;
+                CloseActiveConnection();
             }
-
-            connection.ShowText(deviceId, text);
-
-            activeConnection = connection;
-            CloseActiveConnection();
         }
 
         public void ShowLines(byte deviceId, ushort[][] lines)
         {
-            logger.Debug("show lines [device: {0}; lines: {1}]", deviceId, lines.Length);
-
-            CloseActiveConnection();
-
-            var connection = GetConnectionForDevice(deviceId);
-            if (connection == null)
+            lock (operationLock)
             {
-                return;
+                logger.Debug("show lines [device: {0}; lines: {1}]", deviceId, lines.Length);
+
+                CloseActiveConnection();
+
+                var connection = GetConnectionForDevice(deviceId);
+                if (connection == null)
+                {
+                    return;
+                }
+
+                connection.ShowLines(deviceId, lines);
+
+                activeConnection = connection;
+                CloseActiveConnection();
             }
-
-            connection.ShowLines(deviceId, lines);
-
-            activeConnection = connection;
-            CloseActiveConnection();
         }
 
         public void ClearText(byte deviceId)
         {
-            logger.Debug("clear text [device: {0}]", deviceId);
-
-            CloseActiveConnection();
-
-            var connection = GetConnectionForDevice(deviceId);
-            if (connection == null)
+            lock (operationLock)
             {
-                return;
+                logger.Debug("clear text [device: {0}]", deviceId);
+
+                CloseActiveConnection();
+
+                var connection = GetConnectionForDevice(deviceId);
+                if (connection == null)
+                {
+                    return;
+                }
+
+                connection.Clear(deviceId);
+
+                activeConnection = connection;
+                CloseActiveConnection();
             }
-
-            connection.Clear(deviceId);
-
-            activeConnection = connection;
-            CloseActiveConnection();
         }
 
         private ISvetovodDisplayConnection GetConnectionForDevice(byte deviceId)

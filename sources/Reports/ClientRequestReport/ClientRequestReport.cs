@@ -19,7 +19,7 @@ namespace Queue.Reports.ClientRequestReport
             this.clientRequestId = clientRequestId;
         }
 
-        public override HSSFWorkbook Generate()
+        protected override HSSFWorkbook InternalGenerate()
         {
             var data = GetData();
             var workbook = new HSSFWorkbook(new MemoryStream(Templates.ClientRequest));

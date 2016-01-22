@@ -232,7 +232,7 @@ namespace Queue.Notification.ViewModels
                                     .Select(c => c.Number);
             logger.Debug("workplaces: " + String.Join(", ", workplaces));
 
-            foreach (var req in Requests)
+            foreach (var req in Requests.Where(r => r.Request.State == ClientRequestState.Calling))
             {
                 logger.Debug("req.Request.Operator.Workplace.Number: " + req.Request.Operator.Workplace.Number);
                 if (display.Workplaces.Count > 0 && !workplaces.Contains(req.Request.Operator.Workplace.Number))

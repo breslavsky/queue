@@ -13,7 +13,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
             this.settings = settings;
         }
 
-        public override HSSFWorkbook Generate()
+        protected override HSSFWorkbook InternalGenerate()
         {
             switch (settings.DetailLevel)
             {

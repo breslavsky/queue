@@ -16,9 +16,9 @@ namespace Queue.Reports.ExceptionScheduleReport
             this.fromDate = fromDate;
         }
 
-        public override HSSFWorkbook Generate()
+        protected override HSSFWorkbook InternalGenerate()
         {
-            HSSFWorkbook workbook = new HSSFWorkbook(new MemoryStream(Templates.ExceptionSchedule));
+            var workbook = new HSSFWorkbook(new MemoryStream(Templates.ExceptionSchedule));
 
             AddDataToReport(workbook.GetSheetAt(0), GetDefaultExceptionScheduleData());
             AddDataToReport(workbook.GetSheetAt(1), GetServiceExceptionScheduleData(), false);

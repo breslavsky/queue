@@ -1,5 +1,4 @@
-﻿using NPOI.HSSF.UserModel;
-using Queue.Model.Common;
+﻿using Queue.Model.Common;
 using Queue.Reports;
 using Queue.Reports.AdditionalServicesRatingReport;
 using Queue.Reports.ClientRequestReport;
@@ -53,9 +52,9 @@ namespace Queue.Services.Server
 
         private byte[] GenerateReport(BaseReport report)
         {
-            HSSFWorkbook workbook = report.Generate();
+            var workbook = report.Generate();
 
-            using (MemoryStream memoryStream = new MemoryStream())
+            using (var memoryStream = new MemoryStream())
             {
                 workbook.Write(memoryStream);
                 return memoryStream.ToArray();

@@ -20,6 +20,8 @@ namespace Queue.Reports.ServiceRatingReport
 {
     public abstract class BaseDetailedReport<T>
     {
+        private const int ColumnsCount = 20;
+
         #region dependency
 
         [Dependency]

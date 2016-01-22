@@ -21,13 +21,22 @@ namespace Queue.Reports
                 .BuildUp(this.GetType(), this);
         }
 
-        public abstract HSSFWorkbook Generate();
+        public HSSFWorkbook Generate()
+        {
+            var wk = InternalGenerate();
+            var sheet = wk.GetSheetAt(0);
+            wk.SetPrintArea(0, 0, sheet.GetRow(1).LastCellNum, 0, sheet.LastRowNum);
+
+            return wk;
+        }
+
+        protected abstract HSSFWorkbook InternalGenerate();
 
         protected ICellStyle CreateCellBoldStyle(IWorkbook workBook)
         {
-            ICellStyle boldCellStyle = workBook.CreateCellStyle();
+            var boldCellStyle = workBook.CreateCellStyle();
 
-            IFont font = workBook.CreateFont();
+            var font = workBook.CreateFont();
             font.Boldweight = 1000;
             boldCellStyle.SetFont(font);
 
