@@ -1,6 +1,4 @@
 ﻿using Junte.Data.NHibernate;
-using Microsoft.Practices.ServiceLocation;
-using Microsoft.Practices.Unity;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Transform;
@@ -17,24 +15,15 @@ using System.ServiceModel;
 
 namespace Queue.Reports.OperatorRatingReport
 {
-    public abstract class BaseDetailedReport<T>
+    public abstract class BaseDetailedReport<T> : BaseReport
     {
-        #region dependency
-
-        [Dependency]
-        public SessionProvider SessionProvider { get; set; }
-
-        #endregion dependency
-
         protected OperatorRatingReportSettings settings;
 
         private Lazy<Operator[]> allOperators;
 
         public BaseDetailedReport(OperatorRatingReportSettings settings)
+            : base()
         {
-            ServiceLocator.Current.GetInstance<UnityContainer>()
-                .BuildUp(this.GetType(), this);
-
             this.settings = settings;
 
             allOperators = new Lazy<Operator[]>(() =>
@@ -49,7 +38,7 @@ namespace Queue.Reports.OperatorRatingReport
             });
         }
 
-        public HSSFWorkbook Generate()
+        protected override HSSFWorkbook InternalGenerate()
         {
             var startDate = GetStartDate();
             var finishDate = GetFinishDate();
@@ -91,19 +80,19 @@ namespace Queue.Reports.OperatorRatingReport
                 var workbook = new HSSFWorkbook(new MemoryStream(Templates.OperatorRating));
                 var worksheet = workbook.GetSheetAt(0);
 
-                var format = workbook.CreateDataFormat();
-                var boldCellStyle = CreateCellBoldStyle(workbook);
-                var rowIndex = worksheet.LastRowNum + 1;
+                styles = new StandardCellStyles(workbook);
 
-                var row = worksheet.GetRow(0);
-                var cell = row.CreateCell(0);
-                cell.SetCellValue(string.Format("Период с {0} по {1}", startDate.ToShortDateString(), finishDate.ToShortDateString()));
-                cell.CellStyle = boldCellStyle;
+                WriteCell(worksheet.GetRow(0), 0, c => c.SetCellValue(GetTitle()), styles[StandardCellStyles.BoldStyle]);
 
                 RenderData(worksheet, data);
 
                 return workbook;
             }
+        }
+
+        private string GetTitle()
+        {
+            return String.Format("Период с {0} по {1}", GetStartDate().ToShortDateString(), GetFinishDate().ToShortDateString());
         }
 
         protected abstract DateTime GetStartDate();
@@ -164,24 +153,6 @@ namespace Queue.Reports.OperatorRatingReport
                     Projections.Property("Subjects"), Projections.Constant(0, NHibernateUtil.Int32))), "SubjectsEarly");
 
             return projections;
-        }
-
-        protected void WriteBoldCell(IRow row, int cellIndex, Action<ICell> setValue)
-        {
-            var cell = row.CreateCell(cellIndex);
-            setValue(cell);
-            cell.CellStyle = CreateCellBoldStyle(row.Sheet.Workbook);
-        }
-
-        protected ICellStyle CreateCellBoldStyle(IWorkbook workBook)
-        {
-            var boldCellStyle = workBook.CreateCellStyle();
-
-            var font = workBook.CreateFont();
-            font.Boldweight = 1000;
-            boldCellStyle.SetFont(font);
-
-            return boldCellStyle;
         }
 
         protected void RenderRating(IRow row, OperatorRating rating)

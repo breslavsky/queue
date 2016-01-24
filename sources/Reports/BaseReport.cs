@@ -3,11 +3,14 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
+using System;
 
 namespace Queue.Reports
 {
-    public abstract class BaseReport
+    public abstract class BaseReport : IQueueReport
     {
+        protected StandardCellStyles styles;
+
         #region dependency
 
         [Dependency]
@@ -32,15 +35,16 @@ namespace Queue.Reports
 
         protected abstract HSSFWorkbook InternalGenerate();
 
-        protected ICellStyle CreateCellBoldStyle(IWorkbook workBook)
+        protected ICell WriteCell(IRow row, int column, Action<ICell> setValue, ICellStyle style = null)
         {
-            var boldCellStyle = workBook.CreateCellStyle();
+            var cell = row.CreateCell(column);
+            setValue(cell);
+            if (style != null)
+            {
+                cell.CellStyle = style;
+            }
 
-            var font = workBook.CreateFont();
-            font.Boldweight = 1000;
-            boldCellStyle.SetFont(font);
-
-            return boldCellStyle;
+            return cell;
         }
     }
 }

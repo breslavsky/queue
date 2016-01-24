@@ -24,23 +24,20 @@ namespace Queue.Reports.ClientRequestReport
             var data = GetData();
             var workbook = new HSSFWorkbook(new MemoryStream(Templates.ClientRequest));
             var worksheet = workbook.GetSheetAt(0);
-            var boldCellStyle = CreateCellBoldStyle(workbook);
+
+            styles = new StandardCellStyles(workbook);
+
             int rowIndex = worksheet.LastRowNum + 1;
-
             var row = worksheet.CreateRow(0);
-            row.RowStyle = boldCellStyle;
 
-            var cell = row.CreateCell(0);
-            cell.SetCellValue(data.Title);
-            cell.CellStyle = boldCellStyle;
+            WriteCell(row, 0, c => c.SetCellValue(data.Title), styles[StandardCellStyles.BoldStyle]);
 
             foreach (var item in data.Items)
             {
                 row = worksheet.CreateRow(rowIndex++);
-                cell = row.CreateCell(0);
-                cell.SetCellValue(item.CreateDate.ToString());
-                cell = row.CreateCell(1);
-                cell.SetCellValue(item.Message);
+
+                WriteCell(row, 0, c => c.SetCellValue(item.CreateDate.ToString()));
+                WriteCell(row, 1, c => c.SetCellValue(item.Message));
             };
 
             return workbook;
@@ -54,7 +51,7 @@ namespace Queue.Reports.ClientRequestReport
                 if (clientRequest == null)
                 {
                     throw new FaultException<ObjectNotFoundFault>(
-                        new ObjectNotFoundFault(clientRequestId), string.Format("Запрос [{0}] не найден", clientRequestId));
+                        new ObjectNotFoundFault(clientRequestId), String.Format("Запрос [{0}] не найден", clientRequestId));
                 }
 
                 var result = new ReportData();

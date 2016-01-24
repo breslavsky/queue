@@ -1,7 +1,5 @@
 ﻿using Junte.Data.NHibernate;
 using Junte.Translation;
-using Microsoft.Practices.ServiceLocation;
-using Microsoft.Practices.Unity;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Transform;
@@ -18,28 +16,17 @@ using System.ServiceModel;
 
 namespace Queue.Reports.ServiceRatingReport
 {
-    public abstract class BaseDetailedReport<T>
+    public abstract class BaseDetailedReport<T> : BaseReport
     {
-        private const int ColumnsCount = 20;
-
-        #region dependency
-
-        [Dependency]
-        public SessionProvider SessionProvider { get; set; }
-
-        #endregion dependency
-
         protected ServiceRatingReportSettings settings;
 
         public BaseDetailedReport(ServiceRatingReportSettings settings)
+            : base()
         {
-            ServiceLocator.Current.GetInstance<UnityContainer>()
-                .BuildUp(this.GetType(), this);
-
             this.settings = settings;
         }
 
-        public HSSFWorkbook Generate()
+        protected override HSSFWorkbook InternalGenerate()
         {
             var startDate = GetStartDate();
             var finishDate = GetFinishDate();
@@ -77,12 +64,9 @@ namespace Queue.Reports.ServiceRatingReport
                 var workbook = new HSSFWorkbook(new MemoryStream(Templates.ServiceRating));
                 var worksheet = workbook.GetSheetAt(0);
 
-                var boldCellStyle = CreateCellBoldStyle(workbook);
+                styles = new StandardCellStyles(workbook);
 
-                var row = worksheet.GetRow(0);
-                var cell = row.CreateCell(0);
-                cell.SetCellValue(string.Format("Период с {0} по {1}", startDate.ToShortDateString(), finishDate.ToShortDateString()));
-                cell.CellStyle = boldCellStyle;
+                WriteCell(worksheet.GetRow(0), 0, c => c.SetCellValue(GetReportTitle()), styles[StandardCellStyles.BoldStyle]);
 
                 RenderData(worksheet, data);
 
@@ -90,15 +74,9 @@ namespace Queue.Reports.ServiceRatingReport
             }
         }
 
-        protected ICellStyle CreateCellBoldStyle(IWorkbook workBook)
+        private string GetReportTitle()
         {
-            var boldCellStyle = workBook.CreateCellStyle();
-
-            var font = workBook.CreateFont();
-            font.Boldweight = 1000;
-            boldCellStyle.SetFont(font);
-
-            return boldCellStyle;
+            return String.Format("Период с {0} по {1}", GetStartDate().ToShortDateString(), GetFinishDate().ToShortDateString());
         }
 
         protected ProjectionList GetCommonProjections()
@@ -212,61 +190,39 @@ namespace Queue.Reports.ServiceRatingReport
 
         protected void RenderRating(IRow row, ServiceRating rating)
         {
-            var cell = row.CreateCell(5);
-            cell.SetCellValue(rating.Total);
-            cell = row.CreateCell(6);
-            cell.SetCellValue(rating.Live);
-            cell = row.CreateCell(7);
-            cell.SetCellValue(rating.Early);
-            cell = row.CreateCell(8);
-            cell.SetCellValue(rating.Waiting);
-            cell = row.CreateCell(9);
-            cell.SetCellValue(rating.Absence);
-            cell = row.CreateCell(10);
-            cell.SetCellValue(rating.Rendered);
-            cell = row.CreateCell(11);
-            cell.SetCellValue(rating.Canceled);
-            cell = row.CreateCell(12);
-            cell.SetCellValue(rating.Rendered != 0 ? Math.Round(rating.RenderTime.TotalMinutes / rating.Rendered) : 0);
-            cell = row.CreateCell(13);
-            cell.SetCellValue(rating.Rendered != 0 ? Math.Round(rating.WaitingTime.TotalMinutes / rating.Rendered) : 0);
-            cell = row.CreateCell(14);
-            cell.SetCellValue(rating.SubjectsTotal);
-            cell = row.CreateCell(15);
-            cell.SetCellValue(rating.SubjectsLive);
-            cell = row.CreateCell(16);
-            cell.SetCellValue(rating.SubjectsEarly);
-            cell = row.CreateCell(17);
-            cell.SetCellValue(rating.RatingMin);
-            cell = row.CreateCell(18);
-            cell.SetCellValue(rating.RatingMax);
-            cell = row.CreateCell(19);
-            cell.SetCellValue(Math.Round(rating.RatingAvg * 100) / 100);
-        }
-
-        protected void WriteBoldCell(IRow row, int cellIndex, Action<ICell> setValue)
-        {
-            var cell = row.CreateCell(cellIndex);
-            setValue(cell);
-            cell.CellStyle = CreateCellBoldStyle(row.Sheet.Workbook);
+            WriteCell(row, 5, c => c.SetCellValue(rating.Total), styles[StandardCellStyles.BorderedStyle]);
+            WriteCell(row, 6, c => c.SetCellValue(rating.Live), styles[StandardCellStyles.BorderedStyle]);
+            WriteCell(row, 7, c => c.SetCellValue(rating.Early), styles[StandardCellStyles.BorderedStyle]);
+            WriteCell(row, 8, c => c.SetCellValue(rating.Waiting), styles[StandardCellStyles.BorderedStyle]);
+            WriteCell(row, 9, c => c.SetCellValue(rating.Absence), styles[StandardCellStyles.BorderedStyle]);
+            WriteCell(row, 10, c => c.SetCellValue(rating.Rendered), styles[StandardCellStyles.BorderedStyle]);
+            WriteCell(row, 11, c => c.SetCellValue(rating.Canceled), styles[StandardCellStyles.BorderedStyle]);
+            WriteCell(row, 12, c => c.SetCellValue(rating.Rendered != 0 ? Math.Round(rating.RenderTime.TotalMinutes / rating.Rendered) : 0),
+                                    styles[StandardCellStyles.BorderedStyle]);
+            WriteCell(row, 13, c => c.SetCellValue(rating.Rendered != 0 ? Math.Round(rating.WaitingTime.TotalMinutes / rating.Rendered) : 0),
+                                    styles[StandardCellStyles.BorderedStyle]);
+            WriteCell(row, 14, c => c.SetCellValue(rating.SubjectsTotal), styles[StandardCellStyles.BorderedStyle]);
+            WriteCell(row, 15, c => c.SetCellValue(rating.SubjectsLive), styles[StandardCellStyles.BorderedStyle]);
+            WriteCell(row, 16, c => c.SetCellValue(rating.SubjectsEarly), styles[StandardCellStyles.BorderedStyle]);
+            WriteCell(row, 17, c => c.SetCellValue(rating.RatingMin), styles[StandardCellStyles.BorderedStyle]);
+            WriteCell(row, 18, c => c.SetCellValue(rating.RatingMax), styles[StandardCellStyles.BorderedStyle]);
+            WriteCell(row, 19, c => c.SetCellValue(Math.Round(rating.RatingAvg * 100) / 100), styles[StandardCellStyles.BorderedStyle]);
         }
 
         protected void WriteServiceData(ISheet worksheet, ServiceRating[] ratings, ServiceDto service, ref int rowIndex)
         {
             var row = worksheet.CreateRow(rowIndex++);
-            var cell = row.CreateCell(4);
-            cell.SetCellValue(service.Name);
+
+            var cell = WriteCell(row, 4, c => c.SetCellValue(service.Name));
 
             if (settings.IsServiceTypes)
             {
-                cell.CellStyle = CreateCellBoldStyle(worksheet.Workbook);
+                cell.CellStyle = styles[StandardCellStyles.BoldStyle];
 
                 foreach (ServiceType serviceType in Enum.GetValues(typeof(ServiceType)))
                 {
                     row = worksheet.CreateRow(rowIndex++);
-                    cell = row.CreateCell(4);
-                    cell.SetCellValue(Translater.Enum(serviceType));
-
+                    WriteCell(row, 4, c => c.SetCellValue(Translater.Enum(serviceType)), styles[StandardCellStyles.BorderedStyle]);
                     RenderRating(row, ratings.FirstOrDefault(r => r.Service.Id == service.Id && r.ServiceType.Equals(serviceType)) ??
                                         new ServiceRating());
                 }
@@ -280,7 +236,8 @@ namespace Queue.Reports.ServiceRatingReport
 
         protected void WriteServiceGroupData(ISheet worksheet, ServiceRating[] ratings, ServiceGroupDto group, ref int rowIndex)
         {
-            WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(group.Name));
+            WriteCell(worksheet.CreateRow(rowIndex++), 0,
+                    c => c.SetCellValue(group.Name), styles[StandardCellStyles.BorderedStyle]);
 
             foreach (var subGroup in group.ServicesGroups)
             {

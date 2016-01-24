@@ -63,16 +63,18 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
             foreach (var item in items)
             {
-                WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(item.Year));
+                WriteCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(item.Year), styles[StandardCellStyles.BoldStyle]);
 
                 foreach (var month in item.Months)
                 {
-                    WriteBoldCell(worksheet.CreateRow(rowIndex++), 1, c => c.SetCellValue(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month.Month)));
+                    WriteCell(worksheet.CreateRow(rowIndex++), 1,
+                        c => c.SetCellValue(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month.Month)),
+                        styles[StandardCellStyles.BoldStyle]);
 
                     foreach (var service in GetAdditionalServices(session))
                     {
                         var row = worksheet.CreateRow(rowIndex++);
-                        WriteBoldCell(row, 3, c => c.SetCellValue(service.ToString()));
+                        WriteCell(row, 3, c => c.SetCellValue(service.ToString()), styles[StandardCellStyles.BoldStyle]);
 
                         RenderServiceRating(row, service, month.Ratings);
                     }

@@ -80,7 +80,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
         private void WriteYearData(ISession session, ISheet worksheet, YearReportDataItem data, ref int rowIndex)
         {
-            WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(data.Year));
+            WriteCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(data.Year), styles[StandardCellStyles.BoldStyle]);
 
             foreach (var month in data.Months)
             {
@@ -90,8 +90,9 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
         private void WriteMonthData(ISession session, ISheet worksheet, MonthReportDataItem data, ref int rowIndex)
         {
-            WriteBoldCell(worksheet.CreateRow(rowIndex++), 1, c =>
-                            c.SetCellValue(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(data.Month)));
+            WriteCell(worksheet.CreateRow(rowIndex++), 1, c =>
+                            c.SetCellValue(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(data.Month)),
+                            styles[StandardCellStyles.BoldStyle]);
 
             foreach (var day in data.Days)
             {
@@ -101,12 +102,12 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
         private void WriteDayData(ISession session, ISheet worksheet, DayReportDataItem item, ref int rowIndex)
         {
-            WriteBoldCell(worksheet.CreateRow(rowIndex++), 2, c => c.SetCellValue(item.Day));
+            WriteCell(worksheet.CreateRow(rowIndex++), 2, c => c.SetCellValue(item.Day), styles[StandardCellStyles.BoldStyle]);
 
             foreach (var service in GetAdditionalServices(session))
             {
                 var row = worksheet.CreateRow(rowIndex++);
-                WriteBoldCell(row, 3, c => c.SetCellValue(service.ToString()));
+                WriteCell(row, 3, c => c.SetCellValue(service.ToString()), styles[StandardCellStyles.BoldStyle]);
 
                 RenderServiceRating(row, service, item.Ratings);
             }

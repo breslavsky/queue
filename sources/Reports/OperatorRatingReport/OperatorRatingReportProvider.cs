@@ -1,31 +1,30 @@
-﻿using NPOI.HSSF.UserModel;
-using Queue.Model.Common;
+﻿using Queue.Model.Common;
 using System;
 using System.ServiceModel;
 
 namespace Queue.Reports.OperatorRatingReport
 {
-    public class OperatorRatingReport : BaseReport
+    public class OperatorRatingReportProvider : IReportProvider
     {
         private readonly OperatorRatingReportSettings settings;
 
-        public OperatorRatingReport(OperatorRatingReportSettings settings)
+        public OperatorRatingReportProvider(OperatorRatingReportSettings settings)
         {
             this.settings = settings;
         }
 
-        protected override HSSFWorkbook InternalGenerate()
+        public IQueueReport GetReport()
         {
             switch (settings.DetailLevel)
             {
                 case ReportDetailLevel.Year:
-                    return new YearDetailedReport(settings).Generate();
+                    return new YearDetailedReport(settings);
 
                 case ReportDetailLevel.Month:
-                    return new MonthDetailedReport(settings).Generate();
+                    return new MonthDetailedReport(settings);
 
                 case ReportDetailLevel.Day:
-                    return new DayDetailedReport(settings).Generate();
+                    return new DayDetailedReport(settings);
 
                 default:
                     throw new FaultException(String.Format("Указанный уровень детализации не поддерживается: {0}", settings.DetailLevel.ToString()));

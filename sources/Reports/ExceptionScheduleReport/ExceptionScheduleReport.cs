@@ -20,6 +20,8 @@ namespace Queue.Reports.ExceptionScheduleReport
         {
             var workbook = new HSSFWorkbook(new MemoryStream(Templates.ExceptionSchedule));
 
+            styles = new StandardCellStyles(workbook);
+
             AddDataToReport(workbook.GetSheetAt(0), GetDefaultExceptionScheduleData());
             AddDataToReport(workbook.GetSheetAt(1), GetServiceExceptionScheduleData(), false);
 
@@ -55,20 +57,18 @@ namespace Queue.Reports.ExceptionScheduleReport
         private void AddDataToReport(ISheet worksheet, DefaultExceptionScheduleReportData[] items, bool isDefault = true)
         {
             var rowIndex = worksheet.LastRowNum + 1;
-            var boldCellStyle = CreateCellBoldStyle(worksheet.Workbook);
 
             var dateTitle = DateTime.MinValue;
 
-            IRow row;
-            ICell cell;
-
             foreach (DefaultExceptionScheduleReportData item in items)
             {
+                IRow row;
+
                 if (isDefault)
                 {
                     row = worksheet.CreateRow(rowIndex++);
-                    cell = row.CreateCell(0);
-                    cell.SetCellValue(item.ScheduleDate.ToShortDateString());
+
+                    WriteCell(row, 0, c => c.SetCellValue(item.ScheduleDate.ToShortDateString()));
                 }
                 else
                 {
@@ -77,37 +77,24 @@ namespace Queue.Reports.ExceptionScheduleReport
                         dateTitle = item.ScheduleDate;
 
                         row = worksheet.CreateRow(rowIndex++);
-                        row.RowStyle = boldCellStyle;
 
-                        cell = row.CreateCell(0);
-                        cell.SetCellValue(dateTitle.ToShortDateString());
-                        cell.CellStyle = boldCellStyle;
+                        WriteCell(row, 0, c => c.SetCellValue(dateTitle.ToShortDateString()), styles[StandardCellStyles.BoldStyle]);
                     }
 
                     row = worksheet.CreateRow(rowIndex++);
-                    cell = row.CreateCell(0);
-                    cell.SetCellValue((item as ServiceExceptionScheduleReportData).Service);
+
+                    WriteCell(row, 0, c => c.SetCellValue((item as ServiceExceptionScheduleReportData).Service));
                 }
 
-                cell = row.CreateCell(1);
-                cell.SetCellValue(item.IsWorked ? "Да" : "Нет");
+                WriteCell(row, 1, c => c.SetCellValue(item.IsWorked ? "Да" : "Нет"));
 
                 if (item.IsWorked)
                 {
-                    cell = row.CreateCell(2);
-                    cell.SetCellValue(item.StartTime.ToString());
-
-                    cell = row.CreateCell(3);
-                    cell.SetCellValue(item.FinishTime.ToString());
-
-                    cell = row.CreateCell(4);
-                    cell.SetCellValue(item.ClientInterval.Minutes);
-
-                    cell = row.CreateCell(5);
-                    cell.SetCellValue(item.Intersection.Minutes);
-
-                    cell = row.CreateCell(6);
-                    cell.SetCellValue(item.MaxClientRequests);
+                    WriteCell(row, 2, c => c.SetCellValue(item.StartTime.ToString()));
+                    WriteCell(row, 3, c => c.SetCellValue(item.FinishTime.ToString()));
+                    WriteCell(row, 4, c => c.SetCellValue(item.ClientInterval.Minutes));
+                    WriteCell(row, 5, c => c.SetCellValue(item.Intersection.Minutes));
+                    WriteCell(row, 6, c => c.SetCellValue(item.MaxClientRequests));
                 }
             };
         }

@@ -53,12 +53,12 @@ namespace Queue.Reports.AdditionalServicesRatingReport
             int rowIndex = worksheet.LastRowNum + 1;
             foreach (var item in items)
             {
-                WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(item.Year));
+                WriteCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(item.Year), styles[StandardCellStyles.BoldStyle]);
 
                 foreach (var service in GetAdditionalServices(session))
                 {
                     var row = worksheet.CreateRow(rowIndex++);
-                    WriteBoldCell(row, 3, c => c.SetCellValue(service.ToString()));
+                    WriteCell(row, 3, c => c.SetCellValue(service.ToString()), styles[StandardCellStyles.BoldStyle]);
 
                     RenderServiceRating(row, service, item.Rating);
                 }

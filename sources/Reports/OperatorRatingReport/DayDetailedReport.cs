@@ -57,7 +57,7 @@ namespace Queue.Reports.OperatorRatingReport
 
         private void WriteYearData(ISheet worksheet, YearReportDataItem data, ref int rowIndex)
         {
-            WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(data.Year));
+            WriteCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(data.Year), styles[StandardCellStyles.BoldStyle]);
 
             foreach (var month in data.Months)
             {
@@ -67,8 +67,9 @@ namespace Queue.Reports.OperatorRatingReport
 
         private void WriteMonthData(ISheet worksheet, MonthReportDataItem data, ref int rowIndex)
         {
-            WriteBoldCell(worksheet.CreateRow(rowIndex++), 1, c =>
-                            c.SetCellValue(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(data.Month)));
+            WriteCell(worksheet.CreateRow(rowIndex++), 1, c =>
+                            c.SetCellValue(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(data.Month)),
+                            styles[StandardCellStyles.BoldStyle]);
 
             foreach (var day in data.Days)
             {
@@ -78,12 +79,12 @@ namespace Queue.Reports.OperatorRatingReport
 
         private void WriteDayData(ISheet worksheet, DayReportDataItem data, ref int rowIndex)
         {
-            WriteBoldCell(worksheet.CreateRow(rowIndex++), 2, c => c.SetCellValue(data.Day));
+            WriteCell(worksheet.CreateRow(rowIndex++), 2, c => c.SetCellValue(data.Day), styles[StandardCellStyles.BoldStyle]);
 
             foreach (var rating in data.Ratings)
             {
                 var row = worksheet.CreateRow(rowIndex++);
-                WriteBoldCell(row, 4, c => c.SetCellValue(rating.Operator.ToString()));
+                WriteCell(row, 4, c => c.SetCellValue(rating.Operator.ToString()), styles[StandardCellStyles.BoldStyle]);
                 RenderRating(row, rating);
             }
         }
