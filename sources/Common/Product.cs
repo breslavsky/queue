@@ -43,7 +43,7 @@
             public const string AppName = "Queue.Server";
             public const string Name = "Queue Server";
             public const string Description = "";
-            public const string Build = "1";
+            public const string Build = "2";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "933F65E8-910F-4429-BA0B-16B3CF43E620";
         }
@@ -83,7 +83,7 @@
             public const string AppName = "Queue.Hub";
             public const string Name = "Queue Hub";
             public const string Description = "";
-            public const string Build = "1";
+            public const string Build = "2";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "7B7C4061-8EE4-49AC-943D-19B7227E27D6";
         }
