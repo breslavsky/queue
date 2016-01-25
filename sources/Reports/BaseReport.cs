@@ -11,6 +11,8 @@ namespace Queue.Reports
     {
         protected StandardCellStyles styles;
 
+        protected abstract int ColumnCount { get; }
+
         #region dependency
 
         [Dependency]
@@ -28,7 +30,28 @@ namespace Queue.Reports
         {
             var wk = InternalGenerate();
             var sheet = wk.GetSheetAt(0);
-            wk.SetPrintArea(0, 0, sheet.GetRow(1).LastCellNum, 0, sheet.LastRowNum);
+
+            wk.SetPrintArea(0, 0, ColumnCount, 0, sheet.LastRowNum);
+
+            for (var i = 0; i < sheet.LastRowNum; i++)
+            {
+                var row = sheet.GetRow(i);
+
+                for (int j = row.FirstCellNum; j < ColumnCount; j++)
+                {
+                    var cell = row.GetCell(j);
+
+                    if (cell == null)
+                    {
+                        continue;
+                    }
+
+                    cell.CellStyle.BorderLeft = BorderStyle.Thin;
+                    cell.CellStyle.BorderRight = BorderStyle.Thin;
+                    cell.CellStyle.BorderTop = BorderStyle.Thin;
+                    cell.CellStyle.BorderBottom = BorderStyle.Thin;
+                }
+            }
 
             return wk;
         }

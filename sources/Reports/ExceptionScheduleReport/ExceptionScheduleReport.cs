@@ -11,6 +11,8 @@ namespace Queue.Reports.ExceptionScheduleReport
     {
         private readonly DateTime fromDate;
 
+        protected override int ColumnCount { get { return 7; } }
+
         public ExceptionScheduleReport(DateTime fromDate)
         {
             this.fromDate = fromDate;

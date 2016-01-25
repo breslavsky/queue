@@ -13,6 +13,8 @@ namespace Queue.Reports.ClientRequestReport
     {
         private readonly Guid clientRequestId;
 
+        protected override int ColumnCount { get { return 2; } }
+
         public ClientRequestReport(Guid clientRequestId)
             : base()
         {

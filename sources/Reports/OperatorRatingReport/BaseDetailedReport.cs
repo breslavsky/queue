@@ -21,6 +21,8 @@ namespace Queue.Reports.OperatorRatingReport
 
         private Lazy<Operator[]> allOperators;
 
+        protected override int ColumnCount { get { return 20; } }
+
         public BaseDetailedReport(OperatorRatingReportSettings settings)
             : base()
         {

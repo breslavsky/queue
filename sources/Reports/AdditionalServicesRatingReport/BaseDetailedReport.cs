@@ -29,6 +29,8 @@ namespace Queue.Reports.AdditionalServicesRatingReport
         protected ICellStyle sumCellStyle;
         protected ICellStyle countCellStyle;
 
+        protected override int ColumnCount { get { return 5; } }
+
         protected BaseDetailedReport(AdditionalServicesRatingReportSettings settings)
         {
             ServiceLocator.Current.GetInstance<UnityContainer>()
