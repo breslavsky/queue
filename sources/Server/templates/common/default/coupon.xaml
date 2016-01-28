@@ -3,39 +3,203 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:ui="clr-namespace:Queue.UI.WPF;assembly=Queue.UI.WPF"
-      Width="200"
+      Width="280"
       Background="#FFFFFF"
       mc:Ignorable="d">
-
+    <Grid.Resources>
+        <ui:EnumVisibilityConverter x:Key="visibilityConverter" />
+        <Style x:Key="{x:Type GroupBox}" TargetType="{x:Type GroupBox}">
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="BorderBrush" Value="Black" />
+        </Style>
+        <Style x:Key="{x:Type Label}" TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Margin" Value="5,-5,5,-5" />
+            <Setter Property="FontFamily" Value="Arial" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+        <Style x:Key="GroupBoxHeaderLabel"
+               BasedOn="{StaticResource {x:Type Label}}"
+               TargetType="{x:Type Label}">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+        <Style x:Key="{x:Type TextBlock}" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontFamily" Value="Arial" />
+        </Style>
+    </Grid.Resources>
     <StackPanel Margin="5" VerticalAlignment="Top">
-        <Label HorizontalAlignment="Center"
-               Content="МАУ городского округа Шуя 'МФЦ'"
-               FontSize="12" />
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-            <TextBlock Text="{Binding RequestDate, StringFormat=Дата: {0:dd.MM.yyyy}, FallbackValue=01.01.23}" />
-            <TextBlock HorizontalAlignment="Left" Text=" " />
-            <TextBlock>
-                <TextBlock.Text>
-                    <MultiBinding FallbackValue="23:59:59" StringFormat="{}{0:00}:{1:00}:{2:00}">
-                        <Binding Path="RequestTime.Hours" />
-                        <Binding Path="RequestTime.Minutes" />
-                        <Binding Path="RequestTime.Seconds" />
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
-        </StackPanel>
-
         <TextBlock HorizontalAlignment="Center"
-                   FontSize="25"
-                   FontWeight="Bold"
-                   Text="{Binding Number,
-                                  StringFormat=Талон: {0},
-                                  FallbackValue=000}" />
-
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-            <TextBlock HorizontalAlignment="Center"
-                       FontSize="20"
-                       Text="Окно: " />
+                   FontSize="12"
+                   Text="{Binding QueueName,
+                                  FallbackValue=-}"
+                   TextWrapping="Wrap" />
+        <TextBlock HorizontalAlignment="Right"
+                   FontSize="12"
+                   Text="{Binding CreateDate,
+                                  StringFormat={}{0:dd.MM.yyyy HH:mm:ss},
+                                  FallbackValue=-}" />
+        <GroupBox>
+            <GroupBox.Header>
+                <Label Content="Запрос" Style="{DynamicResource GroupBoxHeaderLabel}" />
+            </GroupBox.Header>
+            <Grid Margin="0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0"
+                           HorizontalAlignment="Left"
+                           Content="Дата"
+                           Visibility="{Binding Path=Sections,
+                                                Converter={StaticResource visibilityConverter},
+                                                ConverterParameter=RequestDate}" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               HorizontalAlignment="Left"
+                               Text="{Binding RequestDate,
+                                              StringFormat={}{0:dd.MM.yyyy},
+                                              FallbackValue=-}"
+                               Visibility="{Binding Path=Sections,
+                                                    Converter={StaticResource visibilityConverter},
+                                                    ConverterParameter=RequestDate}" />
+                    <Label Grid.Row="1"
+                           HorizontalAlignment="Left"
+                           Content="Время"
+                           Visibility="{Binding Path=Sections,
+                                                Converter={StaticResource visibilityConverter},
+                                                ConverterParameter=RequestTime}" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               HorizontalAlignment="Left"
+                               Visibility="{Binding Path=Sections,
+                                                    Converter={StaticResource visibilityConverter},
+                                                    ConverterParameter=RequestTime}">
+                        <TextBlock.Text>
+                            <MultiBinding FallbackValue="-" StringFormat="{}{0:00}:{1:00}:{2:00}">
+                                <Binding Path="RequestTime.Hours" />
+                                <Binding Path="RequestTime.Minutes" />
+                                <Binding Path="RequestTime.Seconds" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <Label Grid.Row="2"
+                           HorizontalAlignment="Left"
+                           Content="Объектов"
+                           Visibility="{Binding Path=Sections,
+                                                Converter={StaticResource visibilityConverter},
+                                                ConverterParameter=Objects}" />
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="1"
+                               HorizontalAlignment="Left"
+                               Text="{Binding Subjects,
+                                              FallbackValue=-}"
+                               Visibility="{Binding Path=Sections,
+                                                    Converter={StaticResource visibilityConverter},
+                                                    ConverterParameter=Objects}" />
+                </Grid>
+                <Border Grid.Row="0"
+                        Grid.Column="1"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        CornerRadius="5">
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="25"
+                               FontWeight="Bold"
+                               Text="{Binding Number,
+                                              FallbackValue=000}" />
+                </Border>
+            </Grid>
+        </GroupBox>
+        <StackPanel>
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding HasPlanned}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <GroupBox Visibility="{Binding WaitingTime, Path=Sections, Converter={StaticResource visibilityConverter}, ConverterParameter='Position, WaitingTime'}">
+                <GroupBox.Header>
+                    <Label Content="Очередь" Style="{DynamicResource GroupBoxHeaderLabel}" />
+                </GroupBox.Header>
+                <Grid Margin="0,5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0"
+                           Content="Позиция"
+                           Visibility="{Binding Path=Sections,
+                                                Converter={StaticResource visibilityConverter},
+                                                ConverterParameter=Position}" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               Text="{Binding Position,
+                                              FallbackValue=-}"
+                               Visibility="{Binding Path=Sections,
+                                                    Converter={StaticResource visibilityConverter},
+                                                    ConverterParameter=Position}" />
+                    <Label Grid.Row="1"
+                           Content="Время ожидания"
+                           Visibility="{Binding Path=Sections,
+                                                Converter={StaticResource visibilityConverter},
+                                                ConverterParameter=WaitingTime}" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="{Binding WaitingTime.TotalMinutes,
+                                              StringFormat={}{0:0} мин.,
+                                              FallbackValue=0 мин.}"
+                               Visibility="{Binding Path=Sections,
+                                                    Converter={StaticResource visibilityConverter},
+                                                    ConverterParameter=WaitingTime}" />
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+        <GroupBox Visibility="{Binding Path=Sections, Converter={StaticResource visibilityConverter}, ConverterParameter=Client}">
+            <GroupBox.Style>
+                <Style BasedOn="{StaticResource {x:Type GroupBox}}" TargetType="GroupBox">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Client}" Value="">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Client}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </GroupBox.Style>
+            <GroupBox.Header>
+                <Label Content="Клиент" Style="{DynamicResource GroupBoxHeaderLabel}" />
+            </GroupBox.Header>
+            <TextBlock Margin="15,5,0,0" Text="{Binding Client, FallbackValue=-}" />
+        </GroupBox>
+        <GroupBox Visibility="{Binding Path=Sections, Converter={StaticResource visibilityConverter}, ConverterParameter=Workplaces}">
+            <GroupBox.Header>
+                <Label Content="Места" Style="{DynamicResource GroupBoxHeaderLabel}" />
+            </GroupBox.Header>
             <ItemsControl ItemsSource="{Binding Workplaces}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -46,11 +210,21 @@
                     <DataTemplate>
                         <TextBlock Margin="10,0,0,0"
                                    FontFamily="Arial"
-                                   FontSize="20"
+                                   FontSize="16"
+                                   FontWeight="Bold"
                                    Text="{Binding}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </StackPanel>
+        </GroupBox>
+        <GroupBox Visibility="{Binding Path=Sections, Converter={StaticResource visibilityConverter}, ConverterParameter=Service}">
+            <GroupBox.Header>
+                <Label Content="Услуга" Style="{DynamicResource GroupBoxHeaderLabel}" />
+            </GroupBox.Header>
+            <TextBlock Margin="15,5,0,5"
+                       Text="{Binding Service,
+                                      FallbackValue=-}"
+                       TextWrapping="Wrap" />
+        </GroupBox>
     </StackPanel>
 </Grid>
