@@ -93,7 +93,7 @@
             public const string AppName = "Queue.Administrator";
             public const string Name = "Queue Administrator";
             public const string Description = "";
-            public const string Build = "1";
+            public const string Build = "2";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "06C4B3D8-20FF-4D84-B14D-30A8BA06CDE6";
         }
