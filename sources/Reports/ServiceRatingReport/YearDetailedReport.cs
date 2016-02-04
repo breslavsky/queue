@@ -35,7 +35,7 @@ namespace Queue.Reports.ServiceRatingReport
 
             foreach (var item in items)
             {
-                WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(item.Year));
+                WriteCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(item.Year), styles[StandardCellStyles.BoldStyle]);
                 WriteServicesRatings(worksheet, item.Ratings, root, ref  rowIndex);
             }
         }

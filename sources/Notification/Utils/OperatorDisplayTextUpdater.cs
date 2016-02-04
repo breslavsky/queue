@@ -4,10 +4,10 @@ using Microsoft.Practices.Unity;
 using NLog;
 using Queue.Common.Settings;
 using Queue.Model.Common;
-using Queue.Services.Contracts;
 using Queue.Services.Contracts.Hub;
 using Queue.Services.DTO;
 using System;
+using System.Threading;
 
 namespace Queue.Notification.Utils
 {
@@ -55,6 +55,7 @@ namespace Queue.Notification.Utils
 
             try
             {
+
                 logger.Debug("show text [device: {0}; text: {1}]", request.Operator.Workplace.DisplayDeviceId, request.Number);
 
                 using (var channel = DisplayChannelManager.CreateChannel())

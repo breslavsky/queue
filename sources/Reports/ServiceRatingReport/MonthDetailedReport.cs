@@ -21,21 +21,21 @@ namespace Queue.Reports.ServiceRatingReport
             worksheet.SetColumnHidden(2, true);
             worksheet.SetColumnHidden(3, true);
 
-           var items = data.GroupBy(y => y.Year)
-                            .Select(y => new YearReportDataItem()
-                            {
-                                Year = y.Key,
-                                Months = y.GroupBy(m => m.Month)
-                                                .Select(m => new MonthReportDataItem()
-                                                {
-                                                    Month = m.Key,
-                                                    Ratings = m.ToArray()
-                                                })
-                                                .OrderBy(m => m.Month)
-                                                .ToArray()
-                            })
-                            .OrderBy(y => y.Year)
-                            .ToArray();
+            var items = data.GroupBy(y => y.Year)
+                             .Select(y => new YearReportDataItem()
+                             {
+                                 Year = y.Key,
+                                 Months = y.GroupBy(m => m.Month)
+                                                 .Select(m => new MonthReportDataItem()
+                                                 {
+                                                     Month = m.Key,
+                                                     Ratings = m.ToArray()
+                                                 })
+                                                 .OrderBy(m => m.Month)
+                                                 .ToArray()
+                             })
+                             .OrderBy(y => y.Year)
+                             .ToArray();
 
             var rowIndex = worksheet.LastRowNum + 1;
 
@@ -43,11 +43,13 @@ namespace Queue.Reports.ServiceRatingReport
 
             foreach (var item in items)
             {
-                WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(item.Year));
+                WriteCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(item.Year), styles[StandardCellStyles.BoldStyle]);
 
                 foreach (var month in item.Months)
                 {
-                    WriteBoldCell(worksheet.CreateRow(rowIndex++), 1, c => c.SetCellValue(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month.Month)));
+                    WriteCell(worksheet.CreateRow(rowIndex++), 1,
+                                c => c.SetCellValue(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month.Month)),
+                                styles[StandardCellStyles.BoldStyle]);
                     WriteServicesRatings(worksheet, month.Ratings, root, ref  rowIndex);
                 }
             }

@@ -105,7 +105,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdditionalServicesRatingReport\AdditionalServiceRatingReport.cs" />
+    <Compile Include="AdditionalServicesRatingReport\AdditionalServiceRatingReportProvider.cs" />
     <Compile Include="AdditionalServicesRatingReport\AdditionalServiceRating.cs" />
     <Compile Include="AdditionalServicesRatingReport\BaseDetailedReport.cs" />
     <Compile Include="AdditionalServicesRatingReport\AdditionalServiceDayRating.cs" />
@@ -115,13 +115,18 @@
     <Compile Include="AdditionalServicesRatingReport\AdditionalServiceYearRating.cs" />
     <Compile Include="AdditionalServicesRatingReport\YearDetailedReport.cs" />
     <Compile Include="BaseReport.cs" />
+    <Compile Include="ClientRequestReport\ClientRequestReportProvider.cs" />
+    <Compile Include="ExceptionScheduleReport\ExceptionScheduleReportProvider.cs" />
+    <Compile Include="IQueueReport.cs" />
+    <Compile Include="IReportProvider.cs" />
+    <Compile Include="StandardCellStyles.cs" />
     <Compile Include="ClientRequestReport\ClientRequestReport.cs" />
     <Compile Include="ExceptionScheduleReport\ExceptionScheduleReport.cs" />
     <Compile Include="OperatorRatingReport\BaseDetailedReport.cs" />
     <Compile Include="OperatorRatingReport\DayDetailedReport.cs" />
     <Compile Include="OperatorRatingReport\MonthDetailedReport.cs" />
     <Compile Include="OperatorRatingReport\OperatorDayRating.cs" />
-    <Compile Include="OperatorRatingReport\OperatorRatingReport.cs" />
+    <Compile Include="OperatorRatingReport\OperatorRatingReportProvider.cs" />
     <Compile Include="OperatorRatingReport\OperatorYearRating.cs" />
     <Compile Include="OperatorRatingReport\OperatorRating.cs" />
     <Compile Include="OperatorRatingReport\OperatorMonthRating.cs" />
@@ -134,7 +139,7 @@
     <Compile Include="ServiceRatingReport\ServiceDayRating.cs" />
     <Compile Include="ServiceRatingReport\ServiceMonthRating.cs" />
     <Compile Include="ServiceRatingReport\ServiceRating.cs" />
-    <Compile Include="ServiceRatingReport\ServiceRatingReport.cs" />
+    <Compile Include="ServiceRatingReport\ServiceRatingReportProvider.cs" />
     <Compile Include="ServiceRatingReport\ServiceYearRating.cs" />
     <Compile Include="ServiceRatingReport\YearDetailedReport.cs" />
     <Compile Include="Templates.Designer.cs">

@@ -129,7 +129,15 @@ namespace Queue.Notification.ViewModels
 
         private void ClientRequestUpdated(object sender, ClientRequest e)
         {
-            AdjustClientRequests(e);
+            logger.Debug("ClientRequestUpdated...");
+            try
+            {
+                AdjustClientRequests(e);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
         }
 
         public void AdjustClientRequests(ClientRequest request)
@@ -183,6 +191,7 @@ namespace Queue.Notification.ViewModels
 
         private void SendRequestsToDisplays()
         {
+            logger.Debug("SendRequestsToDisplays...");
             if (AppSettings.Displays.Count == 0 || !HubSettings.Enabled)
             {
                 return;
@@ -221,16 +230,20 @@ namespace Queue.Notification.ViewModels
             var workplaces = display.Workplaces
                                     .Cast<WorkplaceConfig>()
                                     .Select(c => c.Number);
+            logger.Debug("workplaces: " + String.Join(", ", workplaces));
 
-            foreach (var req in Requests)
+            foreach (var req in Requests.Where(r => r.Request.State == ClientRequestState.Calling))
             {
+                logger.Debug("req.Request.Operator.Workplace.Number: " + req.Request.Operator.Workplace.Number);
                 if (display.Workplaces.Count > 0 && !workplaces.Contains(req.Request.Operator.Workplace.Number))
                 {
                     continue;
                 }
 
-                toSend.Add(new[] { (ushort)req.Request.Number, (ushort)req.Request.Operator.Workplace.Number });
+                toSend.Add(new[] { (ushort)req.Request.Operator.Workplace.Number, (ushort)req.Request.Number });
             }
+
+            logger.Debug("GetLinesForDisplay: " + toSend.Count);
 
             return toSend.ToArray();
         }

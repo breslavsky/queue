@@ -1,5 +1,4 @@
-﻿using NPOI.HSSF.UserModel;
-using Queue.Model.Common;
+﻿using Queue.Model.Common;
 using Queue.Reports;
 using Queue.Reports.AdditionalServicesRatingReport;
 using Queue.Reports.ClientRequestReport;
@@ -19,7 +18,7 @@ namespace Queue.Services.Server
             return await Task.Run(() =>
             {
                 CheckPermission(UserRole.Administrator, AdministratorPermissions.Reports);
-                return GenerateReport(new ServiceRatingReport(settings));
+                return GenerateReport(new ServiceRatingReportProvider(settings));
             });
         }
 
@@ -28,7 +27,7 @@ namespace Queue.Services.Server
             return await Task.Run(() =>
             {
                 CheckPermission(UserRole.Administrator, AdministratorPermissions.Reports);
-                return GenerateReport(new OperatorRatingReport(settings));
+                return GenerateReport(new OperatorRatingReportProvider(settings));
             });
         }
 
@@ -37,27 +36,27 @@ namespace Queue.Services.Server
             return await Task.Run(() =>
             {
                 CheckPermission(UserRole.Administrator, AdministratorPermissions.Reports);
-                return GenerateReport(new AdditionalServiceRatingReport(settings));
+                return GenerateReport(new AdditionalServiceRatingReportProvider(settings));
             });
         }
 
         public async Task<byte[]> GetExceptionScheduleReport(DateTime from)
         {
-            return await Task.Run(() => GenerateReport(new ExceptionScheduleReport(from)));
+            return await Task.Run(() => GenerateReport(new ExceptionScheduleReportProvider(from)));
         }
 
         public async Task<byte[]> GetClientRequestReport(Guid reqId)
         {
-            return await Task.Run(() => GenerateReport(new ClientRequestReport(reqId)));
+            return await Task.Run(() => GenerateReport(new ClientRequestReportProvider(reqId)));
         }
 
-        private byte[] GenerateReport(BaseReport report)
+        private byte[] GenerateReport(IReportProvider report)
         {
-            HSSFWorkbook workbook = report.Generate();
+            var workbook = report.GetReport();
 
-            using (MemoryStream memoryStream = new MemoryStream())
+            using (var memoryStream = new MemoryStream())
             {
-                workbook.Write(memoryStream);
+                workbook.Generate().Write(memoryStream);
                 return memoryStream.ToArray();
             }
         }
