@@ -9,12 +9,14 @@ using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.Terminal.Views;
 using Queue.UI.WPF;
+using Queue.UI.WPF.Types;
 using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using WPFLocalizeExtension.Engine;
+using WinForms = System.Windows.Forms;
 
 namespace Queue.Terminal.ViewModels
 {
@@ -28,6 +30,7 @@ namespace Queue.Terminal.ViewModels
         private string password;
         private bool isRemember;
         private AccentColorComboBoxItem selectedAccent;
+        private ScreenNumberItem selectedScreenNumber;
         private UserComboBoxItem selectedUser;
         private UserComboBoxItem[] users;
         private UserRole userRole;
@@ -37,8 +40,6 @@ namespace Queue.Terminal.ViewModels
         private UserService serverUserService;
 
         public event EventHandler OnLogined = delegate { };
-
-        #region UIProperties
 
         public bool IsConnected
         {
@@ -65,6 +66,14 @@ namespace Queue.Terminal.ViewModels
         }
 
         public User User { get; set; }
+
+        public ScreenNumberItem[] ScreensNumbers { get; set; }
+
+        public ScreenNumberItem SelectedScreenNumber
+        {
+            get { return selectedScreenNumber; }
+            set { SetProperty(ref selectedScreenNumber, value); }
+        }
 
         public AccentColorComboBoxItem[] AccentColors { get; set; }
 
@@ -116,8 +125,6 @@ namespace Queue.Terminal.ViewModels
 
         public ICommand UnloadedCommand { get; set; }
 
-        #endregion UIProperties
-
         [Dependency]
         public IMainWindow Window { get; set; }
 
@@ -125,7 +132,7 @@ namespace Queue.Terminal.ViewModels
         public ConfigurationManager ConfigurationManager { get; set; }
 
         [Dependency]
-        public AppSettings Settings { get; set; }
+        public AppSettings AppSettings { get; set; }
 
         public LoginPageViewModel(UserRole userRole, LoginPage owner) :
             base()
@@ -134,6 +141,7 @@ namespace Queue.Terminal.ViewModels
             this.owner = owner;
 
             AccentColors = ThemeManager.Accents.Select(a => new AccentColorComboBoxItem(a.Name, a.Resources["AccentColorBrush"] as Brush)).ToArray();
+            ScreensNumbers = WinForms.Screen.AllScreens.Select((s, pos) => new ScreenNumberItem((byte)pos)).ToArray();
 
             ConnectCommand = new RelayCommand(Connect);
             LoginCommand = new RelayCommand(Login);
@@ -145,7 +153,7 @@ namespace Queue.Terminal.ViewModels
         {
             LoadSettings();
 
-            if (IsRemember || (Settings.User != Guid.Empty))
+            if (IsRemember || (AppSettings.User != Guid.Empty))
             {
                 Connect();
             }
@@ -153,14 +161,15 @@ namespace Queue.Terminal.ViewModels
 
         private void LoadSettings()
         {
-            Endpoint = Settings.Endpoint;
-            Password = Settings.Password;
-            IsRemember = Settings.IsRemember;
-            SelectedLanguage = Settings.Language;
+            Endpoint = AppSettings.Endpoint;
+            Password = AppSettings.Password;
+            IsRemember = AppSettings.IsRemember;
+            SelectedLanguage = AppSettings.Language;
+            SelectedScreenNumber = ScreensNumbers.FirstOrDefault(d => d.Number == AppSettings.ScreenNumber);
 
-            if (!String.IsNullOrWhiteSpace(Settings.Accent))
+            if (!String.IsNullOrWhiteSpace(AppSettings.Accent))
             {
-                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == Settings.Accent);
+                SelectedAccent = AccentColors.SingleOrDefault(c => c.Name == AppSettings.Accent);
             }
 
             owner.Adjust();
@@ -186,9 +195,9 @@ namespace Queue.Terminal.ViewModels
 
             Users = result.Select(u => new UserComboBoxItem(u.Id, u.ToString())).ToArray();
 
-            if (Settings.User != Guid.Empty)
+            if (AppSettings.User != Guid.Empty)
             {
-                SelectedUser = Users.SingleOrDefault(u => u.Id == Settings.User);
+                SelectedUser = Users.SingleOrDefault(u => u.Id == AppSettings.User);
             }
 
             if (SelectedUser == null)
@@ -230,12 +239,13 @@ namespace Queue.Terminal.ViewModels
 
         private void SaveSettings()
         {
-            Settings.Endpoint = Endpoint;
-            Settings.Password = IsRemember ? Password : String.Empty;
-            Settings.User = SelectedUser.Id;
-            Settings.IsRemember = IsRemember;
-            Settings.Accent = SelectedAccent == null ? String.Empty : SelectedAccent.Name;
-            Settings.Language = SelectedLanguage;
+            AppSettings.Endpoint = Endpoint;
+            AppSettings.Password = IsRemember ? Password : String.Empty;
+            AppSettings.User = SelectedUser.Id;
+            AppSettings.IsRemember = IsRemember;
+            AppSettings.Accent = SelectedAccent == null ? String.Empty : SelectedAccent.Name;
+            AppSettings.Language = SelectedLanguage;
+            AppSettings.ScreenNumber = SelectedScreenNumber == null ? (byte)0 : SelectedScreenNumber.Number;
 
             ConfigurationManager.Save();
         }

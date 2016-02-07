@@ -1,18 +1,24 @@
 ﻿using Queue.Common;
-using Queue.Terminal.Core.Settings;
-using System;
 using System.Configuration;
 
-namespace Queue.Terminal
+namespace Queue.Notification.Settings
 {
     public class AppSettings : ConfigurationSection
     {
-        public const string SectionKey = "terminal";
+        public const string SectionKey = "notification";
 
         public AppSettings()
         {
             Theme = "default";
             Endpoint = "net.tcp://queue:4505";
+            IsFullScreen = true;
+        }
+
+        [ConfigurationProperty("endpoint")]
+        public string Endpoint
+        {
+            get { return (string)this["endpoint"]; }
+            set { this["endpoint"] = value; }
         }
 
         [ConfigurationProperty("theme")]
@@ -27,6 +33,13 @@ namespace Queue.Terminal
         {
             get { return (bool)this["isRemember"]; }
             set { this["isRemember"] = value; }
+        }
+
+        [ConfigurationProperty("isFullScreen", DefaultValue = true)]
+        public bool IsFullScreen
+        {
+            get { return (bool)this["isFullScreen"]; }
+            set { this["isFullScreen"] = value; }
         }
 
         [ConfigurationProperty("screenNumber")]
@@ -50,32 +63,11 @@ namespace Queue.Terminal
             set { this["accent"] = value; }
         }
 
-        [ConfigurationProperty("password")]
-        public string Password
+        [ConfigurationProperty("displays")]
+        [ConfigurationCollection(typeof(DisplayCollection))]
+        public DisplayCollection Displays
         {
-            get { return (string)this["password"]; }
-            set { this["password"] = value; }
-        }
-
-        [ConfigurationProperty("user")]
-        public Guid User
-        {
-            get { return (Guid)this["user"]; }
-            set { this["user"] = value; }
-        }
-
-        [ConfigurationProperty("endpoint")]
-        public string Endpoint
-        {
-            get { return (string)this["endpoint"]; }
-            set { this["endpoint"] = value; }
-        }
-
-        [ConfigurationProperty("serviceBreaks")]
-        public ServiceBreakCollection ServiceBreaks
-        {
-            get { return this["serviceBreaks"] as ServiceBreakCollection; }
-            set { this["serviceBreaks"] = value; }
+            get { return (DisplayCollection)base["displays"]; }
         }
 
         public override bool IsReadOnly()

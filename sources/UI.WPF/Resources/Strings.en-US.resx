@@ -138,6 +138,9 @@
   <data name="Remember" xml:space="preserve">
     <value>Remember</value>
   </data>
+  <data name="ScreenNumber" xml:space="preserve">
+    <value>Screen Number</value>
+  </data>
   <data name="Server" xml:space="preserve">
     <value>Server</value>
   </data>

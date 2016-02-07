@@ -6,6 +6,7 @@ using Queue.Common;
 using Queue.Notification.Settings;
 using Queue.Services.Contracts.Server;
 using Queue.UI.WPF;
+using Queue.UI.WPF.Types;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using WPFLocalizeExtension.Engine;
+using WinForms = System.Windows.Forms;
 
 namespace Queue.Notification.ViewModels
 {
@@ -23,6 +25,7 @@ namespace Queue.Notification.ViewModels
 
         private string endpoint;
         private AccentColorComboBoxItem selectedAccent;
+        private ScreenNumberItem selectedScreenNumber;
 
         public event EventHandler OnConnected = delegate { };
 
@@ -44,6 +47,14 @@ namespace Queue.Notification.ViewModels
         {
             get { return endpoint; }
             set { SetProperty(ref endpoint, value); }
+        }
+
+        public ScreenNumberItem[] ScreensNumbers { get; set; }
+
+        public ScreenNumberItem SelectedScreenNumber
+        {
+            get { return selectedScreenNumber; }
+            set { SetProperty(ref selectedScreenNumber, value); }
         }
 
         public AccentColorComboBoxItem[] AccentColors { get; set; }
@@ -81,7 +92,7 @@ namespace Queue.Notification.ViewModels
         }
 
         [Dependency]
-        public NotificationSettings AppSettings { get; set; }
+        public AppSettings AppSettings { get; set; }
 
         [Dependency]
         public ConfigurationManager ConfigurationManager { get; set; }
@@ -90,6 +101,7 @@ namespace Queue.Notification.ViewModels
             : base()
         {
             AccentColors = ThemeManager.Accents.Select(a => new AccentColorComboBoxItem(a.Name, a.Resources["AccentColorBrush"] as Brush)).ToArray();
+            ScreensNumbers = WinForms.Screen.AllScreens.Select((s, pos) => new ScreenNumberItem((byte)pos)).ToArray();
 
             ConnectCommand = new RelayCommand(Connect);
             LoadedCommand = new RelayCommand(Loaded);
@@ -111,6 +123,7 @@ namespace Queue.Notification.ViewModels
             IsFullScreen = AppSettings.IsFullScreen;
             SelectedLanguage = AppSettings.Language;
             Endpoint = AppSettings.Endpoint;
+            SelectedScreenNumber = ScreensNumbers.FirstOrDefault(d => d.Number == AppSettings.ScreenNumber);
 
             if (!String.IsNullOrWhiteSpace(AppSettings.Accent))
             {
@@ -157,6 +170,7 @@ namespace Queue.Notification.ViewModels
             AppSettings.IsFullScreen = IsFullScreen;
             AppSettings.Accent = SelectedAccent == null ? String.Empty : SelectedAccent.Name;
             AppSettings.Language = SelectedLanguage;
+            AppSettings.ScreenNumber = SelectedScreenNumber == null ? (byte)0 : SelectedScreenNumber.Number;
 
             ConfigurationManager.Save();
         }

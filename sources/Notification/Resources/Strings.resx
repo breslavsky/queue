@@ -123,6 +123,9 @@
   <data name="Client" xml:space="preserve">
     <value>Посетитель</value>
   </data>
+  <data name="IsFullScreen" xml:space="preserve">
+    <value>Во весь экран</value>
+  </data>
   <data name="Workplace" xml:space="preserve">
     <value>Окно</value>
   </data>

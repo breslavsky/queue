@@ -138,6 +138,9 @@
   <data name="Remember" xml:space="preserve">
     <value>Запомнить</value>
   </data>
+  <data name="ScreenNumber" xml:space="preserve">
+    <value>Номер экрана</value>
+  </data>
   <data name="Server" xml:space="preserve">
     <value>Сервер</value>
   </data>

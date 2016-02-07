@@ -117,16 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppName" xml:space="preserve">
-    <value>Notification</value>
-  </data>
-  <data name="Client" xml:space="preserve">
-    <value>Client</value>
-  </data>
-  <data name="IsFullScreen" xml:space="preserve">
-    <value>Full Screen</value>
-  </data>
-  <data name="Workplace" xml:space="preserve">
-    <value>Workplace</value>
+  <data name="ScreenNumberItemText" xml:space="preserve">
+    <value>Экран {0}</value>
   </data>
 </root>

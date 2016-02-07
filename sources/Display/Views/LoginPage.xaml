@@ -18,7 +18,7 @@
     </i:Interaction.Triggers>
 
     <Border>
-        <Grid Width="400" Height="220">
+        <Grid Width="400" Height="250">
             <Border BorderBrush="{DynamicResource AccentColorBrush}"
                     BorderThickness="2"
                     CornerRadius="5"
@@ -29,6 +29,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
@@ -91,8 +92,8 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <Label Grid.Row="3" Content="{lex:Loc Language}" />
 
+                    <Label Grid.Row="3" Content="{lex:Loc Language}" />
                     <lex:EnumComboBox Grid.Row="3"
                                       Grid.Column="1"
                                       Margin="5"
@@ -123,7 +124,15 @@
                             </Style>
                         </lex:EnumComboBox.Style>
                     </lex:EnumComboBox>
-                    <Grid Grid.Row="4"
+                    <Label Grid.Row="4" Content="{lex:Loc ScreenNumber}" />
+                    <ComboBox Grid.Row="4"
+                              Grid.Column="1"
+                              Margin="5"
+                              ItemsSource="{Binding ScreensNumbers,
+                                                    Mode=OneWay}"
+                              SelectedItem="{Binding SelectedScreenNumber,
+                                                     Mode=TwoWay}" />
+                    <Grid Grid.Row="5"
                           Grid.Column="2"
                           Margin="5">
                         <Grid.ColumnDefinitions>

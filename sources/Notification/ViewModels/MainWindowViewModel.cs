@@ -13,7 +13,6 @@ using Queue.Services.Contracts.Server;
 using Queue.UI.WPF;
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
@@ -52,7 +51,7 @@ namespace Queue.Notification.ViewModels
         public IMainWindow Window { get; set; }
 
         [Dependency]
-        public NotificationSettings AppSettings { get; set; }
+        public AppSettings AppSettings { get; set; }
 
         [Dependency]
         public HubSettings HubSettings { get; set; }
@@ -101,9 +100,9 @@ namespace Queue.Notification.ViewModels
             {
                 Mouse.OverrideCursor = Cursors.None;
 
-                var screen = WinForms.Screen.AllScreens.FirstOrDefault(s => !s.Primary);
-                if (screen != null)
+                if (AppSettings.ScreenNumber < WinForms.Screen.AllScreens.Length)
                 {
+                    var screen = WinForms.Screen.AllScreens[AppSettings.ScreenNumber];
                     Application.Current.MainWindow.Left = screen.WorkingArea.Left;
                     Application.Current.MainWindow.Top = screen.WorkingArea.Top;
                 }

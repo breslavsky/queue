@@ -8,12 +8,14 @@ using Queue.Display.Models;
 using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
+using Queue.UI.WPF.Types;
 using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using WPFLocalizeExtension.Engine;
+using WinForms = System.Windows.Forms;
 
 namespace Queue.Display.ViewModels
 {
@@ -21,6 +23,7 @@ namespace Queue.Display.ViewModels
     {
         private bool disposed;
         private AccentColorComboBoxItem selectedAccent;
+        private ScreenNumberItem selectedScreenNumber;
         private bool isConnected;
 
         private string endpoint;
@@ -64,6 +67,14 @@ namespace Queue.Display.ViewModels
         {
             get { return selectedWorkplace; }
             set { SetProperty(ref selectedWorkplace, value); }
+        }
+
+        public ScreenNumberItem[] ScreensNumbers { get; set; }
+
+        public ScreenNumberItem SelectedScreenNumber
+        {
+            get { return selectedScreenNumber; }
+            set { SetProperty(ref selectedScreenNumber, value); }
         }
 
         public AccentColorComboBoxItem[] AccentColors { get; set; }
@@ -121,6 +132,7 @@ namespace Queue.Display.ViewModels
             this.owner = owner;
 
             AccentColors = ThemeManager.Accents.Select(a => new AccentColorComboBoxItem(a.Name, a.Resources["AccentColorBrush"] as Brush)).ToArray();
+            ScreensNumbers = WinForms.Screen.AllScreens.Select((s, pos) => new ScreenNumberItem((byte)pos)).ToArray();
 
             LoadedCommand = new RelayCommand(Loaded);
             UnloadedCommand = new RelayCommand(Unloaded);
@@ -144,6 +156,7 @@ namespace Queue.Display.ViewModels
             SelectedWorkplace = AppSettings.WorkplaceId;
             SelectedLanguage = AppSettings.Language;
             IsRemember = AppSettings.IsRemember;
+            SelectedScreenNumber = ScreensNumbers.FirstOrDefault(d => d.Number == AppSettings.ScreenNumber);
 
             if (!String.IsNullOrWhiteSpace(AppSettings.Accent))
             {
@@ -223,6 +236,7 @@ namespace Queue.Display.ViewModels
             AppSettings.IsRemember = IsRemember;
             AppSettings.Accent = SelectedAccent == null ? String.Empty : SelectedAccent.Name;
             AppSettings.Language = SelectedLanguage;
+            AppSettings.ScreenNumber = SelectedScreenNumber == null ? (byte)0 : SelectedScreenNumber.Number;
 
             ConfigurationManager.Save();
         }

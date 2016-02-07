@@ -122,6 +122,7 @@
     <Compile Include="Controls\LoadingControl.xaml.cs">
       <DependentUpon>LoadingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Types\ScreenNumberItem.cs" />
     <Compile Include="Types\EnumVisibilityConverter.cs" />
     <Compile Include="Enums\ServerState.cs" />
     <Compile Include="Core\Services\ITemplateManager.cs" />
@@ -226,6 +227,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Translate\Messages.en-EN.resx" />
+    <EmbeddedResource Include="Translate\Messages.resx" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

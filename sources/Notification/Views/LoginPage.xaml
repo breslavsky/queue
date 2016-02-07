@@ -16,7 +16,7 @@
     </i:Interaction.Triggers>
 
     <Border>
-        <Grid Width="400" Height="220">
+        <Grid Width="400" Height="250">
             <Border BorderBrush="{DynamicResource AccentColorBrush}"
                     BorderThickness="2"
                     CornerRadius="5"
@@ -33,6 +33,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
@@ -63,8 +64,7 @@
                     </Grid>
 
                     <Label Grid.Row="1" Content="{lex:Loc Accent}" />
-                    <ComboBox x:Name="comboBox"
-                              Grid.Row="1"
+                    <ComboBox Grid.Row="1"
                               Grid.Column="1"
                               Margin="5"
                               ItemsSource="{Binding AccentColors,
@@ -112,13 +112,23 @@
                             </Style>
                         </lex:EnumComboBox.Style>
                     </lex:EnumComboBox>
-                    <CheckBox Grid.Row="3"
+
+                    <Label Grid.Row="3" Content="{lex:Loc ScreenNumber}" />
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="1"
+                              Margin="5"
+                              ItemsSource="{Binding ScreensNumbers,
+                                                    Mode=OneWay}"
+                              SelectedItem="{Binding SelectedScreenNumber,
+                                                     Mode=TwoWay}" />
+
+                    <CheckBox Grid.Row="4"
                               Grid.Column="1"
                               Content="{lex:Loc Remember}"
                               IsChecked="{Binding IsRemember}" />
-                    <CheckBox Grid.Row="4"
+                    <CheckBox Grid.Row="5"
                               Grid.Column="1"
-                              Content="Во весь экран"
+                              Content="{lex:Loc Queue.Notification:Strings:IsFullScreen}"
                               IsChecked="{Binding IsFullScreen}" />
                 </Grid>
             </Border>
