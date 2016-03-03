@@ -48,7 +48,7 @@ namespace Queue.Notification.ViewModels
         public TaskPool TaskPool { get; set; }
 
         [Dependency]
-        public NotificationSettings AppSettings { get; set; }
+        public AppSettings AppSettings { get; set; }
 
         [Dependency]
         public HubSettings HubSettings { get; set; }

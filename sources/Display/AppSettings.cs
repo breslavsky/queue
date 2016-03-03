@@ -7,7 +7,7 @@ namespace Queue.Display.Models
 {
     public class AppSettings : ConfigurationSection
     {
-        public const string SectionKey = "displaySettings";
+        public const string SectionKey = "display";
 
         public AppSettings()
         {
@@ -34,6 +34,13 @@ namespace Queue.Display.Models
         {
             get { return (Language)this["language"]; }
             set { this["language"] = value; }
+        }
+
+        [ConfigurationProperty("screenNumber")]
+        public byte ScreenNumber
+        {
+            get { return (byte)this["screenNumber"]; }
+            set { this["screenNumber"] = value; }
         }
 
         [ConfigurationProperty("endpoint")]
