@@ -23,6 +23,7 @@ namespace Queue.Services.DTO
             EarlyStartTime = new TimeSpan(10, 0, 0);
             EarlyFinishTime = new TimeSpan(18, 0, 0);
             EarlyReservation = 50;
+            MaxOnlineOperators = 1;
         }
 
         [DataMember]
@@ -57,5 +58,11 @@ namespace Queue.Services.DTO
 
         [DataMember]
         public int EarlyReservation { get; set; }
+
+        [DataMember]
+        public int MaxOnlineOperators { get; set; }
+
+        [DataMember]
+        public bool OnlineOperatorsOnly { get; set; }
     }
 }
