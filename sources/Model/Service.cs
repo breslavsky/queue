@@ -5,7 +5,6 @@ using NHibernate.Mapping.Attributes;
 using NHibernate.Validator.Constraints;
 using Queue.Model.Common;
 using System;
-using System.Collections.Generic;
 
 namespace Queue.Model
 {
@@ -13,6 +12,7 @@ namespace Queue.Model
     [Cache(Usage = CacheUsage.ReadWrite)]
     public class Service : IdentifiedEntity
     {
+        private const int NameLength = 1024 * 5;
         private const int DescriptionLength = 1024 * 500;
         private const int TagsLength = 1024 * 500;
 
@@ -70,7 +70,7 @@ namespace Queue.Model
         public virtual int MaxClientRecalls { get; set; }
 
         [NotNullNotEmpty(Message = "Название услуги не указано")]
-        [Property(Length = 1000)]
+        [Property(Length = NameLength)]
         public virtual string Name { get; set; }
 
         [Property]
