@@ -1,8 +1,6 @@
 ﻿using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
-using NLog.Config;
-using NLog.Targets;
 using System.Windows;
 
 namespace Queue.UI.WPF
@@ -15,31 +13,11 @@ namespace Queue.UI.WPF
         {
             base.OnStartup(e);
 
-            //ConfigureLogger();
-
             logger.Info("starting application...");
+
             InitializeContainer();
+
             logger.Info("application started");
-        }
-
-        public void ConfigureLogger()
-        {
-            var config = new LoggingConfiguration();
-            var fileTarget = new FileTarget()
-            {
-                FileName = "${basedir}/logs/log.txt",
-                ConcurrentWrites = true,
-                KeepFileOpen = false,
-                ArchiveFileName = "${basedir}/logs/log.{#}.txt",
-                ArchiveAboveSize = 1024 * 1024 * 10,
-                ArchiveNumbering = ArchiveNumberingMode.Sequence,
-                Layout = "${longdate}|${level:uppercase=true}|${logger}|${message} ${exception:format=tostring}"
-            };
-            config.AddTarget("file", fileTarget);
-
-            config.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, fileTarget));
-
-            LogManager.Configuration = config;
         }
 
         private void InitializeContainer()

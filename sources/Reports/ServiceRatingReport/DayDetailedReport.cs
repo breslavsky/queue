@@ -27,16 +27,17 @@ namespace Queue.Reports.ServiceRatingReport
             int rowIndex = worksheet.LastRowNum + 1;
             foreach (var year in items)
             {
-                WriteBoldCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(year.Year));
+                WriteCell(worksheet.CreateRow(rowIndex++), 0, c => c.SetCellValue(year.Year), styles[StandardCellStyles.BoldStyle]);
 
                 foreach (var month in year.Months)
                 {
-                    WriteBoldCell(worksheet.CreateRow(rowIndex++), 1, c =>
-                            c.SetCellValue(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month.Month)));
+                    WriteCell(worksheet.CreateRow(rowIndex++), 1,
+                        c => c.SetCellValue(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month.Month)),
+                                styles[StandardCellStyles.BoldStyle]);
 
                     foreach (var day in month.Days)
                     {
-                        WriteBoldCell(worksheet.CreateRow(rowIndex++), 2, c => c.SetCellValue(day.Day));
+                        WriteCell(worksheet.CreateRow(rowIndex++), 2, c => c.SetCellValue(day.Day), styles[StandardCellStyles.BoldStyle]);
                         WriteServicesRatings(worksheet, day.Ratings, root, ref  rowIndex);
                     }
                 }

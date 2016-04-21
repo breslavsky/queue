@@ -62,6 +62,9 @@
             this.schedulePanel = new System.Windows.Forms.Panel();
             this.renderingModeControl = new Queue.UI.WinForms.EnumItemControl();
             this.serviceRenderingsLabel = new System.Windows.Forms.Label();
+            this.onlineOperatorsOnlyCheckBox = new System.Windows.Forms.CheckBox();
+            this.maxOnlineOperatorsLabel = new System.Windows.Forms.Label();
+            this.maxOnlineOperatorsUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.serviceRenderingsGridView)).BeginInit();
             this.earlyGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.earlyClientIntervalUpDown)).BeginInit();
@@ -70,11 +73,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.liveClientIntervalUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.intersectionUpDown)).BeginInit();
             this.schedulePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxOnlineOperatorsUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(135, 270);
+            this.saveButton.Location = new System.Drawing.Point(135, 280);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 1;
@@ -84,7 +88,7 @@
             // 
             // addServiceRenderingButton
             // 
-            this.addServiceRenderingButton.Location = new System.Drawing.Point(695, 195);
+            this.addServiceRenderingButton.Location = new System.Drawing.Point(695, 198);
             this.addServiceRenderingButton.Name = "addServiceRenderingButton";
             this.addServiceRenderingButton.Size = new System.Drawing.Size(80, 25);
             this.addServiceRenderingButton.TabIndex = 0;
@@ -110,7 +114,7 @@
             this.serviceStepColumn,
             this.modeColumn,
             this.priorityColumn});
-            this.serviceRenderingsGridView.Location = new System.Drawing.Point(215, 35);
+            this.serviceRenderingsGridView.Location = new System.Drawing.Point(215, 38);
             this.serviceRenderingsGridView.MultiSelect = false;
             this.serviceRenderingsGridView.Name = "serviceRenderingsGridView";
             this.serviceRenderingsGridView.ReadOnly = true;
@@ -159,7 +163,7 @@
             // maxClientRequestsMeasureLabel
             // 
             this.maxClientRequestsMeasureLabel.AutoSize = true;
-            this.maxClientRequestsMeasureLabel.Location = new System.Drawing.Point(170, 90);
+            this.maxClientRequestsMeasureLabel.Location = new System.Drawing.Point(170, 93);
             this.maxClientRequestsMeasureLabel.Name = "maxClientRequestsMeasureLabel";
             this.maxClientRequestsMeasureLabel.Size = new System.Drawing.Size(20, 13);
             this.maxClientRequestsMeasureLabel.TabIndex = 0;
@@ -175,16 +179,16 @@
             this.earlyGroupBox.Controls.Add(this.minLabel3);
             this.earlyGroupBox.Controls.Add(this.earlyReservationLabel);
             this.earlyGroupBox.Controls.Add(this.earlyReservationUpDown);
-            this.earlyGroupBox.Location = new System.Drawing.Point(10, 135);
+            this.earlyGroupBox.Location = new System.Drawing.Point(10, 138);
             this.earlyGroupBox.Name = "earlyGroupBox";
-            this.earlyGroupBox.Size = new System.Drawing.Size(195, 95);
+            this.earlyGroupBox.Size = new System.Drawing.Size(195, 102);
             this.earlyGroupBox.TabIndex = 0;
             this.earlyGroupBox.TabStop = false;
             this.earlyGroupBox.Text = "По записи";
             // 
             // earlyTimeLabel
             // 
-            this.earlyTimeLabel.Location = new System.Drawing.Point(5, 15);
+            this.earlyTimeLabel.Location = new System.Drawing.Point(5, 16);
             this.earlyTimeLabel.Name = "earlyTimeLabel";
             this.earlyTimeLabel.Size = new System.Drawing.Size(105, 25);
             this.earlyTimeLabel.TabIndex = 0;
@@ -193,7 +197,7 @@
             // 
             // earlyStartTimeTextBox
             // 
-            this.earlyStartTimeTextBox.Location = new System.Drawing.Point(115, 20);
+            this.earlyStartTimeTextBox.Location = new System.Drawing.Point(115, 21);
             this.earlyStartTimeTextBox.Mask = "00:00";
             this.earlyStartTimeTextBox.Name = "earlyStartTimeTextBox";
             this.earlyStartTimeTextBox.Size = new System.Drawing.Size(35, 20);
@@ -204,7 +208,7 @@
             // 
             // earlyFinishTimeTextBox
             // 
-            this.earlyFinishTimeTextBox.Location = new System.Drawing.Point(155, 20);
+            this.earlyFinishTimeTextBox.Location = new System.Drawing.Point(155, 21);
             this.earlyFinishTimeTextBox.Mask = "00:00";
             this.earlyFinishTimeTextBox.Name = "earlyFinishTimeTextBox";
             this.earlyFinishTimeTextBox.Size = new System.Drawing.Size(35, 20);
@@ -215,7 +219,7 @@
             // 
             // earlyClientIntervalLabel
             // 
-            this.earlyClientIntervalLabel.Location = new System.Drawing.Point(5, 40);
+            this.earlyClientIntervalLabel.Location = new System.Drawing.Point(5, 41);
             this.earlyClientIntervalLabel.Name = "earlyClientIntervalLabel";
             this.earlyClientIntervalLabel.Size = new System.Drawing.Size(105, 25);
             this.earlyClientIntervalLabel.TabIndex = 3;
@@ -224,7 +228,7 @@
             // 
             // earlyClientIntervalUpDown
             // 
-            this.earlyClientIntervalUpDown.Location = new System.Drawing.Point(115, 45);
+            this.earlyClientIntervalUpDown.Location = new System.Drawing.Point(115, 46);
             this.earlyClientIntervalUpDown.Maximum = new decimal(new int[] {
             600,
             0,
@@ -238,7 +242,7 @@
             // minLabel3
             // 
             this.minLabel3.AutoSize = true;
-            this.minLabel3.Location = new System.Drawing.Point(155, 50);
+            this.minLabel3.Location = new System.Drawing.Point(155, 51);
             this.minLabel3.Name = "minLabel3";
             this.minLabel3.Size = new System.Drawing.Size(27, 13);
             this.minLabel3.TabIndex = 5;
@@ -246,7 +250,7 @@
             // 
             // earlyReservationLabel
             // 
-            this.earlyReservationLabel.Location = new System.Drawing.Point(5, 65);
+            this.earlyReservationLabel.Location = new System.Drawing.Point(5, 72);
             this.earlyReservationLabel.Name = "earlyReservationLabel";
             this.earlyReservationLabel.Size = new System.Drawing.Size(105, 25);
             this.earlyReservationLabel.TabIndex = 0;
@@ -260,7 +264,7 @@
             0,
             0,
             0});
-            this.earlyReservationUpDown.Location = new System.Drawing.Point(115, 70);
+            this.earlyReservationUpDown.Location = new System.Drawing.Point(115, 77);
             this.earlyReservationUpDown.Name = "earlyReservationUpDown";
             this.earlyReservationUpDown.Size = new System.Drawing.Size(35, 20);
             this.earlyReservationUpDown.TabIndex = 0;
@@ -268,7 +272,7 @@
             // 
             // timeLabel
             // 
-            this.timeLabel.Location = new System.Drawing.Point(10, 5);
+            this.timeLabel.Location = new System.Drawing.Point(10, 8);
             this.timeLabel.Name = "timeLabel";
             this.timeLabel.Size = new System.Drawing.Size(115, 25);
             this.timeLabel.TabIndex = 0;
@@ -277,7 +281,7 @@
             // 
             // maxClientRequestsUpDown
             // 
-            this.maxClientRequestsUpDown.Location = new System.Drawing.Point(130, 85);
+            this.maxClientRequestsUpDown.Location = new System.Drawing.Point(130, 88);
             this.maxClientRequestsUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -290,7 +294,7 @@
             // 
             // maxClientRequestsLabel
             // 
-            this.maxClientRequestsLabel.Location = new System.Drawing.Point(10, 80);
+            this.maxClientRequestsLabel.Location = new System.Drawing.Point(10, 83);
             this.maxClientRequestsLabel.Name = "maxClientRequestsLabel";
             this.maxClientRequestsLabel.Size = new System.Drawing.Size(115, 25);
             this.maxClientRequestsLabel.TabIndex = 0;
@@ -299,7 +303,7 @@
             // 
             // startTimeTextBox
             // 
-            this.startTimeTextBox.Location = new System.Drawing.Point(130, 10);
+            this.startTimeTextBox.Location = new System.Drawing.Point(130, 13);
             this.startTimeTextBox.Mask = "00:00";
             this.startTimeTextBox.Name = "startTimeTextBox";
             this.startTimeTextBox.Size = new System.Drawing.Size(35, 20);
@@ -310,7 +314,7 @@
             // 
             // finishTimeTextBox
             // 
-            this.finishTimeTextBox.Location = new System.Drawing.Point(170, 10);
+            this.finishTimeTextBox.Location = new System.Drawing.Point(170, 13);
             this.finishTimeTextBox.Mask = "00:00";
             this.finishTimeTextBox.Name = "finishTimeTextBox";
             this.finishTimeTextBox.Size = new System.Drawing.Size(35, 20);
@@ -321,7 +325,7 @@
             // 
             // liveClientIntervalLabel
             // 
-            this.liveClientIntervalLabel.Location = new System.Drawing.Point(10, 30);
+            this.liveClientIntervalLabel.Location = new System.Drawing.Point(10, 33);
             this.liveClientIntervalLabel.Name = "liveClientIntervalLabel";
             this.liveClientIntervalLabel.Size = new System.Drawing.Size(115, 25);
             this.liveClientIntervalLabel.TabIndex = 0;
@@ -330,7 +334,7 @@
             // 
             // liveClientIntervalUpDown
             // 
-            this.liveClientIntervalUpDown.Location = new System.Drawing.Point(130, 35);
+            this.liveClientIntervalUpDown.Location = new System.Drawing.Point(130, 38);
             this.liveClientIntervalUpDown.Maximum = new decimal(new int[] {
             600,
             0,
@@ -344,7 +348,7 @@
             // minLabel1
             // 
             this.minLabel1.AutoSize = true;
-            this.minLabel1.Location = new System.Drawing.Point(170, 45);
+            this.minLabel1.Location = new System.Drawing.Point(170, 48);
             this.minLabel1.Name = "minLabel1";
             this.minLabel1.Size = new System.Drawing.Size(27, 13);
             this.minLabel1.TabIndex = 0;
@@ -352,7 +356,7 @@
             // 
             // intersectionLabel
             // 
-            this.intersectionLabel.Location = new System.Drawing.Point(10, 55);
+            this.intersectionLabel.Location = new System.Drawing.Point(10, 58);
             this.intersectionLabel.Name = "intersectionLabel";
             this.intersectionLabel.Size = new System.Drawing.Size(115, 25);
             this.intersectionLabel.TabIndex = 0;
@@ -361,7 +365,7 @@
             // 
             // intersectionUpDown
             // 
-            this.intersectionUpDown.Location = new System.Drawing.Point(130, 60);
+            this.intersectionUpDown.Location = new System.Drawing.Point(130, 63);
             this.intersectionUpDown.Maximum = new decimal(new int[] {
             600,
             0,
@@ -375,7 +379,7 @@
             // minLabel2
             // 
             this.minLabel2.AutoSize = true;
-            this.minLabel2.Location = new System.Drawing.Point(170, 65);
+            this.minLabel2.Location = new System.Drawing.Point(170, 68);
             this.minLabel2.Name = "minLabel2";
             this.minLabel2.Size = new System.Drawing.Size(27, 13);
             this.minLabel2.TabIndex = 0;
@@ -383,12 +387,11 @@
             // 
             // isWorkedCheckBox
             // 
-            this.isWorkedCheckBox.Location = new System.Drawing.Point(10, 5);
+            this.isWorkedCheckBox.Location = new System.Drawing.Point(10, 8);
             this.isWorkedCheckBox.Name = "isWorkedCheckBox";
-            this.isWorkedCheckBox.Size = new System.Drawing.Size(320, 17);
+            this.isWorkedCheckBox.Size = new System.Drawing.Size(320, 25);
             this.isWorkedCheckBox.TabIndex = 0;
             this.isWorkedCheckBox.Text = "Услуги оказываются";
-            this.isWorkedCheckBox.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.isWorkedCheckBox.CheckedChanged += new System.EventHandler(this.isWorkedCheckBox_CheckedChanged);
             this.isWorkedCheckBox.Leave += new System.EventHandler(this.isWorkedCheckBox_Leave);
             // 
@@ -410,15 +413,18 @@
             this.schedulePanel.Controls.Add(this.serviceRenderingsLabel);
             this.schedulePanel.Controls.Add(this.serviceRenderingsGridView);
             this.schedulePanel.Controls.Add(this.earlyGroupBox);
+            this.schedulePanel.Controls.Add(this.onlineOperatorsOnlyCheckBox);
+            this.schedulePanel.Controls.Add(this.maxOnlineOperatorsLabel);
+            this.schedulePanel.Controls.Add(this.maxOnlineOperatorsUpDown);
             this.schedulePanel.Controls.Add(this.addServiceRenderingButton);
-            this.schedulePanel.Location = new System.Drawing.Point(5, 25);
+            this.schedulePanel.Location = new System.Drawing.Point(5, 35);
             this.schedulePanel.Name = "schedulePanel";
-            this.schedulePanel.Size = new System.Drawing.Size(780, 240);
+            this.schedulePanel.Size = new System.Drawing.Size(780, 245);
             this.schedulePanel.TabIndex = 2;
             // 
             // renderingModeControl
             // 
-            this.renderingModeControl.Location = new System.Drawing.Point(10, 110);
+            this.renderingModeControl.Location = new System.Drawing.Point(10, 113);
             this.renderingModeControl.Name = "renderingModeControl";
             this.renderingModeControl.Size = new System.Drawing.Size(195, 21);
             this.renderingModeControl.TabIndex = 1;
@@ -426,12 +432,43 @@
             // 
             // serviceRenderingsLabel
             // 
-            this.serviceRenderingsLabel.Location = new System.Drawing.Point(215, 10);
+            this.serviceRenderingsLabel.Location = new System.Drawing.Point(215, 13);
             this.serviceRenderingsLabel.Name = "serviceRenderingsLabel";
-            this.serviceRenderingsLabel.Size = new System.Drawing.Size(560, 20);
+            this.serviceRenderingsLabel.Size = new System.Drawing.Size(201, 20);
             this.serviceRenderingsLabel.TabIndex = 2;
             this.serviceRenderingsLabel.Text = "Параметры обслуживания:";
             this.serviceRenderingsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // onlineOperatorsOnlyCheckBox
+            // 
+            this.onlineOperatorsOnlyCheckBox.Location = new System.Drawing.Point(216, 208);
+            this.onlineOperatorsOnlyCheckBox.Name = "onlineOperatorsOnlyCheckBox";
+            this.onlineOperatorsOnlyCheckBox.Size = new System.Drawing.Size(150, 30);
+            this.onlineOperatorsOnlyCheckBox.TabIndex = 3;
+            this.onlineOperatorsOnlyCheckBox.Text = "Учитывать только операторов онлайн";
+            this.onlineOperatorsOnlyCheckBox.Leave += new System.EventHandler(this.onlineOperatorsOnlyCheckBox_Leave);
+            // 
+            // maxOnlineOperatorsLabel
+            // 
+            this.maxOnlineOperatorsLabel.Location = new System.Drawing.Point(376, 208);
+            this.maxOnlineOperatorsLabel.Name = "maxOnlineOperatorsLabel";
+            this.maxOnlineOperatorsLabel.Size = new System.Drawing.Size(120, 31);
+            this.maxOnlineOperatorsLabel.TabIndex = 6;
+            this.maxOnlineOperatorsLabel.Text = "Максимум операторов онлайн";
+            this.maxOnlineOperatorsLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // maxOnlineOperatorsUpDown
+            // 
+            this.maxOnlineOperatorsUpDown.Location = new System.Drawing.Point(504, 216);
+            this.maxOnlineOperatorsUpDown.Maximum = new decimal(new int[] {
+            600,
+            0,
+            0,
+            0});
+            this.maxOnlineOperatorsUpDown.Name = "maxOnlineOperatorsUpDown";
+            this.maxOnlineOperatorsUpDown.Size = new System.Drawing.Size(35, 20);
+            this.maxOnlineOperatorsUpDown.TabIndex = 6;
+            this.maxOnlineOperatorsUpDown.Leave += new System.EventHandler(this.maxOnlineOperatorsUpDown_Leave);
             // 
             // ScheduleControl
             // 
@@ -452,6 +489,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.intersectionUpDown)).EndInit();
             this.schedulePanel.ResumeLayout(false);
             this.schedulePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.maxOnlineOperatorsUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -490,5 +528,8 @@
         private System.Windows.Forms.Label earlyClientIntervalLabel;
         private System.Windows.Forms.NumericUpDown earlyClientIntervalUpDown;
         private System.Windows.Forms.Label minLabel3;
+        private System.Windows.Forms.CheckBox onlineOperatorsOnlyCheckBox;
+        private System.Windows.Forms.NumericUpDown maxOnlineOperatorsUpDown;
+        private System.Windows.Forms.Label maxOnlineOperatorsLabel;
     }
 }

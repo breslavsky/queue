@@ -95,7 +95,9 @@ namespace Queue.Services.Server
                             EarlyStartTime = template.EarlyStartTime,
                             EarlyFinishTime = template.EarlyFinishTime,
                             EarlyReservation = template.EarlyReservation,
-                            EarlyClientInterval = template.EarlyClientInterval
+                            EarlyClientInterval = template.EarlyClientInterval,
+                            MaxOnlineOperators = template.MaxOnlineOperators,
+                            OnlineOperatorsOnly = template.OnlineOperatorsOnly
                         };
                         session.Save(schedule);
 
@@ -206,7 +208,9 @@ namespace Queue.Services.Server
                             EarlyStartTime = template.EarlyStartTime,
                             EarlyFinishTime = template.EarlyFinishTime,
                             EarlyReservation = template.EarlyReservation,
-                            EarlyClientInterval = template.EarlyClientInterval
+                            EarlyClientInterval = template.EarlyClientInterval,
+                            MaxOnlineOperators = template.MaxOnlineOperators,
+                            OnlineOperatorsOnly = template.OnlineOperatorsOnly
                         };
                         session.Save(schedule);
 
@@ -303,6 +307,8 @@ namespace Queue.Services.Server
                             schedule.EarlyFinishTime = template.EarlyFinishTime;
                             schedule.EarlyReservation = template.EarlyReservation;
                             schedule.EarlyClientInterval = template.EarlyClientInterval;
+                            schedule.MaxOnlineOperators = template.MaxOnlineOperators;
+                            schedule.OnlineOperatorsOnly = template.OnlineOperatorsOnly;
                             session.Save(schedule);
 
                             foreach (var r in session.CreateCriteria<ServiceRendering>()
@@ -436,7 +442,9 @@ namespace Queue.Services.Server
                             EarlyStartTime = template.EarlyStartTime,
                             EarlyFinishTime = template.EarlyFinishTime,
                             EarlyReservation = template.EarlyReservation,
-                            EarlyClientInterval = template.EarlyClientInterval
+                            EarlyClientInterval = template.EarlyClientInterval,
+                            MaxOnlineOperators = template.MaxOnlineOperators,
+                            OnlineOperatorsOnly = template.OnlineOperatorsOnly
                         };
                         session.Save(schedule);
 
@@ -518,6 +526,8 @@ namespace Queue.Services.Server
                     schedule.EarlyFinishTime = source.EarlyFinishTime;
                     schedule.EarlyReservation = source.EarlyReservation;
                     schedule.EarlyClientInterval = source.EarlyClientInterval;
+                    schedule.MaxOnlineOperators = source.MaxOnlineOperators;
+                    schedule.OnlineOperatorsOnly = source.OnlineOperatorsOnly;
 
                     var errors = schedule.Validate();
                     if (errors.Length > 0)

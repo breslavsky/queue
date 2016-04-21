@@ -48,6 +48,12 @@ namespace Queue.Model
         [Property]
         public virtual int Version { get; set; }
 
+        [Property]
+        public virtual bool OnlineOperatorsOnly { get; set; }
+
+        [Property]
+        public virtual int MaxOnlineOperators { get; set; }
+
         #endregion properties
 
         public override ValidationError[] Validate()

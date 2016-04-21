@@ -194,7 +194,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    service = await taskPool.AddTask(channel.Service.EditService(service));
+                    Service = await taskPool.AddTask(channel.Service.EditService(service));
                     if (Saved != null)
                     {
                         Saved(this, EventArgs.Empty);

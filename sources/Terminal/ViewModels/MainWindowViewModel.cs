@@ -19,6 +19,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using WPFLocalizeExtension.Engine;
+using WinForms = System.Windows.Forms;
 
 namespace Queue.Terminal.ViewModels
 {
@@ -102,6 +103,13 @@ namespace Queue.Terminal.ViewModels
             Window.Navigate(new TerminalWindow());
 
             CreateTimers();
+
+            if (AppSettings.ScreenNumber < WinForms.Screen.AllScreens.Length)
+            {
+                var screen = WinForms.Screen.AllScreens[AppSettings.ScreenNumber];
+                Application.Current.MainWindow.Left = screen.WorkingArea.Left;
+                Application.Current.MainWindow.Top = screen.WorkingArea.Top;
+            }
 
             Application.Current.MainWindow.KeyDown += MainWindow_KeyDown;
             Application.Current.MainWindow.PreviewMouseUp += MainWindow_PreviewMouseUp;

@@ -48,7 +48,7 @@ namespace Queue.Notification.ViewModels
         public TaskPool TaskPool { get; set; }
 
         [Dependency]
-        public NotificationSettings AppSettings { get; set; }
+        public AppSettings AppSettings { get; set; }
 
         [Dependency]
         public HubSettings HubSettings { get; set; }
@@ -71,8 +71,6 @@ namespace Queue.Notification.ViewModels
         public ClientRequestsControlViewModel()
             : base()
         {
-            logger.Info("test!!!!");
-
             LoadedCommand = new RelayCommand(Loaded);
             UnloadedCommand = new RelayCommand(Unloaded);
 
@@ -234,7 +232,7 @@ namespace Queue.Notification.ViewModels
                                     .Select(c => c.Number);
             logger.Debug("workplaces: " + String.Join(", ", workplaces));
 
-            foreach (var req in Requests)
+            foreach (var req in Requests.Where(r => r.Request.State == ClientRequestState.Calling))
             {
                 logger.Debug("req.Request.Operator.Workplace.Number: " + req.Request.Operator.Workplace.Number);
                 if (display.Workplaces.Count > 0 && !workplaces.Contains(req.Request.Operator.Workplace.Number))

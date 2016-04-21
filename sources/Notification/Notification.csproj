@@ -144,7 +144,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Settings\NotificationSettings.cs" />
+    <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\DisplayCollection.cs" />
     <Compile Include="Settings\DisplayConfig.cs" />
     <Compile Include="Settings\WorkplaceConfig.cs" />

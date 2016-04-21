@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -86,6 +87,9 @@ namespace Queue.Operator
         #region properties
 
         public bool IsLogout { get; private set; }
+
+        [DllImport("User32.dll")]
+        public static extern Int32 SetForegroundWindow(int hWnd);
 
         private ClientRequestPlan CurrentClientRequestPlan
         {
@@ -192,6 +196,13 @@ namespace Queue.Operator
                                         {
                                             await taskPool.AddTask(channel.Service.UpdateCurrentClientRequest(ClientRequestState.Calling));
                                             await taskPool.AddTask(channel.Service.CallCurrentClient());
+                                            if (WindowState != FormWindowState.Normal)
+                                            {
+                                                WindowState = FormWindowState.Normal;
+                                            }
+
+                                            SetForegroundWindow(Handle.ToInt32());
+                                            Console.Beep();
                                         }
                                         catch (Exception exception)
                                         {

@@ -61,6 +61,9 @@ namespace Queue.Administrator
                     earlyReservationUpDown.Value = schedule.EarlyReservation;
                     earlyClientIntervalUpDown.Value = (decimal)schedule.EarlyClientInterval.TotalMinutes;
 
+                    onlineOperatorsOnlyCheckBox.Checked = schedule.OnlineOperatorsOnly;
+                    maxOnlineOperatorsUpDown.Value = schedule.MaxOnlineOperators;
+
                     Invoke(new MethodInvoker(async () =>
                     {
                         using (var channel = ChannelManager.CreateChannel())
@@ -293,6 +296,16 @@ namespace Queue.Administrator
         private void earlyClientIntervalUpDown_Leave(object sender, EventArgs e)
         {
             schedule.EarlyClientInterval = TimeSpan.FromMinutes((double)earlyClientIntervalUpDown.Value);
+        }
+
+        private void onlineOperatorsOnlyCheckBox_Leave(object sender, EventArgs e)
+        {
+            schedule.OnlineOperatorsOnly = onlineOperatorsOnlyCheckBox.Checked;
+        }
+
+        private void maxOnlineOperatorsUpDown_Leave(object sender, EventArgs e)
+        {
+            schedule.MaxOnlineOperators = (int)maxOnlineOperatorsUpDown.Value;
         }
 
         #endregion bindings

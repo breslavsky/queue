@@ -385,7 +385,7 @@ namespace Queue.Services.Server
         /// </summary>
         public ServiceFreeTime GetServiceFreeTime(Service service, ServiceStep serviceStep, ClientRequestType requestType, int subjects = 1)
         {
-            Schedule schedule = GetServiceSchedule(service);
+            var schedule = GetServiceSchedule(service);
             if (schedule == null)
             {
                 throw new Exception("Не удалось определить расписание для услуги");
@@ -414,10 +414,17 @@ namespace Queue.Services.Server
                     break;
             }
 
+            var report = new List<string>()
+            {
+                string.Format("Поиск свободного времени на дату {0:dd.MM.yyyy} и время {1:hh\\:mm\\:ss}", PlanDate, PlanTime)
+            };
+
             // Только подходящие параметры обслуживания
             var serviceRenderingMode = requestType == ClientRequestType.Early
                 ? ServiceRenderingMode.EarlyRequests
                 : ServiceRenderingMode.LiveRequests;
+
+            report.Add(string.Format("Выбран режим обслуживания [{0}]", serviceRenderingMode));
 
             var renderings = GetServiceRenderings(schedule, serviceStep, serviceRenderingMode);
 
@@ -427,13 +434,24 @@ namespace Queue.Services.Server
 
             if (potentialOperatorsPlans.Count == 0)
             {
-                throw new Exception("В системе нет операторов способных оказать услугу");
+                throw new Exception("В системе нет активных операторов способных оказать услугу");
             }
 
-            var report = new List<string>()
+            report.Add("Найдены следующие потенциальные планы операторов");
+            foreach (var o in potentialOperatorsPlans)
             {
-                string.Format("Поиск свободного времени на дату {0:dd.MM.yyyy} и время {1:hh\\:mm\\:ss}", PlanDate, PlanTime)
-            };
+                report.Add(o.ToString());
+            }
+
+            if (PlanDate == DateTime.Today && schedule.OnlineOperatorsOnly)
+            {
+                potentialOperatorsPlans.RemoveAll(o => !o.Operator.Online);
+                report.Add("Оставлены только операторы онлайн");
+                foreach (var o in potentialOperatorsPlans)
+                {
+                    report.Add(o.ToString());
+                }
+            }
 
             var timeIntervals = new List<TimeSpan>();
 
@@ -494,7 +512,9 @@ namespace Queue.Services.Server
 
             if (PlanDate != DateTime.Today)
             {
-                int maxRequests = (int)((schedule.EarlyFinishTime - schedule.EarlyStartTime).Ticks / clientInterval.Ticks) * potentialOperatorsPlans.Count;
+                int maxOnlineOperators = schedule.MaxOnlineOperators > 0 ? schedule.MaxOnlineOperators : potentialOperatorsPlans.Count;
+
+                int maxRequests = (int)((schedule.EarlyFinishTime - schedule.EarlyStartTime).Ticks / clientInterval.Ticks) * maxOnlineOperators;
                 report.Add(string.Format("Максимальное кол-во запросов {0}", maxRequests));
 
                 int maxEarlyClientRequests = maxRequests * schedule.EarlyReservation / 100;

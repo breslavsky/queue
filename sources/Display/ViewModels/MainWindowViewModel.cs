@@ -9,11 +9,11 @@ using Queue.Services.DTO;
 using Queue.UI.WPF;
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using WPFLocalizeExtension.Engine;
+using WinForms = System.Windows.Forms;
 
 namespace Queue.Display.ViewModels
 {
@@ -86,9 +86,9 @@ namespace Queue.Display.ViewModels
 
             Application.Current.MainWindow.KeyDown += OnKeyDown;
 
-            var screen = System.Windows.Forms.Screen.AllScreens.FirstOrDefault(s => !s.Primary);
-            if (screen != null)
+            if (AppSettings.ScreenNumber < WinForms.Screen.AllScreens.Length)
             {
+                var screen = WinForms.Screen.AllScreens[AppSettings.ScreenNumber];
                 Application.Current.MainWindow.Left = screen.WorkingArea.Left;
                 Application.Current.MainWindow.Top = screen.WorkingArea.Top;
             }

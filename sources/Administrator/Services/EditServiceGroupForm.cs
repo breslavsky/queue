@@ -123,7 +123,7 @@ namespace Queue.Administrator
                 {
                     saveButton.Enabled = false;
 
-                    serviceGroup = await taskPool.AddTask(channel.Service.EditServiceGroup(serviceGroup));
+                    ServiceGroup = await taskPool.AddTask(channel.Service.EditServiceGroup(serviceGroup));
 
                     if (Saved != null)
                     {

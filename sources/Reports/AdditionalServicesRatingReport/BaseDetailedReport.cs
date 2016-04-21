@@ -18,23 +18,18 @@ using System.ServiceModel;
 
 namespace Queue.Reports.AdditionalServicesRatingReport
 {
-    public abstract class BaseDetailedReport<T> where T : AdditionalServiceRating
+    public abstract class BaseDetailedReport<T> : BaseReport
+        where T : AdditionalServiceRating
     {
-        #region dependency
-
-        [Dependency]
-        public SessionProvider SessionProvider { get; set; }
-
-        #endregion dependency
-
         protected const int StartOperatorsStatisticsCol = 6;
 
         private Operator[] operators;
         private AdditionalService[] additionalServices;
         protected AdditionalServicesRatingReportSettings settings;
-        protected ICellStyle boldCellStyle;
         protected ICellStyle sumCellStyle;
         protected ICellStyle countCellStyle;
+
+        protected override int ColumnCount { get { return 5; } }
 
         protected BaseDetailedReport(AdditionalServicesRatingReportSettings settings)
         {
@@ -44,7 +39,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
             this.settings = settings;
         }
 
-        public HSSFWorkbook Generate()
+        protected override HSSFWorkbook InternalGenerate()
         {
             var startDate = GetStartDate();
             var finishDate = GetFinishDate();
@@ -71,10 +66,10 @@ namespace Queue.Reports.AdditionalServicesRatingReport
                     query.Where(Restrictions.On(() => additionalService.Id).IsIn(settings.Services));
                 }
 
-              var results = query.SelectList(CreateProjections)
-                                        .TransformUsing(Transformers.AliasToBean<T>())
-                                        .Where(Restrictions.Gt(Projections.Count<T>(f => f.Quantity), 0))
-                                        .List<T>();
+                var results = query.SelectList(CreateProjections)
+                                          .TransformUsing(Transformers.AliasToBean<T>())
+                                          .Where(Restrictions.Gt(Projections.Count<T>(f => f.Quantity), 0))
+                                          .List<T>();
 
                 if (results.Count == 0)
                 {
@@ -87,10 +82,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
                 CreateCellStyles(worksheet);
 
-                var row = worksheet.GetRow(0);
-                var cell = row.CreateCell(0);
-                cell.SetCellValue(string.Format("Период с {0} по {1}", startDate.ToShortDateString(), finishDate.ToShortDateString()));
-                cell.CellStyle = boldCellStyle;
+                WriteCell(worksheet.GetRow(0), 0, c => c.SetCellValue(GetTitle()), styles[StandardCellStyles.BoldStyle]);
 
                 WriteOperatorsHeader(worksheet, session);
                 RenderData(session, worksheet, results);
@@ -99,18 +91,40 @@ namespace Queue.Reports.AdditionalServicesRatingReport
             }
         }
 
+        private string GetTitle()
+        {
+            return String.Format("Период с {0} по {1}", GetStartDate().ToShortDateString(), GetFinishDate().ToShortDateString());
+        }
+
         private void CreateCellStyles(ISheet worksheet)
         {
-            boldCellStyle = worksheet.Workbook.CreateCellStyle();
-            var font = worksheet.Workbook.CreateFont();
-            font.Boldweight = 1000;
-            boldCellStyle.SetFont(font);
+            styles = new StandardCellStyles(worksheet.Workbook);
+            countCellStyle = CreateCountCellStyle(worksheet);
+            sumCellStyle = CreateSumCellStyle(worksheet);
+        }
 
-            countCellStyle = worksheet.Workbook.CreateCellStyle();
-            countCellStyle.DataFormat = worksheet.GetRow(2).GetCell(4).CellStyle.DataFormat;
+        private ICellStyle CreateSumCellStyle(ISheet worksheet)
+        {
+            var style = worksheet.Workbook.CreateCellStyle();
+            style.DataFormat = worksheet.GetRow(2).GetCell(5).CellStyle.DataFormat;
+            style.BorderLeft = BorderStyle.Thin;
+            style.BorderRight = BorderStyle.Thin;
+            style.BorderBottom = BorderStyle.Thin;
+            style.BorderTop = BorderStyle.Thin;
 
-            sumCellStyle = worksheet.Workbook.CreateCellStyle();
-            sumCellStyle.DataFormat = worksheet.GetRow(2).GetCell(5).CellStyle.DataFormat;
+            return style;
+        }
+
+        private ICellStyle CreateCountCellStyle(ISheet worksheet)
+        {
+            var style = worksheet.Workbook.CreateCellStyle();
+            style.DataFormat = worksheet.GetRow(2).GetCell(4).CellStyle.DataFormat;
+            style.BorderLeft = BorderStyle.Thin;
+            style.BorderRight = BorderStyle.Thin;
+            style.BorderBottom = BorderStyle.Thin;
+            style.BorderTop = BorderStyle.Thin;
+
+            return style;
         }
 
         private QueryOverProjectionBuilder<ClientRequestAdditionalService> CreateProjections(QueryOverProjectionBuilder<ClientRequestAdditionalService> builder)
@@ -146,7 +160,7 @@ namespace Queue.Reports.AdditionalServicesRatingReport
 
         private AdditionalService[] InternalGetAdditionalServices(ISession session)
         {
-          var query = session.QueryOver<AdditionalService>();
+            var query = session.QueryOver<AdditionalService>();
             if (settings.Services.Length > 0)
             {
                 query.Where(s => s.Id.IsIn(settings.Services));
@@ -224,31 +238,8 @@ namespace Queue.Reports.AdditionalServicesRatingReport
                 col += 2;
             }
 
-            var cell = row.CreateCell(4);
-            cell.CellStyle = countCellStyle;
-            cell.SetCellValue(totalCount);
-
-            cell = row.CreateCell(5);
-            cell.CellStyle = sumCellStyle;
-            cell.SetCellValue(totalCount * (double)service.Price);
-        }
-
-        protected void WriteBoldCell(IRow row, int cellIndex, Action<ICell> setValue)
-        {
-            var cell = row.CreateCell(cellIndex);
-            setValue(cell);
-            cell.CellStyle = CreateCellBoldStyle(row.Sheet.Workbook);
-        }
-
-        protected ICellStyle CreateCellBoldStyle(IWorkbook workBook)
-        {
-            var style = workBook.CreateCellStyle();
-
-            var font = workBook.CreateFont();
-            font.Boldweight = 1000;
-            style.SetFont(font);
-
-            return style;
+            WriteCell(row, 4, c => c.SetCellValue(totalCount), countCellStyle);
+            WriteCell(row, 5, c => c.SetCellValue(totalCount * (double)service.Price), sumCellStyle);
         }
     }
 }
