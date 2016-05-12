@@ -473,7 +473,6 @@ namespace Queue.Services.Server
 
             var clientInterval = requestType == ClientRequestType.Live
                 ? schedule.LiveClientInterval : schedule.EarlyClientInterval;
-            clientInterval = TimeSpan.FromTicks(clientInterval.Ticks * subjects);
 
             int openedRequests = 0;
 
