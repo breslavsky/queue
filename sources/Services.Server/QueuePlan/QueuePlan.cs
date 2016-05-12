@@ -204,7 +204,15 @@ namespace Queue.Services.Server
                                 {
                                     OperatorPlan = OperatorsPlans.FirstOrDefault(o => o.Operator.Equals(r.Operator)),
                                     Priority = r.Priority
-                                }).Where(r => r.OperatorPlan != null);
+                                }).Where(r => r.OperatorPlan != null)
+                                .ToList();
+
+                            if (PlanDate == DateTime.Today && schedule.OnlineOperatorsOnly)
+                            {
+                                Report.Add("Операторы не сети игнорируются");
+
+                                potentialOperatorsPlans.RemoveAll(p => p.OperatorPlan.Operator.Online);
+                            }
 
                             if (potentialOperatorsPlans.Count() == 0)
                             {
