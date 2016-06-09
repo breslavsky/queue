@@ -62,7 +62,7 @@ namespace Queue.Reports.ExceptionScheduleReport
 
             var dateTitle = DateTime.MinValue;
 
-            foreach (DefaultExceptionScheduleReportData item in items)
+            foreach (var item in items)
             {
                 IRow row;
 

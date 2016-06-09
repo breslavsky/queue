@@ -2,7 +2,6 @@
 using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
-using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
@@ -13,7 +12,6 @@ using System.Net.Http.Handlers;
 using System.ServiceModel;
 using System.Threading;
 using System.Windows.Forms;
-using QueueAdministrator = Queue.Services.DTO.Administrator;
 
 namespace Queue.Administrator
 {
@@ -184,6 +182,11 @@ namespace Queue.Administrator
                 {
                     try
                     {
+                        if (MediaConfigFile.Id == Guid.Empty)
+                        {
+                            MediaConfigFile = await taskPool.AddTask(channel.Service.EditMediaConfigFile(MediaConfigFile));
+                        }
+
                         CancellationTokenSource uploadOperation = new CancellationTokenSource();
 
                         var progress = new ProgressMessageHandler();

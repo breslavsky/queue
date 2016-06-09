@@ -2,18 +2,13 @@
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NLog;
-using Queue.Common;
-using Queue.Common.Settings;
-using Queue.Services.Common;
 using Queue.Services.Contracts;
 using Queue.Services.Contracts.Media;
-using Queue.Services.DTO;
 using Queue.Services.Media;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using System.Threading.Tasks;
 
 namespace Queue.Media
 {
