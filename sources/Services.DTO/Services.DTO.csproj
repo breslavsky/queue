@@ -36,8 +36,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="Junte.Translation, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Junte.Translation.1.0.1.0\lib\net45\Junte.Translation.dll</HintPath>
+    <Reference Include="Junte.Translation, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Junte.Translation.1.0.2.0\lib\net45\Junte.Translation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
