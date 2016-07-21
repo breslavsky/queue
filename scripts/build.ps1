@@ -1,6 +1,6 @@
 ﻿param([string]$PROJECT_NAME, [string]$DLL_FILE)
 
-$BASE_PATH = "c:\projects\queue";
+$BASE_PATH = "D:\projects\queue";
 $PROJECT_PATH = "$BASE_PATH\sources\$PROJECT_NAME";
 $PROJECT_FILE = "$PROJECT_PATH\$PROJECT_NAME.csproj";
 $WIX_PROJECT_PATH = "$BASE_PATH\sources\Installer.$PROJECT_NAME";
