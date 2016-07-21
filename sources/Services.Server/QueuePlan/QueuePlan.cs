@@ -209,7 +209,7 @@ namespace Queue.Services.Server
 
                             if (PlanDate == DateTime.Today && schedule.OnlineOperatorsOnly)
                             {
-                                Report.Add("Операторы не сети игнорируются");
+                                Report.Add("Операторы не в сети игнорируются");
 
                                 potentialOperatorsPlans.RemoveAll(p => !p.OperatorPlan.Operator.Online);
                             }
