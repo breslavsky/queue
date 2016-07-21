@@ -1,4 +1,5 @@
-﻿using Junte.Parallel;
+﻿using Junte.Data.NHibernate;
+using Junte.Parallel;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using NHibernate.Criterion;
@@ -210,7 +211,7 @@ namespace Queue.Services.Server
                             {
                                 Report.Add("Операторы не сети игнорируются");
 
-                                potentialOperatorsPlans.RemoveAll(p => p.OperatorPlan.Operator.Online);
+                                potentialOperatorsPlans.RemoveAll(p => !p.OperatorPlan.Operator.Online);
                             }
 
                             if (potentialOperatorsPlans.Count() == 0)
