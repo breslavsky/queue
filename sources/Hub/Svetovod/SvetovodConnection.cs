@@ -47,6 +47,8 @@ namespace Queue.Hub.Svetovod
             header.CopyTo(data, 0);
             body.CopyTo(data, header.Length);
 
+            logger.Debug("Write to port {0} {1}", port.PortName, data);
+
             port.Write(data, 0, data.Length);
         }
 
