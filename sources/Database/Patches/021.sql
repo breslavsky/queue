@@ -1,0 +1,1 @@
+﻿update _operator_interruption set ServiceRenderingMode = 3;

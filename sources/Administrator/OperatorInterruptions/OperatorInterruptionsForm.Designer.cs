@@ -16,24 +16,26 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.operatorInterruptionsGridView = new System.Windows.Forms.DataGridView();
+            this.operatorInterruptionsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.addAdditionalServiceButton = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.filterButton = new System.Windows.Forms.Button();
+            this.operatorCheckBox = new System.Windows.Forms.CheckBox();
+            this.operatorPanel = new System.Windows.Forms.GroupBox();
+            this.operatorLabel = new System.Windows.Forms.Label();
+            this.operatorControl = new Queue.UI.WinForms.IdentifiedEntityControl();
             this.operatorColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Type = new Queue.UI.WinForms.DataGridViewTranslatableColumn();
             this.TargetDate = new Queue.UI.WinForms.DataGridViewTranslatableColumn();
             this.dayOfWeekColumn = new Queue.UI.WinForms.DataGridViewTranslatableColumn();
             this.startTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.finishTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.operatorInterruptionsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.addAdditionalServiceButton = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.operatorCheckBox = new System.Windows.Forms.CheckBox();
-            this.operatorPanel = new System.Windows.Forms.GroupBox();
-            this.operatorLabel = new System.Windows.Forms.Label();
-            this.operatorControl = new Queue.UI.WinForms.IdentifiedEntityControl();
-            this.filterButton = new System.Windows.Forms.Button();
+            this.ServiceRenderingMode = new Queue.UI.WinForms.DataGridViewTranslatableColumn();
+            this.WeekFold = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mainTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.operatorInterruptionsGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.operatorInterruptionsBindingSource)).BeginInit();
@@ -64,14 +66,14 @@
             this.operatorInterruptionsGridView.AllowUserToResizeColumns = false;
             this.operatorInterruptionsGridView.AllowUserToResizeRows = false;
             this.operatorInterruptionsGridView.AutoGenerateColumns = false;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(3);
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.operatorInterruptionsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(3);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.operatorInterruptionsGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.operatorInterruptionsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.operatorInterruptionsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.operatorColumn,
@@ -79,7 +81,9 @@
             this.TargetDate,
             this.dayOfWeekColumn,
             this.startTimeColumn,
-            this.finishTimeColumn});
+            this.finishTimeColumn,
+            this.ServiceRenderingMode,
+            this.WeekFold});
             this.operatorInterruptionsGridView.DataSource = this.operatorInterruptionsBindingSource;
             this.operatorInterruptionsGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.operatorInterruptionsGridView.Location = new System.Drawing.Point(0, 60);
@@ -93,59 +97,6 @@
             this.operatorInterruptionsGridView.TabIndex = 0;
             this.operatorInterruptionsGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.operatorInterruptionsGridView_CellMouseDoubleClick);
             this.operatorInterruptionsGridView.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.operatorInterruptionsGridView_UserDeletingRow);
-            // 
-            // operatorColumn
-            // 
-            this.operatorColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.operatorColumn.DataPropertyName = "Operator";
-            this.operatorColumn.HeaderText = "Оператор";
-            this.operatorColumn.Name = "operatorColumn";
-            this.operatorColumn.ReadOnly = true;
-            // 
-            // Type
-            // 
-            this.Type.DataPropertyName = "Type";
-            this.Type.HeaderText = "Тип";
-            this.Type.Name = "Type";
-            this.Type.ReadOnly = true;
-            this.Type.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Type.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // TargetDate
-            // 
-            this.TargetDate.DataPropertyName = "TargetDate";
-            dataGridViewCellStyle8.NullValue = null;
-            this.TargetDate.DefaultCellStyle = dataGridViewCellStyle8;
-            this.TargetDate.HeaderText = "Целевая дата";
-            this.TargetDate.Name = "TargetDate";
-            this.TargetDate.ReadOnly = true;
-            this.TargetDate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.TargetDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.TargetDate.Width = 150;
-            // 
-            // dayOfWeekColumn
-            // 
-            this.dayOfWeekColumn.DataPropertyName = "DayOfWeek";
-            this.dayOfWeekColumn.HeaderText = "День недели";
-            this.dayOfWeekColumn.Name = "dayOfWeekColumn";
-            this.dayOfWeekColumn.ReadOnly = true;
-            this.dayOfWeekColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dayOfWeekColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.dayOfWeekColumn.Width = 120;
-            // 
-            // startTimeColumn
-            // 
-            this.startTimeColumn.DataPropertyName = "StartTime";
-            this.startTimeColumn.HeaderText = "Начало";
-            this.startTimeColumn.Name = "startTimeColumn";
-            this.startTimeColumn.ReadOnly = true;
-            // 
-            // finishTimeColumn
-            // 
-            this.finishTimeColumn.DataPropertyName = "FinishTime";
-            this.finishTimeColumn.HeaderText = "Окончание";
-            this.finishTimeColumn.Name = "finishTimeColumn";
-            this.finishTimeColumn.ReadOnly = true;
             // 
             // operatorInterruptionsBindingSource
             // 
@@ -171,6 +122,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(758, 54);
             this.panel1.TabIndex = 1;
+            // 
+            // filterButton
+            // 
+            this.filterButton.Location = new System.Drawing.Point(250, 20);
+            this.filterButton.Name = "filterButton";
+            this.filterButton.Size = new System.Drawing.Size(75, 25);
+            this.filterButton.TabIndex = 8;
+            this.filterButton.Text = "Вывести";
+            this.filterButton.UseVisualStyleBackColor = true;
+            this.filterButton.Click += new System.EventHandler(this.filterButton_Click);
             // 
             // operatorCheckBox
             // 
@@ -211,15 +172,75 @@
             this.operatorControl.UseResetButton = false;
             this.operatorControl.Leave += new System.EventHandler(this.operatorControl_Leave);
             // 
-            // filterButton
+            // operatorColumn
             // 
-            this.filterButton.Location = new System.Drawing.Point(250, 20);
-            this.filterButton.Name = "filterButton";
-            this.filterButton.Size = new System.Drawing.Size(75, 25);
-            this.filterButton.TabIndex = 8;
-            this.filterButton.Text = "Вывести";
-            this.filterButton.UseVisualStyleBackColor = true;
-            this.filterButton.Click += new System.EventHandler(this.filterButton_Click);
+            this.operatorColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.operatorColumn.DataPropertyName = "Operator";
+            this.operatorColumn.HeaderText = "Оператор";
+            this.operatorColumn.Name = "operatorColumn";
+            this.operatorColumn.ReadOnly = true;
+            // 
+            // Type
+            // 
+            this.Type.DataPropertyName = "Type";
+            this.Type.HeaderText = "Тип";
+            this.Type.Name = "Type";
+            this.Type.ReadOnly = true;
+            this.Type.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Type.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // TargetDate
+            // 
+            this.TargetDate.DataPropertyName = "TargetDate";
+            dataGridViewCellStyle2.Format = "D";
+            dataGridViewCellStyle2.NullValue = null;
+            this.TargetDate.DefaultCellStyle = dataGridViewCellStyle2;
+            this.TargetDate.HeaderText = "Целевая дата";
+            this.TargetDate.Name = "TargetDate";
+            this.TargetDate.ReadOnly = true;
+            this.TargetDate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.TargetDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.TargetDate.Width = 150;
+            // 
+            // dayOfWeekColumn
+            // 
+            this.dayOfWeekColumn.DataPropertyName = "DayOfWeek";
+            this.dayOfWeekColumn.HeaderText = "День недели";
+            this.dayOfWeekColumn.Name = "dayOfWeekColumn";
+            this.dayOfWeekColumn.ReadOnly = true;
+            this.dayOfWeekColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dayOfWeekColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dayOfWeekColumn.Width = 120;
+            // 
+            // startTimeColumn
+            // 
+            this.startTimeColumn.DataPropertyName = "StartTime";
+            this.startTimeColumn.HeaderText = "Начало";
+            this.startTimeColumn.Name = "startTimeColumn";
+            this.startTimeColumn.ReadOnly = true;
+            // 
+            // finishTimeColumn
+            // 
+            this.finishTimeColumn.DataPropertyName = "FinishTime";
+            this.finishTimeColumn.HeaderText = "Окончание";
+            this.finishTimeColumn.Name = "finishTimeColumn";
+            this.finishTimeColumn.ReadOnly = true;
+            // 
+            // ServiceRenderingMode
+            // 
+            this.ServiceRenderingMode.DataPropertyName = "ServiceRenderingMode";
+            this.ServiceRenderingMode.FillWeight = 120F;
+            this.ServiceRenderingMode.HeaderText = "Режим обслуж.";
+            this.ServiceRenderingMode.Name = "ServiceRenderingMode";
+            this.ServiceRenderingMode.ReadOnly = true;
+            // 
+            // WeekFold
+            // 
+            this.WeekFold.DataPropertyName = "WeekFold";
+            this.WeekFold.FillWeight = 120F;
+            this.WeekFold.HeaderText = "Четн. нед.";
+            this.WeekFold.Name = "WeekFold";
+            this.WeekFold.ReadOnly = true;
             // 
             // OperatorInterruptionsForm
             // 
@@ -250,18 +271,19 @@
         private System.Windows.Forms.Button addAdditionalServiceButton;
         private System.Windows.Forms.DataGridView operatorInterruptionsGridView;
         private System.Windows.Forms.BindingSource operatorInterruptionsBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn operatorColumn;
-        private UI.WinForms.DataGridViewTranslatableColumn Type;
-        private UI.WinForms.DataGridViewTranslatableColumn TargetDate;
-        private UI.WinForms.DataGridViewTranslatableColumn dayOfWeekColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn startTimeColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn finishTimeColumn;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.CheckBox operatorCheckBox;
         private System.Windows.Forms.GroupBox operatorPanel;
         private System.Windows.Forms.Label operatorLabel;
         private UI.WinForms.IdentifiedEntityControl operatorControl;
         private System.Windows.Forms.Button filterButton;
-
+        private System.Windows.Forms.DataGridViewTextBoxColumn operatorColumn;
+        private UI.WinForms.DataGridViewTranslatableColumn Type;
+        private UI.WinForms.DataGridViewTranslatableColumn TargetDate;
+        private UI.WinForms.DataGridViewTranslatableColumn dayOfWeekColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn startTimeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn finishTimeColumn;
+        private UI.WinForms.DataGridViewTranslatableColumn ServiceRenderingMode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn WeekFold;
     }
 }

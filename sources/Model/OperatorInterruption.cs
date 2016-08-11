@@ -1,6 +1,5 @@
 ﻿using Junte.Data.NHibernate;
 using NHibernate.Mapping.Attributes;
-using NHibernate.Validator.Constraints;
 using Queue.Model.Common;
 using System;
 using System.Collections.Generic;
@@ -30,6 +29,12 @@ namespace Queue.Model
 
         [Property]
         public virtual TimeSpan FinishTime { get; set; }
+
+        [Property]
+        public virtual ServiceRenderingMode ServiceRenderingMode { get; set; }
+
+        [Property]
+        public virtual int WeekFold { get; set; }
 
         #endregion properties
 

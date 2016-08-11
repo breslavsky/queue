@@ -23,7 +23,7 @@
             public const string AppName = "Queue.Database";
             public const string Name = "Queue Database";
             public const string Description = "";
-            public const string Build = "2";
+            public const string Build = "3";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "7ED0004B-0B6F-4BEE-8756-265D2A0B5C97";
         }
@@ -43,7 +43,7 @@
             public const string AppName = "Queue.Server";
             public const string Name = "Queue Server";
             public const string Description = "";
-            public const string Build = "6";
+            public const string Build = "8";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "933F65E8-910F-4429-BA0B-16B3CF43E620";
         }
@@ -93,7 +93,7 @@
             public const string AppName = "Queue.Administrator";
             public const string Name = "Queue Administrator";
             public const string Description = "";
-            public const string Build = "3";
+            public const string Build = "4";
             public const string Version = Product.Version.Full + "." + Build;
             public const string Guid = "06C4B3D8-20FF-4D84-B14D-30A8BA06CDE6";
         }

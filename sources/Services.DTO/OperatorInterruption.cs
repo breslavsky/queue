@@ -13,6 +13,8 @@ namespace Queue.Services.DTO
         private DayOfWeek dayOfWeek;
         private TimeSpan startTime;
         private TimeSpan finishTime;
+        private ServiceRenderingMode serviceRenderingMode;
+        private int weekFold;
 
         [DataMember]
         public Operator Operator
@@ -54,6 +56,20 @@ namespace Queue.Services.DTO
         {
             get { return finishTime; }
             set { SetProperty(ref finishTime, value); }
+        }
+
+        [DataMember]
+        public ServiceRenderingMode ServiceRenderingMode
+        {
+            get { return serviceRenderingMode; }
+            set { SetProperty(ref serviceRenderingMode, value); }
+        }
+
+        [DataMember]
+        public int WeekFold
+        {
+            get { return weekFold; }
+            set { SetProperty(ref weekFold, value); }
         }
     }
 }

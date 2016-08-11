@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.Linq;
 
 namespace Queue.Services.Server
@@ -14,9 +15,10 @@ namespace Queue.Services.Server
 
         private readonly List<TimeInterval> clientRequestIntervals = new List<TimeInterval>();
 
-        public OperatorPlan(Operator queueOperator)
+        public OperatorPlan(Operator queueOperator, DateTime planDate)
         {
             Operator = queueOperator;
+            PlanDate = planDate;
 
             Metrics = new OperatorPlanMetrics(queueOperator);
 
@@ -41,12 +43,29 @@ namespace Queue.Services.Server
         }
 
         public OperatorPlanMetrics Metrics { get; private set; }
-
         public Operator Operator { get; private set; }
-
+        public DateTime PlanDate { get; set; }
         public TimeSpan PlanTime { get; set; }
+        public OperatorInterruption[] Interruptions { get; set; }
 
-        public void AddClientRequest(ClientRequest clientRequest, Schedule schedule, TimeInterval[] interruptions)
+        private TimeInterval[] GetIgnoredIntervals(ClientRequestType clientRequestType)
+        {
+            var serviceRenderingMode = clientRequestType == ClientRequestType.Early
+                ? ServiceRenderingMode.EarlyRequests
+                : ServiceRenderingMode.LiveRequests;
+
+            var formatInfo = DateTimeFormatInfo.CurrentInfo;
+            var calendar = formatInfo.Calendar;
+            int week = calendar.GetWeekOfYear(PlanDate, formatInfo.CalendarWeekRule, formatInfo.FirstDayOfWeek);
+
+            return Interruptions.Where(i => (i.ServiceRenderingMode == ServiceRenderingMode.AllRequests
+                        || i.ServiceRenderingMode == serviceRenderingMode)
+                    && (i.WeekFold != 0 ? (i.WeekFold > 0 ? week % i.WeekFold == 0 : week % Math.Abs(i.WeekFold) != 0) : true))
+                .Select(i => new TimeInterval(i.StartTime, i.FinishTime))
+                .ToArray();
+        }
+
+        public void AddClientRequest(ClientRequest clientRequest, Schedule schedule)
         {
             if (!clientRequest.IsClosed)
             {
@@ -70,7 +89,7 @@ namespace Queue.Services.Server
                         {
                             startTime = PlanTime;
                         }
-                        startTime = GetNearTimeInterval(startTime, schedule, interruptions);
+                        startTime = GetNearTimeInterval(startTime, schedule, clientRequest.Type);
                         finishTime = startTime.Add(clientInterval);
                         break;
 
@@ -100,13 +119,14 @@ namespace Queue.Services.Server
             }
         }
 
-        public TimeSpan GetNearTimeInterval(TimeSpan startTime, Schedule schedule, TimeInterval[] interruptions, int subjects = 1)
+        public TimeSpan GetNearTimeInterval(TimeSpan startTime, Schedule schedule,
+            ClientRequestType clientRequestType, int subjects = 1)
         {
             // Недоступные интервалы
             var reservedIntervals = new List<TimeInterval>();
 
             // Перерывы оператора
-            reservedIntervals.AddRange(interruptions);
+            reservedIntervals.AddRange(GetIgnoredIntervals(clientRequestType));
             // Запланированные запросы клиентов
             reservedIntervals.AddRange(clientRequestIntervals);
 

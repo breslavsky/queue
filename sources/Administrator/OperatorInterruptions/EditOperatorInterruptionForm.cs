@@ -3,14 +3,12 @@ using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Model.Common;
-using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
-using QueueAdministrator = Queue.Services.DTO.Administrator;
 using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
@@ -55,6 +53,8 @@ namespace Queue.Administrator
                 dayOfWeekControl.Select(operatorInterruption.DayOfWeek);
                 startTimePicker.Value = operatorInterruption.StartTime;
                 finishTimePicker.Value = operatorInterruption.FinishTime;
+                serviceRenderingModeСontrol.Select<ServiceRenderingMode>(operatorInterruption.ServiceRenderingMode);
+                weekFoldUpDown.Value = operatorInterruption.WeekFold;
 
                 AdjustType();
             }
@@ -73,6 +73,8 @@ namespace Queue.Administrator
             taskPool = new TaskPool();
             taskPool.OnAddTask += taskPool_OnAddTask;
             taskPool.OnRemoveTask += taskPool_OnRemoveTask;
+
+            serviceRenderingModeСontrol.Initialize<ServiceRenderingMode>();
         }
 
         private void AdjustType()
@@ -221,6 +223,16 @@ namespace Queue.Administrator
         private void typeControl_Leave(object sender, EventArgs e)
         {
             operatorInterruption.Type = typeControl.Selected<OperatorInterruptionType>();
+        }
+
+        private void serviceRenderingModeСontrol_Leave(object sender, EventArgs e)
+        {
+            operatorInterruption.ServiceRenderingMode = serviceRenderingModeСontrol.Selected<ServiceRenderingMode>();
+        }
+
+        private void weekFoldUpDown_Leave(object sender, EventArgs e)
+        {
+            operatorInterruption.WeekFold = (int)weekFoldUpDown.Value;
         }
 
         private void typeControl_SelectedChanged(object sender, EventArgs e)

@@ -8,6 +8,7 @@ using Queue.Model;
 using Queue.Model.Common;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using ServiceRenderingKey = System.Tuple<Queue.Model.Schedule,
                             Queue.Model.ServiceStep,
@@ -37,8 +38,8 @@ namespace Queue.Services.Server
 
         private List<ClientRequest> clientRequests = new List<ClientRequest>();
 
-        private readonly Dictionary<Operator, TimeInterval[]> operatorInterruptions
-            = new Dictionary<Operator, TimeInterval[]>();
+        private readonly Dictionary<Operator, OperatorInterruption[]> operatorInterruptions
+            = new Dictionary<Operator, OperatorInterruption[]>();
 
         private readonly Dictionary<ServiceRenderingKey, ServiceRendering[]> serviceRenderings
             = new Dictionary<ServiceRenderingKey, ServiceRendering[]>();
@@ -105,9 +106,13 @@ namespace Queue.Services.Server
         {
             PlanTime = planTime;
 
+            var formatInfo = DateTimeFormatInfo.CurrentInfo;
+            var calendar = formatInfo.Calendar;
+            int week = calendar.GetWeekOfYear(PlanDate, formatInfo.CalendarWeekRule, formatInfo.FirstDayOfWeek);
+
             Report = new List<string>()
             {
-                string.Format("Построение плана очереди на дату {0:dd.MM.yyyy} и время {1:hh\\:mm\\:ss}", PlanDate, PlanTime)
+                string.Format("Построение плана очереди на дату {0:dd.MM.yyyy} и время {1:hh\\:mm\\:ss}, номер недели {2}", PlanDate, PlanTime, week)
             };
 
             foreach (var o in OperatorsPlans)
@@ -116,6 +121,7 @@ namespace Queue.Services.Server
                 o.ClientRequestPlans.Clear();
 
                 o.PlanTime = PlanTime;
+                o.Interruptions = GetOperatorInterruptions(o.Operator);
             }
 
             clientRequests.AddRange(NotDistributedClientRequests.Select(n => n.ClientRequest));
@@ -232,7 +238,7 @@ namespace Queue.Services.Server
                                 .Select(p => new
                                 {
                                     OperatorPlan = p.OperatorPlan,
-                                    NearTimeInterval = p.OperatorPlan.GetNearTimeInterval(requestTime, schedule, GetOperatorInterruptions(p.OperatorPlan.Operator), conditionClientRequest.Subjects),
+                                    NearTimeInterval = p.OperatorPlan.GetNearTimeInterval(requestTime, schedule, conditionClientRequest.Type, conditionClientRequest.Subjects),
                                     IsOnline = p.OperatorPlan.Operator.Online,
                                     Availability = p.OperatorPlan.CurrentClientRequestPlan == null || !p.OperatorPlan.CurrentClientRequestPlan.ClientRequest.InWorking,
                                     Priority = p.Priority,
@@ -261,7 +267,7 @@ namespace Queue.Services.Server
 
                         if (targetOperatorPlan != null)
                         {
-                            targetOperatorPlan.AddClientRequest(conditionClientRequest, schedule, GetOperatorInterruptions(targetOperatorPlan.Operator));
+                            targetOperatorPlan.AddClientRequest(conditionClientRequest, schedule);
 
                             Report.Add(string.Format("Оператор [{0}] назначен для [{1}]", targetOperatorPlan, conditionClientRequest));
                         }
@@ -488,7 +494,7 @@ namespace Queue.Services.Server
 
                 while (intervalTime < schedule.FinishTime)
                 {
-                    intervalTime = potentialOperatorPlan.GetNearTimeInterval(intervalTime, schedule, GetOperatorInterruptions(potentialOperatorPlan.Operator), subjects);
+                    intervalTime = potentialOperatorPlan.GetNearTimeInterval(intervalTime, schedule, requestType, subjects);
 
                     report.Add(string.Format("Найден ближайший интвервал времени {0:hh\\:mm\\:ss}", intervalTime));
 
@@ -592,7 +598,7 @@ namespace Queue.Services.Server
         /// <summary>
         /// Получить перерывы оператора
         /// </summary>
-        public TimeInterval[] GetOperatorInterruptions(Operator queueOperator)
+        public OperatorInterruption[] GetOperatorInterruptions(Operator queueOperator)
         {
             if (!operatorInterruptions.ContainsKey(queueOperator))
             {
@@ -612,12 +618,8 @@ namespace Queue.Services.Server
                             .Add(new Conjunction()
                                 .Add(Restrictions.Eq("Type", OperatorInterruptionType.TargetDate))
                                 .Add(Restrictions.Eq("TargetDate", PlanDate))))
-
                          .List<OperatorInterruption>()
-                         .Select(i => new TimeInterval(i.StartTime, i.FinishTime))
                          .ToArray());
-
-                    transaction.Commit();
                 }
             }
 
@@ -724,7 +726,7 @@ namespace Queue.Services.Server
                 OperatorsPlans.Clear();
                 foreach (var o in operators)
                 {
-                    OperatorsPlans.Add(new OperatorPlan(storage.Put(o)));
+                    OperatorsPlans.Add(new OperatorPlan(storage.Put(o), PlanDate));
                     logger.Debug("Загружен оператор [{0}]", o);
                 }
 

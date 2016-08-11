@@ -89,6 +89,8 @@ namespace Queue.Services.Server
                     interruption.DayOfWeek = source.DayOfWeek;
                     interruption.StartTime = source.StartTime;
                     interruption.FinishTime = source.FinishTime;
+                    interruption.ServiceRenderingMode = source.ServiceRenderingMode;
+                    interruption.WeekFold = source.WeekFold;
 
                     if (source.Operator != null)
                     {

@@ -40,11 +40,16 @@
             this.typeLabel = new System.Windows.Forms.Label();
             this.targetDatePicker = new System.Windows.Forms.DateTimePicker();
             this.targetDateLabel = new System.Windows.Forms.Label();
+            this.serviceRenderingModeLabel = new System.Windows.Forms.Label();
+            this.serviceRenderingModeСontrol = new Queue.UI.WinForms.EnumItemControl();
+            this.weekFoldLabel = new System.Windows.Forms.Label();
+            this.weekFoldUpDown = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.weekFoldUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(220, 160);
+            this.saveButton.Location = new System.Drawing.Point(215, 220);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 25);
             this.saveButton.TabIndex = 2;
@@ -149,11 +154,59 @@
             this.targetDateLabel.Text = "Целевая дата";
             this.targetDateLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
+            // serviceRenderingModeLabel
+            // 
+            this.serviceRenderingModeLabel.Location = new System.Drawing.Point(5, 160);
+            this.serviceRenderingModeLabel.Name = "serviceRenderingModeLabel";
+            this.serviceRenderingModeLabel.Size = new System.Drawing.Size(135, 25);
+            this.serviceRenderingModeLabel.TabIndex = 18;
+            this.serviceRenderingModeLabel.Text = "Режим обслуживания";
+            this.serviceRenderingModeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // serviceRenderingModeСontrol
+            // 
+            this.serviceRenderingModeСontrol.Location = new System.Drawing.Point(140, 165);
+            this.serviceRenderingModeСontrol.Name = "serviceRenderingModeСontrol";
+            this.serviceRenderingModeСontrol.Size = new System.Drawing.Size(155, 21);
+            this.serviceRenderingModeСontrol.TabIndex = 20;
+            this.serviceRenderingModeСontrol.Leave += new System.EventHandler(this.serviceRenderingModeСontrol_Leave);
+            // 
+            // weekFoldLabel
+            // 
+            this.weekFoldLabel.Location = new System.Drawing.Point(5, 190);
+            this.weekFoldLabel.Name = "weekFoldLabel";
+            this.weekFoldLabel.Size = new System.Drawing.Size(135, 25);
+            this.weekFoldLabel.TabIndex = 19;
+            this.weekFoldLabel.Text = "Четность недели";
+            this.weekFoldLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // weekFoldUpDown
+            // 
+            this.weekFoldUpDown.Location = new System.Drawing.Point(140, 195);
+            this.weekFoldUpDown.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.weekFoldUpDown.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            -2147483648});
+            this.weekFoldUpDown.Name = "weekFoldUpDown";
+            this.weekFoldUpDown.Size = new System.Drawing.Size(60, 20);
+            this.weekFoldUpDown.TabIndex = 21;
+            this.weekFoldUpDown.Leave += new System.EventHandler(this.weekFoldUpDown_Leave);
+            // 
             // EditOperatorInterruptionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(299, 191);
+            this.ClientSize = new System.Drawing.Size(299, 251);
+            this.Controls.Add(this.serviceRenderingModeLabel);
+            this.Controls.Add(this.serviceRenderingModeСontrol);
+            this.Controls.Add(this.weekFoldLabel);
+            this.Controls.Add(this.weekFoldUpDown);
             this.Controls.Add(this.targetDateLabel);
             this.Controls.Add(this.targetDatePicker);
             this.Controls.Add(this.typeLabel);
@@ -172,6 +225,7 @@
             this.Text = "Редактирование перерыва оператора";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EditAdditionalServiceForm_FormClosed);
             this.Load += new System.EventHandler(this.EditOperatorInterruptionForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.weekFoldUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -190,5 +244,9 @@
         private System.Windows.Forms.Label typeLabel;
         private System.Windows.Forms.DateTimePicker targetDatePicker;
         private System.Windows.Forms.Label targetDateLabel;
+        private System.Windows.Forms.Label serviceRenderingModeLabel;
+        private UI.WinForms.EnumItemControl serviceRenderingModeСontrol;
+        private System.Windows.Forms.Label weekFoldLabel;
+        private System.Windows.Forms.NumericUpDown weekFoldUpDown;
     }
 }

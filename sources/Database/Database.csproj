@@ -242,6 +242,7 @@
     <Content Include="Patches\014.sql" />
     <Content Include="Patches\018.sql" />
     <Content Include="Patches\017.sql" />
+    <Content Include="Patches\021.sql" />
     <Content Include="Patches\020.sql" />
     <Content Include="Patches\019.sql" />
   </ItemGroup>
