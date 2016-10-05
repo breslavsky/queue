@@ -278,7 +278,8 @@ namespace Queue.Services.Server
                         DayOfWeek.Tuesday,
                         DayOfWeek.Wednesday,
                         DayOfWeek.Thursday,
-                        DayOfWeek.Friday })
+                        DayOfWeek.Friday,
+                        DayOfWeek.Saturday})
                     {
                         if (day != targetDay)
                         {

@@ -3,9 +3,7 @@ using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
 using Queue.Model.Common;
-using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
-using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
@@ -57,6 +55,7 @@ namespace Queue.Administrator
                 mobileTextBox.Text = administrator.Mobile;
                 isActiveCheckBox.Checked = administrator.IsActive;
                 permissionsFlagsControl.Select<AdministratorPermissions>(administrator.Permissions);
+                isMultisessionCheckBox.Checked = administrator.IsMultisession;
             }
         }
 
@@ -234,6 +233,11 @@ namespace Queue.Administrator
         private void surnameTextBox_Leave(object sender, EventArgs e)
         {
             administrator.Surname = surnameTextBox.Text;
+        }
+
+        private void isMultisessionCheckBox_Leave(object sender, EventArgs e)
+        {
+            administrator.IsMultisession = isMultisessionCheckBox.Checked;
         }
 
         #endregion bindings

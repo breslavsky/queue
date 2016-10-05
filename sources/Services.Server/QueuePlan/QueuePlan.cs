@@ -83,6 +83,8 @@ namespace Queue.Services.Server
 
         public int Version { get; private set; }
 
+        public int WeekNumber;
+
         /// <summary>
         /// Запланировать новый запрос клиента
         /// </summary>
@@ -106,13 +108,9 @@ namespace Queue.Services.Server
         {
             PlanTime = planTime;
 
-            var formatInfo = DateTimeFormatInfo.CurrentInfo;
-            var calendar = formatInfo.Calendar;
-            int week = calendar.GetWeekOfYear(PlanDate, formatInfo.CalendarWeekRule, formatInfo.FirstDayOfWeek);
-
             Report = new List<string>()
             {
-                string.Format("Построение плана очереди на дату {0:dd.MM.yyyy} и время {1:hh\\:mm\\:ss}, номер недели {2}", PlanDate, PlanTime, week)
+                string.Format("Построение плана очереди на дату {0:dd.MM.yyyy} и время {1:hh\\:mm\\:ss}, номер недели {2}", PlanDate, PlanTime, WeekNumber)
             };
 
             foreach (var o in OperatorsPlans)
@@ -213,6 +211,11 @@ namespace Queue.Services.Server
                                 }).Where(r => r.OperatorPlan != null)
                                 .ToList();
 
+                            foreach (var p in potentialOperatorsPlans)
+                            {
+                                Report.Add(string.Format("{0} {1}", p.OperatorPlan.Operator, p.OperatorPlan.Operator.Online ? "в сети" : "не в сети"));
+                            }
+
                             if (PlanDate == DateTime.Today && schedule.OnlineOperatorsOnly)
                             {
                                 Report.Add("Операторы не в сети игнорируются");
@@ -241,15 +244,13 @@ namespace Queue.Services.Server
                                     NearTimeInterval = p.OperatorPlan.GetNearTimeInterval(requestTime, schedule, conditionClientRequest.Type, conditionClientRequest.Subjects),
                                     IsOnline = p.OperatorPlan.Operator.Online,
                                     Availability = p.OperatorPlan.CurrentClientRequestPlan == null || !p.OperatorPlan.CurrentClientRequestPlan.ClientRequest.InWorking,
-                                    Priority = p.Priority,
                                     DayWorkload = p.OperatorPlan.Metrics.DailyWorkload,
                                     PlaningWorkload = p.OperatorPlan.Metrics.PlaningWorkload
                                 })
                                 .OrderBy(m => m.NearTimeInterval)
                                 .ThenByDescending(m => m.IsOnline)
                                 .ThenByDescending(m => m.Availability)
-                                .ThenByDescending(m => m.Priority)
-                                .ThenBy(m => conditionClientRequest.Type == ClientRequestType.Live ? m.DayWorkload : m.PlaningWorkload)
+                                .ThenBy(m => m.PlaningWorkload)
                                 .ToList();
 
                             Report.Add("Расчет метрик операторов");
@@ -258,8 +259,8 @@ namespace Queue.Services.Server
                             {
                                 m.OperatorPlan.Metrics.Standing++;
 
-                                Report.Add(string.Format("{0} {1}, ближайший интервал времени: {2:hh\\:mm\\:ss}, доступность: {3}, приоритет: {4}, дневная нагрузка: {5:hh\\:mm\\:ss}, планируемая нагрузка: {6:hh\\:mm\\:ss}",
-                                    m.OperatorPlan, m.IsOnline ? "в сети" : "не в сети", m.NearTimeInterval, m.Availability ? "свободен" : "занят", m.Priority, m.DayWorkload, m.PlaningWorkload));
+                                Report.Add(string.Format("{0} {1}, ближайший интервал времени: {2:hh\\:mm\\:ss}, доступность: {3}, дневная нагрузка: {4:hh\\:mm\\:ss}, планируемая нагрузка: {5:hh\\:mm\\:ss}",
+                                    m.OperatorPlan, m.IsOnline ? "в сети" : "не в сети", m.NearTimeInterval, m.Availability ? "свободен" : "занят", m.DayWorkload, m.PlaningWorkload));
                             }
 
                             targetOperatorPlan = operatorPlanMetrics.Select(m => m.OperatorPlan).First();
@@ -607,7 +608,7 @@ namespace Queue.Services.Server
                 using (var session = SessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    operatorInterruptions.Add(queueOperator, session.CreateCriteria<OperatorInterruption>()
+                    var interruptions = session.CreateCriteria<OperatorInterruption>()
                         .Add(new Disjunction()
                             .Add(Restrictions.IsNull("Operator"))
                             .Add(Restrictions.Eq("Operator", queueOperator)))
@@ -619,7 +620,10 @@ namespace Queue.Services.Server
                                 .Add(Restrictions.Eq("Type", OperatorInterruptionType.TargetDate))
                                 .Add(Restrictions.Eq("TargetDate", PlanDate))))
                          .List<OperatorInterruption>()
-                         .ToArray());
+                         .Where(i => (i.WeekFold != 0 ? (i.WeekFold > 0 ? WeekNumber % i.WeekFold == 0 : WeekNumber % Math.Abs(i.WeekFold) != 0) : true))
+                         .ToArray();
+
+                    operatorInterruptions.Add(queueOperator, interruptions);
                 }
             }
 
@@ -691,6 +695,10 @@ namespace Queue.Services.Server
             PlanDate = planDate.Date;
             PlanTime = TimeSpan.Zero;
             Version = 0;
+
+            var formatInfo = DateTimeFormatInfo.CurrentInfo;
+            var calendar = formatInfo.Calendar;
+            WeekNumber = calendar.GetWeekOfYear(PlanDate, CalendarWeekRule.FirstFourDayWeek, formatInfo.FirstDayOfWeek);
 
             Refresh();
         }

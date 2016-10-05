@@ -120,7 +120,7 @@ namespace Queue.Services.Server
                 using (var session = SessionProvider.OpenSession())
                 using (var transaction = session.BeginTransaction())
                 {
-                    var queueOperator = (Operator)currentUser;
+                    var queueOperator = currentUser as Operator;
 
                     ClientRequest clientRequest;
 
@@ -129,8 +129,7 @@ namespace Queue.Services.Server
                         var todayQueuePlan = QueueInstance.TodayQueuePlan;
                         using (var locker = todayQueuePlan.ReadLock())
                         {
-                            var currentClientRequestPlan = todayQueuePlan.GetOperatorPlan(queueOperator)
-                                .CurrentClientRequestPlan;
+                            var currentClientRequestPlan = todayQueuePlan.GetOperatorPlan(queueOperator).CurrentClientRequestPlan;
                             if (currentClientRequestPlan == null)
                             {
                                 throw new FaultException<ObjectNotFoundFault>(new ObjectNotFoundFault(queueOperator.GetId()), string.Format("Текущий запрос клиента не найден у оператора [{0}]", queueOperator));

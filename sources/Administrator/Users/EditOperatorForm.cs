@@ -2,14 +2,12 @@
 using Junte.UI.WinForms;
 using Junte.WCF;
 using Microsoft.Practices.Unity;
-using Queue.Services.Contracts;
 using Queue.Services.Contracts.Server;
 using Queue.Services.DTO;
 using Queue.UI.WinForms;
 using System;
 using System.ServiceModel;
 using System.Windows.Forms;
-using QueueAdministrator = Queue.Services.DTO.Administrator;
 using QueueOperator = Queue.Services.DTO.Operator;
 
 namespace Queue.Administrator
@@ -57,6 +55,7 @@ namespace Queue.Administrator
                 isActiveCheckBox.Checked = queueOperator.IsActive;
                 workplaceControl.Select<Workplace>(queueOperator.Workplace);
                 identityTextBox.Text = queueOperator.Identity;
+                isMultisessionCheckBox.Checked = queueOperator.IsMultisession;
             }
         }
 
@@ -241,6 +240,11 @@ namespace Queue.Administrator
         private void identityTextBox_Leave(object sender, EventArgs e)
         {
             queueOperator.Identity = identityTextBox.Text;
+        }
+
+        private void isMultisessionCheckBox_Leave(object sender, EventArgs e)
+        {
+            queueOperator.IsMultisession = isMultisessionCheckBox.Checked;
         }
 
         #endregion bindings

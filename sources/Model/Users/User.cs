@@ -60,6 +60,9 @@ namespace Queue.Model
         [Property]
         public virtual bool IsActive { get; set; }
 
+        [Property]
+        public virtual bool IsMultisession { get; set; }
+
         public virtual bool Online
         {
             get { return Heartbeat > DateTime.Now - TimeSpan.FromSeconds(HeartbitTimeout); }

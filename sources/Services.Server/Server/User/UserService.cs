@@ -244,7 +244,7 @@ namespace Queue.Services.Server
 
                     var hasGone = user.HasGone;
 
-                    if (user.HasLost)
+                    if (user.HasLost && !user.IsMultisession)
                     {
                         user.SessionId = Guid.NewGuid();
                     }
@@ -355,6 +355,7 @@ namespace Queue.Services.Server
                     administrator.Mobile = source.Mobile;
                     administrator.IsActive = source.IsActive;
                     administrator.Permissions = source.Permissions;
+                    administrator.IsMultisession = source.IsMultisession;
 
                     var errors = administrator.Validate();
                     if (errors.Length > 0)
@@ -413,6 +414,7 @@ namespace Queue.Services.Server
                     queueOperator.Mobile = source.Mobile;
                     queueOperator.IsActive = source.IsActive;
                     queueOperator.Identity = source.Identity;
+                    queueOperator.IsMultisession = source.IsMultisession;
 
                     if (source.Workplace != null)
                     {

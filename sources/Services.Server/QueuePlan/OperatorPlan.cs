@@ -56,11 +56,10 @@ namespace Queue.Services.Server
 
             var formatInfo = DateTimeFormatInfo.CurrentInfo;
             var calendar = formatInfo.Calendar;
-            int week = calendar.GetWeekOfYear(PlanDate, formatInfo.CalendarWeekRule, formatInfo.FirstDayOfWeek);
+            int week = calendar.GetWeekOfYear(PlanDate, CalendarWeekRule.FirstFourDayWeek, formatInfo.FirstDayOfWeek);
 
-            return Interruptions.Where(i => (i.ServiceRenderingMode == ServiceRenderingMode.AllRequests
+            return Interruptions.Where(i => i.ServiceRenderingMode == ServiceRenderingMode.AllRequests
                         || i.ServiceRenderingMode == serviceRenderingMode)
-                    && (i.WeekFold != 0 ? (i.WeekFold > 0 ? week % i.WeekFold == 0 : week % Math.Abs(i.WeekFold) != 0) : true))
                 .Select(i => new TimeInterval(i.StartTime, i.FinishTime))
                 .ToArray();
         }

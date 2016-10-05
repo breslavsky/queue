@@ -1,4 +1,5 @@
 ﻿using Junte.Translation;
+using Queue.Model.Common;
 using Queue.Services.DTO;
 using Queue.UI.WPF;
 using System;
@@ -298,9 +299,46 @@ namespace Queue.Administrator
                     StrokeDashArray = new DoubleCollection(new double[] { 2, 4 })
                 });
 
-                var clientsRequestPlans = operatorPlan.ClientRequestPlans;
+                foreach (var interruption in operatorPlan.Interruptions)
+                {
+                    textBlock = new TextBlock();
+                    textBlock.Padding = new Thickness(5, 5, 5, 5);
 
-                foreach (var clientRequestPlan in clientsRequestPlans)
+                    textBlock.Inlines.Add(new Run("Перерыв"));
+                    textBlock.Inlines.Add(new LineBreak());
+                    textBlock.Inlines.Add(new Run(string.Format("{0:hh\\:mm} - {1:hh\\:mm}", interruption.StartTime, interruption.FinishTime)));
+                    textBlock.Inlines.Add(new LineBreak());
+                    textBlock.Inlines.Add(new Run(Translater.Enum(interruption.ServiceRenderingMode))
+                    {
+                        FontWeight = FontWeights.Bold
+                    });
+                    textBlock.Inlines.Add(new LineBreak());
+
+                    var renderStartTime = interruption.StartTime;
+                    double x1 = renderStartTime.TotalSeconds * SECOND_WIDTH;
+                    var renderFinishTime = interruption.FinishTime;
+                    double x2 = renderFinishTime.TotalSeconds * SECOND_WIDTH;
+                    int width = Math.Max(20, (int)(x2 - x1));
+
+                    var color = ColorTranslator.FromHtml("#ff00ff");
+
+                    switch (interruption.ServiceRenderingMode)
+                    {
+                        case ServiceRenderingMode.LiveRequests:
+                            color = ColorTranslator.FromHtml("#006666");
+                            break;
+
+                        case ServiceRenderingMode.EarlyRequests:
+                            color = ColorTranslator.FromHtml("#666699");
+                            break;
+                    }
+
+                    var block = CreateBlockBox(textBlock, width, BLOCK_BOX_HEIGHT, x1, currentBlockY,
+                        Color.FromArgb(100, color.R, color.G, color.B));
+                    clientRequestsCanvas.Children.Add(block);
+                }
+
+                foreach (var clientRequestPlan in operatorPlan.ClientRequestPlans)
                 {
                     var clientRequest = clientRequestPlan.ClientRequest;
 
@@ -343,7 +381,8 @@ namespace Queue.Administrator
                     int width = Math.Max(20, (int)(x2 - x1));
 
                     var color = ColorTranslator.FromHtml(clientRequest.Color);
-                    var block = CreateBlockBox(textBlock, width, BLOCK_BOX_HEIGHT, x1, currentBlockY, Color.FromRgb(color.R, color.G, color.B));
+                    var block = CreateBlockBox(textBlock, width, BLOCK_BOX_HEIGHT, x1, currentBlockY,
+                        Color.FromRgb(color.R, color.G, color.B));
                     color = ColorTranslator.FromHtml(clientRequest.Color);
                     block.BorderBrush = new SolidColorBrush(Color.FromRgb(color.R, color.G, color.B));
                     block.Cursor = Cursors.Hand;
@@ -388,12 +427,10 @@ namespace Queue.Administrator
                 Stroke = Brushes.Silver
             });
 
-            var notDistributedQueueClientsRequests = queuePlan.NotDistributedClientRequests;
-
             double CurrentTimeLineX = queuePlanTime.TotalSeconds * SECOND_WIDTH;
             index = 0;
 
-            foreach (var notDistributedClientRequest in notDistributedQueueClientsRequests)
+            foreach (var notDistributedClientRequest in queuePlan.NotDistributedClientRequests)
             {
                 var clientRequest = notDistributedClientRequest.ClientRequest;
 
