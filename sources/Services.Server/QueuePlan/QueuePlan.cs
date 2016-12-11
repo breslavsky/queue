@@ -110,7 +110,7 @@ namespace Queue.Services.Server
 
             Report = new List<string>()
             {
-                string.Format("Построение плана очереди на дату {0:dd.MM.yyyy} и время {1:hh\\:mm\\:ss}, номер недели {2}", PlanDate, PlanTime, WeekNumber)
+                string.Format("Построение плана очереди на дату {0:dd.MM.yyyy} ({1}) и время {2:hh\\:mm\\:ss}, номер недели {3}", PlanDate, PlanDate.Ticks, PlanTime, WeekNumber)
             };
 
             foreach (var o in OperatorsPlans)
@@ -237,11 +237,15 @@ namespace Queue.Services.Server
                                 requestTime = planTime;
                             }
 
+                            var clientInterval = conditionClientRequest.Type == ClientRequestType.Live
+                                ? schedule.LiveClientInterval : schedule.EarlyClientInterval;
+                            clientInterval = TimeSpan.FromTicks(clientInterval.Ticks * conditionClientRequest.Subjects);
+
                             var operatorPlanMetrics = potentialOperatorsPlans
                                 .Select(p => new
                                 {
                                     OperatorPlan = p.OperatorPlan,
-                                    NearTimeInterval = p.OperatorPlan.GetNearTimeInterval(requestTime, schedule, conditionClientRequest.Type, conditionClientRequest.Subjects),
+                                    NearTimeInterval = p.OperatorPlan.GetNearTimeInterval(requestTime, schedule, conditionClientRequest.Type, clientInterval),
                                     IsOnline = p.OperatorPlan.Operator.Online,
                                     Availability = p.OperatorPlan.CurrentClientRequestPlan == null || !p.OperatorPlan.CurrentClientRequestPlan.ClientRequest.InWorking,
                                     DayWorkload = p.OperatorPlan.Metrics.DailyWorkload,
@@ -480,6 +484,7 @@ namespace Queue.Services.Server
 
             var clientInterval = requestType == ClientRequestType.Live
                 ? schedule.LiveClientInterval : schedule.EarlyClientInterval;
+            clientInterval = TimeSpan.FromTicks(clientInterval.Ticks * subjects);
 
             int openedRequests = 0;
 
@@ -495,7 +500,7 @@ namespace Queue.Services.Server
 
                 while (intervalTime < schedule.FinishTime)
                 {
-                    intervalTime = potentialOperatorPlan.GetNearTimeInterval(intervalTime, schedule, requestType, subjects);
+                    intervalTime = potentialOperatorPlan.GetNearTimeInterval(intervalTime, schedule, requestType, clientInterval);
 
                     report.Add(string.Format("Найден ближайший интвервал времени {0:hh\\:mm\\:ss}", intervalTime));
 

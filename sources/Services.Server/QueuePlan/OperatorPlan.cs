@@ -88,7 +88,7 @@ namespace Queue.Services.Server
                         {
                             startTime = PlanTime;
                         }
-                        startTime = GetNearTimeInterval(startTime, schedule, clientRequest.Type);
+                        startTime = GetNearTimeInterval(startTime, schedule, clientRequest.Type, clientInterval);
                         finishTime = startTime.Add(clientInterval);
                         break;
 
@@ -119,7 +119,7 @@ namespace Queue.Services.Server
         }
 
         public TimeSpan GetNearTimeInterval(TimeSpan startTime, Schedule schedule,
-            ClientRequestType clientRequestType, int subjects = 1)
+            ClientRequestType clientRequestType, TimeSpan clientInterval)
         {
             // Недоступные интервалы
             var reservedIntervals = new List<TimeInterval>();
@@ -129,14 +129,20 @@ namespace Queue.Services.Server
             // Запланированные запросы клиентов
             reservedIntervals.AddRange(clientRequestIntervals);
 
-            var clientInterval = TimeSpan.FromTicks(schedule.LiveClientInterval.Ticks * subjects);
-
             var renderStartTime = startTime;
 
-            foreach (var exception in reservedIntervals
+            var exceptions = reservedIntervals
                 .Where(i => i.FinishTime >= startTime)
-                .OrderBy(i => i.FinishTime))
+                .OrderBy(i => i.StartTime);
+
+            foreach (var exception in exceptions)
             {
+                // Игнорируем данный интервал
+                if (exception.FinishTime < renderStartTime)
+                {
+                    continue;
+                }
+
                 var renderFinishTime = exception.StartTime;
 
                 var interval = renderFinishTime - renderStartTime;
